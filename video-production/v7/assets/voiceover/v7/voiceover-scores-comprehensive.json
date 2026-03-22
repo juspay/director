@@ -1,0 +1,2300 @@
+[
+  {
+    "variation_id": "r23v4",
+    "filename": "tara-v7-r23v4.mp3",
+    "duration_seconds": 150.4,
+    "scores": {
+      "pacing": 9.98,
+      "duration_fit": 7.6,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 10.0,
+      "spectral_warmth": 8.21,
+      "consistency": 10.0,
+      "clarity": 8.98
+    },
+    "composite_score": 9.18,
+    "details": {
+      "wpm": 118.1,
+      "dynamic_range_db": 26.2,
+      "silence": {
+        "n_pauses": 66,
+        "avg_pause_s": 0.55,
+        "silence_ratio": 0.24
+      },
+      "energy_sections": {
+        "opening": 0.0718,
+        "recognition": 0.0733,
+        "thesis": 0.0894,
+        "demo_peak": 0.0896,
+        "resolution": 0.0868
+      },
+      "warmth_ratio": 11.58,
+      "consistency_cv": 0.961,
+      "clarity_centroid_hz": 3307.0
+    }
+  },
+  {
+    "variation_id": "r6v5",
+    "filename": "tara-v7-r6v5.mp3",
+    "duration_seconds": 152.4,
+    "scores": {
+      "pacing": 9.63,
+      "duration_fit": 8.1,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 10.0,
+      "spectral_warmth": 7.79,
+      "consistency": 10.0,
+      "clarity": 9.0
+    },
+    "composite_score": 9.13,
+    "details": {
+      "wpm": 116.5,
+      "dynamic_range_db": 26.9,
+      "silence": {
+        "n_pauses": 63,
+        "avg_pause_s": 0.62,
+        "silence_ratio": 0.256
+      },
+      "energy_sections": {
+        "opening": 0.0732,
+        "recognition": 0.0748,
+        "thesis": 0.0885,
+        "demo_peak": 0.0838,
+        "resolution": 0.0785
+      },
+      "warmth_ratio": 12.42,
+      "consistency_cv": 0.973,
+      "clarity_centroid_hz": 3300.0
+    }
+  },
+  {
+    "variation_id": "r13v5",
+    "filename": "tara-v7-r13v5.mp3",
+    "duration_seconds": 151.36,
+    "scores": {
+      "pacing": 9.83,
+      "duration_fit": 7.84,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 10.0,
+      "spectral_warmth": 7.37,
+      "consistency": 10.0,
+      "clarity": 9.23
+    },
+    "composite_score": 9.12,
+    "details": {
+      "wpm": 117.3,
+      "dynamic_range_db": 27.3,
+      "silence": {
+        "n_pauses": 65,
+        "avg_pause_s": 0.6,
+        "silence_ratio": 0.257
+      },
+      "energy_sections": {
+        "opening": 0.0759,
+        "recognition": 0.0769,
+        "thesis": 0.0905,
+        "demo_peak": 0.0834,
+        "resolution": 0.0789
+      },
+      "warmth_ratio": 13.26,
+      "consistency_cv": 1.012,
+      "clarity_centroid_hz": 3232.0
+    }
+  },
+  {
+    "variation_id": "r4v5",
+    "filename": "tara-v7-r4v5.mp3",
+    "duration_seconds": 152.4,
+    "scores": {
+      "pacing": 9.63,
+      "duration_fit": 8.1,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 10.0,
+      "spectral_warmth": 7.33,
+      "consistency": 10.0,
+      "clarity": 9.31
+    },
+    "composite_score": 9.12,
+    "details": {
+      "wpm": 116.5,
+      "dynamic_range_db": 27.3,
+      "silence": {
+        "n_pauses": 64,
+        "avg_pause_s": 0.59,
+        "silence_ratio": 0.248
+      },
+      "energy_sections": {
+        "opening": 0.0768,
+        "recognition": 0.0781,
+        "thesis": 0.0849,
+        "demo_peak": 0.0838,
+        "resolution": 0.0766
+      },
+      "warmth_ratio": 13.34,
+      "consistency_cv": 1.015,
+      "clarity_centroid_hz": 3208.0
+    }
+  },
+  {
+    "variation_id": "v2_natural_flow",
+    "settings": {
+      "stability": 0.45,
+      "similarity_boost": 0.8,
+      "style": 0.4,
+      "use_speaker_boost": true
+    },
+    "strategy": "More natural variation \u2014 lower stability for organic feel",
+    "duration_seconds": 156.60408163265305,
+    "scores": {
+      "pacing": 8.83,
+      "duration_fit": 9.15,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 10.0,
+      "spectral_warmth": 7.34,
+      "consistency": 10.0,
+      "clarity": 9.37
+    },
+    "composite_score": 9.11,
+    "details": {
+      "wpm": 113.4,
+      "dynamic_range_db": 28.0,
+      "silence": {
+        "n_pauses": 65,
+        "avg_pause_s": 0.64,
+        "silence_ratio": 0.267
+      },
+      "energy_sections": {
+        "opening": 0.0781,
+        "recognition": 0.0799,
+        "thesis": 0.0879,
+        "demo_peak": 0.082,
+        "resolution": 0.0747
+      },
+      "warmth_ratio": 13.31,
+      "consistency_cv": 1.044,
+      "clarity_centroid_hz": 3189.0
+    }
+  },
+  {
+    "variation_id": "r12v3",
+    "filename": "tara-v7-r12v3.mp3",
+    "duration_seconds": 154.08,
+    "scores": {
+      "pacing": 9.3,
+      "duration_fit": 8.52,
+      "dynamic_range": 9.86,
+      "silence_quality": 7.0,
+      "energy_arc": 10.0,
+      "spectral_warmth": 7.66,
+      "consistency": 9.81,
+      "clarity": 9.36
+    },
+    "composite_score": 9.11,
+    "details": {
+      "wpm": 115.3,
+      "dynamic_range_db": 30.2,
+      "silence": {
+        "n_pauses": 67,
+        "avg_pause_s": 0.63,
+        "silence_ratio": 0.276
+      },
+      "energy_sections": {
+        "opening": 0.0799,
+        "recognition": 0.0834,
+        "thesis": 0.0841,
+        "demo_peak": 0.091,
+        "resolution": 0.0844
+      },
+      "warmth_ratio": 12.68,
+      "consistency_cv": 1.069,
+      "clarity_centroid_hz": 3193.0
+    }
+  },
+  {
+    "variation_id": "r9v5",
+    "filename": "tara-v7-r9v5.mp3",
+    "duration_seconds": 156.0,
+    "scores": {
+      "pacing": 8.94,
+      "duration_fit": 9.0,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 10.0,
+      "spectral_warmth": 7.36,
+      "consistency": 10.0,
+      "clarity": 9.3
+    },
+    "composite_score": 9.11,
+    "details": {
+      "wpm": 113.8,
+      "dynamic_range_db": 29.6,
+      "silence": {
+        "n_pauses": 71,
+        "avg_pause_s": 0.53,
+        "silence_ratio": 0.239
+      },
+      "energy_sections": {
+        "opening": 0.0721,
+        "recognition": 0.08,
+        "thesis": 0.0844,
+        "demo_peak": 0.0868,
+        "resolution": 0.083
+      },
+      "warmth_ratio": 13.27,
+      "consistency_cv": 1.009,
+      "clarity_centroid_hz": 3209.0
+    }
+  },
+  {
+    "variation_id": "r2v4_refined",
+    "settings": {
+      "stability": 0.5,
+      "similarity_boost": 0.8,
+      "style": 0.42,
+      "use_speaker_boost": true
+    },
+    "strategy": "Refined v2 \u2014 slight stability bump for consistency, style up for range",
+    "duration_seconds": 151.7191836734694,
+    "scores": {
+      "pacing": 9.76,
+      "duration_fit": 7.93,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 10.0,
+      "spectral_warmth": 7.33,
+      "consistency": 10.0,
+      "clarity": 9.12
+    },
+    "composite_score": 9.1,
+    "details": {
+      "wpm": 117.1,
+      "dynamic_range_db": 26.7,
+      "silence": {
+        "n_pauses": 65,
+        "avg_pause_s": 0.65,
+        "silence_ratio": 0.277
+      },
+      "energy_sections": {
+        "opening": 0.0718,
+        "recognition": 0.0734,
+        "thesis": 0.0787,
+        "demo_peak": 0.084,
+        "resolution": 0.0721
+      },
+      "warmth_ratio": 13.34,
+      "consistency_cv": 1.03,
+      "clarity_centroid_hz": 3263.0
+    }
+  },
+  {
+    "variation_id": "r3v1",
+    "settings": {
+      "stability": 0.458,
+      "similarity_boost": 0.81,
+      "style": 0.408,
+      "use_speaker_boost": true
+    },
+    "strategy": "perturb_top1_fine",
+    "duration_seconds": 151.0661224489796,
+    "scores": {
+      "pacing": 9.89,
+      "duration_fit": 7.77,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 10.0,
+      "spectral_warmth": 7.18,
+      "consistency": 10.0,
+      "clarity": 9.24
+    },
+    "composite_score": 9.1,
+    "details": {
+      "wpm": 117.6,
+      "dynamic_range_db": 26.7,
+      "silence": {
+        "n_pauses": 67,
+        "avg_pause_s": 0.62,
+        "silence_ratio": 0.276
+      },
+      "energy_sections": {
+        "opening": 0.0778,
+        "recognition": 0.0807,
+        "thesis": 0.0924,
+        "demo_peak": 0.089,
+        "resolution": 0.0805
+      },
+      "warmth_ratio": 13.64,
+      "consistency_cv": 1.001,
+      "clarity_centroid_hz": 3227.0
+    }
+  },
+  {
+    "variation_id": "r17v3",
+    "filename": "tara-v7-r17v3.mp3",
+    "duration_seconds": 152.4,
+    "scores": {
+      "pacing": 9.63,
+      "duration_fit": 8.1,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 10.0,
+      "spectral_warmth": 7.44,
+      "consistency": 10.0,
+      "clarity": 8.98
+    },
+    "composite_score": 9.1,
+    "details": {
+      "wpm": 116.5,
+      "dynamic_range_db": 25.7,
+      "silence": {
+        "n_pauses": 65,
+        "avg_pause_s": 0.62,
+        "silence_ratio": 0.264
+      },
+      "energy_sections": {
+        "opening": 0.0803,
+        "recognition": 0.0813,
+        "thesis": 0.085,
+        "demo_peak": 0.0837,
+        "resolution": 0.0823
+      },
+      "warmth_ratio": 13.12,
+      "consistency_cv": 1.01,
+      "clarity_centroid_hz": 3307.0
+    }
+  },
+  {
+    "variation_id": "r3v5",
+    "settings": {
+      "stability": 0.404,
+      "similarity_boost": 0.829,
+      "style": 0.345,
+      "use_speaker_boost": true
+    },
+    "strategy": "random",
+    "duration_seconds": 153.15591836734694,
+    "scores": {
+      "pacing": 9.48,
+      "duration_fit": 8.29,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 10.0,
+      "spectral_warmth": 7.22,
+      "consistency": 10.0,
+      "clarity": 9.17
+    },
+    "composite_score": 9.09,
+    "details": {
+      "wpm": 116.0,
+      "dynamic_range_db": 26.1,
+      "silence": {
+        "n_pauses": 64,
+        "avg_pause_s": 0.64,
+        "silence_ratio": 0.269
+      },
+      "energy_sections": {
+        "opening": 0.0828,
+        "recognition": 0.0831,
+        "thesis": 0.0901,
+        "demo_peak": 0.0856,
+        "resolution": 0.0784
+      },
+      "warmth_ratio": 13.56,
+      "consistency_cv": 0.996,
+      "clarity_centroid_hz": 3250.0
+    }
+  },
+  {
+    "variation_id": "r13v4",
+    "filename": "tara-v7-r13v4.mp3",
+    "duration_seconds": 154.4,
+    "scores": {
+      "pacing": 9.24,
+      "duration_fit": 8.6,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 10.0,
+      "spectral_warmth": 7.23,
+      "consistency": 10.0,
+      "clarity": 9.19
+    },
+    "composite_score": 9.09,
+    "details": {
+      "wpm": 115.0,
+      "dynamic_range_db": 26.8,
+      "silence": {
+        "n_pauses": 70,
+        "avg_pause_s": 0.62,
+        "silence_ratio": 0.283
+      },
+      "energy_sections": {
+        "opening": 0.0802,
+        "recognition": 0.082,
+        "thesis": 0.0911,
+        "demo_peak": 0.0855,
+        "resolution": 0.0785
+      },
+      "warmth_ratio": 13.55,
+      "consistency_cv": 1.013,
+      "clarity_centroid_hz": 3243.0
+    }
+  },
+  {
+    "variation_id": "r8v1",
+    "filename": "tara-v7-r8v1.mp3",
+    "duration_seconds": 157.92,
+    "scores": {
+      "pacing": 8.59,
+      "duration_fit": 9.48,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 10.0,
+      "spectral_warmth": 7.14,
+      "consistency": 10.0,
+      "clarity": 9.44
+    },
+    "composite_score": 9.09,
+    "details": {
+      "wpm": 112.5,
+      "dynamic_range_db": 27.3,
+      "silence": {
+        "n_pauses": 73,
+        "avg_pause_s": 0.59,
+        "silence_ratio": 0.275
+      },
+      "energy_sections": {
+        "opening": 0.081,
+        "recognition": 0.0857,
+        "thesis": 0.0844,
+        "demo_peak": 0.087,
+        "resolution": 0.0817
+      },
+      "warmth_ratio": 13.71,
+      "consistency_cv": 1.048,
+      "clarity_centroid_hz": 3168.0
+    }
+  },
+  {
+    "variation_id": "r4v1",
+    "settings": {
+      "stability": "?",
+      "similarity_boost": "?",
+      "style": "?"
+    },
+    "strategy": "unknown",
+    "duration_seconds": 149.62938775510204,
+    "scores": {
+      "pacing": 9.82,
+      "duration_fit": 7.41,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 10.0,
+      "spectral_warmth": 7.47,
+      "consistency": 10.0,
+      "clarity": 9.21
+    },
+    "composite_score": 9.08,
+    "details": {
+      "wpm": 118.7,
+      "dynamic_range_db": 29.2,
+      "silence": {
+        "n_pauses": 66,
+        "avg_pause_s": 0.58,
+        "silence_ratio": 0.255
+      },
+      "energy_sections": {
+        "opening": 0.0676,
+        "recognition": 0.0708,
+        "thesis": 0.0818,
+        "demo_peak": 0.0794,
+        "resolution": 0.0733
+      },
+      "warmth_ratio": 13.06,
+      "consistency_cv": 1.002,
+      "clarity_centroid_hz": 3236.0
+    }
+  },
+  {
+    "variation_id": "r17v2",
+    "filename": "tara-v7-r17v2.mp3",
+    "duration_seconds": 159.44,
+    "scores": {
+      "pacing": 8.32,
+      "duration_fit": 9.86,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 10.0,
+      "spectral_warmth": 7.05,
+      "consistency": 10.0,
+      "clarity": 9.42
+    },
+    "composite_score": 9.08,
+    "details": {
+      "wpm": 111.4,
+      "dynamic_range_db": 27.3,
+      "silence": {
+        "n_pauses": 70,
+        "avg_pause_s": 0.61,
+        "silence_ratio": 0.266
+      },
+      "energy_sections": {
+        "opening": 0.0711,
+        "recognition": 0.0717,
+        "thesis": 0.0768,
+        "demo_peak": 0.0813,
+        "resolution": 0.0693
+      },
+      "warmth_ratio": 13.89,
+      "consistency_cv": 1.034,
+      "clarity_centroid_hz": 3175.0
+    }
+  },
+  {
+    "variation_id": "r9v1",
+    "filename": "tara-v7-r9v1.mp3",
+    "duration_seconds": 156.48,
+    "scores": {
+      "pacing": 8.86,
+      "duration_fit": 9.12,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 10.0,
+      "spectral_warmth": 7.98,
+      "consistency": 9.16,
+      "clarity": 9.29
+    },
+    "composite_score": 9.08,
+    "details": {
+      "wpm": 113.5,
+      "dynamic_range_db": 29.5,
+      "silence": {
+        "n_pauses": 67,
+        "avg_pause_s": 0.71,
+        "silence_ratio": 0.304
+      },
+      "energy_sections": {
+        "opening": 0.0794,
+        "recognition": 0.0811,
+        "thesis": 0.0876,
+        "demo_peak": 0.088,
+        "resolution": 0.0774
+      },
+      "warmth_ratio": 12.04,
+      "consistency_cv": 1.134,
+      "clarity_centroid_hz": 3213.0
+    }
+  },
+  {
+    "variation_id": "r9v4",
+    "filename": "tara-v7-r9v4.mp3",
+    "duration_seconds": 155.68,
+    "scores": {
+      "pacing": 9.0,
+      "duration_fit": 8.92,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 10.0,
+      "spectral_warmth": 7.17,
+      "consistency": 9.84,
+      "clarity": 9.39
+    },
+    "composite_score": 9.08,
+    "details": {
+      "wpm": 114.1,
+      "dynamic_range_db": 28.8,
+      "silence": {
+        "n_pauses": 67,
+        "avg_pause_s": 0.66,
+        "silence_ratio": 0.284
+      },
+      "energy_sections": {
+        "opening": 0.0811,
+        "recognition": 0.0837,
+        "thesis": 0.0889,
+        "demo_peak": 0.0977,
+        "resolution": 0.0835
+      },
+      "warmth_ratio": 13.66,
+      "consistency_cv": 1.066,
+      "clarity_centroid_hz": 3183.0
+    }
+  },
+  {
+    "variation_id": "r9v2",
+    "filename": "tara-v7-r9v2.mp3",
+    "duration_seconds": 151.6,
+    "scores": {
+      "pacing": 9.78,
+      "duration_fit": 7.9,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 10.0,
+      "spectral_warmth": 6.67,
+      "consistency": 10.0,
+      "clarity": 9.51
+    },
+    "composite_score": 9.07,
+    "details": {
+      "wpm": 117.2,
+      "dynamic_range_db": 26.9,
+      "silence": {
+        "n_pauses": 63,
+        "avg_pause_s": 0.61,
+        "silence_ratio": 0.254
+      },
+      "energy_sections": {
+        "opening": 0.09,
+        "recognition": 0.0903,
+        "thesis": 0.0952,
+        "demo_peak": 0.0998,
+        "resolution": 0.0972
+      },
+      "warmth_ratio": 14.66,
+      "consistency_cv": 0.998,
+      "clarity_centroid_hz": 3146.0
+    }
+  },
+  {
+    "variation_id": "r23v1",
+    "filename": "tara-v7-r23v1.mp3",
+    "duration_seconds": 157.52,
+    "scores": {
+      "pacing": 8.66,
+      "duration_fit": 9.38,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 10.0,
+      "spectral_warmth": 6.53,
+      "consistency": 9.9,
+      "clarity": 9.57
+    },
+    "composite_score": 9.04,
+    "details": {
+      "wpm": 112.7,
+      "dynamic_range_db": 27.4,
+      "silence": {
+        "n_pauses": 66,
+        "avg_pause_s": 0.72,
+        "silence_ratio": 0.3
+      },
+      "energy_sections": {
+        "opening": 0.0751,
+        "recognition": 0.0786,
+        "thesis": 0.0926,
+        "demo_peak": 0.0949,
+        "resolution": 0.0926
+      },
+      "warmth_ratio": 14.94,
+      "consistency_cv": 1.06,
+      "clarity_centroid_hz": 3129.0
+    }
+  },
+  {
+    "variation_id": "r5v1",
+    "settings": {
+      "stability": 0.454,
+      "similarity_boost": 0.8,
+      "style": 0.391,
+      "use_speaker_boost": true
+    },
+    "strategy": "perturb_top1_fine",
+    "duration_seconds": 150.7526530612245,
+    "scores": {
+      "pacing": 9.95,
+      "duration_fit": 7.69,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 10.0,
+      "spectral_warmth": 5.9,
+      "consistency": 10.0,
+      "clarity": 9.77
+    },
+    "composite_score": 9.03,
+    "details": {
+      "wpm": 117.8,
+      "dynamic_range_db": 28.4,
+      "silence": {
+        "n_pauses": 70,
+        "avg_pause_s": 0.57,
+        "silence_ratio": 0.267
+      },
+      "energy_sections": {
+        "opening": 0.0769,
+        "recognition": 0.0816,
+        "thesis": 0.0922,
+        "demo_peak": 0.0933,
+        "resolution": 0.0872
+      },
+      "warmth_ratio": 16.21,
+      "consistency_cv": 1.026,
+      "clarity_centroid_hz": 3070.0
+    }
+  },
+  {
+    "variation_id": "r6v4",
+    "filename": "tara-v7-r6v4.mp3",
+    "duration_seconds": 159.36,
+    "scores": {
+      "pacing": 8.33,
+      "duration_fit": 9.84,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 10.0,
+      "spectral_warmth": 6.04,
+      "consistency": 10.0,
+      "clarity": 9.81
+    },
+    "composite_score": 9.02,
+    "details": {
+      "wpm": 111.4,
+      "dynamic_range_db": 28.4,
+      "silence": {
+        "n_pauses": 70,
+        "avg_pause_s": 0.58,
+        "silence_ratio": 0.254
+      },
+      "energy_sections": {
+        "opening": 0.0854,
+        "recognition": 0.0907,
+        "thesis": 0.0987,
+        "demo_peak": 0.101,
+        "resolution": 0.0879
+      },
+      "warmth_ratio": 15.93,
+      "consistency_cv": 0.997,
+      "clarity_centroid_hz": 3056.0
+    }
+  },
+  {
+    "variation_id": "r5v3",
+    "settings": {
+      "stability": 0.5,
+      "similarity_boost": 0.8,
+      "style": 0.42,
+      "use_speaker_boost": true
+    },
+    "strategy": "crossover_1_2",
+    "duration_seconds": 159.24244897959184,
+    "scores": {
+      "pacing": 8.35,
+      "duration_fit": 9.81,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 10.0,
+      "spectral_warmth": 6.04,
+      "consistency": 9.96,
+      "clarity": 9.73
+    },
+    "composite_score": 9.01,
+    "details": {
+      "wpm": 111.5,
+      "dynamic_range_db": 29.6,
+      "silence": {
+        "n_pauses": 73,
+        "avg_pause_s": 0.63,
+        "silence_ratio": 0.287
+      },
+      "energy_sections": {
+        "opening": 0.0753,
+        "recognition": 0.0759,
+        "thesis": 0.0969,
+        "demo_peak": 0.0987,
+        "resolution": 0.0957
+      },
+      "warmth_ratio": 15.93,
+      "consistency_cv": 1.054,
+      "clarity_centroid_hz": 3080.0
+    }
+  },
+  {
+    "variation_id": "r18v3",
+    "filename": "tara-v7-r18v3.mp3",
+    "duration_seconds": 150.88,
+    "scores": {
+      "pacing": 9.93,
+      "duration_fit": 7.72,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 9.0,
+      "spectral_warmth": 8.33,
+      "consistency": 10.0,
+      "clarity": 9.01
+    },
+    "composite_score": 9.0,
+    "details": {
+      "wpm": 117.7,
+      "dynamic_range_db": 26.0,
+      "silence": {
+        "n_pauses": 63,
+        "avg_pause_s": 0.67,
+        "silence_ratio": 0.278
+      },
+      "energy_sections": {
+        "opening": 0.0787,
+        "recognition": 0.078,
+        "thesis": 0.0847,
+        "demo_peak": 0.0816,
+        "resolution": 0.0766
+      },
+      "warmth_ratio": 11.34,
+      "consistency_cv": 1.01,
+      "clarity_centroid_hz": 3297.0
+    }
+  },
+  {
+    "variation_id": "r18v4",
+    "filename": "tara-v7-r18v4.mp3",
+    "duration_seconds": 152.48,
+    "scores": {
+      "pacing": 9.61,
+      "duration_fit": 8.12,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 9.0,
+      "spectral_warmth": 8.3,
+      "consistency": 10.0,
+      "clarity": 9.02
+    },
+    "composite_score": 8.99,
+    "details": {
+      "wpm": 116.5,
+      "dynamic_range_db": 26.3,
+      "silence": {
+        "n_pauses": 66,
+        "avg_pause_s": 0.62,
+        "silence_ratio": 0.269
+      },
+      "energy_sections": {
+        "opening": 0.0736,
+        "recognition": 0.0722,
+        "thesis": 0.0806,
+        "demo_peak": 0.0765,
+        "resolution": 0.0718
+      },
+      "warmth_ratio": 11.4,
+      "consistency_cv": 1.024,
+      "clarity_centroid_hz": 3294.0
+    }
+  },
+  {
+    "variation_id": "r13v1",
+    "filename": "tara-v7-r13v1.mp3",
+    "duration_seconds": 158.8,
+    "scores": {
+      "pacing": 8.43,
+      "duration_fit": 9.7,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 10.0,
+      "spectral_warmth": 6.07,
+      "consistency": 9.97,
+      "clarity": 9.39
+    },
+    "composite_score": 8.98,
+    "details": {
+      "wpm": 111.8,
+      "dynamic_range_db": 27.6,
+      "silence": {
+        "n_pauses": 68,
+        "avg_pause_s": 0.6,
+        "silence_ratio": 0.257
+      },
+      "energy_sections": {
+        "opening": 0.0842,
+        "recognition": 0.0895,
+        "thesis": 0.0974,
+        "demo_peak": 0.0954,
+        "resolution": 0.0868
+      },
+      "warmth_ratio": 15.85,
+      "consistency_cv": 1.053,
+      "clarity_centroid_hz": 3184.0
+    }
+  },
+  {
+    "variation_id": "v3_confident",
+    "settings": {
+      "stability": 0.6,
+      "similarity_boost": 0.85,
+      "style": 0.25,
+      "use_speaker_boost": true
+    },
+    "strategy": "Confident and measured \u2014 higher stability, lower style for authority",
+    "duration_seconds": 154.5926530612245,
+    "scores": {
+      "pacing": 9.21,
+      "duration_fit": 8.65,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 9.0,
+      "spectral_warmth": 8.22,
+      "consistency": 9.55,
+      "clarity": 9.22
+    },
+    "composite_score": 8.95,
+    "details": {
+      "wpm": 114.9,
+      "dynamic_range_db": 29.3,
+      "silence": {
+        "n_pauses": 66,
+        "avg_pause_s": 0.72,
+        "silence_ratio": 0.308
+      },
+      "energy_sections": {
+        "opening": 0.0744,
+        "recognition": 0.0726,
+        "thesis": 0.0913,
+        "demo_peak": 0.0898,
+        "resolution": 0.0799
+      },
+      "warmth_ratio": 11.56,
+      "consistency_cv": 1.095,
+      "clarity_centroid_hz": 3235.0
+    }
+  },
+  {
+    "variation_id": "r12v1",
+    "filename": "tara-v7-r12v1.mp3",
+    "duration_seconds": 159.52,
+    "scores": {
+      "pacing": 8.31,
+      "duration_fit": 9.88,
+      "dynamic_range": 9.98,
+      "silence_quality": 7.0,
+      "energy_arc": 9.0,
+      "spectral_warmth": 8.2,
+      "consistency": 9.48,
+      "clarity": 9.2
+    },
+    "composite_score": 8.92,
+    "details": {
+      "wpm": 111.3,
+      "dynamic_range_db": 30.0,
+      "silence": {
+        "n_pauses": 69,
+        "avg_pause_s": 0.7,
+        "silence_ratio": 0.302
+      },
+      "energy_sections": {
+        "opening": 0.0773,
+        "recognition": 0.0723,
+        "thesis": 0.0859,
+        "demo_peak": 0.0869,
+        "resolution": 0.0833
+      },
+      "warmth_ratio": 11.61,
+      "consistency_cv": 1.102,
+      "clarity_centroid_hz": 3239.0
+    }
+  },
+  {
+    "variation_id": "r5v2",
+    "settings": {
+      "stability": 0.48,
+      "similarity_boost": 0.773,
+      "style": 0.375,
+      "use_speaker_boost": true
+    },
+    "strategy": "perturb_top1_med",
+    "duration_seconds": 159.94775510204082,
+    "scores": {
+      "pacing": 8.23,
+      "duration_fit": 9.99,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 9.0,
+      "spectral_warmth": 7.46,
+      "consistency": 10.0,
+      "clarity": 9.32
+    },
+    "composite_score": 8.91,
+    "details": {
+      "wpm": 111.0,
+      "dynamic_range_db": 26.7,
+      "silence": {
+        "n_pauses": 70,
+        "avg_pause_s": 0.64,
+        "silence_ratio": 0.278
+      },
+      "energy_sections": {
+        "opening": 0.0798,
+        "recognition": 0.0782,
+        "thesis": 0.0846,
+        "demo_peak": 0.08,
+        "resolution": 0.0744
+      },
+      "warmth_ratio": 13.07,
+      "consistency_cv": 1.039,
+      "clarity_centroid_hz": 3203.0
+    }
+  },
+  {
+    "variation_id": "r2v1_expressive",
+    "settings": {
+      "stability": 0.45,
+      "similarity_boost": 0.78,
+      "style": 0.5,
+      "use_speaker_boost": true
+    },
+    "strategy": "v2 base + higher style (0.50) for more dynamic range",
+    "duration_seconds": 162.58612244897958,
+    "scores": {
+      "pacing": 7.77,
+      "duration_fit": 9.35,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 10.0,
+      "spectral_warmth": 6.94,
+      "consistency": 9.54,
+      "clarity": 9.51
+    },
+    "composite_score": 8.9,
+    "details": {
+      "wpm": 109.2,
+      "dynamic_range_db": 28.3,
+      "silence": {
+        "n_pauses": 71,
+        "avg_pause_s": 0.72,
+        "silence_ratio": 0.316
+      },
+      "energy_sections": {
+        "opening": 0.0803,
+        "recognition": 0.0836,
+        "thesis": 0.1016,
+        "demo_peak": 0.0961,
+        "resolution": 0.0887
+      },
+      "warmth_ratio": 14.11,
+      "consistency_cv": 1.096,
+      "clarity_centroid_hz": 3148.0
+    }
+  },
+  {
+    "variation_id": "r2v3_storyteller",
+    "settings": {
+      "stability": 0.43,
+      "similarity_boost": 0.8,
+      "style": 0.55,
+      "use_speaker_boost": true
+    },
+    "strategy": "Storyteller \u2014 v2 stability with max expressiveness",
+    "duration_seconds": 152.68571428571428,
+    "scores": {
+      "pacing": 9.57,
+      "duration_fit": 8.17,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 9.0,
+      "spectral_warmth": 7.08,
+      "consistency": 10.0,
+      "clarity": 9.38
+    },
+    "composite_score": 8.9,
+    "details": {
+      "wpm": 116.3,
+      "dynamic_range_db": 27.1,
+      "silence": {
+        "n_pauses": 65,
+        "avg_pause_s": 0.56,
+        "silence_ratio": 0.238
+      },
+      "energy_sections": {
+        "opening": 0.0794,
+        "recognition": 0.0747,
+        "thesis": 0.0868,
+        "demo_peak": 0.0889,
+        "resolution": 0.0782
+      },
+      "warmth_ratio": 13.84,
+      "consistency_cv": 0.984,
+      "clarity_centroid_hz": 3186.0
+    }
+  },
+  {
+    "variation_id": "r4v3",
+    "settings": {
+      "stability": "?",
+      "similarity_boost": "?",
+      "style": "?"
+    },
+    "strategy": "unknown",
+    "duration_seconds": 157.30938775510205,
+    "scores": {
+      "pacing": 8.7,
+      "duration_fit": 9.33,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 9.0,
+      "spectral_warmth": 7.01,
+      "consistency": 10.0,
+      "clarity": 9.64
+    },
+    "composite_score": 8.9,
+    "details": {
+      "wpm": 112.9,
+      "dynamic_range_db": 29.2,
+      "silence": {
+        "n_pauses": 68,
+        "avg_pause_s": 0.63,
+        "silence_ratio": 0.271
+      },
+      "energy_sections": {
+        "opening": 0.0864,
+        "recognition": 0.0843,
+        "thesis": 0.0928,
+        "demo_peak": 0.0925,
+        "resolution": 0.0864
+      },
+      "warmth_ratio": 13.98,
+      "consistency_cv": 1.036,
+      "clarity_centroid_hz": 3109.0
+    }
+  },
+  {
+    "variation_id": "v5_balanced",
+    "settings": {
+      "stability": 0.5,
+      "similarity_boost": 0.82,
+      "style": 0.35,
+      "use_speaker_boost": true
+    },
+    "strategy": "Balanced sweet spot \u2014 tuned from scoring feedback",
+    "duration_seconds": 152.52897959183673,
+    "scores": {
+      "pacing": 9.6,
+      "duration_fit": 8.13,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 9.0,
+      "spectral_warmth": 7.31,
+      "consistency": 10.0,
+      "clarity": 9.17
+    },
+    "composite_score": 8.9,
+    "details": {
+      "wpm": 116.4,
+      "dynamic_range_db": 26.8,
+      "silence": {
+        "n_pauses": 63,
+        "avg_pause_s": 0.65,
+        "silence_ratio": 0.268
+      },
+      "energy_sections": {
+        "opening": 0.0826,
+        "recognition": 0.0789,
+        "thesis": 0.087,
+        "demo_peak": 0.0827,
+        "resolution": 0.0778
+      },
+      "warmth_ratio": 13.39,
+      "consistency_cv": 1.021,
+      "clarity_centroid_hz": 3249.0
+    }
+  },
+  {
+    "variation_id": "r12v2",
+    "filename": "tara-v7-r12v2.mp3",
+    "duration_seconds": 158.8,
+    "scores": {
+      "pacing": 8.43,
+      "duration_fit": 9.7,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 9.0,
+      "spectral_warmth": 7.26,
+      "consistency": 10.0,
+      "clarity": 9.2
+    },
+    "composite_score": 8.88,
+    "details": {
+      "wpm": 111.8,
+      "dynamic_range_db": 27.0,
+      "silence": {
+        "n_pauses": 63,
+        "avg_pause_s": 0.68,
+        "silence_ratio": 0.271
+      },
+      "energy_sections": {
+        "opening": 0.0807,
+        "recognition": 0.0776,
+        "thesis": 0.085,
+        "demo_peak": 0.0872,
+        "resolution": 0.0795
+      },
+      "warmth_ratio": 13.48,
+      "consistency_cv": 1.043,
+      "clarity_centroid_hz": 3240.0
+    }
+  },
+  {
+    "variation_id": "r13v2",
+    "filename": "tara-v7-r13v2.mp3",
+    "duration_seconds": 150.72,
+    "scores": {
+      "pacing": 9.96,
+      "duration_fit": 7.68,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 9.0,
+      "spectral_warmth": 6.82,
+      "consistency": 10.0,
+      "clarity": 9.35
+    },
+    "composite_score": 8.88,
+    "details": {
+      "wpm": 117.8,
+      "dynamic_range_db": 27.6,
+      "silence": {
+        "n_pauses": 63,
+        "avg_pause_s": 0.63,
+        "silence_ratio": 0.262
+      },
+      "energy_sections": {
+        "opening": 0.0737,
+        "recognition": 0.0716,
+        "thesis": 0.0804,
+        "demo_peak": 0.0758,
+        "resolution": 0.067
+      },
+      "warmth_ratio": 14.36,
+      "consistency_cv": 1.016,
+      "clarity_centroid_hz": 3195.0
+    }
+  },
+  {
+    "variation_id": "r18v2",
+    "filename": "tara-v7-r18v2.mp3",
+    "duration_seconds": 156.24,
+    "scores": {
+      "pacing": 8.9,
+      "duration_fit": 9.06,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 9.0,
+      "spectral_warmth": 7.04,
+      "consistency": 10.0,
+      "clarity": 9.2
+    },
+    "composite_score": 8.87,
+    "details": {
+      "wpm": 113.7,
+      "dynamic_range_db": 26.2,
+      "silence": {
+        "n_pauses": 69,
+        "avg_pause_s": 0.62,
+        "silence_ratio": 0.275
+      },
+      "energy_sections": {
+        "opening": 0.0781,
+        "recognition": 0.0703,
+        "thesis": 0.0809,
+        "demo_peak": 0.0844,
+        "resolution": 0.0751
+      },
+      "warmth_ratio": 13.93,
+      "consistency_cv": 1.023,
+      "clarity_centroid_hz": 3239.0
+    }
+  },
+  {
+    "variation_id": "r6v3",
+    "filename": "tara-v7-r6v3.mp3",
+    "duration_seconds": 155.92,
+    "scores": {
+      "pacing": 8.96,
+      "duration_fit": 8.98,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 9.0,
+      "spectral_warmth": 7.4,
+      "consistency": 9.54,
+      "clarity": 9.24
+    },
+    "composite_score": 8.86,
+    "details": {
+      "wpm": 113.9,
+      "dynamic_range_db": 28.0,
+      "silence": {
+        "n_pauses": 74,
+        "avg_pause_s": 0.62,
+        "silence_ratio": 0.295
+      },
+      "energy_sections": {
+        "opening": 0.0739,
+        "recognition": 0.07,
+        "thesis": 0.0829,
+        "demo_peak": 0.0763,
+        "resolution": 0.0711
+      },
+      "warmth_ratio": 13.2,
+      "consistency_cv": 1.096,
+      "clarity_centroid_hz": 3227.0
+    }
+  },
+  {
+    "variation_id": "r4v4",
+    "settings": {
+      "stability": "?",
+      "similarity_boost": "?",
+      "style": "?"
+    },
+    "strategy": "unknown",
+    "duration_seconds": 157.0742857142857,
+    "scores": {
+      "pacing": 8.75,
+      "duration_fit": 9.27,
+      "dynamic_range": 9.69,
+      "silence_quality": 7.0,
+      "energy_arc": 9.0,
+      "spectral_warmth": 7.14,
+      "consistency": 9.71,
+      "clarity": 9.68
+    },
+    "composite_score": 8.85,
+    "details": {
+      "wpm": 113.1,
+      "dynamic_range_db": 30.4,
+      "silence": {
+        "n_pauses": 71,
+        "avg_pause_s": 0.62,
+        "silence_ratio": 0.283
+      },
+      "energy_sections": {
+        "opening": 0.0852,
+        "recognition": 0.0823,
+        "thesis": 0.0949,
+        "demo_peak": 0.0953,
+        "resolution": 0.0844
+      },
+      "warmth_ratio": 13.73,
+      "consistency_cv": 1.079,
+      "clarity_centroid_hz": 3097.0
+    }
+  },
+  {
+    "variation_id": "r8v4",
+    "filename": "tara-v7-r8v4.mp3",
+    "duration_seconds": 148.32,
+    "scores": {
+      "pacing": 9.56,
+      "duration_fit": 7.08,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 9.0,
+      "spectral_warmth": 8.11,
+      "consistency": 9.8,
+      "clarity": 9.15
+    },
+    "composite_score": 8.85,
+    "details": {
+      "wpm": 119.7,
+      "dynamic_range_db": 29.8,
+      "silence": {
+        "n_pauses": 66,
+        "avg_pause_s": 0.61,
+        "silence_ratio": 0.269
+      },
+      "energy_sections": {
+        "opening": 0.0769,
+        "recognition": 0.072,
+        "thesis": 0.0889,
+        "demo_peak": 0.0904,
+        "resolution": 0.0838
+      },
+      "warmth_ratio": 11.78,
+      "consistency_cv": 1.07,
+      "clarity_centroid_hz": 3255.0
+    }
+  },
+  {
+    "variation_id": "r17v5",
+    "filename": "tara-v7-r17v5.mp3",
+    "duration_seconds": 153.36,
+    "scores": {
+      "pacing": 9.44,
+      "duration_fit": 8.34,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 9.0,
+      "spectral_warmth": 6.75,
+      "consistency": 10.0,
+      "clarity": 9.16
+    },
+    "composite_score": 8.84,
+    "details": {
+      "wpm": 115.8,
+      "dynamic_range_db": 28.1,
+      "silence": {
+        "n_pauses": 65,
+        "avg_pause_s": 0.61,
+        "silence_ratio": 0.259
+      },
+      "energy_sections": {
+        "opening": 0.0768,
+        "recognition": 0.0745,
+        "thesis": 0.0813,
+        "demo_peak": 0.0778,
+        "resolution": 0.072
+      },
+      "warmth_ratio": 14.51,
+      "consistency_cv": 1.035,
+      "clarity_centroid_hz": 3251.0
+    }
+  },
+  {
+    "variation_id": "r23v3",
+    "filename": "tara-v7-r23v3.mp3",
+    "duration_seconds": 159.92,
+    "scores": {
+      "pacing": 8.23,
+      "duration_fit": 9.98,
+      "dynamic_range": 9.86,
+      "silence_quality": 7.0,
+      "energy_arc": 9.0,
+      "spectral_warmth": 8.17,
+      "consistency": 9.08,
+      "clarity": 9.08
+    },
+    "composite_score": 8.84,
+    "details": {
+      "wpm": 111.1,
+      "dynamic_range_db": 30.2,
+      "silence": {
+        "n_pauses": 67,
+        "avg_pause_s": 0.75,
+        "silence_ratio": 0.314
+      },
+      "energy_sections": {
+        "opening": 0.0807,
+        "recognition": 0.0776,
+        "thesis": 0.0915,
+        "demo_peak": 0.086,
+        "resolution": 0.0771
+      },
+      "warmth_ratio": 11.65,
+      "consistency_cv": 1.142,
+      "clarity_centroid_hz": 3276.0
+    }
+  },
+  {
+    "variation_id": "r3v2",
+    "settings": {
+      "stability": 0.468,
+      "similarity_boost": 0.758,
+      "style": 0.398,
+      "use_speaker_boost": true
+    },
+    "strategy": "perturb_top1_med",
+    "duration_seconds": 151.17061224489797,
+    "scores": {
+      "pacing": 9.87,
+      "duration_fit": 7.79,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 9.0,
+      "spectral_warmth": 6.6,
+      "consistency": 9.68,
+      "clarity": 9.21
+    },
+    "composite_score": 8.81,
+    "details": {
+      "wpm": 117.5,
+      "dynamic_range_db": 28.0,
+      "silence": {
+        "n_pauses": 68,
+        "avg_pause_s": 0.61,
+        "silence_ratio": 0.277
+      },
+      "energy_sections": {
+        "opening": 0.0718,
+        "recognition": 0.0716,
+        "thesis": 0.079,
+        "demo_peak": 0.0811,
+        "resolution": 0.0717
+      },
+      "warmth_ratio": 14.8,
+      "consistency_cv": 1.082,
+      "clarity_centroid_hz": 3236.0
+    }
+  },
+  {
+    "variation_id": "r3v4",
+    "settings": {
+      "stability": 0.457,
+      "similarity_boost": 0.751,
+      "style": 0.485,
+      "use_speaker_boost": true
+    },
+    "strategy": "perturb_top3",
+    "duration_seconds": 149.3942857142857,
+    "scores": {
+      "pacing": 9.78,
+      "duration_fit": 7.35,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 9.0,
+      "spectral_warmth": 6.89,
+      "consistency": 10.0,
+      "clarity": 9.11
+    },
+    "composite_score": 8.8,
+    "details": {
+      "wpm": 118.9,
+      "dynamic_range_db": 27.1,
+      "silence": {
+        "n_pauses": 67,
+        "avg_pause_s": 0.61,
+        "silence_ratio": 0.272
+      },
+      "energy_sections": {
+        "opening": 0.0856,
+        "recognition": 0.0856,
+        "thesis": 0.0892,
+        "demo_peak": 0.0884,
+        "resolution": 0.0814
+      },
+      "warmth_ratio": 14.21,
+      "consistency_cv": 1.028,
+      "clarity_centroid_hz": 3268.0
+    }
+  },
+  {
+    "variation_id": "r8v3",
+    "filename": "tara-v7-r8v3.mp3",
+    "duration_seconds": 160.96,
+    "scores": {
+      "pacing": 8.05,
+      "duration_fit": 9.76,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 9.0,
+      "spectral_warmth": 7.51,
+      "consistency": 9.46,
+      "clarity": 9.13
+    },
+    "composite_score": 8.79,
+    "details": {
+      "wpm": 110.3,
+      "dynamic_range_db": 29.3,
+      "silence": {
+        "n_pauses": 68,
+        "avg_pause_s": 0.73,
+        "silence_ratio": 0.309
+      },
+      "energy_sections": {
+        "opening": 0.0846,
+        "recognition": 0.0747,
+        "thesis": 0.0906,
+        "demo_peak": 0.0909,
+        "resolution": 0.0837
+      },
+      "warmth_ratio": 12.99,
+      "consistency_cv": 1.104,
+      "clarity_centroid_hz": 3260.0
+    }
+  },
+  {
+    "variation_id": "r6v1",
+    "filename": "tara-v7-r6v1.mp3",
+    "duration_seconds": 152.24,
+    "scores": {
+      "pacing": 9.66,
+      "duration_fit": 8.06,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 8.0,
+      "spectral_warmth": 7.91,
+      "consistency": 10.0,
+      "clarity": 9.14
+    },
+    "composite_score": 8.76,
+    "details": {
+      "wpm": 116.7,
+      "dynamic_range_db": 27.3,
+      "silence": {
+        "n_pauses": 63,
+        "avg_pause_s": 0.59,
+        "silence_ratio": 0.244
+      },
+      "energy_sections": {
+        "opening": 0.0743,
+        "recognition": 0.0759,
+        "thesis": 0.0853,
+        "demo_peak": 0.0739,
+        "resolution": 0.0675
+      },
+      "warmth_ratio": 12.18,
+      "consistency_cv": 0.989,
+      "clarity_centroid_hz": 3257.0
+    }
+  },
+  {
+    "variation_id": "r5v4",
+    "settings": {
+      "stability": 0.496,
+      "similarity_boost": 0.79,
+      "style": 0.413,
+      "use_speaker_boost": true
+    },
+    "strategy": "perturb_top3",
+    "duration_seconds": 152.52897959183673,
+    "scores": {
+      "pacing": 9.6,
+      "duration_fit": 8.13,
+      "dynamic_range": 9.49,
+      "silence_quality": 7.0,
+      "energy_arc": 8.5,
+      "spectral_warmth": 6.17,
+      "consistency": 10.0,
+      "clarity": 9.91
+    },
+    "composite_score": 8.68,
+    "details": {
+      "wpm": 116.4,
+      "dynamic_range_db": 30.6,
+      "silence": {
+        "n_pauses": 62,
+        "avg_pause_s": 0.6,
+        "silence_ratio": 0.245
+      },
+      "energy_sections": {
+        "opening": 0.0879,
+        "recognition": 0.095,
+        "thesis": 0.1087,
+        "demo_peak": 0.107,
+        "resolution": 0.1074
+      },
+      "warmth_ratio": 15.67,
+      "consistency_cv": 0.989,
+      "clarity_centroid_hz": 3026.0
+    }
+  },
+  {
+    "variation_id": "r23v2",
+    "filename": "tara-v7-r23v2.mp3",
+    "duration_seconds": 164.48,
+    "scores": {
+      "pacing": 7.45,
+      "duration_fit": 8.88,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 9.0,
+      "spectral_warmth": 7.43,
+      "consistency": 9.82,
+      "clarity": 9.21
+    },
+    "composite_score": 8.65,
+    "details": {
+      "wpm": 108.0,
+      "dynamic_range_db": 28.7,
+      "silence": {
+        "n_pauses": 68,
+        "avg_pause_s": 0.65,
+        "silence_ratio": 0.27
+      },
+      "energy_sections": {
+        "opening": 0.0849,
+        "recognition": 0.0789,
+        "thesis": 0.0855,
+        "demo_peak": 0.0853,
+        "resolution": 0.0784
+      },
+      "warmth_ratio": 13.14,
+      "consistency_cv": 1.068,
+      "clarity_centroid_hz": 3238.0
+    }
+  },
+  {
+    "variation_id": "r6v2",
+    "filename": "tara-v7-r6v2.mp3",
+    "duration_seconds": 159.28,
+    "scores": {
+      "pacing": 8.35,
+      "duration_fit": 9.82,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 7.0,
+      "spectral_warmth": 8.08,
+      "consistency": 10.0,
+      "clarity": 8.98
+    },
+    "composite_score": 8.54,
+    "details": {
+      "wpm": 111.5,
+      "dynamic_range_db": 27.6,
+      "silence": {
+        "n_pauses": 67,
+        "avg_pause_s": 0.65,
+        "silence_ratio": 0.273
+      },
+      "energy_sections": {
+        "opening": 0.0862,
+        "recognition": 0.0842,
+        "thesis": 0.0893,
+        "demo_peak": 0.0845,
+        "resolution": 0.0792
+      },
+      "warmth_ratio": 11.83,
+      "consistency_cv": 1.03,
+      "clarity_centroid_hz": 3307.0
+    }
+  },
+  {
+    "variation_id": "r4v2",
+    "settings": {
+      "stability": "?",
+      "similarity_boost": "?",
+      "style": "?"
+    },
+    "strategy": "unknown",
+    "duration_seconds": 150.59591836734694,
+    "scores": {
+      "pacing": 9.98,
+      "duration_fit": 7.65,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 7.0,
+      "spectral_warmth": 7.28,
+      "consistency": 10.0,
+      "clarity": 9.32
+    },
+    "composite_score": 8.52,
+    "details": {
+      "wpm": 117.9,
+      "dynamic_range_db": 27.8,
+      "silence": {
+        "n_pauses": 64,
+        "avg_pause_s": 0.63,
+        "silence_ratio": 0.266
+      },
+      "energy_sections": {
+        "opening": 0.087,
+        "recognition": 0.0816,
+        "thesis": 0.0871,
+        "demo_peak": 0.0843,
+        "resolution": 0.0728
+      },
+      "warmth_ratio": 13.43,
+      "consistency_cv": 1.012,
+      "clarity_centroid_hz": 3204.0
+    }
+  },
+  {
+    "variation_id": "r9v3",
+    "filename": "tara-v7-r9v3.mp3",
+    "duration_seconds": 154.56,
+    "scores": {
+      "pacing": 9.21,
+      "duration_fit": 8.64,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 7.0,
+      "spectral_warmth": 7.41,
+      "consistency": 10.0,
+      "clarity": 9.38
+    },
+    "composite_score": 8.52,
+    "details": {
+      "wpm": 114.9,
+      "dynamic_range_db": 29.1,
+      "silence": {
+        "n_pauses": 64,
+        "avg_pause_s": 0.6,
+        "silence_ratio": 0.248
+      },
+      "energy_sections": {
+        "opening": 0.0845,
+        "recognition": 0.0815,
+        "thesis": 0.0851,
+        "demo_peak": 0.0791,
+        "resolution": 0.0677
+      },
+      "warmth_ratio": 13.17,
+      "consistency_cv": 1.033,
+      "clarity_centroid_hz": 3186.0
+    }
+  },
+  {
+    "variation_id": "r5v5",
+    "filename": "tara-v7-r5v5.mp3",
+    "duration_seconds": 152.72,
+    "scores": {
+      "pacing": 9.57,
+      "duration_fit": 8.18,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 7.0,
+      "spectral_warmth": 7.44,
+      "consistency": 10.0,
+      "clarity": 9.06
+    },
+    "composite_score": 8.5,
+    "details": {
+      "wpm": 116.3,
+      "dynamic_range_db": 26.9,
+      "silence": {
+        "n_pauses": 69,
+        "avg_pause_s": 0.6,
+        "silence_ratio": 0.272
+      },
+      "energy_sections": {
+        "opening": 0.0894,
+        "recognition": 0.0815,
+        "thesis": 0.0937,
+        "demo_peak": 0.0876,
+        "resolution": 0.0842
+      },
+      "warmth_ratio": 13.13,
+      "consistency_cv": 1.017,
+      "clarity_centroid_hz": 3283.0
+    }
+  },
+  {
+    "variation_id": "r3v3",
+    "settings": {
+      "stability": 0.5,
+      "similarity_boost": 0.8,
+      "style": 0.4,
+      "use_speaker_boost": true
+    },
+    "strategy": "crossover_1_2",
+    "duration_seconds": 166.34775510204082,
+    "scores": {
+      "pacing": 7.14,
+      "duration_fit": 8.41,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 9.0,
+      "spectral_warmth": 6.93,
+      "consistency": 9.42,
+      "clarity": 9.36
+    },
+    "composite_score": 8.48,
+    "details": {
+      "wpm": 106.8,
+      "dynamic_range_db": 27.6,
+      "silence": {
+        "n_pauses": 75,
+        "avg_pause_s": 0.63,
+        "silence_ratio": 0.285
+      },
+      "energy_sections": {
+        "opening": 0.0823,
+        "recognition": 0.0759,
+        "thesis": 0.0822,
+        "demo_peak": 0.086,
+        "resolution": 0.0749
+      },
+      "warmth_ratio": 14.15,
+      "consistency_cv": 1.108,
+      "clarity_centroid_hz": 3192.0
+    }
+  },
+  {
+    "variation_id": "v1_warm_stable",
+    "settings": {
+      "stability": 0.55,
+      "similarity_boost": 0.8,
+      "style": 0.35,
+      "use_speaker_boost": true
+    },
+    "strategy": "Warm and stable \u2014 baseline from previous iterations",
+    "duration_seconds": 156.1077551020408,
+    "scores": {
+      "pacing": 8.92,
+      "duration_fit": 9.03,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 7.0,
+      "spectral_warmth": 7.44,
+      "consistency": 9.95,
+      "clarity": 8.95
+    },
+    "composite_score": 8.47,
+    "details": {
+      "wpm": 113.8,
+      "dynamic_range_db": 27.4,
+      "silence": {
+        "n_pauses": 69,
+        "avg_pause_s": 0.64,
+        "silence_ratio": 0.282
+      },
+      "energy_sections": {
+        "opening": 0.0822,
+        "recognition": 0.0789,
+        "thesis": 0.0831,
+        "demo_peak": 0.0811,
+        "resolution": 0.077
+      },
+      "warmth_ratio": 13.12,
+      "consistency_cv": 1.055,
+      "clarity_centroid_hz": 3316.0
+    }
+  },
+  {
+    "variation_id": "r17v1",
+    "filename": "tara-v7-r17v1.mp3",
+    "duration_seconds": 168.48,
+    "scores": {
+      "pacing": 6.8,
+      "duration_fit": 7.88,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 9.0,
+      "spectral_warmth": 6.61,
+      "consistency": 9.29,
+      "clarity": 9.67
+    },
+    "composite_score": 8.37,
+    "details": {
+      "wpm": 105.4,
+      "dynamic_range_db": 28.6,
+      "silence": {
+        "n_pauses": 70,
+        "avg_pause_s": 0.75,
+        "silence_ratio": 0.311
+      },
+      "energy_sections": {
+        "opening": 0.0755,
+        "recognition": 0.074,
+        "thesis": 0.0959,
+        "demo_peak": 0.0882,
+        "resolution": 0.0834
+      },
+      "warmth_ratio": 14.78,
+      "consistency_cv": 1.121,
+      "clarity_centroid_hz": 3100.0
+    }
+  },
+  {
+    "variation_id": "r12v4",
+    "filename": "tara-v7-r12v4.mp3",
+    "duration_seconds": 161.76,
+    "scores": {
+      "pacing": 7.91,
+      "duration_fit": 9.56,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 7.0,
+      "spectral_warmth": 7.14,
+      "consistency": 9.96,
+      "clarity": 9.07
+    },
+    "composite_score": 8.36,
+    "details": {
+      "wpm": 109.8,
+      "dynamic_range_db": 26.8,
+      "silence": {
+        "n_pauses": 69,
+        "avg_pause_s": 0.66,
+        "silence_ratio": 0.282
+      },
+      "energy_sections": {
+        "opening": 0.0818,
+        "recognition": 0.0724,
+        "thesis": 0.0838,
+        "demo_peak": 0.081,
+        "resolution": 0.0745
+      },
+      "warmth_ratio": 13.73,
+      "consistency_cv": 1.054,
+      "clarity_centroid_hz": 3280.0
+    }
+  },
+  {
+    "variation_id": "r13v3",
+    "filename": "tara-v7-r13v3.mp3",
+    "duration_seconds": 154.8,
+    "scores": {
+      "pacing": 9.17,
+      "duration_fit": 8.7,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 7.0,
+      "spectral_warmth": 5.73,
+      "consistency": 9.81,
+      "clarity": 9.49
+    },
+    "composite_score": 8.35,
+    "details": {
+      "wpm": 114.7,
+      "dynamic_range_db": 29.8,
+      "silence": {
+        "n_pauses": 68,
+        "avg_pause_s": 0.64,
+        "silence_ratio": 0.281
+      },
+      "energy_sections": {
+        "opening": 0.0901,
+        "recognition": 0.0781,
+        "thesis": 0.0948,
+        "demo_peak": 0.0881,
+        "resolution": 0.0842
+      },
+      "warmth_ratio": 16.54,
+      "consistency_cv": 1.069,
+      "clarity_centroid_hz": 3153.0
+    }
+  },
+  {
+    "variation_id": "v4_conversational",
+    "settings": {
+      "stability": 0.4,
+      "similarity_boost": 0.75,
+      "style": 0.5,
+      "use_speaker_boost": true
+    },
+    "strategy": "Conversational \u2014 low stability, high style for 'colleague telling you' feel",
+    "duration_seconds": 145.08408163265307,
+    "scores": {
+      "pacing": 8.88,
+      "duration_fit": 6.27,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 7.0,
+      "spectral_warmth": 8.32,
+      "consistency": 10.0,
+      "clarity": 9.16
+    },
+    "composite_score": 8.31,
+    "details": {
+      "wpm": 122.4,
+      "dynamic_range_db": 26.1,
+      "silence": {
+        "n_pauses": 62,
+        "avg_pause_s": 0.59,
+        "silence_ratio": 0.252
+      },
+      "energy_sections": {
+        "opening": 0.0851,
+        "recognition": 0.0814,
+        "thesis": 0.0858,
+        "demo_peak": 0.0829,
+        "resolution": 0.076
+      },
+      "warmth_ratio": 11.36,
+      "consistency_cv": 0.982,
+      "clarity_centroid_hz": 3252.0
+    }
+  },
+  {
+    "variation_id": "r2v2_warmexpressive",
+    "settings": {
+      "stability": 0.48,
+      "similarity_boost": 0.76,
+      "style": 0.45,
+      "use_speaker_boost": true
+    },
+    "strategy": "Warm + expressive \u2014 stability 0.48, style 0.45, slightly lower similarity",
+    "duration_seconds": 156.5257142857143,
+    "scores": {
+      "pacing": 8.85,
+      "duration_fit": 9.13,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 6.0,
+      "spectral_warmth": 6.73,
+      "consistency": 9.7,
+      "clarity": 9.59
+    },
+    "composite_score": 8.24,
+    "details": {
+      "wpm": 113.5,
+      "dynamic_range_db": 29.2,
+      "silence": {
+        "n_pauses": 66,
+        "avg_pause_s": 0.66,
+        "silence_ratio": 0.278
+      },
+      "energy_sections": {
+        "opening": 0.0713,
+        "recognition": 0.0683,
+        "thesis": 0.0859,
+        "demo_peak": 0.0853,
+        "resolution": 0.0863
+      },
+      "warmth_ratio": 14.53,
+      "consistency_cv": 1.08,
+      "clarity_centroid_hz": 3124.0
+    }
+  },
+  {
+    "variation_id": "r17v4",
+    "filename": "tara-v7-r17v4.mp3",
+    "duration_seconds": 156.88,
+    "scores": {
+      "pacing": 8.78,
+      "duration_fit": 9.22,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 6.0,
+      "spectral_warmth": 7.56,
+      "consistency": 9.33,
+      "clarity": 9.15
+    },
+    "composite_score": 8.24,
+    "details": {
+      "wpm": 113.2,
+      "dynamic_range_db": 28.0,
+      "silence": {
+        "n_pauses": 69,
+        "avg_pause_s": 0.74,
+        "silence_ratio": 0.327
+      },
+      "energy_sections": {
+        "opening": 0.0699,
+        "recognition": 0.067,
+        "thesis": 0.0843,
+        "demo_peak": 0.084,
+        "resolution": 0.0859
+      },
+      "warmth_ratio": 12.88,
+      "consistency_cv": 1.117,
+      "clarity_centroid_hz": 3255.0
+    }
+  },
+  {
+    "variation_id": "r18v1",
+    "filename": "tara-v7-r18v1.mp3",
+    "duration_seconds": 155.44,
+    "scores": {
+      "pacing": 9.05,
+      "duration_fit": 8.86,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 5.5,
+      "spectral_warmth": 7.37,
+      "consistency": 10.0,
+      "clarity": 9.32
+    },
+    "composite_score": 8.21,
+    "details": {
+      "wpm": 114.3,
+      "dynamic_range_db": 28.6,
+      "silence": {
+        "n_pauses": 68,
+        "avg_pause_s": 0.63,
+        "silence_ratio": 0.277
+      },
+      "energy_sections": {
+        "opening": 0.0873,
+        "recognition": 0.0803,
+        "thesis": 0.0861,
+        "demo_peak": 0.0828,
+        "resolution": 0.0794
+      },
+      "warmth_ratio": 13.26,
+      "consistency_cv": 1.049,
+      "clarity_centroid_hz": 3205.0
+    }
+  },
+  {
+    "variation_id": "r8v5",
+    "filename": "tara-v7-r8v5.mp3",
+    "duration_seconds": 159.28,
+    "scores": {
+      "pacing": 8.35,
+      "duration_fit": 9.82,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 5.5,
+      "spectral_warmth": 7.15,
+      "consistency": 10.0,
+      "clarity": 9.26
+    },
+    "composite_score": 8.18,
+    "details": {
+      "wpm": 111.5,
+      "dynamic_range_db": 26.4,
+      "silence": {
+        "n_pauses": 71,
+        "avg_pause_s": 0.66,
+        "silence_ratio": 0.292
+      },
+      "energy_sections": {
+        "opening": 0.0781,
+        "recognition": 0.0719,
+        "thesis": 0.0756,
+        "demo_peak": 0.0778,
+        "resolution": 0.0754
+      },
+      "warmth_ratio": 13.69,
+      "consistency_cv": 1.045,
+      "clarity_centroid_hz": 3222.0
+    }
+  },
+  {
+    "variation_id": "r8v2",
+    "filename": "tara-v7-r8v2.mp3",
+    "duration_seconds": 162.08,
+    "scores": {
+      "pacing": 7.86,
+      "duration_fit": 9.48,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 6.0,
+      "spectral_warmth": 6.34,
+      "consistency": 9.78,
+      "clarity": 9.65
+    },
+    "composite_score": 8.1,
+    "details": {
+      "wpm": 109.6,
+      "dynamic_range_db": 27.3,
+      "silence": {
+        "n_pauses": 69,
+        "avg_pause_s": 0.71,
+        "silence_ratio": 0.301
+      },
+      "energy_sections": {
+        "opening": 0.085,
+        "recognition": 0.084,
+        "thesis": 0.0852,
+        "demo_peak": 0.0901,
+        "resolution": 0.0936
+      },
+      "warmth_ratio": 15.31,
+      "consistency_cv": 1.072,
+      "clarity_centroid_hz": 3106.0
+    }
+  },
+  {
+    "variation_id": "r12v5",
+    "filename": "tara-v7-r12v5.mp3",
+    "duration_seconds": 170.56,
+    "scores": {
+      "pacing": 6.47,
+      "duration_fit": 7.36,
+      "dynamic_range": 10.0,
+      "silence_quality": 7.0,
+      "energy_arc": 5.5,
+      "spectral_warmth": 6.79,
+      "consistency": 9.96,
+      "clarity": 9.01
+    },
+    "composite_score": 7.58,
+    "details": {
+      "wpm": 104.1,
+      "dynamic_range_db": 26.0,
+      "silence": {
+        "n_pauses": 72,
+        "avg_pause_s": 0.72,
+        "silence_ratio": 0.303
+      },
+      "energy_sections": {
+        "opening": 0.0821,
+        "recognition": 0.0751,
+        "thesis": 0.0798,
+        "demo_peak": 0.0808,
+        "resolution": 0.0736
+      },
+      "warmth_ratio": 14.42,
+      "consistency_cv": 1.054,
+      "clarity_centroid_hz": 3298.0
+    }
+  }
+]
