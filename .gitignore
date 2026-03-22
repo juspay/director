@@ -1,0 +1,15 @@
+node_modules/
+out/
+dist/
+.remotion/
+.DS_Store
+__pycache__/
+*.pyc
+.env
+.env.local
+video-production/assembly/
+video-production/v2/
+video-production/v5/
+video-production/v8/
+video-production/v9/
+video-production/output/

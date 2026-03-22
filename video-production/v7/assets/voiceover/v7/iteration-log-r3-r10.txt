@@ -1,0 +1,33 @@
+2026-03-11 08:44:52,487 [INFO] Starting from iteration 9, target 50
+2026-03-11 08:44:52,487 [INFO] Rounds: 8, batch size: 5, SSML: False
+2026-03-11 08:44:52,487 [INFO] 
+============================================================
+2026-03-11 08:44:52,487 [INFO] ROUND 1/8 — r3 — generating 5 variations
+2026-03-11 08:44:52,487 [INFO] ============================================================
+2026-03-11 08:44:52,488 [INFO] [r3v1] Generating — stability=0.469 similarity=0.816 style=0.384 (strategy: perturb_top1_fine)
+2026-03-11 08:44:53,652 [INFO] HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/1qEiC6qsybMkmnNdVMbK "HTTP/1.1 401 Unauthorized"
+Traceback (most recent call last):
+  File "/Users/sachinsharma/Developer/Official/curator-fork/curator/docs/plans/video-production/v7/scripts/iterate_voiceover_v7.py", line 1008, in <module>
+    main()
+  File "/Users/sachinsharma/Developer/Official/curator-fork/curator/docs/plans/video-production/v7/scripts/iterate_voiceover_v7.py", line 998, in main
+    asyncio.run(run_iteration(
+  File "/Users/sachinsharma/.pyenv/versions/3.12.1/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/Users/sachinsharma/.pyenv/versions/3.12.1/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sachinsharma/.pyenv/versions/3.12.1/lib/python3.12/asyncio/base_events.py", line 684, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/sachinsharma/Developer/Official/curator-fork/curator/docs/plans/video-production/v7/scripts/iterate_voiceover_v7.py", line 882, in run_iteration
+    result = await generate_and_score_variation(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sachinsharma/Developer/Official/curator-fork/curator/docs/plans/video-production/v7/scripts/iterate_voiceover_v7.py", line 711, in generate_and_score_variation
+    await call_elevenlabs(narration_text, settings, output_path, use_ssml)
+  File "/Users/sachinsharma/Developer/Official/curator-fork/curator/docs/plans/video-production/v7/scripts/iterate_voiceover_v7.py", line 656, in call_elevenlabs
+    response.raise_for_status()
+  File "/Users/sachinsharma/.pyenv/versions/3.12.1/lib/python3.12/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '401 Unauthorized' for url 'https://api.elevenlabs.io/v1/text-to-speech/1qEiC6qsybMkmnNdVMbK'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401

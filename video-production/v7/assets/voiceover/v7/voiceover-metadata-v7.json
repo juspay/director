@@ -1,0 +1,218 @@
+{
+  "script_version": "v7.4",
+  "narration_word_count": 296,
+  "narration_char_count": 1811,
+  "voice_id": "1qEiC6qsybMkmnNdVMbK",
+  "model": "eleven_v3",
+  "generated_at": "2026-03-11T07:01:32.841234",
+  "variations": [
+    {
+      "variation_id": "v1_warm_stable",
+      "description": "Warm and stable \u2014 baseline from previous iterations",
+      "settings": {
+        "stability": 0.55,
+        "similarity_boost": 0.8,
+        "style": 0.35,
+        "use_speaker_boost": true
+      },
+      "audio_path": "/Users/sachinsharma/Developer/Official/curator-fork/curator/docs/plans/video-production/v7/assets/voiceover/v7/tara-v7-v1_warm_stable.mp3",
+      "duration_seconds": 156.1077551020408,
+      "file_size_bytes": 2498186,
+      "generated_at": "2026-03-11T06:58:20.925036"
+    },
+    {
+      "variation_id": "v2_natural_flow",
+      "description": "More natural variation \u2014 lower stability for organic feel",
+      "settings": {
+        "stability": 0.45,
+        "similarity_boost": 0.8,
+        "style": 0.4,
+        "use_speaker_boost": true
+      },
+      "audio_path": "/Users/sachinsharma/Developer/Official/curator-fork/curator/docs/plans/video-production/v7/assets/voiceover/v7/tara-v7-v2_natural_flow.mp3",
+      "duration_seconds": 156.60408163265305,
+      "file_size_bytes": 2506127,
+      "generated_at": "2026-03-11T06:59:10.047151"
+    },
+    {
+      "variation_id": "v3_confident",
+      "description": "Confident and measured \u2014 higher stability, lower style for authority",
+      "settings": {
+        "stability": 0.6,
+        "similarity_boost": 0.85,
+        "style": 0.25,
+        "use_speaker_boost": true
+      },
+      "audio_path": "/Users/sachinsharma/Developer/Official/curator-fork/curator/docs/plans/video-production/v7/assets/voiceover/v7/tara-v7-v3_confident.mp3",
+      "duration_seconds": 154.5926530612245,
+      "file_size_bytes": 2473944,
+      "generated_at": "2026-03-11T07:00:03.298392"
+    },
+    {
+      "variation_id": "v4_conversational",
+      "description": "Conversational \u2014 low stability, high style for 'colleague telling you' feel",
+      "settings": {
+        "stability": 0.4,
+        "similarity_boost": 0.75,
+        "style": 0.5,
+        "use_speaker_boost": true
+      },
+      "audio_path": "/Users/sachinsharma/Developer/Official/curator-fork/curator/docs/plans/video-production/v7/assets/voiceover/v7/tara-v7-v4_conversational.mp3",
+      "duration_seconds": 145.08408163265307,
+      "file_size_bytes": 2321807,
+      "generated_at": "2026-03-11T07:00:46.343002"
+    },
+    {
+      "variation_id": "v5_balanced",
+      "description": "Balanced sweet spot \u2014 tuned from scoring feedback",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.82,
+        "style": 0.35,
+        "use_speaker_boost": true
+      },
+      "audio_path": "/Users/sachinsharma/Developer/Official/curator-fork/curator/docs/plans/video-production/v7/assets/voiceover/v7/tara-v7-v5_balanced.mp3",
+      "duration_seconds": 152.52897959183673,
+      "file_size_bytes": 2440925,
+      "generated_at": "2026-03-11T07:01:32.841201"
+    }
+  ],
+  "rounds": {
+    "r1": [
+      {
+        "variation_id": "v1_warm_stable",
+        "description": "Warm and stable \u2014 baseline from previous iterations",
+        "settings": {
+          "stability": 0.55,
+          "similarity_boost": 0.8,
+          "style": 0.35,
+          "use_speaker_boost": true
+        },
+        "audio_path": "/Users/sachinsharma/Developer/Official/curator-fork/curator/docs/plans/video-production/v7/assets/voiceover/v7/tara-v7-v1_warm_stable.mp3",
+        "duration_seconds": 156.1077551020408,
+        "file_size_bytes": 2498186,
+        "generated_at": "2026-03-11T06:58:20.925036"
+      },
+      {
+        "variation_id": "v2_natural_flow",
+        "description": "More natural variation \u2014 lower stability for organic feel",
+        "settings": {
+          "stability": 0.45,
+          "similarity_boost": 0.8,
+          "style": 0.4,
+          "use_speaker_boost": true
+        },
+        "audio_path": "/Users/sachinsharma/Developer/Official/curator-fork/curator/docs/plans/video-production/v7/assets/voiceover/v7/tara-v7-v2_natural_flow.mp3",
+        "duration_seconds": 156.60408163265305,
+        "file_size_bytes": 2506127,
+        "generated_at": "2026-03-11T06:59:10.047151"
+      },
+      {
+        "variation_id": "v3_confident",
+        "description": "Confident and measured \u2014 higher stability, lower style for authority",
+        "settings": {
+          "stability": 0.6,
+          "similarity_boost": 0.85,
+          "style": 0.25,
+          "use_speaker_boost": true
+        },
+        "audio_path": "/Users/sachinsharma/Developer/Official/curator-fork/curator/docs/plans/video-production/v7/assets/voiceover/v7/tara-v7-v3_confident.mp3",
+        "duration_seconds": 154.5926530612245,
+        "file_size_bytes": 2473944,
+        "generated_at": "2026-03-11T07:00:03.298392"
+      },
+      {
+        "variation_id": "v4_conversational",
+        "description": "Conversational \u2014 low stability, high style for 'colleague telling you' feel",
+        "settings": {
+          "stability": 0.4,
+          "similarity_boost": 0.75,
+          "style": 0.5,
+          "use_speaker_boost": true
+        },
+        "audio_path": "/Users/sachinsharma/Developer/Official/curator-fork/curator/docs/plans/video-production/v7/assets/voiceover/v7/tara-v7-v4_conversational.mp3",
+        "duration_seconds": 145.08408163265307,
+        "file_size_bytes": 2321807,
+        "generated_at": "2026-03-11T07:00:46.343002"
+      },
+      {
+        "variation_id": "v5_balanced",
+        "description": "Balanced sweet spot \u2014 tuned from scoring feedback",
+        "settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.82,
+          "style": 0.35,
+          "use_speaker_boost": true
+        },
+        "audio_path": "/Users/sachinsharma/Developer/Official/curator-fork/curator/docs/plans/video-production/v7/assets/voiceover/v7/tara-v7-v5_balanced.mp3",
+        "duration_seconds": 152.52897959183673,
+        "file_size_bytes": 2440925,
+        "generated_at": "2026-03-11T07:01:32.841201"
+      }
+    ],
+    "r2": {
+      "round": 2,
+      "strategy": "Target dynamic range improvement while preserving v2 energy arc",
+      "base_variation": "v2_natural_flow (8.01/10)",
+      "generated_at": "2026-03-11T07:10:51.521277",
+      "variations": [
+        {
+          "variation_id": "r2v1_expressive",
+          "description": "v2 base + higher style (0.50) for more dynamic range",
+          "settings": {
+            "stability": 0.45,
+            "similarity_boost": 0.78,
+            "style": 0.5,
+            "use_speaker_boost": true
+          },
+          "audio_path": "/Users/sachinsharma/Developer/Official/curator-fork/curator/docs/plans/video-production/v7/assets/voiceover/v7/tara-v7-r2v1_expressive.mp3",
+          "duration_seconds": 162.58612244897958,
+          "file_size_bytes": 2601839,
+          "generated_at": "2026-03-11T07:08:21.620878"
+        },
+        {
+          "variation_id": "r2v2_warmexpressive",
+          "description": "Warm + expressive \u2014 stability 0.48, style 0.45, slightly lower similarity",
+          "settings": {
+            "stability": 0.48,
+            "similarity_boost": 0.76,
+            "style": 0.45,
+            "use_speaker_boost": true
+          },
+          "audio_path": "/Users/sachinsharma/Developer/Official/curator-fork/curator/docs/plans/video-production/v7/assets/voiceover/v7/tara-v7-r2v2_warmexpressive.mp3",
+          "duration_seconds": 156.5257142857143,
+          "file_size_bytes": 2504873,
+          "generated_at": "2026-03-11T07:09:09.586200"
+        },
+        {
+          "variation_id": "r2v3_storyteller",
+          "description": "Storyteller \u2014 v2 stability with max expressiveness",
+          "settings": {
+            "stability": 0.43,
+            "similarity_boost": 0.8,
+            "style": 0.55,
+            "use_speaker_boost": true
+          },
+          "audio_path": "/Users/sachinsharma/Developer/Official/curator-fork/curator/docs/plans/video-production/v7/assets/voiceover/v7/tara-v7-r2v3_storyteller.mp3",
+          "duration_seconds": 152.68571428571428,
+          "file_size_bytes": 2443433,
+          "generated_at": "2026-03-11T07:10:05.880641"
+        },
+        {
+          "variation_id": "r2v4_refined",
+          "description": "Refined v2 \u2014 slight stability bump for consistency, style up for range",
+          "settings": {
+            "stability": 0.5,
+            "similarity_boost": 0.8,
+            "style": 0.42,
+            "use_speaker_boost": true
+          },
+          "audio_path": "/Users/sachinsharma/Developer/Official/curator-fork/curator/docs/plans/video-production/v7/assets/voiceover/v7/tara-v7-r2v4_refined.mp3",
+          "duration_seconds": 151.7191836734694,
+          "file_size_bytes": 2427968,
+          "generated_at": "2026-03-11T07:10:51.292795"
+        }
+      ]
+    }
+  }
+}
