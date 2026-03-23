@@ -3,13 +3,8 @@ out/
 dist/
 .remotion/
 .DS_Store
-__pycache__/
 *.pyc
+__pycache__/
 .env
-.env.local
-video-production/assembly/
-video-production/v2/
-video-production/v5/
-video-production/v8/
-video-production/v9/
-video-production/output/
+.env.*
+video-production/archive/finals/*.mp4
