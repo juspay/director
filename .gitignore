@@ -7,4 +7,4 @@ dist/
 __pycache__/
 .env
 .env.*
-video-production/archive/finals/*.mp4
+video-production/archive/
