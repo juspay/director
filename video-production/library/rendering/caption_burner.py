@@ -230,6 +230,73 @@ def validate_wer(transcript: str, source_text: str, warn_threshold: float = 0.05
     return result
 
 
+def validate_srt(srt_path: str | Path) -> list[str]:
+    """Validate SRT file for common quality issues using pysubs2.
+
+    Checks:
+    - No timing overlaps between consecutive entries
+    - No entries shorter than 0.5s or longer than 7s
+    - Max 42 characters per line
+    - Max 2 lines per entry
+    - Minimum 150ms per word display time
+
+    Returns list of warning strings (empty = all checks passed).
+    """
+    try:
+        import pysubs2
+    except ImportError:
+        logger.warning("[SRT] pysubs2 not installed — skipping validation. pip install pysubs2")
+        return ["pysubs2 not installed"]
+
+    subs = pysubs2.load(str(srt_path))
+    warnings = []
+
+    for i, event in enumerate(subs):
+        duration_s = (event.end - event.start) / 1000.0
+        text = event.text.replace("\\N", "\n")
+        lines = text.split("\n")
+        word_count = len(text.split())
+
+        # Duration checks
+        if duration_s < 0.5:
+            warnings.append(f"Entry {i+1}: too short ({duration_s:.2f}s < 0.5s)")
+        if duration_s > 7.0:
+            warnings.append(f"Entry {i+1}: too long ({duration_s:.2f}s > 7.0s)")
+
+        # Line length checks
+        for j, line in enumerate(lines):
+            if len(line) > 42:
+                warnings.append(f"Entry {i+1} line {j+1}: {len(line)} chars (max 42)")
+
+        # Max 2 lines
+        if len(lines) > 2:
+            warnings.append(f"Entry {i+1}: {len(lines)} lines (max 2)")
+
+        # Minimum display time per word (150ms)
+        if word_count > 0 and duration_s > 0:
+            ms_per_word = (duration_s * 1000) / word_count
+            if ms_per_word < 150:
+                warnings.append(f"Entry {i+1}: {ms_per_word:.0f}ms/word (min 150ms)")
+
+        # Overlap check with next entry
+        if i < len(subs) - 1:
+            next_event = subs[i + 1]
+            if event.end > next_event.start:
+                overlap_ms = event.end - next_event.start
+                warnings.append(f"Entry {i+1}-{i+2}: overlap of {overlap_ms}ms")
+
+    if warnings:
+        logger.warning(f"[SRT] {len(warnings)} validation issues found:")
+        for w in warnings[:10]:  # Show first 10
+            logger.warning(f"  - {w}")
+        if len(warnings) > 10:
+            logger.warning(f"  ... and {len(warnings) - 10} more")
+    else:
+        logger.info(f"[SRT] All {len(subs)} entries passed validation")
+
+    return warnings
+
+
 def _format_srt_entry(index: int, words: list[dict]) -> str:
     """Format a group of words as an SRT entry."""
     start_time = words[0]["start"]
