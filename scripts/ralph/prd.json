@@ -81,7 +81,7 @@
         "Typecheck passes"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
       "notes": "pip install pyloudnorm. ~20 lines of integration code."
     },
     {
