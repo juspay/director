@@ -176,6 +176,60 @@ def _has_cuda() -> bool:
         return False
 
 
+def validate_wer(transcript: str, source_text: str, warn_threshold: float = 0.05) -> dict:
+    """Compute Word Error Rate between Whisper transcript and source script.
+
+    Since our voiceover text is scripted (not live speech), we have the ground
+    truth — a luxury most captioning workflows don't have. This lets us measure
+    exact transcription accuracy.
+
+    Args:
+        transcript: The text produced by Whisper (from SRT or word list).
+        source_text: The original voiceover script text.
+        warn_threshold: WER threshold above which to log a warning (default: 5%).
+
+    Returns:
+        Dict with 'wer', 'word_count', 'errors', 'warning' (if above threshold).
+    """
+    try:
+        import jiwer
+    except ImportError:
+        logger.warning("[WER] jiwer not installed — skipping WER validation. pip install jiwer")
+        return {"wer": None, "error": "jiwer not installed"}
+
+    # Normalize both texts
+    transforms = jiwer.Compose([
+        jiwer.RemoveMultipleSpaces(),
+        jiwer.Strip(),
+        jiwer.ToLowerCase(),
+        jiwer.RemovePunctuation(),
+        jiwer.ReduceToListOfListOfWords(),
+    ])
+
+    wer = jiwer.wer(
+        source_text,
+        transcript,
+        truth_transform=transforms,
+        hypothesis_transform=transforms,
+    )
+
+    source_words = len(source_text.split())
+    result = {
+        "wer": round(wer, 4),
+        "wer_percent": round(wer * 100, 2),
+        "source_word_count": source_words,
+        "estimated_errors": round(wer * source_words),
+    }
+
+    if wer > warn_threshold:
+        result["warning"] = f"WER {wer*100:.1f}% exceeds {warn_threshold*100:.0f}% threshold"
+        logger.warning(f"[WER] {result['warning']}")
+    else:
+        logger.info(f"[WER] {wer*100:.2f}% — {result['estimated_errors']} errors in {source_words} words")
+
+    return result
+
+
 def _format_srt_entry(index: int, words: list[dict]) -> str:
     """Format a group of words as an SRT entry."""
     start_time = words[0]["start"]
