@@ -8,6 +8,7 @@ openai>=1.0  # OpenAI gpt-4o-mini-tts voiceover provider
 optuna>=3.0  # Bayesian optimization for TTS parameter search
 pedalboard>=0.9  # Spotify Pedalboard — studio-quality audio effects (optional)
 pyloudnorm>=0.1
+pysubs2>=1.6  # SRT/ASS subtitle parsing and validation
 speechmos>=1.0  # UTMOSv2 MOS prediction for voiceover quality (optional)
 python-dotenv>=1.0.0
 torch>=2.0  # for Silero VAD (optional — mixer falls back to RMS if missing)
