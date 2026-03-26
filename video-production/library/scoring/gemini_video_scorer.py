@@ -83,7 +83,7 @@ def load_video_as_part(video_path: Path) -> types.Part:
     return part
 
 
-def analyze(client: genai.Client, prompt: str, video_parts: list, temperature: float = 0.1) -> tuple:
+def analyze(client: genai.Client, prompt: str, video_parts: list, temperature: float = 0.0) -> tuple:
     """Send multimodal prompt with video(s) and return text response + usage."""
     parts = list(video_parts)
     parts.append(types.Part.from_text(text=prompt))
@@ -306,7 +306,7 @@ def cmd_score(args):
         print(f"  RUN {run}/{num_runs}")
         print(f"{'='*40}")
 
-        text, usage = analyze(client, SCORING_PROMPT_V8, [video_part], temperature=0.1)
+        text, usage = analyze(client, SCORING_PROMPT_V8, [video_part], temperature=0.0)
         all_texts.append(text)
 
         overall = extract_overall_score(text)
