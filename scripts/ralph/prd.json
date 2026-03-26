@@ -247,7 +247,7 @@
         "Typecheck passes"
       ],
       "priority": 6,
-      "passes": false,
+      "passes": true,
       "notes": "pip install speechmos. Adds perceptual quality prediction."
     },
     {

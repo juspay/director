@@ -210,3 +210,17 @@ PRD: Director Pipeline Improvements (32 user stories)
   - Default is now --optimizer optuna --rounds 10 (was genetic with 50 target)
   - The file is still named genetic_optimizer.py for backwards compat — could rename later
 ---
+
+## 2026-03-26 - US-017
+- Added score_perceived_quality() using UTMOSv2 (speechmos UTMOS)
+- MOS 1-5 normalized to 0-10 scale for consistency
+- Weight 0.11 redistributed from existing 8 criteria (all reduced proportionally)
+- Graceful fallback if speechmos not installed (returns neutral 5.0)
+- Added speechmos>=1.0 to requirements.txt
+- Files changed: acoustic_scorer.py, requirements.txt
+- **Learnings for future iterations:**
+  - UTMOSv2 returns MOS 1-5; normalize with (mos - 1) / 4 * 10 for 0-10 scale
+  - WEIGHTS must sum to 1.0 — verify after any weight changes
+  - speechmos UTMOS import may vary between versions — try/except pattern handles this
+  - The scorer now has 9 criteria; genetic_optimizer.py inlines its own scoring — keep in sync
+---
