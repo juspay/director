@@ -1,0 +1,26 @@
+# Ralph Progress Log
+Started: 2026-03-26
+PRD: Director Pipeline Improvements (32 user stories)
+
+## Codebase Patterns
+- All pipeline code is in video-production/library/ (organized by domain: voiceover, music, sfx, mixing, scoring, rendering, pipeline, remotion)
+- Python files have origin comments: `# Origin: {version} — extracted to library on 2026-03-23`
+- Remotion components have JSDoc headers with @component, @origin, @description tags
+- Requirements go in library/pipeline/requirements.txt
+- New directories may need to be created (e.g., library/distribution/)
+- The pipeline uses async Python with asyncio, tenacity for retries
+- Audio processing uses pydub and numpy/scipy currently
+- Scoring uses Google Vertex AI / Gemini 2.5 Pro
+- All files are code-only (no binary assets tracked in git)
+- EncodingPreset.ffmpeg_video_args() in pipeline_config.py is the central point for all FFmpeg encoding flags — modify there for global encoding changes
+- assembler.py has some hardcoded ffmpeg commands (e.g., color grading) that bypass EncodingPreset — check both files when changing encoding
+---
+
+## 2026-03-26 - US-001
+- Added `-tune animation` to all H.264 encoding via EncodingPreset.ffmpeg_video_args()
+- Also added to hardcoded color grading command in assembler.py
+- Files changed: pipeline_config.py, assembler.py
+- **Learnings for future iterations:**
+  - ffmpeg_video_args() is the main encoding flag generator, but assembler.py has a hardcoded libx264 call in apply_color_grade() — always check both
+  - The flag auto-applies only when video_codec == "libx264" so it's future-safe for AV1/HEVC presets
+---
