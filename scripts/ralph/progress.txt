@@ -285,3 +285,9 @@ PRD: Director Pipeline Improvements (32 user stories)
 - Added jiwer>=3.0 to requirements.txt
 - Files changed: caption_burner.py, requirements.txt
 ---
+
+## 2026-03-26 - US-023
+- Added validate_srt() with 5 quality checks using pysubs2
+- Added pysubs2>=1.6 to requirements.txt
+- Files changed: caption_burner.py, requirements.txt
+---
