@@ -100,3 +100,17 @@ PRD: Director Pipeline Improvements (32 user stories)
   - chirp3_ssml.py and edgetts_ssml.py still use SSML legitimately (Google/Edge support it)
   - Only ElevenLabs files need audio tags; other TTS providers keep SSML
 ---
+
+## 2026-03-26 - US-009
+- Added av1_final and av1_web presets using libsvtav1
+- Refactored ffmpeg_video_args() to be codec-aware (libx264 vs libsvtav1 vs generic)
+- Added extra_args field to EncodingPreset for codec-specific flags
+- AV1 uses -svtav1-params for keyint, tune, overlays, scene change detection
+- Files changed: pipeline_config.py
+- **Learnings for future iterations:**
+  - SVT-AV1 preset numbers are strings ("6"), not ints — passed as -preset "6"
+  - AV1 CRF 30 ≈ H.264 CRF 18 quality-wise
+  - 10-bit (yuv420p10le) improves gradient banding in motion graphics
+  - libopus is the natural audio codec pairing for AV1/WebM containers
+  - extra_args field defaults to None, handled with `if self.extra_args` check
+---
