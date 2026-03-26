@@ -304,3 +304,8 @@ PRD: Director Pipeline Improvements (32 user stories)
 - ISO 8601 duration conversion, optional embed/interaction/expiry fields
 - Files changed: schema_generator.py (new)
 ---
+
+## 2026-03-26 - US-026
+- Created CostTracker with JSONL logging, auto-estimation, provider summaries
+- Files changed: cost_tracker.py (new)
+---
