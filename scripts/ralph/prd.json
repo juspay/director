@@ -355,7 +355,7 @@
         "Typecheck passes"
       ],
       "priority": 8,
-      "passes": false,
+      "passes": true,
       "notes": "Config changes + assembler logic for aspect ratio/resolution handling."
     },
     {
