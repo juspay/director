@@ -96,6 +96,7 @@ class EncodingPreset:
     height: int = 1080
     max_bitrate: Optional[str] = None
     bufsize: Optional[str] = None
+    video_bitrate: Optional[str] = None  # for hardware encoders (no CRF support)
     extra_args: Optional[List[str]] = None  # codec-specific extra flags
 
     def ffmpeg_video_args(self) -> List[str]:
@@ -104,6 +105,10 @@ class EncodingPreset:
         if self.video_codec == "libsvtav1":
             # SVT-AV1: uses -crf and -preset but not -profile/-level
             args += ["-crf", str(self.video_crf), "-preset", self.video_preset]
+            args += ["-pix_fmt", self.pixel_format]
+        elif self.video_codec == "h264_videotoolbox":
+            # macOS hardware encoder: uses -b:v (no CRF support)
+            args += ["-b:v", self.video_bitrate or "5M"]
             args += ["-pix_fmt", self.pixel_format]
         elif self.video_codec == "libx264":
             args += [
@@ -201,7 +206,49 @@ PRESETS: Dict[str, EncodingPreset] = {
         height=720,
         extra_args=["-svtav1-params", "keyint=10s:tune=0"],
     ),
+    # macOS hardware-accelerated presets — ~4x faster encoding for drafts
+    "draft_hw": EncodingPreset(
+        name="draft_hw",
+        video_codec="h264_videotoolbox",
+        video_bitrate="5M",
+        audio_bitrate="128k",
+    ),
+    "preview_hw": EncodingPreset(
+        name="preview_hw",
+        video_codec="h264_videotoolbox",
+        video_bitrate="8M",
+        audio_bitrate="192k",
+    ),
 }
+
+
+def is_videotoolbox_available() -> bool:
+    """Check if macOS VideoToolbox hardware encoding is available."""
+    import platform
+    import subprocess
+    if platform.system() != "Darwin":
+        return False
+    try:
+        result = subprocess.run(
+            ["ffmpeg", "-hide_banner", "-encoders"],
+            capture_output=True, text=True, timeout=5,
+        )
+        return "h264_videotoolbox" in result.stdout
+    except Exception:
+        return False
+
+
+def get_preset(name: str, prefer_hw: bool = False) -> EncodingPreset:
+    """Get an encoding preset by name, optionally preferring hardware acceleration.
+
+    If prefer_hw is True and VideoToolbox is available, returns the _hw variant
+    for 'draft' and 'preview' presets. Falls back to software encoding otherwise.
+    """
+    if prefer_hw and name in ("draft", "preview") and is_videotoolbox_available():
+        hw_name = f"{name}_hw"
+        if hw_name in PRESETS:
+            return PRESETS[hw_name]
+    return PRESETS[name]
 
 # ---------------------------------------------------------------------------
 # Quality profiles (orchestration-level)
