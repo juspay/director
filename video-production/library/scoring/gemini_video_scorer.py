@@ -17,6 +17,7 @@ import sys
 import os
 import json
 import re
+import random
 import argparse
 from pathlib import Path
 from datetime import datetime
@@ -124,9 +125,114 @@ def analyze(client: genai.Client, prompt: str, video_parts: list, temperature: f
 
 
 # ---------------------------------------------------------------------------
-# v8 Scoring Prompt — tailored to Slack-native UI, real data, coding agent
+# Dimension definitions for shuffleable rubric
 # ---------------------------------------------------------------------------
-SCORING_PROMPT_V8 = """You are an expert video production critic specializing in motion graphics and SaaS product videos.
+
+SCORING_DIMENSIONS = [
+    {"key": "content_authenticity", "name": "CONTENT AUTHENTICITY", "weight": 0.25, "weight_pct": "25%"},
+    {"key": "visual_polish", "name": "VISUAL POLISH", "weight": 0.20, "weight_pct": "20%"},
+    {"key": "motion_design", "name": "MOTION DESIGN", "weight": 0.15, "weight_pct": "15%"},
+    {"key": "storytelling", "name": "STORYTELLING ARC", "weight": 0.15, "weight_pct": "15%"},
+    {"key": "scene_transitions", "name": "SCENE TRANSITIONS", "weight": 0.10, "weight_pct": "10%"},
+    {"key": "music_audio", "name": "MUSIC/AUDIO INTEGRATION", "weight": 0.10, "weight_pct": "10%"},
+    {"key": "production_value", "name": "PRODUCTION VALUE", "weight": 0.05, "weight_pct": "5%"},
+]
+
+
+def build_scoring_prompt(run_seed: int = 0) -> str:
+    """Build the scoring prompt with dimensions in a shuffled order.
+
+    Each run uses a different seed to reduce positional bias in Gemini's scoring.
+    The weighted overall formula is always rebuilt to match the shuffled order.
+    """
+    dims = list(SCORING_DIMENSIONS)
+    if run_seed > 0:
+        rng = random.Random(run_seed)
+        rng.shuffle(dims)
+
+    return _build_prompt_with_order(dims)
+
+
+def _build_prompt_with_order(dims: list) -> str:
+    """Assemble the full prompt with dimensions in the given order."""
+    letters = "ABCDEFG"
+    # Build the rubric section header + output format with current letter assignment
+    score_lines = []
+    formula_parts = []
+    for i, dim in enumerate(dims):
+        letter = letters[i]
+        score_lines.append(f"{letter}. {dim['name'].title().replace('/', '/')}: X.X/10")
+        formula_parts.append(f"{letter}x{dim['weight']:.2f}")
+
+    output_block = "\n".join(score_lines)
+    formula = " + ".join(formula_parts)
+
+    return SCORING_PROMPT_V8_TEMPLATE.format(
+        rubric_sections=_build_rubric_sections(dims, letters),
+        output_block=output_block,
+        formula=formula,
+    )
+
+
+def _build_rubric_sections(dims: list, letters: str) -> str:
+    """Build the detailed rubric sections with assigned letters."""
+    sections = []
+    for i, dim in enumerate(dims):
+        letter = letters[i]
+        body = DIMENSION_BODIES[dim["key"]]
+        sections.append(f"### {letter}. {dim['name']} (weight: {dim['weight_pct']})\n{body}")
+    return "\n\n".join(sections)
+
+
+# Detailed criteria for each dimension (the body text under each heading)
+DIMENSION_BODIES = {
+    "content_authenticity": """The #1 differentiator for this video is that it should feel REAL, not like a generic SaaS demo.
+1. Does the data look REAL? Real names, real messages, real context?
+2. Are Slack messages believable with actual team member names (Sarthak Singh, Sachin Sharma, Sai Ramcharan, Yaswanth Reddy)?
+3. Are repo names real and specific (Nimble, Vayu, juspay-portal) — not generic like "my-app"?
+4. Does Tara's avatar look like a real character (a distinctive AI assistant identity, not a generic icon/star)?
+5. Is the coding agent UI convincing (step list with checkmarks, real-looking terminal output)?
+6. Does the Slack UI look like actual Slack (dark mode, proper message layout, avatars, timestamps)?""",
+
+    "visual_polish": """1. Typography: Professional-grade? Good hierarchy, spacing, readability?
+2. Slack UI fidelity: Does it look like actual Slack dark mode (#1a1d21 background, proper borders)?
+3. Color consistency across ALL scenes (no jarring palette shifts)?
+4. Glow/shadow/depth effects quality — subtle or overdone?
+5. Overall visual cleanliness — no alignment issues, no orphaned elements?""",
+
+    "motion_design": """1. Animation smoothness and spring quality (Remotion spring() usage)
+2. Stagger timing between elements (messages appearing one by one, etc.)
+3. Enter/exit transitions for UI elements
+4. Scene crossfades — should be smooth 1-second visual-only crossfades
+5. Micro-animations adding life (typing indicators, status pulsing, etc.)""",
+
+    "storytelling": """1. Does the "13 minutes" hook grab attention in the first 3 seconds?
+2. Does energy build from introduction through collaboration to execution?
+3. Is the "human judgment" moment effective in the Collab scene (Tara defers to human)?
+4. Does "Three PRs. One conversation." land as a powerful payoff?
+5. Does "Build what matters." resolve the video satisfyingly?""",
+
+    "scene_transitions": """1. Do scenes flow INTO each other or feel like hard cuts / "scene walls"?
+2. Is there visual continuity between scenes (color, layout, rhythm)?
+3. Are crossfades smooth and professional (not abrupt)?
+4. Does the pacing feel natural between scenes?""",
+
+    "music_audio": """1. Does the music build one continuous arc across the entire video?
+2. Does music volume automation enhance the narrative (quieter for dialogue, louder for climax)?
+3. Is narration/voiceover clear and well-paced? (Note: may be using placeholder narration)
+4. Do audio transitions between scenes feel seamless?""",
+
+    "production_value": """1. Does this look like a $5K+ agency production?
+2. Any rough edges, alignment issues, or amateur tells?
+3. Professional impression — would you be proud to show this to a VP of Engineering?
+4. Consistency between all scenes (same visual language throughout)?""",
+}
+
+
+# ---------------------------------------------------------------------------
+# v8 Scoring Prompt Template — dimensions injected via build_scoring_prompt()
+# ---------------------------------------------------------------------------
+SCORING_PROMPT_V8_TEMPLATE = """You are an expert video production critic specializing in motion graphics and SaaS product videos.
 
 I'm showing you a product announcement video for "Tara" — an AI coding agent that lives in Slack and turns conversations into shipped software. This video was built with Remotion (React-based programmatic animation framework). It's a 2D motion graphics explainer video with Slack-native UI design.
 
@@ -144,70 +250,18 @@ Agency-level motion graphics. Dark Slack-like theme with professional polish. Cl
 
 ## v8 SCORING RUBRIC — Rate each dimension 1-10:
 
-### A. CONTENT AUTHENTICITY (weight: 25%)
-The #1 differentiator for this video is that it should feel REAL, not like a generic SaaS demo.
-1. Does the data look REAL? Real names, real messages, real context?
-2. Are Slack messages believable with actual team member names (Sarthak Singh, Sachin Sharma, Sai Ramcharan, Yaswanth Reddy)?
-3. Are repo names real and specific (Nimble, Vayu, juspay-portal) — not generic like "my-app"?
-4. Does Tara's avatar look like a real character (a distinctive AI assistant identity, not a generic icon/star)?
-5. Is the coding agent UI convincing (step list with checkmarks, real-looking terminal output)?
-6. Does the Slack UI look like actual Slack (dark mode, proper message layout, avatars, timestamps)?
-
-### B. VISUAL POLISH (weight: 20%)
-1. Typography: Professional-grade? Good hierarchy, spacing, readability?
-2. Slack UI fidelity: Does it look like actual Slack dark mode (#1a1d21 background, proper borders)?
-3. Color consistency across ALL scenes (no jarring palette shifts)?
-4. Glow/shadow/depth effects quality — subtle or overdone?
-5. Overall visual cleanliness — no alignment issues, no orphaned elements?
-
-### C. MOTION DESIGN (weight: 15%)
-1. Animation smoothness and spring quality (Remotion spring() usage)
-2. Stagger timing between elements (messages appearing one by one, etc.)
-3. Enter/exit transitions for UI elements
-4. Scene crossfades — should be smooth 1-second visual-only crossfades
-5. Micro-animations adding life (typing indicators, status pulsing, etc.)
-
-### D. STORYTELLING ARC (weight: 15%)
-1. Does the "13 minutes" hook grab attention in the first 3 seconds?
-2. Does energy build from introduction through collaboration to execution?
-3. Is the "human judgment" moment effective in the Collab scene (Tara defers to human)?
-4. Does "Three PRs. One conversation." land as a powerful payoff?
-5. Does "Build what matters." resolve the video satisfyingly?
-
-### E. SCENE TRANSITIONS (weight: 10%)
-1. Do scenes flow INTO each other or feel like hard cuts / "scene walls"?
-2. Is there visual continuity between scenes (color, layout, rhythm)?
-3. Are crossfades smooth and professional (not abrupt)?
-4. Does the pacing feel natural between scenes?
-
-### F. MUSIC/AUDIO INTEGRATION (weight: 10%)
-1. Does the music build one continuous arc across the entire video?
-2. Does music volume automation enhance the narrative (quieter for dialogue, louder for climax)?
-3. Is narration/voiceover clear and well-paced? (Note: may be using placeholder narration)
-4. Do audio transitions between scenes feel seamless?
-
-### G. PRODUCTION VALUE (weight: 5%)
-1. Does this look like a $5K+ agency production?
-2. Any rough edges, alignment issues, or amateur tells?
-3. Professional impression — would you be proud to show this to a VP of Engineering?
-4. Consistency between all scenes (same visual language throughout)?
+{rubric_sections}
 
 ## OUTPUT FORMAT (CRITICAL — follow this exactly)
 
 ### SCORES
 For each dimension, provide scores AND brief justification:
 ```
-A. Content Authenticity: X.X/10
-B. Visual Polish: X.X/10
-C. Motion Design: X.X/10
-D. Storytelling Arc: X.X/10
-E. Scene Transitions: X.X/10
-F. Music/Audio Integration: X.X/10
-G. Production Value: X.X/10
+{output_block}
 ```
 
 ### WEIGHTED OVERALL SCORE
-Calculate: (A×0.25 + B×0.20 + C×0.15 + D×0.15 + E×0.10 + F×0.10 + G×0.05)
+Calculate: ({formula})
 ```
 OVERALL: X.XX/10
 ```
@@ -258,15 +312,19 @@ def extract_overall_score(text: str) -> float | None:
 
 
 def extract_dimension_scores(text: str) -> dict:
-    """Extract per-dimension scores from Gemini's response."""
+    """Extract per-dimension scores from Gemini's response.
+
+    Uses dimension NAME matching (not letter prefixes) so extraction works
+    regardless of the dimension order presented in the prompt.
+    """
     dimensions = {
-        "content_authenticity": r"A\.\s*Content.*?:\s*(\d+\.?\d*)\s*/\s*10",
-        "visual_polish": r"B\.\s*Visual.*?:\s*(\d+\.?\d*)\s*/\s*10",
-        "motion_design": r"C\.\s*Motion.*?:\s*(\d+\.?\d*)\s*/\s*10",
-        "storytelling": r"D\.\s*Storytelling.*?:\s*(\d+\.?\d*)\s*/\s*10",
-        "scene_transitions": r"E\.\s*Scene.*?:\s*(\d+\.?\d*)\s*/\s*10",
-        "music_audio": r"F\.\s*Music.*?:\s*(\d+\.?\d*)\s*/\s*10",
-        "production_value": r"G\.\s*Production.*?:\s*(\d+\.?\d*)\s*/\s*10",
+        "content_authenticity": r"[A-G]\.\s*Content\s*Authenticity.*?:\s*(\d+\.?\d*)\s*/\s*10",
+        "visual_polish": r"[A-G]\.\s*Visual\s*Polish.*?:\s*(\d+\.?\d*)\s*/\s*10",
+        "motion_design": r"[A-G]\.\s*Motion\s*Design.*?:\s*(\d+\.?\d*)\s*/\s*10",
+        "storytelling": r"[A-G]\.\s*Storytelling.*?:\s*(\d+\.?\d*)\s*/\s*10",
+        "scene_transitions": r"[A-G]\.\s*Scene\s*Transitions.*?:\s*(\d+\.?\d*)\s*/\s*10",
+        "music_audio": r"[A-G]\.\s*Music.*?Audio.*?:\s*(\d+\.?\d*)\s*/\s*10",
+        "production_value": r"[A-G]\.\s*Production\s*Value.*?:\s*(\d+\.?\d*)\s*/\s*10",
     }
     scores = {}
     for key, pattern in dimensions.items():
@@ -306,7 +364,9 @@ def cmd_score(args):
         print(f"  RUN {run}/{num_runs}")
         print(f"{'='*40}")
 
-        text, usage = analyze(client, SCORING_PROMPT_V8, [video_part], temperature=0.0)
+        # Each run uses a different dimension order to reduce positional bias
+        scoring_prompt = build_scoring_prompt(run_seed=run)
+        text, usage = analyze(client, scoring_prompt, [video_part], temperature=0.0)
         all_texts.append(text)
 
         overall = extract_overall_score(text)
