@@ -33,18 +33,18 @@ ASS_STYLE = (
 def generate_srt(
     audio_path: Path,
     output_path: Path | None = None,
-    model_size: str = "large-v2",
+    model_size: str = "large-v3-turbo",
 ) -> Path:
     """
     Generate SRT captions from audio using faster-whisper.
 
-    Uses the large-v2 model for best accuracy. Word-level timestamps
-    are used to create precise subtitle timing that matches speech cadence.
+    Uses large-v3-turbo for 4x faster inference with slightly better accuracy
+    than large-v2, and the same multilingual support (99+ languages).
 
     Args:
         audio_path: Path to the combined voiceover audio.
         output_path: Where to save the SRT file. Defaults to assets/captions.srt.
-        model_size: Whisper model size. large-v2 recommended for production.
+        model_size: Whisper model size. large-v3-turbo recommended for production.
 
     Returns:
         Path to the generated SRT file.
@@ -61,7 +61,7 @@ def generate_srt(
     from faster_whisper import WhisperModel
 
     # Use GPU if available (CUDA), otherwise fall back to CPU.
-    # large-v2 on CPU takes ~2x realtime; on GPU it's near-instant.
+    # large-v3-turbo: 4x faster than large-v2 (216x RTF), 809M params, ~6GB VRAM.
     model = WhisperModel(
         model_size,
         device="auto",
