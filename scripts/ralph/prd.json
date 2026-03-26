@@ -401,7 +401,7 @@
         "Typecheck passes"
       ],
       "priority": 9,
-      "passes": false,
+      "passes": true,
       "notes": "pip install vbench. Automated visual QA."
     },
     {

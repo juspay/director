@@ -309,3 +309,9 @@ PRD: Director Pipeline Improvements (32 user stories)
 - Created CostTracker with JSONL logging, auto-estimation, provider summaries
 - Files changed: cost_tracker.py (new)
 ---
+
+## 2026-03-26 - US-027
+- Created vbench_checker.py with temporal_flickering + motion_smoothness checks
+- Python API + CLI fallback, configurable thresholds, CI gating
+- Files changed: vbench_checker.py (new)
+---
