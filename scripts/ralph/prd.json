@@ -215,7 +215,7 @@
         "Typecheck passes"
       ],
       "priority": 5,
-      "passes": false,
+      "passes": true,
       "notes": "67% fewer video tokens."
     },
     {
