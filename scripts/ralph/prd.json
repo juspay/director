@@ -171,7 +171,7 @@
         "Typecheck passes"
       ],
       "priority": 4,
-      "passes": false,
+      "passes": true,
       "notes": "90% token savings on runs 2-3. Requires google-genai SDK support for caching."
     },
     {
