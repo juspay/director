@@ -170,3 +170,15 @@ PRD: Director Pipeline Improvements (32 user stories)
   - ffmpeg must be compiled with libvmaf support (brew install ffmpeg includes it on macOS)
   - FfmpegQualityMetrics returns per-frame scores — we average across all frames
 ---
+
+## 2026-03-26 - US-014
+- Added SCORING_TIERS dict with dev (Flash/1-run) and official (Pro/3-run) configs
+- Added --tier CLI arg (default: dev for fast iteration)
+- MODEL is now set dynamically from tier, not just a constant
+- --runs can override tier default
+- Files changed: gemini_video_scorer.py
+- **Learnings for future iterations:**
+  - MODEL is modified via `global MODEL` in main() — keep this in mind for imports
+  - Default tier is "dev" (Flash) — use --tier official for production scoring
+  - SCORING_TIERS dict is extensible (could add "budget" tier with low-res + Flash)
+---
