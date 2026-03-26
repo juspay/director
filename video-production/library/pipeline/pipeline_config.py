@@ -96,19 +96,36 @@ class EncodingPreset:
     height: int = 1080
     max_bitrate: Optional[str] = None
     bufsize: Optional[str] = None
+    extra_args: Optional[List[str]] = None  # codec-specific extra flags
 
     def ffmpeg_video_args(self) -> List[str]:
-        args = [
-            "-c:v", self.video_codec,
-            "-crf", str(self.video_crf),
-            "-preset", self.video_preset,
-            "-profile:v", self.video_profile,
-            "-level", self.video_level,
-            "-pix_fmt", self.pixel_format,
-        ]
-        # -tune animation optimizes for flat color and hard edges (ideal for Remotion motion graphics)
-        if self.video_codec == "libx264":
-            args += ["-tune", "animation"]
+        args = ["-c:v", self.video_codec]
+
+        if self.video_codec == "libsvtav1":
+            # SVT-AV1: uses -crf and -preset but not -profile/-level
+            args += ["-crf", str(self.video_crf), "-preset", self.video_preset]
+            args += ["-pix_fmt", self.pixel_format]
+        elif self.video_codec == "libx264":
+            args += [
+                "-crf", str(self.video_crf),
+                "-preset", self.video_preset,
+                "-profile:v", self.video_profile,
+                "-level", self.video_level,
+                "-pix_fmt", self.pixel_format,
+                "-tune", "animation",
+            ]
+        else:
+            # Generic: include CRF, preset, profile, level
+            args += [
+                "-crf", str(self.video_crf),
+                "-preset", self.video_preset,
+                "-profile:v", self.video_profile,
+                "-level", self.video_level,
+                "-pix_fmt", self.pixel_format,
+            ]
+
+        if self.extra_args:
+            args += self.extra_args
         if self.max_bitrate:
             args += ["-maxrate", self.max_bitrate, "-bufsize", self.bufsize or self.max_bitrate]
         if self.width != 1920 or self.height != 1080:
@@ -160,6 +177,29 @@ PRESETS: Dict[str, EncodingPreset] = {
         audio_bitrate="192k",
         width=1080,
         height=1080,
+    ),
+    # AV1 presets — 45-50% smaller files than H.264 at same quality
+    "av1_final": EncodingPreset(
+        name="av1_final",
+        video_codec="libsvtav1",
+        video_crf=30,       # AV1 CRF 30 ≈ H.264 CRF 18 quality
+        video_preset="6",   # SVT-AV1 preset 6 = good speed/quality balance
+        pixel_format="yuv420p10le",  # 10-bit for better gradients
+        audio_codec="libopus",
+        audio_bitrate="128k",
+        extra_args=["-svtav1-params", "keyint=10s:tune=0:enable-overlays=1:scd=1"],
+    ),
+    "av1_web": EncodingPreset(
+        name="av1_web",
+        video_codec="libsvtav1",
+        video_crf=35,       # More aggressive for web delivery
+        video_preset="6",
+        pixel_format="yuv420p10le",
+        audio_codec="libopus",
+        audio_bitrate="48k",
+        width=1280,
+        height=720,
+        extra_args=["-svtav1-params", "keyint=10s:tune=0"],
     ),
 }
 
