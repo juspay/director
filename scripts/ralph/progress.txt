@@ -156,3 +156,17 @@ PRD: Director Pipeline Improvements (32 user stories)
   - Cache only created when num_runs > 1 (single runs skip caching)
   - The scoring loop structure changed: run 1 is now outside the `else` branch
 ---
+
+## 2026-03-26 - US-013
+- Created vmaf_gating.py with check_regression(), compute_vmaf(), compare_iterations()
+- Uses ffmpeg-quality-metrics library with fallback to direct ffmpeg libvmaf
+- Default regression threshold: 2.0 VMAF points
+- CLI exits non-zero on regression (for CI/CD gating)
+- Added ffmpeg-quality-metrics>=3.0 to requirements.txt
+- Files changed: vmaf_gating.py (new), requirements.txt
+- **Learnings for future iterations:**
+  - VMAF is asymmetric: compute_vmaf(A, B) != compute_vmaf(B, A) — use compare_iterations() for A/B tests
+  - VMAF of 100 = identical to reference; < 100 = degraded
+  - ffmpeg must be compiled with libvmaf support (brew install ffmpeg includes it on macOS)
+  - FfmpegQualityMetrics returns per-frame scores — we average across all frames
+---
