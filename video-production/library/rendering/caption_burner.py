@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 # positioned near the bottom with enough margin to not overlap UI elements.
 # ASS format gives us precise control over font, color, positioning.
 ASS_STYLE = (
-    "FontName=Arial,FontSize=22,PrimaryColour=&H00FFFFFF,"
+    "FontName=Arial,FontSize=32,PrimaryColour=&H00FFFFFF,"
     "OutlineColour=&H80000000,BackColour=&H80000000,"
     "Bold=1,Outline=2,Shadow=0,MarginV=25,"
     "Alignment=2,BorderStyle=4"
