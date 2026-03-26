@@ -61,3 +61,16 @@ PRD: Director Pipeline Improvements (32 user stories)
   - Any code referencing SCORING_PROMPT_V8 directly needs to use build_scoring_prompt() instead
   - The extract_dimension_scores() regex uses dimension NAMES not letter prefixes
 ---
+
+## 2026-03-26 - US-006
+- Added measure_loudness() function using pyloudnorm (ITU-R BS.1770-4)
+- Called after both pydub and scipy WAV export paths
+- Measures integrated LUFS + true peak dBTP with configurable targets
+- Gracefully handles missing pyloudnorm via HAS_PYLOUDNORM flag
+- Added pyloudnorm to requirements.txt
+- Files changed: vad_mixer.py, requirements.txt
+- **Learnings for future iterations:**
+  - vad_mixer.py has TWO export paths: pydub (line ~373) and scipy fallback (line ~454) — changes to post-export must hit both
+  - pyloudnorm needs float64 data in [-1,1] with shape (samples, channels) — int16 WAV data must be converted
+  - TARGET_LUFS and LUFS_TOLERANCE are module-level constants for easy tuning
+---
