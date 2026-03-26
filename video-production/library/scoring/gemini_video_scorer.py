@@ -52,7 +52,12 @@ from google.genai import types
 PROJECT = os.environ.get("GOOGLE_VERTEX_PROJECT", "dev-ai-beta")
 LOCATION = os.environ.get("GOOGLE_VERTEX_LOCATION", "us-east5")
 CREDS_FILE = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS", "")
-MODEL = "gemini-2.5-pro"
+# Scoring tiers: dev (fast/cheap) vs official (thorough/accurate)
+SCORING_TIERS = {
+    "dev": {"model": "gemini-2.5-flash", "runs": 1, "description": "Fast development scoring (~$0.04/iteration)"},
+    "official": {"model": "gemini-2.5-pro", "runs": 3, "description": "Official 3-run averaged scoring (~$0.16/iteration)"},
+}
+MODEL = "gemini-2.5-pro"  # Default, overridden by tier selection
 
 # Paths
 V8_DIR = Path(__file__).resolve().parent.parent  # v8/
@@ -494,7 +499,12 @@ def main():
 
     score_parser = subparsers.add_parser("score", help="Score the video (3-run average)")
     score_parser.add_argument("--iteration", type=int, default=1, help="Iteration number")
-    score_parser.add_argument("--runs", type=int, default=3, help="Number of scoring runs for averaging")
+    score_parser.add_argument("--runs", type=int, default=None,
+                              help="Number of scoring runs (default: set by tier)")
+    score_parser.add_argument(
+        "--tier", choices=["dev", "official"], default="dev",
+        help="Scoring tier: dev (Flash, 1 run, ~$0.04) or official (Pro, 3 runs, ~$0.16)",
+    )
     score_parser.add_argument(
         "--video",
         type=str,
@@ -505,6 +515,14 @@ def main():
     args = parser.parse_args()
 
     if args.command == "score":
+        # Apply tier settings
+        global MODEL
+        tier_config = SCORING_TIERS[args.tier]
+        MODEL = tier_config["model"]
+        if args.runs is None:
+            args.runs = tier_config["runs"]
+        print(f"Tier: {args.tier} — {tier_config['description']}")
+        print(f"Model: {MODEL}, Runs: {args.runs}")
         cmd_score(args)
     else:
         parser.print_help()
