@@ -142,3 +142,17 @@ PRD: Director Pipeline Improvements (32 user stories)
   - HAS_PEDALBOARD flag gates all Pedalboard usage — safe to import even without it
   - US-020 (frequency-aware ducking) depends on this — uses Pedalboard filters for band splitting
 ---
+
+## 2026-03-26 - US-012
+- Added context caching: after run 1, video is cached for runs 2-3 (90% token savings)
+- analyze() accepts optional cached_content parameter (cache resource name)
+- Cache created via client.caches.create() with 900s TTL
+- Graceful fallback if caching API unavailable
+- Files changed: gemini_video_scorer.py
+- **Learnings for future iterations:**
+  - Gemini caching API: client.caches.create(model=, contents=, config=CreateCachedContentConfig(ttl=))
+  - Cache is passed as cached_content kwarg to generate_content()
+  - TTL of 900s (15 min) is enough for 3 runs; storage cost $4.50/1M tokens/hr
+  - Cache only created when num_runs > 1 (single runs skip caching)
+  - The scoring loop structure changed: run 1 is now outside the `else` branch
+---
