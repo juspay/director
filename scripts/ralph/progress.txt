@@ -297,3 +297,10 @@ PRD: Director Pipeline Improvements (32 user stories)
 - PRESETS dict now has 14 entries
 - Files changed: pipeline_config.py
 ---
+
+## 2026-03-26 - US-025
+- Created library/distribution/schema_generator.py
+- generate_video_schema() + generate_video_schema_html()
+- ISO 8601 duration conversion, optional embed/interaction/expiry fields
+- Files changed: schema_generator.py (new)
+---
