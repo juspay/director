@@ -111,7 +111,7 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
       "notes": "Read the files to understand current SSML usage, then replace with audio tags."
     },
     {
