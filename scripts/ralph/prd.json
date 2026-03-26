@@ -432,7 +432,7 @@
         "Typecheck passes"
       ],
       "priority": 10,
-      "passes": false,
+      "passes": true,
       "notes": "75% cost reduction for B-roll. API access needed."
     },
     {
@@ -448,7 +448,7 @@
         "Typecheck passes"
       ],
       "priority": 10,
-      "passes": false,
+      "passes": true,
       "notes": "Uses existing Gemini API credentials. Native audio generation."
     },
     {
