@@ -87,3 +87,16 @@ PRD: Director Pipeline Improvements (32 user stories)
   - torch.hub.load caches the model after first download (~4MB)
   - The existing create_duck_envelope() function is agnostic to the VAD source — any 0/1 activity array works
 ---
+
+## 2026-03-26 - US-008
+- Converted NARRATION_SSML to NARRATION_AUDIOTAG with ElevenLabs v3 audio tags
+- [pause] replaces <break time="0.3-0.5s"/>, [long pause] replaces <break time="0.6-0.8s"/>
+- [rushed] replaces <prosody rate="105%">
+- Renamed use_ssml→use_audiotags, --ssml→--audiotags throughout
+- Files changed: genetic_optimizer.py
+- **Learnings for future iterations:**
+  - ElevenLabs v3 audio tags: [pause], [long pause], [rushed], [excited], [whispers], [sighs]
+  - v3 does NOT support SSML — tags are read as literal text
+  - chirp3_ssml.py and edgetts_ssml.py still use SSML legitimately (Google/Edge support it)
+  - Only ElevenLabs files need audio tags; other TTS providers keep SSML
+---
