@@ -9,7 +9,7 @@ score plateaus or the target iteration count is reached.
 Usage:
     python iterate_voiceover_v7.py --rounds 10 --batch-size 5
     python iterate_voiceover_v7.py --rounds 10 --batch-size 5 --dry-run
-    python iterate_voiceover_v7.py --rounds 10 --batch-size 5 --ssml
+    python iterate_voiceover_v7.py --rounds 10 --batch-size 5 --audiotags
 """
 
 import argparse
@@ -122,91 +122,92 @@ The implementation doesn't disappear. It just happens — right where the conver
 Tara. Build what matters."""
 
 # ---------------------------------------------------------------------------
-# Narration — SSML-enhanced version
+# Narration — ElevenLabs v3 audio-tag enhanced version
 # ---------------------------------------------------------------------------
-NARRATION_SSML = """<speak>
-Twelve tabs open. A review untouched since Tuesday. <break time="0.4s"/> And somewhere underneath all of it — an idea that was clear this morning.
+# ElevenLabs v3 does NOT support SSML (<break>, <prosody>, <emphasis>).
+# Instead, use audio tags: [pause], [long pause], [excited], [whispers], [rushed], [sighs]
+# Emotional delivery is also conveyed through natural text phrasing.
+NARRATION_AUDIOTAG = """Twelve tabs open. A review untouched since Tuesday. [pause] And somewhere underneath all of it — an idea that was clear this morning.
 
-<break time="0.6s"/>
+[long pause]
 
-Half of them still open from yesterday. Context scattered across five tools. <break time="0.3s"/> Nothing connected.
+Half of them still open from yesterday. Context scattered across five tools. Nothing connected.
 
-<break time="0.7s"/>
+[long pause]
 
-There was a time when the job was writing code. <break time="0.3s"/> Then it became engineering — systems thinking, architecture, knowing why things break.
+There was a time when the job was writing code. Then it became engineering — systems thinking, architecture, knowing why things break.
 
-<break time="0.5s"/>
+[pause]
 
 And carrying the weight when they do.
 
-<break time="0.4s"/>
+[pause]
 
 You earned that shift.
 
-<break time="0.6s"/>
+[long pause]
 
-<prosody rate="95%" pitch="+2%">The next one is bigger.</prosody> From engineer — to builder. Less time on the how. <break time="0.3s"/> <emphasis level="moderate">More time on the what and the why.</emphasis>
+The next one is bigger. From engineer — to builder. Less time on the how. More time on the what and the why.
 
-<break time="0.5s"/>
+[pause]
 
-The friction isn't in your skill. <break time="0.3s"/> <emphasis level="strong">It's between the decision and the done.</emphasis>
+The friction isn't in your skill. It's between the decision and the done.
 
-<break time="0.6s"/>
+[long pause]
 
-<prosody rate="90%" pitch="+3%"><emphasis level="strong">Tara closes that gap.</emphasis></prosody>
+Tara closes that gap.
 
-<break time="0.8s"/>
+[long pause]
 
-She lives in Slack — where your team already thinks. Drop in a screenshot, a question, a half-formed idea. <break time="0.3s"/> Already reading.
+She lives in Slack — where your team already thinks. Drop in a screenshot, a question, a half-formed idea. Already reading.
 
-<break time="0.5s"/>
+[pause]
 
-<prosody rate="105%">In under a minute — she's searched across your repositories, cross-checked your JIRA history, found the root cause, and built a plan.</prosody>
+[rushed] In under a minute — she's searched across your repositories, cross-checked your JIRA history, found the root cause, and built a plan.
 
-<break time="0.6s"/>
+[long pause]
 
 And now your team thinks together.
 
-<break time="0.5s"/>
+[pause]
 
-A PM scopes it tighter. An engineer challenges an assumption. A designer spots something nobody else caught. <break time="0.3s"/> Each message sharpens the plan.
+A PM scopes it tighter. An engineer challenges an assumption. A designer spots something nobody else caught. Each message sharpens the plan.
 
-<break time="0.5s"/>
+[pause]
 
-The judgment. The debate. <break time="0.3s"/> The decisions only humans make. <break time="0.3s"/> And when it's ready — it moves.
+The judgment. The debate. The decisions only humans make. [pause] And when it's ready — it moves.
 
-<break time="0.6s"/>
+[long pause]
 
-<prosody rate="105%">Three repos cloned. Your patterns studied. Three implementations running in parallel — and pull requests opening one after another, connecting back to the thread where it all started.</prosody>
+[rushed] Three repos cloned. Your patterns studied. Three implementations running in parallel — and pull requests opening one after another, connecting back to the thread where it all started.
 
-<break time="0.5s"/>
+[pause]
 
-<emphasis level="moderate">No one waited for anyone.</emphasis>
+No one waited for anyone.
 
-<break time="0.6s"/>
+[long pause]
 
-Tara reads whatever your team works with — code, documents, designs, configs. She connects to everything you already use. <break time="0.3s"/> Everything through Slack.
+Tara reads whatever your team works with — code, documents, designs, configs. She connects to everything you already use. Everything through Slack.
 
-<break time="0.7s"/>
+[long pause]
 
-<prosody rate="95%">Four hundred threads. Double the PR throughput. From a question to production — in minutes, not days.</prosody>
+Four hundred threads. Double the PR throughput. From a question to production — in minutes, not days.
 
-<break time="0.6s"/>
+[long pause]
 
 You already know what to build next.
 
-<break time="0.5s"/>
+[pause]
 
-<prosody rate="90%" pitch="+2%"><emphasis level="strong">Engineers are builders now.</emphasis></prosody>
+Engineers are builders now.
 
-<break time="0.6s"/>
+[long pause]
 
 The implementation doesn't disappear. It just happens — right where the conversation started.
 
-<break time="0.8s"/>
+[long pause]
 
-<prosody rate="85%"><emphasis level="strong">Tara. Build what matters.</emphasis></prosody>
-</speak>"""
+Tara. Build what matters."""
 
 
 # ============================================================================
@@ -613,7 +614,7 @@ async def call_elevenlabs(
     text: str,
     settings: dict,
     output_path: Path,
-    use_ssml: bool = False,
+    use_audiotags: bool = False,
     max_retries: int = 5,
 ) -> None:
     """Call ElevenLabs TTS with exponential backoff on rate limits."""
@@ -683,7 +684,7 @@ async def generate_and_score_variation(
     settings: dict,
     strategy: str,
     narration_text: str,
-    use_ssml: bool,
+    use_audiotags: bool,
     dry_run: bool,
 ) -> Optional[dict]:
     """Generate one variation and score it. Returns full result dict."""
@@ -709,7 +710,7 @@ async def generate_and_score_variation(
             f"style={settings['style']:.3f} "
             f"(strategy: {strategy})"
         )
-        await call_elevenlabs(narration_text, settings, output_path, use_ssml)
+        await call_elevenlabs(narration_text, settings, output_path, use_audiotags)
         logger.info(f"[{var_id}] Audio saved ({output_path.stat().st_size / 1024:.0f} KB)")
 
     # Score
@@ -724,7 +725,7 @@ async def generate_and_score_variation(
         "duration_seconds": duration,
         "audio_path": str(output_path),
         "generated_at": datetime.now().isoformat(),
-        "use_ssml": use_ssml,
+        "use_audiotags": use_audiotags,
         **analysis,
     }
 
@@ -810,7 +811,7 @@ def check_plateau(cumulative: dict, window: int = 3) -> bool:
 async def run_iteration(
     rounds: int,
     batch_size: int,
-    use_ssml: bool,
+    use_audiotags: bool,
     dry_run: bool,
     target_total: int = 50,
 ):
@@ -822,14 +823,14 @@ async def run_iteration(
     start_iteration = cumulative["total_iterations"]
 
     logger.info(f"Starting from iteration {start_iteration}, target {target_total}")
-    logger.info(f"Rounds: {rounds}, batch size: {batch_size}, SSML: {use_ssml}")
+    logger.info(f"Rounds: {rounds}, batch size: {batch_size}, audio tags: {use_audiotags}")
 
     if start_iteration >= target_total:
         logger.info(f"Already at {start_iteration} iterations (target: {target_total}). Done.")
         print_leaderboard(cumulative["all_results"])
         return
 
-    narration_text = NARRATION_SSML if use_ssml else NARRATION_PLAIN
+    narration_text = NARRATION_AUDIOTAG if use_audiotags else NARRATION_PLAIN
 
     for round_idx in range(1, rounds + 1):
         current_total = cumulative["total_iterations"]
@@ -885,7 +886,7 @@ async def run_iteration(
                 settings=spec["settings"],
                 strategy=spec["strategy"],
                 narration_text=narration_text,
-                use_ssml=use_ssml,
+                use_audiotags=use_audiotags,
                 dry_run=dry_run,
             )
 
@@ -925,7 +926,7 @@ async def run_iteration(
                 "best_composite": round_best["composite_score"],
                 "best_variation_id": round_best["variation_id"],
                 "avg_composite": round(round_avg, 2),
-                "use_ssml": use_ssml,
+                "use_audiotags": use_audiotags,
                 "timestamp": datetime.now().isoformat(),
             }
             cumulative["rounds"].append(round_meta)
@@ -979,8 +980,8 @@ def main():
         help="Stop at this many total iterations (default: 50)",
     )
     parser.add_argument(
-        "--ssml", action="store_true",
-        help="Use SSML-enhanced narration with pauses and emphasis",
+        "--audiotags", action="store_true",
+        help="Use ElevenLabs v3 audio-tag narration ([pause], [rushed], etc.)",
     )
     parser.add_argument(
         "--dry-run", action="store_true",
@@ -999,7 +1000,7 @@ def main():
     asyncio.run(run_iteration(
         rounds=args.rounds,
         batch_size=args.batch_size,
-        use_ssml=args.ssml,
+        use_audiotags=args.audiotags,
         dry_run=args.dry_run,
         target_total=args.target,
     ))
