@@ -416,7 +416,7 @@
         "Typecheck passes"
       ],
       "priority": 9,
-      "passes": false,
+      "passes": true,
       "notes": "Uses existing ElevenLabs API key. Professional SFX generation."
     },
     {
