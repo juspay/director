@@ -11,3 +11,4 @@ speechmos>=1.0  # UTMOSv2 MOS prediction for voiceover quality (optional)
 python-dotenv>=1.0.0
 torch>=2.0  # for Silero VAD (optional — mixer falls back to RMS if missing)
 tenacity>=8.2.0
+whisperx>=3.0  # WhisperX — wav2vec2 forced alignment for precise word timestamps (optional)
