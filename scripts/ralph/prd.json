@@ -6,7 +6,7 @@
     {
       "id": "US-001",
       "title": "Add -tune animation to H.264 encoding",
-      "description": "Add -tune animation flag to all H.264 encoding commands in assembler.py. This optimizes for flat color and hard edges — ideal for Remotion motion graphics output. Expected: 10-20% smaller files at same quality.",
+      "description": "Add -tune animation flag to all H.264 encoding commands in assembler.py. This optimizes for flat color and hard edges \u2014 ideal for Remotion motion graphics output. Expected: 10-20% smaller files at same quality.",
       "acceptanceCriteria": [
         "assembler.py ffmpeg commands include -tune animation for H.264 encoding",
         "All quality presets (final, web, social) include the flag",
@@ -27,7 +27,7 @@
         "Typecheck passes"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
       "notes": "Quick win. 1-line change."
     },
     {
@@ -422,7 +422,7 @@
     {
       "id": "US-029",
       "title": "Add Kling 3.0 as B-roll generation alternative",
-      "description": "Create library/pipeline/kling_generator.py that generates B-roll video clips using Kling 3.0 API. Kling 3.0 offers 4K/60fps output at $0.029/sec (vs $0.12/sec for Runway Gen-4.5) — a 75% cost reduction. Supports multi-shot character consistency.",
+      "description": "Create library/pipeline/kling_generator.py that generates B-roll video clips using Kling 3.0 API. Kling 3.0 offers 4K/60fps output at $0.029/sec (vs $0.12/sec for Runway Gen-4.5) \u2014 a 75% cost reduction. Supports multi-shot character consistency.",
       "acceptanceCriteria": [
         "library/pipeline/kling_generator.py exists",
         "generate_clip(prompt, duration, resolution) calls Kling 3.0 API",
