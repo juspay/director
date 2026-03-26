@@ -291,3 +291,9 @@ PRD: Director Pipeline Improvements (32 user stories)
 - Added pysubs2>=1.6 to requirements.txt
 - Files changed: caption_burner.py, requirements.txt
 ---
+
+## 2026-03-26 - US-024
+- Added youtube, linkedin, twitter, tiktok, producthunt presets
+- PRESETS dict now has 14 entries
+- Files changed: pipeline_config.py
+---
