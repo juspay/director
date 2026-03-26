@@ -74,3 +74,16 @@ PRD: Director Pipeline Improvements (32 user stories)
   - pyloudnorm needs float64 data in [-1,1] with shape (samples, channels) — int16 WAV data must be converted
   - TARGET_LUFS and LUFS_TOLERANCE are module-level constants for easy tuning
 ---
+
+## 2026-03-26 - US-007
+- Replaced RMS-based VAD with Silero VAD (torch.hub snakers4/silero-vad)
+- Added _detect_voice_silero() with 16kHz resampling and timestamp mapping
+- Preserved _detect_voice_rms() as fallback when torch not installed
+- Added torch>=2.0 to requirements.txt (optional dependency)
+- Files changed: vad_mixer.py, requirements.txt
+- **Learnings for future iterations:**
+  - Silero VAD needs 16kHz audio — resample with scipy.signal.resample before processing
+  - get_speech_timestamps() returns list of dicts with 'start'/'end' keys in samples at 16kHz
+  - torch.hub.load caches the model after first download (~4MB)
+  - The existing create_duck_envelope() function is agnostic to the VAD source — any 0/1 activity array works
+---

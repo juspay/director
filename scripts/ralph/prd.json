@@ -97,7 +97,7 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
       "notes": "Moderate refactor. pip install silero-vad. The VAD returns per-frame speech probabilities."
     },
     {
