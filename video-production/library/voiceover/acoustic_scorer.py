@@ -2,7 +2,7 @@
 """
 V7 Voiceover Scoring — Technical audio analysis + composite scoring.
 
-Analyzes each voiceover variation across 8 measurable criteria:
+Analyzes each voiceover variation across 9 measurable criteria:
 1. Pacing (WPM closeness to 150 target)
 2. Duration fit (closeness to 160s target)
 3. Dynamic range (RMS energy variation — expressiveness)
@@ -11,6 +11,7 @@ Analyzes each voiceover variation across 8 measurable criteria:
 6. Spectral warmth (low-to-mid frequency emphasis)
 7. Consistency (RMS stability — avoids jarring shifts)
 8. Clarity (spectral centroid — presence without harshness)
+9. Perceived quality (UTMOSv2 MOS prediction — human naturalness)
 
 Usage:
     python score_voiceover_v7.py
@@ -24,6 +25,16 @@ from pathlib import Path
 import librosa
 import numpy as np
 
+try:
+    from speechmos import UTMOS
+    HAS_UTMOS = True
+except ImportError:
+    try:
+        from speechmos import dnsmos
+        HAS_UTMOS = False  # Has speechmos but not UTMOS model
+    except ImportError:
+        HAS_UTMOS = False
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
 logger = logging.getLogger(__name__)
 
@@ -36,15 +47,17 @@ TARGET_WPM = 118.0  # TTS natural delivery rate for this narration length
 WORD_COUNT = 296  # from metadata
 
 # Weight each criterion (total = 1.0)
+# MOS (perceived quality) gets 0.10 weight, redistributed proportionally from others
 WEIGHTS = {
-    "pacing": 0.15,
-    "duration_fit": 0.10,
-    "dynamic_range": 0.15,
-    "silence_quality": 0.10,
-    "energy_arc": 0.20,
-    "spectral_warmth": 0.10,
-    "consistency": 0.10,
-    "clarity": 0.10,
+    "pacing": 0.13,
+    "duration_fit": 0.09,
+    "dynamic_range": 0.13,
+    "silence_quality": 0.09,
+    "energy_arc": 0.18,
+    "spectral_warmth": 0.09,
+    "consistency": 0.09,
+    "clarity": 0.09,
+    "perceived_quality": 0.11,  # UTMOSv2 MOS prediction (0 if unavailable)
 }
 
 
@@ -257,6 +270,34 @@ def score_clarity(y: np.ndarray, sr: int) -> float:
     return round(float(score), 2), round(float(mean_centroid), 0)
 
 
+def score_perceived_quality(audio_path: str) -> tuple[float, float]:
+    """Score perceived naturalness using UTMOSv2 MOS prediction.
+
+    UTMOSv2 predicts human Mean Opinion Score (1-5 scale) directly from audio.
+    We normalize to 0-10 scale for consistency with other criteria.
+
+    Returns (score_0_to_10, raw_mos_1_to_5).
+    """
+    if not HAS_UTMOS:
+        logger.info("  [MOS] UTMOSv2 not available (install speechmos). Using default score.")
+        return 5.0, 0.0  # Neutral score if unavailable
+
+    try:
+        predictor = UTMOS()
+        mos = predictor.predict(audio_path)
+
+        # MOS scale: 1 (bad) to 5 (excellent)
+        # Normalize to 0-10: (mos - 1) / 4 * 10
+        score = max(0.0, min(10.0, (mos - 1.0) / 4.0 * 10.0))
+
+        logger.info(f"  [MOS] UTMOSv2 predicted MOS: {mos:.2f}/5.0 → {score:.1f}/10")
+        return round(score, 2), round(float(mos), 3)
+
+    except Exception as e:
+        logger.warning(f"  [MOS] UTMOSv2 prediction failed: {e}. Using default score.")
+        return 5.0, 0.0
+
+
 def analyze_variation(variation: dict) -> dict:
     """Full analysis of one voiceover variation."""
     var_id = variation["variation_id"]
@@ -276,6 +317,7 @@ def analyze_variation(variation: dict) -> dict:
     warmth_score, warmth_ratio = score_spectral_warmth(y, sr)
     consistency_score, consistency_cv = score_consistency(y, sr)
     clarity_score, clarity_centroid = score_clarity(y, sr)
+    mos_score, raw_mos = score_perceived_quality(audio_path)
 
     scores = {
         "pacing": pacing_score,
@@ -286,6 +328,7 @@ def analyze_variation(variation: dict) -> dict:
         "spectral_warmth": warmth_score,
         "consistency": consistency_score,
         "clarity": clarity_score,
+        "perceived_quality": mos_score,
     }
 
     # Weighted composite
@@ -306,12 +349,13 @@ def analyze_variation(variation: dict) -> dict:
             "warmth_ratio": warmth_ratio,
             "consistency_cv": consistency_cv,
             "clarity_centroid_hz": clarity_centroid,
+            "mos_raw": raw_mos,
         },
     }
 
     logger.info(f"[{var_id}] Composite: {composite:.2f}/10 | "
                 f"Pacing={pacing_score} Duration={duration_score} "
-                f"Dynamic={dynamic_score} Silence={silence_score} "
+                f"Dynamic={dynamic_score} Silence={silence_score} MOS={mos_score} "
                 f"Energy={energy_score} Warmth={warmth_score} "
                 f"Consistency={consistency_score} Clarity={clarity_score}")
 

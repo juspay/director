@@ -6,6 +6,7 @@ mutagen>=1.47.0
 optuna>=3.0  # Bayesian optimization for TTS parameter search
 pedalboard>=0.9  # Spotify Pedalboard — studio-quality audio effects (optional)
 pyloudnorm>=0.1
+speechmos>=1.0  # UTMOSv2 MOS prediction for voiceover quality (optional)
 python-dotenv>=1.0.0
 torch>=2.0  # for Silero VAD (optional — mixer falls back to RMS if missing)
 tenacity>=8.2.0
