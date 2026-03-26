@@ -90,26 +90,37 @@ def load_video_as_part(video_path: Path) -> types.Part:
 
 
 def analyze(client: genai.Client, prompt: str, video_parts: list,
-            temperature: float = 0.0, cached_content: str | None = None) -> tuple:
+            temperature: float = 0.0, cached_content: str | None = None,
+            media_resolution: str | None = None) -> tuple:
     """Send multimodal prompt with video(s) and return text response + usage.
 
-    If cached_content is provided (a cache resource name), the video content
-    is served from cache (90% cheaper on input tokens for runs 2+).
+    Args:
+        cached_content: Cache resource name for token savings on repeat runs.
+        media_resolution: "low" (~100 tok/s, 67% cheaper) or None (default ~300 tok/s).
     """
     parts = list(video_parts)
     parts.append(types.Part.from_text(text=prompt))
 
-    cache_label = " [CACHED]" if cached_content else ""
-    print(f"  Sending to {MODEL} ({len(video_parts)} video(s), ~{len(prompt)} chars prompt){cache_label}...")
+    labels = []
+    if cached_content:
+        labels.append("CACHED")
+    if media_resolution:
+        labels.append(f"res={media_resolution}")
+    label_str = f" [{', '.join(labels)}]" if labels else ""
+    print(f"  Sending to {MODEL} ({len(video_parts)} video(s), ~{len(prompt)} chars prompt){label_str}...")
+
+    config_kwargs = {
+        "temperature": temperature,
+        "max_output_tokens": 8192,
+        "thinking_config": types.ThinkingConfig(thinking_budget=4096),
+    }
+    if media_resolution:
+        config_kwargs["media_resolution"] = media_resolution
 
     generate_kwargs = {
         "model": MODEL,
         "contents": [types.Content(role="user", parts=parts)],
-        "config": types.GenerateContentConfig(
-            temperature=temperature,
-            max_output_tokens=8192,
-            thinking_config=types.ThinkingConfig(thinking_budget=4096),
-        ),
+        "config": types.GenerateContentConfig(**config_kwargs),
     }
     if cached_content:
         generate_kwargs["cached_content"] = cached_content
@@ -369,7 +380,10 @@ def cmd_score(args):
     video_part = load_video_as_part(video_path)
 
     num_runs = args.runs
-    print(f"\nRunning {num_runs} scoring run(s) for iteration {args.iteration}...")
+    low_res = getattr(args, "low_res", False)
+    resolution = "low" if low_res else None
+    res_label = " [low-res]" if low_res else ""
+    print(f"\nRunning {num_runs} scoring run(s) for iteration {args.iteration}{res_label}...")
 
     all_scores = []
     all_texts = []
@@ -386,7 +400,8 @@ def cmd_score(args):
 
         # After run 1, try to cache the video content for runs 2+ (90% token savings)
         if run == 1 and num_runs > 1:
-            text, usage = analyze(client, scoring_prompt, [video_part], temperature=0.0)
+            text, usage = analyze(client, scoring_prompt, [video_part],
+                                  temperature=0.0, media_resolution=resolution)
             # Create cache for subsequent runs
             try:
                 cache = client.caches.create(
@@ -400,7 +415,8 @@ def cmd_score(args):
                 print(f"  [cache] Caching not available: {e} — continuing without cache")
         else:
             text, usage = analyze(client, scoring_prompt, [video_part],
-                                  temperature=0.0, cached_content=cache_name)
+                                  temperature=0.0, cached_content=cache_name,
+                                  media_resolution=resolution)
         all_texts.append(text)
 
         overall = extract_overall_score(text)
@@ -504,6 +520,10 @@ def main():
     score_parser.add_argument(
         "--tier", choices=["dev", "official"], default="dev",
         help="Scoring tier: dev (Flash, 1 run, ~$0.04) or official (Pro, 3 runs, ~$0.16)",
+    )
+    score_parser.add_argument(
+        "--low-res", action="store_true",
+        help="Use low media resolution (~100 tok/s vs ~300 tok/s, 67%% fewer video tokens)",
     )
     score_parser.add_argument(
         "--video",
