@@ -106,6 +106,9 @@ class EncodingPreset:
             "-level", self.video_level,
             "-pix_fmt", self.pixel_format,
         ]
+        # -tune animation optimizes for flat color and hard edges (ideal for Remotion motion graphics)
+        if self.video_codec == "libx264":
+            args += ["-tune", "animation"]
         if self.max_bitrate:
             args += ["-maxrate", self.max_bitrate, "-bufsize", self.bufsize or self.max_bitrate]
         if self.width != 1920 or self.height != 1080:
