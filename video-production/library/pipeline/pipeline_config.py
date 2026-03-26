@@ -219,6 +219,52 @@ PRESETS: Dict[str, EncodingPreset] = {
         video_bitrate="8M",
         audio_bitrate="192k",
     ),
+    # Platform-specific export presets
+    "youtube": EncodingPreset(
+        name="youtube",
+        video_crf=18,
+        video_preset="slow",
+        audio_bitrate="320k",
+        # YouTube re-encodes everything; upload highest quality
+    ),
+    "linkedin": EncodingPreset(
+        name="linkedin",
+        video_crf=20,
+        video_preset="medium",
+        audio_bitrate="192k",
+        # LinkedIn: 1920x1080, 16:9, max 15 min desktop
+    ),
+    "twitter": EncodingPreset(
+        name="twitter",
+        video_crf=23,
+        video_preset="medium",
+        audio_bitrate="160k",
+        width=1280,
+        height=720,
+        max_bitrate="4M",
+        bufsize="8M",
+        # Twitter/X: 1280x720 recommended, max 2:20 standard users
+    ),
+    "tiktok": EncodingPreset(
+        name="tiktok",
+        video_crf=23,
+        video_preset="medium",
+        audio_bitrate="192k",
+        width=1080,
+        height=1920,
+        # TikTok: 9:16 vertical, mandatory for full-screen
+    ),
+    "producthunt": EncodingPreset(
+        name="producthunt",
+        video_crf=28,
+        video_preset="medium",
+        audio_bitrate="128k",
+        width=1080,
+        height=1080,
+        max_bitrate="3M",
+        bufsize="6M",
+        # Product Hunt: 1:1 square, under 30MB, under 60s, auto-loops
+    ),
 }
 
 
