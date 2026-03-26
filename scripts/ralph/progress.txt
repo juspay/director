@@ -24,3 +24,12 @@ PRD: Director Pipeline Improvements (32 user stories)
   - ffmpeg_video_args() is the main encoding flag generator, but assembler.py has a hardcoded libx264 call in apply_color_grade() — always check both
   - The flag auto-applies only when video_codec == "libx264" so it's future-safe for AV1/HEVC presets
 ---
+
+## 2026-03-26 - US-002
+- Upgraded Whisper model_size from "large-v2" to "large-v3-turbo" in caption_burner.py
+- Updated docstring and comment to reflect new model specs
+- Files changed: caption_burner.py
+- **Learnings for future iterations:**
+  - caption_burner.py has a single model_size default parameter — change it there
+  - The model name must match faster-whisper's CTranslate2 conversion names on HuggingFace
+---
