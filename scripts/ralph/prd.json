@@ -125,7 +125,7 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
       "notes": "New preset definition + update assembler to handle AV1 codec selection."
     },
     {
