@@ -58,6 +58,12 @@ try:
 except ImportError:
     HAS_SILERO = False
 
+try:
+    import pedalboard
+    HAS_PEDALBOARD = True
+except ImportError:
+    HAS_PEDALBOARD = False
+
 from music_config import (
     SFX_TIMESTAMPS, SAMPLE_RATE, DUCK_DB, DUCK_ATTACK_MS,
     DUCK_RELEASE_MS, LIMITER_THRESHOLD_DB, MP3_BITRATE,
@@ -272,13 +278,59 @@ def create_duck_envelope(voiceover: np.ndarray, duck_db: float | None = None) ->
 
 
 # --------------------------------------------------------------------------
-# Compression & limiting
+# Compression & limiting (Pedalboard when available, NumPy fallback)
 # --------------------------------------------------------------------------
 
 def soft_compress(signal: np.ndarray, threshold_db: float = -12.0,
                   ratio: float = 3.0, attack_ms: float = 5.0,
                   release_ms: float = 50.0) -> np.ndarray:
-    """Simple soft-knee compressor."""
+    """Compress audio dynamics. Uses Spotify Pedalboard (C++/JUCE, ~300x faster)
+    when available, falling back to a sample-by-sample Python implementation."""
+    if HAS_PEDALBOARD:
+        return _compress_pedalboard(signal, threshold_db, ratio, attack_ms, release_ms)
+    return _compress_numpy(signal, threshold_db, ratio, attack_ms, release_ms)
+
+
+def brick_wall_limiter(signal: np.ndarray,
+                       threshold_db: float = -1.0) -> np.ndarray:
+    """Brick-wall limiter. Uses Pedalboard Limiter when available."""
+    if HAS_PEDALBOARD:
+        return _limit_pedalboard(signal, threshold_db)
+    return _limit_numpy(signal, threshold_db)
+
+
+def _compress_pedalboard(signal: np.ndarray, threshold_db: float,
+                         ratio: float, attack_ms: float,
+                         release_ms: float) -> np.ndarray:
+    """Compressor via Spotify Pedalboard (C++ JUCE backend)."""
+    board = pedalboard.Pedalboard([
+        pedalboard.Compressor(
+            threshold_db=threshold_db,
+            ratio=ratio,
+            attack_ms=attack_ms,
+            release_ms=release_ms,
+        ),
+    ])
+    # Pedalboard expects float32 with shape (channels, samples)
+    audio = signal.astype(np.float32).reshape(1, -1)
+    processed = board(audio, SR)
+    return processed.flatten().astype(signal.dtype)
+
+
+def _limit_pedalboard(signal: np.ndarray, threshold_db: float) -> np.ndarray:
+    """Limiter via Spotify Pedalboard."""
+    board = pedalboard.Pedalboard([
+        pedalboard.Limiter(threshold_db=threshold_db),
+    ])
+    audio = signal.astype(np.float32).reshape(1, -1)
+    processed = board(audio, SR)
+    return processed.flatten().astype(signal.dtype)
+
+
+def _compress_numpy(signal: np.ndarray, threshold_db: float = -12.0,
+                    ratio: float = 3.0, attack_ms: float = 5.0,
+                    release_ms: float = 50.0) -> np.ndarray:
+    """Fallback soft-knee compressor (sample-by-sample Python)."""
     threshold = 10 ** (threshold_db / 20.0)
     attack_coeff = np.exp(-1.0 / (attack_ms / 1000.0 * SR))
     release_coeff = np.exp(-1.0 / (release_ms / 1000.0 * SR))
@@ -302,9 +354,8 @@ def soft_compress(signal: np.ndarray, threshold_db: float = -12.0,
     return output
 
 
-def brick_wall_limiter(signal: np.ndarray,
-                       threshold_db: float = -1.0) -> np.ndarray:
-    """Brick-wall limiter to prevent clipping."""
+def _limit_numpy(signal: np.ndarray, threshold_db: float = -1.0) -> np.ndarray:
+    """Fallback brick-wall limiter."""
     threshold = 10 ** (threshold_db / 20.0)
     peak = np.max(np.abs(signal))
     if peak > threshold:

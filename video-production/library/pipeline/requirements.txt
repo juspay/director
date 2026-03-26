@@ -2,6 +2,7 @@ faster-whisper>=1.0.0
 httpx>=0.27.0
 moviepy>=2.0.0
 mutagen>=1.47.0
+pedalboard>=0.9  # Spotify Pedalboard — studio-quality audio effects (optional)
 pyloudnorm>=0.1
 python-dotenv>=1.0.0
 torch>=2.0  # for Silero VAD (optional — mixer falls back to RMS if missing)
