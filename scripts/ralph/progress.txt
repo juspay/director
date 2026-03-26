@@ -329,3 +329,9 @@ PRD: Director Pipeline Improvements (32 user stories)
 - Both: async generation, polling, variant support, CLI
 - Files changed: kling_generator.py (new), veo_generator.py (new)
 ---
+
+## 2026-03-26 - US-031 + US-032
+- Consolidated requirements.txt: organized by domain, all deps with version pins
+- Created library/README.md: full directory structure, module docs, quick start
+- Files changed: requirements.txt, README.md (new)
+---
