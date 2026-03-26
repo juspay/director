@@ -4,4 +4,5 @@ moviepy>=2.0.0
 mutagen>=1.47.0
 pyloudnorm>=0.1
 python-dotenv>=1.0.0
+torch>=2.0  # for Silero VAD (optional — mixer falls back to RMS if missing)
 tenacity>=8.2.0

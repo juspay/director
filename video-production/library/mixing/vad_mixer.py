@@ -52,6 +52,12 @@ try:
 except ImportError:
     HAS_PYLOUDNORM = False
 
+try:
+    import torch
+    HAS_SILERO = True
+except ImportError:
+    HAS_SILERO = False
+
 from music_config import (
     SFX_TIMESTAMPS, SAMPLE_RATE, DUCK_DB, DUCK_ATTACK_MS,
     DUCK_RELEASE_MS, LIMITER_THRESHOLD_DB, MP3_BITRATE,
@@ -160,7 +166,62 @@ def pad_to_length(signal: np.ndarray, length: int) -> np.ndarray:
 
 def detect_voice_activity(voiceover: np.ndarray, frame_ms: int = 20,
                           threshold: float = 0.01) -> np.ndarray:
-    """Detect voice activity per sample (returns 0/1 array)."""
+    """Detect voice activity per sample (returns 0/1 array).
+
+    Uses Silero VAD (ML-based, MIT licensed, <1ms per chunk) when torch is
+    available. Falls back to simple RMS threshold if torch is not installed.
+    Silero handles background noise and quiet speech far better than RMS.
+    """
+    if HAS_SILERO:
+        return _detect_voice_silero(voiceover)
+    return _detect_voice_rms(voiceover, frame_ms, threshold)
+
+
+def _detect_voice_silero(voiceover: np.ndarray) -> np.ndarray:
+    """Voice activity detection using Silero VAD model."""
+    # Silero VAD expects 16kHz mono audio
+    SILERO_SR = 16000
+    activity = np.zeros(len(voiceover))
+
+    # Load model (cached after first call)
+    model, utils = torch.hub.load(repo_or_dir='snakers4/silero-vad',
+                                  model='silero_vad',
+                                  trust_repo=True)
+    (get_speech_timestamps, _, _, _, _) = utils
+
+    # Resample to 16kHz if needed
+    if SR != SILERO_SR:
+        from scipy.signal import resample
+        num_samples_16k = int(len(voiceover) * SILERO_SR / SR)
+        audio_16k = resample(voiceover, num_samples_16k)
+    else:
+        audio_16k = voiceover
+
+    # Convert to torch tensor
+    wav_tensor = torch.FloatTensor(audio_16k)
+
+    # Get speech timestamps (in samples at 16kHz)
+    speech_timestamps = get_speech_timestamps(wav_tensor, model,
+                                               sampling_rate=SILERO_SR,
+                                               threshold=0.5)
+
+    # Map back to original sample rate
+    ratio = SR / SILERO_SR
+    for ts in speech_timestamps:
+        start = int(ts['start'] * ratio)
+        end = int(ts['end'] * ratio)
+        start = max(0, start)
+        end = min(len(activity), end)
+        activity[start:end] = 1.0
+
+    print(f"      [VAD] Silero detected {len(speech_timestamps)} speech segments")
+    return activity
+
+
+def _detect_voice_rms(voiceover: np.ndarray, frame_ms: int = 20,
+                      threshold: float = 0.01) -> np.ndarray:
+    """Fallback RMS-based voice activity detection."""
+    print("      [VAD] Using RMS fallback (install torch for Silero VAD)")
     frame_size = int(frame_ms / 1000.0 * SR)
     activity = np.zeros(len(voiceover))
 
