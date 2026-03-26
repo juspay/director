@@ -238,3 +238,16 @@ PRD: Director Pipeline Improvements (32 user stories)
   - response.stream_to_file() is the simplest way to save audio
   - DELIVERY_PRESETS dict provides reusable delivery styles for any project
 ---
+
+## 2026-03-26 - US-019
+- Created fish_audio.py with S2 Pro TTS integration
+- Voice cloning from 15-second reference, 80+ languages
+- Zero-shot cloning via multipart file upload
+- generate, clone CLI subcommands
+- Files changed: fish_audio.py (new)
+- **Learnings for future iterations:**
+  - Fish Audio API uses Bearer token auth, REST endpoint at api.fish.audio/v1/tts
+  - Zero-shot cloning: reference audio uploaded as multipart file with text as form data
+  - Voice ID cloning: reference_id in JSON payload
+  - httpx is already a dependency (used by other voiceover providers)
+---

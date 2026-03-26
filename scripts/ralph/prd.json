@@ -279,7 +279,7 @@
         "Typecheck passes"
       ],
       "priority": 7,
-      "passes": false,
+      "passes": true,
       "notes": "~$15/1M chars. Best value for quality."
     },
     {
