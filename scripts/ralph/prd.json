@@ -295,7 +295,7 @@
         "Typecheck passes"
       ],
       "priority": 7,
-      "passes": false,
+      "passes": true,
       "notes": "Requires US-011 (Pedalboard) to be completed first."
     },
     {
