@@ -182,3 +182,15 @@ PRD: Director Pipeline Improvements (32 user stories)
   - Default tier is "dev" (Flash) — use --tier official for production scoring
   - SCORING_TIERS dict is extensible (could add "budget" tier with low-res + Flash)
 ---
+
+## 2026-03-26 - US-015
+- Added --low-res flag to CLI (sets media_resolution="low" in Gemini API)
+- analyze() now accepts media_resolution parameter, passes to GenerateContentConfig
+- Low-res reduces video tokens by 67% (~100 tok/s vs ~300 tok/s)
+- Combined with Flash tier: ~$0.013/iteration vs ~$0.16 for official Pro
+- Files changed: gemini_video_scorer.py
+- **Learnings for future iterations:**
+  - media_resolution is a GenerateContentConfig param, not a Part param
+  - The Gemini Python SDK may use "media_resolution" or "mediaResolution" depending on version
+  - Low-res + Flash + single run = cheapest possible scoring (~95% savings vs default Pro)
+---
