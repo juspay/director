@@ -34,17 +34,20 @@ def generate_srt(
     audio_path: Path,
     output_path: Path | None = None,
     model_size: str = "large-v3-turbo",
+    language: str = "en",
 ) -> Path:
     """
-    Generate SRT captions from audio using faster-whisper.
+    Generate SRT captions from audio with precise word-level timestamps.
 
-    Uses large-v3-turbo for 4x faster inference with slightly better accuracy
-    than large-v2, and the same multilingual support (99+ languages).
+    Uses WhisperX (wav2vec2 forced alignment, ~20-30ms precision) when available,
+    falling back to faster-whisper (~50-100ms precision). WhisperX matters for
+    animated word-by-word captions where timing precision is critical.
 
     Args:
         audio_path: Path to the combined voiceover audio.
         output_path: Where to save the SRT file. Defaults to assets/captions.srt.
         model_size: Whisper model size. large-v3-turbo recommended for production.
+        language: Language code for transcription.
 
     Returns:
         Path to the generated SRT file.
@@ -56,68 +59,36 @@ def generate_srt(
         logger.info("SRT file already exists, skipping generation")
         return output_path
 
-    logger.info(f"Generating captions from {audio_path} using {model_size}")
+    # Try WhisperX first (better word alignment), fall back to faster-whisper
+    try:
+        import whisperx
+        words = _transcribe_whisperx(audio_path, model_size, language)
+        logger.info(f"  Using WhisperX (wav2vec2 forced alignment, ~20-30ms precision)")
+    except ImportError:
+        logger.info("  WhisperX not installed, using faster-whisper (~50-100ms precision)")
+        logger.info("  For better timing: pip install whisperx")
+        words = _transcribe_faster_whisper(audio_path, model_size, language)
 
-    from faster_whisper import WhisperModel
-
-    # Use GPU if available (CUDA), otherwise fall back to CPU.
-    # large-v3-turbo: 4x faster than large-v2 (216x RTF), 809M params, ~6GB VRAM.
-    model = WhisperModel(
-        model_size,
-        device="auto",
-        compute_type="auto",
-    )
-
-    segments, info = model.transcribe(
-        str(audio_path),
-        word_timestamps=True,
-        language="en",
-        # VAD filter removes silence gaps that would create empty subtitle lines
-        vad_filter=True,
-        vad_parameters=dict(
-            min_silence_duration_ms=500,
-        ),
-    )
-
-    logger.info(
-        f"Detected language: {info.language} "
-        f"(probability: {info.language_probability:.2f})"
-    )
-
-    # Build SRT entries from word-level timestamps.
-    # We group words into subtitle lines of ~8-12 words for readability,
-    # breaking at natural pauses (>300ms gap) or punctuation.
+    # Build SRT entries from word-level timestamps
     srt_entries = []
     current_words: list[dict] = []
     entry_index = 1
 
-    for segment in segments:
-        if not segment.words:
-            continue
+    for word in words:
+        current_words.append(word)
 
-        for word in segment.words:
-            current_words.append({
-                "text": word.word.strip(),
-                "start": word.start,
-                "end": word.end,
-            })
+        should_break = False
+        if len(current_words) >= 10:
+            should_break = True
+        elif len(current_words) >= 6 and word["text"].endswith((".", "?", "!", ",")):
+            should_break = True
 
-            # Determine if we should break the current subtitle line
-            should_break = False
+        if should_break and current_words:
+            entry = _format_srt_entry(entry_index, current_words)
+            srt_entries.append(entry)
+            entry_index += 1
+            current_words = []
 
-            if len(current_words) >= 10:
-                should_break = True
-            elif len(current_words) >= 6 and word.word.strip().endswith((".", "?", "!", ",")):
-                # Break at punctuation for natural reading
-                should_break = True
-
-            if should_break and current_words:
-                entry = _format_srt_entry(entry_index, current_words)
-                srt_entries.append(entry)
-                entry_index += 1
-                current_words = []
-
-    # Flush remaining words
     if current_words:
         entry = _format_srt_entry(entry_index, current_words)
         srt_entries.append(entry)
@@ -128,6 +99,81 @@ def generate_srt(
 
     logger.info(f"Generated {entry_index - 1} subtitle entries to {output_path}")
     return output_path
+
+
+def _transcribe_whisperx(audio_path: Path, model_size: str, language: str) -> list[dict]:
+    """Transcribe with WhisperX — wav2vec2 forced alignment for ~20-30ms word precision."""
+    import whisperx
+
+    device = "cuda" if _has_cuda() else "cpu"
+    compute_type = "float16" if device == "cuda" else "int8"
+
+    # Step 1: Transcribe with Whisper
+    model = whisperx.load_model(model_size, device, compute_type=compute_type, language=language)
+    audio = whisperx.load_audio(str(audio_path))
+    result = model.transcribe(audio, batch_size=16)
+
+    # Step 2: Align with wav2vec2 for precise word timestamps
+    align_model, metadata = whisperx.load_align_model(language_code=language, device=device)
+    result = whisperx.align(result["segments"], align_model, metadata, audio, device,
+                            return_char_alignments=False)
+
+    # Extract words with timestamps
+    words = []
+    for segment in result["segments"]:
+        for word_info in segment.get("words", []):
+            if "start" in word_info and "end" in word_info:
+                words.append({
+                    "text": word_info["word"].strip(),
+                    "start": word_info["start"],
+                    "end": word_info["end"],
+                })
+
+    logger.info(f"  WhisperX: {len(words)} words with forced alignment")
+    return words
+
+
+def _transcribe_faster_whisper(audio_path: Path, model_size: str, language: str) -> list[dict]:
+    """Transcribe with faster-whisper — native Whisper word timestamps (~50-100ms)."""
+    from faster_whisper import WhisperModel
+
+    model = WhisperModel(model_size, device="auto", compute_type="auto")
+
+    segments, info = model.transcribe(
+        str(audio_path),
+        word_timestamps=True,
+        language=language,
+        vad_filter=True,
+        vad_parameters=dict(min_silence_duration_ms=500),
+    )
+
+    logger.info(
+        f"  Detected language: {info.language} "
+        f"(probability: {info.language_probability:.2f})"
+    )
+
+    words = []
+    for segment in segments:
+        if not segment.words:
+            continue
+        for word in segment.words:
+            words.append({
+                "text": word.word.strip(),
+                "start": word.start,
+                "end": word.end,
+            })
+
+    logger.info(f"  faster-whisper: {len(words)} words with native timestamps")
+    return words
+
+
+def _has_cuda() -> bool:
+    """Check if CUDA is available."""
+    try:
+        import torch
+        return torch.cuda.is_available()
+    except ImportError:
+        return False
 
 
 def _format_srt_entry(index: int, words: list[dict]) -> str:
