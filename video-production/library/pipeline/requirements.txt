@@ -3,6 +3,7 @@ ffmpeg-quality-metrics>=3.0  # VMAF/SSIM/PSNR computation
 httpx>=0.27.0
 moviepy>=2.0.0
 mutagen>=1.47.0
+openai>=1.0  # OpenAI gpt-4o-mini-tts voiceover provider
 optuna>=3.0  # Bayesian optimization for TTS parameter search
 pedalboard>=0.9  # Spotify Pedalboard — studio-quality audio effects (optional)
 pyloudnorm>=0.1
