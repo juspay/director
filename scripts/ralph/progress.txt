@@ -33,3 +33,11 @@ PRD: Director Pipeline Improvements (32 user stories)
   - caption_burner.py has a single model_size default parameter — change it there
   - The model name must match faster-whisper's CTranslate2 conversion names on HuggingFace
 ---
+
+## 2026-03-26 - US-003
+- Changed temperature from 0.1 to 0.0 in gemini_video_scorer.py (default param + call site)
+- Files changed: gemini_video_scorer.py
+- **Learnings for future iterations:**
+  - The analyze() function has both a default param AND an explicit call-site value — must change both
+  - The scoring prompt is stored in SCORING_PROMPT_V8 constant
+---
