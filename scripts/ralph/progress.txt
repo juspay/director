@@ -49,3 +49,15 @@ PRD: Director Pipeline Improvements (32 user stories)
   - ASS_STYLE is a single string constant at the top of caption_burner.py — all caption styling is there
   - For Shorts/TikTok vertical format, 44-48pt would be needed (separate preset)
 ---
+
+## 2026-03-26 - US-004
+- Refactored scoring prompt into a template with shuffleable dimension blocks
+- Added SCORING_DIMENSIONS data, DIMENSION_BODIES dict, build_scoring_prompt(run_seed)
+- Extraction regex now uses [A-G] instead of fixed letters
+- Each run gets a different dimension order via seeded Random
+- Files changed: gemini_video_scorer.py
+- **Learnings for future iterations:**
+  - The prompt was renamed from SCORING_PROMPT_V8 to SCORING_PROMPT_V8_TEMPLATE (uses .format())
+  - Any code referencing SCORING_PROMPT_V8 directly needs to use build_scoring_prompt() instead
+  - The extract_dimension_scores() regex uses dimension NAMES not letter prefixes
+---
