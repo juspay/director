@@ -114,3 +114,17 @@ PRD: Director Pipeline Improvements (32 user stories)
   - libopus is the natural audio codec pairing for AV1/WebM containers
   - extra_args field defaults to None, handled with `if self.extra_args` check
 ---
+
+## 2026-03-26 - US-010
+- Added draft_hw and preview_hw presets using h264_videotoolbox
+- Added video_bitrate field for hardware encoders (no CRF support)
+- Added h264_videotoolbox branch in ffmpeg_video_args()
+- Added is_videotoolbox_available() platform detection (Darwin + ffmpeg check)
+- Added get_preset(name, prefer_hw=True) for automatic HW fallback
+- Files changed: pipeline_config.py
+- **Learnings for future iterations:**
+  - VideoToolbox does NOT support CRF — must use -b:v bitrate mode
+  - is_videotoolbox_available() checks both platform.system() == "Darwin" AND ffmpeg encoder list
+  - get_preset() maps "draft" → "draft_hw" automatically when prefer_hw=True
+  - PRESETS dict now has 9 entries: final, preview, draft, web, social, av1_final, av1_web, draft_hw, preview_hw
+---
