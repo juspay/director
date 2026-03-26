@@ -41,3 +41,11 @@ PRD: Director Pipeline Improvements (32 user stories)
   - The analyze() function has both a default param AND an explicit call-site value — must change both
   - The scoring prompt is stored in SCORING_PROMPT_V8 constant
 ---
+
+## 2026-03-26 - US-005
+- Changed FontSize from 22 to 32 in ASS_STYLE constant
+- Files changed: caption_burner.py
+- **Learnings for future iterations:**
+  - ASS_STYLE is a single string constant at the top of caption_burner.py — all caption styling is there
+  - For Shorts/TikTok vertical format, 44-48pt would be needed (separate preset)
+---
