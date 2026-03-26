@@ -264,3 +264,16 @@ PRD: Director Pipeline Improvements (32 user stories)
   - The scipy fallback uses 4th-order Butterworth filters
   - Cutoff frequencies (200, 4000) are hardcoded but could be made configurable
 ---
+
+## 2026-03-26 - US-021
+- Refactored generate_srt() to use WhisperX with faster-whisper fallback
+- WhisperX: 3-step pipeline (transcribe → wav2vec2 align → extract words)
+- Both backends return unified list[dict] with text/start/end per word
+- Added whisperx>=3.0 to requirements.txt
+- Files changed: caption_burner.py, requirements.txt
+- **Learnings for future iterations:**
+  - WhisperX needs torch — uses _has_cuda() to pick device
+  - whisperx.align() requires the original audio array, not a file path
+  - WhisperX returns words inside segments[i]["words"] with start/end keys
+  - Some words may lack start/end if alignment fails — filter with "start" in word_info
+---

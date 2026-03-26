@@ -310,7 +310,7 @@
         "Typecheck passes"
       ],
       "priority": 7,
-      "passes": false,
+      "passes": true,
       "notes": "pip install whisperx. Important prerequisite for animated captions."
     },
     {
