@@ -277,3 +277,11 @@ PRD: Director Pipeline Improvements (32 user stories)
   - WhisperX returns words inside segments[i]["words"] with start/end keys
   - Some words may lack start/end if alignment fails — filter with "start" in word_info
 ---
+
+## 2026-03-26 - US-022
+- Added validate_wer() using jiwer for WER computation
+- Normalizes with jiwer.Compose transforms (lowercase, remove punctuation)
+- Warns if WER > 5%, logs exact error count
+- Added jiwer>=3.0 to requirements.txt
+- Files changed: caption_burner.py, requirements.txt
+---

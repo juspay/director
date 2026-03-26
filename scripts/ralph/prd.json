@@ -326,7 +326,7 @@
         "Typecheck passes"
       ],
       "priority": 7,
-      "passes": false,
+      "passes": true,
       "notes": "pip install jiwer. Unique advantage since we have source scripts."
     },
     {
