@@ -46,6 +46,12 @@ except ImportError:
     print("         For MP3 export, install: pip install pydub")
     HAS_PYDUB = False
 
+try:
+    import pyloudnorm as pyln
+    HAS_PYLOUDNORM = True
+except ImportError:
+    HAS_PYLOUDNORM = False
+
 from music_config import (
     SFX_TIMESTAMPS, SAMPLE_RATE, DUCK_DB, DUCK_ATTACK_MS,
     DUCK_RELEASE_MS, LIMITER_THRESHOLD_DB, MP3_BITRATE,
@@ -54,6 +60,62 @@ from music_config import (
 
 
 SR = SAMPLE_RATE
+
+# LUFS target for web video (YouTube, Spotify normalize to ~-14 LUFS)
+TARGET_LUFS = -14.0
+LUFS_TOLERANCE = 2.0  # warn if outside target +/- this
+
+
+def measure_loudness(wav_path: str, sample_rate: int = None) -> dict | None:
+    """Measure integrated LUFS and true peak of a WAV file using pyloudnorm.
+
+    Returns dict with 'integrated_lufs', 'true_peak_dbtp', and 'on_target' flag,
+    or None if pyloudnorm is not installed.
+    """
+    if not HAS_PYLOUDNORM:
+        print("      [loudness] pyloudnorm not installed — skipping LUFS measurement")
+        return None
+
+    sr = sample_rate or SR
+    data, _ = None, None
+    try:
+        from scipy.io import wavfile as _wf
+        _sr, _data = _wf.read(wav_path)
+        sr = _sr
+        # Convert to float64 in [-1, 1] range
+        if _data.dtype == np.int16:
+            data = _data.astype(np.float64) / 32768.0
+        elif _data.dtype == np.int32:
+            data = _data.astype(np.float64) / 2147483648.0
+        else:
+            data = _data.astype(np.float64)
+    except Exception as e:
+        print(f"      [loudness] Could not read {wav_path}: {e}")
+        return None
+
+    # Ensure mono or stereo (pyloudnorm needs shape (samples,) or (samples, channels))
+    if data.ndim == 1:
+        data = data.reshape(-1, 1)
+
+    meter = pyln.Meter(sr)
+    integrated_lufs = meter.integrated_loudness(data)
+    true_peak = pyln.true_peak(data, sr)
+
+    on_target = abs(integrated_lufs - TARGET_LUFS) <= LUFS_TOLERANCE
+    status = "OK" if on_target else "WARNING"
+
+    print(f"      [loudness] Integrated: {integrated_lufs:.1f} LUFS (target: {TARGET_LUFS} +/- {LUFS_TOLERANCE})")
+    print(f"      [loudness] True Peak: {true_peak:.1f} dBTP (max: -1.0 dBTP)")
+    if not on_target:
+        print(f"      [loudness] {status}: LUFS is {abs(integrated_lufs - TARGET_LUFS):.1f} outside target range")
+    if true_peak > -1.0:
+        print(f"      [loudness] WARNING: True peak exceeds -1.0 dBTP")
+
+    return {
+        "integrated_lufs": round(integrated_lufs, 2),
+        "true_peak_dbtp": round(true_peak, 2),
+        "on_target": on_target,
+    }
 
 
 # --------------------------------------------------------------------------
@@ -310,6 +372,7 @@ def mix_with_pydub(music_path: str, sfx_dir: str,
     wav_path = os.path.join(output_dir, f"{base_name}.wav")
     mix.export(wav_path, format="wav")
     print(f"      WAV: {wav_path} ({len(mix)/1000:.1f}s)")
+    measure_loudness(wav_path)
 
     try:
         mp3_path = os.path.join(output_dir, f"{base_name}.mp3")
@@ -390,6 +453,7 @@ def mix_with_scipy(music_path: str, sfx_dir: str,
     wav_path = os.path.join(output_dir, f"{base_name}.wav")
     wavfile.write(wav_path, SR, combined_16)
     print(f"      WAV: {wav_path} ({len(combined_16)/SR:.1f}s)")
+    measure_loudness(wav_path)
     print("      (Install pydub + ffmpeg for MP3 export)")
 
 
