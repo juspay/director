@@ -322,3 +322,10 @@ PRD: Director Pipeline Improvements (32 user stories)
 - Loopable output support, 48kHz/24-bit broadcast quality
 - Files changed: elevenlabs_sfx.py (new)
 ---
+
+## 2026-03-26 - US-029 + US-030
+- Created kling_generator.py (Kling 3.0, 75% cheaper B-roll)
+- Created veo_generator.py (Veo 3.1 via Gemini API, native audio)
+- Both: async generation, polling, variant support, CLI
+- Files changed: kling_generator.py (new), veo_generator.py (new)
+---
