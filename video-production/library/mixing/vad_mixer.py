@@ -277,6 +277,78 @@ def create_duck_envelope(voiceover: np.ndarray, duck_db: float | None = None) ->
     return envelope
 
 
+def apply_frequency_aware_ducking(
+    music: np.ndarray,
+    duck_envelope: np.ndarray,
+    low_cutoff: float = 200.0,
+    high_cutoff: float = 4000.0,
+) -> np.ndarray:
+    """Apply ducking only to the voice frequency range (200-4000 Hz).
+
+    Splits music into 3 bands:
+    - Low (<200 Hz): bass — passes through unattenuated
+    - Mid (200-4000 Hz): voice range — ducked during narration
+    - High (>4000 Hz): shimmer/air — passes through unattenuated
+
+    This preserves the bass groove and high-end presence of the music
+    while clearing space for the narration in the voice frequency range.
+
+    Uses Pedalboard filters when available for speed, scipy butterworth fallback.
+    """
+    if HAS_PEDALBOARD:
+        return _freq_duck_pedalboard(music, duck_envelope, low_cutoff, high_cutoff)
+    return _freq_duck_scipy(music, duck_envelope, low_cutoff, high_cutoff)
+
+
+def _freq_duck_pedalboard(
+    music: np.ndarray, duck_envelope: np.ndarray,
+    low_cutoff: float, high_cutoff: float,
+) -> np.ndarray:
+    """Frequency-aware ducking using Pedalboard filters."""
+    audio_f32 = music.astype(np.float32).reshape(1, -1)
+
+    # Extract low band (< low_cutoff)
+    low_board = pedalboard.Pedalboard([pedalboard.LowpassFilter(cutoff_frequency_hz=low_cutoff)])
+    low_band = low_board(audio_f32, SR).flatten()
+
+    # Extract high band (> high_cutoff)
+    high_board = pedalboard.Pedalboard([pedalboard.HighpassFilter(cutoff_frequency_hz=high_cutoff)])
+    high_band = high_board(audio_f32, SR).flatten()
+
+    # Mid band = original - low - high
+    mid_band = music - low_band.astype(music.dtype) - high_band.astype(music.dtype)
+
+    # Duck only the mid band
+    mid_ducked = mid_band * duck_envelope
+
+    # Recombine
+    return low_band.astype(music.dtype) + mid_ducked + high_band.astype(music.dtype)
+
+
+def _freq_duck_scipy(
+    music: np.ndarray, duck_envelope: np.ndarray,
+    low_cutoff: float, high_cutoff: float,
+) -> np.ndarray:
+    """Frequency-aware ducking using scipy butterworth filters (fallback)."""
+    nyquist = SR / 2.0
+
+    # Design butterworth filters
+    b_low, a_low = butter(4, low_cutoff / nyquist, btype='low')
+    b_high, a_high = butter(4, high_cutoff / nyquist, btype='high')
+    b_band, a_band = butter(4, [low_cutoff / nyquist, high_cutoff / nyquist], btype='band')
+
+    # Apply filters
+    low_band = lfilter(b_low, a_low, music)
+    high_band = lfilter(b_high, a_high, music)
+    mid_band = lfilter(b_band, a_band, music)
+
+    # Duck only mid band
+    mid_ducked = mid_band * duck_envelope
+
+    # Recombine
+    return low_band + mid_ducked + high_band
+
+
 # --------------------------------------------------------------------------
 # Compression & limiting (Pedalboard when available, NumPy fallback)
 # --------------------------------------------------------------------------
@@ -433,11 +505,11 @@ def mix_with_pydub(music_path: str, sfx_dir: str,
         mix_array = pad_to_length(mix_array, max_len)
         vo_array = pad_to_length(vo_array, max_len)
 
-        # Apply ducking (use override if provided)
+        # Apply frequency-aware ducking (only ducks 200-4000 Hz voice range)
         effective_duck_db = duck_db_override if duck_db_override is not None else DUCK_DB
         duck_env = create_duck_envelope(vo_array, duck_db=effective_duck_db)
-        mix_array *= duck_env
-        print(f"      Ducking level: {effective_duck_db} dB")
+        mix_array = apply_frequency_aware_ducking(mix_array, duck_env)
+        print(f"      Frequency-aware ducking: {effective_duck_db} dB (200-4000 Hz only)")
 
         # Combine
         combined = mix_array + vo_array * 1.2  # VO slightly louder than music
@@ -544,8 +616,8 @@ def mix_with_scipy(music_path: str, sfx_dir: str,
 
         effective_duck_db = duck_db_override if duck_db_override is not None else DUCK_DB
         duck_env = create_duck_envelope(vo, duck_db=effective_duck_db)
-        music *= duck_env
-        print(f"      Ducking level: {effective_duck_db} dB")
+        music = apply_frequency_aware_ducking(music, duck_env)
+        print(f"      Frequency-aware ducking: {effective_duck_db} dB (200-4000 Hz only)")
         combined = music + vo * 1.2
     else:
         if voiceover_path:
