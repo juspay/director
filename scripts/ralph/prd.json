@@ -65,7 +65,7 @@
         "Typecheck passes"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
       "notes": "Quick win. 1-line change."
     },
     {
