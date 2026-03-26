@@ -224,3 +224,17 @@ PRD: Director Pipeline Improvements (32 user stories)
   - speechmos UTMOS import may vary between versions — try/except pattern handles this
   - The scorer now has 9 criteria; genetic_optimizer.py inlines its own scoring — keep in sync
 ---
+
+## 2026-03-26 - US-018
+- Created openai_tts.py with gpt-4o-mini-tts integration
+- Prompt-steerable delivery via "instructions" parameter
+- Per-scene generation, variant A/B testing, 5 delivery presets
+- 10 voices, ~$15/1M chars
+- Added openai>=1.0 to requirements.txt
+- Files changed: openai_tts.py (new), requirements.txt
+- **Learnings for future iterations:**
+  - gpt-4o-mini-tts uses "instructions" param (not "system" like chat models)
+  - Only gpt-4o-mini-tts supports instructions — tts-1/tts-1-hd do not
+  - response.stream_to_file() is the simplest way to save audio
+  - DELIVERY_PRESETS dict provides reusable delivery styles for any project
+---
