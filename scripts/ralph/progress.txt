@@ -194,3 +194,19 @@ PRD: Director Pipeline Improvements (32 user stories)
   - The Gemini Python SDK may use "media_resolution" or "mediaResolution" depending on version
   - Low-res + Flash + single run = cheapest possible scoring (~95% savings vs default Pro)
 ---
+
+## 2026-03-26 - US-016
+- Added run_optuna_iteration() with TPE sampler, SQLite persistence
+- Optuna is now the default optimizer (--optimizer optuna)
+- Genetic still available via --optimizer genetic
+- Optuna objective wraps generate_and_score_variation() — same scoring pipeline
+- Results saved to cumulative JSON for leaderboard compatibility
+- Added optuna>=3.0 to requirements.txt
+- Files changed: genetic_optimizer.py, requirements.txt
+- **Learnings for future iterations:**
+  - Optuna doesn't natively support async objectives — used ThreadPoolExecutor workaround
+  - Study stored in SQLite at OUTPUT_DIR/{study_name}.db — auto-resumes on crash
+  - TPE sampler with seed=42 for reproducibility
+  - Default is now --optimizer optuna --rounds 10 (was genetic with 50 target)
+  - The file is still named genetic_optimizer.py for backwards compat — could rename later
+---
