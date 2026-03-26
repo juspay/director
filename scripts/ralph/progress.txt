@@ -315,3 +315,10 @@ PRD: Director Pipeline Improvements (32 user stories)
 - Python API + CLI fallback, configurable thresholds, CI gating
 - Files changed: vbench_checker.py (new)
 ---
+
+## 2026-03-26 - US-028
+- Created elevenlabs_sfx.py with generate_sfx() and generate_sfx_batch()
+- 7 preset SFX prompts (whoosh, shimmer, bass drop, ui click, etc.)
+- Loopable output support, 48kHz/24-bit broadcast quality
+- Files changed: elevenlabs_sfx.py (new)
+---
