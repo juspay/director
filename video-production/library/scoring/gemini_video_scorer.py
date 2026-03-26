@@ -84,21 +84,32 @@ def load_video_as_part(video_path: Path) -> types.Part:
     return part
 
 
-def analyze(client: genai.Client, prompt: str, video_parts: list, temperature: float = 0.0) -> tuple:
-    """Send multimodal prompt with video(s) and return text response + usage."""
+def analyze(client: genai.Client, prompt: str, video_parts: list,
+            temperature: float = 0.0, cached_content: str | None = None) -> tuple:
+    """Send multimodal prompt with video(s) and return text response + usage.
+
+    If cached_content is provided (a cache resource name), the video content
+    is served from cache (90% cheaper on input tokens for runs 2+).
+    """
     parts = list(video_parts)
     parts.append(types.Part.from_text(text=prompt))
-    print(f"  Sending to {MODEL} ({len(video_parts)} video(s), ~{len(prompt)} chars prompt)...")
 
-    response = client.models.generate_content(
-        model=MODEL,
-        contents=[types.Content(role="user", parts=parts)],
-        config=types.GenerateContentConfig(
+    cache_label = " [CACHED]" if cached_content else ""
+    print(f"  Sending to {MODEL} ({len(video_parts)} video(s), ~{len(prompt)} chars prompt){cache_label}...")
+
+    generate_kwargs = {
+        "model": MODEL,
+        "contents": [types.Content(role="user", parts=parts)],
+        "config": types.GenerateContentConfig(
             temperature=temperature,
             max_output_tokens=8192,
             thinking_config=types.ThinkingConfig(thinking_budget=4096),
         ),
-    )
+    }
+    if cached_content:
+        generate_kwargs["cached_content"] = cached_content
+
+    response = client.models.generate_content(**generate_kwargs)
 
     text = ""
     candidates = response.candidates
@@ -358,6 +369,7 @@ def cmd_score(args):
     all_scores = []
     all_texts = []
     all_dimension_scores = []
+    cache_name = None  # Will be set after run 1 if caching succeeds
 
     for run in range(1, num_runs + 1):
         print(f"\n{'='*40}")
@@ -366,7 +378,24 @@ def cmd_score(args):
 
         # Each run uses a different dimension order to reduce positional bias
         scoring_prompt = build_scoring_prompt(run_seed=run)
-        text, usage = analyze(client, scoring_prompt, [video_part], temperature=0.0)
+
+        # After run 1, try to cache the video content for runs 2+ (90% token savings)
+        if run == 1 and num_runs > 1:
+            text, usage = analyze(client, scoring_prompt, [video_part], temperature=0.0)
+            # Create cache for subsequent runs
+            try:
+                cache = client.caches.create(
+                    model=MODEL,
+                    contents=[types.Content(role="user", parts=[video_part])],
+                    config=types.CreateCachedContentConfig(ttl="900s"),
+                )
+                cache_name = cache.name
+                print(f"  [cache] Video cached for runs 2-{num_runs} (TTL: 900s, ~90% token savings)")
+            except Exception as e:
+                print(f"  [cache] Caching not available: {e} — continuing without cache")
+        else:
+            text, usage = analyze(client, scoring_prompt, [video_part],
+                                  temperature=0.0, cached_content=cache_name)
         all_texts.append(text)
 
         overall = extract_overall_score(text)
