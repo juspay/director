@@ -397,3 +397,11 @@ PRD: Director Pipeline Improvements (32 user stories)
 - Created late_publisher.py: multi-platform video posting (13 platforms)
 - Created mux_hosting.py: upload with HLS transcoding, analytics
 ---
+
+## 2026-03-27 - US-044 + US-045 + US-046 + US-047
+- Created litellm_config.py: LLM proxy with cost tracking
+- Created CAPTIONS_GUIDE.md: @remotion/captions migration
+- Created RIVE_AVATAR_GUIDE.md: D-ID → Rive migration architecture
+- Consolidated requirements.txt with all Phase 2 deps
+- ALL 15 PHASE 2 STORIES COMPLETE
+---

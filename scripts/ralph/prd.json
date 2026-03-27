@@ -184,7 +184,7 @@
         "Typecheck passes"
       ],
       "priority": 5,
-      "passes": false,
+      "passes": true,
       "notes": "Free self-hosted. Routes Gemini calls through proxy."
     },
     {
@@ -198,7 +198,7 @@
         "Migration steps from caption_burner.py"
       ],
       "priority": 5,
-      "passes": false,
+      "passes": true,
       "notes": "Documentation story."
     },
     {
@@ -213,7 +213,7 @@
         "Cost comparison vs D-ID"
       ],
       "priority": 6,
-      "passes": false,
+      "passes": true,
       "notes": "Architecture guide. ~3 days design + 1 day integration."
     },
     {
@@ -227,7 +227,7 @@
         "Version pins"
       ],
       "priority": 7,
-      "passes": false,
+      "passes": true,
       "notes": "Run after all other stories."
     }
   ]
