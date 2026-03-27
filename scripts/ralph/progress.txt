@@ -373,3 +373,10 @@ PRD: Director Pipeline Improvements (32 user stories)
 - 3 cloud/local modes, composite_rgba_on_background() replaces green_screen.py
 - Files changed: wan_alpha.py (new)
 ---
+
+## 2026-03-27 - US-038
+- Created temporal_workflow.py: 6 Activities + VideoProductionWorkflow
+- Concurrent phases 2-4, saga compensation, heartbeating
+- HAS_TEMPORAL flag gates all Temporal code (graceful if not installed)
+- Files changed: temporal_workflow.py (new)
+---
