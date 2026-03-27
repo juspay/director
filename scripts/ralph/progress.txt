@@ -335,3 +335,8 @@ PRD: Director Pipeline Improvements (32 user stories)
 - Created library/README.md: full directory structure, module docs, quick start
 - Files changed: requirements.txt, README.md (new)
 ---
+
+## Phase 2 Started — 2026-03-27
+- New PRD: 15 strategic stories (US-033 to US-047)
+- Covers: Lyria music, Beatoven, Qwen3-TTS, MuseTalk, Wan-Alpha, Temporal, Dagster, Remotion Lambda, lakeFS, Late API, Mux, LiteLLM, Remotion captions guide, Rive avatar guide
+---
