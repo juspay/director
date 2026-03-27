@@ -1,12 +1,12 @@
 {
-  "project": "Director Pipeline Improvements — Phase 2 (Strategic)",
+  "project": "Director Pipeline Improvements \u2014 Phase 2 (Strategic)",
   "branchName": "ralph/pipeline-improvements-phase2",
   "description": "Strategic upgrades: new music/avatar integrations, pipeline orchestration (Temporal, Dagster), cloud rendering (Remotion Lambda), distribution (Late API, Mux), and monitoring (LiteLLM).",
   "userStories": [
     {
       "id": "US-033",
       "title": "Add Google Lyria RealTime music integration",
-      "description": "Create library/music/lyria_realtime.py that generates music using Google's Lyria RealTime API via WebSocket. Lyria allows real-time steering of key, tempo, brightness, and mood in 2-second chunks — maps directly to our BPM_MAP architecture. Free via Gemini API.",
+      "description": "Create library/music/lyria_realtime.py that generates music using Google's Lyria RealTime API via WebSocket. Lyria allows real-time steering of key, tempo, brightness, and mood in 2-second chunks \u2014 maps directly to our BPM_MAP architecture. Free via Gemini API.",
       "acceptanceCriteria": [
         "library/music/lyria_realtime.py exists",
         "Connects to Lyria RealTime via WebSocket (Gemini API)",
@@ -15,7 +15,7 @@
         "Typecheck passes"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
       "notes": "Free via Gemini API. WebSocket-based real-time generation."
     },
     {
@@ -30,7 +30,7 @@
         "Typecheck passes"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
       "notes": "$100-200/yr. Scene markers map to our existing section structure."
     },
     {
@@ -45,7 +45,7 @@
         "Typecheck passes"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
       "notes": "Apache 2.0, zero marginal cost. GPU required."
     },
     {
@@ -60,7 +60,7 @@
         "Typecheck passes"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
       "notes": "Open source lip sync, ~$0.01-0.05/clip vs D-ID pricing."
     },
     {
@@ -74,7 +74,7 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
       "notes": "CVPR 2026, open source. Currently 832x480."
     },
     {
@@ -91,7 +91,7 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
       "notes": "Free self-hosted. pip install temporalio."
     },
     {
@@ -107,7 +107,7 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
       "notes": "Free open source. Only re-render what changed."
     },
     {
@@ -123,13 +123,13 @@
         "Typecheck passes"
       ],
       "priority": 4,
-      "passes": false,
+      "passes": true,
       "notes": "~$0.50/render. Remotion license for companies."
     },
     {
       "id": "US-041",
       "title": "Add lakeFS configuration for asset versioning",
-      "description": "Create library/pipeline/lakefs_config.py with helpers for lakeFS — Git-like branching for large media in S3.",
+      "description": "Create library/pipeline/lakefs_config.py with helpers for lakeFS \u2014 Git-like branching for large media in S3.",
       "acceptanceCriteria": [
         "library/pipeline/lakefs_config.py exists",
         "upload_asset(), download_asset(), create_branch(), commit_assets() functions",
@@ -137,7 +137,7 @@
         "Typecheck passes"
       ],
       "priority": 4,
-      "passes": false,
+      "passes": true,
       "notes": "Free self-hosted. S3-compatible."
     },
     {
@@ -152,7 +152,7 @@
         "Typecheck passes"
       ],
       "priority": 4,
-      "passes": false,
+      "passes": true,
       "notes": "$19/mo. Single API for 13 platforms."
     },
     {
@@ -167,7 +167,7 @@
         "Typecheck passes"
       ],
       "priority": 5,
-      "passes": false,
+      "passes": true,
       "notes": "Free tier: 100K min/mo."
     },
     {
@@ -184,7 +184,7 @@
         "Typecheck passes"
       ],
       "priority": 5,
-      "passes": false,
+      "passes": true,
       "notes": "Free self-hosted. Routes Gemini calls through proxy."
     },
     {
@@ -198,7 +198,7 @@
         "Migration steps from caption_burner.py"
       ],
       "priority": 5,
-      "passes": false,
+      "passes": true,
       "notes": "Documentation story."
     },
     {
@@ -213,7 +213,7 @@
         "Cost comparison vs D-ID"
       ],
       "priority": 6,
-      "passes": false,
+      "passes": true,
       "notes": "Architecture guide. ~3 days design + 1 day integration."
     },
     {
@@ -227,7 +227,7 @@
         "Version pins"
       ],
       "priority": 7,
-      "passes": false,
+      "passes": true,
       "notes": "Run after all other stories."
     }
   ]
