@@ -391,3 +391,9 @@ PRD: Director Pipeline Improvements (32 user stories)
 - Created lambda_renderer.py: render, deploy-site, deploy-function
 - Maps presets to Lambda quality, cost estimation, S3 download
 ---
+
+## 2026-03-27 - US-041 + US-042 + US-043
+- Created lakefs_config.py: upload, download, branch, commit, merge, list
+- Created late_publisher.py: multi-platform video posting (13 platforms)
+- Created mux_hosting.py: upload with HLS transcoding, analytics
+---
