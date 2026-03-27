@@ -386,3 +386,8 @@ PRD: Director Pipeline Improvements (32 user stories)
 - Standalone get_rebuild_plan() works without Dagster
 - Files changed: dagster_assets.py (new)
 ---
+
+## 2026-03-27 - US-040
+- Created lambda_renderer.py: render, deploy-site, deploy-function
+- Maps presets to Lambda quality, cost estimation, S3 download
+---
