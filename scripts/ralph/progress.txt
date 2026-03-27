@@ -353,3 +353,11 @@ PRD: Director Pipeline Improvements (32 user stories)
 - build_scene_markers_from_config() bridges pipeline scenes to Beatoven format
 - Files changed: beatoven.py (new)
 ---
+
+## 2026-03-27 - US-035
+- Created qwen3_tts.py: self-hosted TTS with voice cloning
+- Model caching, auto device selection, 0.6B/1.7B support
+- Files changed: qwen3_tts.py (new)
+- **Learnings:** Qwen3-TTS uses chat-template prompt format; exact audio decoding
+  depends on model version — _codec_decode is a fallback that may need updating
+---
