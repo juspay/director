@@ -46,6 +46,24 @@ except ImportError:
     print("         For MP3 export, install: pip install pydub")
     HAS_PYDUB = False
 
+try:
+    import pyloudnorm as pyln
+    HAS_PYLOUDNORM = True
+except ImportError:
+    HAS_PYLOUDNORM = False
+
+try:
+    import torch
+    HAS_SILERO = True
+except ImportError:
+    HAS_SILERO = False
+
+try:
+    import pedalboard
+    HAS_PEDALBOARD = True
+except ImportError:
+    HAS_PEDALBOARD = False
+
 from music_config import (
     SFX_TIMESTAMPS, SAMPLE_RATE, DUCK_DB, DUCK_ATTACK_MS,
     DUCK_RELEASE_MS, LIMITER_THRESHOLD_DB, MP3_BITRATE,
@@ -54,6 +72,62 @@ from music_config import (
 
 
 SR = SAMPLE_RATE
+
+# LUFS target for web video (YouTube, Spotify normalize to ~-14 LUFS)
+TARGET_LUFS = -14.0
+LUFS_TOLERANCE = 2.0  # warn if outside target +/- this
+
+
+def measure_loudness(wav_path: str, sample_rate: int = None) -> dict | None:
+    """Measure integrated LUFS and true peak of a WAV file using pyloudnorm.
+
+    Returns dict with 'integrated_lufs', 'true_peak_dbtp', and 'on_target' flag,
+    or None if pyloudnorm is not installed.
+    """
+    if not HAS_PYLOUDNORM:
+        print("      [loudness] pyloudnorm not installed — skipping LUFS measurement")
+        return None
+
+    sr = sample_rate or SR
+    data, _ = None, None
+    try:
+        from scipy.io import wavfile as _wf
+        _sr, _data = _wf.read(wav_path)
+        sr = _sr
+        # Convert to float64 in [-1, 1] range
+        if _data.dtype == np.int16:
+            data = _data.astype(np.float64) / 32768.0
+        elif _data.dtype == np.int32:
+            data = _data.astype(np.float64) / 2147483648.0
+        else:
+            data = _data.astype(np.float64)
+    except Exception as e:
+        print(f"      [loudness] Could not read {wav_path}: {e}")
+        return None
+
+    # Ensure mono or stereo (pyloudnorm needs shape (samples,) or (samples, channels))
+    if data.ndim == 1:
+        data = data.reshape(-1, 1)
+
+    meter = pyln.Meter(sr)
+    integrated_lufs = meter.integrated_loudness(data)
+    true_peak = pyln.true_peak(data, sr)
+
+    on_target = abs(integrated_lufs - TARGET_LUFS) <= LUFS_TOLERANCE
+    status = "OK" if on_target else "WARNING"
+
+    print(f"      [loudness] Integrated: {integrated_lufs:.1f} LUFS (target: {TARGET_LUFS} +/- {LUFS_TOLERANCE})")
+    print(f"      [loudness] True Peak: {true_peak:.1f} dBTP (max: -1.0 dBTP)")
+    if not on_target:
+        print(f"      [loudness] {status}: LUFS is {abs(integrated_lufs - TARGET_LUFS):.1f} outside target range")
+    if true_peak > -1.0:
+        print(f"      [loudness] WARNING: True peak exceeds -1.0 dBTP")
+
+    return {
+        "integrated_lufs": round(integrated_lufs, 2),
+        "true_peak_dbtp": round(true_peak, 2),
+        "on_target": on_target,
+    }
 
 
 # --------------------------------------------------------------------------
@@ -98,7 +172,62 @@ def pad_to_length(signal: np.ndarray, length: int) -> np.ndarray:
 
 def detect_voice_activity(voiceover: np.ndarray, frame_ms: int = 20,
                           threshold: float = 0.01) -> np.ndarray:
-    """Detect voice activity per sample (returns 0/1 array)."""
+    """Detect voice activity per sample (returns 0/1 array).
+
+    Uses Silero VAD (ML-based, MIT licensed, <1ms per chunk) when torch is
+    available. Falls back to simple RMS threshold if torch is not installed.
+    Silero handles background noise and quiet speech far better than RMS.
+    """
+    if HAS_SILERO:
+        return _detect_voice_silero(voiceover)
+    return _detect_voice_rms(voiceover, frame_ms, threshold)
+
+
+def _detect_voice_silero(voiceover: np.ndarray) -> np.ndarray:
+    """Voice activity detection using Silero VAD model."""
+    # Silero VAD expects 16kHz mono audio
+    SILERO_SR = 16000
+    activity = np.zeros(len(voiceover))
+
+    # Load model (cached after first call)
+    model, utils = torch.hub.load(repo_or_dir='snakers4/silero-vad',
+                                  model='silero_vad',
+                                  trust_repo=True)
+    (get_speech_timestamps, _, _, _, _) = utils
+
+    # Resample to 16kHz if needed
+    if SR != SILERO_SR:
+        from scipy.signal import resample
+        num_samples_16k = int(len(voiceover) * SILERO_SR / SR)
+        audio_16k = resample(voiceover, num_samples_16k)
+    else:
+        audio_16k = voiceover
+
+    # Convert to torch tensor
+    wav_tensor = torch.FloatTensor(audio_16k)
+
+    # Get speech timestamps (in samples at 16kHz)
+    speech_timestamps = get_speech_timestamps(wav_tensor, model,
+                                               sampling_rate=SILERO_SR,
+                                               threshold=0.5)
+
+    # Map back to original sample rate
+    ratio = SR / SILERO_SR
+    for ts in speech_timestamps:
+        start = int(ts['start'] * ratio)
+        end = int(ts['end'] * ratio)
+        start = max(0, start)
+        end = min(len(activity), end)
+        activity[start:end] = 1.0
+
+    print(f"      [VAD] Silero detected {len(speech_timestamps)} speech segments")
+    return activity
+
+
+def _detect_voice_rms(voiceover: np.ndarray, frame_ms: int = 20,
+                      threshold: float = 0.01) -> np.ndarray:
+    """Fallback RMS-based voice activity detection."""
+    print("      [VAD] Using RMS fallback (install torch for Silero VAD)")
     frame_size = int(frame_ms / 1000.0 * SR)
     activity = np.zeros(len(voiceover))
 
@@ -148,14 +277,132 @@ def create_duck_envelope(voiceover: np.ndarray, duck_db: float | None = None) ->
     return envelope
 
 
+def apply_frequency_aware_ducking(
+    music: np.ndarray,
+    duck_envelope: np.ndarray,
+    low_cutoff: float = 200.0,
+    high_cutoff: float = 4000.0,
+) -> np.ndarray:
+    """Apply ducking only to the voice frequency range (200-4000 Hz).
+
+    Splits music into 3 bands:
+    - Low (<200 Hz): bass — passes through unattenuated
+    - Mid (200-4000 Hz): voice range — ducked during narration
+    - High (>4000 Hz): shimmer/air — passes through unattenuated
+
+    This preserves the bass groove and high-end presence of the music
+    while clearing space for the narration in the voice frequency range.
+
+    Uses Pedalboard filters when available for speed, scipy butterworth fallback.
+    """
+    if HAS_PEDALBOARD:
+        return _freq_duck_pedalboard(music, duck_envelope, low_cutoff, high_cutoff)
+    return _freq_duck_scipy(music, duck_envelope, low_cutoff, high_cutoff)
+
+
+def _freq_duck_pedalboard(
+    music: np.ndarray, duck_envelope: np.ndarray,
+    low_cutoff: float, high_cutoff: float,
+) -> np.ndarray:
+    """Frequency-aware ducking using Pedalboard filters."""
+    audio_f32 = music.astype(np.float32).reshape(1, -1)
+
+    # Extract low band (< low_cutoff)
+    low_board = pedalboard.Pedalboard([pedalboard.LowpassFilter(cutoff_frequency_hz=low_cutoff)])
+    low_band = low_board(audio_f32, SR).flatten()
+
+    # Extract high band (> high_cutoff)
+    high_board = pedalboard.Pedalboard([pedalboard.HighpassFilter(cutoff_frequency_hz=high_cutoff)])
+    high_band = high_board(audio_f32, SR).flatten()
+
+    # Mid band = original - low - high
+    mid_band = music - low_band.astype(music.dtype) - high_band.astype(music.dtype)
+
+    # Duck only the mid band
+    mid_ducked = mid_band * duck_envelope
+
+    # Recombine
+    return low_band.astype(music.dtype) + mid_ducked + high_band.astype(music.dtype)
+
+
+def _freq_duck_scipy(
+    music: np.ndarray, duck_envelope: np.ndarray,
+    low_cutoff: float, high_cutoff: float,
+) -> np.ndarray:
+    """Frequency-aware ducking using scipy butterworth filters (fallback)."""
+    nyquist = SR / 2.0
+
+    # Design butterworth filters
+    b_low, a_low = butter(4, low_cutoff / nyquist, btype='low')
+    b_high, a_high = butter(4, high_cutoff / nyquist, btype='high')
+    b_band, a_band = butter(4, [low_cutoff / nyquist, high_cutoff / nyquist], btype='band')
+
+    # Apply filters
+    low_band = lfilter(b_low, a_low, music)
+    high_band = lfilter(b_high, a_high, music)
+    mid_band = lfilter(b_band, a_band, music)
+
+    # Duck only mid band
+    mid_ducked = mid_band * duck_envelope
+
+    # Recombine
+    return low_band + mid_ducked + high_band
+
+
 # --------------------------------------------------------------------------
-# Compression & limiting
+# Compression & limiting (Pedalboard when available, NumPy fallback)
 # --------------------------------------------------------------------------
 
 def soft_compress(signal: np.ndarray, threshold_db: float = -12.0,
                   ratio: float = 3.0, attack_ms: float = 5.0,
                   release_ms: float = 50.0) -> np.ndarray:
-    """Simple soft-knee compressor."""
+    """Compress audio dynamics. Uses Spotify Pedalboard (C++/JUCE, ~300x faster)
+    when available, falling back to a sample-by-sample Python implementation."""
+    if HAS_PEDALBOARD:
+        return _compress_pedalboard(signal, threshold_db, ratio, attack_ms, release_ms)
+    return _compress_numpy(signal, threshold_db, ratio, attack_ms, release_ms)
+
+
+def brick_wall_limiter(signal: np.ndarray,
+                       threshold_db: float = -1.0) -> np.ndarray:
+    """Brick-wall limiter. Uses Pedalboard Limiter when available."""
+    if HAS_PEDALBOARD:
+        return _limit_pedalboard(signal, threshold_db)
+    return _limit_numpy(signal, threshold_db)
+
+
+def _compress_pedalboard(signal: np.ndarray, threshold_db: float,
+                         ratio: float, attack_ms: float,
+                         release_ms: float) -> np.ndarray:
+    """Compressor via Spotify Pedalboard (C++ JUCE backend)."""
+    board = pedalboard.Pedalboard([
+        pedalboard.Compressor(
+            threshold_db=threshold_db,
+            ratio=ratio,
+            attack_ms=attack_ms,
+            release_ms=release_ms,
+        ),
+    ])
+    # Pedalboard expects float32 with shape (channels, samples)
+    audio = signal.astype(np.float32).reshape(1, -1)
+    processed = board(audio, SR)
+    return processed.flatten().astype(signal.dtype)
+
+
+def _limit_pedalboard(signal: np.ndarray, threshold_db: float) -> np.ndarray:
+    """Limiter via Spotify Pedalboard."""
+    board = pedalboard.Pedalboard([
+        pedalboard.Limiter(threshold_db=threshold_db),
+    ])
+    audio = signal.astype(np.float32).reshape(1, -1)
+    processed = board(audio, SR)
+    return processed.flatten().astype(signal.dtype)
+
+
+def _compress_numpy(signal: np.ndarray, threshold_db: float = -12.0,
+                    ratio: float = 3.0, attack_ms: float = 5.0,
+                    release_ms: float = 50.0) -> np.ndarray:
+    """Fallback soft-knee compressor (sample-by-sample Python)."""
     threshold = 10 ** (threshold_db / 20.0)
     attack_coeff = np.exp(-1.0 / (attack_ms / 1000.0 * SR))
     release_coeff = np.exp(-1.0 / (release_ms / 1000.0 * SR))
@@ -179,9 +426,8 @@ def soft_compress(signal: np.ndarray, threshold_db: float = -12.0,
     return output
 
 
-def brick_wall_limiter(signal: np.ndarray,
-                       threshold_db: float = -1.0) -> np.ndarray:
-    """Brick-wall limiter to prevent clipping."""
+def _limit_numpy(signal: np.ndarray, threshold_db: float = -1.0) -> np.ndarray:
+    """Fallback brick-wall limiter."""
     threshold = 10 ** (threshold_db / 20.0)
     peak = np.max(np.abs(signal))
     if peak > threshold:
@@ -259,11 +505,11 @@ def mix_with_pydub(music_path: str, sfx_dir: str,
         mix_array = pad_to_length(mix_array, max_len)
         vo_array = pad_to_length(vo_array, max_len)
 
-        # Apply ducking (use override if provided)
+        # Apply frequency-aware ducking (only ducks 200-4000 Hz voice range)
         effective_duck_db = duck_db_override if duck_db_override is not None else DUCK_DB
         duck_env = create_duck_envelope(vo_array, duck_db=effective_duck_db)
-        mix_array *= duck_env
-        print(f"      Ducking level: {effective_duck_db} dB")
+        mix_array = apply_frequency_aware_ducking(mix_array, duck_env)
+        print(f"      Frequency-aware ducking: {effective_duck_db} dB (200-4000 Hz only)")
 
         # Combine
         combined = mix_array + vo_array * 1.2  # VO slightly louder than music
@@ -310,6 +556,7 @@ def mix_with_pydub(music_path: str, sfx_dir: str,
     wav_path = os.path.join(output_dir, f"{base_name}.wav")
     mix.export(wav_path, format="wav")
     print(f"      WAV: {wav_path} ({len(mix)/1000:.1f}s)")
+    measure_loudness(wav_path)
 
     try:
         mp3_path = os.path.join(output_dir, f"{base_name}.mp3")
@@ -369,8 +616,8 @@ def mix_with_scipy(music_path: str, sfx_dir: str,
 
         effective_duck_db = duck_db_override if duck_db_override is not None else DUCK_DB
         duck_env = create_duck_envelope(vo, duck_db=effective_duck_db)
-        music *= duck_env
-        print(f"      Ducking level: {effective_duck_db} dB")
+        music = apply_frequency_aware_ducking(music, duck_env)
+        print(f"      Frequency-aware ducking: {effective_duck_db} dB (200-4000 Hz only)")
         combined = music + vo * 1.2
     else:
         if voiceover_path:
@@ -390,6 +637,7 @@ def mix_with_scipy(music_path: str, sfx_dir: str,
     wav_path = os.path.join(output_dir, f"{base_name}.wav")
     wavfile.write(wav_path, SR, combined_16)
     print(f"      WAV: {wav_path} ({len(combined_16)/SR:.1f}s)")
+    measure_loudness(wav_path)
     print("      (Install pydub + ffmpeg for MP3 export)")
 
 

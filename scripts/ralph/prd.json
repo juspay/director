@@ -1,0 +1,234 @@
+{
+  "project": "Director Pipeline Improvements — Phase 2 (Strategic)",
+  "branchName": "ralph/pipeline-improvements-phase2",
+  "description": "Strategic upgrades: new music/avatar integrations, pipeline orchestration (Temporal, Dagster), cloud rendering (Remotion Lambda), distribution (Late API, Mux), and monitoring (LiteLLM).",
+  "userStories": [
+    {
+      "id": "US-033",
+      "title": "Add Google Lyria RealTime music integration",
+      "description": "Create library/music/lyria_realtime.py that generates music using Google's Lyria RealTime API via WebSocket. Lyria allows real-time steering of key, tempo, brightness, and mood in 2-second chunks — maps directly to our BPM_MAP architecture. Free via Gemini API.",
+      "acceptanceCriteria": [
+        "library/music/lyria_realtime.py exists",
+        "Connects to Lyria RealTime via WebSocket (Gemini API)",
+        "Supports steering params: key, tempo, brightness, mood",
+        "Outputs WAV file compatible with the mixing pipeline",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": "Free via Gemini API. WebSocket-based real-time generation."
+    },
+    {
+      "id": "US-034",
+      "title": "Add Beatoven.ai video-to-music API integration",
+      "description": "Create library/music/beatoven.py that generates music using Beatoven.ai's API. Supports text-to-music and video-to-music with scene markers for mood shifts.",
+      "acceptanceCriteria": [
+        "library/music/beatoven.py exists",
+        "Supports text-to-music generation with mood/genre/tempo params",
+        "Supports video-to-music (upload video, get scored track)",
+        "Scene marker support for per-section mood control",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": "$100-200/yr. Scene markers map to our existing section structure."
+    },
+    {
+      "id": "US-035",
+      "title": "Add Qwen3-TTS self-hosted voiceover provider",
+      "description": "Create library/voiceover/qwen3_tts.py for self-hosted TTS using Qwen3-TTS (Apache 2.0). Beats ElevenLabs in blind tests with 3-second voice cloning. Zero API cost.",
+      "acceptanceCriteria": [
+        "library/voiceover/qwen3_tts.py exists",
+        "Loads Qwen3-TTS model via transformers or official SDK",
+        "Supports voice cloning from 3-second reference audio",
+        "Outputs MP3/WAV compatible with pipeline",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": "Apache 2.0, zero marginal cost. GPU required."
+    },
+    {
+      "id": "US-036",
+      "title": "Add MuseTalk open-source lip sync integration",
+      "description": "Create library/pipeline/musetalk_avatar.py using MuseTalk (Tencent, open source) for lip-sync avatar generation. 30fps+ real-time on GPU, ~$0.01-0.05/clip via Replicate.",
+      "acceptanceCriteria": [
+        "library/pipeline/musetalk_avatar.py exists",
+        "Supports both local inference and Replicate/fal.ai API",
+        "Takes source image + audio, outputs lip-synced video",
+        "Output MP4 compatible with compositing pipeline",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": "Open source lip sync, ~$0.01-0.05/clip vs D-ID pricing."
+    },
+    {
+      "id": "US-037",
+      "title": "Add Wan-Alpha RGBA video generation",
+      "description": "Create library/pipeline/wan_alpha.py that generates native RGBA video (transparent background) using Wan-Alpha (CVPR 2026, open source). Replaces green_screen.py FFmpeg colorkey pipeline.",
+      "acceptanceCriteria": [
+        "library/pipeline/wan_alpha.py exists",
+        "Generates video with alpha channel (RGBA)",
+        "Output can be composited directly without green screen removal",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": "CVPR 2026, open source. Currently 832x480."
+    },
+    {
+      "id": "US-038",
+      "title": "Add Temporal workflow for durable pipeline execution",
+      "description": "Create library/pipeline/temporal_workflow.py wrapping the 6-phase pipeline as a Temporal workflow. Crash-safe, auto-retry, saga compensation, heartbeating for long polls.",
+      "acceptanceCriteria": [
+        "library/pipeline/temporal_workflow.py exists",
+        "Defines Temporal Workflow with 6 Activities",
+        "Each Activity has retry policy",
+        "Long-running activities use heartbeating",
+        "Saga compensation for partial failures",
+        "temporalio added to requirements.txt",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": "Free self-hosted. pip install temporalio."
+    },
+    {
+      "id": "US-039",
+      "title": "Add Dagster asset definitions for incremental builds",
+      "description": "Create library/pipeline/dagster_assets.py modeling each pipeline output as a Dagster Software-Defined Asset. When one scene changes, only that scene and its downstream assets are rebuilt.",
+      "acceptanceCriteria": [
+        "library/pipeline/dagster_assets.py exists",
+        "Defines assets: voiceover, avatar, broll, music, composite, captions",
+        "Correct dependency graph",
+        "Per-scene partitioning",
+        "dagster added to requirements.txt",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": "Free open source. Only re-render what changed."
+    },
+    {
+      "id": "US-040",
+      "title": "Add Remotion Lambda cloud rendering",
+      "description": "Create library/rendering/lambda_renderer.py wrapping Remotion Lambda for distributed cloud rendering. 170s video in <60s.",
+      "acceptanceCriteria": [
+        "library/rendering/lambda_renderer.py exists",
+        "Configures Remotion Lambda with AWS credentials",
+        "render_on_lambda() submits and polls for completion",
+        "Supports same quality presets as local renderer",
+        "Downloads rendered video on completion",
+        "Typecheck passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": "~$0.50/render. Remotion license for companies."
+    },
+    {
+      "id": "US-041",
+      "title": "Add lakeFS configuration for asset versioning",
+      "description": "Create library/pipeline/lakefs_config.py with helpers for lakeFS — Git-like branching for large media in S3.",
+      "acceptanceCriteria": [
+        "library/pipeline/lakefs_config.py exists",
+        "upload_asset(), download_asset(), create_branch(), commit_assets() functions",
+        "Configuration via environment variables",
+        "Typecheck passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": "Free self-hosted. S3-compatible."
+    },
+    {
+      "id": "US-042",
+      "title": "Add Late API for multi-platform distribution",
+      "description": "Create library/distribution/late_publisher.py for posting video to YouTube, LinkedIn, TikTok, X, Instagram via Late API in a single call.",
+      "acceptanceCriteria": [
+        "library/distribution/late_publisher.py exists",
+        "publish_video() posts to multiple platforms",
+        "Returns per-platform post URLs/IDs",
+        "LATE_API_KEY from environment",
+        "Typecheck passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": "$19/mo. Single API for 13 platforms."
+    },
+    {
+      "id": "US-043",
+      "title": "Add Mux video hosting integration",
+      "description": "Create library/distribution/mux_hosting.py for programmatic video hosting with auto HLS transcoding and engagement analytics.",
+      "acceptanceCriteria": [
+        "library/distribution/mux_hosting.py exists",
+        "upload_video() returns Mux asset ID + playback URL",
+        "get_analytics() returns engagement data",
+        "MUX_TOKEN_ID/MUX_TOKEN_SECRET from env",
+        "Typecheck passes"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": "Free tier: 100K min/mo."
+    },
+    {
+      "id": "US-044",
+      "title": "Add LiteLLM proxy for LLM cost tracking",
+      "description": "Create library/pipeline/litellm_config.py configuring LiteLLM as proxy for Gemini scoring calls with automatic cost tracking.",
+      "acceptanceCriteria": [
+        "library/pipeline/litellm_config.py exists",
+        "get_litellm_client() returns configured client",
+        "Tracks cost per call automatically",
+        "get_cost_report() returns costs by model",
+        "Fallback to direct API if not installed",
+        "litellm added to requirements.txt",
+        "Typecheck passes"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": "Free self-hosted. Routes Gemini calls through proxy."
+    },
+    {
+      "id": "US-045",
+      "title": "Create Remotion animated captions guide",
+      "description": "Create library/remotion/CAPTIONS_GUIDE.md documenting migration from FFmpeg SRT burn-in to @remotion/captions with animated word-by-word highlighting.",
+      "acceptanceCriteria": [
+        "library/remotion/CAPTIONS_GUIDE.md exists",
+        "Documents parseSrt() and createTikTokStyleCaptions()",
+        "Includes React component example with spring physics",
+        "Migration steps from caption_burner.py"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": "Documentation story."
+    },
+    {
+      "id": "US-046",
+      "title": "Create Rive avatar migration guide",
+      "description": "Create library/docs/RIVE_AVATAR_GUIDE.md documenting the path from D-ID to Rive animation for Tara. Covers character design, viseme sets, @remotion/rive, cost comparison.",
+      "acceptanceCriteria": [
+        "library/docs/RIVE_AVATAR_GUIDE.md exists",
+        "Documents Rive character requirements for lip sync",
+        "Explains viseme-driven animation from ElevenLabs timestamps",
+        "Shows @remotion/rive integration",
+        "Cost comparison vs D-ID"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": "Architecture guide. ~3 days design + 1 day integration."
+    },
+    {
+      "id": "US-047",
+      "title": "Consolidate Phase 2 requirements.txt",
+      "description": "Update requirements.txt with all Phase 2 dependencies. Organize by domain.",
+      "acceptanceCriteria": [
+        "requirements.txt includes all Phase 2 deps",
+        "Organized with domain comments",
+        "No duplicates",
+        "Version pins"
+      ],
+      "priority": 7,
+      "passes": false,
+      "notes": "Run after all other stories."
+    }
+  ]
+}
