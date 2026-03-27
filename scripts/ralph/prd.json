@@ -1,486 +1,234 @@
 {
-  "project": "Director Pipeline Improvements",
-  "branchName": "ralph/pipeline-improvements",
-  "description": "Comprehensive upgrade of the video director pipeline based on 12-domain research. Covers voiceover, music, SFX, mixing, scoring, rendering, captions, orchestration, distribution, and creative direction improvements.",
+  "project": "Director Pipeline Improvements — Phase 2 (Strategic)",
+  "branchName": "ralph/pipeline-improvements-phase2",
+  "description": "Strategic upgrades: new music/avatar integrations, pipeline orchestration (Temporal, Dagster), cloud rendering (Remotion Lambda), distribution (Late API, Mux), and monitoring (LiteLLM).",
   "userStories": [
     {
-      "id": "US-001",
-      "title": "Add -tune animation to H.264 encoding",
-      "description": "Add -tune animation flag to all H.264 encoding commands in assembler.py. This optimizes for flat color and hard edges \u2014 ideal for Remotion motion graphics output. Expected: 10-20% smaller files at same quality.",
+      "id": "US-033",
+      "title": "Add Google Lyria RealTime music integration",
+      "description": "Create library/music/lyria_realtime.py that generates music using Google's Lyria RealTime API via WebSocket. Lyria allows real-time steering of key, tempo, brightness, and mood in 2-second chunks — maps directly to our BPM_MAP architecture. Free via Gemini API.",
       "acceptanceCriteria": [
-        "assembler.py ffmpeg commands include -tune animation for H.264 encoding",
-        "All quality presets (final, web, social) include the flag",
-        "Typecheck passes",
-        "No existing functionality broken"
-      ],
-      "priority": 1,
-      "passes": true,
-      "notes": "Quick win. 1-line change per preset."
-    },
-    {
-      "id": "US-002",
-      "title": "Upgrade Whisper model to large-v3-turbo",
-      "description": "Change model_size from 'large-v2' to 'large-v3-turbo' in caption_burner.py. This is a drop-in upgrade: 4x faster inference, slightly better accuracy, same multilingual support. The model is available via faster-whisper's CTranslate2 conversions.",
-      "acceptanceCriteria": [
-        "caption_burner.py uses model_size='large-v3-turbo'",
-        "Any model_size references updated consistently",
+        "library/music/lyria_realtime.py exists",
+        "Connects to Lyria RealTime via WebSocket (Gemini API)",
+        "Supports steering params: key, tempo, brightness, mood",
+        "Outputs WAV file compatible with the mixing pipeline",
         "Typecheck passes"
       ],
       "priority": 1,
-      "passes": true,
-      "notes": "Quick win. 1-line change."
+      "passes": false,
+      "notes": "Free via Gemini API. WebSocket-based real-time generation."
     },
     {
-      "id": "US-003",
-      "title": "Set Gemini scoring temperature to 0.0",
-      "description": "Change temperature from 0.1 to 0.0 in gemini_video_scorer.py. Research on LLM-as-Judge recommends temperature 0 for maximum scoring consistency.",
+      "id": "US-034",
+      "title": "Add Beatoven.ai video-to-music API integration",
+      "description": "Create library/music/beatoven.py that generates music using Beatoven.ai's API. Supports text-to-music and video-to-music with scene markers for mood shifts.",
       "acceptanceCriteria": [
-        "gemini_video_scorer.py uses temperature=0.0",
+        "library/music/beatoven.py exists",
+        "Supports text-to-music generation with mood/genre/tempo params",
+        "Supports video-to-music (upload video, get scored track)",
+        "Scene marker support for per-section mood control",
         "Typecheck passes"
       ],
       "priority": 1,
-      "passes": true,
-      "notes": "Quick win. 1-line change."
+      "passes": false,
+      "notes": "$100-200/yr. Scene markers map to our existing section structure."
     },
     {
-      "id": "US-004",
-      "title": "Randomize rubric dimension order per scoring run",
-      "description": "In gemini_video_scorer.py, randomize the order of the 7 scoring dimensions in the prompt for each of the 3 runs. This reduces positional bias where Gemini tends to score earlier dimensions differently. Use a seeded random shuffle so runs are reproducible but different from each other.",
+      "id": "US-035",
+      "title": "Add Qwen3-TTS self-hosted voiceover provider",
+      "description": "Create library/voiceover/qwen3_tts.py for self-hosted TTS using Qwen3-TTS (Apache 2.0). Beats ElevenLabs in blind tests with 3-second voice cloning. Zero API cost.",
       "acceptanceCriteria": [
-        "Each of the 3 scoring runs presents dimensions in a different random order",
-        "Randomization is seeded per run for reproducibility",
-        "Overall weighted average calculation still works correctly regardless of order",
+        "library/voiceover/qwen3_tts.py exists",
+        "Loads Qwen3-TTS model via transformers or official SDK",
+        "Supports voice cloning from 3-second reference audio",
+        "Outputs MP3/WAV compatible with pipeline",
         "Typecheck passes"
       ],
       "priority": 2,
-      "passes": true,
-      "notes": "~10 lines. Parse dimensions, shuffle, rebuild prompt."
+      "passes": false,
+      "notes": "Apache 2.0, zero marginal cost. GPU required."
     },
     {
-      "id": "US-005",
-      "title": "Increase caption FontSize from 22 to 32",
-      "description": "Update the ASS_STYLE constant in caption_burner.py to use FontSize=32 instead of 22. This improves readability on mobile devices where 22pt is too small.",
+      "id": "US-036",
+      "title": "Add MuseTalk open-source lip sync integration",
+      "description": "Create library/pipeline/musetalk_avatar.py using MuseTalk (Tencent, open source) for lip-sync avatar generation. 30fps+ real-time on GPU, ~$0.01-0.05/clip via Replicate.",
       "acceptanceCriteria": [
-        "caption_burner.py ASS style uses FontSize=32",
-        "Typecheck passes"
-      ],
-      "priority": 1,
-      "passes": true,
-      "notes": "Quick win. 1-line change."
-    },
-    {
-      "id": "US-006",
-      "title": "Add pyloudnorm LUFS measurement to mixer",
-      "description": "Add pyloudnorm to the mixing pipeline in vad_mixer.py. After mixing, measure integrated LUFS and true peak. Target -14 LUFS for web video, -1.0 dBTP true peak. Log the measurements. Optionally normalize to target if outside tolerance.",
-      "acceptanceCriteria": [
-        "pyloudnorm is imported and used in vad_mixer.py",
-        "After mixing, integrated LUFS is measured and logged",
-        "True peak (dBTP) is measured and logged",
-        "If LUFS is outside -14 +/- 2, a warning is logged",
-        "pyloudnorm added to requirements.txt",
+        "library/pipeline/musetalk_avatar.py exists",
+        "Supports both local inference and Replicate/fal.ai API",
+        "Takes source image + audio, outputs lip-synced video",
+        "Output MP4 compatible with compositing pipeline",
         "Typecheck passes"
       ],
       "priority": 2,
-      "passes": true,
-      "notes": "pip install pyloudnorm. ~20 lines of integration code."
+      "passes": false,
+      "notes": "Open source lip sync, ~$0.01-0.05/clip vs D-ID pricing."
     },
     {
-      "id": "US-007",
-      "title": "Replace RMS VAD with Silero VAD",
-      "description": "Replace the simple RMS-threshold voice activity detection in vad_mixer.py with Silero VAD. The current approach uses a 20ms frame RMS threshold of 0.01, which misses quiet speech and triggers on non-speech transients. Silero VAD is ML-based, MIT licensed, runs in <1ms per chunk, and handles background noise far better.",
+      "id": "US-037",
+      "title": "Add Wan-Alpha RGBA video generation",
+      "description": "Create library/pipeline/wan_alpha.py that generates native RGBA video (transparent background) using Wan-Alpha (CVPR 2026, open source). Replaces green_screen.py FFmpeg colorkey pipeline.",
       "acceptanceCriteria": [
-        "silero-vad (or torch + silero model) is used for voice activity detection",
-        "The detect_voice_activity() function uses Silero VAD instead of RMS threshold",
-        "Ducking envelope generation still works with the new VAD signal",
-        "Attack (200ms) and release (400ms) ramps still apply",
-        "silero-vad or torch added to requirements.txt",
+        "library/pipeline/wan_alpha.py exists",
+        "Generates video with alpha channel (RGBA)",
+        "Output can be composited directly without green screen removal",
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": true,
-      "notes": "Moderate refactor. pip install silero-vad. The VAD returns per-frame speech probabilities."
+      "passes": false,
+      "notes": "CVPR 2026, open source. Currently 832x480."
     },
     {
-      "id": "US-008",
-      "title": "Upgrade ElevenLabs from SSML to audio tags",
-      "description": "ElevenLabs v3 does NOT support SSML <break> tags. Rewrite any SSML narration in elevenlabs_generator.py to use v3 audio tags: [pause], [excited], [whispers], [sighs], [rushed]. Also update genetic_optimizer.py if it uses SSML.",
+      "id": "US-038",
+      "title": "Add Temporal workflow for durable pipeline execution",
+      "description": "Create library/pipeline/temporal_workflow.py wrapping the 6-phase pipeline as a Temporal workflow. Crash-safe, auto-retry, saga compensation, heartbeating for long polls.",
       "acceptanceCriteria": [
-        "No SSML tags remain in elevenlabs_generator.py",
-        "Audio tags like [pause], [excited] are used where SSML was used before",
-        "genetic_optimizer.py NARRATION_SSML replaced with audio-tag equivalent if present",
+        "library/pipeline/temporal_workflow.py exists",
+        "Defines Temporal Workflow with 6 Activities",
+        "Each Activity has retry policy",
+        "Long-running activities use heartbeating",
+        "Saga compensation for partial failures",
+        "temporalio added to requirements.txt",
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": true,
-      "notes": "Read the files to understand current SSML usage, then replace with audio tags."
+      "passes": false,
+      "notes": "Free self-hosted. pip install temporalio."
     },
     {
-      "id": "US-009",
-      "title": "Add AV1 output profile to pipeline config",
-      "description": "Add an AV1 (SVT-AV1) encoding preset to pipeline_config.py alongside existing H.264 presets. AV1 produces 45-50% smaller files at same quality. Use: -c:v libsvtav1 -crf 30 -preset 6 -svtav1-params keyint=10s:tune=0 -pix_fmt yuv420p10le",
+      "id": "US-039",
+      "title": "Add Dagster asset definitions for incremental builds",
+      "description": "Create library/pipeline/dagster_assets.py modeling each pipeline output as a Dagster Software-Defined Asset. When one scene changes, only that scene and its downstream assets are rebuilt.",
       "acceptanceCriteria": [
-        "pipeline_config.py has a new 'av1' or 'web_av1' quality profile",
-        "The profile uses libsvtav1 with CRF 30, preset 6, 10-bit",
-        "assembler.py can select and use the AV1 profile",
+        "library/pipeline/dagster_assets.py exists",
+        "Defines assets: voiceover, avatar, broll, music, composite, captions",
+        "Correct dependency graph",
+        "Per-scene partitioning",
+        "dagster added to requirements.txt",
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": true,
-      "notes": "New preset definition + update assembler to handle AV1 codec selection."
+      "passes": false,
+      "notes": "Free open source. Only re-render what changed."
     },
     {
-      "id": "US-010",
-      "title": "Add VideoToolbox fast path for draft renders",
-      "description": "Add a macOS hardware-accelerated encoding preset using h264_videotoolbox in pipeline_config.py. This gives ~4x faster encoding for draft/preview renders. VideoToolbox doesn't support CRF, so use bitrate mode (-b:v 5M).",
+      "id": "US-040",
+      "title": "Add Remotion Lambda cloud rendering",
+      "description": "Create library/rendering/lambda_renderer.py wrapping Remotion Lambda for distributed cloud rendering. 170s video in <60s.",
       "acceptanceCriteria": [
-        "pipeline_config.py has a 'draft_hw' or 'preview_hw' quality profile",
-        "The profile uses h264_videotoolbox with -b:v 5M",
-        "assembler.py can detect and use hardware encoding when available",
-        "Falls back gracefully to libx264 if VideoToolbox is not available",
-        "Typecheck passes"
-      ],
-      "priority": 3,
-      "passes": true,
-      "notes": "VideoToolbox is macOS-only. Add platform detection."
-    },
-    {
-      "id": "US-011",
-      "title": "Add Spotify Pedalboard for audio effects",
-      "description": "Replace the hand-rolled soft_compress() and brick_wall_limiter() functions in vad_mixer.py with Spotify's Pedalboard library. Pedalboard provides professional-grade Compressor, Limiter, Gain, Reverb effects backed by C++ JUCE, running 300x faster than sample-by-sample Python loops. Also update the reverb in karplus_strong.py and numpy_synthesizer.py.",
-      "acceptanceCriteria": [
-        "pedalboard is imported and used in vad_mixer.py",
-        "soft_compress() replaced with Pedalboard Compressor (threshold=-12dB, ratio=3:1, attack=5ms, release=50ms)",
-        "brick_wall_limiter() replaced with Pedalboard Limiter (threshold=-1dBFS)",
-        "Music/SFX synthesis files updated to use Pedalboard Reverb where applicable",
-        "pedalboard added to requirements.txt",
+        "library/rendering/lambda_renderer.py exists",
+        "Configures Remotion Lambda with AWS credentials",
+        "render_on_lambda() submits and polls for completion",
+        "Supports same quality presets as local renderer",
+        "Downloads rendered video on completion",
         "Typecheck passes"
       ],
       "priority": 4,
-      "passes": true,
-      "notes": "pip install pedalboard. Major quality + performance improvement."
+      "passes": false,
+      "notes": "~$0.50/render. Remotion license for companies."
     },
     {
-      "id": "US-012",
-      "title": "Enable Gemini context caching for scoring runs 2-3",
-      "description": "In gemini_video_scorer.py, after the first scoring run, cache the video content using Gemini's context caching API. Runs 2 and 3 use the cached content, saving 90% on input token costs. Cache with 15-minute TTL.",
+      "id": "US-041",
+      "title": "Add lakeFS configuration for asset versioning",
+      "description": "Create library/pipeline/lakefs_config.py with helpers for lakeFS — Git-like branching for large media in S3.",
       "acceptanceCriteria": [
-        "After run 1, video content is cached via client.caches.create()",
-        "Runs 2 and 3 pass cached_content parameter instead of re-uploading video",
-        "Cache has TTL of 900 seconds (15 minutes)",
-        "Fallback to uncached if caching fails",
+        "library/pipeline/lakefs_config.py exists",
+        "upload_asset(), download_asset(), create_branch(), commit_assets() functions",
+        "Configuration via environment variables",
         "Typecheck passes"
       ],
       "priority": 4,
-      "passes": true,
-      "notes": "90% token savings on runs 2-3. Requires google-genai SDK support for caching."
+      "passes": false,
+      "notes": "Free self-hosted. S3-compatible."
     },
     {
-      "id": "US-013",
-      "title": "Add VMAF regression gating",
-      "description": "Create a new file library/scoring/vmaf_gating.py that computes VMAF between video iterations. Install ffmpeg-quality-metrics. The function takes two video paths (current render, previous best) and returns VMAF/SSIM scores. If VMAF drops >2 points, flag as regression.",
+      "id": "US-042",
+      "title": "Add Late API for multi-platform distribution",
+      "description": "Create library/distribution/late_publisher.py for posting video to YouTube, LinkedIn, TikTok, X, Instagram via Late API in a single call.",
       "acceptanceCriteria": [
-        "library/scoring/vmaf_gating.py exists with compute_vmaf(current, reference) function",
-        "Returns VMAF score, SSIM score, and regression boolean",
-        "Regression threshold is configurable (default: 2.0 VMAF points)",
-        "ffmpeg-quality-metrics added to requirements.txt",
+        "library/distribution/late_publisher.py exists",
+        "publish_video() posts to multiple platforms",
+        "Returns per-platform post URLs/IDs",
+        "LATE_API_KEY from environment",
         "Typecheck passes"
       ],
       "priority": 4,
-      "passes": true,
-      "notes": "pip install ffmpeg-quality-metrics. Deterministic regression detection."
+      "passes": false,
+      "notes": "$19/mo. Single API for 13 platforms."
     },
     {
-      "id": "US-014",
-      "title": "Add Flash vs Pro scoring tier support",
-      "description": "Update gemini_video_scorer.py to support two scoring tiers: 'dev' (Gemini 2.5 Flash, single run, $0.04/iteration) and 'official' (Gemini 2.5 Pro, 3-run averaged, $0.16/iteration). Add a --tier CLI argument.",
+      "id": "US-043",
+      "title": "Add Mux video hosting integration",
+      "description": "Create library/distribution/mux_hosting.py for programmatic video hosting with auto HLS transcoding and engagement analytics.",
       "acceptanceCriteria": [
-        "gemini_video_scorer.py accepts --tier dev|official argument",
-        "dev tier uses gemini-2.5-flash model with 1 run",
-        "official tier uses gemini-2.5-pro model with 3 runs (current behavior)",
-        "Default tier is 'dev' for faster iteration",
+        "library/distribution/mux_hosting.py exists",
+        "upload_video() returns Mux asset ID + playback URL",
+        "get_analytics() returns engagement data",
+        "MUX_TOKEN_ID/MUX_TOKEN_SECRET from env",
         "Typecheck passes"
       ],
       "priority": 5,
-      "passes": true,
-      "notes": "Saves 75% during development cycles."
+      "passes": false,
+      "notes": "Free tier: 100K min/mo."
     },
     {
-      "id": "US-015",
-      "title": "Add media_resolution option for scoring",
-      "description": "Add a --low-res flag to gemini_video_scorer.py that passes media_resolution='low' to the Gemini API. This reduces video tokens from ~300/sec to ~100/sec (67% reduction) with minimal impact on rubric-level assessment.",
+      "id": "US-044",
+      "title": "Add LiteLLM proxy for LLM cost tracking",
+      "description": "Create library/pipeline/litellm_config.py configuring LiteLLM as proxy for Gemini scoring calls with automatic cost tracking.",
       "acceptanceCriteria": [
-        "gemini_video_scorer.py accepts --low-res flag",
-        "When set, video Part includes media_resolution='low'",
-        "Works with both Flash and Pro tiers",
+        "library/pipeline/litellm_config.py exists",
+        "get_litellm_client() returns configured client",
+        "Tracks cost per call automatically",
+        "get_cost_report() returns costs by model",
+        "Fallback to direct API if not installed",
+        "litellm added to requirements.txt",
         "Typecheck passes"
       ],
       "priority": 5,
-      "passes": true,
-      "notes": "67% fewer video tokens."
+      "passes": false,
+      "notes": "Free self-hosted. Routes Gemini calls through proxy."
     },
     {
-      "id": "US-016",
-      "title": "Replace genetic optimizer with Optuna Bayesian optimization",
-      "description": "Refactor genetic_optimizer.py to use Optuna for Bayesian optimization of TTS parameters. Optuna models the objective function and converges in 10-15 trials vs the current 50+ with genetic search. Keep the same 8-criterion scoring function. Use TPE sampler with pruning.",
+      "id": "US-045",
+      "title": "Create Remotion animated captions guide",
+      "description": "Create library/remotion/CAPTIONS_GUIDE.md documenting migration from FFmpeg SRT burn-in to @remotion/captions with animated word-by-word highlighting.",
       "acceptanceCriteria": [
-        "genetic_optimizer.py uses optuna for parameter search",
-        "TPE sampler is configured for the 3 parameters (stability, similarity_boost, style)",
-        "Same scoring function (8 acoustic criteria) is used as objective",
-        "Plateau detection replaced by Optuna's built-in pruning",
-        "Resume-safe: study saved to SQLite for crash recovery",
-        "optuna added to requirements.txt",
-        "Typecheck passes"
+        "library/remotion/CAPTIONS_GUIDE.md exists",
+        "Documents parseSrt() and createTikTokStyleCaptions()",
+        "Includes React component example with spring physics",
+        "Migration steps from caption_burner.py"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": "Documentation story."
+    },
+    {
+      "id": "US-046",
+      "title": "Create Rive avatar migration guide",
+      "description": "Create library/docs/RIVE_AVATAR_GUIDE.md documenting the path from D-ID to Rive animation for Tara. Covers character design, viseme sets, @remotion/rive, cost comparison.",
+      "acceptanceCriteria": [
+        "library/docs/RIVE_AVATAR_GUIDE.md exists",
+        "Documents Rive character requirements for lip sync",
+        "Explains viseme-driven animation from ElevenLabs timestamps",
+        "Shows @remotion/rive integration",
+        "Cost comparison vs D-ID"
       ],
       "priority": 6,
-      "passes": true,
-      "notes": "pip install optuna. Major refactor but saves ~70% API cost."
+      "passes": false,
+      "notes": "Architecture guide. ~3 days design + 1 day integration."
     },
     {
-      "id": "US-017",
-      "title": "Add UTMOSv2 to acoustic scorer",
-      "description": "Add UTMOSv2 as a 9th scoring dimension in acoustic_scorer.py. UTMOSv2 predicts human Mean Opinion Score (MOS) directly from audio, which is the metric the other 8 criteria approximate. Install speechmos or utmos package.",
+      "id": "US-047",
+      "title": "Consolidate Phase 2 requirements.txt",
+      "description": "Update requirements.txt with all Phase 2 dependencies. Organize by domain.",
       "acceptanceCriteria": [
-        "acoustic_scorer.py includes UTMOSv2 as a scoring dimension",
-        "MOS prediction runs on each voiceover file",
-        "MOS score (1-5 scale) is normalized to 0-1 and weighted appropriately",
-        "speechmos or equivalent added to requirements.txt",
-        "Typecheck passes"
-      ],
-      "priority": 6,
-      "passes": true,
-      "notes": "pip install speechmos. Adds perceptual quality prediction."
-    },
-    {
-      "id": "US-018",
-      "title": "Add OpenAI gpt-4o-mini-tts voiceover provider",
-      "description": "Create a new file library/voiceover/openai_tts.py that generates voiceover using OpenAI's gpt-4o-mini-tts model. The key differentiator is prompt-steerable delivery: you can describe the desired delivery in natural language (e.g., 'speak with quiet contemplation, building to confident energy'). Include per-scene delivery instructions.",
-      "acceptanceCriteria": [
-        "library/voiceover/openai_tts.py exists",
-        "Uses openai SDK to call gpt-4o-mini-tts model",
-        "Accepts a delivery_prompt parameter for steering voice delivery",
-        "Supports per-scene delivery instructions",
-        "Outputs MP3 files compatible with the rest of the pipeline",
-        "openai added to requirements.txt",
-        "Typecheck passes"
+        "requirements.txt includes all Phase 2 deps",
+        "Organized with domain comments",
+        "No duplicates",
+        "Version pins"
       ],
       "priority": 7,
-      "passes": true,
-      "notes": "~$15/1M chars. Most natural fit for narration arc control."
-    },
-    {
-      "id": "US-019",
-      "title": "Add Fish Audio S2 Pro voiceover provider",
-      "description": "Create a new file library/voiceover/fish_audio.py that generates voiceover using Fish Audio's S2 Pro model. 80% cheaper than ElevenLabs with comparable quality. Supports 15-second voice cloning and 80+ languages.",
-      "acceptanceCriteria": [
-        "library/voiceover/fish_audio.py exists",
-        "Uses Fish Audio API to generate voiceover",
-        "Supports voice cloning from a reference audio file",
-        "Outputs MP3 files compatible with the rest of the pipeline",
-        "Typecheck passes"
-      ],
-      "priority": 7,
-      "passes": true,
-      "notes": "~$15/1M chars. Best value for quality."
-    },
-    {
-      "id": "US-020",
-      "title": "Add frequency-aware ducking to mixer",
-      "description": "Enhance vad_mixer.py to duck only the 200-4000 Hz voice range instead of the full spectrum. This preserves bass groove and high-end shimmer during narration. Use Pedalboard's HighpassFilter and LowpassFilter to split bands, apply ducking only to the voice band, then recombine.",
-      "acceptanceCriteria": [
-        "Music is split into 3 bands: low (<200Hz), mid (200-4000Hz), high (>4000Hz)",
-        "Ducking only applies to the mid band during voice activity",
-        "Low and high bands pass through unattenuated",
-        "Bands are summed back together after processing",
-        "Uses Pedalboard filters for band splitting",
-        "Typecheck passes"
-      ],
-      "priority": 7,
-      "passes": true,
-      "notes": "Requires US-011 (Pedalboard) to be completed first."
-    },
-    {
-      "id": "US-021",
-      "title": "Switch to WhisperX for word-level timestamps",
-      "description": "Replace faster-whisper word timestamps with WhisperX in caption_burner.py. WhisperX adds wav2vec2 forced alignment for ~20-30ms word boundary precision vs ~50-100ms from faster-whisper. This matters for animated word-by-word captions.",
-      "acceptanceCriteria": [
-        "caption_burner.py uses whisperx for transcription and alignment",
-        "Word-level timestamps use wav2vec2 forced alignment",
-        "SRT output still works correctly",
-        "whisperx added to requirements.txt",
-        "Typecheck passes"
-      ],
-      "priority": 7,
-      "passes": true,
-      "notes": "pip install whisperx. Important prerequisite for animated captions."
-    },
-    {
-      "id": "US-022",
-      "title": "Add WER validation against source scripts",
-      "description": "Add a validation step in caption_burner.py that computes Word Error Rate (WER) by comparing Whisper output against the known source voiceover script text. Since we have the ground truth, we can measure exact accuracy.",
-      "acceptanceCriteria": [
-        "caption_burner.py has a validate_wer(transcript, source_text) function",
-        "WER is computed using jiwer or similar library",
-        "WER result is logged with the caption output",
-        "If WER > 5%, a warning is logged",
-        "jiwer added to requirements.txt",
-        "Typecheck passes"
-      ],
-      "priority": 7,
-      "passes": true,
-      "notes": "pip install jiwer. Unique advantage since we have source scripts."
-    },
-    {
-      "id": "US-023",
-      "title": "Add pysubs2 SRT validation",
-      "description": "Add SRT validation using pysubs2 in caption_burner.py. Check for: no timing overlaps, no entries shorter than 0.5s, no entries longer than 7s, max 42 chars per line, max 2 lines per entry, minimum 150ms per word display time.",
-      "acceptanceCriteria": [
-        "caption_burner.py has a validate_srt(srt_path) function",
-        "Checks timing overlaps, entry duration bounds, line length, word-per-entry count",
-        "Returns list of validation warnings",
-        "pysubs2 added to requirements.txt",
-        "Typecheck passes"
-      ],
-      "priority": 7,
-      "passes": true,
-      "notes": "pip install pysubs2. Quality gate for captions."
-    },
-    {
-      "id": "US-024",
-      "title": "Add platform-specific export presets",
-      "description": "Add export presets to pipeline_config.py for: YouTube (1080p CRF 18-20, high bitrate, -tune animation), TikTok (1080x1920 9:16 vertical), Product Hunt (1080x1080 square, <30MB, <60s), Twitter (1280x720, max 2:20), LinkedIn (1920x1080, 16:9).",
-      "acceptanceCriteria": [
-        "pipeline_config.py has youtube, tiktok, producthunt, twitter, linkedin presets",
-        "Each preset has correct resolution, aspect ratio, bitrate, and codec settings",
-        "assembler.py can produce any of these formats",
-        "Typecheck passes"
-      ],
-      "priority": 8,
-      "passes": true,
-      "notes": "Config changes + assembler logic for aspect ratio/resolution handling."
-    },
-    {
-      "id": "US-025",
-      "title": "Add VideoObject JSON-LD schema generator",
-      "description": "Create library/distribution/schema_generator.py that generates VideoObject JSON-LD structured data from video metadata (title, description, duration, thumbnail URL, upload date). This schema markup gives 30% higher CTR in search results.",
-      "acceptanceCriteria": [
-        "library/distribution/schema_generator.py exists",
-        "generate_video_schema() returns valid JSON-LD VideoObject",
-        "Includes: name, description, thumbnailUrl, contentUrl, uploadDate, duration",
-        "Output validates against schema.org VideoObject spec",
-        "Typecheck passes"
-      ],
-      "priority": 8,
-      "passes": true,
-      "notes": "SEO improvement. Create library/distribution/ directory."
-    },
-    {
-      "id": "US-026",
-      "title": "Add CostTracker class for API cost monitoring",
-      "description": "Create library/pipeline/cost_tracker.py with a CostTracker class that logs API costs to a JSON-lines file. Track: provider, operation, input_params hash, estimated_cost, timestamp. Support ElevenLabs (~$0.30/1K chars), Runway (credit-based), D-ID (credit-based), Gemini (token-based).",
-      "acceptanceCriteria": [
-        "library/pipeline/cost_tracker.py exists with CostTracker class",
-        "log_cost(provider, operation, params, cost) method appends to JSONL file",
-        "get_total_cost(provider=None, since=None) method aggregates costs",
-        "Cost estimates for each provider are configurable",
-        "Typecheck passes"
-      ],
-      "priority": 8,
-      "passes": true,
-      "notes": "Build cost awareness into the pipeline."
-    },
-    {
-      "id": "US-027",
-      "title": "Add VBench temporal quality checks",
-      "description": "Create library/scoring/vbench_checker.py that runs VBench temporal_flickering and motion_smoothness checks on rendered videos. These catch flicker and jank that Gemini scoring often misses.",
-      "acceptanceCriteria": [
-        "library/scoring/vbench_checker.py exists",
-        "check_temporal_quality(video_path) runs flickering + smoothness checks",
-        "Returns structured scores per dimension",
-        "Flags issues if scores drop below configurable thresholds",
-        "vbench added to requirements.txt",
-        "Typecheck passes"
-      ],
-      "priority": 9,
-      "passes": true,
-      "notes": "pip install vbench. Automated visual QA."
-    },
-    {
-      "id": "US-028",
-      "title": "Add ElevenLabs SFX v2 API integration",
-      "description": "Create library/sfx/elevenlabs_sfx.py that generates sound effects using ElevenLabs' SFX v2 API. Use for hero moments: transitions, reveals, stingers. The API accepts text prompts and returns broadcast-ready 48kHz/24-bit audio.",
-      "acceptanceCriteria": [
-        "library/sfx/elevenlabs_sfx.py exists",
-        "generate_sfx(prompt, duration_seconds) calls ElevenLabs SFX API",
-        "Supports loopable output via loop parameter",
-        "Output format configurable (WAV or MP3)",
-        "Typecheck passes"
-      ],
-      "priority": 9,
-      "passes": true,
-      "notes": "Uses existing ElevenLabs API key. Professional SFX generation."
-    },
-    {
-      "id": "US-029",
-      "title": "Add Kling 3.0 as B-roll generation alternative",
-      "description": "Create library/pipeline/kling_generator.py that generates B-roll video clips using Kling 3.0 API. Kling 3.0 offers 4K/60fps output at $0.029/sec (vs $0.12/sec for Runway Gen-4.5) \u2014 a 75% cost reduction. Supports multi-shot character consistency.",
-      "acceptanceCriteria": [
-        "library/pipeline/kling_generator.py exists",
-        "generate_clip(prompt, duration, resolution) calls Kling 3.0 API",
-        "Supports 1080p and 4K output",
-        "Multiple variants can be generated concurrently",
-        "Error handling with retries (tenacity)",
-        "Typecheck passes"
-      ],
-      "priority": 10,
-      "passes": true,
-      "notes": "75% cost reduction for B-roll. API access needed."
-    },
-    {
-      "id": "US-030",
-      "title": "Add Veo 3.1 via Gemini API for video generation",
-      "description": "Create library/pipeline/veo_generator.py that generates video clips using Google Veo 3.1 through the Gemini API. Veo 3.1 is the #2 ranked video generation model and offers native 4K + synchronized audio. Accessible through existing Gemini API setup.",
-      "acceptanceCriteria": [
-        "library/pipeline/veo_generator.py exists",
-        "generate_clip(prompt, duration) calls Veo 3.1 via Gemini API",
-        "Supports resolution and aspect ratio parameters",
-        "Output saved as MP4",
-        "Error handling with retries",
-        "Typecheck passes"
-      ],
-      "priority": 10,
-      "passes": true,
-      "notes": "Uses existing Gemini API credentials. Native audio generation."
-    },
-    {
-      "id": "US-031",
-      "title": "Consolidate and update requirements.txt",
-      "description": "Merge all new dependencies added across stories into library/pipeline/requirements.txt. Ensure all packages are listed with version pins. Organize by domain (voiceover, music, mixing, scoring, rendering, captioning).",
-      "acceptanceCriteria": [
-        "requirements.txt contains all dependencies from all previous stories",
-        "Packages have version pins (e.g., pyloudnorm>=0.1)",
-        "Organized with comments by domain",
-        "No duplicate entries",
-        "Typecheck passes"
-      ],
-      "priority": 11,
-      "passes": true,
-      "notes": "Consolidation story. Run after all pip-install stories."
-    },
-    {
-      "id": "US-032",
-      "title": "Create unified pipeline README",
-      "description": "Create library/README.md documenting the complete consolidated pipeline: directory structure, how each module works, dependencies, quick start guide, and links to detailed docs in library/docs/.",
-      "acceptanceCriteria": [
-        "library/README.md exists",
-        "Documents directory structure with descriptions",
-        "Lists all modules with brief descriptions",
-        "Includes quick start / setup instructions",
-        "Links to detailed docs in library/docs/",
-        "Typecheck passes"
-      ],
-      "priority": 11,
-      "passes": true,
-      "notes": "Documentation story. Important for onboarding."
+      "passes": false,
+      "notes": "Run after all other stories."
     }
   ]
 }
