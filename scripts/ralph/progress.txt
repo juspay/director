@@ -367,3 +367,9 @@ PRD: Director Pipeline Improvements (32 user stories)
 - Base64 file uploads for cloud APIs, subprocess for local
 - Files changed: musetalk_avatar.py (new)
 ---
+
+## 2026-03-27 - US-037
+- Created wan_alpha.py: RGBA video gen + alpha compositing
+- 3 cloud/local modes, composite_rgba_on_background() replaces green_screen.py
+- Files changed: wan_alpha.py (new)
+---
