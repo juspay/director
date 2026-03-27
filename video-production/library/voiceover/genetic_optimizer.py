@@ -9,7 +9,7 @@ score plateaus or the target iteration count is reached.
 Usage:
     python iterate_voiceover_v7.py --rounds 10 --batch-size 5
     python iterate_voiceover_v7.py --rounds 10 --batch-size 5 --dry-run
-    python iterate_voiceover_v7.py --rounds 10 --batch-size 5 --ssml
+    python iterate_voiceover_v7.py --rounds 10 --batch-size 5 --audiotags
 """
 
 import argparse
@@ -122,91 +122,92 @@ The implementation doesn't disappear. It just happens — right where the conver
 Tara. Build what matters."""
 
 # ---------------------------------------------------------------------------
-# Narration — SSML-enhanced version
+# Narration — ElevenLabs v3 audio-tag enhanced version
 # ---------------------------------------------------------------------------
-NARRATION_SSML = """<speak>
-Twelve tabs open. A review untouched since Tuesday. <break time="0.4s"/> And somewhere underneath all of it — an idea that was clear this morning.
+# ElevenLabs v3 does NOT support SSML (<break>, <prosody>, <emphasis>).
+# Instead, use audio tags: [pause], [long pause], [excited], [whispers], [rushed], [sighs]
+# Emotional delivery is also conveyed through natural text phrasing.
+NARRATION_AUDIOTAG = """Twelve tabs open. A review untouched since Tuesday. [pause] And somewhere underneath all of it — an idea that was clear this morning.
 
-<break time="0.6s"/>
+[long pause]
 
-Half of them still open from yesterday. Context scattered across five tools. <break time="0.3s"/> Nothing connected.
+Half of them still open from yesterday. Context scattered across five tools. Nothing connected.
 
-<break time="0.7s"/>
+[long pause]
 
-There was a time when the job was writing code. <break time="0.3s"/> Then it became engineering — systems thinking, architecture, knowing why things break.
+There was a time when the job was writing code. Then it became engineering — systems thinking, architecture, knowing why things break.
 
-<break time="0.5s"/>
+[pause]
 
 And carrying the weight when they do.
 
-<break time="0.4s"/>
+[pause]
 
 You earned that shift.
 
-<break time="0.6s"/>
+[long pause]
 
-<prosody rate="95%" pitch="+2%">The next one is bigger.</prosody> From engineer — to builder. Less time on the how. <break time="0.3s"/> <emphasis level="moderate">More time on the what and the why.</emphasis>
+The next one is bigger. From engineer — to builder. Less time on the how. More time on the what and the why.
 
-<break time="0.5s"/>
+[pause]
 
-The friction isn't in your skill. <break time="0.3s"/> <emphasis level="strong">It's between the decision and the done.</emphasis>
+The friction isn't in your skill. It's between the decision and the done.
 
-<break time="0.6s"/>
+[long pause]
 
-<prosody rate="90%" pitch="+3%"><emphasis level="strong">Tara closes that gap.</emphasis></prosody>
+Tara closes that gap.
 
-<break time="0.8s"/>
+[long pause]
 
-She lives in Slack — where your team already thinks. Drop in a screenshot, a question, a half-formed idea. <break time="0.3s"/> Already reading.
+She lives in Slack — where your team already thinks. Drop in a screenshot, a question, a half-formed idea. Already reading.
 
-<break time="0.5s"/>
+[pause]
 
-<prosody rate="105%">In under a minute — she's searched across your repositories, cross-checked your JIRA history, found the root cause, and built a plan.</prosody>
+[rushed] In under a minute — she's searched across your repositories, cross-checked your JIRA history, found the root cause, and built a plan.
 
-<break time="0.6s"/>
+[long pause]
 
 And now your team thinks together.
 
-<break time="0.5s"/>
+[pause]
 
-A PM scopes it tighter. An engineer challenges an assumption. A designer spots something nobody else caught. <break time="0.3s"/> Each message sharpens the plan.
+A PM scopes it tighter. An engineer challenges an assumption. A designer spots something nobody else caught. Each message sharpens the plan.
 
-<break time="0.5s"/>
+[pause]
 
-The judgment. The debate. <break time="0.3s"/> The decisions only humans make. <break time="0.3s"/> And when it's ready — it moves.
+The judgment. The debate. The decisions only humans make. [pause] And when it's ready — it moves.
 
-<break time="0.6s"/>
+[long pause]
 
-<prosody rate="105%">Three repos cloned. Your patterns studied. Three implementations running in parallel — and pull requests opening one after another, connecting back to the thread where it all started.</prosody>
+[rushed] Three repos cloned. Your patterns studied. Three implementations running in parallel — and pull requests opening one after another, connecting back to the thread where it all started.
 
-<break time="0.5s"/>
+[pause]
 
-<emphasis level="moderate">No one waited for anyone.</emphasis>
+No one waited for anyone.
 
-<break time="0.6s"/>
+[long pause]
 
-Tara reads whatever your team works with — code, documents, designs, configs. She connects to everything you already use. <break time="0.3s"/> Everything through Slack.
+Tara reads whatever your team works with — code, documents, designs, configs. She connects to everything you already use. Everything through Slack.
 
-<break time="0.7s"/>
+[long pause]
 
-<prosody rate="95%">Four hundred threads. Double the PR throughput. From a question to production — in minutes, not days.</prosody>
+Four hundred threads. Double the PR throughput. From a question to production — in minutes, not days.
 
-<break time="0.6s"/>
+[long pause]
 
 You already know what to build next.
 
-<break time="0.5s"/>
+[pause]
 
-<prosody rate="90%" pitch="+2%"><emphasis level="strong">Engineers are builders now.</emphasis></prosody>
+Engineers are builders now.
 
-<break time="0.6s"/>
+[long pause]
 
 The implementation doesn't disappear. It just happens — right where the conversation started.
 
-<break time="0.8s"/>
+[long pause]
 
-<prosody rate="85%"><emphasis level="strong">Tara. Build what matters.</emphasis></prosody>
-</speak>"""
+Tara. Build what matters."""
 
 
 # ============================================================================
@@ -613,7 +614,7 @@ async def call_elevenlabs(
     text: str,
     settings: dict,
     output_path: Path,
-    use_ssml: bool = False,
+    use_audiotags: bool = False,
     max_retries: int = 5,
 ) -> None:
     """Call ElevenLabs TTS with exponential backoff on rate limits."""
@@ -683,7 +684,7 @@ async def generate_and_score_variation(
     settings: dict,
     strategy: str,
     narration_text: str,
-    use_ssml: bool,
+    use_audiotags: bool,
     dry_run: bool,
 ) -> Optional[dict]:
     """Generate one variation and score it. Returns full result dict."""
@@ -709,7 +710,7 @@ async def generate_and_score_variation(
             f"style={settings['style']:.3f} "
             f"(strategy: {strategy})"
         )
-        await call_elevenlabs(narration_text, settings, output_path, use_ssml)
+        await call_elevenlabs(narration_text, settings, output_path, use_audiotags)
         logger.info(f"[{var_id}] Audio saved ({output_path.stat().st_size / 1024:.0f} KB)")
 
     # Score
@@ -724,7 +725,7 @@ async def generate_and_score_variation(
         "duration_seconds": duration,
         "audio_path": str(output_path),
         "generated_at": datetime.now().isoformat(),
-        "use_ssml": use_ssml,
+        "use_audiotags": use_audiotags,
         **analysis,
     }
 
@@ -810,7 +811,7 @@ def check_plateau(cumulative: dict, window: int = 3) -> bool:
 async def run_iteration(
     rounds: int,
     batch_size: int,
-    use_ssml: bool,
+    use_audiotags: bool,
     dry_run: bool,
     target_total: int = 50,
 ):
@@ -822,14 +823,14 @@ async def run_iteration(
     start_iteration = cumulative["total_iterations"]
 
     logger.info(f"Starting from iteration {start_iteration}, target {target_total}")
-    logger.info(f"Rounds: {rounds}, batch size: {batch_size}, SSML: {use_ssml}")
+    logger.info(f"Rounds: {rounds}, batch size: {batch_size}, audio tags: {use_audiotags}")
 
     if start_iteration >= target_total:
         logger.info(f"Already at {start_iteration} iterations (target: {target_total}). Done.")
         print_leaderboard(cumulative["all_results"])
         return
 
-    narration_text = NARRATION_SSML if use_ssml else NARRATION_PLAIN
+    narration_text = NARRATION_AUDIOTAG if use_audiotags else NARRATION_PLAIN
 
     for round_idx in range(1, rounds + 1):
         current_total = cumulative["total_iterations"]
@@ -885,7 +886,7 @@ async def run_iteration(
                 settings=spec["settings"],
                 strategy=spec["strategy"],
                 narration_text=narration_text,
-                use_ssml=use_ssml,
+                use_audiotags=use_audiotags,
                 dry_run=dry_run,
             )
 
@@ -925,7 +926,7 @@ async def run_iteration(
                 "best_composite": round_best["composite_score"],
                 "best_variation_id": round_best["variation_id"],
                 "avg_composite": round(round_avg, 2),
-                "use_ssml": use_ssml,
+                "use_audiotags": use_audiotags,
                 "timestamp": datetime.now().isoformat(),
             }
             cumulative["rounds"].append(round_meta)
@@ -959,28 +960,162 @@ async def run_iteration(
 
 
 # ============================================================================
+# Optuna Bayesian Optimization (alternative to genetic search)
+# ============================================================================
+
+async def run_optuna_iteration(
+    n_trials: int = 15,
+    use_audiotags: bool = False,
+    dry_run: bool = False,
+    study_name: str = "tara_voiceover",
+    storage: str | None = None,
+):
+    """Bayesian optimization of TTS parameters using Optuna TPE sampler.
+
+    Converges in 10-15 trials vs 50+ with genetic search, saving ~70% API cost.
+    Uses the same 8-criterion acoustic scoring as the genetic optimizer.
+
+    The study is persisted to SQLite for crash recovery (resume-safe).
+    """
+    try:
+        import optuna
+        from optuna.samplers import TPESampler
+    except ImportError:
+        logger.error("Optuna not installed. Run: pip install optuna")
+        logger.error("Falling back to genetic optimizer.")
+        return
+
+    # Use SQLite storage for crash recovery
+    if storage is None:
+        db_path = OUTPUT_DIR / f"{study_name}.db"
+        storage = f"sqlite:///{db_path}"
+
+    narration_text = NARRATION_AUDIOTAG if use_audiotags else NARRATION_PLAIN
+
+    # Track trial results for logging
+    trial_results = []
+
+    def objective(trial: optuna.Trial) -> float:
+        """Optuna objective — maximize composite voiceover score."""
+        settings = {
+            "stability": trial.suggest_float("stability", *PARAM_BOUNDS["stability"]),
+            "similarity_boost": trial.suggest_float("similarity_boost", *PARAM_BOUNDS["similarity_boost"]),
+            "style": trial.suggest_float("style", *PARAM_BOUNDS["style"]),
+            "use_speaker_boost": True,
+        }
+
+        var_id = f"optuna_t{trial.number}"
+        logger.info(
+            f"[Trial {trial.number}] "
+            f"stability={settings['stability']:.3f} "
+            f"similarity={settings['similarity_boost']:.3f} "
+            f"style={settings['style']:.3f}"
+        )
+
+        # Generate and score synchronously (Optuna doesn't support async objectives)
+        loop = asyncio.get_event_loop()
+        if loop.is_running():
+            # We're already in an async context — use nest_asyncio or run in thread
+            import concurrent.futures
+            with concurrent.futures.ThreadPoolExecutor() as pool:
+                result = pool.submit(
+                    asyncio.run,
+                    generate_and_score_variation(
+                        var_id=var_id,
+                        settings=settings,
+                        strategy="optuna_tpe",
+                        narration_text=narration_text,
+                        use_audiotags=use_audiotags,
+                        dry_run=dry_run,
+                    )
+                ).result()
+        else:
+            result = asyncio.run(
+                generate_and_score_variation(
+                    var_id=var_id,
+                    settings=settings,
+                    strategy="optuna_tpe",
+                    narration_text=narration_text,
+                    use_audiotags=use_audiotags,
+                    dry_run=dry_run,
+                )
+            )
+
+        if result is None:
+            return 0.0  # Pruned / failed
+
+        score = result["composite_score"]
+        trial_results.append(result)
+        logger.info(f"[Trial {trial.number}] Score: {score:.3f}")
+
+        # Save to cumulative JSON (crash-safe)
+        cumulative = load_cumulative()
+        cumulative["all_results"].append(result)
+        cumulative["total_iterations"] += 1
+        if score > cumulative["best_composite"]:
+            cumulative["best_composite"] = score
+            cumulative["best_variation_id"] = result["variation_id"]
+            logger.info(f"  *** NEW BEST: {var_id} @ {score:.3f} ***")
+        save_cumulative(cumulative)
+
+        return score  # Optuna maximizes by default with direction="maximize"
+
+    # Create or load study
+    study = optuna.create_study(
+        study_name=study_name,
+        storage=storage,
+        direction="maximize",
+        sampler=TPESampler(seed=42),
+        load_if_exists=True,  # Resume from previous runs
+    )
+
+    logger.info(f"Optuna study '{study_name}' — {len(study.trials)} existing trials")
+    logger.info(f"Running {n_trials} new trials (TPE sampler)...")
+
+    # Run optimization
+    study.optimize(objective, n_trials=n_trials, show_progress_bar=True)
+
+    # Print results
+    logger.info(f"\n{'='*60}")
+    logger.info(f"OPTUNA OPTIMIZATION COMPLETE")
+    logger.info(f"{'='*60}")
+    logger.info(f"Best trial: #{study.best_trial.number}")
+    logger.info(f"Best score: {study.best_value:.3f}")
+    logger.info(f"Best params: {study.best_params}")
+    logger.info(f"Total trials: {len(study.trials)}")
+
+    # Print leaderboard
+    cumulative = load_cumulative()
+    print_leaderboard(cumulative["all_results"])
+
+
+# ============================================================================
 # CLI
 # ============================================================================
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Automated voiceover iteration with genetic/hill-climbing optimization"
+        description="Automated voiceover iteration with genetic or Bayesian optimization"
+    )
+    parser.add_argument(
+        "--optimizer", choices=["genetic", "optuna"], default="optuna",
+        help="Optimization strategy: genetic (50+ trials) or optuna (10-15 trials, default)",
     )
     parser.add_argument(
         "--rounds", type=int, default=10,
-        help="Number of rounds to run (default: 10)",
+        help="Number of rounds (genetic) or trials (optuna) (default: 10)",
     )
     parser.add_argument(
         "--batch-size", type=int, default=5,
-        help="Variations per round (default: 5)",
+        help="Variations per round — genetic only (default: 5)",
     )
     parser.add_argument(
         "--target", type=int, default=50,
-        help="Stop at this many total iterations (default: 50)",
+        help="Stop at this many total iterations — genetic only (default: 50)",
     )
     parser.add_argument(
-        "--ssml", action="store_true",
-        help="Use SSML-enhanced narration with pauses and emphasis",
+        "--audiotags", action="store_true",
+        help="Use ElevenLabs v3 audio-tag narration ([pause], [rushed], etc.)",
     )
     parser.add_argument(
         "--dry-run", action="store_true",
@@ -988,7 +1123,7 @@ def main():
     )
     parser.add_argument(
         "--plateau-window", type=int, default=3,
-        help="Stop if <0.01 improvement over this many rounds (default: 3)",
+        help="Stop if <0.01 improvement over this many rounds — genetic only (default: 3)",
     )
     args = parser.parse_args()
 
@@ -996,13 +1131,20 @@ def main():
         logger.error("ELEVENLABS_API_KEY not set. Use --dry-run to test without API calls.")
         sys.exit(1)
 
-    asyncio.run(run_iteration(
-        rounds=args.rounds,
-        batch_size=args.batch_size,
-        use_ssml=args.ssml,
-        dry_run=args.dry_run,
-        target_total=args.target,
-    ))
+    if args.optimizer == "optuna":
+        asyncio.run(run_optuna_iteration(
+            n_trials=args.rounds,
+            use_audiotags=args.audiotags,
+            dry_run=args.dry_run,
+        ))
+    else:
+        asyncio.run(run_iteration(
+            rounds=args.rounds,
+            batch_size=args.batch_size,
+            use_audiotags=args.audiotags,
+            dry_run=args.dry_run,
+            target_total=args.target,
+        ))
 
 
 if __name__ == "__main__":

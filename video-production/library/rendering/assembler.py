@@ -231,7 +231,7 @@ def apply_color_grade(
         "ffmpeg", "-y",
         "-i", input_file,
         "-vf", color_filter,
-        "-c:v", "libx264", "-crf", "16", "-preset", "slow",
+        "-c:v", "libx264", "-crf", "16", "-preset", "slow", "-tune", "animation",
         "-c:a", "copy",
         output_file,
     ]

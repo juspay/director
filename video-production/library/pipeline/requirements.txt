@@ -1,6 +1,41 @@
-faster-whisper>=1.0.0
+# Director Pipeline — Python Dependencies
+# Install: pip install -r requirements.txt
+
+# --- Core (required) ---
 httpx>=0.27.0
 moviepy>=2.0.0
 mutagen>=1.47.0
 python-dotenv>=1.0.0
 tenacity>=8.2.0
+
+# --- Voiceover ---
+faster-whisper>=1.0.0       # Whisper transcription (fallback if whisperx unavailable)
+openai>=1.0                 # OpenAI gpt-4o-mini-tts provider
+# fish-audio-sdk           # Fish Audio S2 Pro (uses httpx directly)
+
+# --- Music & Audio ---
+librosa>=0.10               # Audio analysis, spectral features, tempo detection
+numpy>=1.24                 # Signal processing, synthesis
+scipy>=1.10                 # Butterworth filters, WAV I/O, resampling
+pedalboard>=0.9             # Spotify Pedalboard — studio-quality effects (optional)
+pyloudnorm>=0.1             # LUFS loudness measurement (ITU-R BS.1770-4)
+pydub>=0.25                 # Audio manipulation, format conversion
+
+# --- Captioning ---
+whisperx>=3.0               # WhisperX — wav2vec2 forced alignment (optional, recommended)
+jiwer>=3.0                  # Word Error Rate computation
+pysubs2>=1.6                # SRT/ASS subtitle validation
+
+# --- Scoring & QA ---
+ffmpeg-quality-metrics>=3.0 # VMAF/SSIM/PSNR computation
+speechmos>=1.0              # UTMOSv2 MOS prediction (optional)
+optuna>=3.0                 # Bayesian optimization for TTS parameter search
+# vbench                    # VBench temporal quality checks (install separately)
+
+# --- ML (optional — enables Silero VAD, WhisperX, UTMOSv2) ---
+torch>=2.0                  # PyTorch runtime for ML models
+
+# --- API SDKs ---
+google-genai>=0.5           # Gemini API (scoring, Veo 3.1)
+# elevenlabs               # ElevenLabs SDK (uses httpx directly)
+# runway                   # Runway SDK (uses httpx directly)

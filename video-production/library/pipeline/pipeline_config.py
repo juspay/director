@@ -96,16 +96,41 @@ class EncodingPreset:
     height: int = 1080
     max_bitrate: Optional[str] = None
     bufsize: Optional[str] = None
+    video_bitrate: Optional[str] = None  # for hardware encoders (no CRF support)
+    extra_args: Optional[List[str]] = None  # codec-specific extra flags
 
     def ffmpeg_video_args(self) -> List[str]:
-        args = [
-            "-c:v", self.video_codec,
-            "-crf", str(self.video_crf),
-            "-preset", self.video_preset,
-            "-profile:v", self.video_profile,
-            "-level", self.video_level,
-            "-pix_fmt", self.pixel_format,
-        ]
+        args = ["-c:v", self.video_codec]
+
+        if self.video_codec == "libsvtav1":
+            # SVT-AV1: uses -crf and -preset but not -profile/-level
+            args += ["-crf", str(self.video_crf), "-preset", self.video_preset]
+            args += ["-pix_fmt", self.pixel_format]
+        elif self.video_codec == "h264_videotoolbox":
+            # macOS hardware encoder: uses -b:v (no CRF support)
+            args += ["-b:v", self.video_bitrate or "5M"]
+            args += ["-pix_fmt", self.pixel_format]
+        elif self.video_codec == "libx264":
+            args += [
+                "-crf", str(self.video_crf),
+                "-preset", self.video_preset,
+                "-profile:v", self.video_profile,
+                "-level", self.video_level,
+                "-pix_fmt", self.pixel_format,
+                "-tune", "animation",
+            ]
+        else:
+            # Generic: include CRF, preset, profile, level
+            args += [
+                "-crf", str(self.video_crf),
+                "-preset", self.video_preset,
+                "-profile:v", self.video_profile,
+                "-level", self.video_level,
+                "-pix_fmt", self.pixel_format,
+            ]
+
+        if self.extra_args:
+            args += self.extra_args
         if self.max_bitrate:
             args += ["-maxrate", self.max_bitrate, "-bufsize", self.bufsize or self.max_bitrate]
         if self.width != 1920 or self.height != 1080:
@@ -158,7 +183,118 @@ PRESETS: Dict[str, EncodingPreset] = {
         width=1080,
         height=1080,
     ),
+    # AV1 presets — 45-50% smaller files than H.264 at same quality
+    "av1_final": EncodingPreset(
+        name="av1_final",
+        video_codec="libsvtav1",
+        video_crf=30,       # AV1 CRF 30 ≈ H.264 CRF 18 quality
+        video_preset="6",   # SVT-AV1 preset 6 = good speed/quality balance
+        pixel_format="yuv420p10le",  # 10-bit for better gradients
+        audio_codec="libopus",
+        audio_bitrate="128k",
+        extra_args=["-svtav1-params", "keyint=10s:tune=0:enable-overlays=1:scd=1"],
+    ),
+    "av1_web": EncodingPreset(
+        name="av1_web",
+        video_codec="libsvtav1",
+        video_crf=35,       # More aggressive for web delivery
+        video_preset="6",
+        pixel_format="yuv420p10le",
+        audio_codec="libopus",
+        audio_bitrate="48k",
+        width=1280,
+        height=720,
+        extra_args=["-svtav1-params", "keyint=10s:tune=0"],
+    ),
+    # macOS hardware-accelerated presets — ~4x faster encoding for drafts
+    "draft_hw": EncodingPreset(
+        name="draft_hw",
+        video_codec="h264_videotoolbox",
+        video_bitrate="5M",
+        audio_bitrate="128k",
+    ),
+    "preview_hw": EncodingPreset(
+        name="preview_hw",
+        video_codec="h264_videotoolbox",
+        video_bitrate="8M",
+        audio_bitrate="192k",
+    ),
+    # Platform-specific export presets
+    "youtube": EncodingPreset(
+        name="youtube",
+        video_crf=18,
+        video_preset="slow",
+        audio_bitrate="320k",
+        # YouTube re-encodes everything; upload highest quality
+    ),
+    "linkedin": EncodingPreset(
+        name="linkedin",
+        video_crf=20,
+        video_preset="medium",
+        audio_bitrate="192k",
+        # LinkedIn: 1920x1080, 16:9, max 15 min desktop
+    ),
+    "twitter": EncodingPreset(
+        name="twitter",
+        video_crf=23,
+        video_preset="medium",
+        audio_bitrate="160k",
+        width=1280,
+        height=720,
+        max_bitrate="4M",
+        bufsize="8M",
+        # Twitter/X: 1280x720 recommended, max 2:20 standard users
+    ),
+    "tiktok": EncodingPreset(
+        name="tiktok",
+        video_crf=23,
+        video_preset="medium",
+        audio_bitrate="192k",
+        width=1080,
+        height=1920,
+        # TikTok: 9:16 vertical, mandatory for full-screen
+    ),
+    "producthunt": EncodingPreset(
+        name="producthunt",
+        video_crf=28,
+        video_preset="medium",
+        audio_bitrate="128k",
+        width=1080,
+        height=1080,
+        max_bitrate="3M",
+        bufsize="6M",
+        # Product Hunt: 1:1 square, under 30MB, under 60s, auto-loops
+    ),
 }
+
+
+def is_videotoolbox_available() -> bool:
+    """Check if macOS VideoToolbox hardware encoding is available."""
+    import platform
+    import subprocess
+    if platform.system() != "Darwin":
+        return False
+    try:
+        result = subprocess.run(
+            ["ffmpeg", "-hide_banner", "-encoders"],
+            capture_output=True, text=True, timeout=5,
+        )
+        return "h264_videotoolbox" in result.stdout
+    except Exception:
+        return False
+
+
+def get_preset(name: str, prefer_hw: bool = False) -> EncodingPreset:
+    """Get an encoding preset by name, optionally preferring hardware acceleration.
+
+    If prefer_hw is True and VideoToolbox is available, returns the _hw variant
+    for 'draft' and 'preview' presets. Falls back to software encoding otherwise.
+    """
+    if prefer_hw and name in ("draft", "preview") and is_videotoolbox_available():
+        hw_name = f"{name}_hw"
+        if hw_name in PRESETS:
+            return PRESETS[hw_name]
+    return PRESETS[name]
 
 # ---------------------------------------------------------------------------
 # Quality profiles (orchestration-level)
