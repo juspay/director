@@ -60,7 +60,7 @@
         "Typecheck passes"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
       "notes": "Open source lip sync, ~$0.01-0.05/clip vs D-ID pricing."
     },
     {

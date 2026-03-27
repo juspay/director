@@ -361,3 +361,9 @@ PRD: Director Pipeline Improvements (32 user stories)
 - **Learnings:** Qwen3-TTS uses chat-template prompt format; exact audio decoding
   depends on model version — _codec_decode is a fallback that may need updating
 ---
+
+## 2026-03-27 - US-036
+- Created musetalk_avatar.py with 3 modes: Replicate, fal.ai, local
+- Base64 file uploads for cloud APIs, subprocess for local
+- Files changed: musetalk_avatar.py (new)
+---
