@@ -107,7 +107,7 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
       "notes": "Free open source. Only re-render what changed."
     },
     {

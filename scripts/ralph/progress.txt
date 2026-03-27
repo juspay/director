@@ -380,3 +380,9 @@ PRD: Director Pipeline Improvements (32 user stories)
 - HAS_TEMPORAL flag gates all Temporal code (graceful if not installed)
 - Files changed: temporal_workflow.py (new)
 ---
+
+## 2026-03-27 - US-039
+- Created dagster_assets.py: 7 assets with dependency graph + partitioning
+- Standalone get_rebuild_plan() works without Dagster
+- Files changed: dagster_assets.py (new)
+---
