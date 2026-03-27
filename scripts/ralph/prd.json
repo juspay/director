@@ -137,7 +137,7 @@
         "Typecheck passes"
       ],
       "priority": 4,
-      "passes": false,
+      "passes": true,
       "notes": "Free self-hosted. S3-compatible."
     },
     {
@@ -152,7 +152,7 @@
         "Typecheck passes"
       ],
       "priority": 4,
-      "passes": false,
+      "passes": true,
       "notes": "$19/mo. Single API for 13 platforms."
     },
     {
@@ -167,7 +167,7 @@
         "Typecheck passes"
       ],
       "priority": 5,
-      "passes": false,
+      "passes": true,
       "notes": "Free tier: 100K min/mo."
     },
     {
