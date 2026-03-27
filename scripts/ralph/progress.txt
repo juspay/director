@@ -340,3 +340,9 @@ PRD: Director Pipeline Improvements (32 user stories)
 - New PRD: 15 strategic stories (US-033 to US-047)
 - Covers: Lyria music, Beatoven, Qwen3-TTS, MuseTalk, Wan-Alpha, Temporal, Dagster, Remotion Lambda, lakeFS, Late API, Mux, LiteLLM, Remotion captions guide, Rive avatar guide
 ---
+
+## 2026-03-27 - US-033
+- Created lyria_realtime.py with batch (Lyria 3 Pro) and streaming (RealTime) modes
+- BPM/mood map support, 3 preset mood arcs, WAV output
+- Files changed: lyria_realtime.py (new)
+---
