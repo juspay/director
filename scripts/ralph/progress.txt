@@ -340,3 +340,68 @@ PRD: Director Pipeline Improvements (32 user stories)
 - New PRD: 15 strategic stories (US-033 to US-047)
 - Covers: Lyria music, Beatoven, Qwen3-TTS, MuseTalk, Wan-Alpha, Temporal, Dagster, Remotion Lambda, lakeFS, Late API, Mux, LiteLLM, Remotion captions guide, Rive avatar guide
 ---
+
+## 2026-03-27 - US-033
+- Created lyria_realtime.py with batch (Lyria 3 Pro) and streaming (RealTime) modes
+- BPM/mood map support, 3 preset mood arcs, WAV output
+- Files changed: lyria_realtime.py (new)
+---
+
+## 2026-03-27 - US-034
+- Created beatoven.py with text-to-music and video-to-music modes
+- Scene marker support, 16 moods, 10 genres, async polling
+- build_scene_markers_from_config() bridges pipeline scenes to Beatoven format
+- Files changed: beatoven.py (new)
+---
+
+## 2026-03-27 - US-035
+- Created qwen3_tts.py: self-hosted TTS with voice cloning
+- Model caching, auto device selection, 0.6B/1.7B support
+- Files changed: qwen3_tts.py (new)
+- **Learnings:** Qwen3-TTS uses chat-template prompt format; exact audio decoding
+  depends on model version — _codec_decode is a fallback that may need updating
+---
+
+## 2026-03-27 - US-036
+- Created musetalk_avatar.py with 3 modes: Replicate, fal.ai, local
+- Base64 file uploads for cloud APIs, subprocess for local
+- Files changed: musetalk_avatar.py (new)
+---
+
+## 2026-03-27 - US-037
+- Created wan_alpha.py: RGBA video gen + alpha compositing
+- 3 cloud/local modes, composite_rgba_on_background() replaces green_screen.py
+- Files changed: wan_alpha.py (new)
+---
+
+## 2026-03-27 - US-038
+- Created temporal_workflow.py: 6 Activities + VideoProductionWorkflow
+- Concurrent phases 2-4, saga compensation, heartbeating
+- HAS_TEMPORAL flag gates all Temporal code (graceful if not installed)
+- Files changed: temporal_workflow.py (new)
+---
+
+## 2026-03-27 - US-039
+- Created dagster_assets.py: 7 assets with dependency graph + partitioning
+- Standalone get_rebuild_plan() works without Dagster
+- Files changed: dagster_assets.py (new)
+---
+
+## 2026-03-27 - US-040
+- Created lambda_renderer.py: render, deploy-site, deploy-function
+- Maps presets to Lambda quality, cost estimation, S3 download
+---
+
+## 2026-03-27 - US-041 + US-042 + US-043
+- Created lakefs_config.py: upload, download, branch, commit, merge, list
+- Created late_publisher.py: multi-platform video posting (13 platforms)
+- Created mux_hosting.py: upload with HLS transcoding, analytics
+---
+
+## 2026-03-27 - US-044 + US-045 + US-046 + US-047
+- Created litellm_config.py: LLM proxy with cost tracking
+- Created CAPTIONS_GUIDE.md: @remotion/captions migration
+- Created RIVE_AVATAR_GUIDE.md: D-ID → Rive migration architecture
+- Consolidated requirements.txt with all Phase 2 deps
+- ALL 15 PHASE 2 STORIES COMPLETE
+---
