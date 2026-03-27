@@ -346,3 +346,10 @@ PRD: Director Pipeline Improvements (32 user stories)
 - BPM/mood map support, 3 preset mood arcs, WAV output
 - Files changed: lyria_realtime.py (new)
 ---
+
+## 2026-03-27 - US-034
+- Created beatoven.py with text-to-music and video-to-music modes
+- Scene marker support, 16 moods, 10 genres, async polling
+- build_scene_markers_from_config() bridges pipeline scenes to Beatoven format
+- Files changed: beatoven.py (new)
+---
