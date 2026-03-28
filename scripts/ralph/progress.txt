@@ -424,3 +424,9 @@ PRD: Director Pipeline Improvements (32 user stories)
 - Created 6 Zod schemas + barrel export in src/schemas/
 - All follow dopamine's Gemini-safe patterns
 ---
+
+## 2026-03-28 - US-058 through US-063
+- Created 6 Neurolink agents + barrel export
+- VideoScorer, ScriptScorer, SceneAnalyzer, VideoComparator, CreativeDirector, AcousticAnalyzer
+- All use Pattern A (file+schema) or Pattern B (text+schema) from dopamine
+---
