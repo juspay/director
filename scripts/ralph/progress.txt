@@ -430,3 +430,11 @@ PRD: Director Pipeline Improvements (32 user stories)
 - VideoScorer, ScriptScorer, SceneAnalyzer, VideoComparator, CreativeDirector, AcousticAnalyzer
 - All use Pattern A (file+schema) or Pattern B (text+schema) from dopamine
 ---
+
+## 2026-03-28 - US-064 through US-076 (ALL REMAINING)
+- Pipeline: runner.ts (5-step orchestrator), state.ts, CLI
+- Policies: policy-creator (5 policies), policy-enforcer (rule engine), policy-validator (compliance)
+- Observability: agent-observer, evaluation-agent, super-observer, reporter (40s bursts)
+- Integration: dashboard-generator
+- ALL 29 PHASE 3 STORIES COMPLETE
+---
