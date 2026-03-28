@@ -214,7 +214,7 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
       "notes": "Core agent. Port of gemini_video_scorer.py. The Python version uses regex to extract scores from freeform text. The TypeScript version should use Neurolink's structured output to get validated JSON directly, falling back to safeJsonParse. Dimension shuffling reduces Gemini positional bias (~+/-0.8-1.0)."
     },
     {
@@ -232,7 +232,7 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
       "notes": "New agent \u2014 enables pre-render quality gating on script text. Can reject a script before expensive TTS/video generation begins. Should reference the NARRATION_PLAIN text structure from genetic_optimizer.py as context for what good narration looks like."
     },
     {
@@ -251,7 +251,7 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
       "notes": "New granularity. The Python scorer gives a single score per dimension across the whole video. This agent isolates issues to specific scenes, enabling targeted iteration. Scene timestamps come from pipeline config."
     },
     {
@@ -271,7 +271,7 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
       "notes": "Port of reference_comparator.py's compare command + vmaf_gating.py integration. The Python version sends 3 videos to Gemini (2 references + ours). The TypeScript version should support flexible A/B comparison. VMAF data is passed in externally since VMAF computation stays in Python (requires ffmpeg)."
     },
     {
@@ -290,7 +290,7 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
       "notes": "Replaces genetic_optimizer.py's hill-climbing approach. Instead of generating N variations and scoring them, the AI directly predicts optimal parameters. Can be used iteratively: generate -> render -> score -> regenerate with score feedback."
     },
     {
@@ -309,7 +309,7 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
       "notes": "Hybrid approach: deterministic scoring (pacing, duration, spectral analysis) stays in Python/librosa. The AI agent adds subjective quality assessment (naturalness, emotional delivery, pronunciation) and can compare two voiceovers. Maps to the 9 criteria in acoustic_scorer.py."
     },
     {
