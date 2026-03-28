@@ -95,7 +95,7 @@
         "Typecheck passes"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
       "notes": "Weights from gemini_video_scorer.py: content_authenticity=0.25, visual_polish=0.20, motion_design=0.15, storytelling=0.15, scene_transitions=0.10, music_audio=0.10, production_value=0.05. The Python code extracts scores via regex \u2014 this schema enables structured output."
     },
     {
@@ -114,7 +114,7 @@
         "Typecheck passes"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
       "notes": "Script scoring does not exist in the Python codebase \u2014 this is a new capability enabled by Neurolink. The 11 criteria are designed to complement the video scoring dimensions for end-to-end quality assessment."
     },
     {
@@ -133,7 +133,7 @@
         "Typecheck passes"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
       "notes": "Direct port of acoustic_scorer.py schema. Weights: pacing=0.13, duration_fit=0.09, dynamic_range=0.13, silence_quality=0.09, energy_arc=0.18, spectral_warmth=0.09, consistency=0.09, clarity=0.09, perceived_quality=0.11. The AI agent will analyze audio descriptions rather than raw waveforms \u2014 deterministic scoring (librosa) stays in Python."
     },
     {
@@ -154,7 +154,7 @@
         "Typecheck passes"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
       "notes": "New capability. The Python video scorer only gives per-dimension scores across the whole video. Scene-level analysis enables targeted iteration on specific scenes. Maps to the 7-scene structure defined in gemini_video_scorer.py and reference_comparator.py."
     },
     {
@@ -175,7 +175,7 @@
         "Typecheck passes"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
       "notes": "Combines reference_comparator.py's AI comparison with vmaf_gating.py's deterministic scoring. The VMAF data is optional since it comes from the Python layer \u2014 the AI comparison is the primary output."
     },
     {
@@ -193,7 +193,7 @@
         "Typecheck passes"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
       "notes": "The genetic_optimizer.py currently uses hill-climbing to find optimal TTS params. The CreativeDirectorAgent replaces this with AI-guided prompt generation. PARAM_BOUNDS from genetic_optimizer.py: stability (0.30, 0.70), similarity_boost (0.65, 0.90), style (0.20, 0.60)."
     },
     {
