@@ -329,7 +329,7 @@
         "Typecheck passes"
       ],
       "priority": 4,
-      "passes": false,
+      "passes": true,
       "notes": "Mirrors orchestrator.py's 6-phase architecture but for the AI judgment layer. The Python orchestrator handles asset generation (voiceover, avatar, B-roll, music, composite, captions). This TypeScript runner handles quality assessment and creative direction. Both can run in the same iteration loop."
     },
     {
@@ -351,7 +351,7 @@
         "Typecheck passes"
       ],
       "priority": 4,
-      "passes": false,
+      "passes": true,
       "notes": "The Python pipeline uses sequential phases with some concurrency. If a Gemini call fails at phase 4 (video-score), we should not re-run phases 1-3 (script-score, creative-prompts, acoustic-analysis) on resume. JSON state is simple and debuggable."
     },
     {
@@ -372,7 +372,7 @@
         "Typecheck passes"
       ],
       "priority": 4,
-      "passes": false,
+      "passes": true,
       "notes": "Entry point for the TypeScript pipeline. Usage: npx tsx src/pipeline/cli.ts --video path/to/video.mp4 --tier dev. Mirrors orchestrator.py's argparse CLI."
     },
     {
@@ -391,7 +391,7 @@
         "Typecheck passes"
       ],
       "priority": 5,
-      "passes": false,
+      "passes": true,
       "notes": "Policies define quality gates. A video score below 7.0 overall triggers re-iteration. Deal-breakers in video score trigger immediate halt. The thresholds (7.0 overall, 5.0 per-dimension) are based on the production target of 9.0+ from gemini_video_scorer.py \u2014 7.0 is the 'not embarrassing' floor."
     },
     {
@@ -410,7 +410,7 @@
         "Typecheck passes"
       ],
       "priority": 5,
-      "passes": false,
+      "passes": true,
       "notes": "Enforcer runs inline during pipeline execution. Example: after VideoScorerAgent returns, enforcer checks that overall score is reported, all 7 dimensions have scores, no dimension is below 5.0 floor. If video scores below 7.0, pipeline runner can decide to re-iterate."
     },
     {
@@ -429,7 +429,7 @@
         "Typecheck passes"
       ],
       "priority": 5,
-      "passes": false,
+      "passes": true,
       "notes": "Post-hoc validation. Unlike the enforcer (which runs inline), the validator reviews the entire pipeline run after completion. Useful for CI/CD gating: 'Is this iteration ready for release?'"
     },
     {
@@ -448,7 +448,7 @@
         "Typecheck passes"
       ],
       "priority": 6,
-      "passes": false,
+      "passes": true,
       "notes": "The Python code tracks usage metadata (prompt_tokens, response_tokens, total_tokens) per Gemini call. The ObservabilityAgent centralizes this across all TypeScript agents with cost estimation. Essential for optimizing the 3-run scoring approach ($0.04/dev vs $0.16/official per iteration)."
     },
     {
@@ -466,7 +466,7 @@
         "Typecheck passes"
       ],
       "priority": 6,
-      "passes": false,
+      "passes": true,
       "notes": "Meta-evaluation: an agent that scores other agents. Helps detect when the video scorer is miscalibrated (always giving 8+) or when scene analysis contradicts overall scores. Part of the observability layer."
     },
     {
@@ -486,7 +486,7 @@
         "Typecheck passes"
       ],
       "priority": 6,
-      "passes": false,
+      "passes": true,
       "notes": "Top of the observability hierarchy. Watches everything: agent outputs, policy compliance, cost, timing. Can flag when the pipeline is wasting money (too many low-quality iterations) or when a regression sneaks past the video scorer."
     },
     {
@@ -506,7 +506,7 @@
         "Typecheck passes"
       ],
       "priority": 6,
-      "passes": false,
+      "passes": true,
       "notes": "Designed for the Slack-native workflow. After each pipeline iteration, the reporter generates a summary that the team can scan in 40 seconds. Mirrors how the Python pipeline logs results but structured for async team consumption."
     },
     {
@@ -526,7 +526,7 @@
         "Typecheck passes"
       ],
       "priority": 7,
-      "passes": false,
+      "passes": true,
       "notes": "HTML dashboard for tracking progress toward the 9.0+ target. Replaces manually reviewing score JSON files. The Python pipeline saves results to analysis/ directory \u2014 this provides a visual overview. Self-contained HTML means it can be opened in any browser without a server."
     },
     {
@@ -543,7 +543,7 @@
         "Typecheck passes (no TypeScript in this story, but must not break existing checks)"
       ],
       "priority": 7,
-      "passes": false,
+      "passes": true,
       "notes": "Documentation story. Helps the team understand how the TypeScript AI layer fits with the existing Python pipeline."
     },
     {
@@ -560,7 +560,7 @@
         "Typecheck passes"
       ],
       "priority": 7,
-      "passes": false,
+      "passes": true,
       "notes": "Run last. Validates that the entire TypeScript layer compiles and the CLI entry point works in dry-run mode. This is the integration test for all previous stories."
     }
   ]
