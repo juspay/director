@@ -1,7 +1,7 @@
 {
-  "project": "Director Neurolink Migration — AI Pipeline in TypeScript",
+  "project": "Director Neurolink Migration \u2014 AI Pipeline in TypeScript",
   "branchName": "ralph/neurolink-migration",
-  "description": "Migrate the Director video pipeline's AI scoring, analysis, and optimization components from Python (video-production/library/) to a TypeScript layer at src/ using @juspay/neurolink. Mirrors dopamine's agent-based architecture with Zod schemas, structured output, rate limiting, policy enforcement, and observability. The Python pipeline (voiceover generation, avatar, B-roll, compositing, captions) remains unchanged — this migration targets the AI judgment layer: video scoring, script scoring, acoustic analysis, scene analysis, video comparison, and creative direction.",
+  "description": "Migrate the Director video pipeline's AI scoring, analysis, and optimization components from Python (video-production/library/) to a TypeScript layer at src/ using @juspay/neurolink. Mirrors dopamine's agent-based architecture with Zod schemas, structured output, rate limiting, policy enforcement, and observability. The Python pipeline (voiceover generation, avatar, B-roll, compositing, captions) remains unchanged \u2014 this migration targets the AI judgment layer: video scoring, script scoring, acoustic analysis, scene analysis, video comparison, and creative direction.",
   "userStories": [
     {
       "id": "US-048",
@@ -18,7 +18,7 @@
         "Typecheck passes"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
       "notes": "Foundation story. All other stories depend on this. Use tsx for development execution. tsconfig should have paths alias '@/' mapping to src/."
     },
     {
@@ -36,7 +36,7 @@
         "Typecheck passes"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
       "notes": "Port Python SCORING_DIMENSIONS, WEIGHTS, SCORING_TIERS, and PRESETS faithfully. Environment variables: GOOGLE_VERTEX_PROJECT, GOOGLE_VERTEX_LOCATION, GOOGLE_APPLICATION_CREDENTIALS, DIRECTOR_SCORING_TIER, DIRECTOR_OUTPUT_DIR."
     },
     {
@@ -54,7 +54,7 @@
         "Typecheck passes"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
       "notes": "Gemini has 60 RPM default for Vertex AI. The 3-run scoring system sends 3 requests in sequence per iteration. Rate limiter must handle concurrent agent execution."
     },
     {
@@ -73,13 +73,13 @@
         "Typecheck passes"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
       "notes": "Critical for structured output from Gemini. The Python code uses regex to extract scores from freeform text (extract_overall_score, extract_dimension_scores). The TypeScript version should request structured JSON output and validate with Zod."
     },
     {
       "id": "US-052",
       "title": "Create VideoScoreSchema with 7 scoring dimensions",
-      "description": "Create src/schemas/video-score.ts defining the Zod schema for video scoring output. Must encode all 7 dimensions from gemini_video_scorer.py with their weights, plus the overall score, improvements list, deal-breakers, and positives — matching the exact output structure the Gemini prompt requests.",
+      "description": "Create src/schemas/video-score.ts defining the Zod schema for video scoring output. Must encode all 7 dimensions from gemini_video_scorer.py with their weights, plus the overall score, improvements list, deal-breakers, and positives \u2014 matching the exact output structure the Gemini prompt requests.",
       "acceptanceCriteria": [
         "src/schemas/video-score.ts exists",
         "Exports DimensionScore schema: z.object({ score: z.number().min(1).max(10), justification: z.string() })",
@@ -96,7 +96,7 @@
       ],
       "priority": 2,
       "passes": false,
-      "notes": "Weights from gemini_video_scorer.py: content_authenticity=0.25, visual_polish=0.20, motion_design=0.15, storytelling=0.15, scene_transitions=0.10, music_audio=0.10, production_value=0.05. The Python code extracts scores via regex — this schema enables structured output."
+      "notes": "Weights from gemini_video_scorer.py: content_authenticity=0.25, visual_polish=0.20, motion_design=0.15, storytelling=0.15, scene_transitions=0.10, music_audio=0.10, production_value=0.05. The Python code extracts scores via regex \u2014 this schema enables structured output."
     },
     {
       "id": "US-053",
@@ -115,7 +115,7 @@
       ],
       "priority": 2,
       "passes": false,
-      "notes": "Script scoring does not exist in the Python codebase — this is a new capability enabled by Neurolink. The 11 criteria are designed to complement the video scoring dimensions for end-to-end quality assessment."
+      "notes": "Script scoring does not exist in the Python codebase \u2014 this is a new capability enabled by Neurolink. The 11 criteria are designed to complement the video scoring dimensions for end-to-end quality assessment."
     },
     {
       "id": "US-054",
@@ -134,7 +134,7 @@
       ],
       "priority": 2,
       "passes": false,
-      "notes": "Direct port of acoustic_scorer.py schema. Weights: pacing=0.13, duration_fit=0.09, dynamic_range=0.13, silence_quality=0.09, energy_arc=0.18, spectral_warmth=0.09, consistency=0.09, clarity=0.09, perceived_quality=0.11. The AI agent will analyze audio descriptions rather than raw waveforms — deterministic scoring (librosa) stays in Python."
+      "notes": "Direct port of acoustic_scorer.py schema. Weights: pacing=0.13, duration_fit=0.09, dynamic_range=0.13, silence_quality=0.09, energy_arc=0.18, spectral_warmth=0.09, consistency=0.09, clarity=0.09, perceived_quality=0.11. The AI agent will analyze audio descriptions rather than raw waveforms \u2014 deterministic scoring (librosa) stays in Python."
     },
     {
       "id": "US-055",
@@ -144,9 +144,9 @@
         "src/schemas/scene-analysis.ts exists",
         "Exports SceneAnalysisSchema as z.object",
         "Includes sceneId: z.string() and sceneName: z.string()",
-        "Includes temporalQuality: z.object({ animationSmoothness, frameDrops, springQuality, exitAnimationQuality }) — each z.number().min(1).max(10)",
+        "Includes temporalQuality: z.object({ animationSmoothness, frameDrops, springQuality, exitAnimationQuality }) \u2014 each z.number().min(1).max(10)",
         "Includes artifacts: z.array(ArtifactSchema) where ArtifactSchema has type, severity ('critical'|'major'|'minor'), timestamp, description",
-        "Includes composition: z.object({ whitespace, hierarchy, density, alignment }) — each z.number().min(1).max(10)",
+        "Includes composition: z.object({ whitespace, hierarchy, density, alignment }) \u2014 each z.number().min(1).max(10)",
         "Includes timing: z.object({ durationSeconds, transitionInQuality, transitionOutQuality, pacingScore })",
         "Includes overallSceneScore: z.number().min(1).max(10)",
         "Includes recommendations: z.array(z.string())",
@@ -176,12 +176,12 @@
       ],
       "priority": 2,
       "passes": false,
-      "notes": "Combines reference_comparator.py's AI comparison with vmaf_gating.py's deterministic scoring. The VMAF data is optional since it comes from the Python layer — the AI comparison is the primary output."
+      "notes": "Combines reference_comparator.py's AI comparison with vmaf_gating.py's deterministic scoring. The VMAF data is optional since it comes from the Python layer \u2014 the AI comparison is the primary output."
     },
     {
       "id": "US-057",
       "title": "Create CreativePromptSchema for TTS, B-roll, and music prompts",
-      "description": "Create src/schemas/creative-prompt.ts defining the Zod schema for AI-generated creative prompts. Given a script, the CreativeDirectorAgent will output optimized prompts for ElevenLabs TTS (voice settings per scene), Runway B-roll generation, and music generation — replacing manual prompt crafting.",
+      "description": "Create src/schemas/creative-prompt.ts defining the Zod schema for AI-generated creative prompts. Given a script, the CreativeDirectorAgent will output optimized prompts for ElevenLabs TTS (voice settings per scene), Runway B-roll generation, and music generation \u2014 replacing manual prompt crafting.",
       "acceptanceCriteria": [
         "src/schemas/creative-prompt.ts exists",
         "Exports CreativePromptSchema as z.object",
@@ -220,7 +220,7 @@
     {
       "id": "US-059",
       "title": "Create ScriptScorerAgent for narration quality",
-      "description": "Create src/agents/script-scorer.ts implementing the ScriptScorerAgent that evaluates script/narration text against 11 quality criteria. This is a new capability not present in the Python codebase — the Python pipeline only scores rendered video, not the script itself.",
+      "description": "Create src/agents/script-scorer.ts implementing the ScriptScorerAgent that evaluates script/narration text against 11 quality criteria. This is a new capability not present in the Python codebase \u2014 the Python pipeline only scores rendered video, not the script itself.",
       "acceptanceCriteria": [
         "src/agents/script-scorer.ts exists",
         "Exports ScriptScorerAgent class or createScriptScorerAgent factory",
@@ -233,7 +233,7 @@
       ],
       "priority": 3,
       "passes": false,
-      "notes": "New agent — enables pre-render quality gating on script text. Can reject a script before expensive TTS/video generation begins. Should reference the NARRATION_PLAIN text structure from genetic_optimizer.py as context for what good narration looks like."
+      "notes": "New agent \u2014 enables pre-render quality gating on script text. Can reject a script before expensive TTS/video generation begins. Should reference the NARRATION_PLAIN text structure from genetic_optimizer.py as context for what good narration looks like."
     },
     {
       "id": "US-060",
@@ -242,7 +242,7 @@
       "acceptanceCriteria": [
         "src/agents/scene-analyzer.ts exists",
         "Exports SceneAnalyzerAgent class or createSceneAnalyzerAgent factory",
-        "Agent configured via Neurolink with Gemini model (multimodal — accepts video input)",
+        "Agent configured via Neurolink with Gemini model (multimodal \u2014 accepts video input)",
         "System prompt includes the 7-scene structure from gemini_video_scorer.py (Hook, Meet Tara, Collab, Execution, Reach, Payoff, Identity)",
         "Output validated against SceneAnalysisSchema",
         "Exports analyzeScene(videoPath: string, sceneId: string, sceneTimestamps: { start: number, end: number }): Promise<SceneAnalysis>",
@@ -261,7 +261,7 @@
       "acceptanceCriteria": [
         "src/agents/video-comparator.ts exists",
         "Exports VideoComparatorAgent class or createVideoComparatorAgent factory",
-        "Agent configured via Neurolink with Gemini model (multimodal — accepts 2 video inputs)",
+        "Agent configured via Neurolink with Gemini model (multimodal \u2014 accepts 2 video inputs)",
         "System prompt matches COMPARISON_PROMPT from reference_comparator.py structure",
         "Output validated against ComparisonSchema",
         "Exports compareVideos(videoPathA: string, videoPathB: string, options?: { labels?: [string, string], vmafData?: VmafResult }): Promise<ComparisonResult>",
@@ -300,7 +300,7 @@
       "acceptanceCriteria": [
         "src/agents/acoustic-analyzer.ts exists",
         "Exports AcousticAnalyzerAgent class or createAcousticAnalyzerAgent factory",
-        "Agent configured via Neurolink with Gemini model (multimodal — accepts audio input)",
+        "Agent configured via Neurolink with Gemini model (multimodal \u2014 accepts audio input)",
         "System prompt defines all 9 acoustic criteria from acoustic_scorer.py with their scoring rubrics",
         "Output validated against AcousticScoreSchema",
         "Exports analyzeVoiceover(audioPath: string, options?: { deterministicScores?: Partial<AcousticScore>, scriptText?: string }): Promise<AcousticScore>",
@@ -341,12 +341,12 @@
         "Exports PipelineState interface tracking: runId, startedAt, phases (map of phase name to PhaseState)",
         "PhaseState includes: status ('pending'|'running'|'completed'|'failed'), startedAt?, completedAt?, result?, error?",
         "Exports StateManager class with constructor(stateDir: string, runId: string)",
-        "StateManager.load(): PipelineState — loads from JSON file or creates new",
+        "StateManager.load(): PipelineState \u2014 loads from JSON file or creates new",
         "StateManager.markPhaseStarted(phase): void",
         "StateManager.markPhaseCompleted(phase, result): void",
         "StateManager.markPhaseFailed(phase, error): void",
         "StateManager.isPhaseCompleted(phase): boolean",
-        "StateManager.save(): void — writes state to {stateDir}/{runId}.json",
+        "StateManager.save(): void \u2014 writes state to {stateDir}/{runId}.json",
         "State file is written atomically (write to temp file then rename) to prevent corruption",
         "Typecheck passes"
       ],
@@ -357,7 +357,7 @@
     {
       "id": "US-066",
       "title": "Create pipeline CLI entry point with step control",
-      "description": "Create src/pipeline/cli.ts as the CLI entry point for the Neurolink pipeline. Supports running all phases, specific phases, dry-run mode, and specifying input files — mirroring the argparse CLI in orchestrator.py.",
+      "description": "Create src/pipeline/cli.ts as the CLI entry point for the Neurolink pipeline. Supports running all phases, specific phases, dry-run mode, and specifying input files \u2014 mirroring the argparse CLI in orchestrator.py.",
       "acceptanceCriteria": [
         "src/pipeline/cli.ts exists",
         "Parses command-line arguments: --phases (comma-separated), --script (path), --video (path), --previous-video (path), --tier (dev|official), --dry-run, --run-id (for resume)",
@@ -383,16 +383,16 @@
         "src/policy/creator.ts exists",
         "Exports Policy interface: { name, agentId, rules: PolicyRule[] }",
         "PolicyRule types: 'min_score' (field path + threshold), 'required_field' (field path), 'range' (field path + min/max), 'custom' (predicate function)",
-        "Exports createVideoScorePolicy(): Policy — requires overall >= 7.0, each dimension >= 5.0, at least 3 improvements listed, at least 1 positive",
-        "Exports createScriptScorePolicy(): Policy — requires composite >= 7.0, hookStrength >= 7.0, ctaStrength >= 7.0",
-        "Exports createAcousticScorePolicy(): Policy — requires composite >= 7.0, pacing >= 6.0, energyArc >= 6.0",
-        "Exports createComparisonPolicy(): Policy — requires verdict present, at least 5 prioritized improvements",
+        "Exports createVideoScorePolicy(): Policy \u2014 requires overall >= 7.0, each dimension >= 5.0, at least 3 improvements listed, at least 1 positive",
+        "Exports createScriptScorePolicy(): Policy \u2014 requires composite >= 7.0, hookStrength >= 7.0, ctaStrength >= 7.0",
+        "Exports createAcousticScorePolicy(): Policy \u2014 requires composite >= 7.0, pacing >= 6.0, energyArc >= 6.0",
+        "Exports createComparisonPolicy(): Policy \u2014 requires verdict present, at least 5 prioritized improvements",
         "All policies are typed and serializable to JSON",
         "Typecheck passes"
       ],
       "priority": 5,
       "passes": false,
-      "notes": "Policies define quality gates. A video score below 7.0 overall triggers re-iteration. Deal-breakers in video score trigger immediate halt. The thresholds (7.0 overall, 5.0 per-dimension) are based on the production target of 9.0+ from gemini_video_scorer.py — 7.0 is the 'not embarrassing' floor."
+      "notes": "Policies define quality gates. A video score below 7.0 overall triggers re-iteration. Deal-breakers in video score trigger immediate halt. The thresholds (7.0 overall, 5.0 per-dimension) are based on the production target of 9.0+ from gemini_video_scorer.py \u2014 7.0 is the 'not embarrassing' floor."
     },
     {
       "id": "US-068",
@@ -424,7 +424,7 @@
         "ComplianceReport: { overallCompliant: boolean, phaseResults: Map<string, PolicyResult>, summary: string, recommendations: string[] }",
         "Checks all completed phase outputs against their respective policies",
         "Generates human-readable summary of compliance status",
-        "Includes recommendations for failed policies (e.g., 'Video score 6.2 is below 7.0 threshold — re-iterate with focus on motion_design')",
+        "Includes recommendations for failed policies (e.g., 'Video score 6.2 is below 7.0 threshold \u2014 re-iterate with focus on motion_design')",
         "Exports generateComplianceReport(report: ComplianceReport): string for formatted output",
         "Typecheck passes"
       ],
@@ -492,7 +492,7 @@
     {
       "id": "US-073",
       "title": "Create ReporterAgent for 40-second status bursts",
-      "description": "Create src/observability/reporter-agent.ts implementing an agent that generates concise, time-boxed status reports. Designed for Slack integration — produces a summary that can be read in 40 seconds, covering what changed, what improved, what regressed, and what to do next.",
+      "description": "Create src/observability/reporter-agent.ts implementing an agent that generates concise, time-boxed status reports. Designed for Slack integration \u2014 produces a summary that can be read in 40 seconds, covering what changed, what improved, what regressed, and what to do next.",
       "acceptanceCriteria": [
         "src/observability/reporter-agent.ts exists",
         "Exports ReporterAgent class or createReporterAgent factory",
@@ -512,7 +512,7 @@
     {
       "id": "US-074",
       "title": "Create dashboard generator for pipeline results",
-      "description": "Create src/observability/dashboard.ts that generates an HTML dashboard summarizing pipeline results across iterations. Similar to dopamine's DashboardAgent — renders score trends, dimension breakdowns, and iteration history as a self-contained HTML file.",
+      "description": "Create src/observability/dashboard.ts that generates an HTML dashboard summarizing pipeline results across iterations. Similar to dopamine's DashboardAgent \u2014 renders score trends, dimension breakdowns, and iteration history as a self-contained HTML file.",
       "acceptanceCriteria": [
         "src/observability/dashboard.ts exists",
         "Exports generateDashboard(runs: PipelineState[], config: PipelineConfig): string",
@@ -527,7 +527,7 @@
       ],
       "priority": 7,
       "passes": false,
-      "notes": "HTML dashboard for tracking progress toward the 9.0+ target. Replaces manually reviewing score JSON files. The Python pipeline saves results to analysis/ directory — this provides a visual overview. Self-contained HTML means it can be opened in any browser without a server."
+      "notes": "HTML dashboard for tracking progress toward the 9.0+ target. Replaces manually reviewing score JSON files. The Python pipeline saves results to analysis/ directory \u2014 this provides a visual overview. Self-contained HTML means it can be opened in any browser without a server."
     },
     {
       "id": "US-075",
