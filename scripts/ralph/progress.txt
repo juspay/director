@@ -405,3 +405,11 @@ PRD: Director Pipeline Improvements (32 user stories)
 - Consolidated requirements.txt with all Phase 2 deps
 - ALL 15 PHASE 2 STORIES COMPLETE
 ---
+
+## Phase 3: Neurolink Migration Started — 2026-03-28
+- New PRD: 29 stories (US-048 to US-076)
+- Branch: ralph/neurolink-migration
+- Architecture: TypeScript agents at src/ using @juspay/neurolink
+- 3-cycle policy system: Creator → Enforcer → Validator
+- Observability: 40 grouped agents + super observer + 40s reporter
+---
