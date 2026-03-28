@@ -1,0 +1,30 @@
+{
+  "name": "director",
+  "version": "1.0.0",
+  "description": "AI Video Production Pipeline — TypeScript agents powered by Neurolink",
+  "type": "module",
+  "main": "dist/pipeline/runner.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsx src/pipeline/runner.ts",
+    "score": "tsx src/agents/video-scorer.ts",
+    "analyze": "tsx src/agents/scene-analyzer.ts",
+    "compare": "tsx src/agents/video-comparator.ts",
+    "direct": "tsx src/agents/creative-director.ts",
+    "observe": "tsx src/observability/super-observer.ts",
+    "report": "tsx src/observability/reporter.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@juspay/neurolink": "^9.30.0",
+    "zod": "^3.23.0",
+    "dotenv": "^16.4.0",
+    "express": "^4.19.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "tsx": "^4.16.0",
+    "@types/node": "^20.14.0",
+    "@types/express": "^4.17.0"
+  }
+}
