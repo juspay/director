@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Director — AI Video Production Pipeline</title>
+<style>
+/* ============================================================
+   Reset & Base
+   ============================================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: #0a0a10;
+  color: #c8c8d4;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   Typography
+   ============================================================ */
+h1, h2, h3, h4 { color: #eaeaf2; font-weight: 700; }
+h1 { font-size: 3.2em; letter-spacing: -1.5px; line-height: 1.1; }
+h2 { font-size: 1.8em; margin-bottom: 16px; }
+h3 { font-size: 1.2em; margin-bottom: 8px; color: #b0b0c0; }
+a { color: #d97706; text-decoration: none; }
+a:hover { text-decoration: underline; }
+code, .mono {
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+}
+
+/* ============================================================
+   Layout
+   ============================================================ */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+section { padding: 80px 0; }
+section + section { border-top: 1px solid #1a1a28; }
+
+/* ============================================================
+   Hero
+   ============================================================ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140%;
+  height: 140%;
+  background: radial-gradient(ellipse at center, rgba(217,119,6,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-content { position: relative; z-index: 1; }
+.hero .subtitle {
+  font-size: 1.15em;
+  color: #888;
+  margin-top: 20px;
+  max-width: 720px;
+}
+.hero .byline {
+  margin-top: 24px;
+  font-size: 0.95em;
+  color: #666;
+}
+.hero .byline strong { color: #f59e0b; }
+
+.badge-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 32px;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border-radius: 100px;
+  font-size: 0.8em;
+  font-weight: 600;
+  border: 1px solid #2a2a3a;
+  background: #12121e;
+  color: #a8a8c0;
+  white-space: nowrap;
+}
+.badge .dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.badge .dot.ts  { background: #3178c6; }
+.badge .dot.py  { background: #3776ab; }
+.badge .dot.ai  { background: #f5a623; }
+.badge .dot.vid { background: #e74c3c; }
+.badge .dot.web { background: #2ecc71; }
+.badge .dot.audio { background: #d97706; }
+
+/* ============================================================
+   Stats Grid
+   ============================================================ */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+.stat-card {
+  background: linear-gradient(135deg, #14142a 0%, #1a1a2e 100%);
+  border: 1px solid #252540;
+  border-radius: 16px;
+  padding: 28px 24px;
+  text-align: center;
+  transition: transform 0.2s, border-color 0.3s;
+}
+.stat-card:hover {
+  transform: translateY(-4px);
+  border-color: #d9770644;
+}
+.stat-number {
+  font-size: 2.8em;
+  font-weight: 800;
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+}
+.stat-label {
+  font-size: 0.85em;
+  color: #777;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-top: 8px;
+}
+
+/* ============================================================
+   Pipeline Diagram
+   ============================================================ */
+.pipeline-diagram {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  justify-content: center;
+  margin: 40px 0;
+}
+.pipeline-step {
+  display: flex;
+  align-items: center;
+}
+.step-box {
+  width: 150px;
+  background: #14142a;
+  border: 1px solid #252540;
+  border-radius: 12px;
+  padding: 16px 12px;
+  text-align: center;
+  transition: all 0.25s;
+  position: relative;
+}
+.step-box:hover {
+  border-color: #d97706;
+  background: #1a1a36;
+  transform: translateY(-2px);
+}
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  font-size: 0.75em;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.step-num.local {
+  background: #1a3a2a;
+  color: #4ade80;
+  border: 1px solid #2a5a3a;
+}
+.step-num.ai {
+  background: #2a1a0a;
+  color: #f59e0b;
+  border: 1px solid #5a3a1a;
+}
+.step-name {
+  font-size: 0.78em;
+  font-weight: 600;
+  color: #d0d0e0;
+  line-height: 1.3;
+}
+.step-tech {
+  font-size: 0.65em;
+  color: #666;
+  margin-top: 4px;
+}
+.step-type {
+  font-size: 0.6em;
+  color: #555;
+  margin-top: 4px;
+  font-style: italic;
+}
+.step-arrow {
+  color: #333;
+  font-size: 1.4em;
+  padding: 0 6px;
+  user-select: none;
+}
+@media (max-width: 900px) {
+  .pipeline-diagram { flex-direction: column; align-items: center; }
+  .step-arrow { transform: rotate(90deg); padding: 4px 0; }
+}
+
+/* ============================================================
+   Collapsible Sections
+   ============================================================ */
+.collapsible {
+  background: #12121e;
+  border: 1px solid #1e1e32;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.collapsible-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+}
+.collapsible-header:hover { background: #1a1a2e; }
+.collapsible-header h3 { color: #ddd; margin: 0; }
+.collapsible-chevron {
+  font-size: 1.2em;
+  color: #555;
+  transition: transform 0.3s;
+}
+.collapsible.open .collapsible-chevron { transform: rotate(180deg); }
+.collapsible-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out, padding 0.3s ease-out;
+  padding: 0 24px;
+}
+.collapsible.open .collapsible-body {
+  max-height: 3000px;
+  padding: 0 24px 24px;
+}
+
+/* ============================================================
+   Timeline
+   ============================================================ */
+.timeline { position: relative; padding-left: 40px; margin-top: 32px; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 14px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, #d97706, #d9770633);
+}
+.timeline-item {
+  position: relative;
+  padding-bottom: 40px;
+}
+.timeline-item:last-child { padding-bottom: 0; }
+.timeline-dot {
+  position: absolute;
+  left: -33px;
+  top: 4px;
+  width: 16px; height: 16px;
+  background: #d97706;
+  border-radius: 50%;
+  border: 3px solid #0a0a10;
+  box-shadow: 0 0 0 3px #d9770644;
+}
+.timeline-date {
+  font-size: 0.8em;
+  color: #d97706;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.timeline-title {
+  font-size: 1.1em;
+  color: #eaeaf2;
+  font-weight: 600;
+  margin-top: 4px;
+}
+.timeline-desc {
+  font-size: 0.9em;
+  color: #888;
+  margin-top: 4px;
+  max-width: 600px;
+}
+
+/* ============================================================
+   Tech Stack Grid
+   ============================================================ */
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 32px;
+}
+.tech-card {
+  background: #12121e;
+  border: 1px solid #1e1e32;
+  border-radius: 14px;
+  padding: 24px;
+}
+.tech-card h4 {
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #d97706;
+  margin-bottom: 16px;
+}
+.tech-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px solid #1a1a28;
+}
+.tech-item:last-child { border-bottom: none; }
+.tech-name { font-weight: 600; color: #d0d0e0; }
+.tech-version {
+  font-size: 0.8em;
+  color: #555;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
+
+/* ============================================================
+   Commands
+   ============================================================ */
+.command-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+  margin-top: 32px;
+}
+.command-card {
+  background: #12121e;
+  border: 1px solid #1e1e32;
+  border-radius: 12px;
+  padding: 20px;
+  transition: border-color 0.3s;
+}
+.command-card:hover { border-color: #d9770644; }
+.command-code {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.88em;
+  color: #f59e0b;
+  margin-bottom: 8px;
+  word-break: break-all;
+}
+.command-desc {
+  font-size: 0.85em;
+  color: #777;
+}
+
+/* ============================================================
+   Agent Table
+   ============================================================ */
+.agent-table-wrap {
+  overflow-x: auto;
+  margin-top: 20px;
+  border-radius: 12px;
+  border: 1px solid #1e1e32;
+}
+.agent-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88em;
+}
+.agent-table th {
+  text-align: left;
+  padding: 14px 16px;
+  color: #d97706;
+  font-size: 0.72em;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border-bottom: 2px solid #252540;
+  background: #0e0e18;
+  position: sticky;
+  top: 0;
+}
+.agent-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #1a1a28;
+  color: #aaa;
+}
+.agent-table tr:hover td { background: #12121e; }
+.agent-table .name { color: #d0d0e0; font-weight: 600; }
+.agent-table .ai-yes { color: #f59e0b; font-weight: 600; }
+.agent-table .ai-no { color: #555; }
+.agent-table .phase-tag {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 100px;
+  font-size: 0.82em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.phase-voiceover { background: #2a1a0a; color: #f59e0b; border: 1px solid #5a3a1a; }
+.phase-music { background: #1a0a2a; color: #c084fc; border: 1px solid #3a1a5a; }
+.phase-sfx { background: #0a1a2a; color: #60a5fa; border: 1px solid #1a3a5a; }
+.phase-mixing { background: #0a2a1a; color: #34d399; border: 1px solid #1a5a3a; }
+.phase-scoring { background: #2a0a0a; color: #f87171; border: 1px solid #5a1a1a; }
+.phase-rendering { background: #1a2a0a; color: #a3e635; border: 1px solid #3a5a1a; }
+.phase-pipeline { background: #1a1a2a; color: #818cf8; border: 1px solid #2a2a5a; }
+.phase-distribution { background: #2a1a1a; color: #fb923c; border: 1px solid #5a3a1a; }
+
+/* ============================================================
+   Knowledge Base Cards
+   ============================================================ */
+.kb-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  margin-top: 32px;
+}
+.kb-card {
+  background: linear-gradient(135deg, #1a1808, #1a1a2e);
+  border: 1px solid #2a2a3a;
+  border-radius: 14px;
+  padding: 24px 16px;
+  text-align: center;
+  transition: transform 0.2s, border-color 0.3s;
+}
+.kb-card:hover {
+  transform: translateY(-3px);
+  border-color: #d9770644;
+}
+.kb-number {
+  font-size: 1.8em;
+  font-weight: 800;
+  color: #f59e0b;
+  line-height: 1.1;
+}
+.kb-label {
+  font-size: 0.78em;
+  color: #888;
+  margin-top: 6px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+.footer {
+  text-align: center;
+  padding: 48px 32px;
+  border-top: 1px solid #1a1a28;
+  color: #444;
+  font-size: 0.85em;
+}
+.footer strong { color: #666; }
+
+/* ============================================================
+   Nav
+   ============================================================ */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(10,10,16,0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid #1a1a2833;
+  padding: 0 32px;
+  transition: box-shadow 0.3s;
+}
+nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+.nav-logo {
+  font-weight: 800;
+  font-size: 1.1em;
+  color: #eaeaf2;
+  letter-spacing: -0.5px;
+}
+.nav-logo span { color: #d97706; }
+.nav-links { display: flex; gap: 24px; }
+.nav-links a {
+  font-size: 0.85em;
+  color: #777;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: #c8c8d4; text-decoration: none; }
+@media (max-width: 700px) {
+  .nav-links { display: none; }
+  h1 { font-size: 2.2em; }
+}
+
+/* ============================================================
+   Scroll fade-in animation
+   ============================================================ */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- ================================================================
+     NAV
+     ================================================================ -->
+<nav id="nav">
+  <div class="nav-inner">
+    <div class="nav-logo"><span>director</span></div>
+    <div class="nav-links">
+      <a href="#stats">Stats</a>
+      <a href="#pipeline">Pipeline</a>
+      <a href="#agents">Agents</a>
+      <a href="#tech">Stack</a>
+      <a href="#commands">Commands</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#neurolink">Neurolink</a>
+      <a href="#milestones">Milestones</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ================================================================
+     HERO
+     ================================================================ -->
+<section class="hero" id="top">
+  <div class="container hero-content">
+    <h1>Director</h1>
+    <p class="subtitle">
+      From script to shipped video in minutes. Voiceover, music, motion graphics, scoring &mdash; all orchestrated by AI agents.
+    </p>
+    <p class="byline">
+      Built by <strong>Sachin Sharma</strong> at <strong>Juspay</strong>
+    </p>
+    <div class="badge-row">
+      <span class="badge"><span class="dot ts"></span>TypeScript</span>
+      <span class="badge"><span class="dot py"></span>Python</span>
+      <span class="badge"><span class="dot vid"></span>Remotion</span>
+      <span class="badge"><span class="dot ai"></span>Gemini</span>
+      <span class="badge"><span class="dot audio"></span>ElevenLabs</span>
+      <span class="badge"><span class="dot web"></span>FFmpeg</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     STATS
+     ================================================================ -->
+<section id="stats">
+  <div class="container fade-in">
+    <h2>By the Numbers</h2>
+    <p style="color:#777">Everything generated, scored, and shipped automatically.</p>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">137</div>
+        <div class="stat-label">Library Files</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">47</div>
+        <div class="stat-label">User Stories</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">14</div>
+        <div class="stat-label">Encoding Presets</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">9</div>
+        <div class="stat-label">TTS Providers</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">7</div>
+        <div class="stat-label">Video Generators</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Scoring Rubrics</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     PIPELINE
+     ================================================================ -->
+<section id="pipeline">
+  <div class="container fade-in">
+    <h2>The Funnel</h2>
+    <p style="color:#777; margin-bottom: 8px;">7-phase production pipeline. <span style="color:#f59e0b;">Amber</span> = AI-powered. <span style="color:#4ade80;">Green</span> = local/deterministic.</p>
+
+    <div class="pipeline-diagram">
+      <div class="pipeline-step">
+        <div class="step-box">
+          <div class="step-num ai">1</div>
+          <div class="step-name">Voiceover</div>
+          <div class="step-tech">ElevenLabs / OpenAI / Fish / Qwen3</div>
+          <div class="step-type">AI</div>
+        </div>
+      </div>
+      <div class="pipeline-step"><span class="step-arrow">&#x276F;</span>
+        <div class="step-box">
+          <div class="step-num ai">2</div>
+          <div class="step-name">Avatar</div>
+          <div class="step-tech">MuseTalk / D-ID / Rive</div>
+          <div class="step-type">AI</div>
+        </div>
+      </div>
+      <div class="pipeline-step"><span class="step-arrow">&#x276F;</span>
+        <div class="step-box">
+          <div class="step-num ai">3</div>
+          <div class="step-name">B-roll</div>
+          <div class="step-tech">Kling / Runway / Veo</div>
+          <div class="step-type">AI</div>
+        </div>
+      </div>
+      <div class="pipeline-step"><span class="step-arrow">&#x276F;</span>
+        <div class="step-box">
+          <div class="step-num ai">4</div>
+          <div class="step-name">Music</div>
+          <div class="step-tech">Lyria / Beatoven / NumPy</div>
+          <div class="step-type">AI / Local</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipeline-diagram" style="margin-top: 0;">
+      <div class="pipeline-step">
+        <div class="step-box">
+          <div class="step-num local">5</div>
+          <div class="step-name">Render</div>
+          <div class="step-tech">Remotion / Lambda</div>
+          <div class="step-type">Local / Cloud</div>
+        </div>
+      </div>
+      <div class="pipeline-step"><span class="step-arrow">&#x276F;</span>
+        <div class="step-box">
+          <div class="step-num local">6</div>
+          <div class="step-name">Assembly</div>
+          <div class="step-tech">FFmpeg / -tune animation / AV1</div>
+          <div class="step-type">Local</div>
+        </div>
+      </div>
+      <div class="pipeline-step"><span class="step-arrow">&#x276F;</span>
+        <div class="step-box">
+          <div class="step-num ai">7</div>
+          <div class="step-name">Captions</div>
+          <div class="step-tech">WhisperX / Remotion</div>
+          <div class="step-type">AI / Local</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     AGENT ROSTER
+     ================================================================ -->
+<section id="agents">
+  <div class="container fade-in">
+    <h2>Agent Roster</h2>
+    <p style="color:#777; margin-bottom: 8px;">23 modules across 8 domains &mdash; each a specialist in its production phase.</p>
+
+    <div class="agent-table-wrap">
+    <table class="agent-table">
+      <thead>
+        <tr>
+          <th>Phase</th>
+          <th>Module</th>
+          <th>Function</th>
+          <th>AI</th>
+          <th>Technology</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="phase-tag phase-voiceover">Voiceover</span></td>
+          <td class="name">genetic_optimizer.py</td>
+          <td>Optuna Bayesian TTS optimization</td>
+          <td class="ai-yes">Yes</td>
+          <td>ElevenLabs + Optuna</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-voiceover">Voiceover</span></td>
+          <td class="name">acoustic_scorer.py</td>
+          <td>9-criterion audio quality scoring</td>
+          <td class="ai-yes">Yes</td>
+          <td>librosa + UTMOSv2</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-voiceover">Voiceover</span></td>
+          <td class="name">openai_tts.py</td>
+          <td>Prompt-steerable delivery</td>
+          <td class="ai-yes">Yes</td>
+          <td>OpenAI gpt-4o-mini-tts</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-voiceover">Voiceover</span></td>
+          <td class="name">fish_audio.py</td>
+          <td>80% cheaper TTS with cloning</td>
+          <td class="ai-yes">Yes</td>
+          <td>Fish Audio S2 Pro</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-voiceover">Voiceover</span></td>
+          <td class="name">qwen3_tts.py</td>
+          <td>Self-hosted zero-cost TTS</td>
+          <td class="ai-yes">Yes</td>
+          <td>Qwen3-TTS (Apache 2.0)</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-music">Music</span></td>
+          <td class="name">programmatic_synthesizer.py</td>
+          <td>Variable-BPM music from scratch</td>
+          <td class="ai-no">--</td>
+          <td>NumPy / SciPy</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-music">Music</span></td>
+          <td class="name">lyria_realtime.py</td>
+          <td>AI music with real-time steering</td>
+          <td class="ai-yes">Yes</td>
+          <td>Google Lyria RealTime</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-music">Music</span></td>
+          <td class="name">beatoven.py</td>
+          <td>Video-to-music scoring</td>
+          <td class="ai-yes">Yes</td>
+          <td>Beatoven.ai</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-sfx">SFX</span></td>
+          <td class="name">karplus_strong.py</td>
+          <td>Physics-modeled sound effects</td>
+          <td class="ai-no">--</td>
+          <td>NumPy (Karplus-Strong)</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-sfx">SFX</span></td>
+          <td class="name">elevenlabs_sfx.py</td>
+          <td>Text-to-SFX generation</td>
+          <td class="ai-yes">Yes</td>
+          <td>ElevenLabs SFX v2</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-mixing">Mixing</span></td>
+          <td class="name">vad_mixer.py</td>
+          <td>Silero VAD + frequency-aware ducking</td>
+          <td class="ai-yes">Yes</td>
+          <td>Pedalboard + Silero</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-scoring">Scoring</span></td>
+          <td class="name">gemini_video_scorer.py</td>
+          <td>7-dim rubric, context caching, Flash/Pro</td>
+          <td class="ai-yes">Yes</td>
+          <td>Gemini 2.5</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-scoring">Scoring</span></td>
+          <td class="name">vmaf_gating.py</td>
+          <td>Deterministic regression detection</td>
+          <td class="ai-no">--</td>
+          <td>VMAF / SSIM</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-scoring">Scoring</span></td>
+          <td class="name">vbench_checker.py</td>
+          <td>Temporal flickering + smoothness</td>
+          <td class="ai-no">--</td>
+          <td>VBench</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-rendering">Rendering</span></td>
+          <td class="name">assembler.py</td>
+          <td>Color grading + multi-format export</td>
+          <td class="ai-no">--</td>
+          <td>FFmpeg</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-rendering">Rendering</span></td>
+          <td class="name">caption_burner.py</td>
+          <td>WhisperX + WER validation + SRT</td>
+          <td class="ai-yes">Yes</td>
+          <td>WhisperX + jiwer</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-rendering">Rendering</span></td>
+          <td class="name">lambda_renderer.py</td>
+          <td>Cloud rendering in &lt;60s</td>
+          <td class="ai-no">--</td>
+          <td>Remotion Lambda</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-pipeline">Pipeline</span></td>
+          <td class="name">orchestrator.py</td>
+          <td>6-phase async pipeline</td>
+          <td class="ai-no">--</td>
+          <td>asyncio + tenacity</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-pipeline">Pipeline</span></td>
+          <td class="name">temporal_workflow.py</td>
+          <td>Crash-safe durable execution</td>
+          <td class="ai-no">--</td>
+          <td>Temporal</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-pipeline">Pipeline</span></td>
+          <td class="name">dagster_assets.py</td>
+          <td>Incremental builds</td>
+          <td class="ai-no">--</td>
+          <td>Dagster</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-pipeline">Pipeline</span></td>
+          <td class="name">cost_tracker.py</td>
+          <td>API cost monitoring</td>
+          <td class="ai-no">--</td>
+          <td>JSONL logging</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-distribution">Distribution</span></td>
+          <td class="name">late_publisher.py</td>
+          <td>Post to 13 platforms</td>
+          <td class="ai-no">--</td>
+          <td>Late API</td>
+        </tr>
+        <tr>
+          <td><span class="phase-tag phase-distribution">Distribution</span></td>
+          <td class="name">mux_hosting.py</td>
+          <td>HLS hosting + analytics</td>
+          <td class="ai-no">--</td>
+          <td>Mux</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     TECH STACK
+     ================================================================ -->
+<section id="tech">
+  <div class="container fade-in">
+    <h2>Technology Stack</h2>
+    <p style="color:#777;">A dual TypeScript + Python architecture for rendering, AI, and encoding.</p>
+
+    <div class="tech-grid">
+      <div class="tech-card">
+        <h4>Core</h4>
+        <div class="tech-item"><span class="tech-name">TypeScript</span><span class="tech-version">strict</span></div>
+        <div class="tech-item"><span class="tech-name">Python</span><span class="tech-version">3.11+</span></div>
+        <div class="tech-item"><span class="tech-name">Remotion</span><span class="tech-version">4.0</span></div>
+        <div class="tech-item"><span class="tech-name">React</span><span class="tech-version">19</span></div>
+      </div>
+      <div class="tech-card">
+        <h4>AI</h4>
+        <div class="tech-item"><span class="tech-name">Gemini 2.5</span><span class="tech-version">Flash / Pro</span></div>
+        <div class="tech-item"><span class="tech-name">ElevenLabs</span><span class="tech-version">v3</span></div>
+        <div class="tech-item"><span class="tech-name">OpenAI TTS</span><span class="tech-version">gpt-4o-mini-tts</span></div>
+        <div class="tech-item"><span class="tech-name">Qwen3-TTS</span><span class="tech-version">Apache 2.0</span></div>
+      </div>
+      <div class="tech-card">
+        <h4>Video Generation</h4>
+        <div class="tech-item"><span class="tech-name">Kling</span><span class="tech-version">3.0</span></div>
+        <div class="tech-item"><span class="tech-name">Runway</span><span class="tech-version">Gen-4.5</span></div>
+        <div class="tech-item"><span class="tech-name">Google Veo</span><span class="tech-version">3.1</span></div>
+      </div>
+      <div class="tech-card">
+        <h4>Audio</h4>
+        <div class="tech-item"><span class="tech-name">Spotify Pedalboard</span><span class="tech-version">compressor</span></div>
+        <div class="tech-item"><span class="tech-name">pyloudnorm</span><span class="tech-version">LUFS</span></div>
+        <div class="tech-item"><span class="tech-name">Silero VAD</span><span class="tech-version">v5</span></div>
+        <div class="tech-item"><span class="tech-name">librosa</span><span class="tech-version">analysis</span></div>
+      </div>
+      <div class="tech-card">
+        <h4>Encoding</h4>
+        <div class="tech-item"><span class="tech-name">FFmpeg</span><span class="tech-version">H.264 / AV1</span></div>
+        <div class="tech-item"><span class="tech-name">VideoToolbox</span><span class="tech-version">4x faster</span></div>
+        <div class="tech-item"><span class="tech-name">Remotion Lambda</span><span class="tech-version">cloud</span></div>
+      </div>
+      <div class="tech-card">
+        <h4>Orchestration</h4>
+        <div class="tech-item"><span class="tech-name">Temporal</span><span class="tech-version">durable</span></div>
+        <div class="tech-item"><span class="tech-name">Dagster</span><span class="tech-version">incremental</span></div>
+        <div class="tech-item"><span class="tech-name">asyncio</span><span class="tech-version">+ tenacity</span></div>
+      </div>
+      <div class="tech-card">
+        <h4>Distribution</h4>
+        <div class="tech-item"><span class="tech-name">Late API</span><span class="tech-version">13 platforms</span></div>
+        <div class="tech-item"><span class="tech-name">Mux</span><span class="tech-version">HLS + analytics</span></div>
+        <div class="tech-item"><span class="tech-name">JSON-LD</span><span class="tech-version">schema.org</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     COMMANDS
+     ================================================================ -->
+<section id="commands">
+  <div class="container fade-in">
+    <h2>Commands</h2>
+    <p style="color:#777;">Key entry points for the production pipeline.</p>
+
+    <div class="command-grid">
+      <div class="command-card">
+        <div class="command-code">$ python genetic_optimizer.py --optimizer optuna --rounds 15</div>
+        <div class="command-desc">Bayesian optimization of voiceover parameters &mdash; tests 15 rounds of TTS settings to find the best voice delivery.</div>
+      </div>
+      <div class="command-card">
+        <div class="command-code">$ python gemini_video_scorer.py score --tier dev --video render.mp4</div>
+        <div class="command-desc">Score a rendered video against the 7-dimension rubric using Gemini 2.5 with context caching.</div>
+      </div>
+      <div class="command-card">
+        <div class="command-code">$ python vmaf_gating.py current.mp4 previous.mp4</div>
+        <div class="command-desc">Deterministic regression check &mdash; compare VMAF/SSIM between current and previous render to catch quality drops.</div>
+      </div>
+      <div class="command-card">
+        <div class="command-code">$ python kling_generator.py "Developer coding" --duration 5</div>
+        <div class="command-desc">Generate a 5-second B-roll clip from a text prompt using Kling 3.0 video generation.</div>
+      </div>
+      <div class="command-card">
+        <div class="command-code">$ python temporal_workflow.py worker</div>
+        <div class="command-desc">Start a Temporal worker for crash-safe durable pipeline execution with automatic retries.</div>
+      </div>
+      <div class="command-card">
+        <div class="command-code">$ python late_publisher.py video.mp4 --platforms youtube linkedin</div>
+        <div class="command-desc">Distribute the final video to YouTube and LinkedIn via the Late API &mdash; supports 13 platforms total.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     ARCHITECTURE
+     ================================================================ -->
+<section id="architecture">
+  <div class="container fade-in">
+    <h2>Architecture</h2>
+
+    <div class="collapsible open">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>Planner / Generator / Evaluator</h3>
+        <span class="collapsible-chevron">&#x25BC;</span>
+      </div>
+      <div class="collapsible-body">
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 12px;">
+          <div style="background:#0e0e18; border-radius:10px; padding:16px; border: 1px solid #1a1a28;">
+            <div style="color:#d97706; font-weight:700; margin-bottom:6px;">Planner</div>
+            <div style="font-size:0.88em; color:#888;">Claude acts as the planning layer &mdash; decomposing high-level goals into pipeline phases, shot lists, and scene composition decisions.</div>
+          </div>
+          <div style="background:#0e0e18; border-radius:10px; padding:16px; border: 1px solid #1a1a28;">
+            <div style="color:#d97706; font-weight:700; margin-bottom:6px;">Generator</div>
+            <div style="font-size:0.88em; color:#888;">Temporal and Dagster orchestrate the generation phase &mdash; executing TTS, video generation, music synthesis, and rendering as durable workflows.</div>
+          </div>
+          <div style="background:#0e0e18; border-radius:10px; padding:16px; border: 1px solid #1a1a28;">
+            <div style="color:#d97706; font-weight:700; margin-bottom:6px;">Evaluator</div>
+            <div style="font-size:0.88em; color:#888;">Gemini 2.5 (7-dim rubric), VMAF/SSIM (regression gating), and VBench (temporal quality) form a three-layer evaluation system that gates every output.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>Scoring System</h3>
+        <span class="collapsible-chevron">&#x25BC;</span>
+      </div>
+      <div class="collapsible-body">
+        <div style="margin-top: 12px;">
+          <div style="margin-bottom: 20px;">
+            <div style="color:#f59e0b; font-weight:700; margin-bottom:4px;">7-Dimension Video Rubric (Gemini)</div>
+            <div style="font-size:0.88em; color:#888;">Visual quality, pacing, narrative coherence, audio-visual sync, text readability, transitions, and overall polish &mdash; scored by Gemini 2.5 Flash/Pro with context caching for consistency.</div>
+          </div>
+          <div style="margin-bottom: 20px;">
+            <div style="color:#f59e0b; font-weight:700; margin-bottom:4px;">9-Criterion Acoustic Rubric (librosa + UTMOSv2)</div>
+            <div style="font-size:0.88em; color:#888;">PESQ, STOI, spectral centroid, pitch stability, jitter, shimmer, SNR, LUFS compliance, and UTMOSv2 mean opinion score &mdash; fully deterministic audio quality assessment.</div>
+          </div>
+          <div>
+            <div style="color:#f59e0b; font-weight:700; margin-bottom:4px;">11-Criterion Script Rubric</div>
+            <div style="font-size:0.88em; color:#888;">Hook strength, narrative arc, emotional beats, pacing, CTA placement, technical accuracy, audience targeting, jargon balance, transition quality, visual cue scripting, and deliverable length.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>Audio Pipeline</h3>
+        <span class="collapsible-chevron">&#x25BC;</span>
+      </div>
+      <div class="collapsible-body">
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 12px;">
+          <div style="background:#0e0e18; border-radius:10px; padding:16px; border: 1px solid #1a1a28;">
+            <div style="color:#d97706; font-weight:700; margin-bottom:6px;">1. Silero VAD</div>
+            <div style="font-size:0.88em; color:#888;">Voice activity detection identifies speech segments to protect during ducking.</div>
+          </div>
+          <div style="background:#0e0e18; border-radius:10px; padding:16px; border: 1px solid #1a1a28;">
+            <div style="color:#d97706; font-weight:700; margin-bottom:6px;">2. Frequency-Aware Ducking</div>
+            <div style="font-size:0.88em; color:#888;">Music attenuated specifically in the 200&ndash;4000 Hz speech band, preserving bass and shimmer.</div>
+          </div>
+          <div style="background:#0e0e18; border-radius:10px; padding:16px; border: 1px solid #1a1a28;">
+            <div style="color:#d97706; font-weight:700; margin-bottom:6px;">3. Pedalboard Compression</div>
+            <div style="font-size:0.88em; color:#888;">Spotify Pedalboard applies dynamic range compression for broadcast-ready consistency.</div>
+          </div>
+          <div style="background:#0e0e18; border-radius:10px; padding:16px; border: 1px solid #1a1a28;">
+            <div style="color:#d97706; font-weight:700; margin-bottom:6px;">4. LUFS Normalization</div>
+            <div style="font-size:0.88em; color:#888;">Final loudness normalized to -14 LUFS (YouTube) or -16 LUFS (podcast) for platform compliance.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>Encoding Presets</h3>
+        <span class="collapsible-chevron">&#x25BC;</span>
+      </div>
+      <div class="collapsible-body">
+        <div style="margin-top: 12px; font-size:0.9em; color:#888; line-height: 2;">
+          <div><code style="color:#f59e0b;">H.264 -tune animation</code> &mdash; Optimized for screen recordings and motion graphics with clean edges</div>
+          <div><code style="color:#f59e0b;">AV1 (SVT-AV1)</code> &mdash; 50% smaller file size at equivalent quality, ideal for web distribution</div>
+          <div><code style="color:#f59e0b;">VideoToolbox (macOS)</code> &mdash; Hardware-accelerated encoding, 4x faster than software H.264</div>
+          <div><code style="color:#f59e0b;">YouTube 1080p/4K</code> &mdash; Platform-optimized bitrate ladders with 2-pass VBR</div>
+          <div><code style="color:#f59e0b;">TikTok 9:16</code> &mdash; Vertical format with safe-zone padding for UI overlays</div>
+          <div><code style="color:#f59e0b;">LinkedIn 1:1</code> &mdash; Square crop with title-safe margins for feed autoplay</div>
+          <div><code style="color:#f59e0b;">Product Hunt</code> &mdash; GIF-friendly loop with aggressive file-size optimization</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     NEUROLINK AI LAYER
+     ================================================================ -->
+<section id="neurolink">
+  <div class="container fade-in">
+    <h2>Neurolink AI Layer</h2>
+    <h3 style="color:#888; font-weight:400; margin-bottom:32px;">TypeScript agents powered by <code style="color:#f59e0b;">@juspay/neurolink</code> &mdash; structured AI scoring, analysis, and creative direction.</h3>
+
+    <!-- 3-Cycle Policy System -->
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 48px;">
+      <div style="background:#12121e; border:1px solid #1e1e32; border-radius:14px; padding:24px;">
+        <div style="color:#f59e0b; font-weight:700; font-size:0.85em; text-transform:uppercase; letter-spacing:2px; margin-bottom:12px;">Policy Creator</div>
+        <div style="font-size:0.88em; color:#888;">5 policies: video score (7 dims), script lock (9.0 threshold), acoustic quality, scene quality, agent execution bounds.</div>
+      </div>
+      <div style="background:#12121e; border:1px solid #1e1e32; border-radius:14px; padding:24px;">
+        <div style="color:#f59e0b; font-weight:700; font-size:0.85em; text-transform:uppercase; letter-spacing:2px; margin-bottom:12px;">Policy Enforcer</div>
+        <div style="font-size:0.88em; color:#888;">Real-time rule checking during agent execution. Supports min/max/equals/contains/regex conditions on any output field.</div>
+      </div>
+      <div style="background:#12121e; border:1px solid #1e1e32; border-radius:14px; padding:24px;">
+        <div style="color:#f59e0b; font-weight:700; font-size:0.85em; text-transform:uppercase; letter-spacing:2px; margin-bottom:12px;">Policy Validator</div>
+        <div style="font-size:0.88em; color:#888;">Post-execution compliance report. Aggregates violations, classifies by severity, determines release readiness.</div>
+      </div>
+    </div>
+
+    <!-- Neurolink Agent Pipeline -->
+    <h3 style="color:#b0b0c0; margin-bottom:16px;">Agent Pipeline</h3>
+    <div class="pipeline-diagram">
+      <div class="pipeline-step">
+        <div class="step-box">
+          <div class="step-num ai">1</div>
+          <div class="step-name">Creative Director</div>
+          <div class="step-tech">Neurolink + Gemini</div>
+          <div class="step-type">AI</div>
+        </div>
+      </div>
+      <div class="pipeline-step"><span class="step-arrow">&#x276F;</span>
+        <div class="step-box">
+          <div class="step-num ai">2</div>
+          <div class="step-name">Script Scorer</div>
+          <div class="step-tech">Neurolink + Gemini</div>
+          <div class="step-type">AI</div>
+        </div>
+      </div>
+      <div class="pipeline-step"><span class="step-arrow">&#x276F;</span>
+        <div class="step-box">
+          <div class="step-num ai">3</div>
+          <div class="step-name">Video Scorer</div>
+          <div class="step-tech">Neurolink + Gemini</div>
+          <div class="step-type">AI</div>
+        </div>
+      </div>
+      <div class="pipeline-step"><span class="step-arrow">&#x276F;</span>
+        <div class="step-box">
+          <div class="step-num ai">4</div>
+          <div class="step-name">Scene Analyzer</div>
+          <div class="step-tech">Neurolink + Gemini</div>
+          <div class="step-type">AI</div>
+        </div>
+      </div>
+      <div class="pipeline-step"><span class="step-arrow">&#x276F;</span>
+        <div class="step-box">
+          <div class="step-num ai">5</div>
+          <div class="step-name">Acoustic Analyzer</div>
+          <div class="step-tech">Neurolink + Gemini</div>
+          <div class="step-type">AI</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Observability Hierarchy -->
+    <h3 style="color:#b0b0c0; margin-top:48px; margin-bottom:16px;">Observability Hierarchy</h3>
+    <div style="display:flex; flex-direction:column; align-items:center; gap:0; margin:24px 0 48px;">
+      <div style="width:280px; background:#14142a; border:1px solid #252540; border-radius:12px; padding:16px; text-align:center;">
+        <div style="font-size:0.78em; font-weight:600; color:#d0d0e0;">Reporter</div>
+        <div style="font-size:0.65em; color:#666; margin-top:4px;">40s bursts</div>
+      </div>
+      <div style="color:#333; font-size:1.4em; padding:4px 0; user-select:none;">&#x25BC;</div>
+      <div style="width:280px; background:#14142a; border:1px solid #252540; border-radius:12px; padding:16px; text-align:center;">
+        <div style="font-size:0.78em; font-weight:600; color:#d0d0e0;">SuperObserver</div>
+        <div style="font-size:0.65em; color:#666; margin-top:4px;">cross-agent coordination</div>
+      </div>
+      <div style="color:#333; font-size:1.4em; padding:4px 0; user-select:none;">&#x25BC;</div>
+      <div style="width:280px; background:#14142a; border:1px solid #252540; border-radius:12px; padding:16px; text-align:center;">
+        <div style="font-size:0.78em; font-weight:600; color:#d0d0e0;">EvaluationAgent</div>
+        <div style="font-size:0.65em; color:#666; margin-top:4px;">scoring orchestration</div>
+      </div>
+      <div style="color:#333; font-size:1.4em; padding:4px 0; user-select:none;">&#x25BC;</div>
+      <div style="width:280px; background:#14142a; border:1px solid #252540; border-radius:12px; padding:16px; text-align:center;">
+        <div style="font-size:0.78em; font-weight:600; color:#d0d0e0;">AgentObserver</div>
+        <div style="font-size:0.65em; color:#666; margin-top:4px;">per-agent metrics</div>
+      </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">28</div>
+        <div class="stat-label">TypeScript Files</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">6</div>
+        <div class="stat-label">Zod Schemas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">6</div>
+        <div class="stat-label">AI Agents</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">5</div>
+        <div class="stat-label">Policies</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">0</div>
+        <div class="stat-label">Type Errors</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     MILESTONES
+     ================================================================ -->
+<section id="milestones">
+  <div class="container fade-in">
+    <h2>Milestones</h2>
+    <p style="color:#777;">From script to production-ready library in 18 days.</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date mono">2026-03-11</div>
+        <div class="timeline-title">v7.4 Script Locked</div>
+        <div class="timeline-desc">Final script revision scored 9.85/10 on the 11-criterion rubric. Locked for production rendering.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date mono">2026-03-12</div>
+        <div class="timeline-title">Production Renders Complete</div>
+        <div class="timeline-desc">v15 1080p renders finalized with VEO3 B-roll integration. Multi-format export to YouTube, TikTok, and LinkedIn presets.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date mono">2026-03-23</div>
+        <div class="timeline-title">Library Consolidation</div>
+        <div class="timeline-desc">108 reusable files extracted from 6 production versions into a unified library with clean module boundaries.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date mono">2026-03-23</div>
+        <div class="timeline-title">Cleanup Complete</div>
+        <div class="timeline-desc">Repository reduced from 15.7 GB to 330 MB &mdash; a 97.9% size reduction by deduplicating renders and intermediate assets.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date mono">2026-03-26</div>
+        <div class="timeline-title">Phase 1 Improvements</div>
+        <div class="timeline-desc">32 user stories shipped via the Ralph improvement loop &mdash; covering voiceover optimization, scoring, and pipeline hardening.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date mono">2026-03-27</div>
+        <div class="timeline-title">Phase 2 Strategic Upgrades</div>
+        <div class="timeline-desc">15 user stories shipped via the Ralph loop &mdash; adding Qwen3-TTS, Lyria real-time music, VBench temporal checks, and Mux distribution.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date mono">2026-03-28</div>
+        <div class="timeline-title">All 47 Stories Merged to Release</div>
+        <div class="timeline-desc">Complete feature set merged. 137 library files across voiceover, music, SFX, scoring, rendering, pipeline, and distribution domains.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     KNOWLEDGE BASE
+     ================================================================ -->
+<section id="knowledge">
+  <div class="container fade-in">
+    <h2>Library Breakdown</h2>
+    <p style="color:#777;">137 files across 11 domains &mdash; every module a reusable building block for AI video production.</p>
+
+    <div class="kb-grid">
+      <div class="kb-card">
+        <div class="kb-number">54+</div>
+        <div class="kb-label">Remotion</div>
+      </div>
+      <div class="kb-card">
+        <div class="kb-number">14</div>
+        <div class="kb-label">Pipeline</div>
+      </div>
+      <div class="kb-card">
+        <div class="kb-number">12</div>
+        <div class="kb-label">Voiceover</div>
+      </div>
+      <div class="kb-card">
+        <div class="kb-number">10+</div>
+        <div class="kb-label">Docs</div>
+      </div>
+      <div class="kb-card">
+        <div class="kb-number">8</div>
+        <div class="kb-label">Rendering</div>
+      </div>
+      <div class="kb-card">
+        <div class="kb-number">6</div>
+        <div class="kb-label">Music</div>
+      </div>
+      <div class="kb-card">
+        <div class="kb-number">6</div>
+        <div class="kb-label">Scoring</div>
+      </div>
+      <div class="kb-card">
+        <div class="kb-number">4</div>
+        <div class="kb-label">Prompts</div>
+      </div>
+      <div class="kb-card">
+        <div class="kb-number">3</div>
+        <div class="kb-label">SFX</div>
+      </div>
+      <div class="kb-card">
+        <div class="kb-number">3</div>
+        <div class="kb-label">Distribution</div>
+      </div>
+      <div class="kb-card">
+        <div class="kb-number">2</div>
+        <div class="kb-label">Mixing</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 32px; background: #0e0e18; border: 1px solid #1e1e32; border-radius: 12px; padding: 24px;">
+      <h3 style="color: #eaeaf2; margin-bottom: 16px;">What the Library Covers</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px;">
+        <div style="font-size: 0.9em;">
+          <div style="color: #d97706; font-weight: 600; margin-bottom: 4px;">Voiceover Generation</div>
+          <div style="color: #777;">5 TTS providers, Bayesian optimization, acoustic scoring with 9 quality criteria</div>
+        </div>
+        <div style="font-size: 0.9em;">
+          <div style="color: #d97706; font-weight: 600; margin-bottom: 4px;">Music & SFX</div>
+          <div style="color: #777;">Programmatic synthesis, AI generation (Lyria, Beatoven), physics-modeled sound effects</div>
+        </div>
+        <div style="font-size: 0.9em;">
+          <div style="color: #d97706; font-weight: 600; margin-bottom: 4px;">Video Scoring</div>
+          <div style="color: #777;">Gemini multimodal rubric, VMAF regression gating, VBench temporal analysis</div>
+        </div>
+        <div style="font-size: 0.9em;">
+          <div style="color: #d97706; font-weight: 600; margin-bottom: 4px;">Pipeline Orchestration</div>
+          <div style="color: #777;">Temporal durable workflows, Dagster incremental builds, API cost tracking</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     FOOTER
+     ================================================================ -->
+<div class="footer">
+  <strong>Director</strong> &mdash; AI Video Production Pipeline<br>
+  Built by Sachin Sharma at Juspay | March 2026<br>
+  <span style="color:#555;">Powered by Gemini 2.5 + ElevenLabs + Remotion | Orchestrated by Temporal + Dagster</span>
+</div>
+
+<!-- ================================================================
+     SCRIPTS
+     ================================================================ -->
+<script>
+// Collapsible toggle
+function toggleCollapsible(header) {
+  header.parentElement.classList.toggle('open');
+}
+
+// Nav scroll shadow
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// Fade-in on scroll
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  },
+  { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+);
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
