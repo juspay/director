@@ -156,7 +156,7 @@
         "package.json has all entry point scripts"
       ],
       "priority": 4,
-      "passes": false,
+      "passes": true,
       "notes": "Documentation reflects new reality."
     },
     {
@@ -170,7 +170,7 @@
         "No circular dependencies"
       ],
       "priority": 4,
-      "passes": false,
+      "passes": true,
       "notes": "Final gate."
     }
   ]

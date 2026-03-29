@@ -452,3 +452,9 @@ PRD: Director Pipeline Improvements (32 user stories)
 - 14 encoding presets in TypeScript (src/rendering/presets.ts)
 - npx tsc --noEmit: 0 errors
 ---
+
+## 2026-03-29 - US-086 + US-087
+- Created src/README.md with TypeScript-primary architecture
+- Final verification: 0 tsc errors, CLI --help works
+- ALL 11 PHASE 4 STORIES COMPLETE
+---
