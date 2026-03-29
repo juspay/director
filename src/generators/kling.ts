@@ -46,11 +46,12 @@ async function pollTask(url: string, key: string, timeout = 600_000): Promise<st
     await sleep(5000);
     const r = await fetch(url, { headers: { 'Authorization': `Bearer ${key}` } });
     const data = (await r.json()) as Record<string, Record<string, string>>;
-    const d = data.data ?? data;
-    if (['completed', 'succeed', 'done'].includes(d.status ?? '')) {
-      return d.video_url ?? d.output?.video_url ?? '';
+    const d = (data.data ?? data) as Record<string, string | Record<string, string>>;
+    const status = (d.status ?? '') as string;
+    if (['completed', 'succeed', 'done'].includes(status)) {
+      return (d.video_url as string) ?? ((d.output as Record<string, string>)?.video_url ?? '');
     }
-    if (['failed', 'error'].includes(d.status ?? '')) throw new Error(`Kling failed: ${JSON.stringify(d)}`);
+    if (['failed', 'error'].includes(status)) throw new Error(`Kling failed: ${JSON.stringify(d)}`);
   }
   throw new Error('Kling timeout');
 }
