@@ -438,3 +438,9 @@ PRD: Director Pipeline Improvements (32 user stories)
 - Integration: dashboard-generator
 - ALL 29 PHASE 3 STORIES COMPLETE
 ---
+
+## Phase 4: TypeScript Primary Migration — 2026-03-29
+- New PRD: 11 stories (US-077 to US-087)
+- Goal: TypeScript as primary language, Python only for NumPy/SciPy DSP
+- Pattern: same as dopamine — TypeScript primary, Python subprocess via execa
+---
