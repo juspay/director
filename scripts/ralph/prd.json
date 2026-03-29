@@ -1,5 +1,5 @@
 {
-  "project": "Director — TypeScript Primary Migration",
+  "project": "Director \u2014 TypeScript Primary Migration",
   "branchName": "ralph/typescript-primary",
   "description": "Move from Python-primary to TypeScript-primary. Port all API calls, scoring, rendering, pipeline orchestration, and distribution to TypeScript. Keep only NumPy/SciPy DSP as Python subprocess scripts.",
   "userStories": [
@@ -16,7 +16,7 @@
         "Typecheck passes"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
       "notes": "Port httpx to fetch. Same API shape."
     },
     {
@@ -32,7 +32,7 @@
         "Typecheck passes"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
       "notes": "Natural async patterns in TypeScript."
     },
     {
@@ -48,8 +48,8 @@
         "Typecheck passes"
       ],
       "priority": 1,
-      "passes": false,
-      "notes": "FFmpeg/Remotion are CLI — execa subprocess is correct."
+      "passes": true,
+      "notes": "FFmpeg/Remotion are CLI \u2014 execa subprocess is correct."
     },
     {
       "id": "US-080",
@@ -65,7 +65,7 @@
         "Typecheck passes"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
       "notes": "REST calls + CLI wrappers."
     },
     {
@@ -82,7 +82,7 @@
         "Typecheck passes"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
       "notes": "Keep NumPy synthesizers as Python subprocess."
     },
     {
@@ -97,7 +97,7 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
       "notes": "Spectral analysis calls Python librosa via execa."
     },
     {
@@ -113,7 +113,7 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
       "notes": "Mirrors dopamine: Python in scripts/, TS calls via execa."
     },
     {
@@ -128,7 +128,7 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
       "notes": "New primary entry point."
     },
     {
@@ -142,7 +142,7 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
       "notes": "Python config becomes obsolete."
     },
     {
@@ -156,7 +156,7 @@
         "package.json has all entry point scripts"
       ],
       "priority": 4,
-      "passes": false,
+      "passes": true,
       "notes": "Documentation reflects new reality."
     },
     {
@@ -170,7 +170,7 @@
         "No circular dependencies"
       ],
       "priority": 4,
-      "passes": false,
+      "passes": true,
       "notes": "Final gate."
     }
   ]

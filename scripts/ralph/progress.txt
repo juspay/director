@@ -444,3 +444,17 @@ PRD: Director Pipeline Improvements (32 user stories)
 - Goal: TypeScript as primary language, Python only for NumPy/SciPy DSP
 - Pattern: same as dopamine — TypeScript primary, Python subprocess via execa
 ---
+
+## 2026-03-29 - US-077 through US-085
+- Ported TTS (4 providers), video generators (4), rendering (5+presets), distribution (3),
+  scoring (3), avatar (2), music (3), optimizer, Python bridge to TypeScript
+- Unified 7-phase pipeline runner with concurrent phases 2-4
+- 14 encoding presets in TypeScript (src/rendering/presets.ts)
+- npx tsc --noEmit: 0 errors
+---
+
+## 2026-03-29 - US-086 + US-087
+- Created src/README.md with TypeScript-primary architecture
+- Final verification: 0 tsc errors, CLI --help works
+- ALL 11 PHASE 4 STORIES COMPLETE
+---
