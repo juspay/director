@@ -48,7 +48,7 @@ async function observeAgent<T>(
   metricsBuffer.push(metrics);
 
   // Persist to log
-  await appendToLog('agent-metrics.jsonl', metrics);
+  await appendToLog('agent-metrics.jsonl', metrics as unknown as Record<string, unknown>);
 
   const status = success ? 'OK' : 'FAIL';
   console.log(

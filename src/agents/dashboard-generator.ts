@@ -92,6 +92,6 @@ const OBSERVABILITY = ${JSON.stringify(obs, null, 2)};
 </html>`;
 }
 
-if (import.meta.url === \`file://\${process.argv[1]}\`) {
+if (import.meta.url === `file://${process.argv[1]}`) {
   generateDashboard().catch(console.error);
 }
