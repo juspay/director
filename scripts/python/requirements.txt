@@ -1,0 +1,22 @@
+# Python DSP scripts — required dependencies
+# Install: pip install -r scripts/python/requirements.txt
+
+# Core (required)
+numpy>=1.24
+scipy>=1.10
+
+# Audio analysis (required for analyze-audio.py)
+librosa>=0.10
+
+# Music synthesis (required for synthesize-music.py)
+pretty_midi>=0.2
+
+# Audio mixing — optional (graceful degradation)
+pydub>=0.25
+pyloudnorm>=0.1
+
+# VAD — optional (graceful degradation)
+torch>=2.0
+
+# Audio effects — optional (graceful degradation)
+pedalboard>=0.9

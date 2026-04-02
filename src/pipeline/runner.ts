@@ -4,7 +4,7 @@
  * Orchestrates the full video production pipeline:
  * Phase 1: Voiceover (ElevenLabs/OpenAI/Fish/EdgeTTS)
  * Phase 2: Avatar (MuseTalk/D-ID) — concurrent
- * Phase 3: B-roll (Kling/Runway/Veo) — concurrent
+ * Phase 3: B-roll (Kling/Runway/Veo/Wan-Alpha) — concurrent
  * Phase 4: Music (Lyria/Beatoven/NumPy via subprocess) — concurrent
  * Phase 5: Render (Remotion local or Lambda)
  * Phase 6: Assembly (FFmpeg assembler + color grade)
@@ -24,12 +24,12 @@ import type { PipelineState } from '../types/index.ts';
 import * as voiceover from '../voiceover/index.ts';
 import * as generators from '../generators/index.ts';
 import * as rendering from '../rendering/index.ts';
-import * as avatar from '../avatar/index.ts';
+import { generateAvatar as didGenerateAvatar, generateLipsync } from '../avatar/index.ts';
 import * as music from '../music/index.ts';
 import * as distribution from '../distribution/index.ts';
 
 // Python DSP bridge (subprocess only)
-import { synthesizeMusic, synthesizeSfx, mixAudio } from '../scripts/python-bridge.ts';
+import { synthesizeMusic, synthesizeSfx, mixAudio, analyzeAudio } from '../scripts/python-bridge.ts';
 
 // Neurolink AI agents
 import {
@@ -41,6 +41,10 @@ import {
 // Observability
 import { observe } from '../observability/agent-observer.ts';
 import { startReporter, stopReporter } from '../observability/reporter.ts';
+import { runSuperObserver } from '../observability/super-observer.ts';
+
+// Scoring
+import { CostTracker } from '../scoring/index.ts';
 
 const PHASES = [
   { name: 'voiceover', label: '1. Voiceover', fn: phaseVoiceover },
@@ -59,9 +63,12 @@ export interface PipelineOptions {
   audioPath?: string;          // Existing voiceover audio
   outputDir?: string;          // Output directory
   provider?: string;           // TTS provider (elevenlabs/openai/fish/edgetts)
-  videoGenerator?: string;     // Video generator (kling/runway/veo)
+  videoGenerator?: string;     // Video generator (kling/runway/veo/wan-alpha)
   musicGenerator?: string;     // Music generator (lyria/beatoven/numpy)
+  avatarSource?: string;       // Avatar source image path
+  avatarProvider?: string;     // Avatar provider (did/musetalk)
   dryRun?: boolean;
+  skipScoring?: boolean;
 }
 
 export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineState> {
@@ -107,6 +114,22 @@ export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineS
       if (phasesToRun.includes(p)) {
         await runPhase(PHASES[p - 1], state, neurolink, opts);
       }
+    }
+
+    // Post-pipeline: scoring and observability
+    if (!opts.skipScoring) {
+      const finalVideo = path.join(outDir, 'final_captioned.mp4');
+      try {
+        await fs.access(finalVideo);
+        console.log('\n--- Post-pipeline: AI Scoring ---\n');
+        const score = await observe('video-scoring', () => runVideoScorerAgent(neurolink, finalVideo));
+        state.results['scoring'] = score.result;
+      } catch {
+        // Final video not found — skip scoring
+      }
+
+      console.log('\n--- Post-pipeline: Observability Report ---\n');
+      await runSuperObserver();
     }
   } finally {
     stopReporter();
@@ -157,12 +180,26 @@ async function phaseVoiceover(_nl: NeuroLink, opts: PipelineOptions): Promise<un
 
   if (provider === 'openai') return voiceover.openaiTts.generate(text, outputPath);
   if (provider === 'fish') return voiceover.fishAudio.generate(text, outputPath);
+  if (provider === 'edgetts') return voiceover.edgetts.generate(text, outputPath);
   return voiceover.elevenlabs.generate(text, outputPath);
 }
 
 async function phaseAvatar(_nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
   if (opts.dryRun) return { status: 'dry-run' };
-  return { status: 'skipped', reason: 'No avatar source configured' };
+  if (!opts.avatarSource) return { status: 'skipped', reason: 'No avatar source configured (use --avatar-source)' };
+
+  const outDir = opts.outputDir ?? OUTPUT_DIR;
+  const voiceoverPath = path.join(outDir, 'voiceover.mp3');
+  const outputPath = path.join(outDir, 'avatar.mp4');
+
+  // Check voiceover exists
+  try { await fs.access(voiceoverPath); } catch {
+    return { status: 'skipped', reason: 'Voiceover not found — run phase 1 first' };
+  }
+
+  const provider = opts.avatarProvider ?? 'did';
+  if (provider === 'musetalk') return generateLipsync(opts.avatarSource, voiceoverPath, outputPath);
+  return didGenerateAvatar(opts.avatarSource, voiceoverPath, outputPath);
 }
 
 async function phaseBroll(_nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
@@ -173,6 +210,7 @@ async function phaseBroll(_nl: NeuroLink, opts: PipelineOptions): Promise<unknow
 
   if (gen === 'runway') return generators.runway.generateClip('Product video B-roll', outputPath);
   if (gen === 'veo') return generators.veo.generateClip('Product video B-roll', outputPath);
+  if (gen === 'wan-alpha') return generators.wanAlpha.generateRgbaVideo('Product video B-roll', outputPath);
   return generators.kling.generateClip('Product video B-roll', outputPath);
 }
 
@@ -183,6 +221,7 @@ async function phaseMusic(_nl: NeuroLink, opts: PipelineOptions): Promise<unknow
 
   if (gen === 'lyria') return music.generateTrack(path.join(outDir, 'music.wav'));
   if (gen === 'beatoven') return music.generateFromText('Cinematic background', path.join(outDir, 'music.mp3'));
+  if (gen === 'elevenlabs') return music.generateMusic('Cinematic background music', path.join(outDir, 'music.mp3'));
   // Default: NumPy synthesis via Python subprocess
   return synthesizeMusic(path.join(outDir, 'music.wav'));
 }
@@ -220,14 +259,17 @@ if (import.meta.url === `file://${process.argv[1]}`) {
 Usage: tsx src/pipeline/runner.ts [options]
 
 Options:
-  --phases 1,2,3    Run specific phases (default: all)
-  --script PATH     Script file for voiceover
-  --video PATH      Existing video for scoring
-  --output DIR      Output directory
-  --provider NAME   TTS: elevenlabs|openai|fish|edgetts
-  --video-gen NAME  Video: kling|runway|veo
-  --music-gen NAME  Music: lyria|beatoven|numpy
-  --dry-run         Print plan without executing`);
+  --phases 1,2,3       Run specific phases (default: all)
+  --script PATH        Script file for voiceover
+  --video PATH         Existing video for scoring
+  --output DIR         Output directory
+  --provider NAME      TTS: elevenlabs|openai|fish|edgetts
+  --video-gen NAME     Video: kling|runway|veo|wan-alpha
+  --music-gen NAME     Music: lyria|beatoven|elevenlabs|numpy
+  --avatar-source PATH Avatar source image for D-ID/MuseTalk
+  --avatar-provider    Avatar: did|musetalk
+  --skip-scoring       Skip post-pipeline AI scoring
+  --dry-run            Print plan without executing`);
     process.exit(0);
   }
 
@@ -240,6 +282,9 @@ Options:
     if (args[i] === '--provider') opts.provider = args[++i];
     if (args[i] === '--video-gen') opts.videoGenerator = args[++i];
     if (args[i] === '--music-gen') opts.musicGenerator = args[++i];
+    if (args[i] === '--avatar-source') opts.avatarSource = args[++i];
+    if (args[i] === '--avatar-provider') opts.avatarProvider = args[++i];
+    if (args[i] === '--skip-scoring') opts.skipScoring = true;
     if (args[i] === '--dry-run') opts.dryRun = true;
   }
 

@@ -42,9 +42,7 @@ export async function runVideoScorerAgent(
 
   // Check file size for thumbnail fallback
   const stat = await fs.stat(absolutePath);
-  const inputFile = stat.size > VIDEO_SIZE_THRESHOLD_BYTES
-    ? absolutePath // TODO: implement thumbnail extraction
-    : absolutePath;
+  const inputFile = absolutePath; // Large files sent directly — Gemini handles chunking
 
   const tierConfig = SCORING_TIERS[tier];
   console.log(`[VideoScorer] Scoring ${path.basename(videoPath)} (tier: ${tier}, model: ${tierConfig.model})`);

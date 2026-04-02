@@ -38,7 +38,7 @@ async function observeAgent<T>(
   const metrics: AgentMetrics = {
     agentName,
     executionTimeMs,
-    tokensUsed: 0,  // TODO: extract from NeuroLink response metadata
+    tokensUsed: (result as Record<string, unknown>)?.tokensUsed as number ?? 0,
     costEstimate: estimateCost(executionTimeMs),
     success,
     retries,

@@ -24,12 +24,14 @@ export async function generateAvatar(
     method: 'POST', headers: { 'Authorization': `Basic ${API_KEY}` },
     body: (() => { const fd = new FormData(); fd.append('image', new Blob([imgData]), 'avatar.png'); return fd; })(),
   });
+  if (!imgResp.ok) throw new Error(`D-ID image upload ${imgResp.status}: ${(await imgResp.text()).slice(0, 200)}`);
   const imgResult = await imgResp.json() as Record<string, string>;
 
   const audioResp = await fetch(`${API_BASE}/audios`, {
     method: 'POST', headers: { 'Authorization': `Basic ${API_KEY}` },
     body: (() => { const fd = new FormData(); fd.append('audio', new Blob([audioData]), 'audio.mp3'); return fd; })(),
   });
+  if (!audioResp.ok) throw new Error(`D-ID audio upload ${audioResp.status}: ${(await audioResp.text()).slice(0, 200)}`);
   const audioResult = await audioResp.json() as Record<string, string>;
 
   // Create talk
@@ -40,6 +42,7 @@ export async function generateAvatar(
       config: { stitch: true, result_format: 'mp4' },
     }),
   });
+  if (!talkResp.ok) throw new Error(`D-ID talk creation ${talkResp.status}: ${(await talkResp.text()).slice(0, 200)}`);
   const talk = await talkResp.json() as Record<string, string>;
 
   // Poll
@@ -53,6 +56,7 @@ export async function generateAvatar(
       await fs.writeFile(outputPath, Buffer.from(videoData));
       return outputPath;
     }
+    if (r.status === 'error') throw new Error(`D-ID talk failed: ${r.error ?? 'unknown error'}`);
   }
   throw new Error('D-ID timeout');
 }

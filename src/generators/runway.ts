@@ -5,24 +5,25 @@ import fs from 'fs/promises';
 import path from 'path';
 import { sleep } from '../utils/rate-limit.ts';
 
-const API_BASE = 'https://api.dev.runwayml.com/v1';
+const API_BASE = process.env.RUNWAY_API_BASE ?? 'https://api.runwayml.com/v1';
 const API_KEY = process.env.RUNWAY_API_KEY ?? '';
+const API_VERSION = process.env.RUNWAY_API_VERSION ?? '2024-11-06';
 
 export async function generateClip(
   prompt: string,
   outputPath: string,
-  options: { duration?: number; model?: string } = {},
+  options: { duration?: number; model?: string; ratio?: string } = {},
 ): Promise<string> {
   if (!API_KEY) throw new Error('RUNWAY_API_KEY not set');
 
   const response = await fetch(`${API_BASE}/image_to_video`, {
     method: 'POST',
-    headers: { 'Authorization': `Bearer ${API_KEY}`, 'Content-Type': 'application/json', 'X-Runway-Version': '2024-11-06' },
+    headers: { 'Authorization': `Bearer ${API_KEY}`, 'Content-Type': 'application/json', 'X-Runway-Version': API_VERSION },
     body: JSON.stringify({
       model: options.model ?? 'gen4_turbo',
       promptText: prompt,
       duration: options.duration ?? 5,
-      ratio: '1280:720',
+      ratio: options.ratio ?? '1280:720',
     }),
   });
 
@@ -35,7 +36,7 @@ export async function generateClip(
   for (let i = 0; i < 120; i++) {
     await sleep(5000);
     const poll = await fetch(`${API_BASE}/tasks/${taskId}`, {
-      headers: { 'Authorization': `Bearer ${API_KEY}`, 'X-Runway-Version': '2024-11-06' },
+      headers: { 'Authorization': `Bearer ${API_KEY}`, 'X-Runway-Version': API_VERSION },
     });
     const status = await poll.json() as Record<string, string | Array<Record<string, string>>>;
     if (status.status === 'SUCCEEDED') {

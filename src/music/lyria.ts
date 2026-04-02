@@ -4,6 +4,8 @@
 import fs from 'fs/promises';
 import path from 'path';
 
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY ?? '';
+
 export const MOOD_PRESETS = {
   product_demo: [{ time: 0, mood: 'contemplative' }, { time: 40, mood: 'building' }, { time: 80, mood: 'energetic' }, { time: 120, mood: 'resolving' }],
   problem_solution: [{ time: 0, mood: 'tense' }, { time: 60, mood: 'hopeful' }, { time: 120, mood: 'celebratory' }],
@@ -13,15 +15,17 @@ export async function generateTrack(
   outputPath: string,
   options: { duration?: number; prompt?: string; key?: string; moodPreset?: keyof typeof MOOD_PRESETS } = {},
 ): Promise<string> {
-  const genai = await import('@juspay/neurolink').then((m) => m).catch(() => null);
+  if (!GEMINI_API_KEY) throw new Error('GEMINI_API_KEY not set');
   const prompt = buildPrompt(options);
 
   console.log(`[Lyria] Generating ${options.duration ?? 170}s track...`);
 
-  // Use Gemini API for Lyria
-  const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/lyria-3-pro:generateContent?key=${process.env.GEMINI_API_KEY}`, {
+  const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/lyria-3-pro:generateContent', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'x-goog-api-key': GEMINI_API_KEY,
+    },
     body: JSON.stringify({
       contents: [{ parts: [{ text: prompt }] }],
       generationConfig: { response_modalities: ['AUDIO'] },
