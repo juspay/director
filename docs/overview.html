@@ -557,18 +557,19 @@ nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
   <div class="container hero-content">
     <h1>Director</h1>
     <p class="subtitle">
-      From script to shipped video in minutes. Voiceover, music, motion graphics, scoring &mdash; all orchestrated by AI agents.
+      TypeScript-first AI video pipeline. From script to shipped video in minutes &mdash; voiceover, music, motion graphics, scoring &mdash; all orchestrated by AI agents.
     </p>
     <p class="byline">
       Built by <strong>Sachin Sharma</strong> at <strong>Juspay</strong>
     </p>
     <div class="badge-row">
-      <span class="badge"><span class="dot ts"></span>TypeScript</span>
-      <span class="badge"><span class="dot py"></span>Python</span>
+      <span class="badge"><span class="dot ts"></span>TypeScript (primary)</span>
       <span class="badge"><span class="dot vid"></span>Remotion</span>
+      <span class="badge"><span class="dot ai"></span>Neurolink</span>
       <span class="badge"><span class="dot ai"></span>Gemini</span>
       <span class="badge"><span class="dot audio"></span>ElevenLabs</span>
       <span class="badge"><span class="dot web"></span>FFmpeg</span>
+      <span class="badge"><span class="dot py"></span>Python DSP</span>
     </div>
   </div>
 </section>
@@ -582,11 +583,11 @@ nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
     <p style="color:#777">Everything generated, scored, and shipped automatically.</p>
     <div class="stats-grid">
       <div class="stat-card">
-        <div class="stat-number">137</div>
-        <div class="stat-label">Library Files</div>
+        <div class="stat-number">61</div>
+        <div class="stat-label">TypeScript Modules</div>
       </div>
       <div class="stat-card">
-        <div class="stat-number">47</div>
+        <div class="stat-number">87</div>
         <div class="stat-label">User Stories</div>
       </div>
       <div class="stat-card">
@@ -689,6 +690,7 @@ nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
     <h2>Agent Roster</h2>
     <p style="color:#777; margin-bottom: 8px;">23 modules across 8 domains &mdash; each a specialist in its production phase.</p>
 
+    <p style="color:#f59e0b; font-size:0.85em; margin-bottom: 12px; padding: 8px 12px; background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2); border-radius: 8px;">TypeScript is the primary orchestration language. Python modules are used as subprocess workers for DSP operations only.</p>
     <div class="agent-table-wrap">
     <table class="agent-table">
       <thead>
@@ -703,28 +705,28 @@ nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
       <tbody>
         <tr>
           <td><span class="phase-tag phase-voiceover">Voiceover</span></td>
-          <td class="name">genetic_optimizer.py</td>
+          <td class="name">optimizer.ts</td>
           <td>Optuna Bayesian TTS optimization</td>
           <td class="ai-yes">Yes</td>
           <td>ElevenLabs + Optuna</td>
         </tr>
         <tr>
           <td><span class="phase-tag phase-voiceover">Voiceover</span></td>
-          <td class="name">acoustic_scorer.py</td>
+          <td class="name">python-bridge.ts <small style="color:#777">(analyze)</small></td>
           <td>9-criterion audio quality scoring</td>
           <td class="ai-yes">Yes</td>
           <td>librosa + UTMOSv2</td>
         </tr>
         <tr>
           <td><span class="phase-tag phase-voiceover">Voiceover</span></td>
-          <td class="name">openai_tts.py</td>
+          <td class="name">openai-tts.ts</td>
           <td>Prompt-steerable delivery</td>
           <td class="ai-yes">Yes</td>
           <td>OpenAI gpt-4o-mini-tts</td>
         </tr>
         <tr>
           <td><span class="phase-tag phase-voiceover">Voiceover</span></td>
-          <td class="name">fish_audio.py</td>
+          <td class="name">fish-audio.ts</td>
           <td>80% cheaper TTS with cloning</td>
           <td class="ai-yes">Yes</td>
           <td>Fish Audio S2 Pro</td>
@@ -738,7 +740,7 @@ nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
         </tr>
         <tr>
           <td><span class="phase-tag phase-music">Music</span></td>
-          <td class="name">programmatic_synthesizer.py</td>
+          <td class="name">python-bridge.ts <small style="color:#777">(synthesize)</small></td>
           <td>Variable-BPM music from scratch</td>
           <td class="ai-no">--</td>
           <td>NumPy / SciPy</td>
@@ -759,7 +761,7 @@ nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
         </tr>
         <tr>
           <td><span class="phase-tag phase-sfx">SFX</span></td>
-          <td class="name">karplus_strong.py</td>
+          <td class="name">python-bridge.ts <small style="color:#777">(sfx)</small></td>
           <td>Physics-modeled sound effects</td>
           <td class="ai-no">--</td>
           <td>NumPy (Karplus-Strong)</td>
@@ -773,14 +775,14 @@ nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
         </tr>
         <tr>
           <td><span class="phase-tag phase-mixing">Mixing</span></td>
-          <td class="name">vad_mixer.py</td>
+          <td class="name">python-bridge.ts <small style="color:#777">(mix)</small></td>
           <td>Silero VAD + frequency-aware ducking</td>
           <td class="ai-yes">Yes</td>
           <td>Pedalboard + Silero</td>
         </tr>
         <tr>
           <td><span class="phase-tag phase-scoring">Scoring</span></td>
-          <td class="name">gemini_video_scorer.py</td>
+          <td class="name">video-scorer.ts</td>
           <td>7-dim rubric, context caching, Flash/Pro</td>
           <td class="ai-yes">Yes</td>
           <td>Gemini 2.5</td>
@@ -801,14 +803,14 @@ nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
         </tr>
         <tr>
           <td><span class="phase-tag phase-rendering">Rendering</span></td>
-          <td class="name">assembler.py</td>
+          <td class="name">assembler.ts</td>
           <td>Color grading + multi-format export</td>
           <td class="ai-no">--</td>
           <td>FFmpeg</td>
         </tr>
         <tr>
           <td><span class="phase-tag phase-rendering">Rendering</span></td>
-          <td class="name">caption_burner.py</td>
+          <td class="name">caption-burner.ts</td>
           <td>WhisperX + WER validation + SRT</td>
           <td class="ai-yes">Yes</td>
           <td>WhisperX + jiwer</td>
@@ -822,7 +824,7 @@ nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
         </tr>
         <tr>
           <td><span class="phase-tag phase-pipeline">Pipeline</span></td>
-          <td class="name">orchestrator.py</td>
+          <td class="name">runner.ts</td>
           <td>6-phase async pipeline</td>
           <td class="ai-no">--</td>
           <td>asyncio + tenacity</td>
@@ -843,21 +845,21 @@ nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
         </tr>
         <tr>
           <td><span class="phase-tag phase-pipeline">Pipeline</span></td>
-          <td class="name">cost_tracker.py</td>
+          <td class="name">cost-tracker.ts</td>
           <td>API cost monitoring</td>
           <td class="ai-no">--</td>
           <td>JSONL logging</td>
         </tr>
         <tr>
           <td><span class="phase-tag phase-distribution">Distribution</span></td>
-          <td class="name">late_publisher.py</td>
+          <td class="name">late-publisher.ts</td>
           <td>Post to 13 platforms</td>
           <td class="ai-no">--</td>
           <td>Late API</td>
         </tr>
         <tr>
           <td><span class="phase-tag phase-distribution">Distribution</span></td>
-          <td class="name">mux_hosting.py</td>
+          <td class="name">mux-hosting.ts</td>
           <td>HLS hosting + analytics</td>
           <td class="ai-no">--</td>
           <td>Mux</td>
@@ -874,13 +876,13 @@ nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
 <section id="tech">
   <div class="container fade-in">
     <h2>Technology Stack</h2>
-    <p style="color:#777;">A dual TypeScript + Python architecture for rendering, AI, and encoding.</p>
+    <p style="color:#777;">TypeScript-primary architecture with Python DSP subprocess scripts.</p>
 
     <div class="tech-grid">
       <div class="tech-card">
         <h4>Core</h4>
-        <div class="tech-item"><span class="tech-name">TypeScript</span><span class="tech-version">strict</span></div>
-        <div class="tech-item"><span class="tech-name">Python</span><span class="tech-version">3.11+</span></div>
+        <div class="tech-item"><span class="tech-name">TypeScript</span><span class="tech-version">primary</span></div>
+        <div class="tech-item"><span class="tech-name">Python</span><span class="tech-version">DSP only</span></div>
         <div class="tech-item"><span class="tech-name">Remotion</span><span class="tech-version">4.0</span></div>
         <div class="tech-item"><span class="tech-name">React</span><span class="tech-version">19</span></div>
       </div>
@@ -890,6 +892,7 @@ nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
         <div class="tech-item"><span class="tech-name">ElevenLabs</span><span class="tech-version">v3</span></div>
         <div class="tech-item"><span class="tech-name">OpenAI TTS</span><span class="tech-version">gpt-4o-mini-tts</span></div>
         <div class="tech-item"><span class="tech-name">Qwen3-TTS</span><span class="tech-version">Apache 2.0</span></div>
+        <div class="tech-item"><span class="tech-name">@juspay/neurolink</span><span class="tech-version">LLM gateway</span></div>
       </div>
       <div class="tech-card">
         <h4>Video Generation</h4>
@@ -936,28 +939,28 @@ nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
 
     <div class="command-grid">
       <div class="command-card">
-        <div class="command-code">$ python genetic_optimizer.py --optimizer optuna --rounds 15</div>
-        <div class="command-desc">Bayesian optimization of voiceover parameters &mdash; tests 15 rounds of TTS settings to find the best voice delivery.</div>
+        <div class="command-code">$ npx tsx src/pipeline/runner.ts --phases voiceover,music --provider elevenlabs</div>
+        <div class="command-desc">Run voiceover and music phases with ElevenLabs as the TTS provider.</div>
       </div>
       <div class="command-card">
-        <div class="command-code">$ python gemini_video_scorer.py score --tier dev --video render.mp4</div>
-        <div class="command-desc">Score a rendered video against the 7-dimension rubric using Gemini 2.5 with context caching.</div>
+        <div class="command-code">$ npx tsx src/pipeline/runner.ts --dry-run</div>
+        <div class="command-desc">Dry-run the full pipeline &mdash; validates config, checks API keys, and prints the execution plan without spending credits.</div>
       </div>
       <div class="command-card">
-        <div class="command-code">$ python vmaf_gating.py current.mp4 previous.mp4</div>
-        <div class="command-desc">Deterministic regression check &mdash; compare VMAF/SSIM between current and previous render to catch quality drops.</div>
+        <div class="command-code">$ npx tsx src/pipeline/runner.ts --video-gen kling --music-gen lyria</div>
+        <div class="command-desc">Full pipeline with Kling 3.0 for B-roll generation and Google Lyria for AI music scoring.</div>
       </div>
       <div class="command-card">
-        <div class="command-code">$ python kling_generator.py "Developer coding" --duration 5</div>
-        <div class="command-desc">Generate a 5-second B-roll clip from a text prompt using Kling 3.0 video generation.</div>
+        <div class="command-code">$ python src/dsp/acoustic_scorer.py --input voice.wav --output scores.json</div>
+        <div class="command-desc">DSP subprocess: 9-criterion audio quality scoring using librosa + UTMOSv2 (called via python-bridge.ts).</div>
       </div>
       <div class="command-card">
-        <div class="command-code">$ python temporal_workflow.py worker</div>
-        <div class="command-desc">Start a Temporal worker for crash-safe durable pipeline execution with automatic retries.</div>
+        <div class="command-code">$ python src/dsp/vad_mixer.py --vo voice.wav --music bg.wav --output mix.wav</div>
+        <div class="command-desc">DSP subprocess: Silero VAD + frequency-aware ducking for voice-over-music mixing.</div>
       </div>
       <div class="command-card">
-        <div class="command-code">$ python late_publisher.py video.mp4 --platforms youtube linkedin</div>
-        <div class="command-desc">Distribute the final video to YouTube and LinkedIn via the Late API &mdash; supports 13 platforms total.</div>
+        <div class="command-code">$ python src/dsp/programmatic_synthesizer.py --bpm 120 --output track.wav</div>
+        <div class="command-desc">DSP subprocess: Variable-BPM music synthesis from scratch using NumPy / SciPy.</div>
       </div>
     </div>
   </div>
@@ -1159,7 +1162,7 @@ nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
     <!-- Stats Row -->
     <div class="stats-grid">
       <div class="stat-card">
-        <div class="stat-number">28</div>
+        <div class="stat-number">61</div>
         <div class="stat-label">TypeScript Files</div>
       </div>
       <div class="stat-card">
@@ -1233,6 +1236,12 @@ nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
         <div class="timeline-title">All 47 Stories Merged to Release</div>
         <div class="timeline-desc">Complete feature set merged. 137 library files across voiceover, music, SFX, scoring, rendering, pipeline, and distribution domains.</div>
       </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date mono">2026-03-29</div>
+        <div class="timeline-title">TypeScript Primary Migration</div>
+        <div class="timeline-desc">61 TypeScript modules now orchestrate the entire pipeline. Python retained only for NumPy/SciPy DSP as subprocess scripts called via execa. 87 user stories completed across 4 phases.</div>
+      </div>
     </div>
   </div>
 </section>
@@ -1243,7 +1252,7 @@ nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
 <section id="knowledge">
   <div class="container fade-in">
     <h2>Library Breakdown</h2>
-    <p style="color:#777;">137 files across 11 domains &mdash; every module a reusable building block for AI video production.</p>
+    <p style="color:#777;">61 TypeScript modules + Python DSP scripts across 11 domains &mdash; every module a reusable building block for AI video production.</p>
 
     <div class="kb-grid">
       <div class="kb-card">

@@ -11,8 +11,11 @@ import asyncio
 import base64
 import json
 import logging
+import sys
 from dataclasses import dataclass
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent.resolve()))
 
 import httpx
 from tenacity import retry, stop_after_attempt, wait_exponential
