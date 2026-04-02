@@ -8,8 +8,11 @@ Produces 3 variants per scene for manual selection of the best take.
 
 import asyncio
 import logging
+import sys
 from dataclasses import dataclass
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent.resolve()))
 
 import httpx
 from tenacity import retry, stop_after_attempt, wait_exponential

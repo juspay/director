@@ -26,6 +26,8 @@ import sys
 import time
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).parent.resolve()))
+
 from config import (
     ASSETS_DIR,
     OUTPUT_DIR,

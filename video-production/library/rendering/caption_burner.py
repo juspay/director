@@ -10,7 +10,10 @@ using FFmpeg's subtitles filter with styled ASS formatting.
 import asyncio
 import logging
 import subprocess
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent.parent.resolve() / 'pipeline'))
 
 from config import ASSETS_DIR, OUTPUT_DIR
 
