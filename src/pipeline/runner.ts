@@ -229,7 +229,8 @@ async function phaseMusic(_nl: NeuroLink, opts: PipelineOptions): Promise<unknow
 async function phaseRender(_nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
   if (opts.dryRun) return { status: 'dry-run' };
   const outDir = opts.outputDir ?? OUTPUT_DIR;
-  return rendering.renderLocal('TaraBuilders', path.join(outDir, 'render.mp4'));
+  const compositionName = process.env.REMOTION_COMPOSITION ?? 'MainVideo';
+  return rendering.renderLocal(compositionName, path.join(outDir, 'render.mp4'));
 }
 
 async function phaseAssembly(_nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {

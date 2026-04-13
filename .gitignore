@@ -9,3 +9,6 @@ __pycache__/
 .env.*
 !.env.example
 video-production/archive/
+.pipeline-state/
+.observability/
+output/
