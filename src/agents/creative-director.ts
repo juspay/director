@@ -31,7 +31,7 @@ Think like a Pixar creative director meeting a YC startup founder.`;
 export async function runCreativeDirectorAgent(
   neurolink: NeuroLink,
   scriptText: string,
-  projectTitle: string = 'Tara: Build What Matters',
+  projectTitle: string = `${process.env.PRODUCT_NAME ?? 'Director'}: AI Video Pipeline`,
 ): Promise<CreativePrompt | null> {
   console.log(`[CreativeDirector] Generating direction for "${projectTitle}"...`);
 

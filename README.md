@@ -32,19 +32,19 @@ scripts/python/               ← Python (subprocess only — NumPy/SciPy DSP)
 
 ```bash
 npm install
-npx tsx src/pipeline/runner.ts --help
+node --import tsx src/pipeline/runner.ts --help
 
 # Full pipeline
-npx tsx src/pipeline/runner.ts --script script.md --provider elevenlabs --video-gen kling
+node --import tsx src/pipeline/runner.ts --script script.md --provider elevenlabs --video-gen kling
 
 # Specific phases
-npx tsx src/pipeline/runner.ts --phases 1,5,6,7 --script script.md
+node --import tsx src/pipeline/runner.ts --phases 1,5,6,7 --script script.md
 
 # Dry run
-npx tsx src/pipeline/runner.ts --dry-run
+node --import tsx src/pipeline/runner.ts --dry-run
 
 # Score a video
-npx tsx src/agents/video-scorer.ts
+node --import tsx src/agents/video-scorer.ts
 
 # Typecheck
 npm run typecheck

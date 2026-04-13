@@ -11,6 +11,11 @@ export const LIBRARY_DIR = path.join(PROJECT_DIR, 'video-production', 'library')
 export const OUTPUT_DIR = path.join(PROJECT_DIR, 'output');
 export const STATE_DIR = path.join(PROJECT_DIR, '.pipeline-state');
 
+// Product context (used in scoring prompts)
+export const PRODUCT_NAME = process.env.PRODUCT_NAME ?? 'Tara';
+export const PRODUCT_DESCRIPTION =
+  process.env.PRODUCT_DESCRIPTION ?? 'an AI coding agent that lives in Slack';
+
 // AI Model
 export const MODEL = process.env.MODEL ?? 'gemini-2.5-flash';
 export const VERTEX_PROJECT = process.env.VERTEX_PROJECT ?? process.env.GOOGLE_CLOUD_PROJECT ?? '';

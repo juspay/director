@@ -14,11 +14,11 @@ import fs from 'fs/promises';
 import { VideoScoreSchema, type VideoScore } from '../schemas/video-score.ts';
 import { safeJsonParse } from '../utils/json-repair.ts';
 import { exponentialBackoff, rateLimitDelay } from '../utils/rate-limit.ts';
-import { CONFIG, SCORING_TIERS, VIDEO_SIZE_THRESHOLD_BYTES } from '../pipeline/config.ts';
+import { CONFIG, SCORING_TIERS, VIDEO_SIZE_THRESHOLD_BYTES, PRODUCT_NAME, PRODUCT_DESCRIPTION } from '../pipeline/config.ts';
 
 const VIDEO_SCORING_PROMPT = `You are an expert video production critic specializing in motion graphics and SaaS product videos.
 
-Analyze this video against the scoring rubric. This is a product announcement video for "Tara" — an AI coding agent that lives in Slack. Built with Remotion (React-based programmatic animation). 2D motion graphics with Slack-native UI design.
+Analyze this video against the scoring rubric. This is a product announcement video for "${PRODUCT_NAME}" — ${PRODUCT_DESCRIPTION}. Built with Remotion (React-based programmatic animation). 2D motion graphics.
 
 Score each dimension 1-10 with brief justification. Calculate the weighted overall score.
 Identify the top improvements and any deal-breaker issues.
