@@ -12,3 +12,7 @@ video-production/archive/
 .pipeline-state/
 .observability/
 output/
+
+# Generated audio assets (regenerated at build time)
+public/voiceover/**/*.mp3
+public/voiceover/durations.json
