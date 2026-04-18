@@ -1,6 +1,6 @@
 # Director — TypeScript-Primary AI Video Production Pipeline
 
-[![CI](https://github.com/murdore/director/actions/workflows/ci.yml/badge.svg)](https://github.com/murdore/director/actions/workflows/ci.yml)
+[![CI](https://github.com/juspay/director/actions/workflows/ci.yml/badge.svg)](https://github.com/juspay/director/actions/workflows/ci.yml)
 [![Node](https://img.shields.io/badge/node-20%20%7C%2022%20%7C%2024-green)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5-3178c6)](https://www.typescriptlang.org)
 [![Tests](https://img.shields.io/badge/tests-53%20passing-brightgreen)](#verification)
