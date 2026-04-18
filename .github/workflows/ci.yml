@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [release, main]
+  pull_request:
+    branches: [release, main]
+
+jobs:
+  verify:
+    name: Verify (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['20', '22', '24']
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node ${{ matrix.node }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm run test:unit
+
+      - name: Dry-run pipeline (all 7 phases)
+        run: node --import tsx src/pipeline/runner.ts --dry-run
+
+  python:
+    name: Python DSP scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: pip install numpy scipy pretty_midi librosa
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Syntax-check Python scripts
+        run: python3 -c "import ast; [ast.parse(open(f).read()) for f in ['scripts/python/synthesize-music.py','scripts/python/synthesize-sfx.py','scripts/python/mix-audio.py','scripts/python/analyze-audio.py']]; print('All Python scripts parse clean')"
+
+      - name: Python bridge integration tests
+        run: npm run test:python
