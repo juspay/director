@@ -17,6 +17,7 @@
     "test": "node --import tsx --test tests/**/*.test.ts",
     "test:unit": "node --import tsx --test tests/utils/*.test.ts tests/policies/*.test.ts tests/schemas/*.test.ts tests/pipeline/*.test.ts tests/observability/*.test.ts",
     "test:python": "node --import tsx --test tests/scripts/*.test.ts",
+    "test:tier-0": "bash scripts/test-tier-0.sh",
     "dashboard": "node --import tsx src/agents/dashboard-generator.ts"
   },
   "dependencies": {
