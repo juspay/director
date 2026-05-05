@@ -1,0 +1,30 @@
+{
+  "name": "tara-skills",
+  "voice": {
+    "voiceId": "hpp4J3VqNfWAUOO0d1Us",
+    "modelId": "eleven_multilingual_v2",
+    "settings": {
+      "stability": 0.5,
+      "similarity_boost": 0.75,
+      "style": 0.35,
+      "use_speaker_boost": true
+    }
+  },
+  "music": {
+    "prompt": "Upbeat optimistic corporate tech soundtrack, light playful synth arpeggios, soft electronic drums, warm bassline, modern product launch vibe, friendly and motivating, instrumental only, no vocals",
+    "durationMs": 62000,
+    "sfxFallbackSeconds": 22.0
+  },
+  "scenes": [
+    { "id": "01-title", "text": "Tara has Skills now. A new feature for everyone using Tara." },
+    { "id": "02-what", "text": "Skills are elaborate steps or instructions for repetitive tasks. Create them once, and Tara reuses them whenever they're needed." },
+    { "id": "03-commands", "text": "Four slash commands run the show. Skill-create, skill-update, skill-list, and skill-delete. These commands only work inside the tara-skills channel." },
+    { "id": "04-flow", "text": "Each command raises a request. Once approved, the skill goes live, and Tara picks it up automatically." },
+    { "id": "05-scope", "text": "Skills are scoped. Make them global, or specific to a single channel." },
+    { "id": "06-example1", "text": "Here's an A C L Finder skill. Instructions tell Tara where to find A C L definitions in the dashboard codebase." },
+    { "id": "07-example2", "text": "A Jira-first coding skill creates a ticket in the example project before any implementation begins." },
+    { "id": "08-example3", "text": "And a Blend UI skill — always use the shared component library instead of raw markup." },
+    { "id": "09-coming-soon", "text": "And coming soon — Tara will start creating skills for you, automatically." },
+    { "id": "10-outro", "text": "Try it out today. Build what matters. Not XYNE." }
+  ]
+}
