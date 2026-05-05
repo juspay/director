@@ -1,0 +1,32 @@
+{
+  "name": "hippocampus",
+  "voice": {
+    "voiceId": "90ipbRoKi4CpHXvKVtl0",
+    "modelId": "eleven_multilingual_v2",
+    "settings": {
+      "stability": 0.5,
+      "similarity_boost": 0.75,
+      "style": 0.4,
+      "use_speaker_boost": true
+    }
+  },
+  "music": {
+    "prompt": "Cerebral focused tech soundtrack, soft synth pads, subtle pulsing arpeggios, warm sub bass, modern AI product launch feel, calm-confident, instrumental only, no vocals",
+    "durationMs": 64000,
+    "sfxFallbackSeconds": 22.0
+  },
+  "scenes": [
+    { "id": "01-title", "text": "Today's AI has a genius brain and a goldfish memory. Hippocampus is the fix. Condensed memory for AI agents." },
+    { "id": "02-problem", "text": "Most memory layers grow without limit. Vectors pile up. Retrieval gets noisier. And the model still misses what matters." },
+    { "id": "03-solution", "text": "Hippocampus is a different path. One memory string per user. Your model writes it. Your model reads it. No vectors. No pipelines." },
+    { "id": "04-learning", "text": "Every conversation makes it smarter. Hippocampus learns each user's preferences, context, and goals — automatically. Your agent stops repeating itself. It starts learning." },
+    { "id": "05-api", "text": "Four methods. Add. Get. Delete. Close. That is the entire SDK." },
+    { "id": "06-storage", "text": "Drops in anywhere — SQLite, Redis, S3, or your own callback." },
+    { "id": "07-models", "text": "Powered by NeuroLink. Every provider. Every model. Your choice." },
+    { "id": "08-locomo", "text": "On LoCoMo, the long-conversation memory benchmark, Hippocampus hits ninety-five percent on adversarial. It knows when it does not know. Seventy-eight percent on single-hop recall. Sixty-five percent overall. From a memory thirty times smaller than the source." },
+    { "id": "09-moat", "text": "Five thousand turns of dialogue. Compressed into a single prompt your model reads in one pass." },
+    { "id": "10-usedby", "text": "Already in production at Juspay — powering Tara, Breeze Automatic, and Yamma." },
+    { "id": "11-vision", "text": "Every chatbot, every agent, every AI in your stack needs memory. Hippocampus is the simplest one that works." },
+    { "id": "12-outro", "text": "Hippocampus. By Juspay. npm install at-juspay-slash-hippocampus." }
+  ]
+}
