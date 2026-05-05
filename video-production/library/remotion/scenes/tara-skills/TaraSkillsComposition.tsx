@@ -17,12 +17,11 @@
  *  10. Outro — "Build What Matters" tagline + CTA pills
  *
  * Audio assets (generated at build time, NOT committed):
- *   public/voiceover/01-title.mp3 … 10-outro.mp3  — per-scene voiceover
- *   public/voiceover/music-01.mp3                  — background music (looped)
- *   public/voiceover/durations.json                — audio durations for dynamic scene sizing
+ *   public/voiceover/tara-skills/01-title.mp3 … 10-outro.mp3  — per-scene voiceover
+ *   public/voiceover/tara-skills/music-01.mp3                  — background music (looped)
  *
- * Run `node scripts/generate-voiceover.mjs` and `node scripts/generate-music.mjs`
- * to populate these before rendering.
+ * Run `node scripts/generate-voiceover.mjs tara-skills` and
+ * `node scripts/generate-music.mjs tara-skills` to populate these before rendering.
  */
 import React from 'react';
 import {
@@ -121,7 +120,7 @@ const BackgroundMusic: React.FC = () => {
     return BASE;
   };
   return (
-    <Audio src={staticFile('voiceover/music-01.mp3')} volume={volume} loop />
+    <Audio src={staticFile('voiceover/tara-skills/music-01.mp3')} volume={volume} loop />
   );
 };
 
@@ -146,7 +145,7 @@ const TaraAvatar: React.FC<{ size?: number }> = ({ size = 220 }) => {
       }}
     >
       <Img
-        src={staticFile('tara.png')}
+        src={staticFile('products/tara.png')}
         style={{
           position: 'absolute',
           width: 476 * scale,
@@ -454,7 +453,7 @@ export interface TaraSkillsProps {
   sceneFrames: number[];
 }
 
-const VO = (id: string) => staticFile(`voiceover/${id}.mp3`);
+const VO = (id: string) => staticFile(`voiceover/tara-skills/${id}.mp3`);
 
 const TaraSkillsVideo: React.FC<TaraSkillsProps> = ({ sceneFrames }) => {
   const [f1, f2, f3, f4, f5, f6, f7, f8, f9, f10] = sceneFrames;
