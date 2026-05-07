@@ -1,7 +1,9 @@
 /**
  * Mux video hosting — upload, HLS transcoding, analytics.
+ * Upload is HITL-gated by default in production; bypass with HITL_AUTO_APPROVE=1.
  */
 import fs from 'fs/promises';
+import { requestApproval } from './hitl-gate.ts';
 
 const TOKEN_ID = process.env.MUX_TOKEN_ID ?? '';
 const TOKEN_SECRET = process.env.MUX_TOKEN_SECRET ?? '';
@@ -13,6 +15,13 @@ function authHeader(): string {
 
 export async function uploadVideo(videoPath: string): Promise<{ assetId: string; playbackUrl: string }> {
   if (!TOKEN_ID) throw new Error('MUX_TOKEN_ID not set');
+  const stat = await fs.stat(videoPath);
+  const ok = await requestApproval({
+    action: 'mux:upload',
+    description: `Upload ${videoPath} to Mux for public streaming`,
+    context: { file: videoPath, sizeBytes: stat.size },
+  });
+  if (!ok) throw new Error('Mux upload denied by HITL');
 
   const headers = { 'Authorization': authHeader(), 'Content-Type': 'application/json' };
 

@@ -3,11 +3,9 @@
  */
 import { execa } from 'execa';
 import fs from 'fs/promises';
+import type { ValidationResult } from '../types/index.ts';
 
-export interface ValidationResult {
-  valid: boolean;
-  checks: Array<{ name: string; passed: boolean; detail: string }>;
-}
+export type { ValidationResult } from '../types/index.ts';
 
 export async function validateAssets(assets: Record<string, string>): Promise<ValidationResult> {
   const checks: ValidationResult['checks'] = [];

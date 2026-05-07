@@ -9,19 +9,11 @@
  * 4. Applies penalties (logged) for violations
  * 5. Generates comprehensive observability report
  */
-import type { ObservabilityReport, PolicyViolation, AgentMetrics } from '../types/index.ts';
+import type { ObservabilityReport, PolicyViolation, AgentMetrics, Penalty } from '../types/index.ts';
 import { getMetrics, getMetricsSummary } from './agent-observer.ts';
 import { evaluateAllGroups, printEvaluationReport } from './evaluation-agent.ts';
 import { validatePipelineCompliance } from '../policies/policy-validator.ts';
 import { saveState } from '../pipeline/state.ts';
-
-interface Penalty {
-  agent: string;
-  reason: string;
-  severity: 'critical' | 'major' | 'minor';
-  action: string;
-  timestamp: string;
-}
 
 const penalties: Penalty[] = [];
 

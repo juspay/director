@@ -40,13 +40,14 @@ export async function runCreativeDirectorAgent(
       input: {
         text: `${CREATIVE_DIRECTION_PROMPT}\n\nProject: ${projectTitle}\n\n---\n\nSCRIPT:\n${scriptText}`,
       },
-      provider: 'vertex',
-      model: CONFIG.MODEL,
+      provider: process.env.AGENT_PROVIDER ?? 'vertex',
+      model: process.env.CREATIVE_DIRECTOR_MODEL ?? CONFIG.MODEL,
       schema: CreativePromptSchema,
       output: { format: 'json' },
       disableTools: true,
       maxTokens: 8192,
       timeout: '180s',
+      thinkingConfig: { thinkingLevel: 'high' },
     });
 
     return CreativePromptSchema.parse(safeJsonParse(response.content));

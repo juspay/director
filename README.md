@@ -11,18 +11,20 @@ TypeScript-first video production pipeline powered by `@juspay/neurolink` for AI
 
 ```
 src/                          ← TypeScript (primary)
-├── agents/                   # Neurolink AI agents (6 agents, Zod schemas)
+├── agents/                   # Neurolink AI agents (6 + scene-narrator)
 ├── schemas/                  # Zod schemas for structured AI output
-├── voiceover/                # TTS providers (ElevenLabs, OpenAI, Fish, EdgeTTS) + optimizer
-├── generators/               # Video generators (Kling, Veo, Runway, Wan-Alpha)
-├── rendering/                # FFmpeg assembler, Remotion renderer, captions, 14 presets
+├── voiceover/                # TTS (ElevenLabs, OpenAI, Fish, EdgeTTS, Google via NeuroLink TTSProcessor)
+├── generators/               # Video gen (Kling, Veo via NeuroLink, Runway, Wan-Alpha)
+├── rendering/                # FFmpeg assembler + NeuroLink mergeVideoBuffers/frameExtractor, captions, presets
 ├── avatar/                   # Lip sync (MuseTalk, D-ID)
-├── music/                    # Music generators (Lyria, Beatoven, ElevenLabs)
-├── distribution/             # Multi-platform publishing (Late API, Mux, JSON-LD)
-├── scoring/                  # VMAF gating, VBench, cost tracker + AI scoring agents
+├── music/                    # Music gen (Lyria, Beatoven, ElevenLabs)
+├── distribution/             # Mux + Late publishing (HITL-gated) + PPT companion
+├── scoring/                  # VMAF, cost tracker, AI scoring + quality-gates (7 LLM scorers) + multi-judge ensemble
+├── adapters/                 # Unified TTSHandler/VideoGenHandler/etc. registry for direct-fetch vendors
+├── rag/                      # NeuroLink chunkText + sparse retrieval over docs/*.md
 ├── policies/                 # 3-cycle policy system: Creator → Enforcer → Validator
-├── observability/            # Observer → Evaluator → SuperObserver → Reporter
-├── pipeline/                 # Runner (7-phase), config, state management
+├── observability/            # Observer → Evaluator → SuperObserver → Reporter (NeuroLink Langfuse layered on top)
+├── pipeline/                 # Runner (7-phase + Director-Mode), config, state, Langfuse init
 ├── scripts/                  # Python bridge (execa wrappers)
 └── types/                    # TypeScript interfaces
 
