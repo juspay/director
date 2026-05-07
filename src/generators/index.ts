@@ -1,4 +1,48 @@
-export * as kling from './kling.ts';
-export * as veo from './veo.ts';
-export * as runway from './runway.ts';
-export * as wanAlpha from './wan-alpha.ts';
+/**
+ * Video router — dispatches to `nl.generate({output: {mode: 'video'}})` for
+ * every video provider NeuroLink supports (vertex/Veo, Kling, Runway,
+ * Replicate). All providers return `result.video.data` (Buffer).
+ */
+import fs from 'fs/promises';
+import path from 'path';
+import type { NeuroLink } from '@juspay/neurolink';
+import type { VideoProvider, VideoOptions } from '../types/index.ts';
+
+export type { VideoProvider, VideoOptions } from '../types/index.ts';
+
+export async function generate(
+  nl: NeuroLink,
+  provider: VideoProvider,
+  prompt: string,
+  outputPath: string,
+  options: VideoOptions = {},
+): Promise<string> {
+  const images: Array<Buffer | string> = [];
+  if (Buffer.isBuffer(options.inputImage)) images.push(options.inputImage);
+  else if (typeof options.inputImage === 'string') images.push(await fs.readFile(options.inputImage));
+
+  console.log(`[video] ${provider}: ${prompt.slice(0, 60)}...`);
+  const result = await nl.generate({
+    input: { text: prompt, images: images.length ? images : undefined },
+    provider,
+    region: options.region ?? process.env.VERTEX_LOCATION,
+    output: {
+      mode: 'video',
+      video: {
+        provider,
+        model: options.model,
+        resolution: options.resolution ?? '1080p',
+        length: options.length ?? 8,
+        aspectRatio: options.aspectRatio ?? '16:9',
+        audio: options.audio ?? true,
+      },
+    },
+  });
+
+  const buf = result.video?.data;
+  if (!buf) throw new Error(`[video] ${provider}: no video buffer returned`);
+  await fs.mkdir(path.dirname(outputPath), { recursive: true });
+  await fs.writeFile(outputPath, buf);
+  console.log(`[video] ${provider}: ${outputPath} (${(buf.length / 1024).toFixed(0)} KB)`);
+  return outputPath;
+}

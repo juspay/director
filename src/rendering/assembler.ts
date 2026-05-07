@@ -4,7 +4,7 @@
  */
 import { execa } from 'execa';
 import path from 'path';
-import { getPreset, type EncodingPreset } from './presets.ts';
+import { getPreset } from './presets.ts';
 
 export async function assemble(
   videoInput: string,

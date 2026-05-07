@@ -1,11 +1,14 @@
 /**
  * Late API — post video to 13 platforms in a single call.
+ * Publish is always HITL-gated; bypass with HITL_AUTO_APPROVE=1.
  */
 import fs from 'fs/promises';
 import path from 'path';
+import { requestApproval } from './hitl-gate.ts';
 
 const API_KEY = process.env.LATE_API_KEY ?? '';
-const API_BASE = 'https://api.getlate.dev/v1';
+// Late's actual API base is getlate.dev/api/v1 — old api.getlate.dev was NXDOMAIN.
+const API_BASE = process.env.LATE_API_BASE ?? 'https://getlate.dev/api/v1';
 
 export async function publishVideo(
   videoPath: string,
@@ -15,6 +18,12 @@ export async function publishVideo(
   options: { tags?: string[]; thumbnailPath?: string; scheduleAt?: string } = {},
 ): Promise<Record<string, { url: string; id: string; status: string }>> {
   if (!API_KEY) throw new Error('LATE_API_KEY not set');
+  const ok = await requestApproval({
+    action: 'late:publish',
+    description: `Publish "${title}" to ${platforms.join(', ')}`,
+    context: { file: videoPath, platforms, title, scheduleAt: options.scheduleAt },
+  });
+  if (!ok) throw new Error('Late publish denied by HITL');
 
   const formData = new FormData();
   const videoData = await fs.readFile(videoPath);

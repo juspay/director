@@ -34,7 +34,7 @@ export async function runSceneAnalyzerAgent(
         text: `${SCENE_ANALYSIS_PROMPT}\n\nScene ID: ${sceneId}`,
         files: [path.resolve(videoPath)],
       },
-      provider: 'vertex',
+      provider: process.env.AGENT_PROVIDER ?? 'vertex',
       model: CONFIG.MODEL,
       schema: SceneAnalysisSchema,
       output: { format: 'json' },
