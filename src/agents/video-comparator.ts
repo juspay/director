@@ -30,7 +30,7 @@ export async function runVideoComparatorAgent(
         text: `${COMPARISON_PROMPT}\n\nVideo A is the first video. Video B is the second.`,
         files: [path.resolve(videoPathA), path.resolve(videoPathB)],
       },
-      provider: 'vertex',
+      provider: process.env.AGENT_PROVIDER ?? 'vertex',
       model: CONFIG.MODEL,
       schema: ComparisonSchema,
       output: { format: 'json' },

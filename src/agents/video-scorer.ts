@@ -53,7 +53,7 @@ export async function runVideoScorerAgent(
         text: VIDEO_SCORING_PROMPT,
         files: [path.resolve(inputFile)],
       },
-      provider: 'vertex',
+      provider: process.env.AGENT_PROVIDER ?? 'vertex',
       model: tierConfig.model,
       schema: VideoScoreSchema,
       output: { format: 'json' },

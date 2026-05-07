@@ -38,7 +38,7 @@ export async function runScriptScorerAgent(
   const result = await exponentialBackoff(async () => {
     const response = await neurolink.generate({
       input: { text: `${SCRIPT_SCORING_PROMPT}\n\n---\n\nSCRIPT:\n${scriptText}` },
-      provider: 'vertex',
+      provider: process.env.AGENT_PROVIDER ?? 'vertex',
       model: CONFIG.MODEL,
       schema: ScriptScoreSchema,
       output: { format: 'json' },

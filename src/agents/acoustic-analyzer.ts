@@ -41,7 +41,7 @@ export async function runAcousticAnalyzerAgent(
         text: ACOUSTIC_ANALYSIS_PROMPT,
         files: [path.resolve(audioPath)],
       },
-      provider: 'vertex',
+      provider: process.env.AGENT_PROVIDER ?? 'vertex',
       model: CONFIG.MODEL,
       schema: AcousticScoreSchema,
       output: { format: 'json' },

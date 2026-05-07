@@ -5,22 +5,12 @@
  * Runs after all agents complete. Validates the full pipeline state
  * against all policies and generates a compliance report.
  */
-import type { Policy, PolicyViolation, PipelineState } from '../types/index.ts';
+import type { Policy, PolicyViolation, PipelineState, ComplianceReport } from '../types/index.ts';
 import { ALL_POLICIES } from './policy-creator.ts';
 import { enforcePolicy } from './policy-enforcer.ts';
 import { loadState } from '../pipeline/state.ts';
 
-export interface ComplianceReport {
-  timestamp: string;
-  totalPolicies: number;
-  totalRules: number;
-  violations: PolicyViolation[];
-  errorCount: number;
-  warningCount: number;
-  infoCount: number;
-  compliant: boolean;
-  summary: string;
-}
+export type { ComplianceReport } from '../types/index.ts';
 
 /**
  * Validate the full pipeline output against all policies.

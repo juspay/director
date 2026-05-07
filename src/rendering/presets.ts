@@ -3,23 +3,8 @@
  * Single source of truth for all FFmpeg encoding parameters.
  */
 
-export interface EncodingPreset {
-  name: string;
-  videoCodec: string;
-  videoCrf?: number;
-  videoPreset?: string;
-  videoBitrate?: string;
-  pixelFormat: string;
-  audioCodec: string;
-  audioBitrate: string;
-  width: number;
-  height: number;
-  maxBitrate?: string;
-  bufsize?: string;
-  extraArgs?: string[];
-  videoArgs(): string[];
-  audioArgs(): string[];
-}
+import type { EncodingPreset } from '../types/index.ts';
+export type { EncodingPreset } from '../types/index.ts';
 
 function createPreset(config: Omit<EncodingPreset, 'videoArgs' | 'audioArgs'>): EncodingPreset {
   return {

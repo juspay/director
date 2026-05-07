@@ -24,7 +24,7 @@ import type { PipelineState } from '../types/index.ts';
 import * as voiceover from '../voiceover/index.ts';
 import * as generators from '../generators/index.ts';
 import * as rendering from '../rendering/index.ts';
-import { generateAvatar as didGenerateAvatar, generateLipsync } from '../avatar/index.ts';
+import * as avatar from '../avatar/index.ts';
 import * as music from '../music/index.ts';
 import * as distribution from '../distribution/index.ts';
 
@@ -56,23 +56,26 @@ const PHASES = [
   { name: 'captions', label: '7. Captions', fn: phaseCaptions },
 ] as const;
 
-export interface PipelineOptions {
-  phases?: number[];           // Which phases to run (default: all)
-  scriptPath?: string;         // Path to script markdown
-  videoPath?: string;          // Existing video for scoring
-  audioPath?: string;          // Existing voiceover audio
-  outputDir?: string;          // Output directory
-  provider?: string;           // TTS provider (elevenlabs/openai/fish/edgetts)
-  videoGenerator?: string;     // Video generator (kling/runway/veo/wan-alpha)
-  musicGenerator?: string;     // Music generator (lyria/beatoven/numpy)
-  avatarSource?: string;       // Avatar source image path
-  avatarProvider?: string;     // Avatar provider (did/musetalk)
-  dryRun?: boolean;
-  skipScoring?: boolean;
-}
+import type { PipelineOptions } from '../types/index.ts';
+export type { PipelineOptions } from '../types/index.ts';
 
 export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineState> {
   const neurolink = new NeuroLink();
+
+  // Observability: NeuroLink OTel + Langfuse if env keys present.
+  if (process.env.LANGFUSE_PUBLIC_KEY && process.env.LANGFUSE_SECRET_KEY) {
+    try {
+      const nl = await import('@juspay/neurolink');
+      const init = (nl as unknown as { initializeOpenTelemetry?: () => void | Promise<void> }).initializeOpenTelemetry;
+      if (typeof init === 'function') {
+        await init();
+        console.log('[Observability] OpenTelemetry + Langfuse initialized');
+      }
+    } catch (e) {
+      console.warn('[Observability] Langfuse init skipped:', e instanceof Error ? e.message : e);
+    }
+  }
+
   const outDir = opts.outputDir ?? OUTPUT_DIR;
   await fs.mkdir(outDir, { recursive: true });
 
@@ -171,20 +174,40 @@ async function runPhase(
 
 // Phase implementations
 
-async function phaseVoiceover(_nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
+const VOICEOVER_ALIAS: Record<string, voiceover.VoiceoverProvider> = {
+  elevenlabs: 'elevenlabs',
+  openai: 'openai-tts',
+  'openai-tts': 'openai-tts',
+  fish: 'fish-audio',
+  'fish-audio': 'fish-audio',
+  google: 'google-ai',
+  'google-tts': 'google-ai',
+  'google-ai': 'google-ai',
+  azure: 'azure-tts',
+  'azure-tts': 'azure-tts',
+  cartesia: 'cartesia',
+  edgetts: 'edgetts',
+};
+
+async function phaseVoiceover(nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
   if (opts.dryRun) return { status: 'dry-run' };
   const outDir = opts.outputDir ?? OUTPUT_DIR;
-  const provider = opts.provider ?? 'elevenlabs';
+  const requested = opts.provider ?? 'elevenlabs';
+  const provider = VOICEOVER_ALIAS[requested] ?? 'elevenlabs';
   const outputPath = path.join(outDir, 'voiceover.mp3');
   const text = opts.scriptPath ? await fs.readFile(opts.scriptPath, 'utf-8') : 'Sample narration text';
-
-  if (provider === 'openai') return voiceover.openaiTts.generate(text, outputPath);
-  if (provider === 'fish') return voiceover.fishAudio.generate(text, outputPath);
-  if (provider === 'edgetts') return voiceover.edgetts.generate(text, outputPath);
-  return voiceover.elevenlabs.generate(text, outputPath);
+  return voiceover.generate(nl, provider, text, outputPath);
 }
 
-async function phaseAvatar(_nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
+const AVATAR_ALIAS: Record<string, avatar.AvatarProvider> = {
+  did: 'd-id',
+  'd-id': 'd-id',
+  heygen: 'heygen',
+  replicate: 'replicate',
+  musetalk: 'replicate',
+};
+
+async function phaseAvatar(nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
   if (opts.dryRun) return { status: 'dry-run' };
   if (!opts.avatarSource) return { status: 'skipped', reason: 'No avatar source configured (use --avatar-source)' };
 
@@ -192,38 +215,58 @@ async function phaseAvatar(_nl: NeuroLink, opts: PipelineOptions): Promise<unkno
   const voiceoverPath = path.join(outDir, 'voiceover.mp3');
   const outputPath = path.join(outDir, 'avatar.mp4');
 
-  // Check voiceover exists
   try { await fs.access(voiceoverPath); } catch {
     return { status: 'skipped', reason: 'Voiceover not found — run phase 1 first' };
   }
 
-  const provider = opts.avatarProvider ?? 'did';
-  if (provider === 'musetalk') return generateLipsync(opts.avatarSource, voiceoverPath, outputPath);
-  return didGenerateAvatar(opts.avatarSource, voiceoverPath, outputPath);
+  const provider = AVATAR_ALIAS[opts.avatarProvider ?? 'did'] ?? 'd-id';
+  return avatar.generate(nl, provider, opts.avatarSource, { audio: voiceoverPath }, outputPath);
 }
 
-async function phaseBroll(_nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
+const VIDEO_ALIAS: Record<string, generators.VideoProvider> = {
+  vertex: 'vertex',
+  veo: 'vertex',
+  kling: 'kling',
+  runway: 'runway',
+  replicate: 'replicate',
+  'wan-alpha': 'replicate',
+};
+
+const REPLICATE_MODEL: Record<string, string> = {
+  'wan-alpha': 'wechatcv/wan-alpha',
+};
+
+async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
   if (opts.dryRun) return { status: 'dry-run' };
   const outDir = opts.outputDir ?? OUTPUT_DIR;
   const gen = opts.videoGenerator ?? 'kling';
+  const provider = VIDEO_ALIAS[gen] ?? 'kling';
   const outputPath = path.join(outDir, 'broll.mp4');
-
-  if (gen === 'runway') return generators.runway.generateClip('Product video B-roll', outputPath);
-  if (gen === 'veo') return generators.veo.generateClip('Product video B-roll', outputPath);
-  if (gen === 'wan-alpha') return generators.wanAlpha.generateRgbaVideo('Product video B-roll', outputPath);
-  return generators.kling.generateClip('Product video B-roll', outputPath);
+  const model = REPLICATE_MODEL[gen];
+  return generators.generate(nl, provider, 'Product video B-roll', outputPath, model ? { model } : {});
 }
 
-async function phaseMusic(_nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
+const MUSIC_ALIAS: Record<string, music.MusicProvider> = {
+  lyria: 'lyria',
+  beatoven: 'beatoven',
+  elevenlabs: 'elevenlabs-music',
+  'elevenlabs-music': 'elevenlabs-music',
+  replicate: 'replicate',
+};
+
+async function phaseMusic(nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
   if (opts.dryRun) return { status: 'dry-run' };
   const outDir = opts.outputDir ?? OUTPUT_DIR;
   const gen = opts.musicGenerator ?? 'numpy';
-
-  if (gen === 'lyria') return music.generateTrack(path.join(outDir, 'music.wav'));
-  if (gen === 'beatoven') return music.generateFromText('Cinematic background', path.join(outDir, 'music.mp3'));
-  if (gen === 'elevenlabs') return music.generateMusic('Cinematic background music', path.join(outDir, 'music.mp3'));
-  // Default: NumPy synthesis via Python subprocess
-  return synthesizeMusic(path.join(outDir, 'music.wav'));
+  if (gen === 'numpy') return synthesizeMusic(path.join(outDir, 'music.wav'));
+  const provider = MUSIC_ALIAS[gen] ?? 'beatoven';
+  const outFile = provider === 'beatoven' || provider === 'elevenlabs-music' || provider === 'replicate'
+    ? path.join(outDir, 'music.mp3')
+    : path.join(outDir, 'music.wav');
+  return music.generate(nl, provider, 'Cinematic background music for a product video', outFile, {
+    format: outFile.endsWith('.wav') ? 'wav' : 'mp3',
+    mood: 'cinematic',
+  });
 }
 
 async function phaseRender(_nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
