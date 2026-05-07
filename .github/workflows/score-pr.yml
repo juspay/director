@@ -1,0 +1,102 @@
+name: PR Quality Score Gate
+
+# Runs the Director pipeline (single-phase) on PRs and posts the score as
+# a comment. Configurable threshold via repo secret PR_SCORE_THRESHOLD
+# (default 7.0). Requires VERTEX credentials in repo secrets.
+
+on:
+  pull_request:
+    branches: [release, main]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  score:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Auth Google Cloud
+        env:
+          GOOGLE_CREDS_JSON: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}
+          GCP_PROJECT: ${{ secrets.GOOGLE_CLOUD_PROJECT }}
+          VERTEX_LOC: ${{ secrets.VERTEX_LOCATION }}
+        run: |
+          if [ -z "$GOOGLE_CREDS_JSON" ]; then
+            echo "::notice::Vertex credentials not configured — score gate will skip."
+            exit 0
+          fi
+          echo "$GOOGLE_CREDS_JSON" > /tmp/sa.json
+          echo "GOOGLE_APPLICATION_CREDENTIALS=/tmp/sa.json" >> "$GITHUB_ENV"
+          echo "GOOGLE_CLOUD_PROJECT=$GCP_PROJECT" >> "$GITHUB_ENV"
+          echo "VERTEX_PROJECT=$GCP_PROJECT" >> "$GITHUB_ENV"
+          echo "VERTEX_LOCATION=${VERTEX_LOC:-us-central1}" >> "$GITHUB_ENV"
+          echo "MODEL=gemini-2.5-flash" >> "$GITHUB_ENV"
+
+      - name: Score test fixture script via Vertex
+        if: ${{ env.GOOGLE_APPLICATION_CREDENTIALS != '' }}
+        env:
+          AGENT_PROVIDER: vertex
+          PRODUCT_NAME: Tara
+          PRODUCT_DESCRIPTION: an AI coding agent that lives in Slack
+        run: |
+          node --import tsx -e "
+            import 'dotenv/config';
+            import fs from 'fs/promises';
+            import { NeuroLink } from '@juspay/neurolink';
+            import { runScriptScorerAgent } from './src/agents/script-scorer.ts';
+            const nl = new NeuroLink();
+            const text = await fs.readFile('tests/fixtures/script.md', 'utf-8');
+            const r = await runScriptScorerAgent(nl, text);
+            await fs.writeFile('output/script-score.json', JSON.stringify(r, null, 2));
+            const threshold = parseFloat(process.env.PR_SCORE_THRESHOLD || '7.0');
+            console.log('average_score:', r?.average_score);
+            if ((r?.average_score ?? 0) < threshold) {
+              console.error('Score below threshold:', threshold);
+              process.exit(1);
+            }
+            await nl.shutdown();
+          "
+        env:
+          PR_SCORE_THRESHOLD: ${{ secrets.PR_SCORE_THRESHOLD || '7.0' }}
+
+      - name: Comment score on PR
+        if: always() && github.event.pull_request.head.repo.full_name == github.repository
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let body = '## PR Quality Score Gate\n\n';
+            try {
+              const score = JSON.parse(fs.readFileSync('output/script-score.json', 'utf-8'));
+              body += `**Average score:** ${score.average_score?.toFixed(2) ?? 'n/a'}/10  \n`;
+              body += `**Lock-ready:** ${score.lock_ready ? 'yes' : 'no'}  \n`;
+              body += `**Weakest dimension:** ${score.weakest_criterion ?? 'n/a'}  \n\n`;
+              if (score.improvement_notes?.length) {
+                body += '### Top suggestions\n';
+                for (const n of score.improvement_notes.slice(0, 3)) body += `- ${n}\n`;
+              }
+            } catch {
+              body += '_Score not available — quality gate skipped (no Vertex credentials in secrets)._';
+            }
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body,
+            });

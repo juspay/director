@@ -6,13 +6,10 @@ import { execa } from 'execa';
 import fs from 'fs/promises';
 import path from 'path';
 
-const DEFAULT_VOICE = 'en-IN-NeerjaNeural';
+import type { Segment } from '../types/index.ts';
+export type { Segment } from '../types/index.ts';
 
-export interface Segment {
-  text: string;
-  rate?: string;   // e.g., "+5%" or "-10%"
-  pitch?: string;  // e.g., "+2st"
-}
+const DEFAULT_VOICE = 'en-IN-NeerjaNeural';
 
 export async function generate(
   text: string,

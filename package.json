@@ -21,7 +21,7 @@
     "dashboard": "node --import tsx src/agents/dashboard-generator.ts"
   },
   "dependencies": {
-    "@juspay/neurolink": "^9.30.0",
+    "@juspay/neurolink": "^9.65.0",
     "dotenv": "^16.4.0",
     "execa": "^9.6.1",
     "react": "^18.3.1",

@@ -2,20 +2,12 @@
  * EvaluationAgent — scores agent group quality.
  * Groups agents by domain, evaluates each group's collective output quality.
  */
-import type { AgentMetrics, PolicyViolation } from '../types/index.ts';
+import type { AgentMetrics, PolicyViolation, GroupEvaluation } from '../types/index.ts';
 import { getMetrics } from './agent-observer.ts';
 import { enforcePolicy } from '../policies/policy-enforcer.ts';
 import { AGENT_EXECUTION_POLICY } from '../policies/policy-creator.ts';
 
-export interface GroupEvaluation {
-  group: string;
-  agents: string[];
-  avgExecutionMs: number;
-  successRate: number;
-  totalCost: number;
-  policyViolations: PolicyViolation[];
-  grade: 'A' | 'B' | 'C' | 'D' | 'F';
-}
+export type { GroupEvaluation } from '../types/index.ts';
 
 const AGENT_GROUPS: Record<string, string[]> = {
   scoring: ['VideoScorer', 'ScriptScorer', 'SceneAnalyzer'],
