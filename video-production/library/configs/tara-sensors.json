@@ -1,0 +1,30 @@
+{
+  "name": "tara-sensors",
+  "voice": {
+    "voiceId": "90ipbRoKi4CpHXvKVtl0",
+    "modelId": "eleven_multilingual_v2",
+    "settings": {
+      "stability": 0.5,
+      "similarity_boost": 0.75,
+      "style": 0.35,
+      "use_speaker_boost": true
+    }
+  },
+  "music": {
+    "prompt": "Cinematic AI product launch soundtrack, building synth pads with pulsing arpeggios, deep sub bass, subtle percussion accents, observability and monitoring tech vibe, calm-confident lifting to triumphant, modern AI runtime intelligence, instrumental only, no vocals",
+    "durationMs": 70000,
+    "sfxFallbackSeconds": 22.0
+  },
+  "scenes": [
+    { "id": "01-hook", "text": "Logs catch the fire. Alerts wake humans. Humans patch it... We've all lived this loop... Not anymore." },
+    { "id": "02-intro", "text": "Introducing Sensors. Tara's runtime intelligence — observing itself, every cycle." },
+    { "id": "03-inversion", "text": "An observability engine, right next to the application. It reads its own runtime. It ranks its own work." },
+    { "id": "04-pattern", "text": "It reads telemetry. It ranks signals. It recommends fixes. Every line grounded in a real trace." },
+    { "id": "05-live-tara", "text": "Tara has Sensors today... A JIRA webhook stuck on five hundreds... A streams search timing out... The Read tool burning tokens... All caught — before the alert fired." },
+    { "id": "06-self-fixing", "text": "Then Sensors stops just reporting. It opens research threads on its own. Files its own work." },
+    { "id": "07-product", "text": "And the engine itself becomes a product. Not just internal tooling. Something we ship." },
+    { "id": "08-multi-app", "text": "And this is just the beginning... Next, every product gets one. The Dashboard... UPI... Breeze and all other stacks... An engine of its own, for each." },
+    { "id": "09-vision", "text": "Every app on its own feedback loop. Software that improves itself. Cycle by cycle." },
+    { "id": "10-outro", "text": "Try it in tara-dev. Powered by NeuroLink. Build what matters." }
+  ]
+}
