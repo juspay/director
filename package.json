@@ -21,12 +21,12 @@
     "dashboard": "node --import tsx src/agents/dashboard-generator.ts"
   },
   "dependencies": {
-    "@juspay/neurolink": "^9.30.0",
-    "dotenv": "^16.4.0",
+    "@juspay/neurolink": "^9.63.1",
+    "dotenv": "^17.4.2",
     "execa": "^9.6.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "zod": "^4.3.6"
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "zod": "^4.4.3"
   },
   "overrides": {
     "unicorn-magic": "0.4.0",
