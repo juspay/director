@@ -62,3 +62,23 @@ export async function runCreativeDirectorAgent(
   console.log(`[CreativeDirector] Generated direction for ${c.scenes.length} scenes | Key: ${c.music_key} | BPM: ${c.music_bpm_start}-${c.music_bpm_peak}`);
   return c;
 }
+
+// CLI: npm run direct -- <script.txt>
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const scriptPath = process.argv[2];
+  if (!scriptPath) {
+    console.error('Usage: npm run direct -- <script.txt>');
+    process.exit(1);
+  }
+  const fs = await import('fs/promises');
+  const { NeuroLink } = await import('@juspay/neurolink');
+  const scriptText = (await fs.readFile(scriptPath, 'utf-8')).trim();
+  const nl = new NeuroLink();
+  try {
+    const direction = await runCreativeDirectorAgent(nl, scriptText);
+    if (!direction) process.exit(1);
+    console.log(JSON.stringify(direction, null, 2));
+  } finally {
+    await nl.shutdown();
+  }
+}

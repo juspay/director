@@ -4,6 +4,9 @@
   "description": "AI Video Production Pipeline — TypeScript agents powered by Neurolink",
   "type": "module",
   "main": "src/pipeline/runner.ts",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "start": "node --import tsx src/pipeline/runner.ts",
@@ -21,7 +24,7 @@
     "dashboard": "node --import tsx src/agents/dashboard-generator.ts"
   },
   "dependencies": {
-    "@juspay/neurolink": "^9.65.0",
+    "@juspay/neurolink": "^9.67.0",
     "dotenv": "^17.4.2",
     "execa": "^9.6.1",
     "react": "^19.2.6",

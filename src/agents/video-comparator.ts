@@ -51,3 +51,21 @@ export async function runVideoComparatorAgent(
   console.log(`[Comparator] Winner: ${c.winner} (confidence: ${c.confidence}) | Regression: ${c.regression_detected}`);
   return c;
 }
+
+// CLI: npm run compare -- <videoA.mp4> <videoB.mp4>
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const [videoA, videoB] = process.argv.slice(2);
+  if (!videoA || !videoB) {
+    console.error('Usage: npm run compare -- <videoA.mp4> <videoB.mp4>');
+    process.exit(1);
+  }
+  const { NeuroLink } = await import('@juspay/neurolink');
+  const nl = new NeuroLink();
+  try {
+    const comparison = await runVideoComparatorAgent(nl, videoA, videoB);
+    if (!comparison) process.exit(1);
+    console.log(JSON.stringify(comparison, null, 2));
+  } finally {
+    await nl.shutdown();
+  }
+}
