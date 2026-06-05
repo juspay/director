@@ -1,0 +1,13 @@
+{
+  "hero": "Premium commercial product photography of a single sleek brushed-titanium smart ring, smooth wide band with a subtle warm gold inner edge, resting on a dark reflective surface, studio lighting, dramatic rim light, ultra-detailed, photorealistic, minimal, elegant",
+  "scenes": [
+    { "product": false, "prompt": "Cinematic extreme close-up of a person's wrist wearing a black smartwatch surrounded by many floating glowing blue notification cards with abstract unreadable content, cold blue light, dark moody background, shallow depth of field, sense of digital overwhelm, photorealistic" },
+    { "product": false, "prompt": "Cinematic moody portrait of a tired person's face at night lit only by the cold blue glow of phone and watch screens, faint blue reflections in their eyes, digital fatigue, dark background, photorealistic, filmic" },
+    { "product": true, "prompt": "Cinematic hero product shot of the titanium smart ring standing upright on a black reflective pedestal, dramatic rim lighting, premium studio, deep mirror reflections, dark background, macro detail, photorealistic" },
+    { "product": true, "prompt": "Cinematic macro close-up of the titanium smart ring sliding onto a person's finger, soft green and red sensor glow on the inner band, premium, shallow depth of field, dark elegant background, photorealistic" },
+    { "product": false, "prompt": "Cinematic overhead shot of a person sleeping peacefully in a dark minimalist bedroom, a soft glowing teal heartbeat waveform of light drifting across the duvet, calm blue and teal tones, photorealistic, cinematic" },
+    { "product": false, "prompt": "Cinematic warm morning close-up of a hand holding a smartphone that shows a clean minimal circular progress ring, soft sunrise light through a window, shallow depth of field, premium calm mood, photorealistic" },
+    { "product": true, "prompt": "Cinematic golden-hour lifestyle shot of a calm confident person outdoors, relaxed hand showing the titanium smart ring on their finger catching warm light, creamy bokeh background, photorealistic, aspirational" },
+    { "product": true, "prompt": "Cinematic hero end-card shot of the titanium smart ring resting on a dark matte surface under a single dramatic beam of light, elegant minimal premium product photography, deep dark negative space around it, photorealistic" }
+  ]
+}
