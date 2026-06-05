@@ -23,6 +23,7 @@ import type { PipelineState } from '../types/index.ts';
 // TypeScript modules (primary)
 import * as voiceover from '../voiceover/index.ts';
 import * as generators from '../generators/index.ts';
+import { generateImage } from '../generators/image.ts';
 import * as rendering from '../rendering/index.ts';
 import * as avatar from '../avatar/index.ts';
 import * as music from '../music/index.ts';
@@ -125,7 +126,10 @@ export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineS
       try {
         await fs.access(finalVideo);
         console.log('\n--- Post-pipeline: AI Scoring ---\n');
-        const score = await observe('video-scoring', () => runVideoScorerAgent(neurolink, finalVideo));
+        // Give the critic the actual concept (the narration script) so it judges
+        // against what the video is, not a hardcoded default product.
+        const scoreContext = await readScript(opts.scriptPath).catch(() => undefined);
+        const score = await observe('video-scoring', () => runVideoScorerAgent(neurolink, finalVideo, 'dev', scoreContext));
         state.results['scoring'] = score.result;
       } catch {
         // Final video not found — skip scoring
@@ -189,14 +193,21 @@ const VOICEOVER_ALIAS: Record<string, voiceover.VoiceoverProvider> = {
   edgetts: 'edgetts',
 };
 
+async function readScript(scriptPath: string | undefined): Promise<string> {
+  if (scriptPath) return (await fs.readFile(scriptPath, 'utf-8')).trim();
+  const defaultScript = path.resolve('assets/script.txt');
+  try { return (await fs.readFile(defaultScript, 'utf-8')).trim(); } catch { /* no default */ }
+  throw new Error('No script provided. Pass --script <path> or create assets/script.txt');
+}
+
 async function phaseVoiceover(nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
   if (opts.dryRun) return { status: 'dry-run' };
   const outDir = opts.outputDir ?? OUTPUT_DIR;
-  const requested = opts.provider ?? 'elevenlabs';
-  const provider = VOICEOVER_ALIAS[requested] ?? 'elevenlabs';
+  const requested = opts.provider ?? 'openai';
+  const provider = VOICEOVER_ALIAS[requested] ?? 'openai-tts';
   const outputPath = path.join(outDir, 'voiceover.mp3');
-  const text = opts.scriptPath ? await fs.readFile(opts.scriptPath, 'utf-8') : 'Sample narration text';
-  return voiceover.generate(nl, provider, text, outputPath);
+  const text = await readScript(opts.scriptPath);
+  return voiceover.generate(nl, provider, text, outputPath, opts.voice ? { voice: opts.voice } : {});
 }
 
 const AVATAR_ALIAS: Record<string, avatar.AvatarProvider> = {
@@ -236,14 +247,158 @@ const REPLICATE_MODEL: Record<string, string> = {
   'wan-alpha': 'wechatcv/wan-alpha',
 };
 
+async function ensureSeedImage(seedImg: string): Promise<void> {
+  try { await fs.access(seedImg); return; } catch { /* generate */ }
+  const { execa } = await import('execa');
+  await execa('ffmpeg', [
+    '-y', '-f', 'lavfi',
+    '-i', 'gradients=size=1280x720:c0=0x0b1d3a:c1=0xd97a3a:duration=1:rate=1',
+    '-frames:v', '1', seedImg,
+  ], { stdio: 'ignore' });
+}
+
+async function probeDuration(file: string): Promise<number> {
+  const { execa } = await import('execa');
+  try {
+    const { stdout } = await execa('ffprobe', [
+      '-v', 'error', '-show_entries', 'format=duration',
+      '-of', 'default=noprint_wrappers=1:nokey=1', file,
+    ]);
+    return parseFloat(stdout.trim()) || 0;
+  } catch { return 0; }
+}
+
 async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
   if (opts.dryRun) return { status: 'dry-run' };
   const outDir = opts.outputDir ?? OUTPUT_DIR;
-  const gen = opts.videoGenerator ?? 'kling';
-  const provider = VIDEO_ALIAS[gen] ?? 'kling';
+  const gen = opts.videoGenerator ?? 'vertex';
+  const provider = VIDEO_ALIAS[gen] ?? 'vertex';
   const outputPath = path.join(outDir, 'broll.mp4');
   const model = REPLICATE_MODEL[gen];
-  return generators.generate(nl, provider, 'Product video B-roll', outputPath, model ? { model } : {});
+
+  const seedImg = path.join(outDir, '.broll-seed.jpg');
+  await fs.mkdir(outDir, { recursive: true });
+  await ensureSeedImage(seedImg);
+
+  // Match b-roll length to voiceover; default to 8s when VO isn't available.
+  const voPath = path.join(outDir, 'voiceover.mp3');
+  const voDur = await probeDuration(voPath);
+  const segLen = 4;
+
+  const GENERIC_PROMPTS = [
+    'Cinematic close-up: animated workflow diagram, neon nodes connecting, dark blue tech aesthetic, slow zoom',
+    'Cinematic wide shot: futuristic editing studio, multiple monitors showing video pipeline, smooth dolly',
+    'Cinematic macro: glowing particles forming a film strip, depth of field, warm gradient backdrop',
+    'Cinematic top-down: stylized timeline tracks scrolling, audio waveform pulsing, animated overlay',
+    'Cinematic medium shot: holographic interface with TTS, music, captions, abstract product reveal',
+    'Cinematic close-up: rendering progress bars filling, sparks and glow, dramatic lighting',
+    'Cinematic wide shot: data streams converging into a single polished video frame, dramatic camera move',
+    'Cinematic abstract: rotating geometric shapes, deep gradient, soft bokeh, brand-quality b-roll',
+  ];
+
+  // Concept-driven b-roll. assets/broll-prompts.json may be either a plain
+  // string[] (legacy) or { hero?, scenes: [{prompt, product}] }. When scenes
+  // are present we run a two-stage pass: generate a composed keyframe per beat
+  // (product beats anchored to a shared hero image for consistency), then
+  // animate each keyframe with the video model.
+  type Scene = { prompt: string; product?: boolean };
+  let heroPrompt: string | null = null;
+  let scenes: Scene[] | null = null;
+  try {
+    const raw = await fs.readFile(path.resolve('assets/broll-prompts.json'), 'utf-8');
+    const parsed: unknown = JSON.parse(raw);
+    if (Array.isArray(parsed) && parsed.length > 0 && parsed.every((p) => typeof p === 'string')) {
+      scenes = (parsed as string[]).map((p) => ({ prompt: p }));
+    } else if (parsed && typeof parsed === 'object' && Array.isArray((parsed as { scenes?: unknown }).scenes)) {
+      const obj = parsed as { hero?: unknown; scenes: Array<{ prompt?: unknown; product?: unknown }> };
+      scenes = obj.scenes.filter((s) => typeof s.prompt === 'string').map((s) => ({ prompt: s.prompt as string, product: !!s.product }));
+      if (typeof obj.hero === 'string') heroPrompt = obj.hero;
+    }
+  } catch { /* fall back to generic */ }
+
+  const segPaths: string[] = [];
+
+  if (scenes && scenes.length) {
+    console.log(`[B-roll] Concept mode: ${scenes.length} keyframe→video beats${heroPrompt ? ' + hero reference' : ''}`);
+
+    // Shared hero image → product beats stay visually consistent.
+    let heroBuf: Buffer | undefined;
+    if (heroPrompt && scenes.some((s) => s.product)) {
+      const heroPath = path.join(outDir, '.hero.png');
+      try { heroBuf = await fs.readFile(heroPath); }
+      catch {
+        try { await generateImage(heroPrompt, heroPath, { aspectRatio: '16:9' }); heroBuf = await fs.readFile(heroPath); }
+        catch (e) { console.log(`  [B-roll] hero image failed: ${e instanceof Error ? e.message.slice(0, 90) : String(e)}`); }
+      }
+    }
+
+    for (let i = 0; i < scenes.length; i++) {
+      const scene = scenes[i];
+      const segOut = path.join(outDir, `.broll-seg-${i}.mp4`);
+      try { await fs.access(segOut); segPaths.push(segOut); continue; } catch { /* generate */ }
+
+      // Stage 1: composed keyframe (anchor product beats to the hero ring).
+      const keyPath = path.join(outDir, `.broll-key-${i}.png`);
+      let keyframe = keyPath;
+      try { await fs.access(keyPath); }
+      catch {
+        try {
+          await generateImage(scene.prompt, keyPath, { aspectRatio: '16:9', referenceImages: scene.product && heroBuf ? [heroBuf] : undefined });
+        } catch (e) {
+          console.log(`  [B-roll] keyframe ${i} failed, falling back to gradient seed: ${e instanceof Error ? e.message.slice(0, 80) : String(e)}`);
+          await ensureSeedImage(seedImg);
+          keyframe = seedImg;
+        }
+      }
+
+      // Crop the keyframe to 16:9 before animation — image models often emit a
+      // square frame, and the video model would otherwise pillarbox it (black
+      // bars baked into the pixels). center-crop keeps the (centered) subject.
+      try {
+        const { execa } = await import('execa');
+        const keyframe169 = keyframe.replace(/\.(png|jpe?g)$/i, '.169.jpg');
+        await execa('ffmpeg', ['-y', '-i', keyframe, '-vf', 'crop=iw:trunc(iw*9/16/2)*2', '-q:v', '2', keyframe169], { stdio: 'ignore' });
+        keyframe = keyframe169;
+      } catch { /* use original keyframe if crop fails */ }
+
+      // Stage 2: animate the keyframe.
+      try {
+        await generators.generate(nl, provider, scene.prompt, segOut, {
+          inputImage: keyframe, length: segLen, resolution: '720p', aspectRatio: '16:9', audio: false,
+          ...(model ? { model } : {}),
+        });
+        segPaths.push(segOut);
+      } catch (e) {
+        console.log(`  [B-roll] segment ${i} failed: ${e instanceof Error ? e.message.slice(0, 100) : String(e)}`);
+      }
+    }
+  } else {
+    // Legacy generic path: single gradient seed + generic prompts.
+    await ensureSeedImage(seedImg);
+    const segCount = voDur > 0 ? Math.min(8, Math.max(1, Math.ceil(voDur / segLen))) : 2;
+    console.log(`[B-roll] VO ${voDur.toFixed(2)}s → ${segCount}×${segLen}s clips`);
+    for (let i = 0; i < segCount; i++) {
+      const segOut = path.join(outDir, `.broll-seg-${i}.mp4`);
+      try { await fs.access(segOut); segPaths.push(segOut); continue; } catch { /* generate */ }
+      try {
+        await generators.generate(nl, provider, GENERIC_PROMPTS[i % GENERIC_PROMPTS.length], segOut, {
+          inputImage: seedImg, length: segLen, resolution: '720p', aspectRatio: '16:9', audio: false,
+          ...(model ? { model } : {}),
+        });
+        segPaths.push(segOut);
+      } catch (e) {
+        console.log(`  [B-roll] segment ${i} failed: ${e instanceof Error ? e.message.slice(0, 100) : String(e)}`);
+      }
+    }
+  }
+
+  if (segPaths.length === 0) throw new Error('[B-roll] no segments produced');
+  if (segPaths.length === 1) {
+    await fs.copyFile(segPaths[0], outputPath);
+    console.log(`[B-roll] Single segment → ${outputPath}`);
+    return outputPath;
+  }
+  return rendering.concatVideos(segPaths, outputPath, { width: 1280, height: 720, fps: 30 });
 }
 
 const MUSIC_ALIAS: Record<string, music.MusicProvider> = {
@@ -272,6 +427,11 @@ async function phaseMusic(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
 async function phaseRender(_nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
   if (opts.dryRun) return { status: 'dry-run' };
   const outDir = opts.outputDir ?? OUTPUT_DIR;
+  // Remotion is optional — skip cleanly when no remotion/ project exists.
+  try { await fs.access('remotion/package.json'); } catch {
+    console.log('[Render] No remotion/ project — skipping (b-roll is primary video).');
+    return { status: 'skipped', reason: 'No remotion/ project configured' };
+  }
   const compositionName = process.env.REMOTION_COMPOSITION ?? 'MainVideo';
   return rendering.renderLocal(compositionName, path.join(outDir, 'render.mp4'));
 }
@@ -279,18 +439,72 @@ async function phaseRender(_nl: NeuroLink, opts: PipelineOptions): Promise<unkno
 async function phaseAssembly(_nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
   if (opts.dryRun) return { status: 'dry-run' };
   const outDir = opts.outputDir ?? OUTPUT_DIR;
-  return rendering.assemble(
-    path.join(outDir, 'render.mp4'),
-    path.join(outDir, 'music.wav'),
-    path.join(outDir, 'final.mp4'),
-  );
+  const broll = path.join(outDir, 'broll.mp4');
+  const voiceover = path.join(outDir, 'voiceover.mp3');
+  const musicWav = path.join(outDir, 'music.wav');
+  const musicMp3 = path.join(outDir, 'music.mp3');
+
+  let music: string | null = null;
+  try { await fs.access(musicWav); music = musicWav; } catch { /* try mp3 */ }
+  if (!music) { try { await fs.access(musicMp3); music = musicMp3; } catch { /* none */ } }
+
+  return rendering.assembleFinal(broll, voiceover, music, path.join(outDir, 'final.mp4'), {
+    width: 1280, height: 720, musicGainDb: -18,
+  });
+}
+
+function srtTime(t: number): string {
+  const ms = Math.floor((t % 1) * 1000), s = Math.floor(t) % 60, m = Math.floor(t / 60) % 60, h = Math.floor(t / 3600);
+  return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')},${String(ms).padStart(3, '0')}`;
+}
+
+/**
+ * Build an SRT directly from the known script — 100% accurate text, timed
+ * proportionally to word count across the voiceover duration. Avoids STT
+ * mishearing brand names / homophones (e.g. "Aether" → "Ather", "know" → "no").
+ */
+function scriptToSrt(script: string, durationSec: number): string {
+  const words = script.split(/\s+/).filter(Boolean);
+  const cues: string[][] = [];
+  let cur: string[] = [];
+  for (const w of words) {
+    cur.push(w);
+    if (cur.length >= 6 || (/[.!?]$/.test(w) && cur.length >= 3)) { cues.push(cur); cur = []; }
+  }
+  if (cur.length) cues.push(cur);
+
+  const lead = 0.08;
+  const total = words.length || 1;
+  let acc = 0, out = '';
+  cues.forEach((c, i) => {
+    const start = lead + (acc / total) * (durationSec - lead);
+    acc += c.length;
+    const end = lead + (acc / total) * (durationSec - lead);
+    out += `${i + 1}\n${srtTime(start)} --> ${srtTime(end)}\n${c.join(' ')}\n\n`;
+  });
+  return out;
 }
 
 async function phaseCaptions(_nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
   if (opts.dryRun) return { status: 'dry-run' };
   const outDir = opts.outputDir ?? OUTPUT_DIR;
   const srtPath = path.join(outDir, 'captions.srt');
-  await rendering.generateSrt(path.join(outDir, 'voiceover.mp3'), srtPath);
+  const voPath = path.join(outDir, 'voiceover.mp3');
+
+  // Prefer the known script (accurate text); fall back to STT when unavailable.
+  let usedScript = false;
+  try {
+    const script = await readScript(opts.scriptPath);
+    const dur = await probeDuration(voPath);
+    if (script && dur > 0) {
+      await fs.mkdir(outDir, { recursive: true });
+      await fs.writeFile(srtPath, scriptToSrt(script, dur));
+      console.log(`[Captions] SRT from script (${srtPath})`);
+      usedScript = true;
+    }
+  } catch { /* fall back to STT */ }
+
+  if (!usedScript) await rendering.generateSrt(voPath, srtPath);
   return rendering.burnCaptions(path.join(outDir, 'final.mp4'), srtPath, path.join(outDir, 'final_captioned.mp4'));
 }
 
@@ -324,6 +538,7 @@ Options:
     if (args[i] === '--video') opts.videoPath = args[++i];
     if (args[i] === '--output') opts.outputDir = args[++i];
     if (args[i] === '--provider') opts.provider = args[++i];
+    if (args[i] === '--voice') opts.voice = args[++i];
     if (args[i] === '--video-gen') opts.videoGenerator = args[++i];
     if (args[i] === '--music-gen') opts.musicGenerator = args[++i];
     if (args[i] === '--avatar-source') opts.avatarSource = args[++i];

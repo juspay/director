@@ -61,27 +61,49 @@ export type QualityGateInput = {
 };
 
 export type QualityGateConfig = {
-  /** Minimum overall score required to pass (0..1). Defaults to 0.7. */
-  threshold?: number;
-  /** Domain hint (e.g. 'video-script', 'product-narrative'). */
-  evaluationDomain?: string;
+  /** Per-scorer thresholds (0..1). Defaults inline in runQualityGates. */
+  thresholds?: Partial<{
+    promptAlignment: number;
+    answerRelevancy: number;
+    hallucination: number;
+    faithfulness: number;
+    biasDetection: number;
+    toxicity: number;
+    toneConsistency: number;
+  }>;
+  /** AI provider used to drive the LLM scorers. Defaults to AGENT_PROVIDER or 'vertex'. */
+  provider?: string;
+  /** Model used by the LLM scorers. Defaults to MODEL or 'gemini-2.5-flash'. */
+  model?: string;
   /** Where to write the JSON report. */
   outputPath?: string;
 };
 
+export type QualityGateScore =
+  | { name: string; ok: false; error: string }
+  | {
+      name: string;
+      ok: true;
+      scorerId: string;
+      scorerName: string;
+      score: number;
+      normalizedScore: number;
+      passed: boolean;
+      threshold: number;
+      reasoning: string;
+      confidence?: number;
+    };
+
 export type QualityGateReport = {
   passed: boolean;
-  threshold: number;
-  evaluation: {
-    relevance: number;
-    accuracy: number;
-    completeness: number;
-    overall: number;
-    isOffTopic: boolean;
-    alertSeverity: 'low' | 'medium' | 'high' | 'none';
-    reasoning: string;
-    suggestedImprovements?: string;
+  thresholds: Record<string, number>;
+  overall: {
+    minScore: number;
+    avgScore: number;
+    passedGates: number;
+    failedGates: string[];
   };
+  scores: QualityGateScore[];
 };
 
 export type MultiJudgeResult = {

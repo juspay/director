@@ -56,3 +56,21 @@ export async function runSceneAnalyzerAgent(
   console.log(`[SceneAnalyzer] ${sceneId}: ${status} | Artifacts: ${a.artifacts.length} | Motion: ${a.motion_smoothness}/10`);
   return a;
 }
+
+// CLI: npm run analyze -- <video.mp4> [sceneId]
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const [videoPath, sceneId] = process.argv.slice(2);
+  if (!videoPath) {
+    console.error('Usage: npm run analyze -- <video.mp4> [sceneId]');
+    process.exit(1);
+  }
+  const { NeuroLink } = await import('@juspay/neurolink');
+  const nl = new NeuroLink();
+  try {
+    const analysis = await runSceneAnalyzerAgent(nl, videoPath, sceneId ?? 'scene-1');
+    if (!analysis) process.exit(1);
+    console.log(JSON.stringify(analysis, null, 2));
+  } finally {
+    await nl.shutdown();
+  }
+}
