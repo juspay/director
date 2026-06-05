@@ -13,7 +13,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: ['20', '22', '24']
+        # Node 20 dropped — @juspay/neurolink 9.67's undici 7.22+ requires
+        # Node 21+ (webidl.util.markAsUncloneable). NeuroLink declares engines
+        # node >=20.18.1 but its undici dep contradicts that.
+        node: ['22', '24']
     steps:
       - uses: actions/checkout@v6
 
@@ -28,6 +31,9 @@ jobs:
 
       - name: Typecheck
         run: npm run typecheck
+
+      - name: Build (emit dist)
+        run: npm run build
 
       - name: Unit tests
         run: npm run test:unit

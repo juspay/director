@@ -122,3 +122,11 @@ function applyPenalties(metrics: AgentMetrics[], violations: PolicyViolation[]):
     }
   }
 }
+
+// CLI: npm run observe — runs a full observability sweep over collected metrics.
+if (import.meta.url === `file://${process.argv[1]}`) {
+  runSuperObserver().catch((e) => {
+    console.error('[SuperObserver] Failed:', e instanceof Error ? e.message : e);
+    process.exit(1);
+  });
+}

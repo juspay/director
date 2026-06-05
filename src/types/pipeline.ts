@@ -11,6 +11,8 @@ export type PipelineOptions = {
   outputDir?: string;
   /** TTS provider key (elevenlabs / openai-tts / fish-audio / google-ai / azure-tts / cartesia / edgetts). */
   provider?: string;
+  /** TTS voice id/name override (provider-specific, e.g. OpenAI "onyx"). */
+  voice?: string;
   /** Video generator key (kling / runway / veo / wan-alpha). */
   videoGenerator?: string;
   /** Music generator key (lyria / beatoven / elevenlabs / replicate / numpy). */
