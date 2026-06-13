@@ -8,8 +8,13 @@ const RATES: Record<string, Record<string, number>> = {
   elevenlabs: { tts_per_1k_chars: 0.30 },
   openai: { tts_per_1k_chars: 0.015 },
   fish_audio: { tts_per_1k_chars: 0.015 },
+  // Video generators — billed per second of output. `vertex` (Veo) was the gap
+  // that let live-run b-roll log as $0. The figure is a representative Veo 3
+  // rate; override per model/tier with VERTEX_VIDEO_PER_SEC.
+  vertex: { per_second: 0.40 },
   runway: { per_second: 0.12 },
   kling: { per_second: 0.029 },
+  replicate: { per_second: 0.09 },
   gemini_pro: { per_1m_input: 1.25 },
   gemini_flash: { per_1m_input: 0.30 },
 };
@@ -33,9 +38,26 @@ export class CostTracker {
     const r = RATES[provider];
     if (!r) return 0;
     if (params.chars) return (params.chars / 1000) * (r.tts_per_1k_chars ?? 0);
-    if (params.seconds) return params.seconds * (r.per_second ?? 0);
+    if (params.seconds) return params.seconds * this.perSecond(provider, r);
     if (params.input_tokens) return (params.input_tokens / 1_000_000) * (r.per_1m_input ?? 0);
     return 0;
+  }
+
+  private perSecond(provider: string, r: Record<string, number>): number {
+    // Veo pricing varies by model/tier; let an env override correct it without a code change.
+    // Number.isFinite (not `||`) so an explicit VERTEX_VIDEO_PER_SEC=0 stays 0 rather than
+    // falling back to the default rate; only an unparseable value falls back.
+    if (provider === 'vertex' && process.env.VERTEX_VIDEO_PER_SEC) {
+      const parsed = Number(process.env.VERTEX_VIDEO_PER_SEC);
+      return Number.isFinite(parsed) ? parsed : (r.per_second ?? 0);
+    }
+    return r.per_second ?? 0;
+  }
+
+  /** Truncate the log so getSummary() reflects a single run, not cumulative history. */
+  async reset(): Promise<void> {
+    await fs.mkdir(path.dirname(this.logPath), { recursive: true });
+    await fs.writeFile(this.logPath, '');
   }
 
   async getSummary(): Promise<{ total: number; byProvider: Record<string, number> }> {

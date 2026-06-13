@@ -77,6 +77,10 @@ export type QualityGateConfig = {
   model?: string;
   /** Where to write the JSON report. */
   outputPath?: string;
+  /** Run only these named gates (e.g. NARRATION_GATES). Omit to run all. */
+  gates?: string[];
+  /** Judgments below this confidence (or unparseable) are inconclusive, not failures. Default 0.5. */
+  minConfidence?: number;
 };
 
 export type QualityGateScore =
@@ -92,6 +96,8 @@ export type QualityGateScore =
       threshold: number;
       reasoning: string;
       confidence?: number;
+      /** Judgment was unparseable or below the confidence floor — excluded from pass/fail. */
+      inconclusive?: boolean;
     };
 
 export type QualityGateReport = {
@@ -102,6 +108,7 @@ export type QualityGateReport = {
     avgScore: number;
     passedGates: number;
     failedGates: string[];
+    inconclusiveGates: string[];
   };
   scores: QualityGateScore[];
 };
