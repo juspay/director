@@ -38,7 +38,17 @@ import {
   runVideoScorerAgent,
   runScriptScorerAgent,
   runCreativeDirectorAgent,
+  runArtDirectorAgent,
+  runConsistencyCriticAgent,
 } from '../agents/index.ts';
+import {
+  buildShotPrompt,
+  buildAnimationPrompt,
+  shouldRegenerate,
+  applyFixToPrompt,
+  normalizeShotPlan,
+} from './broll-director.ts';
+import type { ShotPlan } from '../schemas/shot-plan.ts';
 
 // Observability
 import { observe } from '../observability/agent-observer.ts';
@@ -334,6 +344,129 @@ async function probeDuration(file: string): Promise<number> {
 }
 
 
+type BrollCtx = {
+  outDir: string;
+  provider: generators.VideoProvider;
+  model?: string;
+  dims: ReturnType<typeof resolveDims>;
+  seedImg: string;
+  segLen: 4 | 6 | 8;
+  concurrency: number;
+  /** Target shot count so total b-roll ≈ voiceover length (no trimmed-off ending). */
+  targetShots: number;
+};
+
+function intEnv(name: string, fallback: number, min = 0): number {
+  const raw = process.env[name];
+  if (raw == null || raw === '') return fallback;
+  const n = Number(raw);
+  return Number.isFinite(n) && n >= min ? Math.floor(n) : fallback;
+}
+
+/**
+ * Director mode: an art-director agent designs a cohesive shot list with ONE
+ * canonical product identity; each product keyframe is generated as an
+ * image-to-image derivation of a single hero still and vetted by a consistency
+ * critic (regenerating off-brand frames *before* paying to animate them), then
+ * animated with the shot's camera direction. Returns segment paths in order, or
+ * [] to let phaseBroll fall back to concept/generic mode.
+ */
+async function directorScenes(nl: NeuroLink, opts: PipelineOptions, ctx: BrollCtx): Promise<string[]> {
+  const script = await readScript(opts.scriptPath).catch(() => '');
+  if (!script) { console.log('[B-roll] director mode: no script available — falling back.'); return []; }
+
+  // Shot plan (cached for resume + inspection). normalizeShotPlan runs on BOTH
+  // a fresh and a cached plan so a changed cap always re-clamps. The cap tracks
+  // the voiceover (targetShots) so the arc — including the closing CTA — fits.
+  const maxShots = intEnv('BROLL_MAX_SHOTS', ctx.targetShots, 1);
+  let plan = await loadState<ShotPlan | null>('shot-plan.json', null);
+  if (!plan) {
+    const fresh = await runArtDirectorAgent(nl, script, { shotCount: ctx.targetShots });
+    if (!fresh) { console.log('[B-roll] art-director produced no plan — falling back.'); return []; }
+    plan = normalizeShotPlan(fresh, maxShots);
+    await saveState('shot-plan.json', plan);
+  } else {
+    plan = normalizeShotPlan(plan, maxShots);
+  }
+  const shots = plan.shots;
+  const productCount = shots.filter((s) => s.shows_product).length;
+  console.log(`[B-roll] Director mode: ${shots.length} shots (${productCount} show the product) @ ${ctx.dims.width}×${ctx.dims.height}, concurrency ${ctx.concurrency}`);
+
+  // Single canonical hero still — every product shot derives from this exact image.
+  const heroPath = path.join(ctx.outDir, '.hero.png');
+  let heroBuf: Buffer | undefined;
+  try { heroBuf = await fs.readFile(heroPath); }
+  catch {
+    try { await generateImage(plan.hero_prompt, heroPath, { aspectRatio: '16:9' }); heroBuf = await fs.readFile(heroPath); }
+    catch (e) { console.log(`  [B-roll] hero image failed: ${e instanceof Error ? e.message.slice(0, 90) : String(e)}`); }
+  }
+
+  const threshold = intEnv('CONSISTENCY_THRESHOLD', 7, 0);
+  const maxRegen = intEnv('BROLL_MAX_REGEN', 2, 0);
+
+  const results = await mapWithConcurrency(shots, ctx.concurrency, async (shot, i): Promise<string | null> => {
+    // Director artifacts are namespaced (.broll-dir-*) so they never collide with
+    // concept/generic mode's .broll-seg-* files if the mode changes between runs.
+    const segOut = path.join(ctx.outDir, `.broll-dir-seg-${i}.mp4`);
+    try { await fs.access(segOut); return segOut; } catch { /* generate */ }
+
+    const keyPath = path.join(ctx.outDir, `.broll-dir-key-${i}.png`);
+    let keyframe = keyPath;
+    let haveKey = false;
+    try { await fs.access(keyPath); haveKey = true; } catch { /* generate */ }
+
+    if (!haveKey) {
+      const basePrompt = buildShotPrompt(shot, plan.product_bible);
+      let prompt = basePrompt;
+      let generated = false;
+      for (let attempt = 0; attempt <= maxRegen; attempt++) {
+        try {
+          await generateImage(prompt, keyPath, {
+            aspectRatio: '16:9',
+            referenceImages: shot.shows_product && heroBuf ? [heroBuf] : undefined,
+          });
+          generated = true;
+        } catch (e) {
+          console.log(`  [B-roll] keyframe ${i} gen failed: ${e instanceof Error ? e.message.slice(0, 80) : String(e)}`);
+          break;
+        }
+        // Vet product shots against the canonical still and regenerate off-brand
+        // frames before paying to animate. Skip the critic on the final attempt
+        // (no retries left → the result is accepted, so the call would be wasted)
+        // and for non-product shots.
+        if (!shot.shows_product || !heroBuf || attempt >= maxRegen) break;
+        const verdict = await runConsistencyCriticAgent(nl, heroPath, keyPath, plan.product_bible).catch(() => null);
+        if (!shouldRegenerate(verdict, threshold)) break;
+        console.log(`  [B-roll] shot ${i} off-brand (${verdict?.score}/10) — regenerating (${attempt + 2}/${maxRegen + 1})`);
+        prompt = applyFixToPrompt(basePrompt, verdict?.fix_instruction ?? '');
+      }
+      if (!generated) { await ensureSeedImage(ctx.seedImg, ctx.dims); keyframe = ctx.seedImg; }
+    }
+
+    // Crop to 16:9 (image models often emit square frames). Per-scene temp name
+    // so concurrent crops never collide.
+    try {
+      const { execa } = await import('execa');
+      const keyframe169 = path.join(ctx.outDir, `.broll-dir-key169-${i}.jpg`);
+      await execa('ffmpeg', ['-y', '-i', keyframe, '-vf', 'crop=iw:trunc(iw*9/16/2)*2', '-q:v', '2', keyframe169], { stdio: 'ignore' });
+      keyframe = keyframe169;
+    } catch { /* use original keyframe if crop fails */ }
+
+    // Animate with the shot's deliberate camera move.
+    try {
+      await generators.generate(nl, ctx.provider, buildAnimationPrompt(shot), segOut, {
+        inputImage: keyframe, length: ctx.segLen, resolution: ctx.dims.veo, aspectRatio: '16:9', audio: false,
+        ...(ctx.model ? { model: ctx.model } : {}),
+      });
+      return segOut;
+    } catch (e) {
+      console.log(`  [B-roll] segment ${i} failed: ${e instanceof Error ? e.message.slice(0, 100) : String(e)}`);
+      return null;
+    }
+  });
+  return results.filter((r): r is string => !!r);
+}
+
 async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
   if (opts.dryRun) return { status: 'dry-run' };
   const outDir = opts.outputDir ?? OUTPUT_DIR;
@@ -348,10 +481,28 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
   await fs.mkdir(outDir, { recursive: true });
   await ensureSeedImage(seedImg, dims);
 
-  // Match b-roll length to voiceover; default to 8s when VO isn't available.
+  // Each clip is a fixed 4s. Director/concept modes emit one clip per shot/beat
+  // (so total ≈ script length); only the generic fallback uses voDur to size its
+  // clip count to the voiceover.
   const voPath = path.join(outDir, 'voiceover.mp3');
   const voDur = await probeDuration(voPath);
   const segLen = 4;
+  const concurrency = Math.max(1, Number(process.env.BROLL_CONCURRENCY) || 3);
+  // One ~4s shot per (segLen) of voiceover so the b-roll ≈ VO length; default 8.
+  const targetShots = voDur > 0 ? Math.max(3, Math.round(voDur / segLen)) : 8;
+  const segPaths: string[] = [];
+
+  // Director mode (default): agent shot plan + canonical product + consistency
+  // critic. Falls through to concept/generic if it produces nothing.
+  const mode = (opts.brollMode ?? process.env.BROLL_MODE ?? 'director').toLowerCase();
+  if (mode === 'director') {
+    try {
+      const dirSegs = await directorScenes(nl, opts, { outDir, provider, model, dims, seedImg, segLen, concurrency, targetShots });
+      for (const s of dirSegs) segPaths.push(s);
+    } catch (e) {
+      console.log(`[B-roll] director mode error, falling back: ${e instanceof Error ? e.message.slice(0, 100) : String(e)}`);
+    }
+  }
 
   const GENERIC_PROMPTS = [
     'Cinematic close-up: animated workflow diagram, neon nodes connecting, dark blue tech aesthetic, slow zoom',
@@ -364,105 +515,96 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
     'Cinematic abstract: rotating geometric shapes, deep gradient, soft bokeh, brand-quality b-roll',
   ];
 
-  // Concept-driven b-roll. assets/broll-prompts.json may be either a plain
-  // string[] (legacy) or { hero?, scenes: [{prompt, product}] }. When scenes
-  // are present we run a two-stage pass: generate a composed keyframe per beat
-  // (product beats anchored to a shared hero image for consistency), then
-  // animate each keyframe with the video model.
-  type Scene = { prompt: string; product?: boolean };
-  let heroPrompt: string | null = null;
-  let scenes: Scene[] | null = null;
-  try {
-    const raw = await fs.readFile(path.resolve('assets/broll-prompts.json'), 'utf-8');
-    const parsed: unknown = JSON.parse(raw);
-    if (Array.isArray(parsed) && parsed.length > 0 && parsed.every((p) => typeof p === 'string')) {
-      scenes = (parsed as string[]).map((p) => ({ prompt: p }));
-    } else if (parsed && typeof parsed === 'object' && Array.isArray((parsed as { scenes?: unknown }).scenes)) {
-      const obj = parsed as { hero?: unknown; scenes: Array<{ prompt?: unknown; product?: unknown }> };
-      scenes = obj.scenes.filter((s) => typeof s.prompt === 'string').map((s) => ({ prompt: s.prompt as string, product: !!s.product }));
-      if (typeof obj.hero === 'string') heroPrompt = obj.hero;
-    }
-  } catch { /* fall back to generic */ }
-
-  const segPaths: string[] = [];
-
-  if (scenes && scenes.length) {
-    console.log(`[B-roll] Concept mode: ${scenes.length} keyframe→video beats${heroPrompt ? ' + hero reference' : ''}`);
-
-    // Shared hero image → product beats stay visually consistent.
-    let heroBuf: Buffer | undefined;
-    if (heroPrompt && scenes.some((s) => s.product)) {
-      const heroPath = path.join(outDir, '.hero.png');
-      try { heroBuf = await fs.readFile(heroPath); }
-      catch {
-        try { await generateImage(heroPrompt, heroPath, { aspectRatio: '16:9' }); heroBuf = await fs.readFile(heroPath); }
-        catch (e) { console.log(`  [B-roll] hero image failed: ${e instanceof Error ? e.message.slice(0, 90) : String(e)}`); }
+  // Concept/generic fallback — runs only when director mode produced nothing
+  // (mode !== 'director', the art-director failed, or every shot errored).
+  if (segPaths.length === 0) {
+    // assets/broll-prompts.json may be a plain string[] (legacy) or
+    // { hero?, scenes: [{prompt, product}] }. Two-stage: keyframe per beat
+    // (product beats anchored to a shared hero image), then animate.
+    type Scene = { prompt: string; product?: boolean };
+    let heroPrompt: string | null = null;
+    let scenes: Scene[] | null = null;
+    try {
+      const raw = await fs.readFile(path.resolve('assets/broll-prompts.json'), 'utf-8');
+      const parsed: unknown = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0 && parsed.every((p) => typeof p === 'string')) {
+        scenes = (parsed as string[]).map((p) => ({ prompt: p }));
+      } else if (parsed && typeof parsed === 'object' && Array.isArray((parsed as { scenes?: unknown }).scenes)) {
+        const obj = parsed as { hero?: unknown; scenes: Array<{ prompt?: unknown; product?: unknown }> };
+        scenes = obj.scenes.filter((s) => typeof s.prompt === 'string').map((s) => ({ prompt: s.prompt as string, product: !!s.product }));
+        if (typeof obj.hero === 'string') heroPrompt = obj.hero;
       }
-    }
+    } catch { /* fall back to generic */ }
 
-    // Scenes are independent (distinct output files + per-scene resume guards),
-    // so generate them with bounded concurrency instead of one-at-a-time. Order
-    // is preserved by mapWithConcurrency so the concat stays in beat order.
-    const concurrency = Math.max(1, Number(process.env.BROLL_CONCURRENCY) || 3);
-    console.log(`[B-roll] ${scenes.length} beats @ ${dims.width}×${dims.height}, concurrency ${concurrency}`);
+    if (mode !== 'generic' && scenes && scenes.length) {
+      console.log(`[B-roll] Concept mode: ${scenes.length} keyframe→video beats${heroPrompt ? ' + hero reference' : ''}`);
 
-    const sceneResults = await mapWithConcurrency(scenes, concurrency, async (scene, i): Promise<string | null> => {
-      const segOut = path.join(outDir, `.broll-seg-${i}.mp4`);
-      try { await fs.access(segOut); return segOut; } catch { /* generate */ }
-
-      // Stage 1: composed keyframe (anchor product beats to the hero ring).
-      const keyPath = path.join(outDir, `.broll-key-${i}.png`);
-      let keyframe = keyPath;
-      try { await fs.access(keyPath); }
-      catch {
-        try {
-          await generateImage(scene.prompt, keyPath, { aspectRatio: '16:9', referenceImages: scene.product && heroBuf ? [heroBuf] : undefined });
-        } catch (e) {
-          console.log(`  [B-roll] keyframe ${i} failed, falling back to gradient seed: ${e instanceof Error ? e.message.slice(0, 80) : String(e)}`);
-          await ensureSeedImage(seedImg, dims);
-          keyframe = seedImg;
+      // Shared hero image → product beats stay visually consistent.
+      let heroBuf: Buffer | undefined;
+      if (heroPrompt && scenes.some((s) => s.product)) {
+        const heroPath = path.join(outDir, '.hero.png');
+        try { heroBuf = await fs.readFile(heroPath); }
+        catch {
+          try { await generateImage(heroPrompt, heroPath, { aspectRatio: '16:9' }); heroBuf = await fs.readFile(heroPath); }
+          catch (e) { console.log(`  [B-roll] hero image failed: ${e instanceof Error ? e.message.slice(0, 90) : String(e)}`); }
         }
       }
 
-      // Crop the keyframe to 16:9 before animation — image models often emit a
-      // square frame the video model would otherwise pillarbox. The temp name is
-      // per-scene so concurrent crops (incl. the shared seed fallback) never collide.
-      try {
-        const { execa } = await import('execa');
-        const keyframe169 = path.join(outDir, `.broll-key169-${i}.jpg`);
-        await execa('ffmpeg', ['-y', '-i', keyframe, '-vf', 'crop=iw:trunc(iw*9/16/2)*2', '-q:v', '2', keyframe169], { stdio: 'ignore' });
-        keyframe = keyframe169;
-      } catch { /* use original keyframe if crop fails */ }
+      console.log(`[B-roll] ${scenes.length} beats @ ${dims.width}×${dims.height}, concurrency ${concurrency}`);
+      const sceneResults = await mapWithConcurrency(scenes, concurrency, async (scene, i): Promise<string | null> => {
+        const segOut = path.join(outDir, `.broll-seg-${i}.mp4`);
+        try { await fs.access(segOut); return segOut; } catch { /* generate */ }
 
-      // Stage 2: animate the keyframe.
-      try {
-        await generators.generate(nl, provider, scene.prompt, segOut, {
-          inputImage: keyframe, length: segLen, resolution: dims.veo, aspectRatio: '16:9', audio: false,
-          ...(model ? { model } : {}),
-        });
-        return segOut;
-      } catch (e) {
-        console.log(`  [B-roll] segment ${i} failed: ${e instanceof Error ? e.message.slice(0, 100) : String(e)}`);
-        return null;
-      }
-    });
-    for (const r of sceneResults) if (r) segPaths.push(r);
-  } else {
-    // Legacy generic path: single gradient seed + generic prompts.
-    await ensureSeedImage(seedImg, dims);
-    const segCount = voDur > 0 ? Math.min(8, Math.max(1, Math.ceil(voDur / segLen))) : 2;
-    console.log(`[B-roll] VO ${voDur.toFixed(2)}s → ${segCount}×${segLen}s clips`);
-    for (let i = 0; i < segCount; i++) {
-      const segOut = path.join(outDir, `.broll-seg-${i}.mp4`);
-      try { await fs.access(segOut); segPaths.push(segOut); continue; } catch { /* generate */ }
-      try {
-        await generators.generate(nl, provider, GENERIC_PROMPTS[i % GENERIC_PROMPTS.length], segOut, {
-          inputImage: seedImg, length: segLen, resolution: dims.veo, aspectRatio: '16:9', audio: false,
-          ...(model ? { model } : {}),
-        });
-        segPaths.push(segOut);
-      } catch (e) {
-        console.log(`  [B-roll] segment ${i} failed: ${e instanceof Error ? e.message.slice(0, 100) : String(e)}`);
+        const keyPath = path.join(outDir, `.broll-key-${i}.png`);
+        let keyframe = keyPath;
+        try { await fs.access(keyPath); }
+        catch {
+          try {
+            await generateImage(scene.prompt, keyPath, { aspectRatio: '16:9', referenceImages: scene.product && heroBuf ? [heroBuf] : undefined });
+          } catch (e) {
+            console.log(`  [B-roll] keyframe ${i} failed, falling back to gradient seed: ${e instanceof Error ? e.message.slice(0, 80) : String(e)}`);
+            await ensureSeedImage(seedImg, dims);
+            keyframe = seedImg;
+          }
+        }
+
+        // Crop to 16:9 before animation (image models often emit square frames).
+        try {
+          const { execa } = await import('execa');
+          const keyframe169 = path.join(outDir, `.broll-key169-${i}.jpg`);
+          await execa('ffmpeg', ['-y', '-i', keyframe, '-vf', 'crop=iw:trunc(iw*9/16/2)*2', '-q:v', '2', keyframe169], { stdio: 'ignore' });
+          keyframe = keyframe169;
+        } catch { /* use original keyframe if crop fails */ }
+
+        try {
+          await generators.generate(nl, provider, scene.prompt, segOut, {
+            inputImage: keyframe, length: segLen, resolution: dims.veo, aspectRatio: '16:9', audio: false,
+            ...(model ? { model } : {}),
+          });
+          return segOut;
+        } catch (e) {
+          console.log(`  [B-roll] segment ${i} failed: ${e instanceof Error ? e.message.slice(0, 100) : String(e)}`);
+          return null;
+        }
+      });
+      for (const r of sceneResults) if (r) segPaths.push(r);
+    } else {
+      // Legacy generic path: single gradient seed + generic prompts.
+      await ensureSeedImage(seedImg, dims);
+      const segCount = voDur > 0 ? Math.min(8, Math.max(1, Math.ceil(voDur / segLen))) : 2;
+      console.log(`[B-roll] VO ${voDur.toFixed(2)}s → ${segCount}×${segLen}s clips`);
+      for (let i = 0; i < segCount; i++) {
+        const segOut = path.join(outDir, `.broll-seg-${i}.mp4`);
+        try { await fs.access(segOut); segPaths.push(segOut); continue; } catch { /* generate */ }
+        try {
+          await generators.generate(nl, provider, GENERIC_PROMPTS[i % GENERIC_PROMPTS.length], segOut, {
+            inputImage: seedImg, length: segLen, resolution: dims.veo, aspectRatio: '16:9', audio: false,
+            ...(model ? { model } : {}),
+          });
+          segPaths.push(segOut);
+        } catch (e) {
+          console.log(`  [B-roll] segment ${i} failed: ${e instanceof Error ? e.message.slice(0, 100) : String(e)}`);
+        }
       }
     }
   }
@@ -574,6 +716,7 @@ Options:
   --video-gen NAME     Video: kling|runway|veo|wan-alpha
   --music-gen NAME     Music: lyria|beatoven|elevenlabs|numpy
   --resolution RES     Output resolution: 1080p (default) | 720p
+  --broll-mode MODE    B-roll: director (default) | concept | generic
   --avatar-source PATH Avatar source image for D-ID/MuseTalk
   --avatar-provider    Avatar: did|musetalk
   --skip-scoring       Skip post-pipeline AI scoring
@@ -592,6 +735,7 @@ Options:
     if (args[i] === '--voice') opts.voice = args[++i];
     if (args[i] === '--resolution') opts.resolution = args[++i];
     if (args[i] === '--video-gen') opts.videoGenerator = args[++i];
+    if (args[i] === '--broll-mode') opts.brollMode = args[++i];
     if (args[i] === '--music-gen') opts.musicGenerator = args[++i];
     if (args[i] === '--avatar-source') opts.avatarSource = args[++i];
     if (args[i] === '--avatar-provider') opts.avatarProvider = args[++i];
