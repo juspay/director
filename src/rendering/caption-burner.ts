@@ -146,6 +146,33 @@ export async function generateSrt(
   return outputPath;
 }
 
+/**
+ * Transcribe audio to plain text via NeuroLink STT (Deepgram → OpenAI Whisper).
+ * Returns '' if no provider is configured or all fail. Used for post-pipeline
+ * quality gating (script vs. what was actually narrated).
+ */
+export async function transcribe(
+  audioPath: string,
+  options: { language?: string } = {},
+): Promise<string> {
+  ensureSttRegistered();
+  const language = options.language ?? 'en';
+  const order = [
+    { name: 'deepgram', env: 'DEEPGRAM_API_KEY' },
+    { name: 'openai-stt', env: 'OPENAI_API_KEY' },
+  ].filter(c => !!process.env[c.env]);
+  const audio = await fs.readFile(audioPath);
+  const ext = path.extname(audioPath).slice(1).toLowerCase();
+  const format = (['mp3', 'wav', 'ogg', 'flac', 'm4a', 'opus'].includes(ext) ? ext : 'mp3') as 'mp3';
+  for (const c of order) {
+    try {
+      const r = await STTProcessor.transcribe(audio, c.name, { format, language, punctuation: true });
+      if (r?.text) return r.text.trim();
+    } catch { /* try next provider */ }
+  }
+  return '';
+}
+
 type SrtCue = { idx: number; start: number; end: number; text: string };
 
 function parseSrt(raw: string): SrtCue[] {

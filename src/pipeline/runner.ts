@@ -13,11 +13,12 @@
  * Single NeuroLink instance for AI scoring. Resume-safe via JSON state.
  * TypeScript primary — Python only for NumPy/SciPy DSP via execa.
  */
-import { NeuroLink } from '@juspay/neurolink';
+import { NeuroLink, initializeOpenTelemetry } from '@juspay/neurolink';
 import fs from 'fs/promises';
 import path from 'path';
 import { OUTPUT_DIR } from './config.ts';
 import { loadState, saveState } from './state.ts';
+import { mapWithConcurrency, resolveDims, scriptToSrt } from './runner-helpers.ts';
 import type { PipelineState } from '../types/index.ts';
 
 // TypeScript modules (primary)
@@ -64,14 +65,19 @@ export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineS
   const neurolink = new NeuroLink();
 
   // Observability: NeuroLink OTel + Langfuse if env keys present.
+  // (Previously this used an unsafe cast and called init() with no args — but
+  // initializeOpenTelemetry requires a LangfuseConfig, so it never actually
+  // initialized. Pass the config from env via the typed top-level export.)
   if (process.env.LANGFUSE_PUBLIC_KEY && process.env.LANGFUSE_SECRET_KEY) {
     try {
-      const nl = await import('@juspay/neurolink');
-      const init = (nl as unknown as { initializeOpenTelemetry?: () => void | Promise<void> }).initializeOpenTelemetry;
-      if (typeof init === 'function') {
-        await init();
-        console.log('[Observability] OpenTelemetry + Langfuse initialized');
-      }
+      await initializeOpenTelemetry({
+        enabled: true,
+        publicKey: process.env.LANGFUSE_PUBLIC_KEY,
+        secretKey: process.env.LANGFUSE_SECRET_KEY,
+        baseUrl: process.env.LANGFUSE_BASE_URL,
+        environment: process.env.NODE_ENV ?? 'production',
+      });
+      console.log('[Observability] OpenTelemetry + Langfuse initialized');
     } catch (e) {
       console.warn('[Observability] Langfuse init skipped:', e instanceof Error ? e.message : e);
     }
@@ -133,6 +139,30 @@ export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineS
         state.results['scoring'] = score.result;
       } catch {
         // Final video not found — skip scoring
+      }
+
+      // Quality gates: transcribe the voiceover and score it against the script —
+      // did the produced narration faithfully + safely deliver what was written?
+      try {
+        const script = await readScript(opts.scriptPath).catch(() => '');
+        const transcript = await rendering.transcribe(path.join(outDir, 'voiceover.mp3')).catch(() => '');
+        if (script && transcript) {
+          console.log('\n--- Post-pipeline: Quality Gates ---\n');
+          const { runQualityGates } = await import('../scoring/quality-gates.ts');
+          const report = await observe('quality-gates', () => runQualityGates(
+            { script, response: transcript },
+            { outputPath: path.join(outDir, 'quality-gates.json') },
+          ));
+          const r = report.result;
+          if (r) {
+            console.log(`[QualityGates] ${r.passed ? 'PASS' : 'FAIL'} — avg ${r.overall.avgScore.toFixed(2)}, ${r.overall.passedGates} passed${r.overall.failedGates.length ? `, failed: ${r.overall.failedGates.join(', ')}` : ''}`);
+            state.results['quality-gates'] = r;
+          } else {
+            console.warn('[QualityGates] scorer returned no report (see observer log above).');
+          }
+        }
+      } catch (e) {
+        console.warn('[QualityGates] skipped:', e instanceof Error ? e.message : e);
       }
 
       console.log('\n--- Post-pipeline: Observability Report ---\n');
@@ -247,12 +277,12 @@ const REPLICATE_MODEL: Record<string, string> = {
   'wan-alpha': 'wechatcv/wan-alpha',
 };
 
-async function ensureSeedImage(seedImg: string): Promise<void> {
+async function ensureSeedImage(seedImg: string, dims: { width: number; height: number }): Promise<void> {
   try { await fs.access(seedImg); return; } catch { /* generate */ }
   const { execa } = await import('execa');
   await execa('ffmpeg', [
     '-y', '-f', 'lavfi',
-    '-i', 'gradients=size=1280x720:c0=0x0b1d3a:c1=0xd97a3a:duration=1:rate=1',
+    '-i', `gradients=size=${dims.width}x${dims.height}:c0=0x0b1d3a:c1=0xd97a3a:duration=1:rate=1`,
     '-frames:v', '1', seedImg,
   ], { stdio: 'ignore' });
 }
@@ -268,6 +298,7 @@ async function probeDuration(file: string): Promise<number> {
   } catch { return 0; }
 }
 
+
 async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
   if (opts.dryRun) return { status: 'dry-run' };
   const outDir = opts.outputDir ?? OUTPUT_DIR;
@@ -275,10 +306,12 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
   const provider = VIDEO_ALIAS[gen] ?? 'vertex';
   const outputPath = path.join(outDir, 'broll.mp4');
   const model = REPLICATE_MODEL[gen];
+  const dims = resolveDims(opts.resolution);
 
-  const seedImg = path.join(outDir, '.broll-seed.jpg');
+  // Resolution-suffixed so a cached 720p seed isn't reused for a 1080p run.
+  const seedImg = path.join(outDir, `.broll-seed-${dims.height}.jpg`);
   await fs.mkdir(outDir, { recursive: true });
-  await ensureSeedImage(seedImg);
+  await ensureSeedImage(seedImg, dims);
 
   // Match b-roll length to voiceover; default to 8s when VO isn't available.
   const voPath = path.join(outDir, 'voiceover.mp3');
@@ -332,10 +365,15 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
       }
     }
 
-    for (let i = 0; i < scenes.length; i++) {
-      const scene = scenes[i];
+    // Scenes are independent (distinct output files + per-scene resume guards),
+    // so generate them with bounded concurrency instead of one-at-a-time. Order
+    // is preserved by mapWithConcurrency so the concat stays in beat order.
+    const concurrency = Math.max(1, Number(process.env.BROLL_CONCURRENCY) || 3);
+    console.log(`[B-roll] ${scenes.length} beats @ ${dims.width}×${dims.height}, concurrency ${concurrency}`);
+
+    const sceneResults = await mapWithConcurrency(scenes, concurrency, async (scene, i): Promise<string | null> => {
       const segOut = path.join(outDir, `.broll-seg-${i}.mp4`);
-      try { await fs.access(segOut); segPaths.push(segOut); continue; } catch { /* generate */ }
+      try { await fs.access(segOut); return segOut; } catch { /* generate */ }
 
       // Stage 1: composed keyframe (anchor product beats to the hero ring).
       const keyPath = path.join(outDir, `.broll-key-${i}.png`);
@@ -346,17 +384,17 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
           await generateImage(scene.prompt, keyPath, { aspectRatio: '16:9', referenceImages: scene.product && heroBuf ? [heroBuf] : undefined });
         } catch (e) {
           console.log(`  [B-roll] keyframe ${i} failed, falling back to gradient seed: ${e instanceof Error ? e.message.slice(0, 80) : String(e)}`);
-          await ensureSeedImage(seedImg);
+          await ensureSeedImage(seedImg, dims);
           keyframe = seedImg;
         }
       }
 
       // Crop the keyframe to 16:9 before animation — image models often emit a
-      // square frame, and the video model would otherwise pillarbox it (black
-      // bars baked into the pixels). center-crop keeps the (centered) subject.
+      // square frame the video model would otherwise pillarbox. The temp name is
+      // per-scene so concurrent crops (incl. the shared seed fallback) never collide.
       try {
         const { execa } = await import('execa');
-        const keyframe169 = keyframe.replace(/\.(png|jpe?g)$/i, '.169.jpg');
+        const keyframe169 = path.join(outDir, `.broll-key169-${i}.jpg`);
         await execa('ffmpeg', ['-y', '-i', keyframe, '-vf', 'crop=iw:trunc(iw*9/16/2)*2', '-q:v', '2', keyframe169], { stdio: 'ignore' });
         keyframe = keyframe169;
       } catch { /* use original keyframe if crop fails */ }
@@ -364,17 +402,19 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
       // Stage 2: animate the keyframe.
       try {
         await generators.generate(nl, provider, scene.prompt, segOut, {
-          inputImage: keyframe, length: segLen, resolution: '720p', aspectRatio: '16:9', audio: false,
+          inputImage: keyframe, length: segLen, resolution: dims.veo, aspectRatio: '16:9', audio: false,
           ...(model ? { model } : {}),
         });
-        segPaths.push(segOut);
+        return segOut;
       } catch (e) {
         console.log(`  [B-roll] segment ${i} failed: ${e instanceof Error ? e.message.slice(0, 100) : String(e)}`);
+        return null;
       }
-    }
+    });
+    for (const r of sceneResults) if (r) segPaths.push(r);
   } else {
     // Legacy generic path: single gradient seed + generic prompts.
-    await ensureSeedImage(seedImg);
+    await ensureSeedImage(seedImg, dims);
     const segCount = voDur > 0 ? Math.min(8, Math.max(1, Math.ceil(voDur / segLen))) : 2;
     console.log(`[B-roll] VO ${voDur.toFixed(2)}s → ${segCount}×${segLen}s clips`);
     for (let i = 0; i < segCount; i++) {
@@ -382,7 +422,7 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
       try { await fs.access(segOut); segPaths.push(segOut); continue; } catch { /* generate */ }
       try {
         await generators.generate(nl, provider, GENERIC_PROMPTS[i % GENERIC_PROMPTS.length], segOut, {
-          inputImage: seedImg, length: segLen, resolution: '720p', aspectRatio: '16:9', audio: false,
+          inputImage: seedImg, length: segLen, resolution: dims.veo, aspectRatio: '16:9', audio: false,
           ...(model ? { model } : {}),
         });
         segPaths.push(segOut);
@@ -398,7 +438,7 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
     console.log(`[B-roll] Single segment → ${outputPath}`);
     return outputPath;
   }
-  return rendering.concatVideos(segPaths, outputPath, { width: 1280, height: 720, fps: 30 });
+  return rendering.concatVideos(segPaths, outputPath, { width: dims.width, height: dims.height, fps: 30 });
 }
 
 const MUSIC_ALIAS: Record<string, music.MusicProvider> = {
@@ -448,41 +488,10 @@ async function phaseAssembly(_nl: NeuroLink, opts: PipelineOptions): Promise<unk
   try { await fs.access(musicWav); music = musicWav; } catch { /* try mp3 */ }
   if (!music) { try { await fs.access(musicMp3); music = musicMp3; } catch { /* none */ } }
 
+  const dims = resolveDims(opts.resolution);
   return rendering.assembleFinal(broll, voiceover, music, path.join(outDir, 'final.mp4'), {
-    width: 1280, height: 720, musicGainDb: -18,
+    width: dims.width, height: dims.height, musicGainDb: -18,
   });
-}
-
-function srtTime(t: number): string {
-  const ms = Math.floor((t % 1) * 1000), s = Math.floor(t) % 60, m = Math.floor(t / 60) % 60, h = Math.floor(t / 3600);
-  return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')},${String(ms).padStart(3, '0')}`;
-}
-
-/**
- * Build an SRT directly from the known script — 100% accurate text, timed
- * proportionally to word count across the voiceover duration. Avoids STT
- * mishearing brand names / homophones (e.g. "Aether" → "Ather", "know" → "no").
- */
-function scriptToSrt(script: string, durationSec: number): string {
-  const words = script.split(/\s+/).filter(Boolean);
-  const cues: string[][] = [];
-  let cur: string[] = [];
-  for (const w of words) {
-    cur.push(w);
-    if (cur.length >= 6 || (/[.!?]$/.test(w) && cur.length >= 3)) { cues.push(cur); cur = []; }
-  }
-  if (cur.length) cues.push(cur);
-
-  const lead = 0.08;
-  const total = words.length || 1;
-  let acc = 0, out = '';
-  cues.forEach((c, i) => {
-    const start = lead + (acc / total) * (durationSec - lead);
-    acc += c.length;
-    const end = lead + (acc / total) * (durationSec - lead);
-    out += `${i + 1}\n${srtTime(start)} --> ${srtTime(end)}\n${c.join(' ')}\n\n`;
-  });
-  return out;
 }
 
 async function phaseCaptions(_nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
@@ -522,12 +531,15 @@ Options:
   --video PATH         Existing video for scoring
   --output DIR         Output directory
   --provider NAME      TTS: elevenlabs|openai|fish|edgetts
+  --voice NAME         TTS voice override (e.g. OpenAI onyx)
   --video-gen NAME     Video: kling|runway|veo|wan-alpha
   --music-gen NAME     Music: lyria|beatoven|elevenlabs|numpy
+  --resolution RES     Output resolution: 1080p (default) | 720p
   --avatar-source PATH Avatar source image for D-ID/MuseTalk
   --avatar-provider    Avatar: did|musetalk
   --skip-scoring       Skip post-pipeline AI scoring
-  --dry-run            Print plan without executing`);
+  --dry-run            Print plan without executing
+  (env) BROLL_CONCURRENCY=N  parallel b-roll scenes (default 3)`);
     process.exit(0);
   }
 
@@ -539,6 +551,7 @@ Options:
     if (args[i] === '--output') opts.outputDir = args[++i];
     if (args[i] === '--provider') opts.provider = args[++i];
     if (args[i] === '--voice') opts.voice = args[++i];
+    if (args[i] === '--resolution') opts.resolution = args[++i];
     if (args[i] === '--video-gen') opts.videoGenerator = args[++i];
     if (args[i] === '--music-gen') opts.musicGenerator = args[++i];
     if (args[i] === '--avatar-source') opts.avatarSource = args[++i];

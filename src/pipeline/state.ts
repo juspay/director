@@ -16,10 +16,23 @@ export async function loadState<T>(filename: string, defaultValue: T): Promise<T
   }
 }
 
+// Per-file write chain: phases 2-4 run concurrently and each calls saveState on
+// the same file. Without serialization their fs.writeFile calls can resolve out
+// of order, letting an earlier (less complete) snapshot overwrite a later one and
+// corrupting the resume checkpoint. The JSON is snapshotted synchronously at call
+// time, then writes are queued so they apply in call order.
+const writeChains = new Map<string, Promise<void>>();
+
 export async function saveState<T>(filename: string, data: T): Promise<void> {
-  await fs.mkdir(STATE_DIR, { recursive: true });
   const filePath = path.join(STATE_DIR, filename);
-  await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf-8');
+  const payload = JSON.stringify(data, null, 2);
+  const prev = writeChains.get(filename) ?? Promise.resolve();
+  const next = prev.catch(() => undefined).then(async () => {
+    await fs.mkdir(STATE_DIR, { recursive: true });
+    await fs.writeFile(filePath, payload, 'utf-8');
+  });
+  writeChains.set(filename, next);
+  await next;
 }
 
 export async function appendToLog(filename: string, entry: Record<string, unknown>): Promise<void> {
