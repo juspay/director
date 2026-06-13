@@ -58,6 +58,15 @@ const PHASES = [
   { name: 'captions', label: '7. Captions', fn: phaseCaptions },
 ] as const;
 
+// One tracker per process; reset() at the start of each run scopes the summary
+// to that run. Maps TTS provider ids → the rate keys in cost-tracker's RATES.
+const costTracker = new CostTracker();
+const TTS_COST_KEY: Record<string, string> = {
+  'openai-tts': 'openai',
+  'fish-audio': 'fish_audio',
+  elevenlabs: 'elevenlabs',
+};
+
 import type { PipelineOptions } from '../types/index.ts';
 export type { PipelineOptions } from '../types/index.ts';
 
@@ -96,6 +105,7 @@ export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineS
   });
 
   const phasesToRun = opts.phases ?? PHASES.map((_, i) => i + 1);
+  await costTracker.reset().catch(() => undefined); // cost accounting must never break a run
   startReporter();
 
   console.log(`\n${'='.repeat(60)}`);
@@ -141,21 +151,25 @@ export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineS
         // Final video not found — skip scoring
       }
 
-      // Quality gates: transcribe the voiceover and score it against the script —
-      // did the produced narration faithfully + safely deliver what was written?
+      // Quality gates (issue #40): judge the narration *script* for content
+      // safety/quality. We deliberately do NOT round-trip through STT — TTS
+      // renders the script verbatim and captions come from the exact script, so
+      // fidelity is guaranteed by construction. STT mishears (e.g. "Aether"→"Ather")
+      // were the only thing producing failures. Only the narration-appropriate
+      // gates run; the Q&A scorers can't fairly judge a verbatim narration.
       try {
         const script = await readScript(opts.scriptPath).catch(() => '');
-        const transcript = await rendering.transcribe(path.join(outDir, 'voiceover.mp3')).catch(() => '');
-        if (script && transcript) {
+        if (script) {
           console.log('\n--- Post-pipeline: Quality Gates ---\n');
-          const { runQualityGates } = await import('../scoring/quality-gates.ts');
+          const { runQualityGates, NARRATION_GATES } = await import('../scoring/quality-gates.ts');
           const report = await observe('quality-gates', () => runQualityGates(
-            { script, response: transcript },
-            { outputPath: path.join(outDir, 'quality-gates.json') },
+            { script, response: script },
+            { outputPath: path.join(outDir, 'quality-gates.json'), gates: [...NARRATION_GATES] },
           ));
           const r = report.result;
           if (r) {
-            console.log(`[QualityGates] ${r.passed ? 'PASS' : 'FAIL'} — avg ${r.overall.avgScore.toFixed(2)}, ${r.overall.passedGates} passed${r.overall.failedGates.length ? `, failed: ${r.overall.failedGates.join(', ')}` : ''}`);
+            const inc = r.overall.inconclusiveGates;
+            console.log(`[QualityGates] ${r.passed ? 'PASS' : 'FAIL'} — avg ${r.overall.avgScore.toFixed(2)}, ${r.overall.passedGates} passed${r.overall.failedGates.length ? `, failed: ${r.overall.failedGates.join(', ')}` : ''}${inc.length ? `, inconclusive: ${inc.join(', ')}` : ''}`);
             state.results['quality-gates'] = r;
           } else {
             console.warn('[QualityGates] scorer returned no report (see observer log above).');
@@ -168,14 +182,33 @@ export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineS
       console.log('\n--- Post-pipeline: Observability Report ---\n');
       await runSuperObserver();
     }
+
+    // Estimated API spend for this run (Veo/TTS now captured — issue #40).
+    try {
+      const cost = await costTracker.getSummary();
+      state.results['cost'] = cost;
+      if (cost.total > 0) {
+        const breakdown = Object.entries(cost.byProvider)
+          .filter(([, c]) => c > 0)
+          .map(([p, c]) => `${p} $${c.toFixed(4)}`)
+          .join(', ');
+        console.log(`\n[Cost] Estimated API spend this run: $${cost.total.toFixed(4)}${breakdown ? ` (${breakdown})` : ''}`);
+      }
+    } catch (e) {
+      console.warn('[Cost] summary skipped:', e instanceof Error ? e.message : e);
+    }
   } finally {
     stopReporter();
     await neurolink.shutdown();
     await saveState('pipeline-state.json', state);
   }
 
+  // Count only real phase results — post-pipeline keys (scoring, quality-gates, cost)
+  // aren't phases and would otherwise overcount.
+  const phaseNames = new Set<string>(PHASES.map((p) => p.name));
+  const phasesDone = Object.keys(state.results).filter((k) => phaseNames.has(k)).length;
   console.log(`\n${'='.repeat(60)}`);
-  console.log(`  Pipeline complete. ${Object.keys(state.results).length}/${PHASES.length} phases.`);
+  console.log(`  Pipeline complete. ${phasesDone}/${PHASES.length} phases.`);
   console.log(`${'='.repeat(60)}\n`);
 
   return state;
@@ -237,7 +270,9 @@ async function phaseVoiceover(nl: NeuroLink, opts: PipelineOptions): Promise<unk
   const provider = VOICEOVER_ALIAS[requested] ?? 'openai-tts';
   const outputPath = path.join(outDir, 'voiceover.mp3');
   const text = await readScript(opts.scriptPath);
-  return voiceover.generate(nl, provider, text, outputPath, opts.voice ? { voice: opts.voice } : {});
+  const result = await voiceover.generate(nl, provider, text, outputPath, opts.voice ? { voice: opts.voice } : {});
+  await costTracker.log(TTS_COST_KEY[provider] ?? provider, 'tts', { chars: text.length }).catch(() => undefined);
+  return result;
 }
 
 const AVATAR_ALIAS: Record<string, avatar.AvatarProvider> = {
@@ -433,6 +468,10 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
   }
 
   if (segPaths.length === 0) throw new Error('[B-roll] no segments produced');
+  // Real video spend (per second of output) — keyed by provider so vertex/Veo
+  // is finally captured instead of logging $0 (issue #40). Never let a cost-log
+  // I/O hiccup fail the phase after the (paid) segments are already in hand.
+  await costTracker.log(provider, 'broll-video', { seconds: segPaths.length * segLen }).catch(() => undefined);
   if (segPaths.length === 1) {
     await fs.copyFile(segPaths[0], outputPath);
     console.log(`[B-roll] Single segment → ${outputPath}`);
