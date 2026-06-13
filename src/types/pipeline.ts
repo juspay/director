@@ -13,6 +13,8 @@ export type PipelineOptions = {
   provider?: string;
   /** TTS voice id/name override (provider-specific, e.g. OpenAI "onyx"). */
   voice?: string;
+  /** Output resolution: '1080p' (default) or '720p' for cheaper/faster iteration. */
+  resolution?: string;
   /** Video generator key (kling / runway / veo / wan-alpha). */
   videoGenerator?: string;
   /** Music generator key (lyria / beatoven / elevenlabs / replicate / numpy). */
