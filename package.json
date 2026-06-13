@@ -38,7 +38,8 @@
     "hono": "^4.12.18",
     "fastify": "^5.8.5",
     "@xmldom/xmldom": "^0.8.12",
-    "mathjs": "^15.2.0"
+    "mathjs": "^15.2.0",
+    "uuid": "^11.1.1"
   },
   "devDependencies": {
     "@types/node": "^25.9.3",
