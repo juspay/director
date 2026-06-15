@@ -1,0 +1,225 @@
+# =============================================================================
+# Yama PR Review configuration
+# =============================================================================
+# Consumed by the @juspay/yama GitHub Action (.github/workflows). Auto-discovered
+# from the repo root (search order: yama.config.yaml → config/yama.config.yaml →
+# .yama/config.yaml) and also passed explicitly via the workflow `config-path`.
+#
+# WHERE THE REVIEW RULES COME FROM
+#   Yama automatically loads, from this repo root, if present:
+#     • CLAUDE.md       — your authoritative engineering rules
+#     • CONTRIBUTING.md — contribution + commit conventions
+#   and injects them into the reviewer as <project-rules>. Keep repo-specific
+#   rules THERE; this file tunes WHAT the reviewer focuses on and WHAT blocks a
+#   merge.
+#
+# PROVIDER / MODEL ARE INTENTIONALLY NOT SET HERE
+#   They are controlled by the workflow inputs (ai-provider / ai-model), exposed
+#   as AI_PROVIDER / AI_MODEL env. Yama merges this file OVER those env values, so
+#   setting ai.provider / ai.model here would silently override the workflow.
+# =============================================================================
+
+version: 2
+configType: "yama"
+
+display:
+  showBanner: false
+  streamingMode: false
+  verboseToolCalls: false
+  showAIThinking: false
+
+ai:
+  # provider/model OMITTED on purpose — controlled by the workflow.
+  temperature: 0.2 # deterministic, review-grade output
+  timeout: "15m"
+  retryAttempts: 3
+
+  # The explore worker reads project rules (CLAUDE.md / CONTRIBUTING.md) and
+  # codebase context. Keep enabled so the reviewer sees your repo's rules.
+  explore:
+    enabled: true
+    timeout: "5m"
+    cacheResults: true
+
+# GitHub MCP only. Jira/Bitbucket off so no extra credentials are needed. Yama's
+# built-in denylist already blocks repo-mutating GitHub tools; this is a
+# read + review-comment workflow.
+mcpServers:
+  github:
+    enabled: true
+    # transport defaults to "http" (hosted GitHub MCP at api.githubcopilot.com).
+  jira:
+    enabled: false
+
+review:
+  enabled: true
+
+  workflowInstructions: |
+    You are reviewing a pull request for `juspay/director` — a TypeScript-first AI
+    video-production pipeline (NeuroLink-driven agents, 7 pipeline phases) that
+    fans out to many paid external providers: video generation (Veo/Vertex, Kling,
+    Runway, Wan), TTS (ElevenLabs, OpenAI, Fish, EdgeTTS, Google), music (Lyria,
+    Beatoven), avatar lip-sync (D-ID, Replicate/MuseTalk), and distribution
+    (Mux, Late — HITL-gated). Python is used ONLY as `execa` subprocesses for
+    NumPy/SciPy/librosa DSP. Treat the <project-rules> block (this repo's
+    CLAUDE.md / CONTRIBUTING.md, if present) as the AUTHORITATIVE ruleset and cite
+    the specific rule when you flag a violation.
+
+    Do NOT re-flag what CI already enforces mechanically — name the gate instead of
+    duplicating it. CI (`.github/workflows/ci.yml`) already runs, on Node 22 & 24:
+    `npm run typecheck` (tsc --noEmit), `npm run build`, `npm run test:unit`, the
+    `--dry-run` of all 7 phases, Python `ast.parse` syntax-checks of the DSP
+    scripts, and the python-bridge integration tests. `score-pr.yml` separately
+    runs a Vertex-based quality-score gate. Assume type errors, build breakage,
+    lint, and broad syntax problems are caught there.
+
+    Concentrate on what static analysis and a dry-run cannot catch:
+
+    - PIPELINE-STAGE CORRECTNESS: each of the 7 phases must consume the prior
+      phase's outputs/state correctly (see src/pipeline/{runner,state,config}.ts);
+      Zod schemas (src/schemas/**) must actually validate structured AI output
+      before it is trusted downstream; quality gates / multi-judge scoring
+      (src/scoring/**) and the 3-cycle policy system (src/policies/**) must not be
+      silently bypassed or have thresholds weakened without justification.
+    - EXTERNAL API / COST & QUOTA SAFETY: every call to a paid provider should be
+      counted through CostTracker (src/scoring/cost-tracker.ts) with the right unit
+      (video = per_second, TTS = per_1k_chars, LLM = per_1m_input); watch for new
+      providers/operations that log $0, missing rate units, unbounded loops or
+      retries over a billed call, and large/expensive generations not gated behind
+      a budget, dry-run, or HITL check. Distribution/publishing (Mux, Late) must
+      stay HITL-gated.
+    - CONCURRENCY / RACE CONDITIONS: parallel fan-out (Promise.all / allSettled)
+      over provider calls must respect rate-limit/backoff (src/utils/rate-limit.ts:
+      exponentialBackoff, rateLimitDelay) and not stampede quotas; check for shared
+      mutable state, concurrent writes to the JSONL cost log / .pipeline-state,
+      and one provider failure silently corrupting the aggregate result.
+    - ERROR HANDLING & RETRIES: provider/network/subprocess (execa) failures must
+      be handled; `exponentialBackoff` returns a discriminated union and never
+      throws — callers MUST check `.success` rather than assuming `.value`. Quota
+      (429/RESOURCE_EXHAUSTED) errors must use exponential, not linear, retry.
+    - SECURITY: no provider keys, tokens, or service-account JSON committed
+      (only `.env.example` placeholders belong in the repo); no key logged or
+      echoed; no untrusted/script-derived input flowing unescaped into execa
+      shell calls, FFmpeg/Python args, or AI prompts (prompt/command injection).
+
+    Be specific and constructive: every comment references the exact file+line,
+    explains the concrete risk, and suggests a fix where useful. Only block per
+    <blocking-criteria>; otherwise leave inline comments and approve.
+
+  # Priority is advisory; see blockingCriteria below for what actually fails the check.
+  focusAreas:
+    - name: "External API / cost & quota safety"
+      priority: "CRITICAL"
+      description: |
+        - Every paid provider call (Veo/Vertex, Kling, Runway, TTS, music, avatar)
+          is metered via CostTracker with the correct unit (per_second / per_1k_chars
+          / per_1m_input); no new provider or operation logs $0
+        - No unbounded loops, regenerations, or retries over a billed call; expensive
+          generations gated behind budget / --dry-run / HITL
+        - Distribution & publishing (Mux, Late) stay HITL-gated; quota usage respects
+          rate-limit/backoff
+    - name: "Pipeline correctness & quality gates"
+      priority: "MAJOR"
+      description: |
+        - Each of the 7 phases consumes prior-phase state/outputs correctly
+          (src/pipeline/{runner,state,config}.ts)
+        - Zod schemas validate structured AI output before downstream trust
+        - Quality gates, multi-judge scoring (src/scoring/**) and the 3-cycle policy
+          system (src/policies/**) are not bypassed or silently weakened
+    - name: "Concurrency & race conditions"
+      priority: "MAJOR"
+      description: |
+        - Parallel provider fan-out (Promise.all / allSettled) respects backoff and
+          does not stampede provider quotas
+        - No shared-mutable-state races or concurrent writes to the JSONL cost log /
+          .pipeline-state; one provider failure must not corrupt aggregate results
+    - name: "Error handling & retries"
+      priority: "MAJOR"
+      description: |
+        - Provider / network / execa-subprocess failures are handled
+        - exponentialBackoff callers check the discriminated `.success` union (it
+          never throws) instead of assuming `.value`
+        - Quota errors (429 / RESOURCE_EXHAUSTED) use exponential retry, not linear
+    - name: "Security"
+      priority: "CRITICAL"
+      description: |
+        - No provider keys, tokens, or service-account JSON committed (only
+          .env.example placeholders); no secret logged or echoed
+        - No script-derived / untrusted input flowing unescaped into execa, FFmpeg /
+          Python args, or AI prompts (command / prompt injection); no unsafe eval,
+          SSRF, or path traversal
+
+  # ONLY these escalate the decision to BLOCKED (which fails the check when the
+  # workflow runs in enforcing mode). Everything else is posted as an advisory
+  # inline comment.
+  blockingCriteria:
+    - condition: "Any provider API key, token, password, or service-account JSON (Vertex/GCP, ElevenLabs, OpenAI, Kling, Runway, D-ID, Replicate, Mux, Late, etc.) committed in source — anything beyond an empty .env.example placeholder"
+      action: "BLOCK"
+      reason: "Security: provider credentials must never be committed; they live in .env (gitignored) / CI secrets"
+    - condition: "Any CRITICAL severity security vulnerability — command/prompt injection via execa, FFmpeg or Python args, auth bypass, SSRF, path traversal, or secret/PII exposure"
+      action: "BLOCK"
+      reason: "Critical security risk"
+    - condition: "A paid external generation (video/TTS/music/avatar) added or modified to run unbounded, in an uncapped loop/retry, or without CostTracker metering — i.e. uncontrolled runaway spend"
+      action: "BLOCK"
+      reason: "Cost safety: provider spend must stay metered and bounded"
+    - condition: "A quality gate, multi-judge score threshold, or policy-cycle check (src/scoring/**, src/policies/**) disabled or bypassed without explicit justification, OR HITL-gating removed from distribution/publishing (Mux, Late)"
+      action: "BLOCK"
+      reason: "Quality/safety gate bypass: gates and HITL approvals must not be silently removed"
+    # - condition: "3 or more MAJOR severity issues in the same pull request"
+    #   action: "BLOCK"
+    #   reason: "Too many significant issues to merge safely"
+
+  # Generated / vendored / binary / media-output files are skipped.
+  excludePatterns:
+    - "*.lock"
+    - "pnpm-lock.yaml"
+    - "package-lock.json"
+    - "yarn.lock"
+    - "*.min.js"
+    - "*.map"
+    - "*.svg"
+    - "dist/**"
+    - "build/**"
+    - "out/**"
+    - "coverage/**"
+    - "__pycache__/**"
+    - "*.pyc"
+    # Generated / runtime artifacts and media outputs (not source)
+    - ".pipeline-state/**"
+    - ".observability/**"
+    - ".remotion/**"
+    - "output/**"
+    - "output-*/**"
+    - "public/voiceover/**"
+    - "video-production/archive/**"
+    - "*.mp4"
+    - "*.mp3"
+    - "*.wav"
+    - "*.mov"
+
+  contextLines: 3
+  maxFilesPerReview: 100
+  fileAnalysisTimeout: "2m"
+
+# Review-only: never rewrite PR descriptions (also forced by the workflow input
+# skip-description-enhance: "true").
+descriptionEnhancement:
+  enabled: false
+
+# Stateless reviewer: no memory-bank dir, no knowledge-base file, no commits back
+# to the repo (needs no write access beyond posting the review).
+memoryBank:
+  enabled: false
+knowledgeBase:
+  enabled: false
+memory:
+  enabled: false
+  autoCommit: false
+
+# Cost / runtime guardrails.
+performance:
+  maxReviewDuration: "15m"
+  tokenBudget:
+    maxTokensPerReview: 800000
+    warningThreshold: 600000
+
