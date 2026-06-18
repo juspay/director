@@ -77,6 +77,19 @@ test('scriptToSrt', async (t) => {
     });
   });
 
+  await t.test('breaks at sentence boundaries, not greedy mid-phrase chunks', () => {
+    const srt = scriptToSrt('Meet Aether. No screen. No buzzing now.', 10);
+    const texts = srt.trim().split(/\n\n+/).map((b) => b.split('\n').slice(2).join(' '));
+    assert.equal(texts[0], 'Meet Aether.', 'first cue is the complete first sentence');
+    for (const ct of texts) assert.ok(ct.split(/\s+/).length <= 7, `cue "${ct}" within word cap`);
+  });
+
+  await t.test('respects a custom word cap', () => {
+    const srt = scriptToSrt('one two three four five six seven eight nine ten', 10, 4);
+    const texts = srt.trim().split(/\n\n+/).map((b) => b.split('\n').slice(2).join(' '));
+    for (const ct of texts) assert.ok(ct.split(/\s+/).length <= 4, `cue "${ct}" within cap 4`);
+  });
+
   await t.test('all script words are preserved in order', () => {
     const srt = scriptToSrt(script, 10);
     const cueText = srt.trim().split(/\n\n+/).map((b) => b.split('\n').slice(2).join(' ')).join(' ');
