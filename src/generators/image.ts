@@ -32,8 +32,11 @@ export async function generateImage(
   outputPath: string,
   opts: ImageGenOpts = {},
 ): Promise<string> {
-  const provider = opts.provider ?? process.env.IMAGE_PROVIDER ?? 'openai';
-  const model = opts.model ?? process.env.IMAGE_MODEL ?? 'gpt-image-1';
+  // Default to Vertex Gemini image ("nano banana"): native reference-image editing
+  // (best for product consistency), cinematic output, and on the Vertex billing path
+  // rather than OpenAI. Override via IMAGE_PROVIDER / IMAGE_MODEL or opts.
+  const provider = opts.provider ?? process.env.IMAGE_PROVIDER ?? 'vertex';
+  const model = opts.model ?? process.env.IMAGE_MODEL ?? 'gemini-2.5-flash-image';
   console.log(`[image] ${provider}/${model}: ${prompt.slice(0, 60)}...`);
 
   const result = await service().generate({
