@@ -71,12 +71,16 @@ export async function assembleFinal(
   voiceoverPath: string,
   musicPath: string | null,
   outputPath: string,
-  options: { width?: number; height?: number; musicGainDb?: number; colorGrade?: boolean } = {},
+  options: { width?: number; height?: number; musicGainDb?: number; colorGrade?: boolean; loudnessLufs?: number | null } = {},
 ): Promise<string> {
   const w = options.width ?? 1280;
   const h = options.height ?? 720;
   const musicGainDb = options.musicGainDb ?? -18;
   const grade = options.colorGrade === false ? '' : `,${CINEMATIC_GRADE}`;
+  // EBU R128 loudness master so the deliverable lands near streaming/social target
+  // (~-14 LUFS) instead of the ~-25 LUFS the raw VO+music mix produces. loudnorm
+  // also enforces true-peak, so it replaces the separate limiter.
+  const norm = options.loudnessLufs === null ? '' : `,loudnorm=I=${options.loudnessLufs ?? -14}:TP=-1.5:LRA=11`;
 
   const voDur = await getDuration(voiceoverPath);
   const brollDur = await getDuration(brollPath);
@@ -93,9 +97,9 @@ export async function assembleFinal(
     aChain =
       `[1:a]aresample=44100,aformat=sample_fmts=fltp:channel_layouts=stereo[vo];` +
       `[2:a]aresample=44100,aformat=sample_fmts=fltp:channel_layouts=stereo,volume=${musicGainDb}dB[bgm];` +
-      `[vo][bgm]amix=inputs=2:duration=first:dropout_transition=0:normalize=0,alimiter=limit=0.98[a]`;
+      `[vo][bgm]amix=inputs=2:duration=first:dropout_transition=0:normalize=0${norm}[a]`;
   } else {
-    aChain = `[1:a]aresample=44100,aformat=sample_fmts=fltp:channel_layouts=stereo[a]`;
+    aChain = `[1:a]aresample=44100,aformat=sample_fmts=fltp:channel_layouts=stereo${norm}[a]`;
   }
 
   args.push('-filter_complex', `${vChain};${aChain}`);
