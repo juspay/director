@@ -28,9 +28,10 @@ Non-negotiable rules:
 2. Each shot's "prompt" describes the SCENE only (setting, lighting, mood, framing, action) — do NOT restate the product description inside shot prompts; the product_bible is injected separately.
 3. Set shows_product=true for any shot the product appears in (hero shots, on-body shots, lifestyle shots where it's worn).
 4. LEGIBILITY — If a beat references a number, score, metric or reading (e.g. "a single number: how ready you are"), the shot MUST make that value legibly visible on screen (e.g. a clean UI showing a large readiness score like "87").
-5. Give every shot a deliberate "camera" direction (slow push-in, rack focus, static macro, handheld drift, orbit) for an intentional, cinematic feel.
-6. Keep one cohesive tone and colour palette across all shots so it reads as a single film.
-7. Order shots to follow the script beats exactly, beginning with the problem and ending on the product + call to action.`;
+5. CINEMATIC, NOT CATALOG — The hero_prompt and every product shot must be CINEMATIC: dramatic directional / rim lighting, a dark or moody reflective environment, deep negative space, shallow depth of field and rich contrast. Never a flat, evenly-lit white studio/e-commerce catalog shot. The product should feel like a hero in a film, set in evocative real-world or moody contexts — not floating on white.
+6. CAMERA IN MOTION — Every shot needs noticeable, deliberate camera movement (slow push-in, dolly, orbit, crane, rack focus, parallax). Avoid fully static locked-off frames; the film should always feel alive.
+7. Keep ONE cohesive cinematic colour palette and lighting mood across all shots — including the product shots — so it reads as a single film, not a deck of disconnected images.
+8. Order shots to follow the script beats exactly, beginning with the problem and ending on the product + call to action.`;
 
 export async function runArtDirectorAgent(
   neurolink: NeuroLink,

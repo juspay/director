@@ -60,16 +60,23 @@ export async function concatVideos(
   return outputPath;
 }
 
+// Neutral filmic grade applied across the whole cut so disparate shots (moody
+// lifestyle + cleaner product) read as one film. A gentle S-curve + mild contrast/
+// saturation, no colour cast — keeps the titanium product its true silver.
+const CINEMATIC_GRADE =
+  "eq=contrast=1.06:saturation=1.10:brightness=0.005,curves=all='0/0.02 0.25/0.22 0.5/0.5 0.75/0.78 1/0.985'";
+
 export async function assembleFinal(
   brollPath: string,
   voiceoverPath: string,
   musicPath: string | null,
   outputPath: string,
-  options: { width?: number; height?: number; musicGainDb?: number } = {},
+  options: { width?: number; height?: number; musicGainDb?: number; colorGrade?: boolean } = {},
 ): Promise<string> {
   const w = options.width ?? 1280;
   const h = options.height ?? 720;
   const musicGainDb = options.musicGainDb ?? -18;
+  const grade = options.colorGrade === false ? '' : `,${CINEMATIC_GRADE}`;
 
   const voDur = await getDuration(voiceoverPath);
   const brollDur = await getDuration(brollPath);
@@ -80,7 +87,7 @@ export async function assembleFinal(
   args.push('-i', voiceoverPath);
   if (musicPath) args.push('-stream_loop', '-1', '-i', musicPath);
 
-  const vChain = `[0:v]scale=${w}:${h}:force_original_aspect_ratio=increase,crop=${w}:${h},setsar=1[v]`;
+  const vChain = `[0:v]scale=${w}:${h}:force_original_aspect_ratio=increase,crop=${w}:${h},setsar=1${grade}[v]`;
   let aChain: string;
   if (musicPath) {
     aChain =
