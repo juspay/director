@@ -17,6 +17,8 @@ export type PipelineOptions = {
   resolution?: string;
   /** Video generator key (kling / runway / veo / wan-alpha). */
   videoGenerator?: string;
+  /** B-roll strategy: 'director' (default — art-director shot plan + consistency critic), 'concept' (assets/broll-prompts.json), or 'generic'. */
+  brollMode?: string;
   /** Music generator key (lyria / beatoven / elevenlabs / replicate / numpy). */
   musicGenerator?: string;
   /** Source image for the avatar phase. */
