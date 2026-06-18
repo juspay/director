@@ -33,13 +33,14 @@
   },
   "overrides": {
     "unicorn-magic": "0.4.0",
-    "protobufjs": "^7.5.5",
+    "protobufjs": "^7.6.4",
     "@hono/node-server": "^1.19.14",
-    "hono": "^4.12.18",
+    "hono": "^4.12.26",
     "fastify": "^5.8.5",
     "@xmldom/xmldom": "^0.8.12",
     "mathjs": "^15.2.0",
-    "uuid": "^11.1.1"
+    "uuid": "^11.1.1",
+    "@opentelemetry/core": "^2.8.0"
   },
   "devDependencies": {
     "@types/node": "^25.9.3",
