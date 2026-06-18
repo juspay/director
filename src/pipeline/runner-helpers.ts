@@ -38,15 +38,28 @@ function srtTime(t: number): string {
  * proportionally to word count across the voiceover duration. Avoids STT
  * mishearing brand names / homophones (e.g. "Aether" → "Ather", "know" → "no").
  * Robust to tiny/zero durations (each cue keeps a positive span).
+ *
+ * Cues break on natural language boundaries — sentence ends first, then clause
+ * punctuation (comma / dash / semicolon) once a line is reasonably full, and only
+ * a word cap as a last resort — so phrases aren't split mid-thought.
  */
-export function scriptToSrt(script: string, durationSec: number): string {
+export function scriptToSrt(script: string, durationSec: number, maxWords = 7): string {
   const words = script.split(/\s+/).filter(Boolean);
   if (words.length === 0) return '';
   const cues: string[][] = [];
   let cur: string[] = [];
   for (const w of words) {
     cur.push(w);
-    if (cur.length >= 6 || (/[.!?]$/.test(w) && cur.length >= 3)) { cues.push(cur); cur = []; }
+    const endsSentence = /[.!?]["'’”)\]]?$/.test(w);
+    const endsClause = /[,;:—–-]$/.test(w);
+    if (
+      (endsSentence && cur.length >= 2) ||   // prefer to end a cue at a full stop
+      (endsClause && cur.length >= 4) ||      // break at a clause once the line is full
+      cur.length >= maxWords                  // hard cap so no cue runs too long
+    ) {
+      cues.push(cur);
+      cur = [];
+    }
   }
   if (cur.length) cues.push(cur);
 
