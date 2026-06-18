@@ -18,7 +18,7 @@ jobs:
         # node >=20.18.1 but its undici dep contradicts that.
         node: ['22', '24']
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Setup Node ${{ matrix.node }}
         uses: actions/setup-node@v6
@@ -45,7 +45,7 @@ jobs:
     name: Python DSP scripts
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Setup Node
         uses: actions/setup-node@v6
