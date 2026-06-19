@@ -29,6 +29,8 @@ export type PipelineOptions = {
   dryRun?: boolean;
   /** Skip the post-pipeline scoring step. */
   skipScoring?: boolean;
+  /** Scoring mode: 'single' (default — one critic) or 'multi-judge' (consensus panel). */
+  scoringMode?: string;
 };
 
 export type PipelineState = {

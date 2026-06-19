@@ -146,17 +146,32 @@ export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineS
       }
     }
 
-    // Post-pipeline: scoring and observability
-    if (!opts.skipScoring) {
+    // Post-pipeline: scoring and observability. Never score on a dry-run — it
+    // would spend on a (possibly stale) video in the output dir.
+    if (!opts.skipScoring && !opts.dryRun) {
       const finalVideo = path.join(outDir, 'final_captioned.mp4');
+      // 'multi-judge' runs a panel of multimodal judges and takes the median
+      // consensus (robust to one noisy critic); 'single' is the default cheap path.
+      const scoringMode = (opts.scoringMode ?? process.env.SCORING_MODE ?? 'single').toLowerCase();
       try {
         await fs.access(finalVideo);
-        console.log('\n--- Post-pipeline: AI Scoring ---\n');
         // Give the critic the actual concept (the narration script) so it judges
         // against what the video is, not a hardcoded default product.
         const scoreContext = await readScript(opts.scriptPath).catch(() => undefined);
-        const score = await observe('video-scoring', () => runVideoScorerAgent(neurolink, finalVideo, 'dev', scoreContext));
-        state.results['scoring'] = score.result;
+        if (scoringMode === 'multi-judge') {
+          console.log('\n--- Post-pipeline: AI Scoring (multi-judge panel) ---\n');
+          const { runMultiJudgeVideoScoring } = await import('../scoring/multi-judge-scorer.ts');
+          const consensus = await observe('video-scoring', () => runMultiJudgeVideoScoring(neurolink, finalVideo, { context: scoreContext }));
+          if (consensus.result) {
+            // Keep a weighted_overall-shaped record so downstream/report code is mode-agnostic.
+            state.results['scoring'] = { weighted_overall: consensus.result.consensusOverall, ...consensus.result.dimensions };
+            state.results['multi-judge'] = consensus.result;
+          }
+        } else {
+          console.log('\n--- Post-pipeline: AI Scoring ---\n');
+          const score = await observe('video-scoring', () => runVideoScorerAgent(neurolink, finalVideo, 'dev', scoreContext));
+          if (score.result) state.results['scoring'] = score.result; // don't persist null on scorer failure
+        }
       } catch {
         // Final video not found — skip scoring
       }
@@ -187,6 +202,22 @@ export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineS
         }
       } catch (e) {
         console.warn('[QualityGates] skipped:', e instanceof Error ? e.message : e);
+      }
+
+      // Production verdict — combine the (visual) video score with the (content)
+      // quality gates into one ship/no-ship signal.
+      const videoScore = (state.results['scoring'] as { weighted_overall?: number } | undefined)?.weighted_overall;
+      const gates = state.results['quality-gates'] as { passed?: boolean } | undefined;
+      if (typeof videoScore === 'number' || gates) {
+        const gatesPassed = gates?.passed ?? null;
+        const videoOk = typeof videoScore === 'number' && videoScore >= 7;
+        // SHIP-READY needs both signals positive. When gates never ran (no script),
+        // we can't claim content was verified — flag that rather than imply a pass.
+        const verdict = gatesPassed === null
+          ? (videoOk ? 'SHIP-READY (no content gates)' : 'NEEDS WORK')
+          : (videoOk && gatesPassed ? 'SHIP-READY' : 'NEEDS WORK');
+        console.log(`\n[Production Verdict] ${verdict} — video ${typeof videoScore === 'number' ? `${videoScore.toFixed(2)}/10` : 'n/a'}${gates ? ` · gates ${gatesPassed ? 'PASS' : 'FAIL'}` : ' · gates not run'}`);
+        state.results['production-verdict'] = { verdict, videoScore: videoScore ?? null, gatesPassed };
       }
 
       console.log('\n--- Post-pipeline: Observability Report ---\n');
@@ -719,6 +750,7 @@ Options:
   --broll-mode MODE    B-roll: director (default) | concept | generic
   --avatar-source PATH Avatar source image for D-ID/MuseTalk
   --avatar-provider    Avatar: did|musetalk
+  --scoring MODE       Scoring: single (default) | multi-judge (consensus panel)
   --skip-scoring       Skip post-pipeline AI scoring
   --dry-run            Print plan without executing
   (env) BROLL_CONCURRENCY=N  parallel b-roll scenes (default 3)`);
@@ -739,6 +771,7 @@ Options:
     if (args[i] === '--music-gen') opts.musicGenerator = args[++i];
     if (args[i] === '--avatar-source') opts.avatarSource = args[++i];
     if (args[i] === '--avatar-provider') opts.avatarProvider = args[++i];
+    if (args[i] === '--scoring') opts.scoringMode = args[++i];
     if (args[i] === '--skip-scoring') opts.skipScoring = true;
     if (args[i] === '--dry-run') opts.dryRun = true;
   }
