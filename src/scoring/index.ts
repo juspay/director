@@ -3,6 +3,7 @@ export { runVideoScorerAgent, runMultiRunScoring } from '../agents/video-scorer.
 export { runScriptScorerAgent } from '../agents/script-scorer.ts';
 export { runSceneAnalyzerAgent } from '../agents/scene-analyzer.ts';
 export { runVideoComparatorAgent } from '../agents/video-comparator.ts';
+export { scoreWithMultiJudge, runMultiJudgeVideoScoring, aggregateJudgeScores } from './multi-judge-scorer.ts';
 
 // Deterministic scoring (CLI wrappers)
 export { checkRegression } from './vmaf-gating.ts';

@@ -46,6 +46,7 @@ export async function runVideoScorerAgent(
   videoPath: string,
   tier: 'dev' | 'official' = 'dev',
   context?: string,
+  model?: string,
 ): Promise<VideoScore | null> {
   const absolutePath = path.resolve(videoPath);
 
@@ -62,7 +63,8 @@ export async function runVideoScorerAgent(
   const inputFile = absolutePath; // Large files sent directly — Gemini handles chunking
 
   const tierConfig = SCORING_TIERS[tier];
-  console.log(`[VideoScorer] Scoring ${path.basename(videoPath)} (tier: ${tier}, model: ${tierConfig.model})`);
+  const scoringModel = model ?? tierConfig.model;
+  console.log(`[VideoScorer] Scoring ${path.basename(videoPath)} (tier: ${tier}, model: ${scoringModel})`);
 
   const result = await exponentialBackoff(async () => {
     const response = await neurolink.generate({
@@ -71,7 +73,7 @@ export async function runVideoScorerAgent(
         files: [path.resolve(inputFile)],
       },
       provider: process.env.AGENT_PROVIDER ?? 'vertex',
-      model: tierConfig.model,
+      model: scoringModel,
       schema: VideoScoreSchema,
       output: { format: 'json' },
       disableTools: true,  // REQUIRED: Gemini rejects tools + JSON schema together
@@ -87,7 +89,7 @@ export async function runVideoScorerAgent(
     return null;
   }
 
-  console.log(`[VideoScorer] Overall: ${result.value.weighted_overall.toFixed(2)}/10`);
+  console.log(`[VideoScorer] Overall: ${result.value.weighted_overall.toFixed(2)}/10 (${scoringModel})`);
   return result.value;
 }
 
