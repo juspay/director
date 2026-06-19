@@ -127,3 +127,28 @@ export type MultiJudgeResult = {
     error?: string;
   }>;
 };
+
+/** One judge's full rubric score for the video (model = the judge). */
+export type JudgeVerdict = {
+  model: string;
+  weighted_overall: number;
+  dimensions: Record<string, number>;
+  top_improvements: string[];
+  deal_breakers: string[];
+};
+
+/**
+ * Consensus of a multi-model video-scoring panel. `consensusOverall` is the
+ * median (robust to one outlier judge); `agreement` reflects how tightly the
+ * judges clustered.
+ */
+export type MultiJudgeConsensus = {
+  consensusOverall: number;
+  meanOverall: number;
+  variance: number;
+  agreement: 'strong' | 'moderate' | 'weak';
+  dimensions: Record<string, number>;
+  judges: JudgeVerdict[];
+  topImprovements: string[];
+  dealBreakers: string[];
+};
