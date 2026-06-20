@@ -1,6 +1,23 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { resolveDims, mapWithConcurrency, scriptToSrt } from '../../src/pipeline/runner-helpers.ts';
+import { resolveDims, mapWithConcurrency, scriptToSrt, parseIntOr, parseFloatOr } from '../../src/pipeline/runner-helpers.ts';
+
+test('parseIntOr / parseFloatOr', async (t) => {
+  await t.test('parses a valid numeric string', () => {
+    assert.equal(parseIntOr('42', 5), 42);
+    assert.equal(parseFloatOr('9.5', 1), 9.5);
+  });
+  await t.test('falls back when missing or non-numeric (no NaN leaks)', () => {
+    assert.equal(parseIntOr(undefined, 5), 5);
+    assert.equal(parseIntOr('foo', 5), 5);
+    assert.equal(parseFloatOr('', 9), 9);
+    assert.equal(parseFloatOr('abc', 9), 9);
+  });
+  await t.test('honors an explicit zero override (not the fallback)', () => {
+    assert.equal(parseIntOr('0', 5), 0);
+    assert.equal(parseFloatOr('0', 9), 0);
+  });
+});
 
 test('resolveDims', async (t) => {
   await t.test('720p → 1280×720', () => {
@@ -137,5 +154,12 @@ test('scriptToSrt', async (t) => {
 
   await t.test('empty script → empty SRT', () => {
     assert.equal(scriptToSrt('   ', 5), '');
+  });
+
+  // Regression: a non-finite duration (NaN from a failed probe, Infinity) used to
+  // produce "NaN:NaN:NaN,NaN" timestamps. Fail loudly instead.
+  await t.test('throws on a non-finite duration', () => {
+    assert.throws(() => scriptToSrt('one two three.', NaN), /must be finite/);
+    assert.throws(() => scriptToSrt('one two three.', Infinity), /must be finite/);
   });
 });

@@ -17,16 +17,36 @@ const validScore = {
   music_audio_justification: 'Balanced mix',
   production_value: 9,
   production_value_justification: 'Agency-level',
-  weighted_overall: 8.6,
+  // 9*.25 + 8*.20 + 9*.15 + 8*.15 + 9*.10 + 8*.10 + 9*.05 = 8.55 (was wrongly 8.6).
+  weighted_overall: 8.55,
   top_improvements: ['tighten hook', 'boost bass'],
   deal_breakers: [],
 };
 
+const DIMENSIONS = [
+  'content_authenticity', 'visual_polish', 'motion_design', 'storytelling_arc',
+  'scene_transitions', 'music_audio', 'production_value',
+] as const;
+
 describe('VideoScoreSchema', () => {
   it('accepts a valid score object', () => {
     const result = VideoScoreSchema.parse(validScore);
-    assert.equal(result.weighted_overall, 8.6);
+    assert.equal(result.weighted_overall, 8.55);
     assert.equal(result.top_improvements.length, 2);
+  });
+
+  // The schema can't compute weighted_overall (it's a plain z.number()), so this
+  // is the only place the cross-field invariant — weighted_overall equals the
+  // dot product of the dimension scores and VIDEO_SCORE_WEIGHTS — is checked.
+  // It caught the fixture's wrong 8.6 value.
+  it('fixture weighted_overall matches the declared weighted-sum formula', () => {
+    const computed = DIMENSIONS.reduce(
+      (sum, d) => sum + (validScore[d] as number) * VIDEO_SCORE_WEIGHTS[d], 0,
+    );
+    assert.ok(
+      Math.abs(computed - validScore.weighted_overall) < 1e-9,
+      `weighted sum ${computed} != fixture weighted_overall ${validScore.weighted_overall}`,
+    );
   });
 
   it('rejects missing required fields', () => {

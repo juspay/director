@@ -34,18 +34,28 @@ describe('pipeline/state', () => {
   });
 
   it('appendToLog appends a newline-delimited JSON record', async () => {
-    const { appendToLog } = await import('../../src/pipeline/state.ts');
-    const { STATE_DIR } = await import('../../src/pipeline/config.ts');
+    const { appendToLog, stateDir } = await import('../../src/pipeline/state.ts');
     const unique = `test-events-${process.pid}-${Date.now()}.jsonl`;
     await appendToLog(unique, { event: 'one' });
     await appendToLog(unique, { event: 'two' });
-    const raw = await fs.readFile(path.join(STATE_DIR, unique), 'utf-8');
+    const raw = await fs.readFile(path.join(stateDir(), unique), 'utf-8');
     const lines = raw.trim().split('\n');
     assert.equal(lines.length, 2);
     const first = JSON.parse(lines[0]);
     assert.equal(first.event, 'one');
     assert.ok(first.timestamp);
     // Cleanup
-    await fs.unlink(path.join(STATE_DIR, unique));
+    await fs.unlink(path.join(stateDir(), unique));
+  });
+
+  // Regression: STATE_DIR_OVERRIDE was previously a no-op (config STATE_DIR is
+  // fixed at import), so these tests silently wrote into the real .pipeline-state/.
+  // Persistence must now land in the isolated tmp dir.
+  it('persists into the isolated STATE_DIR_OVERRIDE, not the real state dir', async () => {
+    const { saveState, stateDir } = await import('../../src/pipeline/state.ts');
+    assert.equal(stateDir(), tmpDir, 'stateDir() honors the override');
+    await saveState('isolated.json', { ok: true });
+    const onDisk = await fs.readFile(path.join(tmpDir, 'isolated.json'), 'utf-8');
+    assert.deepEqual(JSON.parse(onDisk), { ok: true });
   });
 });

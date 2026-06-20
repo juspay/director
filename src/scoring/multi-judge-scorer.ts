@@ -48,6 +48,10 @@ function dedup(items: string[]): string[] {
 export function aggregateJudgeScores(
   results: Array<{ model: string; score: VideoScore }>,
 ): MultiJudgeConsensus {
+  // An empty panel has no consensus. Returning {0, 'strong'} here would let a
+  // total judge failure masquerade as a unanimous zero-score to a quality gate;
+  // the only caller (runMultiJudgeVideoScoring) already returns null beforehand.
+  if (results.length === 0) throw new Error('aggregateJudgeScores: cannot aggregate an empty judge panel');
   const overalls = results.map((r) => r.score.weighted_overall);
   const variance = overalls.length ? round2(Math.max(...overalls) - Math.min(...overalls)) : 0;
   const dimensions: Record<string, number> = {};

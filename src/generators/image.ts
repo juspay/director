@@ -4,8 +4,9 @@
  *
  * Used by the two-stage b-roll path: generate a composed keyframe (optionally
  * anchored to a reference image for product consistency), then animate it with
- * an image-to-video model. Defaults to OpenAI `gpt-image-1` because Vertex
- * Imagen is not enabled in every project/region.
+ * an image-to-video model. Defaults to Vertex Gemini image (`gemini-2.5-flash-image`,
+ * "nano banana") for native reference-image editing and the Vertex billing path;
+ * override via IMAGE_PROVIDER / IMAGE_MODEL or per-call opts.
  */
 import fs from 'fs/promises';
 import path from 'path';
@@ -27,22 +28,36 @@ function service(): ImageGenService {
   return _svc;
 }
 
+/**
+ * Resolve the provider/model/negative/aspect for an image generation, applying
+ * the precedence opts → env → default. Default is Vertex Gemini image (the
+ * OpenAI default was dropped when gpt-image-1 billing was hard-limited). Pure —
+ * exported so the defaults are unit-testable without constructing the service.
+ */
+export function resolveImageGenParams(
+  opts: ImageGenOpts = {},
+  env: NodeJS.ProcessEnv = process.env,
+): { provider: string; model: string; negativePrompt: string; aspectRatio: string } {
+  return {
+    provider: opts.provider ?? env.IMAGE_PROVIDER ?? 'vertex',
+    model: opts.model ?? env.IMAGE_MODEL ?? 'gemini-2.5-flash-image',
+    negativePrompt: opts.negativePrompt ?? DEFAULT_NEGATIVE,
+    aspectRatio: opts.aspectRatio ?? '16:9',
+  };
+}
+
 export async function generateImage(
   prompt: string,
   outputPath: string,
   opts: ImageGenOpts = {},
 ): Promise<string> {
-  // Default to Vertex Gemini image ("nano banana"): native reference-image editing
-  // (best for product consistency), cinematic output, and on the Vertex billing path
-  // rather than OpenAI. Override via IMAGE_PROVIDER / IMAGE_MODEL or opts.
-  const provider = opts.provider ?? process.env.IMAGE_PROVIDER ?? 'vertex';
-  const model = opts.model ?? process.env.IMAGE_MODEL ?? 'gemini-2.5-flash-image';
+  const { provider, model, negativePrompt, aspectRatio } = resolveImageGenParams(opts);
   console.log(`[image] ${provider}/${model}: ${prompt.slice(0, 60)}...`);
 
   const result = await service().generate({
     prompt,
-    negativePrompt: opts.negativePrompt ?? DEFAULT_NEGATIVE,
-    aspectRatio: opts.aspectRatio ?? '16:9',
+    negativePrompt,
+    aspectRatio,
     provider,
     model,
     ...(opts.referenceImages && opts.referenceImages.length ? { images: opts.referenceImages } : {}),

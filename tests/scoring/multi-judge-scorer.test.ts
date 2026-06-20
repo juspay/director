@@ -80,4 +80,10 @@ test('aggregateJudgeScores', async (t) => {
     assert.equal(c.agreement, 'strong');
     assert.equal(c.judges[0].model, 'solo');
   });
+
+  // Regression: an empty panel must throw, not return {0, 'strong'} — that would
+  // let a total judge failure masquerade as a unanimous zero to a quality gate.
+  await t.test('empty panel throws instead of returning a misleading zero', () => {
+    assert.throws(() => aggregateJudgeScores([]), /empty judge panel/);
+  });
 });

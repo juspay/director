@@ -103,6 +103,22 @@ describe('enforcePolicy', () => {
   it('treats missing nested fields as undefined (no violation from min/max)', () => {
     assert.deepEqual(enforcePolicy(minPolicy, {}), []);
   });
+
+  // Regression: NaN is `typeof 'number'` but every comparison with it is false,
+  // so the old `actual < value` silently satisfied a min bound. A corrupt score
+  // (e.g. from a failed parseInt) must be reported, not pass the gate.
+  it('reports a NaN field as a min violation', () => {
+    assert.equal(enforcePolicy(minPolicy, { score: NaN }).length, 1);
+  });
+
+  it('reports a NaN field as a max violation', () => {
+    assert.equal(enforcePolicy(maxPolicy, { duration: NaN }).length, 1);
+  });
+
+  it('still passes a valid number at the exact min/max bound', () => {
+    assert.deepEqual(enforcePolicy(minPolicy, { score: 9.0 }), []);
+    assert.deepEqual(enforcePolicy(maxPolicy, { duration: 180 }), []);
+  });
 });
 
 describe('enforceAllPolicies', () => {
