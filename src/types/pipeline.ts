@@ -25,6 +25,8 @@ export type PipelineOptions = {
   avatarSource?: string;
   /** Avatar provider key (did / heygen / replicate / musetalk). */
   avatarProvider?: string;
+  /** Provider avatar id (required by HeyGen). Falls back to HEYGEN_AVATAR_ID env. */
+  avatarId?: string;
   /** Skip actual provider calls — for smoke tests. */
   dryRun?: boolean;
   /** Skip the post-pipeline scoring step. */
