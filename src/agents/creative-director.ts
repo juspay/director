@@ -8,6 +8,7 @@ import { CreativePromptSchema, type CreativePrompt } from '../schemas/creative-p
 import { safeJsonParse } from '../utils/json-repair.ts';
 import { exponentialBackoff } from '../utils/rate-limit.ts';
 import { CONFIG } from '../pipeline/config.ts';
+import { buildBrandVoiceRAG } from '../rag/index.ts';
 
 const CREATIVE_DIRECTION_PROMPT = `You are a creative director for product videos. Given a video script, generate optimized creative direction for every production phase.
 
@@ -28,17 +29,51 @@ Also provide overall:
 
 Think like a Pixar creative director meeting a YC startup founder.`;
 
+/**
+ * Assemble the creative-direction input, optionally prefixing retrieved brand
+ * context so the model honors the documented brand voice / product facts. Pure —
+ * exported for unit testing.
+ */
+export function composeCreativeInput(projectTitle: string, scriptText: string, brandContext?: string): string {
+  const brand = brandContext?.trim()
+    ? `\n\nBRAND CONTEXT (retrieved from brand-voice & product-knowledge docs — honor this):\n${brandContext.trim()}`
+    : '';
+  return `${CREATIVE_DIRECTION_PROMPT}${brand}\n\nProject: ${projectTitle}\n\n---\n\nSCRIPT:\n${scriptText}`;
+}
+
+/** Retrieve a brand-voice / product brief grounded in docs/. Never throws — returns '' if unavailable. */
+async function fetchBrandContext(neurolink: NeuroLink, scriptText: string): Promise<string> {
+  try {
+    const rag = await buildBrandVoiceRAG(neurolink);
+    if (!rag.files.length) return '';
+    const query = `Summarize the brand voice, tone, and the key product facts to respect when directing a video for this script:\n\n${scriptText.slice(0, 1500)}`;
+    return (await rag.ask(query, { topK: 5 })).trim();
+  } catch (e) {
+    console.warn(`[CreativeDirector] brand-voice RAG skipped: ${e instanceof Error ? e.message : e}`);
+    return '';
+  }
+}
+
 export async function runCreativeDirectorAgent(
   neurolink: NeuroLink,
   scriptText: string,
   projectTitle: string = `${process.env.PRODUCT_NAME ?? 'Director'}: AI Video Pipeline`,
+  opts: { brandContext?: string; useBrandVoice?: boolean } = {},
 ): Promise<CreativePrompt | null> {
   console.log(`[CreativeDirector] Generating direction for "${projectTitle}"...`);
+
+  // Opt-in brand grounding: explicit context wins; otherwise fetch via RAG when
+  // requested (option or BRAND_VOICE_RAG=1). Default path is unchanged.
+  let brandContext = opts.brandContext;
+  if (brandContext === undefined && (opts.useBrandVoice ?? process.env.BRAND_VOICE_RAG === '1')) {
+    brandContext = await fetchBrandContext(neurolink, scriptText);
+    if (brandContext) console.log(`[CreativeDirector] injected ${brandContext.length} chars of brand context`);
+  }
 
   const result = await exponentialBackoff(async () => {
     const response = await neurolink.generate({
       input: {
-        text: `${CREATIVE_DIRECTION_PROMPT}\n\nProject: ${projectTitle}\n\n---\n\nSCRIPT:\n${scriptText}`,
+        text: composeCreativeInput(projectTitle, scriptText, brandContext),
       },
       provider: process.env.AGENT_PROVIDER ?? 'vertex',
       model: process.env.CREATIVE_DIRECTOR_MODEL ?? CONFIG.MODEL,
@@ -63,11 +98,13 @@ export async function runCreativeDirectorAgent(
   return c;
 }
 
-// CLI: npm run direct -- <script.txt>
+// CLI: npm run direct -- <script.txt> [--brand-voice]
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const scriptPath = process.argv[2];
+  const args = process.argv.slice(2);
+  const scriptPath = args.find((a) => !a.startsWith('--'));
+  const useBrandVoice = args.includes('--brand-voice');
   if (!scriptPath) {
-    console.error('Usage: npm run direct -- <script.txt>');
+    console.error('Usage: npm run direct -- <script.txt> [--brand-voice]');
     process.exit(1);
   }
   const fs = await import('fs/promises');
@@ -75,7 +112,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const scriptText = (await fs.readFile(scriptPath, 'utf-8')).trim();
   const nl = new NeuroLink();
   try {
-    const direction = await runCreativeDirectorAgent(nl, scriptText);
+    const direction = await runCreativeDirectorAgent(nl, scriptText, undefined, { useBrandVoice });
     if (!direction) process.exit(1);
     console.log(JSON.stringify(direction, null, 2));
   } finally {
