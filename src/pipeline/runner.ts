@@ -18,7 +18,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { OUTPUT_DIR } from './config.ts';
 import { loadState, saveState } from './state.ts';
-import { mapWithConcurrency, resolveDims, scriptToSrt } from './runner-helpers.ts';
+import { mapWithConcurrency, resolveDims, scriptToSrt, resolveNarrationMode, pickCaptionText } from './runner-helpers.ts';
 import type { PipelineState } from '../types/index.ts';
 
 // TypeScript modules (primary)
@@ -40,6 +40,7 @@ import {
   runCreativeDirectorAgent,
   runArtDirectorAgent,
   runConsistencyCriticAgent,
+  narrateScene,
 } from '../agents/index.ts';
 import {
   buildShotPrompt,
@@ -307,9 +308,23 @@ async function readScript(scriptPath: string | undefined): Promise<string> {
 async function phaseVoiceover(nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
   if (opts.dryRun) return { status: 'dry-run' };
   const outDir = opts.outputDir ?? OUTPUT_DIR;
+  const outputPath = path.join(outDir, 'voiceover.mp3');
+  const mode = resolveNarrationMode(opts.narrationMode ?? process.env.NARRATION_MODE);
+
+  if (mode === 'narrator') {
+    // Single round-trip: the model writes the spoken narration from the script
+    // (treated as a scene brief) AND synthesizes the voice. Persist the generated
+    // text so captions use the actual spoken words, not the brief.
+    const brief = await readScript(opts.scriptPath);
+    const narration = await narrateScene(nl, brief, outputPath, opts.voice ? { voice: opts.voice } : {});
+    await fs.writeFile(path.join(outDir, 'narration.txt'), narration.text, 'utf-8').catch(() => undefined);
+    await costTracker.log('google-ai', 'tts', { chars: narration.text.length }).catch(() => undefined);
+    console.log(`[Voiceover] narrator mode — generated ${narration.text.length} chars of narration`);
+    return { mode: 'narrator', ...narration };
+  }
+
   const requested = opts.provider ?? 'openai';
   const provider = VOICEOVER_ALIAS[requested] ?? 'openai-tts';
-  const outputPath = path.join(outDir, 'voiceover.mp3');
   const text = await readScript(opts.scriptPath);
   const result = await voiceover.generate(nl, provider, text, outputPath, opts.voice ? { voice: opts.voice } : {});
   await costTracker.log(TTS_COST_KEY[provider] ?? provider, 'tts', { chars: text.length }).catch(() => undefined);
@@ -712,15 +727,19 @@ async function phaseCaptions(_nl: NeuroLink, opts: PipelineOptions): Promise<unk
   const srtPath = path.join(outDir, 'captions.srt');
   const voPath = path.join(outDir, 'voiceover.mp3');
 
-  // Prefer the known script (accurate text); fall back to STT when unavailable.
+  // Prefer the known text (accurate); fall back to STT when unavailable. In
+  // narrator mode the spoken words were generated, so prefer narration.txt over
+  // the script brief.
   let usedScript = false;
   try {
-    const script = await readScript(opts.scriptPath);
+    const narrationText = await fs.readFile(path.join(outDir, 'narration.txt'), 'utf-8').catch(() => '');
+    const script = await readScript(opts.scriptPath).catch(() => '');
+    const text = pickCaptionText(narrationText, script);
     const dur = await probeDuration(voPath);
-    if (script && dur > 0) {
+    if (text && dur > 0) {
       await fs.mkdir(outDir, { recursive: true });
-      await fs.writeFile(srtPath, scriptToSrt(script, dur));
-      console.log(`[Captions] SRT from script (${srtPath})`);
+      await fs.writeFile(srtPath, scriptToSrt(text, dur));
+      console.log(`[Captions] SRT from ${narrationText.trim() ? 'narration' : 'script'} (${srtPath})`);
       usedScript = true;
     }
   } catch { /* fall back to STT */ }
@@ -751,6 +770,7 @@ Options:
   --avatar-source PATH Avatar source image for D-ID/MuseTalk
   --avatar-provider    Avatar: did|musetalk
   --scoring MODE       Scoring: single (default) | multi-judge (consensus panel)
+  --narration MODE     Voiceover: script (default — file + TTS) | narrator (model writes narration + TTS)
   --skip-scoring       Skip post-pipeline AI scoring
   --dry-run            Print plan without executing
   (env) BROLL_CONCURRENCY=N  parallel b-roll scenes (default 3)`);
@@ -772,6 +792,7 @@ Options:
     if (args[i] === '--avatar-source') opts.avatarSource = args[++i];
     if (args[i] === '--avatar-provider') opts.avatarProvider = args[++i];
     if (args[i] === '--scoring') opts.scoringMode = args[++i];
+    if (args[i] === '--narration') opts.narrationMode = args[++i];
     if (args[i] === '--skip-scoring') opts.skipScoring = true;
     if (args[i] === '--dry-run') opts.dryRun = true;
   }
