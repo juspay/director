@@ -25,6 +25,20 @@ export type AcousticScoreResult = {
   timestamp: string;
 };
 
+/** VMAF regression check (vmaf-gating). */
+export type VmafResult = { regression: boolean; vmaf: number; message: string };
+
+/** VBench temporal-quality check (vbench-checker). */
+export type TemporalResult = { passed: boolean; scores: Record<string, number>; issues: string[] };
+
+/** Combined deterministic quality-regression verdict (VMAF vs a reference + VBench temporal). */
+export type RegressionGateReport = {
+  passed: boolean;
+  reasons: string[];
+  vmaf: VmafResult | null;
+  vbench: TemporalResult;
+};
+
 export type SceneAnalysisResult = {
   sceneId: string;
   artifacts: string[];
