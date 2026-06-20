@@ -37,6 +37,7 @@ export async function generate(
         ttsProvider: options.ttsProvider,
         voice: options.voice,
         ...(options.model ? { model: options.model } : {}),
+        ...(options.avatarId ? { avatarId: options.avatarId } : {}),
       },
     },
   });
