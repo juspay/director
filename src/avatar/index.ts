@@ -6,9 +6,20 @@
 import fs from 'fs/promises';
 import path from 'path';
 import type { NeuroLink } from '@juspay/neurolink';
+import { registerDefaultAvatarHandlers } from '@juspay/neurolink/avatar';
 import type { AvatarProvider, AvatarOptions } from '../types/index.ts';
 
 export type { AvatarProvider, AvatarOptions } from '../types/index.ts';
+
+// NeuroLink ships D-ID / HeyGen / Replicate avatar handlers but doesn't register
+// them automatically — without this the avatar registry is empty and every
+// provider fails with "Avatar provider '…' is not registered". Register once.
+let _handlersRegistered = false;
+function ensureAvatarHandlers(): void {
+  if (_handlersRegistered) return;
+  registerDefaultAvatarHandlers();
+  _handlersRegistered = true;
+}
 
 /**
  * Generate a talking-head video by lip-syncing a portrait image to either
@@ -23,6 +34,7 @@ export async function generate(
   outputPath: string,
   options: AvatarOptions = {},
 ): Promise<string> {
+  ensureAvatarHandlers();
   console.log(`[avatar] ${provider}: ${typeof image === 'string' ? image : 'buffer'} ...`);
   const result = await nl.generate({
     input: { text: '' },
