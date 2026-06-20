@@ -37,6 +37,17 @@ export async function mapWithConcurrency<T, R>(
   return results;
 }
 
+/** Resolve the voiceover source mode. Only an explicit 'narrator' switches; anything else (incl. undefined/typo) keeps the default script-file path. */
+export function resolveNarrationMode(raw: string | undefined): 'script' | 'narrator' {
+  return (raw ?? '').trim().toLowerCase() === 'narrator' ? 'narrator' : 'script';
+}
+
+/** Choose the caption source text: prefer model-generated narration (narrator mode) when present, else the script. */
+export function pickCaptionText(narrationText: string | undefined, script: string): string {
+  const n = narrationText?.trim();
+  return n ? n : script;
+}
+
 /** Map a resolution key to output frame dimensions + the video-model resolution string. */
 export function resolveDims(resolution: string | undefined): { veo: '720p' | '1080p'; width: number; height: number } {
   return resolution === '720p'

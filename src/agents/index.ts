@@ -9,3 +9,4 @@ export { runCreativeDirectorAgent } from './creative-director.ts';
 export { runArtDirectorAgent } from './art-director.ts';
 export { runConsistencyCriticAgent } from './consistency-critic.ts';
 export { runAcousticAnalyzerAgent } from './acoustic-analyzer.ts';
+export { narrateScene } from './scene-narrator.ts';

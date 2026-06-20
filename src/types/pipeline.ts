@@ -31,6 +31,8 @@ export type PipelineOptions = {
   skipScoring?: boolean;
   /** Scoring mode: 'single' (default — one critic) or 'multi-judge' (consensus panel). */
   scoringMode?: string;
+  /** Voiceover source: 'script' (default — read script file + TTS) or 'narrator' (model writes spoken narration from the script-as-brief + TTS in one call). */
+  narrationMode?: string;
 };
 
 export type PipelineState = {
