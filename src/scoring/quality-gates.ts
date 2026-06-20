@@ -69,7 +69,11 @@ export function classifyGate(
   minConfidence = 0.5,
 ): GateVerdict {
   const unparseable = /could not parse|failed to parse|no structured/i.test(score.reasoning ?? '');
-  const lowConfidence = typeof score.confidence === 'number' && score.confidence < minConfidence;
+  // A provided-but-garbage confidence (NaN/Infinity) must be inconclusive too:
+  // `typeof NaN === 'number'` is true but `NaN < minConfidence` is false, so a
+  // bare typeof guard would silently trust a scorer with no real confidence.
+  const c = score.confidence;
+  const lowConfidence = c !== undefined && (!Number.isFinite(c) || c < minConfidence);
   if (unparseable || lowConfidence) return 'inconclusive';
   return score.passed ? 'passed' : 'failed';
 }

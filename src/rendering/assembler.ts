@@ -128,12 +128,24 @@ export async function applyColorGrade(
   return outputPath;
 }
 
+/**
+ * Parse an ffprobe `format=duration` line into seconds. ffprobe prints `N/A`
+ * for streams without a container duration (raw H.264, corrupt files); a bare
+ * parseFloat would yield NaN and silently flow into ffmpeg's `-t NaN`. Throwing
+ * here surfaces a clear error instead. Pure — exported for tests.
+ */
+export function parseDuration(probeStdout: string): number {
+  const seconds = parseFloat(probeStdout.trim());
+  if (!Number.isFinite(seconds)) throw new Error(`getDuration: ffprobe returned no usable duration ("${probeStdout.trim()}")`);
+  return seconds;
+}
+
 export async function getDuration(filePath: string): Promise<number> {
   const { stdout } = await execa('ffprobe', [
     '-v', 'error', '-show_entries', 'format=duration',
     '-of', 'default=noprint_wrappers=1:nokey=1', filePath,
   ]);
-  return parseFloat(stdout.trim());
+  return parseDuration(stdout);
 }
 
 export async function generateThumbnail(

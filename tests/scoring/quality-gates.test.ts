@@ -35,6 +35,18 @@ test('classifyGate', async (t) => {
   await t.test('confidence exactly at the floor passes (strict <)', () => {
     assert.equal(classifyGate({ passed: true, confidence: 0.5 }, 0.5), 'passed');
   });
+
+  // Regression: a provided-but-garbage confidence must be inconclusive. The old
+  // `typeof c === 'number'` guard let NaN through (typeof NaN === 'number', but
+  // NaN < floor is false), trusting the passed flag unconditionally.
+  await t.test('NaN confidence → inconclusive, not a trusted pass', () => {
+    assert.equal(classifyGate({ passed: true, confidence: NaN }), 'inconclusive');
+    assert.equal(classifyGate({ passed: false, confidence: NaN }), 'inconclusive');
+  });
+
+  await t.test('Infinity confidence → inconclusive', () => {
+    assert.equal(classifyGate({ passed: true, confidence: Infinity }), 'inconclusive');
+  });
 });
 
 test('NARRATION_GATES excludes the Q&A-relationship scorers', () => {

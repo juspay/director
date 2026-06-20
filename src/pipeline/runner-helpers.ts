@@ -4,6 +4,23 @@
  * be unit-tested without loading the whole pipeline or mutating process.env.
  */
 
+/**
+ * Parse an integer env value, falling back to `fallback` when it's missing or
+ * not a finite number. Plain `parseInt(process.env.X ?? '5', 10)` yields NaN for
+ * a non-numeric override (e.g. MAX_RETRIES=foo), and `typeof NaN === 'number'`
+ * lets that NaN silently flow into downstream math.
+ */
+export function parseIntOr(raw: string | undefined, fallback: number): number {
+  const n = parseInt(raw ?? '', 10);
+  return Number.isFinite(n) ? n : fallback;
+}
+
+/** Float counterpart of `parseIntOr`. */
+export function parseFloatOr(raw: string | undefined, fallback: number): number {
+  const n = parseFloat(raw ?? '');
+  return Number.isFinite(n) ? n : fallback;
+}
+
 /** Run `fn` over `items` with bounded concurrency, preserving input order in the result. */
 export async function mapWithConcurrency<T, R>(
   items: T[], limit: number, fn: (item: T, index: number) => Promise<R>,
@@ -44,6 +61,9 @@ function srtTime(t: number): string {
  * a word cap as a last resort — so phrases aren't split mid-thought.
  */
 export function scriptToSrt(script: string, durationSec: number, maxWords = 7): string {
+  // A non-finite duration (NaN from a failed probe, Infinity) would propagate
+  // into every cue timestamp as "NaN:NaN:NaN,NaN" — fail loudly instead.
+  if (!Number.isFinite(durationSec)) throw new Error(`scriptToSrt: durationSec must be finite, got ${durationSec}`);
   const words = script.split(/\s+/).filter(Boolean);
   if (words.length === 0) return '';
   const cues: string[][] = [];
