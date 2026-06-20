@@ -6,4 +6,6 @@ export type AvatarOptions = {
   ttsProvider?: string;
   voice?: string;
   model?: string;
+  /** Provider avatar identifier — required by HeyGen (which preset talking head to drive). */
+  avatarId?: string;
 };
