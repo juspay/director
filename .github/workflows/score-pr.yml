@@ -1,8 +1,10 @@
 name: PR Quality Score Gate
 
-# Runs the Director pipeline (single-phase) on PRs and posts the score as
-# a comment. Configurable threshold via repo secret PR_SCORE_THRESHOLD
-# (default 7.0). Requires VERTEX credentials in repo secrets.
+# Runs the Director script scorer on PRs and posts the score as a comment.
+# Activation: add repo secret GOOGLE_APPLICATION_CREDENTIALS_JSON (a Vertex
+# service-account key JSON); optional GOOGLE_CLOUD_PROJECT, VERTEX_LOCATION,
+# and PR_SCORE_THRESHOLD (default 7.0). Without the credentials secret the job
+# self-skips with a notice (never blocks a PR), so it's safe to keep enabled.
 
 on:
   pull_request:
@@ -12,6 +14,11 @@ on:
 permissions:
   contents: read
   pull-requests: write
+
+# Don't pile up score runs on rapid pushes — keep only the latest per PR.
+concurrency:
+  group: score-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
 
 jobs:
   score:
@@ -54,6 +61,7 @@ jobs:
           AGENT_PROVIDER: vertex
           PRODUCT_NAME: Tara
           PRODUCT_DESCRIPTION: an AI coding agent that lives in Slack
+          PR_SCORE_THRESHOLD: ${{ secrets.PR_SCORE_THRESHOLD || '7.0' }}
         run: |
           node --import tsx -e "
             import 'dotenv/config';
@@ -72,8 +80,6 @@ jobs:
             }
             await nl.shutdown();
           "
-        env:
-          PR_SCORE_THRESHOLD: ${{ secrets.PR_SCORE_THRESHOLD || '7.0' }}
 
       - name: Comment score on PR
         if: always() && github.event.pull_request.head.repo.full_name == github.repository
