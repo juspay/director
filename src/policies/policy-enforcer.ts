@@ -68,11 +68,14 @@ export function passesAllPolicies(
 
 function checkRule(rule: PolicyRule, actual: unknown): boolean {
   switch (rule.condition) {
+    // Negated comparisons so a NaN field (typeof NaN === 'number', but every
+    // comparison with NaN is false) is reported as a violation rather than
+    // silently satisfying the bound.
     case 'min':
-      return typeof actual === 'number' && actual < (rule.value as number);
+      return typeof actual === 'number' && !(actual >= (rule.value as number));
     case 'max': {
       if (Array.isArray(actual)) return actual.length > (rule.value as number);
-      return typeof actual === 'number' && actual > (rule.value as number);
+      return typeof actual === 'number' && !(actual <= (rule.value as number));
     }
     case 'equals': {
       if (typeof rule.value === 'number' && typeof actual === 'boolean') {

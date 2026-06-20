@@ -8,6 +8,40 @@
  */
 
 /**
+ * Remove trailing commas (a comma immediately before `}` or `]`) WITHOUT
+ * touching commas inside string literals. A blanket `/,\s*([}\]])/g` replace
+ * corrupts string *values* that contain the substrings `,}` or `,]` (regex
+ * patterns, code snippets, prose like "items: a,b,") — this scanner tracks
+ * in-string state and only drops structural trailing commas. Exported for tests.
+ */
+export function stripTrailingCommas(input: string): string {
+  let out = '';
+  let inString = false;
+  for (let i = 0; i < input.length; i++) {
+    const ch = input[i];
+    if (inString) {
+      out += ch;
+      if (ch === '\\') {
+        // Copy the escaped character verbatim so an escaped quote (\") never
+        // looks like the end of the string.
+        if (i + 1 < input.length) { out += input[i + 1]; i++; }
+      } else if (ch === '"') {
+        inString = false;
+      }
+      continue;
+    }
+    if (ch === '"') { inString = true; out += ch; continue; }
+    if (ch === ',') {
+      let j = i + 1;
+      while (j < input.length && /\s/.test(input[j])) j++;
+      if (j < input.length && (input[j] === '}' || input[j] === ']')) continue; // structural trailing comma → drop
+    }
+    out += ch;
+  }
+  return out;
+}
+
+/**
  * Parse JSON with automatic repair of common Gemini output issues.
  */
 export function safeJsonParse(raw: string): unknown {
@@ -27,8 +61,9 @@ export function safeJsonParse(raw: string): unknown {
     // Continue to repair
   }
 
-  // Step 3: Remove trailing commas (,} or ,])
-  cleaned = cleaned.replace(/,\s*([}\]])/g, '$1');
+  // Step 3: Remove trailing commas (,} or ,]) — string-aware so we never strip
+  // a comma that lives inside a JSON string value.
+  cleaned = stripTrailingCommas(cleaned);
 
   // Step 4: Escape unescaped control characters inside strings
   // This is tricky — we only want to escape inside JSON string values

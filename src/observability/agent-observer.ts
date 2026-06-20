@@ -22,23 +22,32 @@ async function observeAgent<T>(
   fn: () => Promise<T>,
 ): Promise<{ result: T | null; metrics: AgentMetrics }> {
   const start = Date.now();
-  let success = false;
-  let retries = 0;
+  const retries = 0;
+  let threw = false;
   let result: T | null = null;
 
   try {
     result = await fn();
-    success = result !== null;
   } catch (err) {
+    threw = true;
     console.error(`[Observer] ${agentName} threw: ${err instanceof Error ? err.message : String(err)}`);
   }
 
+  // Success = completed without throwing AND returned a defined, non-null value.
+  // `result != null` catches both null and undefined (the old `!== null` marked
+  // an `undefined` return as a success).
+  const success = !threw && result != null;
   const executionTimeMs = Date.now() - start;
+
+  // tokensUsed is cast from an unknown result shape — coerce at runtime so a
+  // string like '300' becomes the number 300 rather than violating the declared
+  // `number` type (a TS-only cast left it as a string, breaking downstream math).
+  const tokensNum = Number((result as Record<string, unknown> | null)?.tokensUsed);
 
   const metrics: AgentMetrics = {
     agentName,
     executionTimeMs,
-    tokensUsed: (result as Record<string, unknown>)?.tokensUsed as number ?? 0,
+    tokensUsed: Number.isFinite(tokensNum) ? tokensNum : 0,
     costEstimate: estimateCost(executionTimeMs),
     success,
     retries,

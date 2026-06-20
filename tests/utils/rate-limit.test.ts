@@ -1,6 +1,22 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { exponentialBackoff, sleep } from '../../src/utils/rate-limit.ts';
+import { exponentialBackoff, sleep, isQuotaError } from '../../src/utils/rate-limit.ts';
+
+describe('isQuotaError', () => {
+  it('matches genuine quota / rate-limit markers', () => {
+    for (const m of ['HTTP 429', 'RESOURCE_EXHAUSTED', 'quota exceeded', 'Rate limit reached', 'rate_limit', 'rate-limit', 'Too Many Requests']) {
+      assert.equal(isQuotaError(m), true, `should match: ${m}`);
+    }
+  });
+
+  // Regression: the old bare includes('rate') fired on these, wrongly applying
+  // exponential backoff to non-quota errors.
+  it('does NOT match innocent messages that merely contain "rate"', () => {
+    for (const m of ['failed to iterate results', 'moderate rate of failures', 'exchange rate unavailable', 'could not generate image']) {
+      assert.equal(isQuotaError(m), false, `should not match: ${m}`);
+    }
+  });
+});
 
 describe('exponentialBackoff', () => {
   it('returns success on first attempt when fn succeeds', async () => {
