@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { resolveDims, mapWithConcurrency, scriptToSrt, parseIntOr, parseFloatOr } from '../../src/pipeline/runner-helpers.ts';
+import { resolveDims, mapWithConcurrency, scriptToSrt, parseIntOr, parseFloatOr, resolveNarrationMode, pickCaptionText } from '../../src/pipeline/runner-helpers.ts';
 
 test('parseIntOr / parseFloatOr', async (t) => {
   await t.test('parses a valid numeric string', () => {
@@ -16,6 +16,28 @@ test('parseIntOr / parseFloatOr', async (t) => {
   await t.test('honors an explicit zero override (not the fallback)', () => {
     assert.equal(parseIntOr('0', 5), 0);
     assert.equal(parseFloatOr('0', 9), 0);
+  });
+});
+
+test('resolveNarrationMode', async (t) => {
+  await t.test("only explicit 'narrator' switches; everything else stays 'script'", () => {
+    assert.equal(resolveNarrationMode('narrator'), 'narrator');
+    assert.equal(resolveNarrationMode('NARRATOR'), 'narrator');
+    assert.equal(resolveNarrationMode('  narrator '), 'narrator');
+    assert.equal(resolveNarrationMode('script'), 'script');
+    assert.equal(resolveNarrationMode(undefined), 'script');
+    assert.equal(resolveNarrationMode('typo'), 'script');
+  });
+});
+
+test('pickCaptionText', async (t) => {
+  await t.test('prefers generated narration when present', () => {
+    assert.equal(pickCaptionText('Spoken narration.', 'The brief.'), 'Spoken narration.');
+  });
+  await t.test('falls back to the script when narration is empty/whitespace/undefined', () => {
+    assert.equal(pickCaptionText('', 'The brief.'), 'The brief.');
+    assert.equal(pickCaptionText('   ', 'The brief.'), 'The brief.');
+    assert.equal(pickCaptionText(undefined, 'The brief.'), 'The brief.');
   });
 });
 
