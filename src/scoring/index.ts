@@ -8,4 +8,5 @@ export { scoreWithMultiJudge, runMultiJudgeVideoScoring, aggregateJudgeScores } 
 // Deterministic scoring (CLI wrappers)
 export { checkRegression } from './vmaf-gating.ts';
 export { checkTemporalQuality } from './vbench-checker.ts';
+export { runRegressionGate, aggregateRegressionGate } from './regression-gate.ts';
 export { CostTracker } from './cost-tracker.ts';
