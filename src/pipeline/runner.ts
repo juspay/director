@@ -352,7 +352,12 @@ async function phaseAvatar(nl: NeuroLink, opts: PipelineOptions): Promise<unknow
   }
 
   const provider = AVATAR_ALIAS[opts.avatarProvider ?? 'did'] ?? 'd-id';
-  return avatar.generate(nl, provider, opts.avatarSource, { audio: voiceoverPath }, outputPath);
+  const avatarId = opts.avatarId ?? process.env.HEYGEN_AVATAR_ID;
+  // HeyGen drives a preset talking head — it can't run without an avatar id.
+  if (provider === 'heygen' && !avatarId) {
+    return { status: 'skipped', reason: 'HeyGen requires an avatar id (use --avatar-id or HEYGEN_AVATAR_ID)' };
+  }
+  return avatar.generate(nl, provider, opts.avatarSource, { audio: voiceoverPath }, outputPath, avatarId ? { avatarId } : {});
 }
 
 const VIDEO_ALIAS: Record<string, generators.VideoProvider> = {
@@ -768,7 +773,8 @@ Options:
   --resolution RES     Output resolution: 1080p (default) | 720p
   --broll-mode MODE    B-roll: director (default) | concept | generic
   --avatar-source PATH Avatar source image for D-ID/MuseTalk
-  --avatar-provider    Avatar: did|musetalk
+  --avatar-provider    Avatar: did|heygen|musetalk
+  --avatar-id ID       Provider avatar id (required by HeyGen; or HEYGEN_AVATAR_ID)
   --scoring MODE       Scoring: single (default) | multi-judge (consensus panel)
   --narration MODE     Voiceover: script (default — file + TTS) | narrator (model writes narration + TTS)
   --skip-scoring       Skip post-pipeline AI scoring
@@ -791,6 +797,7 @@ Options:
     if (args[i] === '--music-gen') opts.musicGenerator = args[++i];
     if (args[i] === '--avatar-source') opts.avatarSource = args[++i];
     if (args[i] === '--avatar-provider') opts.avatarProvider = args[++i];
+    if (args[i] === '--avatar-id') opts.avatarId = args[++i];
     if (args[i] === '--scoring') opts.scoringMode = args[++i];
     if (args[i] === '--narration') opts.narrationMode = args[++i];
     if (args[i] === '--skip-scoring') opts.skipScoring = true;
