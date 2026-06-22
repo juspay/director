@@ -341,23 +341,33 @@ const AVATAR_ALIAS: Record<string, avatar.AvatarProvider> = {
 
 async function phaseAvatar(nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
   if (opts.dryRun) return { status: 'dry-run' };
-  if (!opts.avatarSource) return { status: 'skipped', reason: 'No avatar source configured (use --avatar-source)' };
-
   const outDir = opts.outputDir ?? OUTPUT_DIR;
-  const voiceoverPath = path.join(outDir, 'voiceover.mp3');
   const outputPath = path.join(outDir, 'avatar.mp4');
+  const provider = AVATAR_ALIAS[opts.avatarProvider ?? 'did'] ?? 'd-id';
 
+  // HeyGen: use the direct REST adapter — NeuroLink's avatar mode registers the
+  // handler but its internal download step fails ("fetch failed"). The adapter
+  // drives HeyGen TTS from the script, so it needs neither a source image nor the
+  // VO file — just an avatar id + voice id + key.
+  if (provider === 'heygen') {
+    const avatarId = opts.avatarId ?? process.env.HEYGEN_AVATAR_ID;
+    const voiceId = process.env.HEYGEN_VOICE_ID;
+    const apiKey = process.env.HEYGEN_API_KEY;
+    if (!avatarId) return { status: 'skipped', reason: 'HeyGen requires an avatar id (use --avatar-id or HEYGEN_AVATAR_ID)' };
+    if (!apiKey || !voiceId) return { status: 'skipped', reason: 'HeyGen requires HEYGEN_API_KEY and HEYGEN_VOICE_ID env' };
+    const { width, height } = resolveDims(opts.resolution);
+    const text = await readScript(opts.scriptPath);
+    const { renderHeyGenAvatar } = await import('../avatar/heygen-direct.ts');
+    return renderHeyGenAvatar(outputPath, { apiKey, avatarId, voiceId, text, width, height });
+  }
+
+  // D-ID / Replicate: lip-sync a source portrait to the voiceover via NeuroLink.
+  if (!opts.avatarSource) return { status: 'skipped', reason: 'No avatar source configured (use --avatar-source)' };
+  const voiceoverPath = path.join(outDir, 'voiceover.mp3');
   try { await fs.access(voiceoverPath); } catch {
     return { status: 'skipped', reason: 'Voiceover not found — run phase 1 first' };
   }
-
-  const provider = AVATAR_ALIAS[opts.avatarProvider ?? 'did'] ?? 'd-id';
-  const avatarId = opts.avatarId ?? process.env.HEYGEN_AVATAR_ID;
-  // HeyGen drives a preset talking head — it can't run without an avatar id.
-  if (provider === 'heygen' && !avatarId) {
-    return { status: 'skipped', reason: 'HeyGen requires an avatar id (use --avatar-id or HEYGEN_AVATAR_ID)' };
-  }
-  return avatar.generate(nl, provider, opts.avatarSource, { audio: voiceoverPath }, outputPath, avatarId ? { avatarId } : {});
+  return avatar.generate(nl, provider, opts.avatarSource, { audio: voiceoverPath }, outputPath, opts.avatarId ? { avatarId: opts.avatarId } : {});
 }
 
 const VIDEO_ALIAS: Record<string, generators.VideoProvider> = {
