@@ -78,6 +78,72 @@ export function classifyGate(
   return score.passed ? 'passed' : 'failed';
 }
 
+/** A resolved LLM scorer's raw output (the fulfilled value of `scorer.score()`). */
+export type ScorerResult = {
+  scorerId: string; scorerName: string; score: number; normalizedScore: number;
+  passed: boolean; threshold: number; reasoning: string; confidence?: number;
+};
+
+/**
+ * Aggregate the settled scorer results into a pass/fail report. Pure — exported
+ * for unit testing without any LLM calls. A rejected scorer is *inconclusive*
+ * (a transient blip must not sink the gate); the aggregate (min/avg) is computed
+ * over conclusive gates only, and the gate passes only when something was
+ * actually verified (≥1 pass) and nothing failed.
+ */
+export function buildQualityGateReport(
+  scoreSettled: Array<PromiseSettledResult<ScorerResult>>,
+  names: string[],
+  thresholds: Record<string, number>,
+  minConfidence = 0.5,
+): QualityGateReport {
+  const scores: QualityGateReport['scores'] = scoreSettled.map((s, i) => {
+    if (s.status === 'fulfilled') {
+      return {
+        name: names[i],
+        ok: true,
+        scorerId: s.value.scorerId,
+        scorerName: s.value.scorerName,
+        score: s.value.score,
+        normalizedScore: s.value.normalizedScore,
+        passed: s.value.passed,
+        threshold: s.value.threshold,
+        reasoning: s.value.reasoning,
+        confidence: s.value.confidence,
+        inconclusive: classifyGate(s.value, minConfidence) === 'inconclusive',
+      };
+    }
+    // Execution error → can't judge; treat as inconclusive rather than a hard fail
+    // so a transient blip never sinks the whole gate.
+    return { name: names[i], ok: false, error: s.reason instanceof Error ? s.reason.message : String(s.reason) };
+  });
+
+  const verdictOf = (s: QualityGateReport['scores'][number]): GateVerdict =>
+    s.ok ? classifyGate(s, minConfidence) : 'inconclusive';
+
+  const passedGates       = scores.filter(s => verdictOf(s) === 'passed');
+  const failedGates       = scores.filter(s => verdictOf(s) === 'failed');
+  const inconclusiveGates = scores.filter(s => verdictOf(s) === 'inconclusive');
+  // Aggregate over conclusive gates only — inconclusive noise must not skew it.
+  const conclusive = [...passedGates, ...failedGates].filter(s => s.ok) as Array<Extract<QualityGateReport['scores'][number], { ok: true }>>;
+  const minScore   = conclusive.length ? Math.min(...conclusive.map(s => s.normalizedScore)) : 0;
+  const avgScore   = conclusive.length ? conclusive.reduce((sum, s) => sum + s.normalizedScore, 0) / conclusive.length : 0;
+
+  return {
+    // Pass only when something was actually verified and nothing failed.
+    passed: failedGates.length === 0 && passedGates.length > 0,
+    thresholds,
+    overall: {
+      minScore,
+      avgScore,
+      passedGates: passedGates.length,
+      failedGates: failedGates.map(g => g.name),
+      inconclusiveGates: inconclusiveGates.map(g => g.name),
+    },
+    scores,
+  };
+}
+
 export async function runQualityGates(
   input: QualityGateInput,
   config: QualityGateConfig = {},
@@ -125,51 +191,8 @@ export async function runQualityGates(
   const names = selected.map(s => s.name);
   const scoreSettled = await Promise.allSettled(resolvedScorers.map(scorer => scorer.score(scorerInput)));
   const minConfidence = config.minConfidence ?? 0.5;
-  const scores: QualityGateReport['scores'] = scoreSettled.map((s, i) => {
-    if (s.status === 'fulfilled') {
-      return {
-        name: names[i],
-        ok: true,
-        scorerId: s.value.scorerId,
-        scorerName: s.value.scorerName,
-        score: s.value.score,
-        normalizedScore: s.value.normalizedScore,
-        passed: s.value.passed,
-        threshold: s.value.threshold,
-        reasoning: s.value.reasoning,
-        confidence: s.value.confidence,
-        inconclusive: classifyGate(s.value, minConfidence) === 'inconclusive',
-      };
-    }
-    // Execution error → can't judge; treat as inconclusive rather than a hard fail
-    // so a transient blip never sinks the whole gate.
-    return { name: names[i], ok: false, error: s.reason instanceof Error ? s.reason.message : String(s.reason) };
-  });
 
-  const verdictOf = (s: QualityGateReport['scores'][number]): GateVerdict =>
-    s.ok ? classifyGate(s, minConfidence) : 'inconclusive';
-
-  const passedGates       = scores.filter(s => verdictOf(s) === 'passed');
-  const failedGates       = scores.filter(s => verdictOf(s) === 'failed');
-  const inconclusiveGates = scores.filter(s => verdictOf(s) === 'inconclusive');
-  // Aggregate over conclusive gates only — inconclusive noise must not skew it.
-  const conclusive = [...passedGates, ...failedGates].filter(s => s.ok) as Array<Extract<QualityGateReport['scores'][number], { ok: true }>>;
-  const minScore   = conclusive.length ? Math.min(...conclusive.map(s => s.normalizedScore)) : 0;
-  const avgScore   = conclusive.length ? conclusive.reduce((sum, s) => sum + s.normalizedScore, 0) / conclusive.length : 0;
-
-  const report: QualityGateReport = {
-    // Pass only when something was actually verified and nothing failed.
-    passed: failedGates.length === 0 && passedGates.length > 0,
-    thresholds,
-    overall: {
-      minScore,
-      avgScore,
-      passedGates: passedGates.length,
-      failedGates: failedGates.map(g => g.name),
-      inconclusiveGates: inconclusiveGates.map(g => g.name),
-    },
-    scores,
-  };
+  const report = buildQualityGateReport(scoreSettled, names, thresholds, minConfidence);
 
   const outPath = config.outputPath ?? path.join('output', 'quality-gates.json');
   await fs.mkdir(path.dirname(outPath), { recursive: true });
