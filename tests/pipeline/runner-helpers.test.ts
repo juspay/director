@@ -1,6 +1,26 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { resolveDims, mapWithConcurrency, scriptToSrt, parseIntOr, parseFloatOr, resolveNarrationMode, pickCaptionText } from '../../src/pipeline/runner-helpers.ts';
+import { resolveDims, mapWithConcurrency, scriptToSrt, parseIntOr, parseFloatOr, resolveNarrationMode, pickCaptionText, completedPhaseCount } from '../../src/pipeline/runner-helpers.ts';
+
+const PHASE_NAMES = ['voiceover', 'avatar', 'broll', 'music', 'render', 'assembly', 'captions'];
+
+test('completedPhaseCount', async (t) => {
+  await t.test('counts only real phases, ignoring post-pipeline keys', () => {
+    const results = { voiceover: {}, broll: {}, scoring: {}, cost: {}, 'quality-gates': {} };
+    assert.equal(completedPhaseCount(results, PHASE_NAMES), 2);
+  });
+  await t.test('is 0 for a fresh run (drives the resume check)', () => {
+    assert.equal(completedPhaseCount({}, PHASE_NAMES), 0);
+    assert.equal(completedPhaseCount({ scoring: {}, cost: {} }, PHASE_NAMES), 0);
+  });
+  await t.test('counts every phase when all are done', () => {
+    const all = Object.fromEntries(PHASE_NAMES.map((n) => [n, {}]));
+    assert.equal(completedPhaseCount(all, PHASE_NAMES), PHASE_NAMES.length);
+  });
+  await t.test('accepts a Set of names as well as an array', () => {
+    assert.equal(completedPhaseCount({ voiceover: {}, music: {} }, new Set(PHASE_NAMES)), 2);
+  });
+});
 
 test('parseIntOr / parseFloatOr', async (t) => {
   await t.test('parses a valid numeric string', () => {

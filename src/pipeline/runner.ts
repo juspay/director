@@ -18,7 +18,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { OUTPUT_DIR } from './config.ts';
 import { loadState, saveState } from './state.ts';
-import { mapWithConcurrency, resolveDims, scriptToSrt, resolveNarrationMode, pickCaptionText } from './runner-helpers.ts';
+import { mapWithConcurrency, resolveDims, scriptToSrt, resolveNarrationMode, pickCaptionText, completedPhaseCount } from './runner-helpers.ts';
 import type { PipelineState } from '../types/index.ts';
 
 // TypeScript modules (primary)
@@ -116,7 +116,13 @@ export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineS
   });
 
   const phasesToRun = opts.phases ?? PHASES.map((_, i) => i + 1);
-  await costTracker.reset().catch(() => undefined); // cost accounting must never break a run
+  // Only truncate the cost log on a *fresh* run. On a resume (state already has
+  // completed phases), the prior invocation's cost lines must survive — otherwise
+  // getSummary() undercounts spend across the multi-invocation run, since resumed
+  // phases are skipped and never re-log their cost. Cost accounting must never
+  // break a run, hence the swallow.
+  const isResume = completedPhaseCount(state.results, PHASES.map((p) => p.name)) > 0;
+  if (!isResume) await costTracker.reset().catch(() => undefined);
   startReporter();
 
   console.log(`\n${'='.repeat(60)}`);
@@ -247,8 +253,7 @@ export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineS
 
   // Count only real phase results — post-pipeline keys (scoring, quality-gates, cost)
   // aren't phases and would otherwise overcount.
-  const phaseNames = new Set<string>(PHASES.map((p) => p.name));
-  const phasesDone = Object.keys(state.results).filter((k) => phaseNames.has(k)).length;
+  const phasesDone = completedPhaseCount(state.results, PHASES.map((p) => p.name));
   console.log(`\n${'='.repeat(60)}`);
   console.log(`  Pipeline complete. ${phasesDone}/${PHASES.length} phases.`);
   console.log(`${'='.repeat(60)}\n`);
@@ -272,6 +277,10 @@ async function runPhase(
   try {
     const { result } = await observe(phase.name, () => phase.fn(neurolink, opts));
     state.results[phase.name] = result ?? { status: 'complete' };
+    // Keep currentStep in step with real completions (runner never advanced it
+    // before, so it stayed 0 for the whole run and the dashboard read 0/7). Count
+    // completed phases directly — correct even under concurrent phases 2-4.
+    state.currentStep = completedPhaseCount(state.results, PHASES.map((p) => p.name));
     state.updatedAt = new Date().toISOString();
     await saveState('pipeline-state.json', state);
   } catch (err) {

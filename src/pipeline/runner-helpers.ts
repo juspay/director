@@ -21,6 +21,19 @@ export function parseFloatOr(raw: string | undefined, fallback: number): number 
   return Number.isFinite(n) ? n : fallback;
 }
 
+/**
+ * Count how many pipeline phases have completed, given the run's `results` map
+ * and the set of real phase names. `results` also holds post-pipeline keys
+ * (scoring, cost, …) which must not be counted as phases. Used both to drive the
+ * live `currentStep` and to detect a resume (count > 0 → already-started run).
+ */
+export function completedPhaseCount(results: Record<string, unknown>, phaseNames: Iterable<string>): number {
+  const names = phaseNames instanceof Set ? phaseNames : new Set(phaseNames);
+  let n = 0;
+  for (const key of Object.keys(results)) if (names.has(key)) n++;
+  return n;
+}
+
 /** Run `fn` over `items` with bounded concurrency, preserving input order in the result. */
 export async function mapWithConcurrency<T, R>(
   items: T[], limit: number, fn: (item: T, index: number) => Promise<R>,

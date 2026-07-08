@@ -15,7 +15,10 @@ export type ObservabilityReport = {
   totalAgents: number;
   completedAgents: number;
   failedAgents: number;
+  /** Time-based cost *estimate* (agent-observer's $/sec heuristic) — NOT real spend. */
   totalCost: number;
+  /** Real API spend for the run from CostTracker (`state.results.cost.total`), when available. */
+  actualCost: number | null;
   totalTokens: number;
   policyViolations: PolicyViolation[];
   agentMetrics: AgentMetrics[];
