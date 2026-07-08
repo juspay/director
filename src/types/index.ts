@@ -4,6 +4,7 @@
  */
 export * from './agents.ts';
 export * from './avatar.ts';
+export * from './backlot.ts';
 export * from './distribution.ts';
 export * from './music.ts';
 export * from './observability.ts';
