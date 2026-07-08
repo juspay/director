@@ -57,7 +57,7 @@ import { startReporter, stopReporter } from '../observability/reporter.ts';
 import { runSuperObserver } from '../observability/super-observer.ts';
 
 // Scoring
-import { CostTracker } from '../scoring/index.ts';
+import { CostTracker, runRegressionGate } from '../scoring/index.ts';
 
 const PHASES = [
   { name: 'voiceover', label: '1. Voiceover', fn: phaseVoiceover },
@@ -211,20 +211,50 @@ export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineS
         console.warn('[QualityGates] skipped:', e instanceof Error ? e.message : e);
       }
 
-      // Production verdict — combine the (visual) video score with the (content)
-      // quality gates into one ship/no-ship signal.
+      // Deterministic regression gate — run the model-free VMAF + VBench gate as
+      // part of the pipeline, not only via the `npm run gate` CLI. Lenient by
+      // construction: a missing reference skips VMAF and absent CLI binaries
+      // resolve to PASS, so it only fails on a *measured* regression and never
+      // breaks a completed run. A reference baseline (opt/env) enables VMAF.
+      try {
+        await fs.access(finalVideo);
+        console.log('\n--- Post-pipeline: Regression Gate ---\n');
+        const reference = opts.regressionReference ?? process.env.REGRESSION_REFERENCE ?? null;
+        const gate = await observe('regression-gate', () => runRegressionGate(finalVideo, reference, {
+          outputPath: path.join(outDir, 'regression-gate.json'),
+        }));
+        if (gate.result) state.results['regression-gate'] = gate.result;
+      } catch {
+        // Final video not found — skip the regression gate.
+      }
+
+      // Production verdict — combine the (visual) video score, the (content)
+      // quality gates, and the (deterministic) regression gate into one
+      // ship/no-ship signal.
       const videoScore = (state.results['scoring'] as { weighted_overall?: number } | undefined)?.weighted_overall;
       const gates = state.results['quality-gates'] as { passed?: boolean } | undefined;
-      if (typeof videoScore === 'number' || gates) {
+      const regression = state.results['regression-gate'] as { passed?: boolean } | undefined;
+      if (typeof videoScore === 'number' || gates || regression) {
         const gatesPassed = gates?.passed ?? null;
+        // null = gate didn't run (no tools / no final video) → non-blocking.
+        // false = a *measured* regression → hard downgrade.
+        const regressionPassed = regression?.passed ?? null;
         const videoOk = typeof videoScore === 'number' && videoScore >= 7;
-        // SHIP-READY needs both signals positive. When gates never ran (no script),
-        // we can't claim content was verified — flag that rather than imply a pass.
-        const verdict = gatesPassed === null
-          ? (videoOk ? 'SHIP-READY (no content gates)' : 'NEEDS WORK')
-          : (videoOk && gatesPassed ? 'SHIP-READY' : 'NEEDS WORK');
-        console.log(`\n[Production Verdict] ${verdict} — video ${typeof videoScore === 'number' ? `${videoScore.toFixed(2)}/10` : 'n/a'}${gates ? ` · gates ${gatesPassed ? 'PASS' : 'FAIL'}` : ' · gates not run'}`);
-        state.results['production-verdict'] = { verdict, videoScore: videoScore ?? null, gatesPassed };
+        // SHIP-READY needs a good video score, no failing content gates, and no
+        // measured quality regression. Signals that never ran don't block; only a
+        // definitive failure does. When content gates never ran (no script), we
+        // can't claim content was verified — flag that rather than imply a pass.
+        const shipReady = videoOk && gatesPassed !== false && regressionPassed !== false;
+        const verdict = shipReady
+          ? (gatesPassed === null ? 'SHIP-READY (no content gates)' : 'SHIP-READY')
+          : 'NEEDS WORK';
+        const parts = [
+          `video ${typeof videoScore === 'number' ? `${videoScore.toFixed(2)}/10` : 'n/a'}`,
+          gates ? `gates ${gatesPassed ? 'PASS' : 'FAIL'}` : 'gates not run',
+          regression ? `regression ${regressionPassed ? 'PASS' : 'FAIL'}` : 'regression not run',
+        ];
+        console.log(`\n[Production Verdict] ${verdict} — ${parts.join(' · ')}`);
+        state.results['production-verdict'] = { verdict, videoScore: videoScore ?? null, gatesPassed, regressionPassed };
       }
 
       console.log('\n--- Post-pipeline: Observability Report ---\n');
@@ -795,6 +825,7 @@ Options:
   --avatar-provider    Avatar: did|heygen|musetalk
   --avatar-id ID       Provider avatar id (required by HeyGen; or HEYGEN_AVATAR_ID)
   --scoring MODE       Scoring: single (default) | multi-judge (consensus panel)
+  --reference PATH     Baseline video for the VMAF regression gate (or REGRESSION_REFERENCE env)
   --narration MODE     Voiceover: script (default — file + TTS) | narrator (model writes narration + TTS)
   --skip-scoring       Skip post-pipeline AI scoring
   --dry-run            Print plan without executing
@@ -818,6 +849,7 @@ Options:
     if (args[i] === '--avatar-provider') opts.avatarProvider = args[++i];
     if (args[i] === '--avatar-id') opts.avatarId = args[++i];
     if (args[i] === '--scoring') opts.scoringMode = args[++i];
+    if (args[i] === '--reference') opts.regressionReference = args[++i];
     if (args[i] === '--narration') opts.narrationMode = args[++i];
     if (args[i] === '--skip-scoring') opts.skipScoring = true;
     if (args[i] === '--dry-run') opts.dryRun = true;

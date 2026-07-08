@@ -33,6 +33,8 @@ export type PipelineOptions = {
   skipScoring?: boolean;
   /** Scoring mode: 'single' (default — one critic) or 'multi-judge' (consensus panel). */
   scoringMode?: string;
+  /** Reference video for the deterministic VMAF regression gate. Absent → VBench-only (no baseline to regress against). Falls back to REGRESSION_REFERENCE env. */
+  regressionReference?: string;
   /** Voiceover source: 'script' (default — read script file + TTS) or 'narrator' (model writes spoken narration from the script-as-brief + TTS in one call). */
   narrationMode?: string;
 };
