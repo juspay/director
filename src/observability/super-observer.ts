@@ -13,7 +13,20 @@ import type { ObservabilityReport, PolicyViolation, AgentMetrics, Penalty } from
 import { getMetrics, getMetricsSummary } from './agent-observer.ts';
 import { evaluateAllGroups, printEvaluationReport } from './evaluation-agent.ts';
 import { validatePipelineCompliance } from '../policies/policy-validator.ts';
-import { saveState } from '../pipeline/state.ts';
+import { loadState, saveState } from '../pipeline/state.ts';
+
+/**
+ * Real API spend for the run, as recorded by CostTracker and persisted onto the
+ * pipeline state (`results.cost.total`). Distinct from the agent-observer's
+ * time-based `summary.totalCost` estimate — read it so the report can carry both
+ * numbers, clearly labelled, instead of conflating a guess with real spend.
+ */
+async function readActualCost(): Promise<number | null> {
+  const state = await loadState<{ results?: Record<string, unknown> }>('pipeline-state.json', { results: {} })
+    .catch(() => ({ results: {} as Record<string, unknown> }));
+  const cost = state.results?.['cost'] as { total?: number } | undefined;
+  return typeof cost?.total === 'number' ? cost.total : null;
+}
 
 const penalties: Penalty[] = [];
 
@@ -28,8 +41,15 @@ export async function runSuperObserver(): Promise<ObservabilityReport> {
   // 1. Collect metrics
   const metrics = getMetrics();
   const summary = getMetricsSummary();
+  const actualCost = await readActualCost();
   console.log(`[SuperObserver] Agents observed: ${summary.total} (${summary.succeeded} ok, ${summary.failed} failed)`);
-  console.log(`[SuperObserver] Total cost: $${summary.totalCost.toFixed(4)} | Time: ${(summary.totalTimeMs / 1000).toFixed(1)}s`);
+  // Two distinct numbers: a time-based estimate (observer) and real API spend
+  // (CostTracker). Label them so neither is mistaken for the other.
+  console.log(
+    `[SuperObserver] Est. agent cost (time-based): $${summary.totalCost.toFixed(4)}` +
+    `${actualCost !== null ? ` | Actual API spend: $${actualCost.toFixed(4)}` : ''}` +
+    ` | Time: ${(summary.totalTimeMs / 1000).toFixed(1)}s`,
+  );
 
   // 2. Group evaluations
   const evaluations = evaluateAllGroups();
@@ -48,6 +68,7 @@ export async function runSuperObserver(): Promise<ObservabilityReport> {
     completedAgents: summary.succeeded,
     failedAgents: summary.failed,
     totalCost: summary.totalCost,
+    actualCost,
     totalTokens: metrics.reduce((sum, m) => sum + m.tokensUsed, 0),
     policyViolations: compliance.violations,
     agentMetrics: metrics,
