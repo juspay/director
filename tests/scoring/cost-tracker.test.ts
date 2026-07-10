@@ -88,6 +88,37 @@ test('CostTracker.estimate', async (t) => {
       else process.env.VERTEX_VIDEO_PER_SEC = prev;
     }
   });
+
+  await t.test('image generation billed per image (the unlogged-keyframes gap)', async () => {
+    const p = await tmpLog();
+    const ct = new CostTracker(p);
+    await ct.reset();
+    // A representative director-mode run: 1 hero + 8 keyframes = 9 images.
+    await ct.log('vertex', 'image-gen', { images: 9 });
+    assert.equal((await ct.getSummary()).total, 0.351); // 9 × $0.039
+    await fs.rm(path.dirname(p), { recursive: true, force: true });
+  });
+
+  await t.test('VERTEX_IMAGE_PER_IMAGE overrides the image rate; explicit 0 means free', async () => {
+    const prev = process.env.VERTEX_IMAGE_PER_IMAGE;
+    try {
+      process.env.VERTEX_IMAGE_PER_IMAGE = '0.10';
+      const p = await tmpLog();
+      const ct = new CostTracker(p);
+      await ct.reset();
+      await ct.log('vertex', 'image-gen', { images: 10 });
+      assert.equal((await ct.getSummary()).total, 1.0); // 10 × $0.10 override
+
+      process.env.VERTEX_IMAGE_PER_IMAGE = '0'; // explicit zero must NOT fall back
+      await ct.reset();
+      await ct.log('vertex', 'image-gen', { images: 10 });
+      assert.equal((await ct.getSummary()).total, 0);
+      await fs.rm(path.dirname(p), { recursive: true, force: true });
+    } finally {
+      if (prev === undefined) delete process.env.VERTEX_IMAGE_PER_IMAGE;
+      else process.env.VERTEX_IMAGE_PER_IMAGE = prev;
+    }
+  });
 });
 
 test('CostTracker.reset scopes the summary to one run', async () => {

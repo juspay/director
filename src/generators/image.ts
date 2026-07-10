@@ -11,6 +11,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { ImageGenService } from '@juspay/neurolink';
+import { CostTracker } from '../scoring/cost-tracker.ts';
 
 export type ImageGenOpts = {
   referenceImages?: Array<Buffer | string>;
@@ -27,6 +28,12 @@ function service(): ImageGenService {
   if (!_svc) _svc = new ImageGenService();
   return _svc;
 }
+
+// Logging at this choke point covers every billed image — hero, per-shot
+// keyframes, and critic-driven regenerations — which previously never reached
+// cost_log.jsonl at all (a director-mode run bills up to 1 + shots × attempts
+// images that the end-of-run summary silently omitted).
+const costTracker = new CostTracker();
 
 /**
  * Resolve the provider/model/negative/aspect for an image generation, applying
@@ -68,6 +75,8 @@ export async function generateImage(
   }
   await fs.mkdir(path.dirname(outputPath), { recursive: true });
   await fs.writeFile(outputPath, result.imageBuffer);
+  // Accounting must never break generation, hence the swallow.
+  await costTracker.log(provider, 'image-gen', { images: 1 }).catch(() => undefined);
   console.log(`[image] ${provider}/${model}: ${outputPath} (${(result.imageBuffer.length / 1024).toFixed(0)} KB)`);
   return outputPath;
 }
