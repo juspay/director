@@ -17,7 +17,7 @@ import { NeuroLink, initializeOpenTelemetry } from '@juspay/neurolink';
 import fs from 'fs/promises';
 import path from 'path';
 import { OUTPUT_DIR } from './config.ts';
-import { loadState, saveState, stateDirFor } from './state.ts';
+import { appendToLog, loadState, saveState, stateDirFor } from './state.ts';
 import { mapWithConcurrency, resolveDims, scriptToSrt, resolveNarrationMode, pickCaptionText, completedPhaseCount } from './runner-helpers.ts';
 import type { PipelineState } from '../types/index.ts';
 
@@ -563,7 +563,14 @@ async function directorScenes(nl: NeuroLink, opts: PipelineOptions, ctx: BrollCt
         // and for non-product shots.
         if (!shot.shows_product || !heroBuf || attempt >= maxRegen) break;
         const verdict = await runConsistencyCriticAgent(nl, heroPath, keyPath, plan.product_bible).catch(() => null);
-        if (!shouldRegenerate(verdict, threshold)) break;
+        const regen = shouldRegenerate(verdict, threshold);
+        // Persist each verdict so Backlot's shot grid can show the critic's
+        // call per attempt. Observability only — never let it affect the run.
+        await appendToLog('shot-verdicts.jsonl', {
+          shot: i, attempt: attempt + 1, score: verdict?.score ?? null, regenerate: regen,
+          ...(regen && verdict?.fix_instruction ? { fix: verdict.fix_instruction.slice(0, 160) } : {}),
+        }).catch(() => undefined);
+        if (!regen) break;
         console.log(`  [B-roll] shot ${i} off-brand (${verdict?.score}/10) — regenerating (${attempt + 2}/${maxRegen + 1})`);
         prompt = applyFixToPrompt(basePrompt, verdict?.fix_instruction ?? '');
       }

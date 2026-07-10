@@ -34,6 +34,18 @@ h2{color:var(--head);font-size:.9em;text-transform:uppercase;letter-spacing:.09e
 .pill .st{margin-left:auto;font:600 11px ui-monospace,monospace;text-transform:uppercase;opacity:.55}
 .pill.done .st{color:var(--ok);opacity:1}
 .pill .err{margin-left:auto;color:var(--fail);font-size:13px;max-width:60%;text-align:right}
+.shotgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.shot{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.shot img,.shot .ph{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#000}
+.shot .ph{display:flex;align-items:center;justify-content:center;color:var(--pend);font-size:26px}
+.shot .meta{padding:8px 10px}
+.shot .sid{font:600 11px ui-monospace,monospace;color:var(--head)}
+.shot .beat{font-size:12px;color:#8a8a9a;margin:3px 0 7px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.chips{display:flex;flex-wrap:wrap;gap:4px}
+.chip{font:600 10px ui-monospace,monospace;padding:2px 7px;border-radius:9px;border:1px solid var(--line);color:#8a8a9a}
+.chip.ok{color:var(--ok);border-color:var(--ok)}
+.chip.run{color:var(--amber);border-color:var(--amber)}
+.chip.warn{color:var(--fail);border-color:var(--fail)}
 .cost .total{font-size:2em;font-weight:800;color:var(--amber)}
 .cost .sub{color:#8a8a9a;font:12px ui-monospace,monospace;margin-top:4px}
 footer{margin-top:26px;color:#66667a;font:12px ui-monospace,monospace}
@@ -53,6 +65,7 @@ export function renderShell(snapshot: BacklotSnapshot): string {
   <header><h1>🎬 Backlot</h1><span id="status" class="badge"></span></header>
   <div class="bar"><div id="fill" class="fill"></div></div>
   <div id="phases" class="phases"></div>
+  <section id="shotsec" hidden><h2>B-roll shots</h2><div id="shots" class="shotgrid"></div></section>
   <section class="cost"><h2>Estimated API spend</h2><div id="cost"></div></section>
   <footer id="foot"></footer>
 </div>
@@ -75,8 +88,30 @@ function render(s){
   var prov = Object.keys(s.cost.byProvider || {});
   var sub = s.cost.events + ' events' + (prov.length ? ' · ' + prov.map(function(k){ return esc(k) + ' ' + money(s.cost.byProvider[k]); }).join(' · ') : '');
   el('cost').innerHTML = '<div class="total">' + money(s.cost.total) + '</div><div class="sub">' + sub + '</div>';
+  renderShots(s);
   var act = s.lastActivityAt || s.updatedAt;
   el('foot').textContent = act ? ('last activity ' + act) : 'no run recorded yet';
+}
+function renderShots(s){
+  var sec = el('shotsec');
+  if (!s.shots || !s.shots.length) { sec.hidden = true; return; }
+  sec.hidden = false;
+  var bust = encodeURIComponent(s.lastActivityAt || '');
+  el('shots').innerHTML = s.shots.map(function(sh){
+    var thumb = sh.keyframe
+      ? '<img src="/api/shot-key/' + sh.index + '?t=' + bust + '" alt="keyframe ' + sh.index + '" loading="lazy">'
+      : '<div class="ph">·</div>';
+    var st = sh.animated ? ['animated','ok'] : sh.keyframe ? ['keyframe','run'] : ['pending',''];
+    var chips = '<span class="chip ' + st[1] + '">' + st[0] + '</span>';
+    if (sh.showsProduct) chips += '<span class="chip">product</span>';
+    if (sh.critic) {
+      chips += '<span class="chip ' + (sh.critic.regenerate ? 'warn' : 'ok') + '">critic ' +
+        (sh.critic.score == null ? '—' : sh.critic.score + '/10') +
+        (sh.critic.attempts > 1 ? ' ×' + sh.critic.attempts : '') + '</span>';
+    }
+    return '<div class="shot">' + thumb + '<div class="meta"><div class="sid">' + esc(sh.sceneId) + '</div>' +
+      '<div class="beat">' + esc(sh.beat) + '</div><div class="chips">' + chips + '</div></div></div>';
+  }).join('');
 }
 render(SNAP);
 function poll(){

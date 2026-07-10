@@ -8,12 +8,19 @@
  * BACKLOT_STATE_DIR env). Without `--state`, the newest per-run state dir wins
  * (see `resolveStateDir`) — runs keep their state under their own output dir.
  */
+import fs from 'fs/promises';
 import http from 'http';
+import path from 'path';
+import { STATE_DIR } from '../pipeline/config.ts';
 import { readSnapshot, resolveStateDir } from './tailer.ts';
 import { renderShell } from './html.ts';
 import { parseIntOr } from '../pipeline/runner-helpers.ts';
 
 const DEFAULT_PORT = 4599;
+
+// Keyframe thumbnails: digits-only index (no traversal surface), resolved
+// against the run's output dir — the parent of a per-run state dir.
+const SHOT_KEY_ROUTE = /^\/api\/shot-key\/(\d{1,3})$/;
 
 export function createBacklotServer(stateDir?: string): http.Server {
   return http.createServer(async (req, res) => {
@@ -44,6 +51,22 @@ export function createBacklotServer(stateDir?: string): http.Server {
         const tick = setInterval(() => { void push(); }, 1500);
         const beat = setInterval(() => res.write(': ping\n\n'), 15_000);
         req.on('close', () => { clearInterval(tick); clearInterval(beat); });
+        return;
+      }
+      const shotKey = url.match(SHOT_KEY_ROUTE);
+      if (req.method === 'GET' && shotKey) {
+        const outDir = path.dirname(stateDir ?? STATE_DIR);
+        const png = await fs
+          .readFile(path.join(outDir, `.broll-dir-key-${Number(shotKey[1])}.png`))
+          .catch(() => null);
+        if (!png) {
+          res.writeHead(404, { 'Content-Type': 'text/plain' });
+          res.end('No keyframe');
+          return;
+        }
+        // no-cache (not immutable): the critic can regenerate a keyframe in place.
+        res.writeHead(200, { 'Content-Type': 'image/png', 'Cache-Control': 'no-cache' });
+        res.end(png);
         return;
       }
       if (req.method === 'GET' && (url === '/' || url === '/index.html')) {

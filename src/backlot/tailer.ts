@@ -10,7 +10,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { STATE_DIR } from '../pipeline/config.ts';
 import { completedPhaseCount } from '../pipeline/runner-helpers.ts';
-import type { ActivityInfo, BacklotSnapshot, CostView, Liveness, PhaseView, PipelineStateLike } from '../types/backlot.ts';
+import type { ActivityInfo, BacklotSnapshot, CostView, Liveness, PhaseView, PipelineStateLike, ShotView } from '../types/backlot.ts';
 
 /** Quiet period before an incomplete run reads as stalled (BACKLOT_STALL_SECONDS overrides). */
 export const DEFAULT_STALL_SECONDS = 300;
@@ -146,6 +146,45 @@ export async function resolveStateDir(
 }
 
 /**
+ * Derive the director-mode shot grid: the art director's plan (state dir) joined
+ * with what exists on disk (keyframes/segments in the run's output dir — the
+ * parent of a per-run state dir) and the critic's logged verdicts. Returns
+ * undefined when no plan exists (non-director modes, or nothing yet). For the
+ * legacy project-global state dir the artifact probes simply come back false.
+ */
+export async function readShots(stateDir: string): Promise<ShotView[] | undefined> {
+  const planRaw = await fs.readFile(path.join(stateDir, 'shot-plan.json'), 'utf8').catch(() => null);
+  if (!planRaw) return undefined;
+  let shots: Array<{ scene_id?: string; beat?: string; shows_product?: boolean; camera?: string }>;
+  try {
+    const plan = JSON.parse(planRaw) as { shots?: unknown };
+    if (!Array.isArray(plan.shots) || plan.shots.length === 0) return undefined;
+    shots = plan.shots as typeof shots;
+  } catch { return undefined; }
+
+  const outDir = path.dirname(stateDir);
+  const verdicts = (await readJsonl(path.join(stateDir, 'shot-verdicts.jsonl'))) as Array<{
+    shot?: number; score?: number | null; regenerate?: boolean;
+  }>;
+  const onDisk = (p: string): Promise<boolean> => fs.access(p).then(() => true, () => false);
+
+  return Promise.all(shots.map(async (s, i) => {
+    const mine = verdicts.filter((v) => v.shot === i);
+    const last = mine[mine.length - 1];
+    return {
+      index: i,
+      sceneId: s.scene_id ?? `shot_${i}`,
+      beat: s.beat ?? '',
+      showsProduct: !!s.shows_product,
+      camera: s.camera ?? '',
+      keyframe: await onDisk(path.join(outDir, `.broll-dir-key-${i}.png`)),
+      animated: await onDisk(path.join(outDir, `.broll-dir-seg-${i}.mp4`)),
+      critic: last ? { score: last.score ?? null, regenerate: !!last.regenerate, attempts: mine.length } : null,
+    };
+  }));
+}
+
+/**
  * Read the live snapshot from a state dir (default: the real `.pipeline-state`).
  * Tolerant by design — a missing or half-written state file yields an empty-but-
  * valid snapshot rather than throwing, so the poller never crashes mid-run.
@@ -168,5 +207,8 @@ export async function readSnapshot(stateDir: string = STATE_DIR): Promise<Backlo
   }
   const envStall = Number(process.env.BACKLOT_STALL_SECONDS);
   const stallSeconds = Number.isFinite(envStall) && envStall > 0 ? envStall : undefined;
-  return deriveSnapshot(state, costLines, { mtimeMs, nowMs: Date.now(), stallSeconds });
+  const snap = deriveSnapshot(state, costLines, { mtimeMs, nowMs: Date.now(), stallSeconds });
+  // Shot grid rides along when a plan exists; deriveSnapshot itself stays pure.
+  const shots = await readShots(stateDir);
+  return shots ? { ...snap, shots } : snap;
 }

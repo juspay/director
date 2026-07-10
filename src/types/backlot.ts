@@ -44,6 +44,31 @@ export type CostView = {
   events: number;
 };
 
+/** Latest consistency-critic call for a shot, from shot-verdicts.jsonl. */
+export type ShotCriticView = {
+  /** 0-10 product-identity score from the latest attempt (null = critic errored). */
+  score: number | null;
+  /** Whether that latest verdict demanded a regeneration. */
+  regenerate: boolean;
+  /** Total critic attempts logged for this shot. */
+  attempts: number;
+};
+
+/** One director-mode shot in the b-roll grid, derived from the shot plan + on-disk artifacts. */
+export type ShotView = {
+  index: number;
+  sceneId: string;
+  /** The narrative beat this shot covers (from the art director's plan). */
+  beat: string;
+  showsProduct: boolean;
+  camera: string;
+  /** A keyframe image exists on disk (thumbnail servable). */
+  keyframe: boolean;
+  /** The animated segment exists on disk. */
+  animated: boolean;
+  critic: ShotCriticView | null;
+};
+
 export type BacklotSnapshot = {
   phases: PhaseView[];
   currentStep: number;
@@ -56,6 +81,8 @@ export type BacklotSnapshot = {
   updatedAt: string | null;
   errors: string[];
   cost: CostView;
+  /** Director-mode b-roll grid — present only once a shot plan exists. */
+  shots?: ShotView[];
 };
 
 /**
