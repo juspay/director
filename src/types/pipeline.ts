@@ -35,6 +35,8 @@ export type PipelineOptions = {
   scoringMode?: string;
   /** Reference video for the deterministic VMAF regression gate. Absent → VBench-only (no baseline to regress against). Falls back to REGRESSION_REFERENCE env. */
   regressionReference?: string;
+  /** Whole-run spend cap in USD — the pre-flight projection aborts b-roll generation before the first paid call if already-logged spend + worst-case projection would exceed it. Falls back to BUDGET_USD env. */
+  budgetUsd?: number;
   /** Voiceover source: 'script' (default — read script file + TTS) or 'narrator' (model writes spoken narration from the script-as-brief + TTS in one call). */
   narrationMode?: string;
 };
