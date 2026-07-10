@@ -84,6 +84,8 @@ npm start -- --script assets/script.txt --resolution 720p --broll-mode concept
 
 ## Usage
 
+> Driving Director with an AI coding assistant (inspect, repair, or compose runs)? Start at [AGENT_GUIDE.md](AGENT_GUIDE.md).
+
 ### CLI reference
 
 ```
