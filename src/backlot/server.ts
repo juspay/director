@@ -7,12 +7,17 @@
  * CLI: `npm run backlot [-- --port 4599 --state <dir>]`  (or BACKLOT_PORT /
  * BACKLOT_STATE_DIR env). Without `--state`, the newest per-run state dir wins
  * (see `resolveStateDir`) — runs keep their state under their own output dir.
+ *
+ * Phase D: every data endpoint takes `?run=<state dir>` to view any discovered
+ * run (validated against the server's own scan — arbitrary paths are rejected),
+ * `/api/runs` lists them, and `/api/replay?t=<ms>` reconstructs the run as of a
+ * moment in its history for the scrubber.
  */
 import fs from 'fs/promises';
 import http from 'http';
 import path from 'path';
 import { STATE_DIR } from '../pipeline/config.ts';
-import { readSnapshot, resolveStateDir } from './tailer.ts';
+import { listRuns, readReplay, readSnapshot, replayBounds, resolveStateDir, scanStateDirs } from './tailer.ts';
 import { renderShell } from './html.ts';
 import { parseIntOr } from '../pipeline/runner-helpers.ts';
 
@@ -22,14 +27,51 @@ const DEFAULT_PORT = 4599;
 // against the run's output dir — the parent of a per-run state dir.
 const SHOT_KEY_ROUTE = /^\/api\/shot-key\/(\d{1,3})$/;
 
-export function createBacklotServer(stateDir?: string): http.Server {
+export function createBacklotServer(stateDir?: string, base: string = process.cwd()): http.Server {
+  const defaultDir = (): string => stateDir ?? STATE_DIR;
+
+  /**
+   * Resolve the `?run=` param to a state dir. The client may only name dirs the
+   * server's own scan (or its configured default) yields — anything else is
+   * rejected so the endpoint can't be used to read arbitrary paths.
+   */
+  const resolveRun = async (runParam: string | null): Promise<string | null> => {
+    if (!runParam) return defaultDir();
+    if (runParam === defaultDir()) return runParam;
+    const scanned = await scanStateDirs(base);
+    return scanned.some((r) => r.dir === runParam) ? runParam : null;
+  };
+
   return http.createServer(async (req, res) => {
-    const url = (req.url ?? '/').split('?')[0];
+    const parsed = new URL(req.url ?? '/', 'http://backlot.local');
+    const url = parsed.pathname;
     try {
+      const run = await resolveRun(parsed.searchParams.get('run'));
+      if (!run) {
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        res.end('Unknown run');
+        return;
+      }
+
       if (req.method === 'GET' && url === '/api/snapshot') {
-        const snap = await readSnapshot(stateDir);
+        const snap = await readSnapshot(run);
         res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
         res.end(JSON.stringify(snap));
+        return;
+      }
+      if (req.method === 'GET' && url === '/api/runs') {
+        const runs = await listRuns(base, run);
+        res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
+        res.end(JSON.stringify({ runs }));
+        return;
+      }
+      if (req.method === 'GET' && url === '/api/replay') {
+        const bounds = await replayBounds(run);
+        const tParam = Number(parsed.searchParams.get('t'));
+        const t = Number.isFinite(tParam) && tParam > 0 ? tParam : bounds.endMs;
+        const snapshot = t == null ? await readSnapshot(run) : await readReplay(run, t);
+        res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
+        res.end(JSON.stringify({ bounds, t, snapshot }));
         return;
       }
       if (req.method === 'GET' && url === '/api/events') {
@@ -43,7 +85,7 @@ export function createBacklotServer(stateDir?: string): http.Server {
         let last = '';
         const push = async (): Promise<void> => {
           try {
-            const data = JSON.stringify(await readSnapshot(stateDir));
+            const data = JSON.stringify(await readSnapshot(run));
             if (data !== last) { last = data; res.write(`data: ${data}\n\n`); }
           } catch { /* transient read hiccup — the next tick retries */ }
         };
@@ -55,7 +97,7 @@ export function createBacklotServer(stateDir?: string): http.Server {
       }
       const shotKey = url.match(SHOT_KEY_ROUTE);
       if (req.method === 'GET' && shotKey) {
-        const outDir = path.dirname(stateDir ?? STATE_DIR);
+        const outDir = path.dirname(run);
         const png = await fs
           .readFile(path.join(outDir, `.broll-dir-key-${Number(shotKey[1])}.png`))
           .catch(() => null);
@@ -70,7 +112,7 @@ export function createBacklotServer(stateDir?: string): http.Server {
         return;
       }
       if (req.method === 'GET' && (url === '/' || url === '/index.html')) {
-        const snap = await readSnapshot(stateDir);
+        const snap = await readSnapshot(run);
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
         res.end(renderShell(snap));
         return;

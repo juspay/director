@@ -34,6 +34,12 @@ h2{color:var(--head);font-size:.9em;text-transform:uppercase;letter-spacing:.09e
 .pill .st{margin-left:auto;font:600 11px ui-monospace,monospace;text-transform:uppercase;opacity:.55}
 .pill.done .st{color:var(--ok);opacity:1}
 .pill .err{margin-left:auto;color:var(--fail);font-size:13px;max-width:60%;text-align:right}
+#runsel{margin-left:auto;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:8px;font:600 12px ui-monospace,monospace;padding:5px 8px;max-width:220px}
+.replaybar{display:flex;align-items:center;gap:12px;margin:12px 0 4px}
+.replaybar .live{font:700 11px ui-monospace,monospace;letter-spacing:.08em;padding:4px 10px;border-radius:14px;border:1px solid var(--line);background:transparent;color:#8a8a9a;cursor:pointer}
+.replaybar .live.on{color:var(--ok);border-color:var(--ok)}
+.replaybar input[type=range]{flex:1;accent-color:var(--amber)}
+.rtime{font:600 12px ui-monospace,monospace;color:var(--amber);min-width:82px;text-align:right}
 .shotgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
 .shot{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
 .shot img,.shot .ph{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#000}
@@ -62,8 +68,13 @@ export function renderShell(snapshot: BacklotSnapshot): string {
 <style>${CSS}</style>
 </head><body>
 <div class="wrap">
-  <header><h1>🎬 Backlot</h1><span id="status" class="badge"></span></header>
+  <header><h1>🎬 Backlot</h1><span id="status" class="badge"></span><select id="runsel" hidden></select></header>
   <div class="bar"><div id="fill" class="fill"></div></div>
+  <div id="replaybar" class="replaybar" hidden>
+    <button id="livebtn" class="live on" type="button">LIVE</button>
+    <input id="scrub" type="range" min="0" max="1000" value="1000" aria-label="replay position">
+    <span id="rtime" class="rtime"></span>
+  </div>
   <div id="phases" class="phases"></div>
   <section id="shotsec" hidden><h2>B-roll shots</h2><div id="shots" class="shotgrid"></div></section>
   <section class="cost"><h2>Estimated API spend</h2><div id="cost"></div></section>
@@ -99,7 +110,7 @@ function renderShots(s){
   var bust = encodeURIComponent(s.lastActivityAt || '');
   el('shots').innerHTML = s.shots.map(function(sh){
     var thumb = sh.keyframe
-      ? '<img src="/api/shot-key/' + sh.index + '?t=' + bust + '" alt="keyframe ' + sh.index + '" loading="lazy">'
+      ? '<img src="/api/shot-key/' + sh.index + qs({ t: bust }) + '" alt="keyframe ' + sh.index + '" loading="lazy">'
       : '<div class="ph">·</div>';
     var st = sh.animated ? ['animated','ok'] : sh.keyframe ? ['keyframe','run'] : ['pending',''];
     var chips = '<span class="chip ' + st[1] + '">' + st[0] + '</span>';
@@ -113,24 +124,95 @@ function renderShots(s){
       '<div class="beat">' + esc(sh.beat) + '</div><div class="chips">' + chips + '</div></div></div>';
   }).join('');
 }
-render(SNAP);
+// ---- run switching + live/replay plumbing (Phase D) ----
+var RUN = '';                 // '' = the server default run
+var MODE = 'live';            // 'live' | 'replay'
+var BOUNDS = null;            // {startMs, endMs} for the scrubber
+function qs(extra){
+  var parts = [];
+  if (RUN) parts.push('run=' + encodeURIComponent(RUN));
+  for (var k in (extra || {})) if (extra[k]) parts.push(k + '=' + extra[k]);
+  return parts.length ? '?' + parts.join('&') : '';
+}
+function onLive(s){ SNAP = s; if (MODE === 'live') render(s); }
 function poll(){
-  fetch('/api/snapshot', { cache: 'no-store' })
+  fetch('/api/snapshot' + qs(), { cache: 'no-store' })
     .then(function(r){ return r.ok ? r.json() : null; })
-    .then(function(j){ if (j) { SNAP = j; render(j); } })
+    .then(function(j){ if (j) onLive(j); })
     .catch(function(){ /* transient — retry next tick */ });
 }
-var pollTimer = null;
+var pollTimer = null, es = null;
 function startPolling(){ if (!pollTimer) pollTimer = setInterval(poll, 1500); }
 // SSE first (server pushes only on change); EventSource reconnects transient
 // drops itself — fall back to polling only once the stream is fully CLOSED.
-if (window.EventSource) {
-  var es = new EventSource('/api/events');
-  es.onmessage = function(ev){ try { SNAP = JSON.parse(ev.data); render(SNAP); } catch (e) { /* skip torn frame */ } };
-  es.onerror = function(){ if (es.readyState === 2) startPolling(); };
-} else {
-  startPolling();
+function startStream(){
+  if (es) { es.close(); es = null; }
+  if (!window.EventSource) { startPolling(); return; }
+  es = new EventSource('/api/events' + qs());
+  es.onmessage = function(ev){ try { onLive(JSON.parse(ev.data)); } catch (e) { /* skip torn frame */ } };
+  es.onerror = function(){ if (es && es.readyState === 2) startPolling(); };
 }
+function loadRuns(){
+  fetch('/api/runs' + qs(), { cache: 'no-store' })
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(j){
+      if (!j || !j.runs || j.runs.length < 2) return;
+      var sel = el('runsel');
+      sel.innerHTML = j.runs.map(function(r){
+        return '<option value="' + esc(r.id) + '"' + (r.active ? ' selected' : '') + '>' + esc(r.label) + '</option>';
+      }).join('');
+      sel.hidden = false;
+      sel.onchange = function(){ switchRun(sel.value); };
+    })
+    .catch(function(){ /* the picker is optional chrome */ });
+}
+function switchRun(id){
+  RUN = id;
+  goLive();
+  loadBounds();
+  poll();
+  startStream();
+}
+// ---- replay scrubber ----
+function loadBounds(){
+  fetch('/api/replay' + qs(), { cache: 'no-store' })
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(j){
+      BOUNDS = j && j.bounds && j.bounds.startMs != null ? j.bounds : null;
+      el('replaybar').hidden = !BOUNDS;
+    })
+    .catch(function(){ el('replaybar').hidden = true; });
+}
+var scrubT = null;
+function onScrub(){
+  if (!BOUNDS) return;
+  MODE = 'replay';
+  el('livebtn').className = 'live';
+  var frac = Number(el('scrub').value) / 1000;
+  var t = Math.round(BOUNDS.startMs + frac * (BOUNDS.endMs - BOUNDS.startMs));
+  el('rtime').textContent = new Date(t).toLocaleTimeString();
+  clearTimeout(scrubT);
+  scrubT = setTimeout(function(){
+    fetch('/api/replay' + qs({ t: t }), { cache: 'no-store' })
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(j){ if (j && MODE === 'replay') render(j.snapshot); })
+      .catch(function(){ /* scrub again */ });
+  }, 120);
+}
+function goLive(){
+  MODE = 'live';
+  el('livebtn').className = 'live on';
+  el('scrub').value = 1000;
+  el('rtime').textContent = '';
+  render(SNAP);
+}
+el('scrub').addEventListener('input', onScrub);
+el('livebtn').addEventListener('click', goLive);
+
+render(SNAP);
+loadRuns();
+loadBounds();
+startStream();
 </script>
 </body></html>`;
 }

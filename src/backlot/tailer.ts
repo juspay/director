@@ -10,7 +10,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { STATE_DIR } from '../pipeline/config.ts';
 import { completedPhaseCount } from '../pipeline/runner-helpers.ts';
-import type { ActivityInfo, BacklotSnapshot, CostView, Liveness, PhaseView, PipelineStateLike, ShotView } from '../types/backlot.ts';
+import type { ActivityInfo, BacklotSnapshot, CostView, Liveness, PhaseView, PipelineStateLike, RunInfo, ShotView } from '../types/backlot.ts';
 
 /** Quiet period before an incomplete run reads as stalled (BACKLOT_STALL_SECONDS overrides). */
 export const DEFAULT_STALL_SECONDS = 300;
@@ -131,18 +131,38 @@ export async function resolveStateDir(
   const i = args.indexOf('--state');
   if (i >= 0 && args[i + 1]) return args[i + 1];
   if (env.BACKLOT_STATE_DIR) return env.BACKLOT_STATE_DIR;
+  return (await scanStateDirs(base))[0]?.dir ?? STATE_DIR;
+}
 
+/**
+ * All discoverable run state dirs under a base — `<base>/.pipeline-state`
+ * (legacy) plus every `<base>/<child>/.pipeline-state` — that actually contain
+ * a `pipeline-state.json`, newest first. This is also the run-switching
+ * allowlist: the server accepts a `?run=` value only if this scan produced it.
+ */
+export async function scanStateDirs(base: string = process.cwd()): Promise<Array<{ dir: string; mtimeMs: number }>> {
   const candidates: string[] = [path.join(base, '.pipeline-state')];
   const children = await fs.readdir(base, { withFileTypes: true }).catch(() => [] as import('fs').Dirent[]);
   for (const c of children) {
     if (c.isDirectory()) candidates.push(path.join(base, c.name, '.pipeline-state'));
   }
-  let newest: { dir: string; mtimeMs: number } | null = null;
+  const found: Array<{ dir: string; mtimeMs: number }> = [];
   for (const dir of candidates) {
     const st = await fs.stat(path.join(dir, 'pipeline-state.json')).catch(() => null);
-    if (st && (!newest || st.mtimeMs > newest.mtimeMs)) newest = { dir, mtimeMs: st.mtimeMs };
+    if (st) found.push({ dir, mtimeMs: st.mtimeMs });
   }
-  return newest?.dir ?? STATE_DIR;
+  return found.sort((a, b) => b.mtimeMs - a.mtimeMs);
+}
+
+/** The discoverable runs as UI options: id = the state dir, label = the run's output dir name. */
+export async function listRuns(base: string = process.cwd(), activeDir?: string): Promise<RunInfo[]> {
+  const scanned = await scanStateDirs(base);
+  return scanned.map((r) => ({
+    id: r.dir,
+    label: path.dirname(r.dir) === base ? '(project root)' : path.basename(path.dirname(r.dir)),
+    lastActivityAt: new Date(r.mtimeMs).toISOString(),
+    active: r.dir === activeDir,
+  }));
 }
 
 /**
@@ -211,4 +231,48 @@ export async function readSnapshot(stateDir: string = STATE_DIR): Promise<Backlo
   // Shot grid rides along when a plan exists; deriveSnapshot itself stays pure.
   const shots = await readShots(stateDir);
   return shots ? { ...snap, shots } : snap;
+}
+
+/**
+ * Replay (Phase D): reconstruct the run as it looked at time `tMs`, purely from
+ * the logs the pipeline already writes — agent-metrics.jsonl carries a
+ * timestamped completion line per phase, cost_log.jsonl carries timestamped
+ * spend. No new runner instrumentation needed.
+ */
+export function deriveReplayState(
+  metrics: Array<Record<string, unknown>>,
+  tMs: number,
+): PipelineStateLike {
+  const results: Record<string, unknown> = {};
+  for (const m of metrics) {
+    const name = typeof m.agentName === 'string' ? m.agentName : null;
+    if (!name || !PHASE_NAMES.includes(name) || m.success === false) continue;
+    const ts = Date.parse(typeof m.timestamp === 'string' ? m.timestamp : '');
+    if (Number.isFinite(ts) && ts <= tMs) results[name] = { replay: true };
+  }
+  return { results, errors: [] };
+}
+
+const lineTs = (l: Record<string, unknown>): number =>
+  Date.parse(typeof l.timestamp === 'string' ? l.timestamp : '');
+
+/** The scrubbing window: [earliest, latest] timestamp across both logs, or nulls when empty. */
+export async function replayBounds(stateDir: string): Promise<{ startMs: number | null; endMs: number | null }> {
+  const lines = [
+    ...(await readJsonl(path.join(stateDir, 'agent-metrics.jsonl'))),
+    ...(await readJsonl(path.join(stateDir, 'cost_log.jsonl'))),
+  ];
+  const stamps = lines.map(lineTs).filter(Number.isFinite);
+  if (!stamps.length) return { startMs: null, endMs: null };
+  return { startMs: Math.min(...stamps), endMs: Math.max(...stamps) };
+}
+
+/** The snapshot as of `tMs` — phases completed by then, spend accrued by then. */
+export async function readReplay(stateDir: string, tMs: number): Promise<BacklotSnapshot> {
+  const metrics = await readJsonl(path.join(stateDir, 'agent-metrics.jsonl'));
+  const costLines = (await readJsonl(path.join(stateDir, 'cost_log.jsonl')))
+    .filter((l) => { const ts = lineTs(l); return Number.isFinite(ts) && ts <= tMs; }) as CostLine[];
+  // Activity pinned to the replay instant: an incomplete moment reads as
+  // 'running' (it WAS running then), the final moment reads as 'complete'.
+  return deriveSnapshot(deriveReplayState(metrics, tMs), costLines, { mtimeMs: tMs, nowMs: tMs });
 }

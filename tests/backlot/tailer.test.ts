@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'fs/promises';
 import os from 'os';
 import path from 'path';
-import { deriveSnapshot, readSnapshot, readShots, resolveStateDir, BACKLOT_PHASES } from '../../src/backlot/tailer.ts';
+import { deriveSnapshot, deriveReplayState, listRuns, readReplay, readShots, readSnapshot, replayBounds, resolveStateDir, BACKLOT_PHASES } from '../../src/backlot/tailer.ts';
 import { STATE_DIR } from '../../src/pipeline/config.ts';
 
 test('deriveSnapshot', async (t) => {
@@ -244,6 +244,81 @@ test('readShots', async (t) => {
       assert.equal(s.shots?.length, 2);
     } finally {
       await fs.rm(outDir, { recursive: true, force: true });
+    }
+  });
+});
+
+test('listRuns + scanStateDirs', async () => {
+  const base = await fs.mkdtemp(path.join(os.tmpdir(), 'backlot-runs-'));
+  try {
+    const mk = async (dir: string, mtime: Date) => {
+      await fs.mkdir(dir, { recursive: true });
+      const f = path.join(dir, 'pipeline-state.json');
+      await fs.writeFile(f, '{"results":{}}');
+      await fs.utimes(f, mtime, mtime);
+    };
+    await mk(path.join(base, 'run-old', '.pipeline-state'), new Date('2026-01-01T00:00:00Z'));
+    await mk(path.join(base, 'run-new', '.pipeline-state'), new Date('2026-06-01T00:00:00Z'));
+    await mk(path.join(base, '.pipeline-state'), new Date('2026-03-01T00:00:00Z'));
+
+    const active = path.join(base, 'run-new', '.pipeline-state');
+    const runs = await listRuns(base, active);
+    assert.deepEqual(runs.map((r) => r.label), ['run-new', '(project root)', 'run-old'], 'newest first, legacy labeled');
+    assert.deepEqual(runs.map((r) => r.active), [true, false, false]);
+    assert.ok(runs.every((r) => r.id.endsWith('.pipeline-state') && r.lastActivityAt));
+  } finally {
+    await fs.rm(base, { recursive: true, force: true });
+  }
+});
+
+test('replay', async (t) => {
+  const T0 = Date.parse('2026-07-10T10:00:00Z');
+  const MIN = 60_000;
+  const metric = (name: string, atMs: number, success = true) =>
+    JSON.stringify({ agentName: name, executionTimeMs: 0, success, timestamp: new Date(atMs).toISOString() });
+  const cost = (provider: string, c: number, atMs: number) =>
+    JSON.stringify({ provider, operation: 'x', cost: c, timestamp: new Date(atMs).toISOString() });
+
+  await t.test('deriveReplayState replays only successful phase completions up to T', () => {
+    const metrics = [
+      { agentName: 'voiceover', success: true, timestamp: new Date(T0).toISOString() },
+      { agentName: 'broll', success: true, timestamp: new Date(T0 + 5 * MIN).toISOString() },
+      { agentName: 'music', success: false, timestamp: new Date(T0 + 1 * MIN).toISOString() },
+      { agentName: 'not-a-phase', success: true, timestamp: new Date(T0).toISOString() },
+    ];
+    const mid = deriveReplayState(metrics, T0 + 2 * MIN);
+    assert.deepEqual(Object.keys(mid.results ?? {}), ['voiceover'], 'broll is later, music failed, unknown ignored');
+    const end = deriveReplayState(metrics, T0 + 9 * MIN);
+    assert.deepEqual(Object.keys(end.results ?? {}).sort(), ['broll', 'voiceover']);
+  });
+
+  await t.test('readReplay + replayBounds reconstruct the run at T from the on-disk logs', async () => {
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'backlot-replay-'));
+    try {
+      const names = ['voiceover', 'avatar', 'broll', 'music', 'render', 'assembly', 'captions'];
+      await fs.writeFile(
+        path.join(dir, 'agent-metrics.jsonl'),
+        names.map((n, i) => metric(n, T0 + i * MIN)).join('\n') + '\n',
+      );
+      await fs.writeFile(
+        path.join(dir, 'cost_log.jsonl'),
+        cost('openai', 0.01, T0) + '\n' + cost('vertex', 12.8, T0 + 2.5 * MIN) + '\n',
+      );
+
+      const bounds = await replayBounds(dir);
+      assert.deepEqual(bounds, { startMs: T0, endMs: T0 + 6 * MIN });
+
+      const mid = await readReplay(dir, T0 + 2 * MIN);
+      assert.equal(mid.currentStep, 3, 'voiceover+avatar+broll completed by T0+2min');
+      assert.equal(mid.liveness, 'running', 'the run WAS running at that instant');
+      assert.equal(mid.cost.total, 0.01, 'the Veo bill lands later');
+
+      const end = await readReplay(dir, T0 + 6 * MIN);
+      assert.equal(end.complete, true);
+      assert.equal(end.liveness, 'complete');
+      assert.equal(end.cost.total, 12.81);
+    } finally {
+      await fs.rm(dir, { recursive: true, force: true });
     }
   });
 });
