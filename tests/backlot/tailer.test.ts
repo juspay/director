@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import fs from 'fs/promises';
 import os from 'os';
 import path from 'path';
-import { deriveSnapshot, readSnapshot, BACKLOT_PHASES } from '../../src/backlot/tailer.ts';
+import { deriveSnapshot, readSnapshot, resolveStateDir, BACKLOT_PHASES } from '../../src/backlot/tailer.ts';
+import { STATE_DIR } from '../../src/pipeline/config.ts';
 
 test('deriveSnapshot', async (t) => {
   await t.test('all phases pending, zero cost, on an empty run', () => {
@@ -80,5 +81,58 @@ test('readSnapshot', async (t) => {
     assert.ok(s.phases.every((p) => p.status === 'pending'));
     assert.equal(s.cost.total, 0);
     assert.equal(s.complete, false);
+  });
+});
+
+test('resolveStateDir', async (t) => {
+  const mkState = async (dir: string, mtime?: Date) => {
+    await fs.mkdir(dir, { recursive: true });
+    const f = path.join(dir, 'pipeline-state.json');
+    await fs.writeFile(f, '{"results":{}}');
+    if (mtime) await fs.utimes(f, mtime, mtime);
+  };
+
+  await t.test('--state arg wins over env and any scan', async () => {
+    const dir = await resolveStateDir(['--state', '/explicit/dir'], { BACKLOT_STATE_DIR: '/env/dir' }, '/nonexistent-base');
+    assert.equal(dir, '/explicit/dir');
+  });
+
+  await t.test('BACKLOT_STATE_DIR wins over the scan', async () => {
+    const dir = await resolveStateDir([], { BACKLOT_STATE_DIR: '/env/dir' }, '/nonexistent-base');
+    assert.equal(dir, '/env/dir');
+  });
+
+  await t.test('newest per-run child state dir wins the mtime scan', async () => {
+    const base = await fs.mkdtemp(path.join(os.tmpdir(), 'backlot-resolve-'));
+    try {
+      await mkState(path.join(base, 'output-a', '.pipeline-state'), new Date('2026-01-01T00:00:00Z'));
+      await mkState(path.join(base, 'output-b', '.pipeline-state'), new Date('2026-06-01T00:00:00Z'));
+      const dir = await resolveStateDir([], {}, base);
+      assert.equal(dir, path.join(base, 'output-b', '.pipeline-state'));
+    } finally {
+      await fs.rm(base, { recursive: true, force: true });
+    }
+  });
+
+  await t.test('the legacy project-global dir competes in the same scan', async () => {
+    const base = await fs.mkdtemp(path.join(os.tmpdir(), 'backlot-resolve-'));
+    try {
+      await mkState(path.join(base, 'output-a', '.pipeline-state'), new Date('2026-01-01T00:00:00Z'));
+      await mkState(path.join(base, '.pipeline-state'), new Date('2026-06-01T00:00:00Z'));
+      const dir = await resolveStateDir([], {}, base);
+      assert.equal(dir, path.join(base, '.pipeline-state'));
+    } finally {
+      await fs.rm(base, { recursive: true, force: true });
+    }
+  });
+
+  await t.test('nothing found → legacy STATE_DIR fallback (readSnapshot stays tolerant)', async () => {
+    const base = await fs.mkdtemp(path.join(os.tmpdir(), 'backlot-resolve-empty-'));
+    try {
+      const dir = await resolveStateDir([], {}, base);
+      assert.equal(dir, STATE_DIR);
+    } finally {
+      await fs.rm(base, { recursive: true, force: true });
+    }
   });
 });

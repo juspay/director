@@ -4,27 +4,29 @@
  * pipeline's on-disk state. It never imports runner.ts, so running it (or not)
  * has zero effect on the pipeline.
  *
- * CLI: `npm run backlot [-- --port 4599]`  (or BACKLOT_PORT env)
+ * CLI: `npm run backlot [-- --port 4599 --state <dir>]`  (or BACKLOT_PORT /
+ * BACKLOT_STATE_DIR env). Without `--state`, the newest per-run state dir wins
+ * (see `resolveStateDir`) — runs keep their state under their own output dir.
  */
 import http from 'http';
-import { readSnapshot } from './tailer.ts';
+import { readSnapshot, resolveStateDir } from './tailer.ts';
 import { renderShell } from './html.ts';
 import { parseIntOr } from '../pipeline/runner-helpers.ts';
 
 const DEFAULT_PORT = 4599;
 
-export function createBacklotServer(): http.Server {
+export function createBacklotServer(stateDir?: string): http.Server {
   return http.createServer(async (req, res) => {
     const url = (req.url ?? '/').split('?')[0];
     try {
       if (req.method === 'GET' && url === '/api/snapshot') {
-        const snap = await readSnapshot();
+        const snap = await readSnapshot(stateDir);
         res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
         res.end(JSON.stringify(snap));
         return;
       }
       if (req.method === 'GET' && (url === '/' || url === '/index.html')) {
-        const snap = await readSnapshot();
+        const snap = await readSnapshot(stateDir);
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
         res.end(renderShell(snap));
         return;
@@ -47,9 +49,11 @@ export function resolvePort(args: string[], env: NodeJS.ProcessEnv): number {
 
 // CLI entry
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const port = resolvePort(process.argv.slice(2), process.env);
-  createBacklotServer().listen(port, () => {
+  const args = process.argv.slice(2);
+  const port = resolvePort(args, process.env);
+  const stateDir = await resolveStateDir(args, process.env);
+  createBacklotServer(stateDir).listen(port, () => {
     console.log(`[Backlot] live run dashboard → http://localhost:${port}`);
-    console.log(`[Backlot] tailing ${process.cwd()}/.pipeline-state (polling every 1.5s)`);
+    console.log(`[Backlot] tailing ${stateDir} (polling every 1.5s)`);
   });
 }

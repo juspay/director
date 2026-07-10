@@ -16,6 +16,18 @@ export function stateDir(): string {
   return process.env.STATE_DIR_OVERRIDE ?? STATE_DIR;
 }
 
+/**
+ * The state directory for a given run's output dir. State was historically a
+ * single project-global `.pipeline-state/`, which let concurrent or sequential
+ * runs with different `--output` dirs overwrite each other's checkpoints,
+ * scores, and cost logs — and let a fresh run "resume" phases completed by a
+ * different run entirely. Namespacing state under the output dir makes the
+ * checkpoint's scope match the artifacts it describes.
+ */
+export function stateDirFor(outDir: string): string {
+  return path.join(outDir, '.pipeline-state');
+}
+
 export async function loadState<T>(filename: string, defaultValue: T): Promise<T> {
   const filePath = path.join(stateDir(), filename);
   try {
