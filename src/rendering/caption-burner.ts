@@ -238,10 +238,16 @@ async function videoSize(p: string): Promise<{ width: number; height: number }> 
   return { width: w, height: h };
 }
 
+/** Vertical overlay position: captions sit above the safe margin, cards dead-center. Pure. */
+export function overlayYExpr(placement: 'bottom' | 'center', height: number): string {
+  return placement === 'center' ? '(H-h)/2' : `H-h-${Math.round(height * 0.07)}`;
+}
+
 async function burnViaOverlay(
   videoPath: string,
   cues: SrtCue[],
   outputPath: string,
+  placement: 'bottom' | 'center' = 'bottom',
 ): Promise<string> {
   const { width, height } = await videoSize(videoPath);
   const tmpDir = path.join(path.dirname(outputPath), '.cue-overlays');
@@ -254,7 +260,7 @@ async function burnViaOverlay(
   for (let i = 0; i < cues.length; i++) {
     const c = cues[i];
     const tag = i === cues.length - 1 ? '[outv]' : `[v${i + 1}]`;
-    const yPos = `H-h-${Math.round(height * 0.07)}`;
+    const yPos = overlayYExpr(placement, height);
     chain.push(
       `${prev}[${i + 1}:v]overlay=x=(W-w)/2:y=${yPos}:enable='between(t,${c.start.toFixed(3)},${c.end.toFixed(3)})'${tag}`,
     );
@@ -274,10 +280,16 @@ export async function burnCaptions(
   videoPath: string,
   srtPath: string,
   outputPath: string,
+  opts: { forceStyle?: string; overlayPlacement?: 'bottom' | 'center' } = {},
 ): Promise<string> {
-  // 1) Hard burn-in via libass when available
+  // 1) Hard burn-in via libass when available. `forceStyle` overrides the
+  // caption look for callers that use the burn pipeline as a typography
+  // renderer (cards b-roll); the PNG-overlay tier honors `overlayPlacement`
+  // so cards stay centered without libass, but keeps its own type treatment —
+  // callers needing the exact style should treat tiers 2/3 as degraded output.
   if (await hasLibass()) {
-    const style = 'FontName=Helvetica,FontSize=28,PrimaryColour=&H00FFFFFF,OutlineColour=&H80000000,BackColour=&H80000000,Bold=1,Outline=2,Shadow=0,MarginV=40,Alignment=2,BorderStyle=4';
+    const style = opts.forceStyle
+      ?? 'FontName=Helvetica,FontSize=28,PrimaryColour=&H00FFFFFF,OutlineColour=&H80000000,BackColour=&H80000000,Bold=1,Outline=2,Shadow=0,MarginV=40,Alignment=2,BorderStyle=4';
     const srtEscaped = srtPath.replace(/'/g, "\\'").replace(/:/g, '\\:');
     try {
       await execa('ffmpeg', [
@@ -297,7 +309,7 @@ export async function burnCaptions(
   const cues = parseSrt(await fs.readFile(srtPath, 'utf-8'));
   if (cues.length && await hasImagemagick()) {
     try {
-      return await burnViaOverlay(videoPath, cues, outputPath);
+      return await burnViaOverlay(videoPath, cues, outputPath, opts.overlayPlacement ?? 'bottom');
     } catch (e) {
       console.log(`[Captions] overlay burn failed: ${(e instanceof Error ? e.message : String(e)).slice(0, 120)}`);
     }
