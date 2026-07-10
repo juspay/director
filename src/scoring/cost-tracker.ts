@@ -7,12 +7,16 @@ import { stateDir } from '../pipeline/state.ts';
 
 const RATES: Record<string, Record<string, number>> = {
   elevenlabs: { tts_per_1k_chars: 0.30 },
-  openai: { tts_per_1k_chars: 0.015 },
+  // Image generation — billed per image. A director-mode run bills 1 hero +
+  // up to BROLL_MAX_REGEN attempts × shots of keyframes, which previously never
+  // reached the log at all. `vertex` covers Gemini 2.5 Flash Image ("nano
+  // banana", the default IMAGE_PROVIDER); override with VERTEX_IMAGE_PER_IMAGE.
+  openai: { tts_per_1k_chars: 0.015, per_image: 0.04 },
   fish_audio: { tts_per_1k_chars: 0.015 },
   // Video generators — billed per second of output. `vertex` (Veo) was the gap
   // that let live-run b-roll log as $0. The figure is a representative Veo 3
   // rate; override per model/tier with VERTEX_VIDEO_PER_SEC.
-  vertex: { per_second: 0.40 },
+  vertex: { per_second: 0.40, per_image: 0.039 },
   runway: { per_second: 0.12 },
   kling: { per_second: 0.029 },
   replicate: { per_second: 0.09 },
@@ -52,8 +56,19 @@ export class CostTracker {
     if (!r) return 0;
     if (params.chars) return (params.chars / 1000) * (r.tts_per_1k_chars ?? 0);
     if (params.seconds) return params.seconds * this.perSecond(provider, r);
+    if (params.images) return params.images * this.perImage(provider, r);
     if (params.input_tokens) return (params.input_tokens / 1_000_000) * (r.per_1m_input ?? 0);
     return 0;
+  }
+
+  private perImage(provider: string, r: Record<string, number>): number {
+    // Same override contract as VERTEX_VIDEO_PER_SEC: explicit 0 means free,
+    // only an unparseable value falls back to the table rate.
+    if (provider === 'vertex' && process.env.VERTEX_IMAGE_PER_IMAGE) {
+      const parsed = Number(process.env.VERTEX_IMAGE_PER_IMAGE);
+      return Number.isFinite(parsed) ? parsed : (r.per_image ?? 0);
+    }
+    return r.per_image ?? 0;
   }
 
   private perSecond(provider: string, r: Record<string, number>): number {
