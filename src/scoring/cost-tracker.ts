@@ -51,6 +51,15 @@ export class CostTracker {
     await fs.appendFile(logPath, JSON.stringify(entry) + '\n');
   }
 
+  /**
+   * Price a hypothetical operation without logging it — the pre-flight
+   * projection prices planned work through the exact table (and env overrides)
+   * that will bill the real calls, so projection and billing can't drift.
+   */
+  estimateOnly(provider: string, params: Record<string, number>): number {
+    return this.estimate(provider, params);
+  }
+
   private estimate(provider: string, params: Record<string, number>): number {
     const r = RATES[provider];
     if (!r) return 0;

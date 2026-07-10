@@ -24,7 +24,7 @@ import type { PipelineState } from '../types/index.ts';
 // TypeScript modules (primary)
 import * as voiceover from '../voiceover/index.ts';
 import * as generators from '../generators/index.ts';
-import { generateImage } from '../generators/image.ts';
+import { generateImage, resolveImageGenParams } from '../generators/image.ts';
 import * as rendering from '../rendering/index.ts';
 import * as avatar from '../avatar/index.ts';
 import * as music from '../music/index.ts';
@@ -57,7 +57,8 @@ import { startReporter, stopReporter } from '../observability/reporter.ts';
 import { runSuperObserver } from '../observability/super-observer.ts';
 
 // Scoring
-import { CostTracker, runRegressionGate } from '../scoring/index.ts';
+import { CostTracker, runRegressionGate, estimatePreflight, formatPreflight, assertWithinBudget, BudgetExceededError } from '../scoring/index.ts';
+import type { PreflightInputs } from '../scoring/index.ts';
 
 const PHASES = [
   { name: 'voiceover', label: '1. Voiceover', fn: phaseVoiceover },
@@ -468,6 +469,11 @@ function intEnv(name: string, fallback: number, min = 0): number {
   return Number.isFinite(n) && n >= min ? Math.floor(n) : fallback;
 }
 
+/** Whole-run spend cap: --budget flag wins, else BUDGET_USD env, else no cap. */
+function resolveBudgetUsd(opts: PipelineOptions): number | undefined {
+  return opts.budgetUsd ?? (process.env.BUDGET_USD ? Number(process.env.BUDGET_USD) : undefined);
+}
+
 /**
  * Director mode: an art-director agent designs a cohesive shot list with ONE
  * canonical product identity; each product keyframe is generated as an
@@ -497,17 +503,33 @@ async function directorScenes(nl: NeuroLink, opts: PipelineOptions, ctx: BrollCt
   const productCount = shots.filter((s) => s.shows_product).length;
   console.log(`[B-roll] Director mode: ${shots.length} shots (${productCount} show the product) @ ${ctx.dims.width}×${ctx.dims.height}, concurrency ${ctx.concurrency}`);
 
-  // Single canonical hero still — every product shot derives from this exact image.
+  const threshold = intEnv('CONSISTENCY_THRESHOLD', 7, 0);
+  const maxRegen = intEnv('BROLL_MAX_REGEN', 2, 0);
+
+  // Single canonical hero still — every product shot derives from this exact
+  // image. Read it before the projection: the read attempt IS the cache probe
+  // (no separate exists-check — that's a TOCTOU pattern), and a cached hero
+  // from a resume prices as already-paid rather than as pending generation.
   const heroPath = path.join(ctx.outDir, '.hero.png');
   let heroBuf: Buffer | undefined;
-  try { heroBuf = await fs.readFile(heroPath); }
-  catch {
+  try { heroBuf = await fs.readFile(heroPath); } catch { /* not cached — generate after the gate */ }
+
+  // Pre-flight: the plan fixes every cost driver, so price the phase and
+  // enforce the whole-run budget cap while aborting is still free.
+  const preflightInputs: PreflightInputs = {
+    shots: shots.length, segLen: ctx.segLen, videoProvider: ctx.provider,
+    imageProvider: resolveImageGenParams().provider,
+    heroNeeded: !heroBuf, productShots: productCount, maxRegen,
+  };
+  const est = estimatePreflight(preflightInputs);
+  const spent = (await costTracker.getSummary()).total;
+  console.log(formatPreflight(est, preflightInputs, spent));
+  assertWithinBudget(spent, est, resolveBudgetUsd(opts));
+
+  if (!heroBuf) {
     try { await generateImage(plan.hero_prompt, heroPath, { aspectRatio: '16:9' }); heroBuf = await fs.readFile(heroPath); }
     catch (e) { console.log(`  [B-roll] hero image failed: ${e instanceof Error ? e.message.slice(0, 90) : String(e)}`); }
   }
-
-  const threshold = intEnv('CONSISTENCY_THRESHOLD', 7, 0);
-  const maxRegen = intEnv('BROLL_MAX_REGEN', 2, 0);
 
   const results = await mapWithConcurrency(shots, ctx.concurrency, async (shot, i): Promise<string | null> => {
     // Director artifacts are namespaced (.broll-dir-*) so they never collide with
@@ -605,6 +627,9 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
       const dirSegs = await directorScenes(nl, opts, { outDir, provider, model, dims, seedImg, segLen, concurrency, targetShots });
       for (const s of dirSegs) segPaths.push(s);
     } catch (e) {
+      // A budget abort must fail the phase — the fallback modes below also pay
+      // to generate, which is exactly what the cap forbids.
+      if (e instanceof BudgetExceededError) throw e;
       console.log(`[B-roll] director mode error, falling back: ${e instanceof Error ? e.message.slice(0, 100) : String(e)}`);
     }
   }
@@ -644,15 +669,29 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
     if (mode !== 'generic' && scenes && scenes.length) {
       console.log(`[B-roll] Concept mode: ${scenes.length} keyframe→video beats${heroPrompt ? ' + hero reference' : ''}`);
 
-      // Shared hero image → product beats stay visually consistent.
+      // Shared hero image → product beats stay visually consistent. Same
+      // pattern as director mode: the read attempt is the cache probe, and
+      // generation waits until the budget gate has passed.
+      const wantHero = !!heroPrompt && scenes.some((s) => s.product);
+      const conceptHeroPath = path.join(outDir, '.hero.png');
       let heroBuf: Buffer | undefined;
-      if (heroPrompt && scenes.some((s) => s.product)) {
-        const heroPath = path.join(outDir, '.hero.png');
-        try { heroBuf = await fs.readFile(heroPath); }
-        catch {
-          try { await generateImage(heroPrompt, heroPath, { aspectRatio: '16:9' }); heroBuf = await fs.readFile(heroPath); }
-          catch (e) { console.log(`  [B-roll] hero image failed: ${e instanceof Error ? e.message.slice(0, 90) : String(e)}`); }
-        }
+      if (wantHero) {
+        try { heroBuf = await fs.readFile(conceptHeroPath); } catch { /* not cached — generate after the gate */ }
+      }
+
+      const conceptInputs: PreflightInputs = {
+        shots: scenes.length, segLen, videoProvider: provider,
+        imageProvider: resolveImageGenParams().provider,
+        heroNeeded: wantHero && !heroBuf, productShots: 0, maxRegen: 0,
+      };
+      const conceptEst = estimatePreflight(conceptInputs);
+      const conceptSpent = (await costTracker.getSummary()).total;
+      console.log(formatPreflight(conceptEst, conceptInputs, conceptSpent));
+      assertWithinBudget(conceptSpent, conceptEst, resolveBudgetUsd(opts));
+
+      if (heroPrompt && wantHero && !heroBuf) {
+        try { await generateImage(heroPrompt, conceptHeroPath, { aspectRatio: '16:9' }); heroBuf = await fs.readFile(conceptHeroPath); }
+        catch (e) { console.log(`  [B-roll] hero image failed: ${e instanceof Error ? e.message.slice(0, 90) : String(e)}`); }
       }
 
       console.log(`[B-roll] ${scenes.length} beats @ ${dims.width}×${dims.height}, concurrency ${concurrency}`);
@@ -698,6 +737,16 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
       await ensureSeedImage(seedImg, dims);
       const segCount = voDur > 0 ? Math.min(8, Math.max(1, Math.ceil(voDur / segLen))) : 2;
       console.log(`[B-roll] VO ${voDur.toFixed(2)}s → ${segCount}×${segLen}s clips`);
+
+      // No keyframes here (gradient seed) — the projection is video-only.
+      const genericInputs: PreflightInputs = {
+        shots: segCount, segLen, videoProvider: provider,
+        imageProvider: 'none', heroNeeded: false, productShots: 0, maxRegen: 0,
+      };
+      const genericEst = estimatePreflight(genericInputs);
+      const genericSpent = (await costTracker.getSummary()).total;
+      console.log(formatPreflight(genericEst, genericInputs, genericSpent));
+      assertWithinBudget(genericSpent, genericEst, resolveBudgetUsd(opts));
       for (let i = 0; i < segCount; i++) {
         const segOut = path.join(outDir, `.broll-seg-${i}.mp4`);
         try { await fs.access(segOut); segPaths.push(segOut); continue; } catch { /* generate */ }
@@ -831,6 +880,7 @@ Options:
   --avatar-id ID       Provider avatar id (required by HeyGen; or HEYGEN_AVATAR_ID)
   --scoring MODE       Scoring: single (default) | multi-judge (consensus panel)
   --reference PATH     Baseline video for the VMAF regression gate (or REGRESSION_REFERENCE env)
+  --budget USD         Whole-run spend cap — abort before b-roll generation if the pre-flight projection would exceed it (or BUDGET_USD env)
   --narration MODE     Voiceover: script (default — file + TTS) | narrator (model writes narration + TTS)
   --skip-scoring       Skip post-pipeline AI scoring
   --dry-run            Print plan without executing
@@ -855,6 +905,7 @@ Options:
     if (args[i] === '--avatar-id') opts.avatarId = args[++i];
     if (args[i] === '--scoring') opts.scoringMode = args[++i];
     if (args[i] === '--reference') opts.regressionReference = args[++i];
+    if (args[i] === '--budget') opts.budgetUsd = Number(args[++i]);
     if (args[i] === '--narration') opts.narrationMode = args[++i];
     if (args[i] === '--skip-scoring') opts.skipScoring = true;
     if (args[i] === '--dry-run') opts.dryRun = true;
