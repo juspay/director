@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'fs/promises';
 import os from 'os';
 import path from 'path';
-import { deriveSnapshot, readSnapshot, resolveStateDir, BACKLOT_PHASES } from '../../src/backlot/tailer.ts';
+import { deriveSnapshot, readSnapshot, readShots, resolveStateDir, BACKLOT_PHASES } from '../../src/backlot/tailer.ts';
 import { STATE_DIR } from '../../src/pipeline/config.ts';
 
 test('deriveSnapshot', async (t) => {
@@ -181,6 +181,69 @@ test('liveness', async (t) => {
       assert.ok(s.lastActivityAt);
     } finally {
       await fs.rm(dir, { recursive: true, force: true });
+    }
+  });
+});
+
+test('readShots', async (t) => {
+  const PLAN = {
+    product_bible: 'x', hero_prompt: 'x', tone: 'x', color_palette: 'x',
+    shots: [
+      { scene_id: 'shot_01_problem', beat: 'A bug lands in Slack.', shows_product: false, prompt: 'p', camera: 'slow push-in' },
+      { scene_id: 'shot_02_reveal', beat: 'Tara reads the thread.', shows_product: true, prompt: 'p', camera: 'rack focus' },
+    ],
+  };
+
+  await t.test('joins the plan, on-disk artifacts, and critic verdicts into the grid', async () => {
+    const outDir = await fs.mkdtemp(path.join(os.tmpdir(), 'backlot-shots-'));
+    const stateDir = path.join(outDir, '.pipeline-state');
+    try {
+      await fs.mkdir(stateDir, { recursive: true });
+      await fs.writeFile(path.join(stateDir, 'shot-plan.json'), JSON.stringify(PLAN));
+      await fs.writeFile(path.join(outDir, '.broll-dir-key-0.png'), 'png');
+      await fs.writeFile(path.join(outDir, '.broll-dir-seg-0.mp4'), 'mp4');
+      await fs.writeFile(path.join(outDir, '.broll-dir-key-1.png'), 'png');
+      await fs.writeFile(
+        path.join(stateDir, 'shot-verdicts.jsonl'),
+        JSON.stringify({ shot: 1, attempt: 1, score: 4, regenerate: true, fix: 'match the finish' }) + '\n'
+        + JSON.stringify({ shot: 1, attempt: 2, score: 9, regenerate: false }) + '\n',
+      );
+      const shots = await readShots(stateDir);
+      assert.ok(shots);
+      assert.equal(shots.length, 2);
+      assert.deepEqual(
+        { keyframe: shots[0].keyframe, animated: shots[0].animated, critic: shots[0].critic },
+        { keyframe: true, animated: true, critic: null },
+      );
+      assert.equal(shots[1].sceneId, 'shot_02_reveal');
+      assert.equal(shots[1].showsProduct, true);
+      assert.equal(shots[1].animated, false);
+      assert.deepEqual(shots[1].critic, { score: 9, regenerate: false, attempts: 2 }); // latest verdict wins
+    } finally {
+      await fs.rm(outDir, { recursive: true, force: true });
+    }
+  });
+
+  await t.test('no shot plan → undefined (snapshot omits the grid)', async () => {
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'backlot-noshots-'));
+    try {
+      assert.equal(await readShots(dir), undefined);
+    } finally {
+      await fs.rm(dir, { recursive: true, force: true });
+    }
+  });
+
+  await t.test('readSnapshot carries the grid when a plan exists', async () => {
+    const outDir = await fs.mkdtemp(path.join(os.tmpdir(), 'backlot-snapshots-'));
+    const stateDir = path.join(outDir, '.pipeline-state');
+    try {
+      await fs.mkdir(stateDir, { recursive: true });
+      await fs.writeFile(path.join(stateDir, 'pipeline-state.json'), JSON.stringify({ results: {}, errors: [] }));
+      await fs.writeFile(path.join(stateDir, 'shot-plan.json'), JSON.stringify(PLAN));
+      const s = await readSnapshot(stateDir);
+      assert.equal(s.shots?.length, 2);
+    } finally {
+      await fs.rm(outDir, { recursive: true, force: true });
     }
   });
 });
