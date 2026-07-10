@@ -88,6 +88,40 @@ async function readJsonl(file: string): Promise<Record<string, unknown>[]> {
 }
 
 /**
+ * Resolve which state dir to tail. Precedence:
+ *   1. `--state <dir>` CLI arg
+ *   2. `BACKLOT_STATE_DIR` env
+ *   3. the state dir with the newest `pipeline-state.json` among `<base>`'s
+ *      immediate children (`<child>/.pipeline-state/`) and the legacy
+ *      project-global `<base>/.pipeline-state/`
+ *   4. the legacy `STATE_DIR` (so a missing everything still yields the same
+ *      empty-but-valid snapshot readSnapshot already guarantees)
+ * Runs write state under their own `--output` dir (see `stateDirFor`), so the
+ * mtime scan finds the most recently active run without any flags.
+ */
+export async function resolveStateDir(
+  args: string[],
+  env: NodeJS.ProcessEnv,
+  base: string = process.cwd(),
+): Promise<string> {
+  const i = args.indexOf('--state');
+  if (i >= 0 && args[i + 1]) return args[i + 1];
+  if (env.BACKLOT_STATE_DIR) return env.BACKLOT_STATE_DIR;
+
+  const candidates: string[] = [path.join(base, '.pipeline-state')];
+  const children = await fs.readdir(base, { withFileTypes: true }).catch(() => [] as import('fs').Dirent[]);
+  for (const c of children) {
+    if (c.isDirectory()) candidates.push(path.join(base, c.name, '.pipeline-state'));
+  }
+  let newest: { dir: string; mtimeMs: number } | null = null;
+  for (const dir of candidates) {
+    const st = await fs.stat(path.join(dir, 'pipeline-state.json')).catch(() => null);
+    if (st && (!newest || st.mtimeMs > newest.mtimeMs)) newest = { dir, mtimeMs: st.mtimeMs };
+  }
+  return newest?.dir ?? STATE_DIR;
+}
+
+/**
  * Read the live snapshot from a state dir (default: the real `.pipeline-state`).
  * Tolerant by design — a missing or half-written state file yields an empty-but-
  * valid snapshot rather than throwing, so the poller never crashes mid-run.

@@ -17,7 +17,7 @@ import { NeuroLink, initializeOpenTelemetry } from '@juspay/neurolink';
 import fs from 'fs/promises';
 import path from 'path';
 import { OUTPUT_DIR } from './config.ts';
-import { loadState, saveState } from './state.ts';
+import { loadState, saveState, stateDirFor } from './state.ts';
 import { mapWithConcurrency, resolveDims, scriptToSrt, resolveNarrationMode, pickCaptionText, completedPhaseCount } from './runner-helpers.ts';
 import type { PipelineState } from '../types/index.ts';
 
@@ -105,6 +105,11 @@ export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineS
 
   const outDir = opts.outputDir ?? OUTPUT_DIR;
   await fs.mkdir(outDir, { recursive: true });
+
+  // Scope all state (checkpoint, cost log, agent metrics) to this run's output
+  // dir. `??=` so an explicit STATE_DIR_OVERRIDE (tests, tooling) still wins.
+  // Must happen before the first loadState/costTracker call below.
+  process.env.STATE_DIR_OVERRIDE ??= stateDirFor(outDir);
 
   const state = await loadState<PipelineState>('pipeline-state.json', {
     currentStep: 0,

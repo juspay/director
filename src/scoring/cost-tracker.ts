@@ -3,6 +3,7 @@
  */
 import fs from 'fs/promises';
 import path from 'path';
+import { stateDir } from '../pipeline/state.ts';
 
 const RATES: Record<string, Record<string, number>> = {
   elevenlabs: { tts_per_1k_chars: 0.30 },
@@ -20,9 +21,20 @@ const RATES: Record<string, Record<string, number>> = {
 };
 
 export class CostTracker {
-  private logPath: string;
+  private explicitLogPath: string | null;
   constructor(logPath?: string) {
-    this.logPath = logPath ?? path.join(process.cwd(), '.pipeline-state', 'cost_log.jsonl');
+    this.explicitLogPath = logPath ?? null;
+  }
+
+  /**
+   * Resolved per call, not at construction: the runner constructs its tracker at
+   * module load, *before* runPipeline() scopes STATE_DIR_OVERRIDE to the run's
+   * output dir. Resolving lazily (and via stateDir() rather than process.cwd())
+   * keeps the cost log in the same per-run state dir as the checkpoint it
+   * belongs to.
+   */
+  private logPath(): string {
+    return this.explicitLogPath ?? path.join(stateDir(), 'cost_log.jsonl');
   }
 
   async log(provider: string, operation: string, params: Record<string, number> = {}, cost?: number): Promise<void> {
@@ -30,8 +42,9 @@ export class CostTracker {
       timestamp: new Date().toISOString(), provider, operation, params,
       cost: cost ?? this.estimate(provider, params),
     };
-    await fs.mkdir(path.dirname(this.logPath), { recursive: true });
-    await fs.appendFile(this.logPath, JSON.stringify(entry) + '\n');
+    const logPath = this.logPath();
+    await fs.mkdir(path.dirname(logPath), { recursive: true });
+    await fs.appendFile(logPath, JSON.stringify(entry) + '\n');
   }
 
   private estimate(provider: string, params: Record<string, number>): number {
@@ -56,14 +69,15 @@ export class CostTracker {
 
   /** Truncate the log so getSummary() reflects a single run, not cumulative history. */
   async reset(): Promise<void> {
-    await fs.mkdir(path.dirname(this.logPath), { recursive: true });
-    await fs.writeFile(this.logPath, '');
+    const logPath = this.logPath();
+    await fs.mkdir(path.dirname(logPath), { recursive: true });
+    await fs.writeFile(logPath, '');
   }
 
   async getSummary(): Promise<{ total: number; byProvider: Record<string, number> }> {
     let entries: Array<{ provider: string; cost: number }> = [];
     try {
-      const raw = await fs.readFile(this.logPath, 'utf-8');
+      const raw = await fs.readFile(this.logPath(), 'utf-8');
       entries = raw.trim().split('\n').filter(Boolean).map((l) => JSON.parse(l));
     } catch { /* no log yet */ }
 

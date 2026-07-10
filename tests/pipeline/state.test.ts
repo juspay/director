@@ -59,3 +59,11 @@ describe('pipeline/state', () => {
     assert.deepEqual(JSON.parse(onDisk), { ok: true });
   });
 });
+
+describe('stateDirFor', () => {
+  it('namespaces state under the run output dir', async () => {
+    const { stateDirFor } = await import('../../src/pipeline/state.ts');
+    assert.equal(stateDirFor('/runs/output-live4'), path.join('/runs/output-live4', '.pipeline-state'));
+    assert.equal(stateDirFor('output'), path.join('output', '.pipeline-state'));
+  });
+});
