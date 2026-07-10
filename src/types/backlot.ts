@@ -69,6 +69,16 @@ export type ShotView = {
   critic: ShotCriticView | null;
 };
 
+/** A discoverable run for the switcher — id doubles as the server's allowlist key. */
+export type RunInfo = {
+  /** The run's state dir (absolute). Only values from the server's own scan are accepted back. */
+  id: string;
+  /** The run's output dir name ('(project root)' for the legacy global dir). */
+  label: string;
+  lastActivityAt: string | null;
+  active: boolean;
+};
+
 export type BacklotSnapshot = {
   phases: PhaseView[];
   currentStep: number;
