@@ -10,7 +10,10 @@ import fs from 'fs/promises';
 import path from 'path';
 import { STATE_DIR } from '../pipeline/config.ts';
 import { completedPhaseCount } from '../pipeline/runner-helpers.ts';
-import type { BacklotSnapshot, CostView, PhaseView, PipelineStateLike } from '../types/backlot.ts';
+import type { ActivityInfo, BacklotSnapshot, CostView, Liveness, PhaseView, PipelineStateLike } from '../types/backlot.ts';
+
+/** Quiet period before an incomplete run reads as stalled (BACKLOT_STALL_SECONDS overrides). */
+export const DEFAULT_STALL_SECONDS = 300;
 
 /**
  * Phase name/label list mirroring `runner.ts` PHASES. Duplicated deliberately —
@@ -50,7 +53,18 @@ function summarizeCost(lines: CostLine[]): CostView {
  * A phase is 'done' if it has a result, 'failed' if `errors` carries its label
  * prefix (`"${label}: …"`, exactly what runner.ts:309 writes), else 'pending'.
  */
-export function deriveSnapshot(state: PipelineStateLike, costLines: CostLine[]): BacklotSnapshot {
+function deriveLiveness(complete: boolean, activity: ActivityInfo | undefined): Liveness {
+  if (complete) return 'complete';
+  if (!activity || activity.mtimeMs == null) return 'idle';
+  const quietMs = (activity.stallSeconds ?? DEFAULT_STALL_SECONDS) * 1000;
+  return activity.nowMs - activity.mtimeMs <= quietMs ? 'running' : 'stalled';
+}
+
+export function deriveSnapshot(
+  state: PipelineStateLike,
+  costLines: CostLine[],
+  activity?: ActivityInfo,
+): BacklotSnapshot {
   const results = state.results ?? {};
   const errors = state.errors ?? [];
   const phases: PhaseView[] = BACKLOT_PHASES.map((p) => {
@@ -63,11 +77,21 @@ export function deriveSnapshot(state: PipelineStateLike, costLines: CostLine[]):
   // it's authoritative, always matches the 'done' pills, and stays correct even
   // for state files written before the runner started maintaining currentStep.
   const done = completedPhaseCount(results, PHASE_NAMES);
+  const complete = done === BACKLOT_PHASES.length;
+  const liveness = deriveLiveness(complete, activity);
+  // A live run's first pending phase is the one in flight (phases 2-4 run
+  // concurrently, so this is a best-single-pill approximation, not a claim).
+  if (liveness === 'running') {
+    const active = phases.find((p) => p.status === 'pending');
+    if (active) active.status = 'running';
+  }
   return {
     phases,
     currentStep: done,
     totalSteps: BACKLOT_PHASES.length,
-    complete: done === BACKLOT_PHASES.length,
+    complete,
+    liveness,
+    lastActivityAt: activity?.mtimeMs != null ? new Date(activity.mtimeMs).toISOString() : null,
     startedAt: state.startedAt ?? null,
     updatedAt: state.updatedAt ?? null,
     errors,
@@ -133,5 +157,16 @@ export async function readSnapshot(stateDir: string = STATE_DIR): Promise<Backlo
     try { state = JSON.parse(stateRaw) as PipelineStateLike; } catch { /* keep the empty default */ }
   }
   const costLines = (await readJsonl(path.join(stateDir, 'cost_log.jsonl'))) as CostLine[];
-  return deriveSnapshot(state, costLines);
+
+  // Activity = the newest write across all three state files. The checkpoint
+  // only updates at phase boundaries, but cost/metrics lines land mid-phase
+  // (every agent call), so a long b-roll phase still reads as alive.
+  let mtimeMs: number | null = null;
+  for (const f of ['pipeline-state.json', 'cost_log.jsonl', 'agent-metrics.jsonl']) {
+    const st = await fs.stat(path.join(stateDir, f)).catch(() => null);
+    if (st && (mtimeMs == null || st.mtimeMs > mtimeMs)) mtimeMs = st.mtimeMs;
+  }
+  const envStall = Number(process.env.BACKLOT_STALL_SECONDS);
+  const stallSeconds = Number.isFinite(envStall) && envStall > 0 ? envStall : undefined;
+  return deriveSnapshot(state, costLines, { mtimeMs, nowMs: Date.now(), stallSeconds });
 }

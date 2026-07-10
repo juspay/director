@@ -17,6 +17,12 @@ h2{color:var(--head);font-size:.9em;text-transform:uppercase;letter-spacing:.09e
 .badge{font:600 12px ui-monospace,Menlo,monospace;padding:4px 11px;border-radius:20px;border:1px solid var(--line)}
 .badge.ok{color:var(--ok);border-color:var(--ok)}
 .badge.run{color:var(--amber);border-color:var(--amber)}
+.badge.stall{color:var(--fail);border-color:var(--fail)}
+.badge.idle{opacity:.55}
+@keyframes blip{50%{opacity:.25}}
+.pill.running .dot{background:var(--amber);animation:blip 1.4s ease-in-out infinite}
+.pill.running .st{color:var(--amber);opacity:1}
+@media (prefers-reduced-motion: reduce){.pill.running .dot{animation:none}}
 .bar{height:8px;background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden}
 .fill{height:100%;width:0;background:linear-gradient(90deg,var(--amber),#f59e0b);transition:width .4s ease}
 .phases{display:flex;flex-direction:column;gap:8px;margin-top:16px}
@@ -56,8 +62,11 @@ function el(id){return document.getElementById(id);}
 function esc(s){return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
 function money(n){return '$'+(Number(n)||0).toFixed(4);}
 function render(s){
-  el('status').textContent = s.complete ? 'COMPLETE' : (s.currentStep + '/' + s.totalSteps);
-  el('status').className = 'badge ' + (s.complete ? 'ok' : 'run');
+  var lv = s.liveness || (s.complete ? 'complete' : 'running');
+  var badge = { complete: ['COMPLETE', 'ok'], running: [s.currentStep + '/' + s.totalSteps + ' · RUNNING', 'run'],
+                stalled: [s.currentStep + '/' + s.totalSteps + ' · STALLED', 'stall'], idle: ['IDLE', 'idle'] }[lv];
+  el('status').textContent = badge[0];
+  el('status').className = 'badge ' + badge[1];
   el('fill').style.width = ((s.currentStep / s.totalSteps) * 100).toFixed(1) + '%';
   el('phases').innerHTML = s.phases.map(function(p){
     var right = p.error ? '<span class="err">' + esc(p.error) + '</span>' : '<span class="st">' + p.status + '</span>';
@@ -66,7 +75,8 @@ function render(s){
   var prov = Object.keys(s.cost.byProvider || {});
   var sub = s.cost.events + ' events' + (prov.length ? ' · ' + prov.map(function(k){ return esc(k) + ' ' + money(s.cost.byProvider[k]); }).join(' · ') : '');
   el('cost').innerHTML = '<div class="total">' + money(s.cost.total) + '</div><div class="sub">' + sub + '</div>';
-  el('foot').textContent = s.updatedAt ? ('last update ' + s.updatedAt) : 'no run recorded yet';
+  var act = s.lastActivityAt || s.updatedAt;
+  el('foot').textContent = act ? ('last activity ' + act) : 'no run recorded yet';
 }
 render(SNAP);
 function poll(){
@@ -75,7 +85,17 @@ function poll(){
     .then(function(j){ if (j) { SNAP = j; render(j); } })
     .catch(function(){ /* transient — retry next tick */ });
 }
-setInterval(poll, 1500);
+var pollTimer = null;
+function startPolling(){ if (!pollTimer) pollTimer = setInterval(poll, 1500); }
+// SSE first (server pushes only on change); EventSource reconnects transient
+// drops itself — fall back to polling only once the stream is fully CLOSED.
+if (window.EventSource) {
+  var es = new EventSource('/api/events');
+  es.onmessage = function(ev){ try { SNAP = JSON.parse(ev.data); render(SNAP); } catch (e) { /* skip torn frame */ } };
+  es.onerror = function(){ if (es.readyState === 2) startPolling(); };
+} else {
+  startPolling();
+}
 </script>
 </body></html>`;
 }
