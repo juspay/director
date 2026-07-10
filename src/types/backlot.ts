@@ -7,8 +7,26 @@
  * derives for the UI.
  */
 
-/** MVP status of a single phase. 'running' (mtime-based) is a later phase. */
-export type PhaseStatus = 'pending' | 'done' | 'failed';
+/** Status of a single phase. 'running' is derived, mtime-based (Phase B): the
+ * first pending phase while the run shows recent on-disk activity. */
+export type PhaseStatus = 'pending' | 'running' | 'done' | 'failed';
+
+/**
+ * Run-level liveness, derived purely from on-disk activity — the pipeline
+ * never reports "I'm alive", so recency of its state-file writes is the signal:
+ * 'running' = incomplete with recent writes, 'stalled' = incomplete and quiet
+ * past the threshold, 'idle' = no state on disk, 'complete' = all phases done.
+ */
+export type Liveness = 'idle' | 'running' | 'stalled' | 'complete';
+
+/** On-disk activity evidence, injected so liveness derivation stays pure. */
+export type ActivityInfo = {
+  /** Newest mtime across the state files, or null when none exist. */
+  mtimeMs: number | null;
+  nowMs: number;
+  /** Quiet-period threshold before 'running' degrades to 'stalled' (default 300). */
+  stallSeconds?: number;
+};
 
 export type PhaseView = {
   name: string;
@@ -31,6 +49,9 @@ export type BacklotSnapshot = {
   currentStep: number;
   totalSteps: number;
   complete: boolean;
+  liveness: Liveness;
+  /** ISO time of the newest state-file write, or null when nothing exists. */
+  lastActivityAt: string | null;
   startedAt: string | null;
   updatedAt: string | null;
   errors: string[];

@@ -25,6 +25,27 @@ export function createBacklotServer(stateDir?: string): http.Server {
         res.end(JSON.stringify(snap));
         return;
       }
+      if (req.method === 'GET' && url === '/api/events') {
+        // SSE: push the snapshot only when it changes (server-side 1.5s tail),
+        // with a comment heartbeat so idle proxies don't reap the connection.
+        res.writeHead(200, {
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-store',
+          Connection: 'keep-alive',
+        });
+        let last = '';
+        const push = async (): Promise<void> => {
+          try {
+            const data = JSON.stringify(await readSnapshot(stateDir));
+            if (data !== last) { last = data; res.write(`data: ${data}\n\n`); }
+          } catch { /* transient read hiccup — the next tick retries */ }
+        };
+        await push();
+        const tick = setInterval(() => { void push(); }, 1500);
+        const beat = setInterval(() => res.write(': ping\n\n'), 15_000);
+        req.on('close', () => { clearInterval(tick); clearInterval(beat); });
+        return;
+      }
       if (req.method === 'GET' && (url === '/' || url === '/index.html')) {
         const snap = await readSnapshot(stateDir);
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
@@ -54,6 +75,6 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const stateDir = await resolveStateDir(args, process.env);
   createBacklotServer(stateDir).listen(port, () => {
     console.log(`[Backlot] live run dashboard → http://localhost:${port}`);
-    console.log(`[Backlot] tailing ${stateDir} (polling every 1.5s)`);
+    console.log(`[Backlot] tailing ${stateDir} (SSE push, 1.5s tail; stall threshold ${process.env.BACKLOT_STALL_SECONDS ?? '300'}s)`);
   });
 }

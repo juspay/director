@@ -136,3 +136,51 @@ test('resolveStateDir', async (t) => {
     }
   });
 });
+
+test('liveness', async (t) => {
+  const state = { results: { voiceover: {} }, errors: [] };
+  const NOW = 1_800_000_000_000;
+
+  await t.test('recent activity on an incomplete run → running, first pending pill marked', () => {
+    const s = deriveSnapshot(state, [], { mtimeMs: NOW - 10_000, nowMs: NOW });
+    assert.equal(s.liveness, 'running');
+    assert.equal(s.phases.find((p) => p.name === 'avatar')?.status, 'running'); // first pending phase
+    assert.equal(s.phases.filter((p) => p.status === 'running').length, 1);
+    assert.equal(s.lastActivityAt, new Date(NOW - 10_000).toISOString());
+  });
+
+  await t.test('quiet past the default 300s threshold → stalled, nothing marked running', () => {
+    const s = deriveSnapshot(state, [], { mtimeMs: NOW - 301_000, nowMs: NOW });
+    assert.equal(s.liveness, 'stalled');
+    assert.ok(s.phases.every((p) => p.status !== 'running'));
+  });
+
+  await t.test('custom stallSeconds is honored in both directions', () => {
+    assert.equal(deriveSnapshot(state, [], { mtimeMs: NOW - 10_000, nowMs: NOW, stallSeconds: 5 }).liveness, 'stalled');
+    assert.equal(deriveSnapshot(state, [], { mtimeMs: NOW - 10_000, nowMs: NOW, stallSeconds: 60 }).liveness, 'running');
+  });
+
+  await t.test('a complete run is complete regardless of mtime age', () => {
+    const all = Object.fromEntries(BACKLOT_PHASES.map((p) => [p.name, {}]));
+    const s = deriveSnapshot({ results: all, errors: [] }, [], { mtimeMs: NOW - 999_000, nowMs: NOW });
+    assert.equal(s.liveness, 'complete');
+  });
+
+  await t.test('no on-disk activity → idle (and omitted activity degrades the same way)', () => {
+    assert.equal(deriveSnapshot(state, [], { mtimeMs: null, nowMs: NOW }).liveness, 'idle');
+    assert.equal(deriveSnapshot(state, []).liveness, 'idle');
+    assert.equal(deriveSnapshot(state, []).lastActivityAt, null);
+  });
+
+  await t.test('readSnapshot on a freshly-written fixture reads as running', async () => {
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'backlot-live-'));
+    try {
+      await fs.writeFile(path.join(dir, 'pipeline-state.json'), JSON.stringify({ results: { voiceover: {} }, errors: [] }));
+      const s = await readSnapshot(dir);
+      assert.equal(s.liveness, 'running');
+      assert.ok(s.lastActivityAt);
+    } finally {
+      await fs.rm(dir, { recursive: true, force: true });
+    }
+  });
+});
