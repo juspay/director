@@ -622,6 +622,20 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
   // Director mode (default): agent shot plan + canonical product + consistency
   // critic. Falls through to concept/generic if it produces nothing.
   const mode = (opts.brollMode ?? process.env.BROLL_MODE ?? 'director').toLowerCase();
+
+  // Cards mode: the $0 typography tier. Chosen explicitly for zero spend, so it
+  // throws rather than falling through to any paid generation path.
+  if (mode === 'cards') {
+    const script = await readScript(opts.scriptPath).catch(() => '');
+    if (!script) throw new Error('[B-roll] cards mode requires a script (--script PATH)');
+    const out = await rendering.renderCardBroll({
+      script, outDir, width: dims.width, height: dims.height,
+      durationSec: rendering.resolveCardDuration(voDur),
+    });
+    await costTracker.log('local', 'cards-broll', {}, 0).catch(() => undefined);
+    return out;
+  }
+
   if (mode === 'director') {
     try {
       const dirSegs = await directorScenes(nl, opts, { outDir, provider, model, dims, seedImg, segLen, concurrency, targetShots });
@@ -874,7 +888,7 @@ Options:
   --video-gen NAME     Video: kling|runway|veo|wan-alpha
   --music-gen NAME     Music: lyria|beatoven|elevenlabs|numpy
   --resolution RES     Output resolution: 1080p (default) | 720p
-  --broll-mode MODE    B-roll: director (default) | concept | generic
+  --broll-mode MODE    B-roll: director (default) | concept | generic | cards ($0 typography from the script — the card text IS the visual, so consider skipping the caption phase: --phases 1,3,4,6)
   --avatar-source PATH Avatar source image for D-ID/MuseTalk
   --avatar-provider    Avatar: did|heygen|musetalk
   --avatar-id ID       Provider avatar id (required by HeyGen; or HEYGEN_AVATAR_ID)
