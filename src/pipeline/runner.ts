@@ -25,6 +25,8 @@ import type { PipelineState } from '../types/index.ts';
 import * as voiceover from '../voiceover/index.ts';
 import * as generators from '../generators/index.ts';
 import { generateImage, resolveImageGenParams } from '../generators/image.ts';
+import { withDoctor, type DoctorOptions } from '../generators/doctor.ts';
+import { runPromptDoctorAgent } from '../agents/prompt-doctor.ts';
 import * as stock from '../generators/stock-video.ts';
 import * as rendering from '../rendering/index.ts';
 import * as avatar from '../avatar/index.ts';
@@ -589,10 +591,10 @@ async function directorScenes(nl: NeuroLink, opts: PipelineOptions, ctx: BrollCt
 
     // Animate with the shot's deliberate camera move.
     try {
-      await generators.generate(nl, ctx.provider, buildAnimationPrompt(shot), segOut, {
+      await withDoctor((p) => generators.generate(nl, ctx.provider, p, segOut, {
         inputImage: keyframe, length: ctx.segLen, resolution: ctx.dims.veo, aspectRatio: '16:9', audio: false,
         ...(ctx.model ? { model: ctx.model } : {}),
-      });
+      }), buildAnimationPrompt(shot), doctorOpts(nl));
       return segOut;
     } catch (e) {
       console.log(`  [B-roll] segment ${i} failed: ${e instanceof Error ? e.message.slice(0, 100) : String(e)}`);
@@ -600,6 +602,18 @@ async function directorScenes(nl: NeuroLink, opts: PipelineOptions, ctx: BrollCt
     }
   });
   return results.filter((r): r is string => !!r);
+}
+
+// Doctor loop config for paid animate calls: DOCTOR_RETRIES extra attempts
+// (default 1, 0 disables). The LLM prompt rewrite only fires on safety-class
+// rejections; quota/transient failures retry with backoff, unchanged.
+function doctorOpts(nl: NeuroLink): DoctorOptions {
+  const n = Number(process.env.DOCTOR_RETRIES ?? 1);
+  return {
+    retries: Number.isFinite(n) ? Math.max(0, n) : 1,
+    rewrite: (p, err) => runPromptDoctorAgent(nl, p, err, 'video'),
+    onEvent: (e) => console.log(`  [Doctor] attempt ${e.attempt + 1}: ${e.kind} → ${e.action}`),
+  };
 }
 
 async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
@@ -796,10 +810,10 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
         } catch { /* use original keyframe if crop fails */ }
 
         try {
-          await generators.generate(nl, provider, scene.prompt, segOut, {
+          await withDoctor((p) => generators.generate(nl, provider, p, segOut, {
             inputImage: keyframe, length: segLen, resolution: dims.veo, aspectRatio: '16:9', audio: false,
             ...(model ? { model } : {}),
-          });
+          }), scene.prompt, doctorOpts(nl));
           return segOut;
         } catch (e) {
           console.log(`  [B-roll] segment ${i} failed: ${e instanceof Error ? e.message.slice(0, 100) : String(e)}`);
@@ -826,10 +840,10 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
         const segOut = path.join(outDir, `.broll-seg-${i}.mp4`);
         try { await fs.access(segOut); segPaths.push(segOut); continue; } catch { /* generate */ }
         try {
-          await generators.generate(nl, provider, GENERIC_PROMPTS[i % GENERIC_PROMPTS.length], segOut, {
+          await withDoctor((p) => generators.generate(nl, provider, p, segOut, {
             inputImage: seedImg, length: segLen, resolution: dims.veo, aspectRatio: '16:9', audio: false,
             ...(model ? { model } : {}),
-          });
+          }), GENERIC_PROMPTS[i % GENERIC_PROMPTS.length], doctorOpts(nl));
           segPaths.push(segOut);
         } catch (e) {
           console.log(`  [B-roll] segment ${i} failed: ${e instanceof Error ? e.message.slice(0, 100) : String(e)}`);
