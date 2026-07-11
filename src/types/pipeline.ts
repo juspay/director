@@ -21,6 +21,8 @@ export type PipelineOptions = {
   brollMode?: string;
   /** B-roll spend tier: 'hero' (default — configured generator) or 'draft' (cheap iteration via BROLL_DRAFT_GENERATOR / BROLL_DRAFT_MODEL). */
   brollTier?: string;
+  /** Caption rendering style: 'phrase' (default) or 'karaoke' (word-level ASS highlight sweep; requires libass). */
+  captionStyle?: string;
   /** Music generator key (lyria / beatoven / elevenlabs / replicate / numpy). */
   musicGenerator?: string;
   /** Source image for the avatar phase. */
