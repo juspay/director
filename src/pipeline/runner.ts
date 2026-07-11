@@ -18,7 +18,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { OUTPUT_DIR } from './config.ts';
 import { appendToLog, loadState, saveState, stateDirFor } from './state.ts';
-import { mapWithConcurrency, resolveDims, scriptToSrt, resolveNarrationMode, pickCaptionText, completedPhaseCount } from './runner-helpers.ts';
+import { mapWithConcurrency, resolveDims, resolveVideoTier, scriptToSrt, resolveNarrationMode, pickCaptionText, completedPhaseCount } from './runner-helpers.ts';
 import type { PipelineState } from '../types/index.ts';
 
 // TypeScript modules (primary)
@@ -605,11 +605,20 @@ async function directorScenes(nl: NeuroLink, opts: PipelineOptions, ctx: BrollCt
 async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
   if (opts.dryRun) return { status: 'dry-run' };
   const outDir = opts.outputDir ?? OUTPUT_DIR;
-  const gen = opts.videoGenerator ?? 'vertex';
+  // Spend tier: 'hero' (default) uses the configured generator; 'draft' routes
+  // every animate call to the cheap iteration config (BROLL_DRAFT_GENERATOR /
+  // BROLL_DRAFT_MODEL). The hosted i2v market spans ~$0.04–$0.40 per second,
+  // so iterating on the hero tier pays a ~10x premium for throwaway cuts.
+  const tier = (opts.brollTier ?? process.env.BROLL_TIER ?? 'hero').toLowerCase();
+  const tierChoice = resolveVideoTier(tier, process.env, opts.videoGenerator ?? 'vertex');
+  const gen = tierChoice.gen;
   const provider = VIDEO_ALIAS[gen] ?? 'vertex';
   const outputPath = path.join(outDir, 'broll.mp4');
-  const model = REPLICATE_MODEL[gen];
+  const model = tierChoice.model ?? REPLICATE_MODEL[gen];
   const dims = resolveDims(opts.resolution);
+  if (tier === 'draft') {
+    console.log(`[B-roll] DRAFT tier → ${provider}${model ? ` (${model})` : ''} — iteration output; re-run with --broll-tier hero for the final cut`);
+  }
 
   // Resolution-suffixed so a cached 720p seed isn't reused for a 1080p run.
   const seedImg = path.join(outDir, `.broll-seed-${dims.height}.jpg`);
@@ -941,6 +950,7 @@ Options:
   --music-gen NAME     Music: lyria|beatoven|elevenlabs|numpy
   --resolution RES     Output resolution: 1080p (default) | 720p
   --broll-mode MODE    B-roll: director (default) | concept | generic | stock ($0-API real footage via PEXELS_API_KEY, queries derived from the script) | cards ($0 typography from the script — the card text IS the visual, so consider skipping the caption phase: --phases 1,3,4,6)
+  --broll-tier TIER    B-roll spend tier: hero (default — configured generator) | draft (cheap iteration: BROLL_DRAFT_GENERATOR, optional BROLL_DRAFT_MODEL; ~10x cheaper per second on Wan/Kling-class models)
   --avatar-source PATH Avatar source image for D-ID/MuseTalk
   --avatar-provider    Avatar: did|heygen|musetalk
   --avatar-id ID       Provider avatar id (required by HeyGen; or HEYGEN_AVATAR_ID)
@@ -965,6 +975,7 @@ Options:
     if (args[i] === '--resolution') opts.resolution = args[++i];
     if (args[i] === '--video-gen') opts.videoGenerator = args[++i];
     if (args[i] === '--broll-mode') opts.brollMode = args[++i];
+    if (args[i] === '--broll-tier') opts.brollTier = args[++i];
     if (args[i] === '--music-gen') opts.musicGenerator = args[++i];
     if (args[i] === '--avatar-source') opts.avatarSource = args[++i];
     if (args[i] === '--avatar-provider') opts.avatarProvider = args[++i];

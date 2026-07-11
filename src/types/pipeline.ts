@@ -19,6 +19,8 @@ export type PipelineOptions = {
   videoGenerator?: string;
   /** B-roll strategy: 'director' (default — art-director shot plan + consistency critic), 'concept' (assets/broll-prompts.json), or 'generic'. */
   brollMode?: string;
+  /** B-roll spend tier: 'hero' (default — configured generator) or 'draft' (cheap iteration via BROLL_DRAFT_GENERATOR / BROLL_DRAFT_MODEL). */
+  brollTier?: string;
   /** Music generator key (lyria / beatoven / elevenlabs / replicate / numpy). */
   musicGenerator?: string;
   /** Source image for the avatar phase. */

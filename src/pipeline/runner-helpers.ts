@@ -121,3 +121,33 @@ export function scriptToSrt(script: string, durationSec: number, maxWords = 7): 
   });
   return out;
 }
+
+export type VideoTierChoice = {
+  gen: string;
+  model?: string;
+};
+
+/**
+ * Resolve the b-roll spend tier to a generator alias + optional model.
+ * 'hero' (default) keeps the run's configured generator untouched. 'draft'
+ * routes to the cheap iteration config and is deliberately explicit: with no
+ * BROLL_DRAFT_GENERATOR set it throws rather than silently rendering finals
+ * on a guessed cheap model — tier choice is a spend decision, not a default.
+ */
+export function resolveVideoTier(
+  tier: string,
+  env: Record<string, string | undefined>,
+  fallbackGen: string,
+): VideoTierChoice {
+  const t = tier.toLowerCase();
+  if (t === 'hero') return { gen: fallbackGen };
+  if (t !== 'draft') throw new Error(`[B-roll] unknown tier '${tier}' — use draft or hero`);
+  const gen = env.BROLL_DRAFT_GENERATOR?.toLowerCase();
+  if (!gen) {
+    throw new Error(
+      '[B-roll] draft tier requires BROLL_DRAFT_GENERATOR ' +
+      "(e.g. 'wan-alpha', or 'replicate' + BROLL_DRAFT_MODEL=<owner/model>, or 'kling')",
+    );
+  }
+  return { gen, model: env.BROLL_DRAFT_MODEL || undefined };
+}
