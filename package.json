@@ -19,6 +19,7 @@
     "report": "node --import tsx src/observability/reporter.ts",
     "typecheck": "tsc --noEmit",
     "test": "node --import tsx --test tests/**/*.test.ts",
+    "export:project": "tsx src/rendering/project-export.ts",
     "test:unit": "node --import tsx --test tests/utils/*.test.ts tests/policies/*.test.ts tests/schemas/*.test.ts tests/pipeline/*.test.ts tests/observability/*.test.ts tests/scoring/*.test.ts tests/rendering/*.test.ts tests/generators/*.test.ts tests/agents/*.test.ts tests/avatar/*.test.ts tests/backlot/*.test.ts",
     "test:python": "node --import tsx --test tests/scripts/*.test.ts",
     "test:tier-0": "bash scripts/test-tier-0.sh",

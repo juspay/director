@@ -3,4 +3,5 @@ export { generateSrt, burnCaptions, burnKaraokeCaptions, transcribe } from './ca
 export { renderCardBroll, resolveCardDuration, buildCardBaseArgs, CARD_STYLE, CARD_BG } from './card-broll.ts';
 export { renderLocal, renderOnLambda, deploySite } from './remotion-renderer.ts';
 export { validateAssets } from './asset-validator.ts';
+export { exportProject, collectRunAssets, buildFcpXml, toFcpTime } from './project-export.ts';
 export { PRESETS, getPreset, type EncodingPreset } from './presets.ts';
