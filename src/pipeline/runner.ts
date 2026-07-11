@@ -561,18 +561,18 @@ async function directorScenes(nl: NeuroLink, opts: PipelineOptions, ctx: BrollCt
       for (let attempt = 0; attempt <= maxRegen; attempt++) {
         const candPaths = Array.from({ length: nCand }, (_, j) =>
           nCand === 1 ? keyPath : path.join(ctx.outDir, `.broll-dir-key-${i}-a${attempt}c${j}.png`));
-        const goodPaths = (await Promise.all(candPaths.map(async (p) => {
+        const goodPaths = (await Promise.all(candPaths.map(async (p, slot) => {
           try {
             await generateImage(prompt, p, {
               aspectRatio: '16:9',
               referenceImages: shot.shows_product && heroBuf ? [heroBuf] : undefined,
             });
-            return p;
+            return { path: p, slot };
           } catch (e) {
             console.log(`  [B-roll] keyframe ${i} gen failed: ${e instanceof Error ? e.message.slice(0, 80) : String(e)}`);
             return null;
           }
-        }))).filter((p): p is string => !!p);
+        }))).filter((c): c is { path: string; slot: number } => !!c);
         if (!goodPaths.length) break;
         generated = true;
         // Vet product shots against the canonical still. With a single
@@ -581,9 +581,9 @@ async function directorScenes(nl: NeuroLink, opts: PipelineOptions, ctx: BrollCt
         // the point even when no retries remain. Non-product shots skip it.
         if (!shot.shows_product || !heroBuf) break;
         if (nCand === 1 && attempt >= maxRegen) break;
-        const scored = await Promise.all(goodPaths.map(async (p, j) => ({
-          index: j, path: p,
-          verdict: await runConsistencyCriticAgent(nl, heroPath, p, plan.product_bible).catch(() => null),
+        const scored = await Promise.all(goodPaths.map(async (c, j) => ({
+          index: j, path: c.path, slot: c.slot,
+          verdict: await runConsistencyCriticAgent(nl, heroPath, c.path, plan.product_bible).catch(() => null),
         })));
         const best = pickBestCandidate(scored) ?? scored[0];
         if (nCand > 1 && best.path !== keyPath) await fs.copyFile(best.path, keyPath);
@@ -593,7 +593,7 @@ async function directorScenes(nl: NeuroLink, opts: PipelineOptions, ctx: BrollCt
         // the run. Extra fields are ignored by the tailer.
         await appendToLog('shot-verdicts.jsonl', {
           shot: i, attempt: attempt + 1, score: best.verdict?.score ?? null, regenerate: regen,
-          ...(nCand > 1 ? { candidates: nCand, chosen: best.index } : {}),
+          ...(nCand > 1 ? { candidates: nCand, chosen: best.slot } : {}),
           ...(regen && best.verdict?.fix_instruction ? { fix: best.verdict.fix_instruction.slice(0, 160) } : {}),
         }).catch(() => undefined);
         if (!regen || attempt >= maxRegen) break;
@@ -642,20 +642,8 @@ function doctorOpts(nl: NeuroLink): DoctorOptions {
 async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
   if (opts.dryRun) return { status: 'dry-run' };
   const outDir = opts.outputDir ?? OUTPUT_DIR;
-  // Spend tier: 'hero' (default) uses the configured generator; 'draft' routes
-  // every animate call to the cheap iteration config (BROLL_DRAFT_GENERATOR /
-  // BROLL_DRAFT_MODEL). The hosted i2v market spans ~$0.04–$0.40 per second,
-  // so iterating on the hero tier pays a ~10x premium for throwaway cuts.
-  const tier = (opts.brollTier ?? process.env.BROLL_TIER ?? 'hero').toLowerCase();
-  const tierChoice = resolveVideoTier(tier, process.env, opts.videoGenerator ?? 'vertex');
-  const gen = tierChoice.gen;
-  const provider = VIDEO_ALIAS[gen] ?? 'vertex';
   const outputPath = path.join(outDir, 'broll.mp4');
-  const model = tierChoice.model ?? REPLICATE_MODEL[gen];
   const dims = resolveDims(opts.resolution);
-  if (tier === 'draft') {
-    console.log(`[B-roll] DRAFT tier → ${provider}${model ? ` (${model})` : ''} — iteration output; re-run with --broll-tier hero for the final cut`);
-  }
 
   // Resolution-suffixed so a cached 720p seed isn't reused for a 1080p run.
   const seedImg = path.join(outDir, `.broll-seed-${dims.height}.jpg`);
@@ -700,7 +688,9 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
     const queries = stock.scriptToQueries(script, targetShots);
     console.log(`[B-roll] Stock mode: ${queries.length} clips @ ${dims.width}×${dims.height}, concurrency ${concurrency}`);
     const stockResults = await mapWithConcurrency(queries, concurrency, async (query, i): Promise<string | null> => {
-      const segOut = path.join(outDir, `.broll-seg-${i}.mp4`);
+      // Mode-specific cache prefix: stock must never serve (or be served by)
+      // another mode's cached segments when --broll-mode changes between runs.
+      const segOut = path.join(outDir, `.broll-stock-seg-${i}.mp4`);
       try { await fs.access(segOut); return segOut; } catch { /* fetch */ }
       try {
         const clips = await stock.searchStockClips(query, apiKey);
@@ -732,6 +722,21 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
       return outputPath;
     }
     return rendering.concatVideos(segPaths, outputPath, { width: dims.width, height: dims.height, fps: 30 });
+  }
+
+  // Spend tier: 'hero' (default) uses the configured generator; 'draft' routes
+  // every animate call to the cheap iteration config (BROLL_DRAFT_GENERATOR /
+  // BROLL_DRAFT_MODEL). Resolved only past the $0 modes above — a draft-tier
+  // misconfiguration must not fail a cards/stock run that never animates —
+  // and validated against VIDEO_ALIAS so a typo'd draft generator throws
+  // instead of silently routing the cheap tier to premium vertex.
+  const tier = (opts.brollTier ?? process.env.BROLL_TIER ?? 'hero').toLowerCase();
+  const tierChoice = resolveVideoTier(tier, process.env, opts.videoGenerator ?? 'vertex', Object.keys(VIDEO_ALIAS));
+  const gen = tierChoice.gen;
+  const provider = VIDEO_ALIAS[gen] ?? 'vertex';
+  const model = tierChoice.model ?? REPLICATE_MODEL[gen];
+  if (tier === 'draft') {
+    console.log(`[B-roll] DRAFT tier → ${provider}${model ? ` (${model})` : ''} — iteration output; re-run with --broll-tier hero for the final cut`);
   }
 
   if (mode === 'director') {

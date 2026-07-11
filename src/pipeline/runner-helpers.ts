@@ -138,6 +138,7 @@ export function resolveVideoTier(
   tier: string,
   env: Record<string, string | undefined>,
   fallbackGen: string,
+  knownGens?: readonly string[],
 ): VideoTierChoice {
   const t = tier.toLowerCase();
   if (t === 'hero') return { gen: fallbackGen };
@@ -148,6 +149,12 @@ export function resolveVideoTier(
       '[B-roll] draft tier requires BROLL_DRAFT_GENERATOR ' +
       "(e.g. 'wan-alpha', or 'replicate' + BROLL_DRAFT_MODEL=<owner/model>, or 'kling')",
     );
+  }
+  // An unrecognized draft generator must throw here: downstream alias lookup
+  // falls back to vertex, which would silently run the *draft* tier on the
+  // premium provider — the exact spend surprise this tier exists to prevent.
+  if (knownGens && !knownGens.includes(gen)) {
+    throw new Error(`[B-roll] BROLL_DRAFT_GENERATOR '${gen}' is not a known generator (known: ${knownGens.join(', ')})`);
   }
   return { gen, model: env.BROLL_DRAFT_MODEL || undefined };
 }
