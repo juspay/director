@@ -1,5 +1,11 @@
 # AI Video Generation Landscape -- Q1 2026
 
+> **SUPERSEDED (2026-07-12): see [`VIDEO-GEN-LANDSCAPE-2026Q3.md`](./VIDEO-GEN-LANDSCAPE-2026Q3.md).**
+> The Q1 warnings no longer hold: Seedance's API has been live since April 2026
+> (BytePlus / fal / Replicate / Krea) and leads the quality leaderboards; Runway is no
+> longer #1; Veo 3.1 is ~#3. Kept for historical reference only — do not plan from the
+> tables below.
+
 Research conducted March 26, 2026. Covers the current state of the art in AI video
 generation, with emphasis on programmatic API access for production pipelines.
 

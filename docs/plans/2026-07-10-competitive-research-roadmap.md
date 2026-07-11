@@ -90,7 +90,7 @@ Four Director capabilities remain genuinely uncommon across the OSS field: the w
 ### Corrected backlog (W = wider-field)
 
 - **W-P0-A · Model-tiered b-roll routing** — draft tier (LTX-2.3 $0.04/s · Wan ~$0.07–0.10/s · Veo 3.1 Lite $0.03–0.05/s) for iterations/critic loops, hero tier (Veo/Kling) for finals. Routing **landed in [#79](https://github.com/juspay/director/pull/79)** (`--broll-tier draft|hero`). Honest caveat from the post-merge review: the rate table prices the four provider keys (vertex/runway/kling/replicate) — it has **no per-model rates**, so an LTX model routed through replicate prices at replicate's flat $0.09/s (not LTX's real $0.04/s), and vertex's single scalar cannot hold draft-Veo and hero-Veo rates simultaneously. Per-model rate keys are the remaining work if projection accuracy on draft tiers starts to matter. Expected ~5–10x b-roll cost cut from the $14.40/video baseline stands.
-- **W-P0-B · Stock-footage b-roll tier** — Pexels/Pixabay/Coverr retrieval with script-order matching (MoneyPrinterTurbo `app/services/material.py` pattern) as `--broll-mode stock`, the middle tier between `cards` ($0, typography) and `director` (generated). Reverses the Part II non-goal, deliberately.
+- **W-P0-B · Stock-footage b-roll tier** — ✓ **landed in [#78](https://github.com/juspay/director/pull/78)**: Pexels retrieval with script-order matching (MoneyPrinterTurbo `app/services/material.py` pattern) as `--broll-mode stock`, the middle tier between `cards` ($0, typography) and `director` (generated). Reverses the Part II non-goal, deliberately.
 - **W-P1-A · Word-level karaoke captions** — ✓ **landed** in [#80](https://github.com/juspay/director/pull/80): `--caption-style karaoke`, per-word ASS `\k` sweep through the libass tier, word timings derived from the SRT (one code path for script and STT sources), graceful degradation to phrase captions without libass.
 - **W-P1-B · Doctor loop on media calls** — ✓ **landed** in [#81](https://github.com/juspay/director/pull/81): all three b-roll animate sites wrapped in classify → (LLM prompt rewrite on safety blocks only) → bounded retry; budget aborts and invalid params never retried; `DOCTOR_RETRIES` tunes (default 1).
 - **W-P1-C · Composition-layer spike** — ✓ **spike complete (2026-07-11)**, verdict recorded:
@@ -104,6 +104,31 @@ Four Director capabilities remain genuinely uncommon across the OSS field: the w
 ### Research trail
 
 Working notes with all verified numbers, source URLs, and clone paths: session scratchpad `research2/findings.md` (2026-07-11). Local deep-read clones: MoneyPrinterTurbo, VideoClaw, NarratoAI.
+
+## Part IV — the missing tiers (2026-07-12)
+
+A second completeness challenge named Higgsfield and Seedance as suspected misses. Both checked out: Higgsfield had zero coverage anywhere in Parts I–III; Seedance appeared only as a pricing footnote. A third research wave (16 agents: six tier lenses, an adversarial completeness critic, three gap-fill agents on the critic's findings; 254 live source fetches) closed the model-maker and creator-platform tiers.
+
+### What Part III still got wrong
+
+- **The bias, restated precisely:** anchoring on our own stack (Veo, HeyGen, Remotion-shaped tools) spotlighted Western, architecturally-similar players and missed where the money and usage actually sit. ByteDance (Seedance ~$1.8–2B annualized pace + CapCut 736M MAU), Kling ($3B raise at $18B — the largest-ever for a video model), MiniMax (HK IPO), fal (~$400M ARR) and Higgsfield ($500M ARR) are collectively larger than the entire familiar Western comparison set combined.
+- **Veo — our sole b-roll source — is now ~#3 on quality**, behind Seedance 2.0 (#1 on both image-to-video and text-to-video-with-audio, Artificial Analysis July 2026) and contested by HappyHorse 1.1 and Grok Imagine 1.5 (#2 i2v). Veo's remaining unique strength: true 48 kHz synchronized dialogue.
+- **The "cheap Seedance" footnote was wrong in both directions.** Accessible path (fal, official partner): $0.24–0.68/s — parity-to-worse vs Veo. Cheap path (BytePlus ~$0.01–0.03/s): ByteDance-linked enterprise KYC, India availability undocumented — a compliance question, not an engineering one. Best accessible route found: **Krea's dollar-metered API at $0.0677–0.0849/s** (verified 2026-07-12 on krea.ai's rate card; commercial-use licensed, account-only signup).
+- **Higgsfield is both competitor and component:** Marketing Studio (URL → 15 ad variants in ~5 min) and Supercomputer 2.0 (autonomous marketing agents) do Director's job at $500M-ARR scale; its camera-control suite and hosted MCP/CLI (April 2026) are equally usable as a b-roll backend. Its recommended b-roll workflow (shot list → hero keyframe → first/last-frame lock → camera preset → i2v) mirrors Director's phase design exactly — independent validation of the architecture, from a competitor.
+- **Agent-native became table stakes in H1 2026:** Higgsfield, Krea, PixVerse, Pollo and InVideo all shipped hosted MCP servers; Hedra shipped a brief→video orchestration agent. "Agent-drivable" now describes the market, not a differentiator. The four Part-III surviving properties (quality gates, cost governance, safety scoring, tracing) survive Part IV unchanged — still no public analog found, including no avatar-quality equivalent of an Elo arena.
+- **Copyright became a procurement axis:** MPA's first-ever AI cease-and-desist (Seedance, Feb 2026), five studio C&Ds, SCOTUS declining *Thaler* (AI-only output uncopyrightable), Moonvalley selling indemnity as the product. Our content-safety scorers are part of an indemnity story, not just a quality gate.
+
+### Part IV actions
+
+- **W-P4-LANDSCAPE · Refresh the in-repo model landscape** — ✓ **this PR**: `video-production/library/docs/VIDEO-GEN-LANDSCAPE-2026Q3.md` supersedes the Q1 doc, whose "Seedance BLOCKED — do not plan around it" warning has been false since April 2026.
+- **W-P4-RATES · Per-model video rate keys** — the W-P0-A caveat graduates to prerequisite: cost-tracker's flat `replicate: $0.09/s` silently mis-prices every non-default model, which blocks honest multi-model tiering. PR to follow.
+- **W-P4-TIER2 · Draft-tier pilot on the zero-code path** — `minimax/hailuo-2.3-fast` and `wan-video/wan-2.7-i2v` (slugs verified on Replicate 2026-07-12) as named `BROLL_DRAFT_GENERATOR` aliases through the existing NeuroLink Replicate handler. Depends on W-P4-RATES. PR to follow.
+- **W-P4-COMPLIANCE · Seedance/BytePlus vendor-risk review** — owner-level: the 13–40× path spread is a compliance decision; also verify Krea's 720p/1080p Seedance rates ("from" pricing) before budgeting around them.
+- **W-P4-AVATAR-BENCH · Hedra + Tavus vs HeyGen** — the W-DEC concentration-risk action now has named candidates: Hedra Character-3 (~$0.031–0.06/s batch API, 720p cap) and Tavus Phoenix-4 (~$0.013–0.017/s overage, bundled plans). HeyGen still wins reviews on polish and languages — the benchmark should measure our actual avatar segment profile.
+
+### Research trail (Part IV)
+
+Wave-3/4 structured results: session scratchpad `research3/*.json` (7 tier/critic lenses + 3 gap-fill); running log `research2/findings.md`. Artifact updated to v8 with §08 ("Part IV — the missing tiers"): hard-evidence leader board, end-to-end tier comparison, the critic's nine (Hedra, Tavus, Grok Imagine, Adobe Firefly/Topaz, Meta Vibes, Moonvalley, Viggle, Descript Underlord, Submagic-class).
 
 ## Evidence
 
