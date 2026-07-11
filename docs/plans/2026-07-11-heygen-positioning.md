@@ -1,6 +1,6 @@
 # W-DEC — HeyGen positioning: differentiate on the pipeline, absorb tactically as a provider
 
-**Status:** recommended (drafted from the 2026-07-11 wider-field re-scan; flip to *accepted* on owner sign-off) · **Owner:** core · **Origin:** roadmap Part III, W-DEC.
+**Status:** accepted (2026-07-11, owner sign-off) · **Owner:** core · **Origin:** roadmap Part III, W-DEC.
 
 ## Context
 
