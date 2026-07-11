@@ -30,19 +30,27 @@ describe('agent-observer', () => {
 
   it('observe() catches errors without rethrowing and marks success=false', async () => {
     const baseline = getMetrics().length;
-    const { result, metrics } = await observe('failing-agent', async () => {
+    const { result, metrics, error } = await observe('failing-agent', async () => {
       throw new Error('kaboom');
     });
     assert.equal(result, null);
     assert.equal(metrics.success, false);
     assert.equal(metrics.agentName, 'failing-agent');
     assert.equal(getMetrics().length, baseline + 1);
+    // Regression: the swallowed error must be surfaced so runPhase can rethrow —
+    // without it a thrown phase checkpointed as {status:'complete'} and resume
+    // skipped the failed phase forever.
+    assert.ok(error instanceof Error);
+    assert.equal(error.message, 'kaboom');
   });
 
   it('observe() treats null result as failure', async () => {
-    const { result, metrics } = await observe('null-agent', async () => null);
+    const { result, metrics, error } = await observe('null-agent', async () => null);
     assert.equal(result, null);
     assert.equal(metrics.success, false);
+    // A null return is a soft failure, not a throw — no error is surfaced, so
+    // runPhase still checkpoints it (phases may legitimately return nothing).
+    assert.equal(error, undefined);
   });
 
   // Regression: the old `result !== null` flagged an `undefined` return as a

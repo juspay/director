@@ -9,27 +9,35 @@ const metricsBuffer: AgentMetrics[] = [];
 
 /**
  * Wrap an agent function with observability tracking.
+ *
+ * Never rethrows — metrics must persist even for a failed call — but a thrown
+ * error is surfaced on the `error` field so callers with a failure contract
+ * (runPhase's checkpoint) can rethrow it. `result ?? fallback` alone cannot
+ * distinguish "threw" from "legitimately returned undefined", which is how a
+ * failed b-roll phase got checkpointed as complete and resume skipped it.
  */
 export function observe<T>(
   agentName: string,
   fn: () => Promise<T>,
-): Promise<{ result: T | null; metrics: AgentMetrics }> {
+): Promise<{ result: T | null; metrics: AgentMetrics; error?: unknown }> {
   return observeAgent(agentName, fn);
 }
 
 async function observeAgent<T>(
   agentName: string,
   fn: () => Promise<T>,
-): Promise<{ result: T | null; metrics: AgentMetrics }> {
+): Promise<{ result: T | null; metrics: AgentMetrics; error?: unknown }> {
   const start = Date.now();
   const retries = 0;
   let threw = false;
+  let caught: unknown;
   let result: T | null = null;
 
   try {
     result = await fn();
   } catch (err) {
     threw = true;
+    caught = err;
     console.error(`[Observer] ${agentName} threw: ${err instanceof Error ? err.message : String(err)}`);
   }
 
@@ -64,7 +72,7 @@ async function observeAgent<T>(
     `[Observer] ${agentName}: ${status} (${(executionTimeMs / 1000).toFixed(1)}s, ~$${metrics.costEstimate.toFixed(4)})`,
   );
 
-  return { result, metrics };
+  return threw ? { result, metrics, error: caught } : { result, metrics };
 }
 
 /**
