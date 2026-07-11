@@ -373,6 +373,15 @@ export function assTime(t: number): string {
   return `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}.${String(c).padStart(2, '0')}`;
 }
 
+/**
+ * ASS Dialogue text is a mini-language: braces open override blocks and a
+ * backslash starts control sequences. Caption words come from scripts/STT and
+ * must render as literal text, never as style injection.
+ */
+export function assSafeText(s: string): string {
+  return s.replace(/\\/g, '/').replace(/\{/g, '(').replace(/\}/g, ')');
+}
+
 type KaraokeLine = { start: number; end: number; words: WordTiming[] };
 
 function groupWordsIntoLines(words: WordTiming[], maxCharsPerLine: number): KaraokeLine[] {
@@ -429,7 +438,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
       // the gap), except the last word which runs to the line end.
       const until = i === line.words.length - 1 ? line.end : line.words[i + 1].start;
       const cs = Math.max(1, Math.round((until - w.start) * 100));
-      return `{\\k${cs}}${w.text}`;
+      return `{\\k${cs}}${assSafeText(w.text)}`;
     });
     return `Dialogue: 0,${assTime(line.start)},${assTime(line.end)},Karaoke,,0,0,0,,${parts.join(' ')}`;
   });

@@ -8,6 +8,12 @@
  * Pure module: no I/O, no logging. The optional budget check throws a
  * distinctive error so the runner can fail the phase outright instead of
  * falling through to another paid generation path.
+ *
+ * Known unpriced costs (deliberate, documented): consistency-critic and
+ * prompt-doctor LLM calls (NeuroLink does not surface token usage yet — the
+ * P0-1 upstream ask) and doctor-loop retry attempts on animate calls (retries
+ * fire only on provider failures, which providers do not bill for completed
+ * output; the successful attempt is billed once via the normal seconds log).
  */
 import { CostTracker } from './cost-tracker.ts';
 

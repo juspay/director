@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { srtToWordTimings, wordsToKaraokeAss, assTime, ffFilterPathEscape, type WordTiming } from '../../src/rendering/caption-burner.ts';
+import { srtToWordTimings, wordsToKaraokeAss, assTime, ffFilterPathEscape, assSafeText, type WordTiming } from '../../src/rendering/caption-burner.ts';
 
 const SRT = `1
 00:00:01,000 --> 00:00:03,000
@@ -100,5 +100,19 @@ test('ffFilterPathEscape', async (t) => {
   await t.test('plain posix paths only get colon escaping', () => {
     assert.equal(ffFilterPathEscape('/tmp/captions.ass'), '/tmp/captions.ass');
     assert.equal(ffFilterPathEscape('/a:b/c.srt'), '/a\\:b/c.srt');
+  });
+});
+
+test('assSafeText neutralizes ASS control characters', async (t) => {
+  await t.test('braces and backslashes become inert', () => {
+    assert.equal(assSafeText('{\\b1}bold{\\b0}'), '(/b1)bold(/b0)');
+    assert.equal(assSafeText('plain words'), 'plain words');
+  });
+  await t.test('dialogue lines never contain injected override blocks', () => {
+    const words: WordTiming[] = [{ text: '{\\pos(0,0)}hack', start: 0, end: 1 }];
+    const ass = wordsToKaraokeAss(words, { width: 1280, height: 720 });
+    const dialogue = ass.split('\n').find((l) => l.startsWith('Dialogue:'))!;
+    assert.ok(!dialogue.includes('{\\pos'), 'no raw override survives');
+    assert.match(dialogue, /\{\\k\d+\}\(\/pos\(0,0\)\)hack/);
   });
 });

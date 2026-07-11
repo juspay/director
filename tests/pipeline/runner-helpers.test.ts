@@ -242,3 +242,22 @@ test('resolveVideoTier', async (t) => {
     );
   });
 });
+
+test('resolveVideoTier validates the draft generator against known aliases', async (t) => {
+  const KNOWN = ['vertex', 'veo', 'kling', 'runway', 'replicate', 'wan-alpha'];
+  await t.test('known draft generators pass', () => {
+    assert.deepEqual(
+      resolveVideoTier('draft', { BROLL_DRAFT_GENERATOR: 'wan-alpha' }, 'vertex', KNOWN),
+      { gen: 'wan-alpha', model: undefined },
+    );
+  });
+  await t.test('unknown draft generators throw instead of silently routing to vertex', () => {
+    assert.throws(
+      () => resolveVideoTier('draft', { BROLL_DRAFT_GENERATOR: 'ltx' }, 'vertex', KNOWN),
+      /'ltx' is not a known generator/,
+    );
+  });
+  await t.test('hero tier never validates (fallback gen is the caller-configured one)', () => {
+    assert.deepEqual(resolveVideoTier('hero', {}, 'vertex', KNOWN), { gen: 'vertex' });
+  });
+});
