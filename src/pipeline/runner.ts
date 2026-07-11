@@ -928,7 +928,16 @@ async function phaseCaptions(_nl: NeuroLink, opts: PipelineOptions): Promise<unk
   } catch { /* fall back to STT */ }
 
   if (!usedScript) await rendering.generateSrt(voPath, srtPath);
-  return rendering.burnCaptions(path.join(outDir, 'final.mp4'), srtPath, path.join(outDir, 'final_captioned.mp4'));
+
+  const captionStyle = (opts.captionStyle ?? process.env.CAPTION_STYLE ?? 'phrase').toLowerCase();
+  if (captionStyle !== 'phrase' && captionStyle !== 'karaoke') {
+    throw new Error(`[Captions] unknown caption style '${captionStyle}' — use phrase or karaoke`);
+  }
+  const finalIn = path.join(outDir, 'final.mp4');
+  const finalOut = path.join(outDir, 'final_captioned.mp4');
+  return captionStyle === 'karaoke'
+    ? rendering.burnKaraokeCaptions(finalIn, srtPath, finalOut)
+    : rendering.burnCaptions(finalIn, srtPath, finalOut);
 }
 
 // CLI
@@ -951,6 +960,7 @@ Options:
   --resolution RES     Output resolution: 1080p (default) | 720p
   --broll-mode MODE    B-roll: director (default) | concept | generic | stock ($0-API real footage via PEXELS_API_KEY, queries derived from the script) | cards ($0 typography from the script — the card text IS the visual, so consider skipping the caption phase: --phases 1,3,4,6)
   --broll-tier TIER    B-roll spend tier: hero (default — configured generator) | draft (cheap iteration: BROLL_DRAFT_GENERATOR, optional BROLL_DRAFT_MODEL; ~10x cheaper per second on Wan/Kling-class models)
+  --caption-style S    Captions: phrase (default) | karaoke (word-level ASS \\k highlight sweep; needs libass, degrades to phrase without it)
   --avatar-source PATH Avatar source image for D-ID/MuseTalk
   --avatar-provider    Avatar: did|heygen|musetalk
   --avatar-id ID       Provider avatar id (required by HeyGen; or HEYGEN_AVATAR_ID)
@@ -976,6 +986,7 @@ Options:
     if (args[i] === '--video-gen') opts.videoGenerator = args[++i];
     if (args[i] === '--broll-mode') opts.brollMode = args[++i];
     if (args[i] === '--broll-tier') opts.brollTier = args[++i];
+    if (args[i] === '--caption-style') opts.captionStyle = args[++i];
     if (args[i] === '--music-gen') opts.musicGenerator = args[++i];
     if (args[i] === '--avatar-source') opts.avatarSource = args[++i];
     if (args[i] === '--avatar-provider') opts.avatarProvider = args[++i];

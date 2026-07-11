@@ -25,7 +25,7 @@ function ensureSttRegistered(): void {
   try { if (process.env.AZURE_SPEECH_KEY)   STTProcessor.registerHandler('azure-stt',  new AzureSTT());    } catch {}
 }
 
-type WordTiming = { text: string; start: number; end: number };
+export type WordTiming = { text: string; start: number; end: number };
 
 function formatSrtTime(t: number): string {
   const ms = Math.floor((t % 1) * 1000);
@@ -173,6 +173,16 @@ export async function transcribe(
   return '';
 }
 
+
+/**
+ * Escape a path for interpolation into an ffmpeg filter argument
+ * (subtitles='...'). Backslashes must be escaped first, then quotes and
+ * colons — escaping in the other order re-escapes the escapes.
+ */
+export function ffFilterPathEscape(p: string): string {
+  return p.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/:/g, '\\:');
+}
+
 type SrtCue = { idx: number; start: number; end: number; text: string };
 
 function parseSrt(raw: string): SrtCue[] {
@@ -290,7 +300,7 @@ export async function burnCaptions(
   if (await hasLibass()) {
     const style = opts.forceStyle
       ?? 'FontName=Helvetica,FontSize=28,PrimaryColour=&H00FFFFFF,OutlineColour=&H80000000,BackColour=&H80000000,Bold=1,Outline=2,Shadow=0,MarginV=40,Alignment=2,BorderStyle=4';
-    const srtEscaped = srtPath.replace(/'/g, "\\'").replace(/:/g, '\\:');
+    const srtEscaped = ffFilterPathEscape(srtPath);
     try {
       await execa('ffmpeg', [
         '-y', '-i', videoPath,
@@ -325,4 +335,137 @@ export async function burnCaptions(
   ]);
   console.log(`[Captions] Soft-muxed (mov_text): ${outputPath}`);
   return outputPath;
+}
+
+// ---------- Word-level karaoke (W-P1-A) ----------
+
+/**
+ * Distribute per-word timings inside each SRT cue, proportional to word
+ * length. Cue boundaries are the accurate part (script pacing or STT line
+ * timing); inside a cue this is an approximation — good enough for karaoke
+ * highlighting, and it gives one code path for both caption sources.
+ */
+export function srtToWordTimings(raw: string): WordTiming[] {
+  const out: WordTiming[] = [];
+  for (const cue of parseSrt(raw)) {
+    const words = cue.text.split(/\s+/).filter(Boolean);
+    if (!words.length || cue.end <= cue.start) continue;
+    const span = cue.end - cue.start;
+    const weights = words.map((w) => w.length + 1);
+    const total = weights.reduce((a, b) => a + b, 0);
+    let t = cue.start;
+    words.forEach((w, i) => {
+      const dur = (weights[i] / total) * span;
+      out.push({ text: w, start: t, end: i === words.length - 1 ? cue.end : t + dur });
+      t += dur;
+    });
+  }
+  return out;
+}
+
+/** ASS timestamp: H:MM:SS.CC (centiseconds). */
+export function assTime(t: number): string {
+  const cs = Math.max(0, Math.round(t * 100));
+  const h = Math.floor(cs / 360000);
+  const m = Math.floor(cs / 6000) % 60;
+  const s = Math.floor(cs / 100) % 60;
+  const c = cs % 100;
+  return `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}.${String(c).padStart(2, '0')}`;
+}
+
+type KaraokeLine = { start: number; end: number; words: WordTiming[] };
+
+function groupWordsIntoLines(words: WordTiming[], maxCharsPerLine: number): KaraokeLine[] {
+  if (!words.length) return [];
+  const lines: KaraokeLine[] = [];
+  let cur: KaraokeLine = { start: words[0].start, end: words[0].end, words: [words[0]] };
+  let len = words[0].text.length;
+  for (let i = 1; i < words.length; i++) {
+    const w = words[i];
+    if (len + 1 + w.text.length > maxCharsPerLine) {
+      lines.push(cur);
+      cur = { start: w.start, end: w.end, words: [w] };
+      len = w.text.length;
+    } else {
+      cur.words.push(w);
+      cur.end = w.end;
+      len += 1 + w.text.length;
+    }
+  }
+  lines.push(cur);
+  return lines;
+}
+
+/**
+ * Emit an ASS subtitle document with per-word `\k` karaoke tags: unspoken
+ * words render in SecondaryColour (white), spoken fill sweeps to
+ * PrimaryColour (gold). Inter-word gaps are absorbed into the preceding
+ * word's tag so the sweep never stalls between words.
+ */
+export function wordsToKaraokeAss(
+  words: WordTiming[],
+  opts: { width: number; height: number; maxCharsPerLine?: number },
+): string {
+  const { width, height } = opts;
+  const lines = groupWordsIntoLines(words, opts.maxCharsPerLine ?? 32);
+  const fontSize = Math.round(height * 0.055);
+  const marginV = Math.round(height * 0.06);
+  const header = `[Script Info]
+ScriptType: v4.00+
+PlayResX: ${width}
+PlayResY: ${height}
+WrapStyle: 2
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Karaoke,Helvetica,${fontSize},&H0000D7FF,&H00FFFFFF,&H80000000,&H80000000,1,0,0,0,100,100,0,0,1,2,0,2,20,20,${marginV},1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+`;
+  const events = lines.map((line) => {
+    const parts = line.words.map((w, i) => {
+      // \k duration is centiseconds; run to the next word's start (absorbing
+      // the gap), except the last word which runs to the line end.
+      const until = i === line.words.length - 1 ? line.end : line.words[i + 1].start;
+      const cs = Math.max(1, Math.round((until - w.start) * 100));
+      return `{\\k${cs}}${w.text}`;
+    });
+    return `Dialogue: 0,${assTime(line.start)},${assTime(line.end)},Karaoke,,0,0,0,,${parts.join(' ')}`;
+  });
+  return header + events.join('\n') + '\n';
+}
+
+/**
+ * Burn word-level karaoke captions. Requires libass (the \k sweep cannot be
+ * reproduced by the PNG-overlay or soft-mux tiers) — anything short of that
+ * degrades to the standard phrase pipeline rather than failing the phase.
+ */
+export async function burnKaraokeCaptions(
+  videoPath: string,
+  srtPath: string,
+  outputPath: string,
+): Promise<string> {
+  const words = srtToWordTimings(await fs.readFile(srtPath, 'utf-8').catch(() => ''));
+  if (!words.length || !(await hasLibass())) {
+    console.log('[Captions] karaoke unavailable (no words or no libass) — falling back to phrase captions');
+    return burnCaptions(videoPath, srtPath, outputPath);
+  }
+  const { width, height } = await videoSize(videoPath);
+  const assPath = srtPath.replace(/\.srt$/i, '') + '.karaoke.ass';
+  await fs.writeFile(assPath, wordsToKaraokeAss(words, { width, height }));
+  const assEscaped = ffFilterPathEscape(assPath);
+  try {
+    await execa('ffmpeg', [
+      '-y', '-i', videoPath,
+      '-vf', `subtitles='${assEscaped}'`,
+      '-c:v', 'libx264', '-crf', '18', '-preset', 'slow',
+      '-c:a', 'copy', '-movflags', '+faststart', outputPath,
+    ]);
+    console.log(`[Captions] Burned karaoke (libass, ${words.length} words): ${outputPath}`);
+    return outputPath;
+  } catch (e) {
+    console.log(`[Captions] karaoke burn failed: ${(e instanceof Error ? e.message : String(e)).slice(0, 80)} — falling back`);
+    return burnCaptions(videoPath, srtPath, outputPath);
+  }
 }
