@@ -316,7 +316,13 @@ async function runPhase(
   console.log(`\n--- ${phase.label} ---\n`);
 
   try {
-    const { result } = await observe(phase.name, () => phase.fn(neurolink, opts));
+    const { result, error } = await observe(phase.name, () => phase.fn(neurolink, opts));
+    // observe() swallows to guarantee metrics persistence; the phase's failure
+    // contract lives here. Without this rethrow a thrown phase returned
+    // result=null, `?? { status: 'complete' }` checkpointed it as complete, and
+    // resume skipped the failed phase forever (found live: a b-roll phase that
+    // produced zero segments resumed as "Already complete, skipping").
+    if (error !== undefined) throw error;
     state.results[phase.name] = result ?? { status: 'complete' };
     // Keep currentStep in step with real completions (runner never advanced it
     // before, so it stayed 0 for the whole run and the dashboard read 0/7). Count
