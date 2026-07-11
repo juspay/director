@@ -25,6 +25,7 @@ import type { PipelineState } from '../types/index.ts';
 import * as voiceover from '../voiceover/index.ts';
 import * as generators from '../generators/index.ts';
 import { generateImage, resolveImageGenParams } from '../generators/image.ts';
+import * as stock from '../generators/stock-video.ts';
 import * as rendering from '../rendering/index.ts';
 import * as avatar from '../avatar/index.ts';
 import * as music from '../music/index.ts';
@@ -643,6 +644,50 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
     return out;
   }
 
+  // Stock mode: the $0-API retrieval tier (real Pexels footage, no generation
+  // spend). Explicitly chosen, so a missing key or empty results throw rather
+  // than falling through to any paid generation path.
+  if (mode === 'stock') {
+    const apiKey = process.env.PEXELS_API_KEY ?? '';
+    if (!apiKey) throw new Error('[B-roll] stock mode requires PEXELS_API_KEY (free at pexels.com/api)');
+    const script = await readScript(opts.scriptPath).catch(() => '');
+    const queries = stock.scriptToQueries(script, targetShots);
+    console.log(`[B-roll] Stock mode: ${queries.length} clips @ ${dims.width}×${dims.height}, concurrency ${concurrency}`);
+    const stockResults = await mapWithConcurrency(queries, concurrency, async (query, i): Promise<string | null> => {
+      const segOut = path.join(outDir, `.broll-seg-${i}.mp4`);
+      try { await fs.access(segOut); return segOut; } catch { /* fetch */ }
+      try {
+        const clips = await stock.searchStockClips(query, apiKey);
+        const file = stock.pickClipFile(clips, dims.width, segLen);
+        if (!file) { console.log(`  [B-roll] no stock match for "${query}"`); return null; }
+        const raw = path.join(outDir, `.stock-raw-${i}.mp4`);
+        await stock.downloadStockClip(file.link, raw);
+        // Normalize to the run's exact frame: cover-scale + center-crop, fixed
+        // fps, audio stripped (narration and music own the audio buses).
+        const { execa } = await import('execa');
+        await execa('ffmpeg', [
+          '-y', '-i', raw, '-t', String(segLen),
+          '-vf', `scale=${dims.width}:${dims.height}:force_original_aspect_ratio=increase,crop=${dims.width}:${dims.height}`,
+          '-r', '30', '-an', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20', segOut,
+        ], { stdio: 'ignore' });
+        await fs.rm(raw, { force: true });
+        return segOut;
+      } catch (e) {
+        console.log(`  [B-roll] stock clip ${i} failed: ${e instanceof Error ? e.message.slice(0, 100) : String(e)}`);
+        return null;
+      }
+    });
+    for (const r of stockResults) if (r) segPaths.push(r);
+    if (segPaths.length === 0) throw new Error('[B-roll] stock mode produced no clips');
+    await costTracker.log('local', 'stock-broll', {}, 0).catch(() => undefined);
+    if (segPaths.length === 1) {
+      await fs.copyFile(segPaths[0], outputPath);
+      console.log(`[B-roll] Single stock segment → ${outputPath}`);
+      return outputPath;
+    }
+    return rendering.concatVideos(segPaths, outputPath, { width: dims.width, height: dims.height, fps: 30 });
+  }
+
   if (mode === 'director') {
     try {
       const dirSegs = await directorScenes(nl, opts, { outDir, provider, model, dims, seedImg, segLen, concurrency, targetShots });
@@ -895,7 +940,7 @@ Options:
   --video-gen NAME     Video: kling|runway|veo|wan-alpha
   --music-gen NAME     Music: lyria|beatoven|elevenlabs|numpy
   --resolution RES     Output resolution: 1080p (default) | 720p
-  --broll-mode MODE    B-roll: director (default) | concept | generic | cards ($0 typography from the script — the card text IS the visual, so consider skipping the caption phase: --phases 1,3,4,6)
+  --broll-mode MODE    B-roll: director (default) | concept | generic | stock ($0-API real footage via PEXELS_API_KEY, queries derived from the script) | cards ($0 typography from the script — the card text IS the visual, so consider skipping the caption phase: --phases 1,3,4,6)
   --avatar-source PATH Avatar source image for D-ID/MuseTalk
   --avatar-provider    Avatar: did|heygen|musetalk
   --avatar-id ID       Provider avatar id (required by HeyGen; or HEYGEN_AVATAR_ID)
