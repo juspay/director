@@ -91,3 +91,24 @@ test('assertWithinBudget', async (t) => {
     assert.throws(() => assertWithinBudget(2, e, 15), BudgetExceededError);
   });
 });
+
+test('candidate pools multiply product-shot image counts', async (t) => {
+  const base = {
+    shots: 8, segLen: 4, videoProvider: 'none', imageProvider: 'vertex',
+    heroNeeded: true, productShots: 3, maxRegen: 2,
+  };
+  await t.test('candidates: 1 (and omitted) reduce to the classic formulas', () => {
+    const classic = estimatePreflight(base);
+    const explicit = estimatePreflight({ ...base, candidates: 1 });
+    assert.equal(classic.imagesBest, 9);
+    assert.equal(classic.imagesWorst, 15);
+    assert.deepEqual(explicit, classic);
+  });
+  await t.test('candidates: 3 prices the pool on every product-shot attempt', () => {
+    const est = estimatePreflight({ ...base, candidates: 3 });
+    // best: hero 1 + 8 shots + 3 product shots × 2 extra candidates = 15
+    assert.equal(est.imagesBest, 15);
+    // worst: best + 3 product shots × 3 candidates × 2 regens = 33
+    assert.equal(est.imagesWorst, 33);
+  });
+});

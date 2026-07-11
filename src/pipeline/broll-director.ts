@@ -55,3 +55,28 @@ export function normalizeShotPlan(plan: ShotPlan, maxShots: number): ShotPlan {
     .slice(0, Math.max(1, maxShots));
   return { ...plan, shots };
 }
+
+export type ScoredCandidate = { index: number; verdict: ConsistencyVerdict | null };
+
+/**
+ * Pick the best keyframe candidate by critic score. Unscored candidates
+ * (critic call failed) rank below any scored one; ties keep the earliest
+ * index so the choice is deterministic. Null only for an empty pool.
+ */
+export function pickBestCandidate<T extends ScoredCandidate>(scored: readonly T[]): T | null {
+  if (!scored.length) return null;
+  return scored.reduce((best, cur) => {
+    const b = best.verdict?.score ?? -1;
+    const c = cur.verdict?.score ?? -1;
+    return c > b ? cur : best;
+  });
+}
+
+/**
+ * KEYFRAME_CANDIDATES resolution: clamped to [1, 4] — 1 is today's behavior,
+ * 4 caps the per-shot image spend multiplier. Non-numeric input means 1.
+ */
+export function resolveCandidateCount(raw: string | undefined): number {
+  const n = Number(raw ?? 1);
+  return Number.isFinite(n) ? Math.min(4, Math.max(1, Math.trunc(n))) : 1;
+}
