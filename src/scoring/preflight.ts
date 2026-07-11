@@ -24,6 +24,8 @@ export type PreflightInputs = {
   segLen: number;
   /** Rate-table key for the video generator ('vertex', 'kling', …). */
   videoProvider: string;
+  /** Model string when the provider routes named models (e.g. replicate) — enables per-model rates. */
+  videoModel?: string;
   /** Rate-table key for the keyframe image generator. */
   imageProvider: string;
   /** Whether a hero still must be generated (false when cached from a resume). */
@@ -57,13 +59,14 @@ const round2 = (n: number): number => Math.round(n * 100) / 100;
 
 /**
  * Project the spend the coming generation will commit. Uses estimateOnly so the
- * per-provider env overrides (VERTEX_VIDEO_PER_SEC, VERTEX_IMAGE_PER_IMAGE)
- * apply identically to projection and billing. Unknown providers price at $0 —
- * the projection must never block a run the tracker itself would bill as free.
+ * per-provider and per-model env overrides (VERTEX_VIDEO_PER_SEC,
+ * VERTEX_IMAGE_PER_IMAGE, VIDEO_MODEL_RATES) apply identically to projection
+ * and billing. Unknown providers price at $0 — the projection must never block
+ * a run the tracker itself would bill as free.
  */
 export function estimatePreflight(inp: PreflightInputs): PreflightEstimate {
   const rates = new CostTracker();
-  const videoUsd = rates.estimateOnly(inp.videoProvider, { seconds: inp.shots * inp.segLen });
+  const videoUsd = rates.estimateOnly(inp.videoProvider, { seconds: inp.shots * inp.segLen }, inp.videoModel);
   // Candidate pools multiply the images generated per attempt on product
   // shots; with candidates = 1 both formulas reduce to the classic ones.
   const cand = Math.max(1, inp.candidates ?? 1);
@@ -90,7 +93,8 @@ export function formatPreflight(e: PreflightEstimate, inp: PreflightInputs, spen
   const total = e.bestUsd === e.worstUsd
     ? `$${e.bestUsd.toFixed(2)}`
     : `$${e.bestUsd.toFixed(2)}–$${e.worstUsd.toFixed(2)}`;
-  return `[Pre-flight] projected spend: video $${e.videoUsd.toFixed(2)} (${inp.shots}×${inp.segLen}s @ ${inp.videoProvider})`
+  const videoKey = inp.videoModel ? `${inp.videoProvider}:${inp.videoModel}` : inp.videoProvider;
+  return `[Pre-flight] projected spend: video $${e.videoUsd.toFixed(2)} (${inp.shots}×${inp.segLen}s @ ${videoKey})`
     + ` + ${images} (${inp.imageProvider}) → ${total} this phase; $${spentUsd.toFixed(2)} already logged this run`;
 }
 

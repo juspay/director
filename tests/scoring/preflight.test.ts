@@ -53,6 +53,28 @@ test('estimatePreflight', async (t) => {
   });
 });
 
+test('videoModel routes the projection through per-model rates', async (t) => {
+  await t.test('projection and billing agree on the per-model price', () => {
+    const prev = process.env.VIDEO_MODEL_RATES;
+    process.env.VIDEO_MODEL_RATES = '{"replicate:minimax/hailuo-2.3-fast":0.03}';
+    try {
+      const flat = estimatePreflight({ ...DIRECTOR, videoProvider: 'replicate' });
+      const perModel = estimatePreflight({ ...DIRECTOR, videoProvider: 'replicate', videoModel: 'minimax/hailuo-2.3-fast' });
+      assert.equal(flat.videoUsd, 2.88);     // 32s × flat $0.09
+      assert.equal(perModel.videoUsd, 0.96); // 32s × per-model $0.03
+    } finally {
+      if (prev === undefined) delete process.env.VIDEO_MODEL_RATES;
+      else process.env.VIDEO_MODEL_RATES = prev;
+    }
+  });
+
+  await t.test('formatPreflight names the model so the console line matches the log', () => {
+    const inp: PreflightInputs = { ...DIRECTOR, videoProvider: 'replicate', videoModel: 'minimax/hailuo-2.3-fast' };
+    const line = formatPreflight(estimatePreflight(inp), inp, 0);
+    assert.match(line, /@ replicate:minimax\/hailuo-2\.3-fast\)/);
+  });
+});
+
 test('formatPreflight prints the range and the already-logged figure', () => {
   const e = estimatePreflight(DIRECTOR);
   const line = formatPreflight(e, DIRECTOR, 0.02);
