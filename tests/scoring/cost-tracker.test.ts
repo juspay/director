@@ -121,6 +121,91 @@ test('CostTracker.estimate', async (t) => {
   });
 });
 
+test('CostTracker per-model video rates', async (t) => {
+  await t.test('built-in per-model key beats the provider flat rate', async () => {
+    const p = await tmpLog();
+    const ct = new CostTracker(p);
+    await ct.reset();
+    // Without the model key this would price at replicate's flat $0.09/s.
+    await ct.log('replicate', 'broll-video', { seconds: 10 }, undefined, 'wavespeedai/wan-2.1-i2v-720p');
+    assert.equal((await ct.getSummary()).total, 2.5); // 10s × $0.25
+    await fs.rm(path.dirname(p), { recursive: true, force: true });
+  });
+
+  await t.test('a model with no per-model rate prices at the provider rate', async () => {
+    const p = await tmpLog();
+    const ct = new CostTracker(p);
+    await ct.reset();
+    await ct.log('replicate', 'broll-video', { seconds: 10 }, undefined, 'someone/unpriced-model');
+    assert.equal((await ct.getSummary()).total, 0.9); // falls back to flat $0.09/s
+    await fs.rm(path.dirname(p), { recursive: true, force: true });
+  });
+
+  await t.test('VIDEO_MODEL_RATES overrides both the built-in model table and the flat rate', async () => {
+    const prev = process.env.VIDEO_MODEL_RATES;
+    process.env.VIDEO_MODEL_RATES = JSON.stringify({
+      'replicate:minimax/hailuo-2.3-fast': 0.03,
+      'replicate:wavespeedai/wan-2.1-i2v-720p': 0.20,
+    });
+    try {
+      const p = await tmpLog();
+      const ct = new CostTracker(p);
+      await ct.reset();
+      await ct.log('replicate', 'broll-video', { seconds: 10 }, undefined, 'minimax/hailuo-2.3-fast');
+      await ct.log('replicate', 'broll-video', { seconds: 10 }, undefined, 'wavespeedai/wan-2.1-i2v-720p');
+      assert.equal((await ct.getSummary()).total, 2.3); // 10s × $0.03 + 10s × $0.20 (env beats table's $0.25)
+      await fs.rm(path.dirname(p), { recursive: true, force: true });
+    } finally {
+      if (prev === undefined) delete process.env.VIDEO_MODEL_RATES;
+      else process.env.VIDEO_MODEL_RATES = prev;
+    }
+  });
+
+  await t.test('an explicit 0 in VIDEO_MODEL_RATES means free, not fall-through', async () => {
+    const prev = process.env.VIDEO_MODEL_RATES;
+    process.env.VIDEO_MODEL_RATES = '{"replicate:wavespeedai/wan-2.1-i2v-720p":0}';
+    try {
+      const p = await tmpLog();
+      const ct = new CostTracker(p);
+      await ct.reset();
+      await ct.log('replicate', 'broll-video', { seconds: 10 }, undefined, 'wavespeedai/wan-2.1-i2v-720p');
+      assert.equal((await ct.getSummary()).total, 0);
+      await fs.rm(path.dirname(p), { recursive: true, force: true });
+    } finally {
+      if (prev === undefined) delete process.env.VIDEO_MODEL_RATES;
+      else process.env.VIDEO_MODEL_RATES = prev;
+    }
+  });
+
+  await t.test('unparseable VIDEO_MODEL_RATES is ignored, not fatal', async () => {
+    const prev = process.env.VIDEO_MODEL_RATES;
+    process.env.VIDEO_MODEL_RATES = 'not json{';
+    try {
+      const p = await tmpLog();
+      const ct = new CostTracker(p);
+      await ct.reset();
+      await ct.log('replicate', 'broll-video', { seconds: 10 }, undefined, 'wavespeedai/wan-2.1-i2v-720p');
+      assert.equal((await ct.getSummary()).total, 2.5); // built-in table still applies
+      await fs.rm(path.dirname(p), { recursive: true, force: true });
+    } finally {
+      if (prev === undefined) delete process.env.VIDEO_MODEL_RATES;
+      else process.env.VIDEO_MODEL_RATES = prev;
+    }
+  });
+
+  await t.test('the JSONL entry records the model so the log stays auditable', async () => {
+    const p = await tmpLog();
+    const ct = new CostTracker(p);
+    await ct.reset();
+    await ct.log('replicate', 'broll-video', { seconds: 5 }, undefined, 'minimax/hailuo-2.3-fast');
+    await ct.log('vertex', 'broll-video', { seconds: 5 }); // no model → no field
+    const lines = (await fs.readFile(p, 'utf-8')).trim().split('\n').map((l) => JSON.parse(l));
+    assert.equal(lines[0].model, 'minimax/hailuo-2.3-fast');
+    assert.equal('model' in lines[1], false);
+    await fs.rm(path.dirname(p), { recursive: true, force: true });
+  });
+});
+
 test('CostTracker.reset scopes the summary to one run', async () => {
   const p = await tmpLog();
   const ct = new CostTracker(p);

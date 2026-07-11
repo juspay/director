@@ -526,7 +526,7 @@ async function directorScenes(nl: NeuroLink, opts: PipelineOptions, ctx: BrollCt
   // Pre-flight: the plan fixes every cost driver, so price the phase and
   // enforce the whole-run budget cap while aborting is still free.
   const preflightInputs: PreflightInputs = {
-    shots: shots.length, segLen: ctx.segLen, videoProvider: ctx.provider,
+    shots: shots.length, segLen: ctx.segLen, videoProvider: ctx.provider, videoModel: ctx.model,
     imageProvider: resolveImageGenParams().provider,
     heroNeeded: !heroBuf, productShots: productCount, maxRegen, candidates,
   };
@@ -797,7 +797,7 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
       }
 
       const conceptInputs: PreflightInputs = {
-        shots: scenes.length, segLen, videoProvider: provider,
+        shots: scenes.length, segLen, videoProvider: provider, videoModel: model,
         imageProvider: resolveImageGenParams().provider,
         heroNeeded: wantHero && !heroBuf, productShots: 0, maxRegen: 0,
       };
@@ -857,7 +857,7 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
 
       // No keyframes here (gradient seed) — the projection is video-only.
       const genericInputs: PreflightInputs = {
-        shots: segCount, segLen, videoProvider: provider,
+        shots: segCount, segLen, videoProvider: provider, videoModel: model,
         imageProvider: 'none', heroNeeded: false, productShots: 0, maxRegen: 0,
       };
       const genericEst = estimatePreflight(genericInputs);
@@ -882,9 +882,11 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
 
   if (segPaths.length === 0) throw new Error('[B-roll] no segments produced');
   // Real video spend (per second of output) — keyed by provider so vertex/Veo
-  // is finally captured instead of logging $0 (issue #40). Never let a cost-log
+  // is finally captured instead of logging $0 (issue #40), plus the model
+  // string so per-model rates (VIDEO_MODEL_RATES) bill draft-tier routes at
+  // their real price instead of the provider's flat rate. Never let a cost-log
   // I/O hiccup fail the phase after the (paid) segments are already in hand.
-  await costTracker.log(provider, 'broll-video', { seconds: segPaths.length * segLen }).catch(() => undefined);
+  await costTracker.log(provider, 'broll-video', { seconds: segPaths.length * segLen }, undefined, model).catch(() => undefined);
   if (segPaths.length === 1) {
     await fs.copyFile(segPaths[0], outputPath);
     console.log(`[B-roll] Single segment → ${outputPath}`);

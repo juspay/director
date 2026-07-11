@@ -24,6 +24,37 @@ const RATES: Record<string, Record<string, number>> = {
   gemini_flash: { per_1m_input: 0.30 },
 };
 
+// Per-model video rates, keyed `${provider}:${model}`. A single provider
+// scalar can't hold two spend tiers at once — an LTX or Hailuo model routed
+// through replicate would silently price at replicate's flat $0.09/s. Only
+// rates verified against a published price page belong in this table; every
+// other model corrects via the VIDEO_MODEL_RATES env override and otherwise
+// falls back to the provider rate (the pre-per-model behavior).
+const MODEL_RATES: Record<string, number> = {
+  'replicate:wavespeedai/wan-2.1-i2v-480p': 0.09,
+  'replicate:wavespeedai/wan-2.1-i2v-720p': 0.25,
+};
+
+/**
+ * VIDEO_MODEL_RATES — JSON map of `${provider}:${model}` → USD per output
+ * second, e.g. '{"replicate:minimax/hailuo-2.3-fast":0.03}'. Same override
+ * contract as VERTEX_VIDEO_PER_SEC: an explicit 0 means free; entries that
+ * aren't finite numbers (and unparseable JSON) are ignored and fall through
+ * to the built-in tables.
+ */
+function envModelRate(key: string): number | undefined {
+  const raw = process.env.VIDEO_MODEL_RATES;
+  if (!raw) return undefined;
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    if (typeof parsed !== 'object' || parsed === null) return undefined;
+    const v = (parsed as Record<string, unknown>)[key];
+    return typeof v === 'number' && Number.isFinite(v) ? v : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 export class CostTracker {
   private explicitLogPath: string | null;
   constructor(logPath?: string) {
@@ -41,10 +72,12 @@ export class CostTracker {
     return this.explicitLogPath ?? path.join(stateDir(), 'cost_log.jsonl');
   }
 
-  async log(provider: string, operation: string, params: Record<string, number> = {}, cost?: number): Promise<void> {
+  async log(provider: string, operation: string, params: Record<string, number> = {}, cost?: number, model?: string): Promise<void> {
     const entry = {
-      timestamp: new Date().toISOString(), provider, operation, params,
-      cost: cost ?? this.estimate(provider, params),
+      timestamp: new Date().toISOString(), provider,
+      ...(model ? { model } : {}),
+      operation, params,
+      cost: cost ?? this.estimate(provider, params, model),
     };
     const logPath = this.logPath();
     await fs.mkdir(path.dirname(logPath), { recursive: true });
@@ -56,15 +89,15 @@ export class CostTracker {
    * projection prices planned work through the exact table (and env overrides)
    * that will bill the real calls, so projection and billing can't drift.
    */
-  estimateOnly(provider: string, params: Record<string, number>): number {
-    return this.estimate(provider, params);
+  estimateOnly(provider: string, params: Record<string, number>, model?: string): number {
+    return this.estimate(provider, params, model);
   }
 
-  private estimate(provider: string, params: Record<string, number>): number {
+  private estimate(provider: string, params: Record<string, number>, model?: string): number {
     const r = RATES[provider];
     if (!r) return 0;
     if (params.chars) return (params.chars / 1000) * (r.tts_per_1k_chars ?? 0);
-    if (params.seconds) return params.seconds * this.perSecond(provider, r);
+    if (params.seconds) return params.seconds * this.perSecond(provider, r, model);
     if (params.images) return params.images * this.perImage(provider, r);
     if (params.input_tokens) return (params.input_tokens / 1_000_000) * (r.per_1m_input ?? 0);
     return 0;
@@ -80,7 +113,17 @@ export class CostTracker {
     return r.per_image ?? 0;
   }
 
-  private perSecond(provider: string, r: Record<string, number>): number {
+  private perSecond(provider: string, r: Record<string, number>, model?: string): number {
+    // Most-specific wins: env per-model rate, then the built-in per-model
+    // table, then the provider-level rate. A model with no per-model rate
+    // anywhere prices at the provider rate — the pre-per-model behavior.
+    if (model) {
+      const key = `${provider}:${model}`;
+      const fromEnv = envModelRate(key);
+      if (fromEnv !== undefined) return fromEnv;
+      const fromTable = MODEL_RATES[key];
+      if (fromTable !== undefined) return fromTable;
+    }
     // Veo pricing varies by model/tier; let an env override correct it without a code change.
     // Number.isFinite (not `||`) so an explicit VERTEX_VIDEO_PER_SEC=0 stays 0 rather than
     // falling back to the default rate; only an unparseable value falls back.
