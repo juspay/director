@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { resolveDims, mapWithConcurrency, scriptToSrt, parseIntOr, parseFloatOr, resolveNarrationMode, pickCaptionText, completedPhaseCount } from '../../src/pipeline/runner-helpers.ts';
+import { resolveDims, mapWithConcurrency, scriptToSrt, parseIntOr, parseFloatOr, resolveNarrationMode, pickCaptionText, completedPhaseCount, resolveVideoTier } from '../../src/pipeline/runner-helpers.ts';
 
 const PHASE_NAMES = ['voiceover', 'avatar', 'broll', 'music', 'render', 'assembly', 'captions'];
 
@@ -203,5 +203,42 @@ test('scriptToSrt', async (t) => {
   await t.test('throws on a non-finite duration', () => {
     assert.throws(() => scriptToSrt('one two three.', NaN), /must be finite/);
     assert.throws(() => scriptToSrt('one two three.', Infinity), /must be finite/);
+  });
+});
+
+test('resolveVideoTier', async (t) => {
+  await t.test('hero tier keeps the configured generator, no model override', () => {
+    assert.deepEqual(resolveVideoTier('hero', {}, 'vertex'), { gen: 'vertex' });
+    assert.deepEqual(resolveVideoTier('HERO', { BROLL_DRAFT_GENERATOR: 'kling' }, 'runway'), { gen: 'runway' });
+  });
+
+  await t.test('draft tier routes to BROLL_DRAFT_GENERATOR (lowercased)', () => {
+    assert.deepEqual(
+      resolveVideoTier('draft', { BROLL_DRAFT_GENERATOR: 'Wan-Alpha' }, 'vertex'),
+      { gen: 'wan-alpha', model: undefined },
+    );
+  });
+
+  await t.test('draft tier carries an explicit model override', () => {
+    assert.deepEqual(
+      resolveVideoTier('draft', { BROLL_DRAFT_GENERATOR: 'replicate', BROLL_DRAFT_MODEL: 'lightricks/ltx-video' }, 'vertex'),
+      { gen: 'replicate', model: 'lightricks/ltx-video' },
+    );
+  });
+
+  await t.test('draft tier without a configured generator throws (spend decisions are explicit)', () => {
+    assert.throws(() => resolveVideoTier('draft', {}, 'vertex'), /BROLL_DRAFT_GENERATOR/);
+    assert.throws(() => resolveVideoTier('draft', { BROLL_DRAFT_MODEL: 'x/y' }, 'vertex'), /BROLL_DRAFT_GENERATOR/);
+  });
+
+  await t.test('unknown tier values throw instead of silently running hero', () => {
+    assert.throws(() => resolveVideoTier('cheap', {}, 'vertex'), /unknown tier 'cheap'/);
+  });
+
+  await t.test('empty BROLL_DRAFT_MODEL normalizes to undefined', () => {
+    assert.deepEqual(
+      resolveVideoTier('draft', { BROLL_DRAFT_GENERATOR: 'kling', BROLL_DRAFT_MODEL: '' }, 'vertex'),
+      { gen: 'kling', model: undefined },
+    );
   });
 });
