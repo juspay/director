@@ -101,7 +101,7 @@ node --import tsx src/pipeline/runner.ts [options]
 | `--narration MODE` | `script` (default — file + TTS) · `narrator` (AI writes narration + TTS in one call) |
 | `--resolution RES` | `1080p` (default) · `720p` |
 | `--provider NAME` | TTS: `openai` · `elevenlabs` · `google-tts` · `fish` · `edgetts` |
-| `--video-gen NAME` | Video: `veo` · `kling` · `runway` · `wan-alpha` |
+| `--video-gen NAME` | Video: `veo` · `kling` · `runway` · `wan-alpha` · `hailuo-fast` · `wan-2.7` |
 | `--music-gen NAME` | Music: `lyria` · `beatoven` · `elevenlabs` · `numpy` |
 | `--avatar-provider` | Avatar: `heygen` · `did` · `replicate` |
 | `--avatar-id ID` | Provider avatar id (required by HeyGen; or `HEYGEN_AVATAR_ID`) |

@@ -244,11 +244,21 @@ test('resolveVideoTier', async (t) => {
 });
 
 test('resolveVideoTier validates the draft generator against known aliases', async (t) => {
-  const KNOWN = ['vertex', 'veo', 'kling', 'runway', 'replicate', 'wan-alpha'];
+  const KNOWN = ['vertex', 'veo', 'kling', 'runway', 'replicate', 'wan-alpha', 'hailuo-fast', 'wan-2.7'];
   await t.test('known draft generators pass', () => {
     assert.deepEqual(
       resolveVideoTier('draft', { BROLL_DRAFT_GENERATOR: 'wan-alpha' }, 'vertex', KNOWN),
       { gen: 'wan-alpha', model: undefined },
+    );
+  });
+  await t.test('the W-P4-TIER2 pilot aliases resolve as draft generators', () => {
+    assert.deepEqual(
+      resolveVideoTier('draft', { BROLL_DRAFT_GENERATOR: 'hailuo-fast' }, 'vertex', KNOWN),
+      { gen: 'hailuo-fast', model: undefined },
+    );
+    assert.deepEqual(
+      resolveVideoTier('draft', { BROLL_DRAFT_GENERATOR: 'Wan-2.7' }, 'vertex', KNOWN),
+      { gen: 'wan-2.7', model: undefined },
     );
   });
   await t.test('unknown draft generators throw instead of silently routing to vertex', () => {

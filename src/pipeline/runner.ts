@@ -427,10 +427,19 @@ const VIDEO_ALIAS: Record<string, generators.VideoProvider> = {
   runway: 'runway',
   replicate: 'replicate',
   'wan-alpha': 'replicate',
+  'hailuo-fast': 'replicate',
+  'wan-2.7': 'replicate',
 };
 
+// Named draft-tier pilots (roadmap W-P4-TIER2) ride NeuroLink's generic
+// Replicate handler — an alias here is the whole integration. Slugs verified
+// on replicate.com 2026-07-12. Replicate publishes no per-second price for
+// these two: set VIDEO_MODEL_RATES (e.g. '{"replicate:minimax/hailuo-2.3-fast":0.03}')
+// after checking the console, or spend logs bill at replicate's flat rate.
 const REPLICATE_MODEL: Record<string, string> = {
   'wan-alpha': 'wechatcv/wan-alpha',
+  'hailuo-fast': 'minimax/hailuo-2.3-fast',
+  'wan-2.7': 'wan-video/wan-2.7-i2v',
 };
 
 async function ensureSeedImage(seedImg: string, dims: { width: number; height: number }): Promise<void> {
@@ -997,7 +1006,7 @@ Options:
   --output DIR         Output directory
   --provider NAME      TTS: elevenlabs|openai|fish|edgetts
   --voice NAME         TTS voice override (e.g. OpenAI onyx)
-  --video-gen NAME     Video: kling|runway|veo|wan-alpha
+  --video-gen NAME     Video: kling|runway|veo|wan-alpha|hailuo-fast|wan-2.7
   --music-gen NAME     Music: lyria|beatoven|elevenlabs|numpy
   --resolution RES     Output resolution: 1080p (default) | 720p
   --broll-mode MODE    B-roll: director (default) | concept | generic | stock ($0-API real footage via PEXELS_API_KEY, queries derived from the script) | cards ($0 typography from the script — the card text IS the visual, so consider skipping the caption phase: --phases 1,3,4,6)
