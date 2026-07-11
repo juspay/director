@@ -26,6 +26,8 @@ export type PreflightInputs = {
   productShots: number;
   /** BROLL_MAX_REGEN — worst-case extra keyframe attempts per product shot. */
   maxRegen: number;
+  /** KEYFRAME_CANDIDATES — images generated per attempt on product shots (default 1). */
+  candidates?: number;
 };
 
 export type PreflightEstimate = {
@@ -56,8 +58,11 @@ const round2 = (n: number): number => Math.round(n * 100) / 100;
 export function estimatePreflight(inp: PreflightInputs): PreflightEstimate {
   const rates = new CostTracker();
   const videoUsd = rates.estimateOnly(inp.videoProvider, { seconds: inp.shots * inp.segLen });
-  const imagesBest = (inp.heroNeeded ? 1 : 0) + inp.shots;
-  const imagesWorst = imagesBest + inp.productShots * inp.maxRegen;
+  // Candidate pools multiply the images generated per attempt on product
+  // shots; with candidates = 1 both formulas reduce to the classic ones.
+  const cand = Math.max(1, inp.candidates ?? 1);
+  const imagesBest = (inp.heroNeeded ? 1 : 0) + inp.shots + inp.productShots * (cand - 1);
+  const imagesWorst = imagesBest + inp.productShots * cand * inp.maxRegen;
   const imagesBestUsd = rates.estimateOnly(inp.imageProvider, { images: imagesBest });
   const imagesWorstUsd = rates.estimateOnly(inp.imageProvider, { images: imagesWorst });
   return {

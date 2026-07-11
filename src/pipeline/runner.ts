@@ -51,6 +51,8 @@ import {
   shouldRegenerate,
   applyFixToPrompt,
   normalizeShotPlan,
+  pickBestCandidate,
+  resolveCandidateCount,
 } from './broll-director.ts';
 import type { ShotPlan } from '../schemas/shot-plan.ts';
 
@@ -508,6 +510,10 @@ async function directorScenes(nl: NeuroLink, opts: PipelineOptions, ctx: BrollCt
 
   const threshold = intEnv('CONSISTENCY_THRESHOLD', 7, 0);
   const maxRegen = intEnv('BROLL_MAX_REGEN', 2, 0);
+  // N candidates per attempt on product shots, critic picks the best (1 = the
+  // classic single-candidate loop). Multiplies image spend on product shots,
+  // so it's priced into the pre-flight projection below.
+  const candidates = resolveCandidateCount(process.env.KEYFRAME_CANDIDATES);
 
   // Single canonical hero still — every product shot derives from this exact
   // image. Read it before the projection: the read attempt IS the cache probe
@@ -522,7 +528,7 @@ async function directorScenes(nl: NeuroLink, opts: PipelineOptions, ctx: BrollCt
   const preflightInputs: PreflightInputs = {
     shots: shots.length, segLen: ctx.segLen, videoProvider: ctx.provider,
     imageProvider: resolveImageGenParams().provider,
-    heroNeeded: !heroBuf, productShots: productCount, maxRegen,
+    heroNeeded: !heroBuf, productShots: productCount, maxRegen, candidates,
   };
   const est = estimatePreflight(preflightInputs);
   const spent = (await costTracker.getSummary()).total;
@@ -549,33 +555,50 @@ async function directorScenes(nl: NeuroLink, opts: PipelineOptions, ctx: BrollCt
       const basePrompt = buildShotPrompt(shot, plan.product_bible);
       let prompt = basePrompt;
       let generated = false;
+      // Candidate pools only apply where the critic can pick (product shots
+      // with a hero to compare against); everything else stays single-shot.
+      const nCand = shot.shows_product && heroBuf ? candidates : 1;
       for (let attempt = 0; attempt <= maxRegen; attempt++) {
-        try {
-          await generateImage(prompt, keyPath, {
-            aspectRatio: '16:9',
-            referenceImages: shot.shows_product && heroBuf ? [heroBuf] : undefined,
-          });
-          generated = true;
-        } catch (e) {
-          console.log(`  [B-roll] keyframe ${i} gen failed: ${e instanceof Error ? e.message.slice(0, 80) : String(e)}`);
-          break;
-        }
-        // Vet product shots against the canonical still and regenerate off-brand
-        // frames before paying to animate. Skip the critic on the final attempt
-        // (no retries left → the result is accepted, so the call would be wasted)
-        // and for non-product shots.
-        if (!shot.shows_product || !heroBuf || attempt >= maxRegen) break;
-        const verdict = await runConsistencyCriticAgent(nl, heroPath, keyPath, plan.product_bible).catch(() => null);
-        const regen = shouldRegenerate(verdict, threshold);
-        // Persist each verdict so Backlot's shot grid can show the critic's
-        // call per attempt. Observability only — never let it affect the run.
+        const candPaths = Array.from({ length: nCand }, (_, j) =>
+          nCand === 1 ? keyPath : path.join(ctx.outDir, `.broll-dir-key-${i}-a${attempt}c${j}.png`));
+        const goodPaths = (await Promise.all(candPaths.map(async (p) => {
+          try {
+            await generateImage(prompt, p, {
+              aspectRatio: '16:9',
+              referenceImages: shot.shows_product && heroBuf ? [heroBuf] : undefined,
+            });
+            return p;
+          } catch (e) {
+            console.log(`  [B-roll] keyframe ${i} gen failed: ${e instanceof Error ? e.message.slice(0, 80) : String(e)}`);
+            return null;
+          }
+        }))).filter((p): p is string => !!p);
+        if (!goodPaths.length) break;
+        generated = true;
+        // Vet product shots against the canonical still. With a single
+        // candidate the critic is skipped on the final attempt (its verdict
+        // couldn't change anything); with a pool it still runs — selection is
+        // the point even when no retries remain. Non-product shots skip it.
+        if (!shot.shows_product || !heroBuf) break;
+        if (nCand === 1 && attempt >= maxRegen) break;
+        const scored = await Promise.all(goodPaths.map(async (p, j) => ({
+          index: j, path: p,
+          verdict: await runConsistencyCriticAgent(nl, heroPath, p, plan.product_bible).catch(() => null),
+        })));
+        const best = pickBestCandidate(scored) ?? scored[0];
+        if (nCand > 1 && best.path !== keyPath) await fs.copyFile(best.path, keyPath);
+        const regen = shouldRegenerate(best.verdict, threshold);
+        // Persist the chosen verdict so Backlot's shot grid can show the
+        // critic's call per attempt. Observability only — never let it affect
+        // the run. Extra fields are ignored by the tailer.
         await appendToLog('shot-verdicts.jsonl', {
-          shot: i, attempt: attempt + 1, score: verdict?.score ?? null, regenerate: regen,
-          ...(regen && verdict?.fix_instruction ? { fix: verdict.fix_instruction.slice(0, 160) } : {}),
+          shot: i, attempt: attempt + 1, score: best.verdict?.score ?? null, regenerate: regen,
+          ...(nCand > 1 ? { candidates: nCand, chosen: best.index } : {}),
+          ...(regen && best.verdict?.fix_instruction ? { fix: best.verdict.fix_instruction.slice(0, 160) } : {}),
         }).catch(() => undefined);
-        if (!regen) break;
-        console.log(`  [B-roll] shot ${i} off-brand (${verdict?.score}/10) — regenerating (${attempt + 2}/${maxRegen + 1})`);
-        prompt = applyFixToPrompt(basePrompt, verdict?.fix_instruction ?? '');
+        if (!regen || attempt >= maxRegen) break;
+        console.log(`  [B-roll] shot ${i} off-brand (${best.verdict?.score}/10) — regenerating (${attempt + 2}/${maxRegen + 1})`);
+        prompt = applyFixToPrompt(basePrompt, best.verdict?.fix_instruction ?? '');
       }
       if (!generated) { await ensureSeedImage(ctx.seedImg, ctx.dims); keyframe = ctx.seedImg; }
     }

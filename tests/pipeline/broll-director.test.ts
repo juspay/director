@@ -6,6 +6,8 @@ import {
   shouldRegenerate,
   applyFixToPrompt,
   normalizeShotPlan,
+  pickBestCandidate,
+  resolveCandidateCount,
 } from '../../src/pipeline/broll-director.ts';
 import type { Shot, ShotPlan } from '../../src/schemas/shot-plan.ts';
 import type { ConsistencyVerdict } from '../../src/schemas/consistency-verdict.ts';
@@ -91,5 +93,55 @@ test('normalizeShotPlan', async (t) => {
     const out = normalizeShotPlan(plan([shot()]), 8);
     assert.equal(out.product_bible, BIBLE);
     assert.equal(out.tone, 't');
+  });
+});
+
+const verdict = (score: number): ConsistencyVerdict => ({
+  consistent: score >= 7, score, mismatches: [], fix_instruction: 'fix it',
+});
+
+test('pickBestCandidate', async (t) => {
+  await t.test('highest critic score wins', () => {
+    const best = pickBestCandidate([
+      { index: 0, verdict: verdict(5) },
+      { index: 1, verdict: verdict(9) },
+      { index: 2, verdict: verdict(7) },
+    ]);
+    assert.equal(best?.index, 1);
+  });
+  await t.test('unscored candidates rank below any scored one', () => {
+    const best = pickBestCandidate([
+      { index: 0, verdict: null },
+      { index: 1, verdict: verdict(1) },
+    ]);
+    assert.equal(best?.index, 1);
+  });
+  await t.test('ties keep the earliest index (deterministic)', () => {
+    const best = pickBestCandidate([
+      { index: 0, verdict: verdict(8) },
+      { index: 1, verdict: verdict(8) },
+    ]);
+    assert.equal(best?.index, 0);
+  });
+  await t.test('all-unscored pools fall back to the first candidate', () => {
+    const best = pickBestCandidate([
+      { index: 0, verdict: null },
+      { index: 1, verdict: null },
+    ]);
+    assert.equal(best?.index, 0);
+  });
+  await t.test('empty pool is null', () => {
+    assert.equal(pickBestCandidate([]), null);
+  });
+});
+
+test('resolveCandidateCount', async (t) => {
+  await t.test('defaults to 1 and clamps to [1, 4]', () => {
+    assert.equal(resolveCandidateCount(undefined), 1);
+    assert.equal(resolveCandidateCount('3'), 3);
+    assert.equal(resolveCandidateCount('0'), 1);
+    assert.equal(resolveCandidateCount('99'), 4);
+    assert.equal(resolveCandidateCount('2.9'), 2);
+    assert.equal(resolveCandidateCount('abc'), 1);
   });
 });
