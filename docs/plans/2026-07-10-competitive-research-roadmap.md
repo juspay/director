@@ -136,7 +136,16 @@ One 2×4s generic-mode leg per route, budget-capped, same brief. Results:
 | replicate: hailuo-2.3-fast | ❌ 422 on submit | Model requires `first_frame_image`; handler sends `image` + non-schema `num_frames`/`fps` → [neurolink#1150](https://github.com/juspay/neurolink/pull/1150) |
 | replicate: wan-2.7-i2v | ❌ `first_frame`/`first_clip` required | Same class → neurolink#1150 |
 | wan-alpha (pre-existing alias) | ❌ 404 | `wechatcv/wan-alpha` removed from Replicate; NeuroLink's default `atonamy/wan-alpha` is t2v-only (the image was always silently ignored) |
-| kling | ❌ twice | (a) Director passed a video-only name as NeuroLink's *text-shell* provider — kling/runway never worked live; fixed in [#95](https://github.com/juspay/director/pull/95). (b) `KlingVideoHandler` then requires a publicly accessible `imageUrl` (PiAPI rejects inline base64) — **open**: needs an upload step or handler base64 support |
+| kling | ❌ twice | (a) Director passed a video-only name as NeuroLink's *text-shell* provider — kling/runway never worked live; fixed in [#95](https://github.com/juspay/director/pull/95). (b) `KlingVideoHandler` then requires a publicly accessible `imageUrl` (PiAPI rejects inline base64) — **superseded by the spike verdict below**: route Kling through Replicate instead |
+
+**Spike verdict (2026-07-12, later the same day): the Kling `imageUrl` problem dissolves — route Kling through Replicate.** `kwaivgi/kling-v2.1` on Replicate takes `start_image` as a URI-format field and accepts inline data URIs, so no upload infrastructure is needed at all. Live spike results (local mirror of the upstream fixes, serial pacing):
+
+- **Kling v2.1 generated a real 5.0s clip** (5.0 MB) from an inline data-URI `start_image` through the [neurolink#1150](https://github.com/juspay/neurolink/pull/1150) `imageInputKey` shape (~6.3 min generation).
+- **Hailuo 2.3 Fast generated a real 5.9s clip** (776 KB) via `first_frame_image` (~3.8 min).
+- Both initially failed at the *download* step — root-caused to a third upstream bug: NeuroLink's SSRF-pinned lookup ignores `options.all`, breaking every `safeDownload` on Node ≥20 (`autoSelectFamily`); fixed upstream in [neurolink#1157](https://github.com/juspay/neurolink/pull/1157) with a minimal undici repro (string-form → `Invalid IP address: undefined`; array-form → HTTP 200).
+- Also learned: fresh Replicate accounts are throttled to 6 predictions/min, burst 1, until $5 lifetime spend; NeuroLink's runtime validation caps `resolution` at 720p/1080p, so hailuo's 768p must be left to the model default until the type/validator widen (noted on #1150).
+
+Completion path unchanged but now fully de-risked: neurolink #1150 + #1157 merge/release → Director bumps NeuroLink, `REPLICATE_MODEL` aliases gain per-model `imageInputKey` (`hailuo-fast` → `first_frame_image`, and a new `kling-replicate` → `kwaivgi/kling-v2.1` + `start_image`), `wan-alpha` dropped. Proven live **in composition**: with both fixes mirrored locally, `minimax/hailuo-2.3-fast` generated and downloaded a real 5.9s clip end-to-end through `nl.generate` in 110.6s (`ok: true`).
 
 Collateral fixed the same day: a failed phase was checkpointed `complete` (observe() swallowed the throw), so resume skipped it — [#94](https://github.com/juspay/director/pull/94). Net position: the draft tier's plumbing (routing, rates, projection) is proven; the actual cheap generation is blocked on neurolink#1150 merging + releasing, then one small Director follow-up.
 
