@@ -10,6 +10,22 @@ import type { VideoProvider, VideoOptions } from '../types/index.ts';
 
 export type { VideoProvider, VideoOptions } from '../types/index.ts';
 
+/**
+ * NeuroLink dispatches video by `output.video.provider`, but the top-level
+ * `provider` still instantiates the text-provider shell (baseProvider) that
+ * hosts the video call. Kling and Runway are video-only handlers — no text
+ * provider of that name exists — so requesting them at the top level dies in
+ * the provider registry ("Unknown provider: kling") before the video dispatch
+ * ever runs. Route their shell through vertex; the video handler selection
+ * below stays on the real provider.
+ */
+const SHELL_PROVIDER: Record<VideoProvider, string> = {
+  vertex: 'vertex',
+  replicate: 'replicate',
+  kling: 'vertex',
+  runway: 'vertex',
+};
+
 export async function generate(
   nl: NeuroLink,
   provider: VideoProvider,
@@ -24,7 +40,7 @@ export async function generate(
   console.log(`[video] ${provider}: ${prompt.slice(0, 60)}...`);
   const result = await nl.generate({
     input: { text: prompt, images: images.length ? images : undefined },
-    provider,
+    provider: SHELL_PROVIDER[provider] ?? 'vertex',
     region: options.region ?? process.env.VERTEX_LOCATION,
     output: {
       mode: 'video',
