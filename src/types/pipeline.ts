@@ -15,7 +15,7 @@ export type PipelineOptions = {
   voice?: string;
   /** Output resolution: '1080p' (default) or '720p' for cheaper/faster iteration. */
   resolution?: string;
-  /** Video generator key (kling / runway / veo / wan-alpha / hailuo-fast / wan-2.7). */
+  /** Video generator key (kling / runway / veo / wan-2.1 / hailuo-fast / wan-2.7 / kling-replicate). */
   videoGenerator?: string;
   /** B-roll strategy: 'director' (default — art-director shot plan + consistency critic), 'concept' (assets/broll-prompts.json), or 'generic'. */
   brollMode?: string;

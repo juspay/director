@@ -147,7 +147,7 @@ export function resolveVideoTier(
   if (!gen) {
     throw new Error(
       '[B-roll] draft tier requires BROLL_DRAFT_GENERATOR ' +
-      "(e.g. 'hailuo-fast', 'wan-2.7', 'wan-alpha', 'kling', or 'replicate' + BROLL_DRAFT_MODEL=<owner/model>)",
+      "(e.g. 'wan-2.1', 'hailuo-fast', 'wan-2.7', 'kling-replicate', or 'replicate' + BROLL_DRAFT_MODEL=<owner/model>)",
     );
   }
   // An unrecognized draft generator must throw here: downstream alias lookup

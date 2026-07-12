@@ -432,20 +432,27 @@ const VIDEO_ALIAS: Record<string, generators.VideoProvider> = {
   kling: 'kling',
   runway: 'runway',
   replicate: 'replicate',
-  'wan-alpha': 'replicate',
+  'wan-2.1': 'replicate',
   'hailuo-fast': 'replicate',
   'wan-2.7': 'replicate',
+  'kling-replicate': 'replicate',
 };
 
-// Named draft-tier pilots (roadmap W-P4-TIER2) ride NeuroLink's generic
-// Replicate handler — an alias here is the whole integration. Slugs verified
-// on replicate.com 2026-07-12. Replicate publishes no per-second price for
-// these two: set VIDEO_MODEL_RATES (e.g. '{"replicate:minimax/hailuo-2.3-fast":0.03}')
-// after checking the console, or spend logs bill at replicate's flat rate.
-const REPLICATE_MODEL: Record<string, string> = {
-  'wan-alpha': 'wechatcv/wan-alpha',
-  'hailuo-fast': 'minimax/hailuo-2.3-fast',
-  'wan-2.7': 'wan-video/wan-2.7-i2v',
+// Named draft-tier routes (roadmap W-P4-TIER2, live-verified 2026-07-12).
+// imageInputKey is the model's required image field (schemas fetched from the
+// live Replicate models API) — it activates once NeuroLink ships
+// juspay/neurolink#1150; today NeuroLink ignores the extra key, so only
+// wan-2.1 (which takes the default 'image') generates. wan-alpha was removed:
+// its slug 404s on Replicate and the upstream default is text-to-video-only.
+// Duration constraints are per-model (hailuo: 6|10 s; kling: 5|10 s) and
+// per-second prices are mostly unpublished — set VIDEO_MODEL_RATES after a
+// console check or spend logs bill at replicate's flat rate (wan-2.1 rates
+// are page-verified and built in).
+const REPLICATE_MODEL: Record<string, { model: string; imageInputKey?: string }> = {
+  'wan-2.1': { model: 'wavespeedai/wan-2.1-i2v-480p' },
+  'hailuo-fast': { model: 'minimax/hailuo-2.3-fast', imageInputKey: 'first_frame_image' },
+  'wan-2.7': { model: 'wan-video/wan-2.7-i2v', imageInputKey: 'first_frame' },
+  'kling-replicate': { model: 'kwaivgi/kling-v2.1', imageInputKey: 'start_image' },
 };
 
 async function ensureSeedImage(seedImg: string, dims: { width: number; height: number }): Promise<void> {
@@ -474,6 +481,8 @@ type BrollCtx = {
   outDir: string;
   provider: generators.VideoProvider;
   model?: string;
+  /** Replicate models disagree on the image field name — threaded to the generator (neurolink#1150). */
+  imageInputKey?: string;
   dims: ReturnType<typeof resolveDims>;
   seedImg: string;
   segLen: 4 | 6 | 8;
@@ -632,6 +641,7 @@ async function directorScenes(nl: NeuroLink, opts: PipelineOptions, ctx: BrollCt
       await withDoctor((p) => generators.generate(nl, ctx.provider, p, segOut, {
         inputImage: keyframe, length: ctx.segLen, resolution: ctx.dims.veo, aspectRatio: '16:9', audio: false,
         ...(ctx.model ? { model: ctx.model } : {}),
+        ...(ctx.imageInputKey ? { imageInputKey: ctx.imageInputKey } : {}),
       }), buildAnimationPrompt(shot), doctorOpts(nl));
       return segOut;
     } catch (e) {
@@ -749,14 +759,20 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
   const tierChoice = resolveVideoTier(tier, process.env, opts.videoGenerator ?? 'vertex', Object.keys(VIDEO_ALIAS));
   const gen = tierChoice.gen;
   const provider = VIDEO_ALIAS[gen] ?? 'vertex';
-  const model = tierChoice.model ?? REPLICATE_MODEL[gen];
+  // An explicit BROLL_DRAFT_MODEL brings its own (optional) image key via
+  // BROLL_DRAFT_IMAGE_INPUT_KEY; named aliases carry theirs from the table.
+  const replRoute = tierChoice.model
+    ? { model: tierChoice.model, imageInputKey: process.env.BROLL_DRAFT_IMAGE_INPUT_KEY || undefined }
+    : REPLICATE_MODEL[gen];
+  const model = replRoute?.model;
+  const imageInputKey = replRoute?.imageInputKey;
   if (tier === 'draft') {
     console.log(`[B-roll] DRAFT tier → ${provider}${model ? ` (${model})` : ''} — iteration output; re-run with --broll-tier hero for the final cut`);
   }
 
   if (mode === 'director') {
     try {
-      const dirSegs = await directorScenes(nl, opts, { outDir, provider, model, dims, seedImg, segLen, concurrency, targetShots });
+      const dirSegs = await directorScenes(nl, opts, { outDir, provider, model, imageInputKey, dims, seedImg, segLen, concurrency, targetShots });
       for (const s of dirSegs) segPaths.push(s);
     } catch (e) {
       // A budget abort must fail the phase — the fallback modes below also pay
@@ -856,6 +872,7 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
           await withDoctor((p) => generators.generate(nl, provider, p, segOut, {
             inputImage: keyframe, length: segLen, resolution: dims.veo, aspectRatio: '16:9', audio: false,
             ...(model ? { model } : {}),
+            ...(imageInputKey ? { imageInputKey } : {}),
           }), scene.prompt, doctorOpts(nl));
           return segOut;
         } catch (e) {
@@ -886,6 +903,7 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
           await withDoctor((p) => generators.generate(nl, provider, p, segOut, {
             inputImage: seedImg, length: segLen, resolution: dims.veo, aspectRatio: '16:9', audio: false,
             ...(model ? { model } : {}),
+            ...(imageInputKey ? { imageInputKey } : {}),
           }), GENERIC_PROMPTS[i % GENERIC_PROMPTS.length], doctorOpts(nl));
           segPaths.push(segOut);
         } catch (e) {
@@ -1014,7 +1032,7 @@ Options:
   --output DIR         Output directory
   --provider NAME      TTS: elevenlabs|openai|fish|edgetts
   --voice NAME         TTS voice override (e.g. OpenAI onyx)
-  --video-gen NAME     Video: kling|runway|veo|wan-alpha|hailuo-fast|wan-2.7
+  --video-gen NAME     Video: kling|runway|veo|wan-2.1|hailuo-fast|wan-2.7|kling-replicate
   --music-gen NAME     Music: lyria|beatoven|elevenlabs|numpy
   --resolution RES     Output resolution: 1080p (default) | 720p
   --broll-mode MODE    B-roll: director (default) | concept | generic | stock ($0-API real footage via PEXELS_API_KEY, queries derived from the script) | cards ($0 typography from the script — the card text IS the visual, so consider skipping the caption phase: --phases 1,3,4,6)
