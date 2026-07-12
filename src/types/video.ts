@@ -13,6 +13,13 @@ export type VideoOptions = {
   inputImage?: Buffer | string;
   /** Provider-specific model id (e.g. Replicate model slug). */
   model?: string;
+  /**
+   * Replicate only: the input-schema key the model expects the image under
+   * (e.g. 'first_frame_image' for minimax/hailuo-2.3-fast, 'start_image' for
+   * kwaivgi/kling-v2.1). Forwarded to NeuroLink's Replicate handler; a no-op
+   * until juspay/neurolink#1150 ships, required for those models after.
+   */
+  imageInputKey?: string;
   /** Region override. */
   region?: string;
 };

@@ -47,6 +47,7 @@ export async function generate(
       video: {
         provider,
         model: options.model,
+        ...(options.imageInputKey ? { imageInputKey: options.imageInputKey } : {}),
         resolution: options.resolution ?? '1080p',
         length: options.length ?? 8,
         aspectRatio: options.aspectRatio ?? '16:9',
