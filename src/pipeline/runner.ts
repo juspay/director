@@ -18,7 +18,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { OUTPUT_DIR } from './config.ts';
 import { appendToLog, loadState, saveState, stateDirFor } from './state.ts';
-import { mapWithConcurrency, resolveDims, resolveVideoTier, scriptToSrt, resolveNarrationMode, pickCaptionText, completedPhaseCount } from './runner-helpers.ts';
+import { mapWithConcurrency, resolveDims, resolveVideoTier, resolveReplicateRoute, scriptToSrt, resolveNarrationMode, pickCaptionText, completedPhaseCount } from './runner-helpers.ts';
 import type { PipelineState } from '../types/index.ts';
 
 // TypeScript modules (primary)
@@ -759,11 +759,14 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
   const tierChoice = resolveVideoTier(tier, process.env, opts.videoGenerator ?? 'vertex', Object.keys(VIDEO_ALIAS));
   const gen = tierChoice.gen;
   const provider = VIDEO_ALIAS[gen] ?? 'vertex';
-  // An explicit BROLL_DRAFT_MODEL brings its own (optional) image key via
-  // BROLL_DRAFT_IMAGE_INPUT_KEY; named aliases carry theirs from the table.
-  const replRoute = tierChoice.model
-    ? { model: tierChoice.model, imageInputKey: process.env.BROLL_DRAFT_IMAGE_INPUT_KEY || undefined }
-    : REPLICATE_MODEL[gen];
+  // BROLL_DRAFT_MODEL accepts either a known alias (resolved through the
+  // table, carrying its image key) or a raw owner/name slug. Without the
+  // alias hop, 'wan-2.1' etc. leak verbatim to the Replicate API, which
+  // 404s every animate call — the documented names must work everywhere
+  // they can be typed. BROLL_DRAFT_IMAGE_INPUT_KEY overrides either way.
+  const replRoute = resolveReplicateRoute(
+    tierChoice.model, gen, REPLICATE_MODEL, process.env.BROLL_DRAFT_IMAGE_INPUT_KEY,
+  );
   const model = replRoute?.model;
   const imageInputKey = replRoute?.imageInputKey;
   if (tier === 'draft') {

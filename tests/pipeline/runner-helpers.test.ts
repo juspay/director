@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { resolveDims, mapWithConcurrency, scriptToSrt, parseIntOr, parseFloatOr, resolveNarrationMode, pickCaptionText, completedPhaseCount, resolveVideoTier } from '../../src/pipeline/runner-helpers.ts';
+import { resolveDims, mapWithConcurrency, scriptToSrt, parseIntOr, parseFloatOr, resolveNarrationMode, pickCaptionText, completedPhaseCount, resolveVideoTier, resolveReplicateRoute } from '../../src/pipeline/runner-helpers.ts';
 
 const PHASE_NAMES = ['voiceover', 'avatar', 'broll', 'music', 'render', 'assembly', 'captions'];
 
@@ -273,5 +273,46 @@ test('resolveVideoTier validates the draft generator against known aliases', asy
   });
   await t.test('hero tier never validates (fallback gen is the caller-configured one)', () => {
     assert.deepEqual(resolveVideoTier('hero', {}, 'vertex', KNOWN), { gen: 'vertex' });
+  });
+});
+
+test('resolveReplicateRoute', async (t) => {
+  const TABLE = {
+    'wan-2.1': { model: 'wavespeedai/wan-2.1-i2v-480p' },
+    'hailuo-fast': { model: 'minimax/hailuo-2.3-fast', imageInputKey: 'first_frame_image' },
+  };
+  await t.test('BROLL_DRAFT_MODEL alias resolves to the slug, carrying its image key', () => {
+    assert.deepEqual(resolveReplicateRoute('hailuo-fast', 'replicate', TABLE, undefined), {
+      model: 'minimax/hailuo-2.3-fast',
+      imageInputKey: 'first_frame_image',
+    });
+    // The live 404 regression: 'wan-2.1' typed as the draft model must never
+    // reach the Replicate API verbatim.
+    assert.deepEqual(resolveReplicateRoute('wan-2.1', 'replicate', TABLE, undefined), {
+      model: 'wavespeedai/wan-2.1-i2v-480p',
+      imageInputKey: undefined,
+    });
+  });
+  await t.test('raw owner/name slug passes through verbatim', () => {
+    assert.deepEqual(resolveReplicateRoute('lightricks/ltx-video', 'replicate', TABLE, undefined), {
+      model: 'lightricks/ltx-video',
+      imageInputKey: undefined,
+    });
+  });
+  await t.test('BROLL_DRAFT_IMAGE_INPUT_KEY overrides the table image key', () => {
+    assert.deepEqual(resolveReplicateRoute('hailuo-fast', 'replicate', TABLE, 'start_image'), {
+      model: 'minimax/hailuo-2.3-fast',
+      imageInputKey: 'start_image',
+    });
+    assert.deepEqual(resolveReplicateRoute('lightricks/ltx-video', 'replicate', TABLE, 'first_frame'), {
+      model: 'lightricks/ltx-video',
+      imageInputKey: 'first_frame',
+    });
+  });
+  await t.test('no draft model: the generator alias picks the route from the table', () => {
+    assert.deepEqual(resolveReplicateRoute(undefined, 'wan-2.1', TABLE, undefined), {
+      model: 'wavespeedai/wan-2.1-i2v-480p',
+    });
+    assert.equal(resolveReplicateRoute(undefined, 'veo', TABLE, undefined), undefined);
   });
 });
