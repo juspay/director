@@ -18,7 +18,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { OUTPUT_DIR } from './config.ts';
 import { appendToLog, loadState, saveState, stateDirFor } from './state.ts';
-import { mapWithConcurrency, resolveDims, resolveVideoTier, resolveReplicateRoute, scriptToSrt, resolveNarrationMode, pickCaptionText, completedPhaseCount } from './runner-helpers.ts';
+import { mapWithConcurrency, resolveDims, resolveVideoTier, resolveReplicateRoute, scriptToSrt, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult } from './runner-helpers.ts';
 import type { PipelineState } from '../types/index.ts';
 
 // TypeScript modules (primary)
@@ -308,7 +308,7 @@ async function runPhase(
   neurolink: NeuroLink,
   opts: PipelineOptions,
 ): Promise<void> {
-  if (state.results[phase.name]) {
+  if (isCompletedResult(state.results[phase.name])) {
     console.log(`  [${phase.label}] Already complete, skipping.`);
     return;
   }
@@ -329,7 +329,9 @@ async function runPhase(
     // completed phases directly — correct even under concurrent phases 2-4.
     state.currentStep = completedPhaseCount(state.results, PHASES.map((p) => p.name));
     state.updatedAt = new Date().toISOString();
-    await saveState('pipeline-state.json', state);
+    // A dry-run must not leave resumable checkpoints on disk: a later real run
+    // in the same output dir would skip every phase as already complete.
+    if (!opts.dryRun) await saveState('pipeline-state.json', state);
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     state.errors.push(`${phase.label}: ${msg}`);

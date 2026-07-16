@@ -22,15 +22,29 @@ export function parseFloatOr(raw: string | undefined, fallback: number): number 
 }
 
 /**
+ * A phase result counts as completed work only if it came from a real run.
+ * Dry-run phases record `{ status: 'dry-run' }` — treating that as complete
+ * made a `--dry-run` in an output dir poison every later real run there:
+ * resume skipped all phases as "Already complete" and the pipeline produced
+ * nothing (found live). Also heals state written before this fix.
+ */
+export function isCompletedResult(result: unknown): boolean {
+  if (!result) return false;
+  if (typeof result !== 'object') return true;
+  return (result as { status?: unknown }).status !== 'dry-run';
+}
+
+/**
  * Count how many pipeline phases have completed, given the run's `results` map
  * and the set of real phase names. `results` also holds post-pipeline keys
  * (scoring, cost, …) which must not be counted as phases. Used both to drive the
  * live `currentStep` and to detect a resume (count > 0 → already-started run).
+ * Dry-run placeholders are not completions.
  */
 export function completedPhaseCount(results: Record<string, unknown>, phaseNames: Iterable<string>): number {
   const names = phaseNames instanceof Set ? phaseNames : new Set(phaseNames);
   let n = 0;
-  for (const key of Object.keys(results)) if (names.has(key)) n++;
+  for (const key of Object.keys(results)) if (names.has(key) && isCompletedResult(results[key])) n++;
   return n;
 }
 

@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { resolveDims, mapWithConcurrency, scriptToSrt, parseIntOr, parseFloatOr, resolveNarrationMode, pickCaptionText, completedPhaseCount, resolveVideoTier, resolveReplicateRoute } from '../../src/pipeline/runner-helpers.ts';
+import { resolveDims, mapWithConcurrency, scriptToSrt, parseIntOr, parseFloatOr, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult, resolveVideoTier, resolveReplicateRoute } from '../../src/pipeline/runner-helpers.ts';
 
 const PHASE_NAMES = ['voiceover', 'avatar', 'broll', 'music', 'render', 'assembly', 'captions'];
 
@@ -314,5 +314,26 @@ test('resolveReplicateRoute', async (t) => {
       model: 'wavespeedai/wan-2.1-i2v-480p',
     });
     assert.equal(resolveReplicateRoute(undefined, 'veo', TABLE, undefined), undefined);
+  });
+});
+
+test('isCompletedResult', async (t) => {
+  await t.test('real results count, dry-run placeholders and empties do not', () => {
+    assert.equal(isCompletedResult({ status: 'complete' }), true);
+    assert.equal(isCompletedResult({ path: 'output/broll.mp4' }), true);
+    assert.equal(isCompletedResult({ status: 'dry-run' }), false);
+    assert.equal(isCompletedResult(undefined), false);
+    assert.equal(isCompletedResult(null), false);
+  });
+  await t.test('completedPhaseCount ignores dry-run placeholders', () => {
+    const results = {
+      voiceover: { status: 'dry-run' },
+      broll: { status: 'complete' },
+      scoring: { weighted_overall: 0.9 },
+    };
+    // The live regression: a --dry-run left {status:'dry-run'} for every phase
+    // and the next real run resumed straight past all of them.
+    assert.equal(completedPhaseCount(results, ['voiceover', 'broll', 'music']), 1);
+    assert.equal(completedPhaseCount({ voiceover: { status: 'dry-run' } }, ['voiceover']), 0);
   });
 });
