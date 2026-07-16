@@ -127,6 +127,38 @@ export type VideoTierChoice = {
   model?: string;
 };
 
+export type ReplicateRoute = {
+  model: string;
+  imageInputKey?: string;
+};
+
+/**
+ * Resolve the Replicate animate route for the b-roll phase.
+ *
+ * `draftModel` (BROLL_DRAFT_MODEL) accepts either a known alias — resolved
+ * through `table` so it carries the model's required image key — or a raw
+ * owner/name slug passed through verbatim. Without the alias hop, a typed
+ * 'wan-2.1' would leak to the Replicate API as the model name and 404 every
+ * animate call. `envImageKey` (BROLL_DRAFT_IMAGE_INPUT_KEY) overrides the
+ * table's image key in both cases. With no draft model, the generator alias
+ * itself picks the route from the table.
+ */
+export function resolveReplicateRoute(
+  draftModel: string | undefined,
+  gen: string,
+  table: Record<string, ReplicateRoute>,
+  envImageKey?: string,
+): ReplicateRoute | undefined {
+  if (draftModel) {
+    const alias = table[draftModel];
+    return {
+      model: alias?.model ?? draftModel,
+      imageInputKey: envImageKey || alias?.imageInputKey,
+    };
+  }
+  return table[gen];
+}
+
 /**
  * Resolve the b-roll spend tier to a generator alias + optional model.
  * 'hero' (default) keeps the run's configured generator untouched. 'draft'
