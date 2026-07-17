@@ -18,7 +18,8 @@ import fs from 'fs/promises';
 import path from 'path';
 import { OUTPUT_DIR } from './config.ts';
 import { appendToLog, loadState, saveState, stateDirFor } from './state.ts';
-import { mapWithConcurrency, resolveDims, resolveVideoTier, resolveReplicateRoute, scriptToSrt, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult } from './runner-helpers.ts';
+import { mapWithConcurrency, resolveDims, resolveVideoTier, resolveReplicateRoute, clampSegLen, scriptToSrt, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult } from './runner-helpers.ts';
+import type { ReplicateRoute } from './runner-helpers.ts';
 import type { PipelineState } from '../types/index.ts';
 
 // TypeScript modules (primary)
@@ -450,11 +451,11 @@ const VIDEO_ALIAS: Record<string, generators.VideoProvider> = {
 // per-second prices are mostly unpublished — set VIDEO_MODEL_RATES after a
 // console check or spend logs bill at replicate's flat rate (wan-2.1 rates
 // are page-verified and built in).
-const REPLICATE_MODEL: Record<string, { model: string; imageInputKey?: string }> = {
+const REPLICATE_MODEL: Record<string, ReplicateRoute> = {
   'wan-2.1': { model: 'wavespeedai/wan-2.1-i2v-480p' },
-  'hailuo-fast': { model: 'minimax/hailuo-2.3-fast', imageInputKey: 'first_frame_image' },
+  'hailuo-fast': { model: 'minimax/hailuo-2.3-fast', imageInputKey: 'first_frame_image', allowedLengths: [6, 10] },
   'wan-2.7': { model: 'wan-video/wan-2.7-i2v', imageInputKey: 'first_frame' },
-  'kling-replicate': { model: 'kwaivgi/kling-v2.1', imageInputKey: 'start_image' },
+  'kling-replicate': { model: 'kwaivgi/kling-v2.1', imageInputKey: 'start_image', allowedLengths: [5, 10] },
 };
 
 async function ensureSeedImage(seedImg: string, dims: { width: number; height: number }): Promise<void> {
@@ -487,7 +488,7 @@ type BrollCtx = {
   imageInputKey?: string;
   dims: ReturnType<typeof resolveDims>;
   seedImg: string;
-  segLen: 4 | 6 | 8;
+  segLen: number;
   concurrency: number;
   /** Target shot count so total b-roll ≈ voiceover length (no trimmed-off ending). */
   targetShots: number;
@@ -682,10 +683,10 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
   // clip count to the voiceover.
   const voPath = path.join(outDir, 'voiceover.mp3');
   const voDur = await probeDuration(voPath);
-  const segLen = 4;
+  let segLen = 4;
   const concurrency = Math.max(1, Number(process.env.BROLL_CONCURRENCY) || 3);
   // One ~4s shot per (segLen) of voiceover so the b-roll ≈ VO length; default 8.
-  const targetShots = voDur > 0 ? Math.max(3, Math.round(voDur / segLen)) : 8;
+  let targetShots = voDur > 0 ? Math.max(3, Math.round(voDur / segLen)) : 8;
   const segPaths: string[] = [];
 
   // Director mode (default): agent shot plan + canonical product + consistency
@@ -771,6 +772,16 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
   );
   const model = replRoute?.model;
   const imageInputKey = replRoute?.imageInputKey;
+  // Enum-duration models reject the default 4s segments outright — clamp up
+  // to the nearest allowed length and re-size the shot count so total b-roll
+  // still tracks the voiceover. Without this, every enum-constrained draft
+  // route (kling 5|10s, hailuo 6|10s) 422s on its first animate call.
+  const clampedLen = clampSegLen(segLen, replRoute?.allowedLengths);
+  if (clampedLen !== segLen) {
+    segLen = clampedLen;
+    if (voDur > 0) targetShots = Math.max(3, Math.round(voDur / segLen));
+    console.log(`[B-roll] ${model}: segment length clamped to ${segLen}s (allowed: ${replRoute?.allowedLengths?.join('|')}s) → ${targetShots} shots`);
+  }
   if (tier === 'draft') {
     console.log(`[B-roll] DRAFT tier → ${provider}${model ? ` (${model})` : ''} — iteration output; re-run with --broll-tier hero for the final cut`);
   }

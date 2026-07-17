@@ -144,6 +144,8 @@ export type VideoTierChoice = {
 export type ReplicateRoute = {
   model: string;
   imageInputKey?: string;
+  /** Durations the model's schema accepts (enum models only, e.g. kling 5|10). */
+  allowedLengths?: readonly number[];
 };
 
 /**
@@ -168,6 +170,7 @@ export function resolveReplicateRoute(
     return {
       model: alias?.model ?? draftModel,
       imageInputKey: envImageKey || alias?.imageInputKey,
+      ...(alias?.allowedLengths ? { allowedLengths: alias.allowedLengths } : {}),
     };
   }
   return table[gen];
@@ -203,4 +206,17 @@ export function resolveVideoTier(
     throw new Error(`[B-roll] BROLL_DRAFT_GENERATOR '${gen}' is not a known generator (known: ${knownGens.join(', ')})`);
   }
   return { gen, model: env.BROLL_DRAFT_MODEL || undefined };
+}
+
+/**
+ * Clamp a requested segment length to a model's allowed duration enum:
+ * the smallest allowed value that fits the request, else the largest.
+ * Models without an enum pass the request through untouched. Without this,
+ * enum-duration models (kling 5|10s, hailuo 6|10s) reject the pipeline's
+ * default 4s segments on every animate call.
+ */
+export function clampSegLen(requested: number, allowed?: readonly number[]): number {
+  if (!allowed || allowed.length === 0) return requested;
+  const sorted = [...allowed].sort((a, b) => a - b);
+  return sorted.find((v) => v >= requested) ?? sorted[sorted.length - 1] ?? requested;
 }
