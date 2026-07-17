@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { resolveDims, mapWithConcurrency, scriptToSrt, parseIntOr, parseFloatOr, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult, resolveVideoTier, resolveReplicateRoute } from '../../src/pipeline/runner-helpers.ts';
+import { resolveDims, mapWithConcurrency, scriptToSrt, parseIntOr, parseFloatOr, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult, resolveVideoTier, resolveReplicateRoute, clampSegLen } from '../../src/pipeline/runner-helpers.ts';
 
 const PHASE_NAMES = ['voiceover', 'avatar', 'broll', 'music', 'render', 'assembly', 'captions'];
 
@@ -335,5 +335,41 @@ test('isCompletedResult', async (t) => {
     // and the next real run resumed straight past all of them.
     assert.equal(completedPhaseCount(results, ['voiceover', 'broll', 'music']), 1);
     assert.equal(completedPhaseCount({ voiceover: { status: 'dry-run' } }, ['voiceover']), 0);
+  });
+});
+
+test('clampSegLen', async (t) => {
+  await t.test('clamps up to the nearest allowed duration', () => {
+    // The live 422s: kling accepts 5|10, hailuo 6|10, pipeline default is 4.
+    assert.equal(clampSegLen(4, [5, 10]), 5);
+    assert.equal(clampSegLen(4, [6, 10]), 6);
+    assert.equal(clampSegLen(8, [5, 10]), 10);
+    assert.equal(clampSegLen(6, [6, 10]), 6);
+  });
+  await t.test('requests above the enum fall back to the largest allowed', () => {
+    assert.equal(clampSegLen(12, [5, 10]), 10);
+  });
+  await t.test('models without an enum pass through untouched', () => {
+    assert.equal(clampSegLen(4, undefined), 4);
+    assert.equal(clampSegLen(4, []), 4);
+  });
+});
+
+test('resolveReplicateRoute carries allowedLengths', async (t) => {
+  const TABLE = {
+    'kling-replicate': { model: 'kwaivgi/kling-v2.1', imageInputKey: 'start_image', allowedLengths: [5, 10] },
+  };
+  await t.test('through the draft-model alias path', () => {
+    assert.deepEqual(resolveReplicateRoute('kling-replicate', 'replicate', TABLE, undefined), {
+      model: 'kwaivgi/kling-v2.1',
+      imageInputKey: 'start_image',
+      allowedLengths: [5, 10],
+    });
+  });
+  await t.test('through the generator-alias path', () => {
+    assert.deepEqual(resolveReplicateRoute(undefined, 'kling-replicate', TABLE, undefined)?.allowedLengths, [5, 10]);
+  });
+  await t.test('raw slugs have no enum', () => {
+    assert.equal(resolveReplicateRoute('x/y', 'replicate', TABLE, undefined)?.allowedLengths, undefined);
   });
 });

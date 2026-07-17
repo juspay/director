@@ -1,8 +1,12 @@
 export type VideoProvider = 'vertex' | 'kling' | 'runway' | 'replicate';
 
 export type VideoOptions = {
-  /** Duration in seconds — Veo supports 4/6/8. */
-  length?: 4 | 6 | 8;
+  /**
+   * Duration in seconds. Veo supports 4/6/8; enum-duration Replicate models
+   * (kling 5|10, hailuo 6|10) get their length clamped by the b-roll phase
+   * before the request is built.
+   */
+  length?: number;
   /** Aspect ratio. */
   aspectRatio?: '16:9' | '9:16' | '1:1';
   /** Output resolution. */
