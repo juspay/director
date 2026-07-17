@@ -149,6 +149,19 @@ Completion path unchanged but now fully de-risked: neurolink #1150 + #1157 merge
 
 Collateral fixed the same day: a failed phase was checkpointed `complete` (observe() swallowed the throw), so resume skipped it — [#94](https://github.com/juspay/director/pull/94). Net position: the draft tier's plumbing (routing, rates, projection) is proven; the actual cheap generation is blocked on neurolink#1150 merging + releasing, then one small Director follow-up.
 
+## 2026-07-17 — Full-pipeline A/B: the AI judge said draft wins; the owner overrode it
+
+The first end-to-end pipeline run on the activated draft tier (same Aether script and voiceover as the Veo baseline, `kling-replicate` route). Getting it to run found **four more Director bugs, all merged same-day**: draft-model aliases leaking verbatim to the Replicate API ([#102](https://github.com/juspay/director/pull/102)), dry-run checkpoints satisfying resume ([#103](https://github.com/juspay/director/pull/103)), no submit pacing/backoff — throttled accounts lose every segment to a 429 cascade ([#104](https://github.com/juspay/director/pull/104); the 429 body also corrected our throttle model: it keys on **credit < $5**, not lifetime spend), and a hardcoded 4s segment length that no enum-duration model accepts ([#105](https://github.com/juspay/director/pull/105): per-model `allowedLengths` + clamping). Also found: `wavespeedai/wan-2.1-i2v-480p` is **broken server-side** (opaque E002 on every submit that clears the throttle) — demote or drop it from the alias table. Upstream: NeuroLink's video retries fire ~1s apart ignoring `retry_after` ([neurolink#1189](https://github.com/juspay/neurolink/issues/1189)).
+
+**The run**: 6×5s kling-v2.1 clips (clamped 4→5s), 32.26s finished 1080p video, gates + regression PASS, **$2.40 all-in** ($1.50 video — cost log matched Replicate billing to the cent; the budget gate correctly aborted two over-projection attempts first).
+
+**The AI verdict**: the comparator picked the draft **over** the Veo baseline at 0.9 confidence (4.43 vs 3.86) — winning only the two resolution-driven dimensions (the baseline rendered at 720p), content/motion/storytelling scored tied.
+
+**The human override (the finding that matters)**: on side-by-side review the owner rejected that verdict on every substance axis — product consistency broken, motion artifacts, shot-intent drift, overall look reads cheaper, and critically **the product's identity is gone: no logo, shallow understanding of what the product is**. Two conclusions replace the judge's one:
+
+1. **Draft tier = iteration tool only** (blocking, timing, scene structure at ~1/6 the b-roll cost). It is not a hero substitute even when an AI judge says so; position it that way in every doc and help text.
+2. **The comparator is resolution-swayed and product-blind.** Follow-up (W-COMP-FIDELITY): add product-fidelity dimensions — logo presence, product identity persistence across shots, brand-asset checks — and normalize inputs to matched resolution before scoring. Until then, treat comparator verdicts on cross-tier comparisons as advisory, not decisive.
+
 ### Research trail (Part IV)
 
 Wave-3/4 structured results: session scratchpad `research3/*.json` (7 tier/critic lenses + 3 gap-fill); running log `research2/findings.md`. Artifact updated to v8 with §08 ("Part IV — the missing tiers"): hard-evidence leader board, end-to-end tier comparison, the critic's nine (Hedra, Tavus, Grok Imagine, Adobe Firefly/Topaz, Meta Vibes, Moonvalley, Viggle, Descript Underlord, Submagic-class).
