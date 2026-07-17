@@ -9,6 +9,7 @@ import type { NeuroLink } from '@juspay/neurolink';
 import type { VideoProvider, VideoOptions } from '../types/index.ts';
 
 export type { VideoProvider, VideoOptions } from '../types/index.ts';
+import { pacedVideoCall, RATE_LIMIT_BACKOFF_MS } from './pacing.ts';
 
 /**
  * NeuroLink dispatches video by `output.video.provider`, but the top-level
@@ -38,7 +39,11 @@ export async function generate(
   else if (typeof options.inputImage === 'string') images.push(await fs.readFile(options.inputImage));
 
   console.log(`[video] ${provider}: ${prompt.slice(0, 60)}...`);
-  const result = await nl.generate({
+  // Paid submit: globally spaced (VIDEO_SUBMIT_INTERVAL_MS) and retried on
+  // rate-limit errors only — see generators/pacing.ts for the live failure
+  // this guards against.
+  const intervalMs = Math.max(0, Number(process.env.VIDEO_SUBMIT_INTERVAL_MS ?? 0) || 0);
+  const result = await pacedVideoCall(() => nl.generate({
     input: { text: prompt, images: images.length ? images : undefined },
     provider: SHELL_PROVIDER[provider] ?? 'vertex',
     region: options.region ?? process.env.VERTEX_LOCATION,
@@ -54,7 +59,7 @@ export async function generate(
         audio: options.audio ?? true,
       },
     },
-  });
+  }), { intervalMs, retryDelaysMs: RATE_LIMIT_BACKOFF_MS });
 
   const buf = result.video?.data;
   if (!buf) throw new Error(`[video] ${provider}: no video buffer returned`);

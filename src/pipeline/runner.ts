@@ -1052,7 +1052,8 @@ Options:
   --narration MODE     Voiceover: script (default — file + TTS) | narrator (model writes narration + TTS)
   --skip-scoring       Skip post-pipeline AI scoring
   --dry-run            Print plan without executing
-  (env) BROLL_CONCURRENCY=N  parallel b-roll scenes (default 3)`);
+  (env) BROLL_CONCURRENCY=N  parallel b-roll scenes (default 3)
+  (env) VIDEO_SUBMIT_INTERVAL_MS=N  space paid video submits N ms apart (rate-limited accounts, e.g. 12000; rate-limit backoff is always on)`);
     process.exit(0);
   }
 
