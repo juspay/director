@@ -246,3 +246,25 @@ test('CostTracker default path follows STATE_DIR_OVERRIDE set after construction
     await fs.rm(runState, { recursive: true, force: true });
   }
 });
+
+// Avatar renders and paid music were billable-but-invisible until 2026-07-18:
+// no rate exists for those providers, and nothing logged the call at all. The
+// contract for the new call sites: an unknown-rate provider still writes an
+// entry ($0 estimate, params preserved) so the CALL is auditable even before
+// a page-verified rate lands.
+test('unknown-rate providers still log the call with params intact', async () => {
+  const p = await tmpLog();
+  const ct = new CostTracker(p);
+  await ct.reset();
+  await ct.log('heygen', 'avatar-render', { seconds: 12.4 });
+  await ct.log('beatoven', 'music-gen', { seconds: 32 });
+  const lines = (await fs.readFile(p, 'utf-8')).trim().split('\n').map((l) => JSON.parse(l));
+  assert.equal(lines.length, 2);
+  assert.equal(lines[0].provider, 'heygen');
+  assert.equal(lines[0].operation, 'avatar-render');
+  assert.deepEqual(lines[0].params, { seconds: 12.4 });
+  assert.equal(lines[0].cost, 0);
+  assert.equal(lines[1].provider, 'beatoven');
+  assert.equal(lines[1].cost, 0);
+  await fs.rm(path.dirname(p), { recursive: true, force: true });
+});
