@@ -268,3 +268,16 @@ test('unknown-rate providers still log the call with params intact', async () =>
   assert.equal(lines[1].cost, 0);
   await fs.rm(path.dirname(p), { recursive: true, force: true });
 });
+
+// Rates verified live 2026-07-18 from Replicate billingConfig + input-schema
+// defaults (kling-v3-video resolves to mode=pro + generate_audio=false).
+test('kling per-model rates price v2.1 and v3 differently through one provider', async () => {
+  const p = await tmpLog();
+  const ct = new CostTracker(p);
+  await ct.reset();
+  await ct.log('replicate', 'broll-video', { seconds: 5 }, undefined, 'kwaivgi/kling-v2.1');
+  await ct.log('replicate', 'broll-video', { seconds: 5 }, undefined, 'kwaivgi/kling-v3-video');
+  const s = await ct.getSummary();
+  assert.equal(s.total, 5 * 0.05 + 5 * 0.224);
+  await fs.rm(path.dirname(p), { recursive: true, force: true });
+});
