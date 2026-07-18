@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { estimatePreflight, formatPreflight, assertWithinBudget, BudgetExceededError } from '../../src/scoring/preflight.ts';
+import { estimatePreflight, formatPreflight, assertWithinBudget, pendingShotCounts, BudgetExceededError } from '../../src/scoring/preflight.ts';
 import type { PreflightInputs } from '../../src/scoring/preflight.ts';
 
 // A representative director-mode run: 8 shots × 4s vertex video, hero + one
@@ -132,5 +132,38 @@ test('candidate pools multiply product-shot image counts', async (t) => {
     assert.equal(est.imagesBest, 15);
     // worst: best + 3 product shots × 3 candidates × 2 regens = 33
     assert.equal(est.imagesWorst, 33);
+  });
+});
+
+test('pendingShotCounts prices only shots whose segments are not cached', async (t) => {
+  // Index-aligned shows_product flags for a 5-shot plan: shots 1 and 3 show
+  // the product.
+  const flags = [false, true, false, true, false];
+
+  await t.test('nothing cached → full plan counts', () => {
+    assert.deepEqual(pendingShotCounts(flags, new Set()), { shots: 5, productShots: 2 });
+  });
+
+  await t.test('cached segments drop from both counts', () => {
+    // Shots 0-2 rendered before the run died — a regen of 3 and 4 prices two
+    // shots, one of which shows the product.
+    assert.deepEqual(pendingShotCounts(flags, new Set([0, 1, 2])), { shots: 2, productShots: 1 });
+  });
+
+  await t.test('fully cached plan projects zero paid shots', () => {
+    assert.deepEqual(pendingShotCounts(flags, new Set([0, 1, 2, 3, 4])), { shots: 0, productShots: 0 });
+  });
+
+  await t.test('stale indices beyond the plan are ignored', () => {
+    assert.deepEqual(pendingShotCounts(flags, new Set([7, 9])), { shots: 5, productShots: 2 });
+  });
+
+  await t.test('a zero-shot projection passes any budget (regen with all segments intact)', () => {
+    const est = estimatePreflight({
+      shots: 0, segLen: 4, videoProvider: 'vertex', imageProvider: 'vertex',
+      heroNeeded: false, productShots: 0, maxRegen: 2,
+    });
+    assert.equal(est.worstUsd, 0);
+    assert.doesNotThrow(() => assertWithinBudget(10.30, est, 10.31));
   });
 });

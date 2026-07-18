@@ -85,6 +85,22 @@ export function estimatePreflight(inp: PreflightInputs): PreflightEstimate {
   };
 }
 
+/**
+ * Collapse a shot plan to what the phase will actually pay for. Segments
+ * already on disk are skipped by the per-shot cache check before any paid
+ * call, so pricing them into the projection wrongly vetoes a resume or
+ * --regen-shot run whose *new* spend fits the budget (found live: a 3-shot
+ * regen priced as all 9 shots plus prior logged spend could never pass an
+ * honest cap). The runner probes the segment files; this stays pure.
+ */
+export function pendingShotCounts(
+  showsProduct: readonly boolean[],
+  cachedIndices: ReadonlySet<number>,
+): { shots: number; productShots: number } {
+  const pending = showsProduct.filter((_, i) => !cachedIndices.has(i));
+  return { shots: pending.length, productShots: pending.filter(Boolean).length };
+}
+
 /** One console line: what the phase is about to spend, plus what the run already has. */
 export function formatPreflight(e: PreflightEstimate, inp: PreflightInputs, spentUsd: number): string {
   const images = e.imagesBest === e.imagesWorst

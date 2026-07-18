@@ -67,7 +67,7 @@ import { startReporter, stopReporter } from '../observability/reporter.ts';
 import { runSuperObserver } from '../observability/super-observer.ts';
 
 // Scoring
-import { CostTracker, runRegressionGate, estimatePreflight, formatPreflight, assertWithinBudget, BudgetExceededError } from '../scoring/index.ts';
+import { CostTracker, runRegressionGate, estimatePreflight, formatPreflight, assertWithinBudget, pendingShotCounts, BudgetExceededError } from '../scoring/index.ts';
 import type { PreflightInputs } from '../scoring/index.ts';
 
 const PHASES = [
@@ -631,6 +631,17 @@ function resolveBudgetUsd(opts: PipelineOptions): number | undefined {
 }
 
 /**
+ * Indices whose segment file is already on disk. Mirrors the per-shot cache
+ * skip in each generation loop so the pre-flight prices only pending shots —
+ * a resume or --regen-shot run pays nothing for cached segments.
+ */
+async function cachedSegIndices(dir: string, prefix: string, count: number): Promise<ReadonlySet<number>> {
+  const flags = await Promise.all(Array.from({ length: count }, (_, i) =>
+    fs.access(path.join(dir, `${prefix}${i}.mp4`)).then(() => true, () => false)));
+  return new Set(flags.flatMap((cached, i) => (cached ? [i] : [])));
+}
+
+/**
  * Director mode: an art-director agent designs a cohesive shot list with ONE
  * canonical product identity; each product keyframe is generated as an
  * image-to-image derivation of a single hero still and vetted by a consistency
@@ -675,11 +686,16 @@ async function directorScenes(nl: NeuroLink, opts: PipelineOptions, ctx: BrollCt
   try { heroBuf = await fs.readFile(heroPath); } catch { /* not cached — generate after the gate */ }
 
   // Pre-flight: the plan fixes every cost driver, so price the phase and
-  // enforce the whole-run budget cap while aborting is still free.
+  // enforce the whole-run budget cap while aborting is still free. Cached
+  // segments are skipped by the per-shot check below, so only pending shots
+  // are priced — otherwise a --regen-shot run could never fit an honest cap.
+  const segCached = await cachedSegIndices(ctx.outDir, '.broll-dir-seg-', shots.length);
+  const pending = pendingShotCounts(shots.map((s) => s.shows_product), segCached);
+  if (segCached.size > 0) console.log(`[Pre-flight] ${segCached.size}/${shots.length} segment(s) cached — pricing ${pending.shots} pending shot(s)`);
   const preflightInputs: PreflightInputs = {
-    shots: shots.length, segLen: ctx.segLen, videoProvider: ctx.provider, videoModel: ctx.model,
+    shots: pending.shots, segLen: ctx.segLen, videoProvider: ctx.provider, videoModel: ctx.model,
     imageProvider: resolveImageGenParams().provider,
-    heroNeeded: !heroBuf, productShots: productCount, maxRegen, candidates,
+    heroNeeded: !heroBuf, productShots: pending.productShots, maxRegen, candidates,
   };
   const est = estimatePreflight(preflightInputs);
   const spent = (await costTracker.getSummary()).total;
@@ -972,8 +988,10 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
         try { heroBuf = await fs.readFile(conceptHeroPath); } catch { /* not cached — generate after the gate */ }
       }
 
+      const conceptCached = await cachedSegIndices(outDir, '.broll-seg-', scenes.length);
+      if (conceptCached.size > 0) console.log(`[Pre-flight] ${conceptCached.size}/${scenes.length} segment(s) cached — pricing ${scenes.length - conceptCached.size} pending shot(s)`);
       const conceptInputs: PreflightInputs = {
-        shots: scenes.length, segLen, videoProvider: provider, videoModel: model,
+        shots: scenes.length - conceptCached.size, segLen, videoProvider: provider, videoModel: model,
         imageProvider: resolveImageGenParams().provider,
         heroNeeded: wantHero && !heroBuf, productShots: 0, maxRegen: 0,
       };
@@ -1033,8 +1051,10 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
       console.log(`[B-roll] VO ${voDur.toFixed(2)}s → ${segCount}×${segLen}s clips`);
 
       // No keyframes here (gradient seed) — the projection is video-only.
+      const genericCached = await cachedSegIndices(outDir, '.broll-seg-', segCount);
+      if (genericCached.size > 0) console.log(`[Pre-flight] ${genericCached.size}/${segCount} segment(s) cached — pricing ${segCount - genericCached.size} pending shot(s)`);
       const genericInputs: PreflightInputs = {
-        shots: segCount, segLen, videoProvider: provider, videoModel: model,
+        shots: segCount - genericCached.size, segLen, videoProvider: provider, videoModel: model,
         imageProvider: 'none', heroNeeded: false, productShots: 0, maxRegen: 0,
       };
       const genericEst = estimatePreflight(genericInputs);
