@@ -22,7 +22,7 @@ import path from 'path';
 import { OUTPUT_DIR } from './config.ts';
 import { appendToLog, loadState, saveState, stateDirFor } from './state.ts';
 import { mapWithConcurrency, resolveDims, resolveVideoTier, resolveReplicateRoute, clampSegLen, targetShotCount, scriptToSrt, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult, parseShotList, parseVariants, pruneForRegen, parseFormats, formatToDims, formatSuffix, brollCoverageOk } from './runner-helpers.ts';
-import { runFidelityGateAgent, fidelityPassed } from '../agents/fidelity-gate.ts';
+import { runFidelityGateAgent, fidelityPassed, buildStoryboardContext } from '../agents/fidelity-gate.ts';
 import type { ReplicateRoute } from './runner-helpers.ts';
 import type { PipelineState } from '../types/index.ts';
 
@@ -306,7 +306,15 @@ export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineS
             const tail = await rendering.runTailCheck(finalVideo, path.join(outDir, 'broll.mp4'), endCard)
               .catch((e: unknown) => { console.warn('[FidelityGate] tail check skipped:', e instanceof Error ? e.message : e); return null; });
             if (tail) console.log(`[FidelityGate] tail ${tail.passed ? 'PASS' : 'FAIL'} (diff ${tail.score.toFixed(3)} vs ${tail.reference})`);
-            const judge = await runFidelityGateAgent(neurolink, finalVideo, script ? { productContext: script } : {});
+            // The art director's plan tells the judge which shots deliberately
+            // show a contrast device (e.g. the smartwatch the ring replaces) —
+            // without it the judge scores designed storytelling as identity
+            // drift (B8 hero: identity 1/5 on a run with zero actual drift).
+            const storyPlan = await loadState<ShotPlan | null>('shot-plan.json', null);
+            const judge = await runFidelityGateAgent(neurolink, finalVideo, {
+              ...(script ? { productContext: script } : {}),
+              ...(storyPlan?.shots?.length ? { storyboard: buildStoryboardContext(storyPlan) } : {}),
+            });
             // Split authority: the judge blocks on identity/brand; the ending
             // blocks via the deterministic tail check, falling back to the
             // judge's cta score only when the tail check couldn't run.
