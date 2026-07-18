@@ -220,3 +220,15 @@ export function clampSegLen(requested: number, allowed?: readonly number[]): num
   const sorted = [...allowed].sort((a, b) => a - b);
   return sorted.find((v) => v >= requested) ?? sorted[sorted.length - 1] ?? requested;
 }
+
+/**
+ * Shots needed for the b-roll to COVER the voiceover: ceil, floor of 3, or the
+ * fallback when the VO duration is unknown. Rounding to nearest under-provisions
+ * whenever voDur/segLen has a fractional part below .5 (e.g. 32.26s VO at 5s
+ * segments → 6 shots = 30s), and the assembler must then pad the tail — the
+ * historical -stream_loop overrun put the opening hook under the closing CTA.
+ */
+export function targetShotCount(voDur: number, segLen: number, fallback = 8): number {
+  if (!(voDur > 0) || !(segLen > 0)) return fallback;
+  return Math.max(3, Math.ceil(voDur / segLen));
+}

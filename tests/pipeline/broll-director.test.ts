@@ -89,6 +89,27 @@ test('normalizeShotPlan', async (t) => {
     assert.equal(out.shots.length, 8);
   });
 
+  // Live regression: a cached 8-shot plan clamped to 6 dropped the ring hero
+  // closer — the ad ended on a phone UI. The closer must survive the clamp.
+  await t.test('truncation keeps the LAST shot (the hero/CTA closer)', () => {
+    const shots = Array.from({ length: 8 }, (_, i) => shot({ prompt: `beat ${i}` }));
+    const out = normalizeShotPlan(plan(shots), 6);
+    assert.equal(out.shots.length, 6);
+    assert.deepEqual(out.shots.map((s) => s.prompt), ['beat 0', 'beat 1', 'beat 2', 'beat 3', 'beat 4', 'beat 7']);
+  });
+
+  await t.test('maxShots of 1 keeps only the closer', () => {
+    const shots = Array.from({ length: 3 }, (_, i) => shot({ prompt: `beat ${i}` }));
+    const out = normalizeShotPlan(plan(shots), 1);
+    assert.deepEqual(out.shots.map((s) => s.prompt), ['beat 2']);
+  });
+
+  await t.test('under-length plans are untouched', () => {
+    const shots = Array.from({ length: 4 }, (_, i) => shot({ prompt: `beat ${i}` }));
+    const out = normalizeShotPlan(plan(shots), 8);
+    assert.deepEqual(out.shots.map((s) => s.prompt), ['beat 0', 'beat 1', 'beat 2', 'beat 3']);
+  });
+
   await t.test('preserves bible/tone/palette', () => {
     const out = normalizeShotPlan(plan([shot()]), 8);
     assert.equal(out.product_bible, BIBLE);
