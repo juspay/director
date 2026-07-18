@@ -540,6 +540,7 @@ const VIDEO_ALIAS: Record<string, generators.VideoProvider> = {
   'hailuo-fast': 'replicate',
   'wan-2.7': 'replicate',
   'kling-replicate': 'replicate',
+  'kling-3': 'replicate',
 };
 
 // Named draft-tier routes (roadmap W-P4-TIER2, live-verified 2026-07-12).
@@ -557,6 +558,14 @@ const REPLICATE_MODEL: Record<string, ReplicateRoute> = {
   'hailuo-fast': { model: 'minimax/hailuo-2.3-fast', imageInputKey: 'first_frame_image', allowedLengths: [6, 10] },
   'wan-2.7': { model: 'wan-video/wan-2.7-i2v', imageInputKey: 'first_frame' },
   'kling-replicate': { model: 'kwaivgi/kling-v2.1', imageInputKey: 'start_image', allowedLengths: [5, 10] },
+  // Current-generation Kling (leaderboard-verified 2026-07-18, see
+  // docs/plans/2026-07-18-model-leaderboard-snapshot.md): Replicate defaults
+  // resolve to mode=pro + generate_audio=false → $0.224/s. Duration is a free
+  // integer 3-15s (no enum, so no allowedLengths). kling-v2.6 was evaluated
+  // and deliberately skipped: its generate_audio defaults TRUE, and NeuroLink
+  // can't unset it, so it bills at the with-audio $0.14/s for Elo ~1006 —
+  // dominated by v2.1 on price and by v3 on quality.
+  'kling-3': { model: 'kwaivgi/kling-v3-video', imageInputKey: 'start_image' },
 };
 
 async function ensureSeedImage(seedImg: string, dims: { width: number; height: number }): Promise<void> {
@@ -1168,7 +1177,7 @@ Options:
   --output DIR         Output directory
   --provider NAME      TTS: elevenlabs|openai|fish|edgetts
   --voice NAME         TTS voice override (e.g. OpenAI onyx)
-  --video-gen NAME     Video: kling|runway|veo|wan-2.1|hailuo-fast|wan-2.7|kling-replicate
+  --video-gen NAME     Video: kling|runway|veo|wan-2.1|hailuo-fast|wan-2.7|kling-replicate|kling-3 (kling-3 = Kling 3.0 pro via Replicate, $0.224/s — the quality route; kling-replicate = v2.1, $0.05/s — the cheap draft)
   --music-gen NAME     Music: lyria|beatoven|elevenlabs|numpy
   --resolution RES     Output resolution: 1080p (default) | 720p
   --broll-mode MODE    B-roll: director (default) | concept | generic | stock ($0-API real footage via PEXELS_API_KEY, queries derived from the script) | cards ($0 typography from the script — the card text IS the visual, so consider skipping the caption phase: --phases 1,3,4,6)

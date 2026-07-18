@@ -477,3 +477,13 @@ test('pruneForRegen', async (t) => {
     assert.ok('broll' in results && 'assembly' in results);
   });
 });
+
+test('kling-3 routes to current-generation Kling with start_image and no duration enum', () => {
+  const TABLE = {
+    'kling-3': { model: 'kwaivgi/kling-v3-video', imageInputKey: 'start_image' },
+  };
+  assert.deepEqual(resolveReplicateRoute('kling-3', 'replicate', TABLE, undefined), {
+    model: 'kwaivgi/kling-v3-video',
+    imageInputKey: 'start_image',
+  });
+});

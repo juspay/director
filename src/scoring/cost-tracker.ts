@@ -33,6 +33,11 @@ const RATES: Record<string, Record<string, number>> = {
 const MODEL_RATES: Record<string, number> = {
   'replicate:wavespeedai/wan-2.1-i2v-480p': 0.09,
   'replicate:wavespeedai/wan-2.1-i2v-720p': 0.25,
+  // Kling via Replicate — billingConfig + input-schema defaults pulled live
+  // 2026-07-18 (docs/plans/2026-07-18-model-leaderboard-snapshot.md):
+  // v2.1 standard $0.05/s; v3 defaults mode=pro + generate_audio=false → $0.224/s.
+  'replicate:kwaivgi/kling-v2.1': 0.05,
+  'replicate:kwaivgi/kling-v3-video': 0.224,
 };
 
 /**
