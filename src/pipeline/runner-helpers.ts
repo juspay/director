@@ -82,6 +82,47 @@ export function resolveDims(resolution: string | undefined): { veo: '720p' | '10
     : { veo: '1080p', width: 1920, height: 1080 };
 }
 
+const ALLOWED_FORMATS = ['16:9', '9:16', '1:1'] as const;
+export type AspectFormat = (typeof ALLOWED_FORMATS)[number];
+
+/**
+ * Parse the --formats CLI value into a deduped, validated list of aspect
+ * ratios. No value (undefined/blank) means just the generated 16:9 — the
+ * multi-format re-encode step is entirely opt-in. An unrecognized token
+ * throws rather than being silently dropped: a typo'd format would otherwise
+ * burn a full run and quietly ship one fewer deliverable than requested.
+ */
+export function parseFormats(raw: string | undefined): AspectFormat[] {
+  const trimmed = raw?.trim();
+  if (!trimmed) return ['16:9'];
+  const out: AspectFormat[] = [];
+  for (const token of trimmed.split(',').map((s) => s.trim()).filter(Boolean)) {
+    if (!(ALLOWED_FORMATS as readonly string[]).includes(token)) {
+      throw new Error(`--formats: unknown format '${token}' — use one of ${ALLOWED_FORMATS.join(', ')}`);
+    }
+    if (!out.includes(token as AspectFormat)) out.push(token as AspectFormat);
+  }
+  return out.length > 0 ? out : ['16:9'];
+}
+
+/**
+ * Pixel dimensions for a requested output format at a given resolution.
+ * Delegates the base 16:9 grid to resolveDims so the actual pixel numbers
+ * (1920×1080 / 1280×720) live in exactly one place.
+ */
+export function formatToDims(format: AspectFormat, resolution: '720p' | '1080p'): { width: number; height: number } {
+  const { width, height } = resolveDims(resolution);
+  if (format === '16:9') return { width, height };
+  if (format === '9:16') return { width: height, height: width };
+  if (format === '1:1') return { width: height, height };
+  throw new Error(`formatToDims: unknown format '${format}'`);
+}
+
+/** Filename-safe suffix for a non-default format, e.g. '9:16' → '9x16'. */
+export function formatSuffix(format: AspectFormat): string {
+  return format.replace(':', 'x');
+}
+
 function srtTime(t: number): string {
   const safe = Math.max(0, t);
   const ms = Math.floor((safe % 1) * 1000), s = Math.floor(safe) % 60, m = Math.floor(safe / 60) % 60, h = Math.floor(safe / 3600);

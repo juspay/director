@@ -120,6 +120,36 @@ export async function assembleFinal(
   return outputPath;
 }
 
+/**
+ * Re-encode a finished cut to a different aspect ratio via center-crop-fill
+ * (scale to cover the target frame, then crop — the same idiom as
+ * concatVideos), so a 16:9 generation can still ship 9:16/1:1 deliverables
+ * without regenerating. Audio is copied through untouched: the source track
+ * is already mastered (loudnorm'd) by assembleFinal, so re-encoding it again
+ * would only cost quality for no benefit. Deliberately not routed through
+ * presets.ts — its `-vf scale=W:H` stretches straight to the target box
+ * instead of crop-filling it, which would squeeze a 16:9 source into a
+ * distorted 9:16/1:1 frame rather than cropping it.
+ */
+export async function reencodeAspect(
+  inputPath: string,
+  outputPath: string,
+  dims: { width: number; height: number },
+): Promise<string> {
+  const { width, height } = dims;
+  await fs.mkdir(path.dirname(outputPath), { recursive: true });
+  await execa('ffmpeg', [
+    '-y', '-i', inputPath,
+    '-vf', `scale=${width}:${height}:force_original_aspect_ratio=increase,crop=${width}:${height},setsar=1`,
+    '-c:v', 'libx264', '-crf', '20', '-preset', 'medium', '-pix_fmt', 'yuv420p', '-profile:v', 'high', '-level', '4.1',
+    '-c:a', 'copy',
+    '-movflags', '+faststart',
+    outputPath,
+  ]);
+  console.log(`[Assembler] Aspect re-encode → ${outputPath} (${width}×${height})`);
+  return outputPath;
+}
+
 export async function applyColorGrade(
   inputPath: string,
   outputPath: string,

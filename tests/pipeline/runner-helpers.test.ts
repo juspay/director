@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { resolveDims, mapWithConcurrency, scriptToSrt, parseIntOr, parseFloatOr, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult, resolveVideoTier, resolveReplicateRoute, clampSegLen, targetShotCount, parseShotList, parseVariants, pruneForRegen } from '../../src/pipeline/runner-helpers.ts';
+import { resolveDims, mapWithConcurrency, scriptToSrt, parseIntOr, parseFloatOr, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult, resolveVideoTier, resolveReplicateRoute, clampSegLen, targetShotCount, parseShotList, parseVariants, pruneForRegen, parseFormats, formatToDims, formatSuffix } from '../../src/pipeline/runner-helpers.ts';
 
 const PHASE_NAMES = ['voiceover', 'avatar', 'broll', 'music', 'render', 'assembly', 'captions'];
 
@@ -371,6 +371,51 @@ test('resolveReplicateRoute carries allowedLengths', async (t) => {
   });
   await t.test('raw slugs have no enum', () => {
     assert.equal(resolveReplicateRoute('x/y', 'replicate', TABLE, undefined)?.allowedLengths, undefined);
+  });
+});
+
+test('parseFormats', async (t) => {
+  await t.test('undefined/blank defaults to 16:9 only', () => {
+    assert.deepEqual(parseFormats(undefined), ['16:9']);
+    assert.deepEqual(parseFormats(''), ['16:9']);
+    assert.deepEqual(parseFormats('   '), ['16:9']);
+  });
+  await t.test('parses a valid comma-separated list', () => {
+    assert.deepEqual(parseFormats('16:9,9:16,1:1'), ['16:9', '9:16', '1:1']);
+    assert.deepEqual(parseFormats('9:16'), ['9:16']);
+  });
+  await t.test('trims whitespace around tokens', () => {
+    assert.deepEqual(parseFormats(' 16:9 , 9:16 '), ['16:9', '9:16']);
+  });
+  await t.test('dedupes repeated formats, preserving first-seen order', () => {
+    assert.deepEqual(parseFormats('9:16,16:9,9:16'), ['9:16', '16:9']);
+  });
+  await t.test('an unrecognized format throws a clear error', () => {
+    assert.throws(() => parseFormats('16:9,vertical'), /unknown format 'vertical'/);
+    assert.throws(() => parseFormats('4:3'), /unknown format '4:3'/);
+  });
+});
+
+test('formatToDims', async (t) => {
+  await t.test('16:9', () => {
+    assert.deepEqual(formatToDims('16:9', '1080p'), { width: 1920, height: 1080 });
+    assert.deepEqual(formatToDims('16:9', '720p'), { width: 1280, height: 720 });
+  });
+  await t.test('9:16', () => {
+    assert.deepEqual(formatToDims('9:16', '1080p'), { width: 1080, height: 1920 });
+    assert.deepEqual(formatToDims('9:16', '720p'), { width: 720, height: 1280 });
+  });
+  await t.test('1:1', () => {
+    assert.deepEqual(formatToDims('1:1', '1080p'), { width: 1080, height: 1080 });
+    assert.deepEqual(formatToDims('1:1', '720p'), { width: 720, height: 720 });
+  });
+});
+
+test('formatSuffix', async (t) => {
+  await t.test('replaces the colon for a filename-safe suffix', () => {
+    assert.equal(formatSuffix('9:16'), '9x16');
+    assert.equal(formatSuffix('1:1'), '1x1');
+    assert.equal(formatSuffix('16:9'), '16x9');
   });
 });
 

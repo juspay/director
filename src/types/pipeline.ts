@@ -47,6 +47,8 @@ export type PipelineOptions = {
   budgetUsd?: number;
   /** Voiceover source: 'script' (default — read script file + TTS) or 'narrator' (model writes spoken narration from the script-as-brief + TTS in one call). */
   narrationMode?: string;
+  /** Output aspect ratios beyond the generated 16:9 (default ['16:9'] — no extra outputs). Each additional entry is a post-render center-crop re-encode of the finished captioned cut, not a native regeneration. */
+  formats?: string[];
 };
 
 export type PipelineState = {
