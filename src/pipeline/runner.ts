@@ -18,7 +18,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { OUTPUT_DIR } from './config.ts';
 import { appendToLog, loadState, saveState, stateDirFor } from './state.ts';
-import { mapWithConcurrency, resolveDims, resolveVideoTier, resolveReplicateRoute, clampSegLen, targetShotCount, scriptToSrt, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult } from './runner-helpers.ts';
+import { mapWithConcurrency, resolveDims, resolveVideoTier, resolveReplicateRoute, clampSegLen, targetShotCount, scriptToSrt, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult, parseShotList, parseVariants, pruneForRegen } from './runner-helpers.ts';
 import { runFidelityGateAgent, fidelityPassed } from '../agents/fidelity-gate.ts';
 import type { ReplicateRoute } from './runner-helpers.ts';
 import type { PipelineState } from '../types/index.ts';
@@ -127,6 +127,27 @@ export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineS
     startedAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   });
+
+  // Shot re-roll (--regen-shot): drop the flagged shots' cached keyframes and
+  // segments and invalidate broll + everything downstream, so the resume
+  // machinery regenerates exactly those shots and re-assembles. Upstream paid
+  // phases (voiceover, avatar, music) keep their checkpoints — this replaces
+  // the undocumented delete-the-cache-file workaround.
+  if (opts.regenShots?.length && opts.dryRun) {
+    console.log(`[Regen] dry-run: would clear shot(s) ${opts.regenShots.join(', ')} and re-run b-roll, assembly, captions`);
+  } else if (opts.regenShots?.length) {
+    if (opts.phases && !opts.phases.includes(3)) {
+      console.warn('[Regen] WARNING: --regen-shot without phase 3 leaves broll.mp4 stale — the cleared shots only regenerate when the b-roll phase runs (use --phases 3,6,7)');
+    }
+    for (const n of opts.regenShots) {
+      for (const f of [`.broll-dir-seg-${n}.mp4`, `.broll-dir-key-${n}.png`, `.broll-seg-${n}.mp4`]) {
+        await fs.rm(path.join(outDir, f), { force: true });
+      }
+    }
+    state.results = pruneForRegen(state.results);
+    await saveState('pipeline-state.json', state);
+    console.log(`[Regen] Cleared shot(s) ${opts.regenShots.join(', ')} — b-roll, assembly, captions will re-run`);
+  }
 
   const phasesToRun = opts.phases ?? PHASES.map((_, i) => i + 1);
   // Only truncate the cost log on a *fresh* run. On a resume (state already has
@@ -1131,6 +1152,8 @@ Options:
   --reference PATH     Baseline video for the VMAF regression gate (or REGRESSION_REFERENCE env)
   --budget USD         Whole-run spend cap — abort before b-roll generation if the pre-flight projection would exceed it (or BUDGET_USD env)
   --narration MODE     Voiceover: script (default — file + TTS) | narrator (model writes narration + TTS)
+  --regen-shot N[,M]   Re-roll specific b-roll shots: clears their cached keyframe+segment, re-runs b-roll/assembly/captions; upstream phases stay cached (pair with --phases 3,6,7 for the fastest loop)
+  --variants T1,T2     One pipeline run per b-roll tier into <output>-<tier>; exactly two variants auto-compare through the product-aware judge into <output>-variants-compare.json
   --skip-scoring       Skip post-pipeline AI scoring
   --dry-run            Print plan without executing
   (env) BROLL_CONCURRENCY=N  parallel b-roll scenes (default 3)
@@ -1162,9 +1185,52 @@ Options:
     if (args[i] === '--reference') opts.regressionReference = args[++i];
     if (args[i] === '--budget') opts.budgetUsd = Number(args[++i]);
     if (args[i] === '--narration') opts.narrationMode = args[++i];
+    if (args[i] === '--regen-shot') opts.regenShots = parseShotList(args[++i]);
+    if (args[i] === '--variants') opts.variants = parseVariants(args[++i]);
     if (args[i] === '--skip-scoring') opts.skipScoring = true;
     if (args[i] === '--dry-run') opts.dryRun = true;
   }
 
-  runPipeline(opts).catch(console.error);
+  if (opts.variants) {
+    const { variants, ...base } = opts;
+    void (async () => {
+      const baseOut = base.outputDir ?? OUTPUT_DIR;
+      // runPipeline pins STATE_DIR_OVERRIDE to its run's output dir (??=), so
+      // it must be reset between variant runs or every variant after the first
+      // would silently share the first one's state — the #68 bleed, in-process.
+      const initialOverride = process.env.STATE_DIR_OVERRIDE;
+      const finals: string[] = [];
+      for (const tier of variants) {
+        if (initialOverride === undefined) delete process.env.STATE_DIR_OVERRIDE;
+        else process.env.STATE_DIR_OVERRIDE = initialOverride;
+        const outputDir = `${baseOut}-${tier}`;
+        console.log(`\n=== Variant ${finals.length + 1}/${variants.length}: ${tier} → ${outputDir} ===`);
+        await runPipeline({ ...base, brollTier: tier, outputDir });
+        finals.push(path.join(outputDir, 'final_captioned.mp4'));
+      }
+      if (variants.length !== 2) return;
+      const [a, b] = finals;
+      if (a === undefined || b === undefined) return;
+      try { await fs.access(a); await fs.access(b); } catch {
+        console.warn('[Variants] compare skipped — a variant produced no final_captioned.mp4');
+        return;
+      }
+      console.log(`\n=== Variants compare: ${variants[0]} (A) vs ${variants[1]} (B) ===`);
+      const { runVideoComparatorAgent } = await import('../agents/video-comparator.ts');
+      const script = await readScript(base.scriptPath).catch(() => '');
+      const nl = new NeuroLink();
+      try {
+        const cmp = await runVideoComparatorAgent(nl, a, b, script ? { productContext: script } : {});
+        if (cmp) {
+          const cmpPath = `${baseOut}-variants-compare.json`;
+          await fs.writeFile(cmpPath, JSON.stringify({ variants, a, b, comparison: cmp }, null, 2));
+          console.log(`[Variants] verdict: ${cmp.winner} (confidence ${cmp.confidence}) → ${cmpPath}`);
+        }
+      } finally {
+        await nl.shutdown();
+      }
+    })().catch(console.error);
+  } else {
+    runPipeline(opts).catch(console.error);
+  }
 }
