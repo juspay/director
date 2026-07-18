@@ -547,9 +547,9 @@ async function phaseAvatar(nl: NeuroLink, opts: PipelineOptions): Promise<unknow
  * music were invisible to every audit until 2026-07-18). Never throws: cost
  * accounting must not fail a phase that already paid for its output.
  */
-async function logMediaCost(provider: string, operation: string, mediaPath: string): Promise<void> {
+async function logMediaCost(provider: string, operation: string, mediaPath: string, model?: string): Promise<void> {
   const seconds = await probeDuration(mediaPath).catch(() => 0);
-  await costTracker.log(provider, operation, seconds > 0 ? { seconds } : {}).catch(() => undefined);
+  await costTracker.log(provider, operation, seconds > 0 ? { seconds } : {}, undefined, model).catch(() => undefined);
 }
 
 const VIDEO_ALIAS: Record<string, generators.VideoProvider> = {
@@ -794,6 +794,9 @@ async function directorScenes(nl: NeuroLink, opts: PipelineOptions, ctx: BrollCt
         ...(ctx.model ? { model: ctx.model } : {}),
         ...(ctx.imageInputKey ? { imageInputKey: ctx.imageInputKey } : {}),
       }), buildAnimationPrompt(shot), doctorOpts(nl));
+      // Bill at the moment of paid work, per clip — the cache-hit return above
+      // never reaches here, so a resume/regen re-bills nothing.
+      await logMediaCost(ctx.provider, 'broll-video', segOut, ctx.model);
       return segOut;
     } catch (e) {
       console.log(`  [B-roll] segment ${i} failed: ${e instanceof Error ? e.message.slice(0, 100) : String(e)}`);
@@ -1045,6 +1048,7 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
             ...(model ? { model } : {}),
             ...(imageInputKey ? { imageInputKey } : {}),
           }), scene.prompt, doctorOpts(nl));
+          await logMediaCost(provider, 'broll-video', segOut, model);
           return segOut;
         } catch (e) {
           console.log(`  [B-roll] segment ${i} failed: ${e instanceof Error ? e.message.slice(0, 100) : String(e)}`);
@@ -1078,6 +1082,7 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
             ...(model ? { model } : {}),
             ...(imageInputKey ? { imageInputKey } : {}),
           }), GENERIC_PROMPTS[i % GENERIC_PROMPTS.length], doctorOpts(nl));
+          await logMediaCost(provider, 'broll-video', segOut, model);
           segPaths.push(segOut);
         } catch (e) {
           console.log(`  [B-roll] segment ${i} failed: ${e instanceof Error ? e.message.slice(0, 100) : String(e)}`);
@@ -1087,12 +1092,11 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
   }
 
   if (segPaths.length === 0) throw new Error('[B-roll] no segments produced');
-  // Real video spend (per second of output) — keyed by provider so vertex/Veo
-  // is finally captured instead of logging $0 (issue #40), plus the model
-  // string so per-model rates (VIDEO_MODEL_RATES) bill draft-tier routes at
-  // their real price instead of the provider's flat rate. Never let a cost-log
-  // I/O hiccup fail the phase after the (paid) segments are already in hand.
-  await costTracker.log(provider, 'broll-video', { seconds: segPaths.length * segLen }, undefined, model).catch(() => undefined);
+  // Video spend is billed per clip at generation time (logMediaCost in each
+  // mode's loop) — billing the phase total here re-billed every CACHED
+  // segment on resume/regen runs: the B8 re-roll logged 60s of Veo for 36s
+  // ever generated ($9.60 phantom spend) because segPaths includes clips
+  // paid for by earlier runs.
   if (segPaths.length === 1) {
     await fs.copyFile(segPaths[0], outputPath);
     console.log(`[B-roll] Single segment → ${outputPath}`);
