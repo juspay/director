@@ -19,6 +19,7 @@ import path from 'path';
 import { OUTPUT_DIR } from './config.ts';
 import { appendToLog, loadState, saveState, stateDirFor } from './state.ts';
 import { mapWithConcurrency, resolveDims, resolveVideoTier, resolveReplicateRoute, clampSegLen, targetShotCount, scriptToSrt, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult } from './runner-helpers.ts';
+import { runFidelityGateAgent, fidelityPassed } from '../agents/fidelity-gate.ts';
 import type { ReplicateRoute } from './runner-helpers.ts';
 import type { PipelineState } from '../types/index.ts';
 
@@ -240,23 +241,56 @@ export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineS
         // Final video not found — skip the regression gate.
       }
 
+      // Product-fidelity gate (B4) — the judging rubric that reproduced the
+      // owner's veto (identity/brand/CTA scored on the actual pixels), plus the
+      // deterministic tail check for the corruption class BOTH the judge and
+      // human review missed (#109's wrap-around). Same contract as the other
+      // gates: a signal that never ran stays null and doesn't block.
+      try {
+        await fs.access(finalVideo);
+        if ((process.env.FIDELITY_GATE ?? 'on').toLowerCase() !== 'off') {
+          console.log('\n--- Post-pipeline: Fidelity Gate ---\n');
+          const gateRes = await observe('fidelity-gate', async () => {
+            const script = await readScript(opts.scriptPath).catch(() => '');
+            const endCard = rendering.resolveBrandKit()?.endCardPath;
+            const tail = await rendering.runTailCheck(finalVideo, path.join(outDir, 'broll.mp4'), endCard)
+              .catch((e: unknown) => { console.warn('[FidelityGate] tail check skipped:', e instanceof Error ? e.message : e); return null; });
+            if (tail) console.log(`[FidelityGate] tail ${tail.passed ? 'PASS' : 'FAIL'} (diff ${tail.score.toFixed(3)} vs ${tail.reference})`);
+            const judge = await runFidelityGateAgent(neurolink, finalVideo, script ? { productContext: script } : {});
+            // Split authority: the judge blocks on identity/brand; the ending
+            // blocks via the deterministic tail check, falling back to the
+            // judge's cta score only when the tail check couldn't run.
+            const judgeOk = judge ? fidelityPassed(judge) : null;
+            const ctaOk = tail ? tail.passed : judge ? judge.cta_ending.score >= 3 : null;
+            const passed = judgeOk === null && ctaOk === null ? null : judgeOk !== false && ctaOk !== false;
+            return { judge, judgeOk, tail, ctaOk, passed };
+          });
+          if (gateRes.result) state.results['fidelity-gate'] = gateRes.result;
+        }
+      } catch {
+        // Final video not found — skip the fidelity gate.
+      }
+
       // Production verdict — combine the (visual) video score, the (content)
-      // quality gates, and the (deterministic) regression gate into one
-      // ship/no-ship signal.
+      // quality gates, the (deterministic) regression gate, and the (product)
+      // fidelity gate into one ship/no-ship signal.
       const videoScore = (state.results['scoring'] as { weighted_overall?: number } | undefined)?.weighted_overall;
       const gates = state.results['quality-gates'] as { passed?: boolean } | undefined;
       const regression = state.results['regression-gate'] as { passed?: boolean } | undefined;
-      if (typeof videoScore === 'number' || gates || regression) {
+      const fidelity = state.results['fidelity-gate'] as { passed?: boolean | null } | undefined;
+      if (typeof videoScore === 'number' || gates || regression || fidelity) {
         const gatesPassed = gates?.passed ?? null;
         // null = gate didn't run (no tools / no final video) → non-blocking.
         // false = a *measured* regression → hard downgrade.
         const regressionPassed = regression?.passed ?? null;
+        const fidelityOk = fidelity?.passed ?? null;
         const videoOk = typeof videoScore === 'number' && videoScore >= 7;
-        // SHIP-READY needs a good video score, no failing content gates, and no
-        // measured quality regression. Signals that never ran don't block; only a
-        // definitive failure does. When content gates never ran (no script), we
-        // can't claim content was verified — flag that rather than imply a pass.
-        const shipReady = videoOk && gatesPassed !== false && regressionPassed !== false;
+        // SHIP-READY needs a good video score, no failing content gates, no
+        // measured quality regression, and no failed fidelity gate. Signals that
+        // never ran don't block; only a definitive failure does. When content
+        // gates never ran (no script), we can't claim content was verified —
+        // flag that rather than imply a pass.
+        const shipReady = videoOk && gatesPassed !== false && regressionPassed !== false && fidelityOk !== false;
         const verdict = shipReady
           ? (gatesPassed === null ? 'SHIP-READY (no content gates)' : 'SHIP-READY')
           : 'NEEDS WORK';
@@ -264,9 +298,10 @@ export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineS
           `video ${typeof videoScore === 'number' ? `${videoScore.toFixed(2)}/10` : 'n/a'}`,
           gates ? `gates ${gatesPassed ? 'PASS' : 'FAIL'}` : 'gates not run',
           regression ? `regression ${regressionPassed ? 'PASS' : 'FAIL'}` : 'regression not run',
+          fidelity ? `fidelity ${fidelityOk === null ? 'n/a' : fidelityOk ? 'PASS' : 'FAIL'}` : 'fidelity not run',
         ];
         console.log(`\n[Production Verdict] ${verdict} — ${parts.join(' · ')}`);
-        state.results['production-verdict'] = { verdict, videoScore: videoScore ?? null, gatesPassed, regressionPassed };
+        state.results['production-verdict'] = { verdict, videoScore: videoScore ?? null, gatesPassed, regressionPassed, fidelityPassed: fidelityOk };
       }
 
       console.log('\n--- Post-pipeline: Observability Report ---\n');
