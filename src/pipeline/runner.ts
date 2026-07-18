@@ -992,9 +992,21 @@ async function phaseAssembly(_nl: NeuroLink, opts: PipelineOptions): Promise<unk
   if (!music) { try { await fs.access(musicMp3); music = musicMp3; } catch { /* none */ } }
 
   const dims = resolveDims(opts.resolution);
-  return rendering.assembleFinal(broll, voiceover, music, path.join(outDir, 'final.mp4'), {
+  const finalPath = path.join(outDir, 'final.mp4');
+  await rendering.assembleFinal(broll, voiceover, music, finalPath, {
     width: dims.width, height: dims.height, musicGainDb: -18,
   });
+
+  // Brand kit (opt-in via BRAND_LOGO / BRAND_END_CARD): branding is composited
+  // deterministically here because the generative path deliberately excludes
+  // logos — a finished ad must carry the brand no matter which model made it.
+  const kit = rendering.resolveBrandKit();
+  if (kit) {
+    const branded = path.join(outDir, '.final-branded.mp4');
+    await rendering.applyBrandOverlay(finalPath, branded, kit);
+    await fs.rename(branded, finalPath);
+  }
+  return finalPath;
 }
 
 async function phaseCaptions(_nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
@@ -1064,7 +1076,10 @@ Options:
   --skip-scoring       Skip post-pipeline AI scoring
   --dry-run            Print plan without executing
   (env) BROLL_CONCURRENCY=N  parallel b-roll scenes (default 3)
-  (env) VIDEO_SUBMIT_INTERVAL_MS=N  space paid video submits N ms apart (rate-limited accounts, e.g. 12000; rate-limit backoff is always on)`);
+  (env) VIDEO_SUBMIT_INTERVAL_MS=N  space paid video submits N ms apart (rate-limited accounts, e.g. 12000; rate-limit backoff is always on)
+  (env) BRAND_LOGO=path.png  composite a logo bug onto the final cut (deterministic — survives any b-roll model)
+  (env) BRAND_LOGO_CORNER=top-right|top-left|bottom-right|bottom-left (default top-right) · BRAND_LOGO_WIDTH=0.12 (fraction of frame width)
+  (env) BRAND_END_CARD=path.png  full-frame end-card held over the tail · BRAND_END_CARD_SECONDS=2`);
     process.exit(0);
   }
 
