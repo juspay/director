@@ -64,9 +64,9 @@ The five durable moats stand: self-hosted/data-resident, provider-portable, enfo
 | Metric | Today | Target | Measured by |
 |---|---|---|---|
 | Blind quality vs HeyGen/Creatify output | unmeasured (n=0) | ≥60% blind preference, n≥20 raters; product-identity-correct scored separately ≥95% | B12 panel |
-| $/finished 30s video (single-attribution) | none exists (hero misattributed; draft fails fidelity) | hero ≤$5 **at fidelity-gate pass**; draft counts only if it passes fidelity too | B8 clean re-run, log ↔ billing to the cent |
+| $/finished 30s video (single-attribution) | **B8 landed (§7): draft $2.35/30s at full fidelity PASS — beats target; hero $14.33/30s at fidelity PASS — misses ≤$5 on raw Veo economics ($0.40/s), route decision pending (Kling 3 Pro via fal ≈ $4/36s)** | hero ≤$5 **at fidelity-gate pass**; draft counts only if it passes fidelity too | B8 clean re-run, log ↔ billing to the cent |
 | Wall-clock / finished video | 10.5–11 min (no avatar, 1 format) | ≤12 min **including** avatar + 3 aspect ratios | re-time after B2/B3/B4/B9 |
-| Fidelity gate pass rate | 0% (no gate wired) | ≥95% of ship-ready runs pass wired identity+logo+CTA gate (gate itself ≥8/10 on labeled set) | B4 + B2 checks |
+| Fidelity gate pass rate | gate wired ([#112](https://github.com/juspay/director/pull/112)) and blocking; B8: 2/2 completed legs pass, and it correctly vetoed both incomplete cuts first (§7) | ≥95% of ship-ready runs pass wired identity+logo+CTA gate (gate itself ≥8/10 on labeled set) | B4 + B2 checks |
 | Iteration cost per shot | full re-run (only path) | ≤$0.50 and ≤90s per flagged shot | B10 measured vs baseline |
 | Accounting completeness | 2/7 phases logged | 7/7 phases + agent calls; zero orphan state dirs | B7 audit |
 | Formats per run | 1 (hardcoded) | 16:9 + 9:16 + 1:1 from one invocation | B9 ffprobe |
@@ -86,7 +86,7 @@ The five durable moats stand: self-hosted/data-resident, provider-portable, enfo
 
 - **B5 · Fresh dated leaderboard pull** — resolve #3-vs-#7; confirm or kill "Gemini Omni Flash" with one real API call; commit the dated snapshot. Gates every model swap. *$0–2, hours.*
 - **B6 · Draft-tier currency** — repoint `kling-replicate` to the current Kling generation per B5; align `creative-director.ts`; staleness check vs AA model-family page. *$2–4, hours.*
-- **B8 · Clean contemporaneous hero-vs-draft re-run** — same commit, same day, after B2–B7; both tiers must pass the new gates; publishes the first citable cost/quality baseline. *$5–8, days.*
+- **B8 · Clean contemporaneous hero-vs-draft re-run** — same commit, same day, after B2–B7; both tiers must pass the new gates; publishes the first citable cost/quality baseline. *$5–8, days.* → **✓ landed 2026-07-19, both legs SHIP-READY — see §7.**
 - **B9 · Multi-aspect output** — thread `aspectRatio` through the 7 call sites; wire `presets.ts` as a post-render re-encode pass → 16:9/9:16/1:1 from one run; ffprobe tests. *$0, days.*
 - **B10 · Iteration loop** — `--regen-shot N` (expose the existing cache-probe path, documented) + `--variants N` batching so an A/B is one invocation. *$1–3, days.*
 - **B11 · Avatar bench (W-P4-AVATAR-BENCH)** — HeyGen vs Hedra vs Tavus on our segment profile; concrete re-evaluation trigger for the HeyGen concentration risk. *$3–6, days; needs owner accounts.*
@@ -105,6 +105,28 @@ The five durable moats stand: self-hosted/data-resident, provider-portable, enfo
 ## 6 · Sequencing
 
 **The entire P0 wave shipped the same day this plan was written**: B1 ✓ (verified, frames committed), B2 ✓ [#109](https://github.com/juspay/director/pull/109), B3 ✓ [#110](https://github.com/juspay/director/pull/110), B7 ✓ [#111](https://github.com/juspay/director/pull/111). B4 lands after B2+B3 so the gate has something real to gate, and only blocks after its 10-pair calibration. B5 before B6 and before any hero-tier bet — no model swap on unverified rank data. Then **B8 is the capstone**: no cost or quality figure gets cited externally until it lands. B9/B10 are parallel-safe any time; B10 early — it directly answers yesterday's pain (two manual runs + manual compare). B11/B12/B14 are pure measurement; reuse B8's runs to avoid duplicate spend. P0 validation spend fits under ~$15 against $3.48 Replicate credit + Vertex; B6/B8 may need the credit topped up or routed via Vertex.
+
+## 7 · B8 outcome (2026-07-19) — the gates earned their keep
+
+Same brief, same script, same voiceover, same day, AETHER brand kit on both legs; hero = Veo on Vertex (9×4s), draft = Kling v2.1 on Replicate (7×5s); run as one `--variants hero,draft` invocation with per-leg budget caps and 16:9/9:16/1:1 outputs.
+
+**Final baseline (ledger-corrected):**
+
+| Leg | B-roll | True spend | Per 30s | Fidelity gate | Legacy score | Verdict |
+|---|---|---|---|---|---|---|
+| hero (Veo) | 36.0s / VO 32.26s | **$15.41** | $14.33 | PASS — identity 5/5, brand 5/5, tail 0.003, coverage 112% | 7.30/10 | **SHIP-READY** |
+| draft (Kling v2.1) | 35.2s / VO 32.26s | **$2.53** | $2.35 | PASS — identity 5/5, brand 5/5, cta 5/5, tail 0.003 | 7.60/10 | **SHIP-READY** |
+
+Comparator: hero wins at 0.9 confidence with a regression flag on draft — aligned with the July-17 human call, inverted from the July-17 machine call. Program total across both legs: $17.94.
+
+**The run caught four real defect classes; all four were fixed the same day:**
+
+1. **Prompt-length loss** — 4 of 16 segments died on NeuroLink's 500-char video-prompt limit while the doctor misclassified the rejection as transient (bare `500`/`503` in the message matched the status-code heuristic) and the freeze-pad masked a 26% frozen tail that the legacy scorer rated 8.65/10. → [#116](https://github.com/juspay/director/pull/116): clamp at `generate()`, classifier reorder, `brollCoverageOk` gate signal.
+2. **Regen-blind pre-flight** — the budget projection priced all planned shots plus prior logged spend, so an honest re-roll could never pass its cap ($25.60 projected for ~$5 of new work). → [#117](https://github.com/juspay/director/pull/117): price only pending (un-cached) shots, all three b-roll modes.
+3. **Judge without intent** — fidelity judge scored identity 1/5 on a run a 7-agent frame audit proved had **zero generative drift**: the plan deliberately opens on the villain smartwatch the ring replaces, and the judge read designed contrast as the product mutating. → [#118](https://github.com/juspay/director/pull/118): storyboard `[PRODUCT]`/`[CONTRAST]` intent lines in the judge prompt. Live calibration: identity 1/5 → 5/5 *and* the judge got sharper — script_alignment now names the exact missing shots, corroborating the coverage gate.
+4. **Phantom billing on resume** — the phase-level cost log re-billed every cached segment on regen (hero ledger: 60s of Veo billed for 36s generated, $9.60 phantom). → [#119](https://github.com/juspay/director/pull/119): bill per clip at generation time, probing actual file duration.
+
+**Scorecard readout:** the draft tier now clears the bar the plan set for hero — $2.35/30s at a full fidelity PASS — while hero's $14.33/30s is raw Veo economics ($0.40/s × 36s = $14.40 floor), not waste; the credible path to a ≤$5 hero is a route change (Kling 3 Pro via fal ≈ $0.112/s → ~$4.03/36s, pending B5/B6 discipline), not micro-optimization. The legacy scorer preferred the broken cut (8.15 frozen-tail vs 7.30 completed) — one more reason the verdict composes gates, not scores. Caveats that stand: n=1 brief; the judge's cta dimension remains tail-blind (deterministic tail check owns the ending, by design); and product identity still rests on generative consistency + critics — reference-conditioned generation remains the durable frontier for true drift, which this run happened not to exhibit.
 
 ## Method note
 
