@@ -14,12 +14,30 @@ import fsp from 'fs/promises';
 import os from 'os';
 import path from 'path';
 import { FidelityReportSchema, type FidelityReport } from '../schemas/fidelity.ts';
+import type { ShotPlan } from '../schemas/shot-plan.ts';
 import { safeJsonParse } from '../utils/json-repair.ts';
 import { exponentialBackoff } from '../utils/rate-limit.ts';
 import { CONFIG } from '../pipeline/config.ts';
 import { extractLastFramePng } from '../rendering/tail-check.ts';
 
-export function buildFidelityPrompt(productContext?: string): string {
+/**
+ * Storyboard intent for the judge: which shots deliberately show something
+ * other than the product. Without this the judge scores designed contrast as
+ * identity drift — found live on the B8 hero leg: identity 1/5 on a run with
+ * zero actual drift, because the plan intentionally opens on the generic
+ * smartwatch the ring replaces. The context states intent; it does not tell
+ * the judge to pass — a product shot showing the wrong device still fails.
+ */
+export function buildStoryboardContext(plan: ShotPlan): string {
+  const lines = plan.shots.map((s, i) =>
+    `${i}. ${s.shows_product ? '[PRODUCT]' : '[CONTRAST — deliberately NOT the product]'} ${s.prompt.trim().slice(0, 160)}`);
+  return `Storyboard (the art director's plan; the video assembles these shots in order):
+${lines.join('\n')}
+
+Shots marked [CONTRAST] intentionally show generic or competing devices/scenes as the problem the product solves. Their presence is deliberate storytelling, NOT a product-identity or script failure. Product identity is judged on the product itself wherever it appears — a [PRODUCT] shot showing a different object is still a failure.`;
+}
+
+export function buildFidelityPrompt(productContext?: string, storyboard?: string): string {
   return `You are the product-fidelity gate for a finished product video. Judge the ACTUAL pixels, shot by shot.
 
 Score each dimension 1-5 (5 = flawless, 1 = failing):
@@ -32,7 +50,7 @@ Score each dimension 1-5 (5 = flawless, 1 = failing):
 Resolution, sharpness-from-pixel-count, and file size are NOT quality signals — never cite them. Judge what was created, not how it was delivered.
 
 The second attached file is the video's EXACT final frame, extracted losslessly — treat it as ground truth for cta_ending and for end-card/logo presence at the ending, even if your sampling of the video itself did not surface it.
-${productContext ? `\nThe product and script this video must be faithful to:\n---\n${productContext}\n---\n` : ''}
+${productContext ? `\nThe product and script this video must be faithful to:\n---\n${productContext}\n---\n` : ''}${storyboard ? `\n${storyboard}\n` : ''}
 Set passed=false if ANY critical dimension scores below 3, and list every concrete failure you saw (shot + what is wrong). Focus on VISIBLE evidence — don't manufacture problems that aren't there.`;
 }
 
@@ -53,7 +71,7 @@ export function fidelityPassed(report: FidelityReport, threshold = 3): boolean {
 export async function runFidelityGateAgent(
   neurolink: NeuroLink,
   videoPath: string,
-  options: { productContext?: string } = {},
+  options: { productContext?: string; storyboard?: string } = {},
 ): Promise<FidelityReport | null> {
   console.log(`[FidelityGate] Judging ${path.basename(videoPath)}`);
 
@@ -68,7 +86,7 @@ export async function runFidelityGateAgent(
   const result = await exponentialBackoff(async () => {
     const response = await neurolink.generate({
       input: {
-        text: buildFidelityPrompt(options.productContext),
+        text: buildFidelityPrompt(options.productContext, options.storyboard),
         files: [path.resolve(videoPath), ...(lastFrame ? [lastFrame] : [])],
       },
       provider: process.env.AGENT_PROVIDER ?? 'vertex',
@@ -94,19 +112,21 @@ export async function runFidelityGateAgent(
   return r;
 }
 
-// CLI: npm run fidelity -- <video.mp4> [script.txt]
+// CLI: npm run fidelity -- <video.mp4> [script.txt] [shot-plan.json]
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const [video, scriptPath] = process.argv.slice(2);
+  const [video, scriptPath, planPath] = process.argv.slice(2);
   if (!video) {
-    console.error('Usage: npm run fidelity -- <video.mp4> [script.txt — product/script context for the judge]');
+    console.error('Usage: npm run fidelity -- <video.mp4> [script.txt — product/script context] [shot-plan.json — storyboard intent]');
     process.exit(1);
   }
   const fs = await import('fs/promises');
   const productContext = scriptPath ? await fs.readFile(scriptPath, 'utf8') : undefined;
+  const plan = planPath ? JSON.parse(await fs.readFile(planPath, 'utf8')) as ShotPlan : undefined;
+  const storyboard = plan?.shots?.length ? buildStoryboardContext(plan) : undefined;
   const { NeuroLink } = await import('@juspay/neurolink');
   const nl = new NeuroLink();
   try {
-    const report = await runFidelityGateAgent(nl, video, { productContext });
+    const report = await runFidelityGateAgent(nl, video, { productContext, storyboard });
     if (!report) process.exit(1);
     console.log(JSON.stringify({ ...report, gate_passed: fidelityPassed(report) }, null, 2));
   } finally {
