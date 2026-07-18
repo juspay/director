@@ -232,3 +232,37 @@ export function targetShotCount(voDur: number, segLen: number, fallback = 8): nu
   if (!(voDur > 0) || !(segLen > 0)) return fallback;
   return Math.max(3, Math.ceil(voDur / segLen));
 }
+
+/**
+ * Parse a --regen-shot list ("2" or "2,5"): non-negative integers, deduped,
+ * sorted. Throws on junk rather than silently regenerating nothing.
+ */
+export function parseShotList(raw: string): number[] {
+  const shots = raw.split(',').map((part) => {
+    const n = Number(part.trim());
+    if (!Number.isInteger(n) || n < 0) throw new Error(`--regen-shot: "${part.trim()}" is not a non-negative shot index`);
+    return n;
+  });
+  return [...new Set(shots)].sort((a, b) => a - b);
+}
+
+/** Parse a --variants list ("hero,draft"): trimmed non-empty tiers, deduped, at least two. */
+export function parseVariants(raw: string): string[] {
+  const tiers = [...new Set(raw.split(',').map((t) => t.trim()).filter(Boolean))];
+  if (tiers.length < 2) throw new Error(`--variants: need at least two distinct tiers, got "${raw}"`);
+  return tiers;
+}
+
+// A shot regen invalidates everything downstream of b-roll — but never the
+// phases that cost money and didn't change (voiceover, avatar, music), and
+// post-pipeline keys always recompute on the rerun.
+const REGEN_INVALIDATES = ['broll', 'assembly', 'captions', 'scoring', 'quality-gates', 'regression-gate', 'fidelity-gate', 'production-verdict'] as const;
+
+/**
+ * Results object with every regen-invalidated checkpoint removed. Pure —
+ * the caller persists it; upstream phase results survive untouched.
+ */
+export function pruneForRegen(results: Record<string, unknown>): Record<string, unknown> {
+  const invalidated: ReadonlySet<string> = new Set(REGEN_INVALIDATES);
+  return Object.fromEntries(Object.entries(results).filter(([k]) => !invalidated.has(k)));
+}

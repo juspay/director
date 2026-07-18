@@ -21,6 +21,10 @@ export type PipelineOptions = {
   brollMode?: string;
   /** B-roll spend tier: 'hero' (default — configured generator) or 'draft' (cheap iteration via BROLL_DRAFT_GENERATOR / BROLL_DRAFT_MODEL). */
   brollTier?: string;
+  /** Shot indexes to force-regenerate: their cached keyframes/segments are deleted and broll/assembly/captions re-run. */
+  regenShots?: number[];
+  /** B-roll tiers to render as separate variants in one invocation (e.g. ['hero','draft']); exactly two triggers an automatic comparison. */
+  variants?: string[];
   /** Caption rendering style: 'phrase' (default) or 'karaoke' (word-level ASS highlight sweep; requires libass). */
   captionStyle?: string;
   /** Music generator key (lyria / beatoven / elevenlabs / replicate / numpy). */

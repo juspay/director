@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { resolveDims, mapWithConcurrency, scriptToSrt, parseIntOr, parseFloatOr, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult, resolveVideoTier, resolveReplicateRoute, clampSegLen, targetShotCount } from '../../src/pipeline/runner-helpers.ts';
+import { resolveDims, mapWithConcurrency, scriptToSrt, parseIntOr, parseFloatOr, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult, resolveVideoTier, resolveReplicateRoute, clampSegLen, targetShotCount, parseShotList, parseVariants, pruneForRegen } from '../../src/pipeline/runner-helpers.ts';
 
 const PHASE_NAMES = ['voiceover', 'avatar', 'broll', 'music', 'render', 'assembly', 'captions'];
 
@@ -391,5 +391,44 @@ test('targetShotCount', async (t) => {
     assert.equal(targetShotCount(0, 5), 8);
     assert.equal(targetShotCount(NaN, 5), 8);
     assert.equal(targetShotCount(30, 0), 8);
+  });
+});
+
+test('parseShotList', async (t) => {
+  await t.test('parses, dedupes, sorts', () => {
+    assert.deepEqual(parseShotList('5, 2,2,0'), [0, 2, 5]);
+    assert.deepEqual(parseShotList('3'), [3]);
+  });
+  await t.test('throws on junk instead of silently regenerating nothing', () => {
+    assert.throws(() => parseShotList('two'), /not a non-negative shot index/);
+    assert.throws(() => parseShotList('-1'), /not a non-negative shot index/);
+    assert.throws(() => parseShotList('1.5'), /not a non-negative shot index/);
+  });
+});
+
+test('parseVariants', async (t) => {
+  await t.test('parses and dedupes tiers', () => {
+    assert.deepEqual(parseVariants('hero, draft'), ['hero', 'draft']);
+    assert.deepEqual(parseVariants('hero,draft,hero'), ['hero', 'draft']);
+  });
+  await t.test('requires at least two distinct tiers', () => {
+    assert.throws(() => parseVariants('hero'), /at least two distinct tiers/);
+    assert.throws(() => parseVariants('hero,hero'), /at least two distinct tiers/);
+  });
+});
+
+test('pruneForRegen', async (t) => {
+  const results = {
+    voiceover: { ok: true }, avatar: { ok: true }, music: { ok: true },
+    broll: { ok: true }, assembly: 'final.mp4', captions: 'final_captioned.mp4',
+    scoring: {}, 'quality-gates': {}, 'regression-gate': {}, 'fidelity-gate': {}, 'production-verdict': {}, cost: {},
+  };
+  await t.test('drops b-roll and everything downstream, keeps paid upstream phases', () => {
+    const pruned = pruneForRegen(results);
+    assert.deepEqual(Object.keys(pruned).sort(), ['avatar', 'cost', 'music', 'voiceover']);
+  });
+  await t.test('does not mutate the input', () => {
+    pruneForRegen(results);
+    assert.ok('broll' in results && 'assembly' in results);
   });
 });

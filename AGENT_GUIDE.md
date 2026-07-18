@@ -76,7 +76,7 @@ npm run observe                        # post-run observability sweep + penaltie
 |---|---|
 | Run died mid-phase | Re-run the same command — resume skips completed phases |
 | One phase produced garbage | Delete its artifact(s) from `<outDir>` and its key from `results` in `pipeline-state.json`, then re-run |
-| B-roll went off-brand | Read `shot-verdicts.jsonl` for the critic's reasoning; delete the offending `.broll-dir-key-N.png`/`.broll-dir-seg-N.mp4` and resume — the keyframe regenerates through the critic loop |
+| B-roll went off-brand | Read `shot-verdicts.jsonl` for the critic's reasoning, then `--regen-shot N --phases 3,6,7` — clears that shot's cached keyframe+segment and re-runs b-roll, assembly, captions; upstream phases stay cached. (`--regen-shot N,M` for several; the old delete-the-cache-file workaround still works but is no longer needed) |
 | Spend runs away | Kill it; add `--budget` and/or lower `BROLL_MAX_SHOTS`; resume |
 | "Is it alive?" | `npm run backlot` — `RUNNING` vs `STALLED` is derived from state-file mtimes (`BACKLOT_STALL_SECONDS` to tune) |
 | Need the verdict trail | `output/quality-gates.json`, `output/regression-gate.json`, scoring block in `pipeline-state.json` |
