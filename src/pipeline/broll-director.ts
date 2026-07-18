@@ -48,11 +48,18 @@ export function applyFixToPrompt(basePrompt: string, fixInstruction: string): st
 /**
  * Defensive normalisation of an agent-produced plan: drop empty-prompt shots and
  * clamp to `maxShots` so a runaway plan can't fan out unbounded paid generations.
+ * Over-length plans keep their first maxShots-1 beats plus the LAST shot: plans
+ * end on the hero/CTA closer, and plain end-truncation silently cut it (the live
+ * draft run animated 6 of a cached 8-shot plan and lost its ring hero closer —
+ * the ad ended on a readiness-score phone UI instead of the product).
  */
 export function normalizeShotPlan(plan: ShotPlan, maxShots: number): ShotPlan {
-  const shots = plan.shots
-    .filter((s) => typeof s.prompt === 'string' && s.prompt.trim().length > 0)
-    .slice(0, Math.max(1, maxShots));
+  const valid = plan.shots.filter((s) => typeof s.prompt === 'string' && s.prompt.trim().length > 0);
+  const cap = Math.max(1, maxShots);
+  const last = valid[valid.length - 1];
+  const shots = valid.length > cap && last !== undefined
+    ? [...valid.slice(0, cap - 1), last]
+    : valid.slice(0, cap);
   return { ...plan, shots };
 }
 

@@ -18,7 +18,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { OUTPUT_DIR } from './config.ts';
 import { appendToLog, loadState, saveState, stateDirFor } from './state.ts';
-import { mapWithConcurrency, resolveDims, resolveVideoTier, resolveReplicateRoute, clampSegLen, scriptToSrt, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult } from './runner-helpers.ts';
+import { mapWithConcurrency, resolveDims, resolveVideoTier, resolveReplicateRoute, clampSegLen, targetShotCount, scriptToSrt, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult } from './runner-helpers.ts';
 import type { ReplicateRoute } from './runner-helpers.ts';
 import type { PipelineState } from '../types/index.ts';
 
@@ -685,8 +685,9 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
   const voDur = await probeDuration(voPath);
   let segLen = 4;
   const concurrency = Math.max(1, Number(process.env.BROLL_CONCURRENCY) || 3);
-  // One ~4s shot per (segLen) of voiceover so the b-roll ≈ VO length; default 8.
-  let targetShots = voDur > 0 ? Math.max(3, Math.round(voDur / segLen)) : 8;
+  // One ~4s shot per (segLen) of voiceover, rounded UP so the b-roll covers the
+  // VO (a shortfall freezes the closing shot at assembly); default 8.
+  let targetShots = targetShotCount(voDur, segLen);
   const segPaths: string[] = [];
 
   // Director mode (default): agent shot plan + canonical product + consistency
@@ -779,7 +780,7 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
   const clampedLen = clampSegLen(segLen, replRoute?.allowedLengths);
   if (clampedLen !== segLen) {
     segLen = clampedLen;
-    if (voDur > 0) targetShots = Math.max(3, Math.round(voDur / segLen));
+    if (voDur > 0) targetShots = targetShotCount(voDur, segLen);
     console.log(`[B-roll] ${model}: segment length clamped to ${segLen}s (allowed: ${replRoute?.allowedLengths?.join('|')}s) → ${targetShots} shots`);
   }
   if (tier === 'draft') {

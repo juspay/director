@@ -84,14 +84,19 @@ export async function assembleFinal(
 
   const voDur = await getDuration(voiceoverPath);
   const brollDur = await getDuration(brollPath);
-  console.log(`[Assembler] Target duration ${voDur.toFixed(2)}s (VO); b-roll ${brollDur.toFixed(2)}s → loop=${(voDur / brollDur).toFixed(2)}x`);
+  const pad = tailPadSeconds(voDur, brollDur);
+  console.log(`[Assembler] Target duration ${voDur.toFixed(2)}s (VO); b-roll ${brollDur.toFixed(2)}s → ${pad > 0 ? `hold last frame ${pad.toFixed(2)}s` : `trim ${(brollDur - voDur).toFixed(2)}s`}`);
 
   const args: string[] = ['-y'];
-  args.push('-stream_loop', '-1', '-i', brollPath);
+  // The b-roll is never looped: when it runs shorter than the VO the overrun
+  // must freeze on the closing shot (tpad below), not wrap back to shot 0 —
+  // looping put the opening hook clip under the closing CTA caption.
+  args.push('-i', brollPath);
   args.push('-i', voiceoverPath);
   if (musicPath) args.push('-stream_loop', '-1', '-i', musicPath);
 
-  const vChain = `[0:v]scale=${w}:${h}:force_original_aspect_ratio=increase,crop=${w}:${h},setsar=1${grade}[v]`;
+  const tailHold = pad > 0 ? `,tpad=stop_mode=clone:stop_duration=${pad.toFixed(3)}` : '';
+  const vChain = `[0:v]scale=${w}:${h}:force_original_aspect_ratio=increase,crop=${w}:${h},setsar=1${grade}${tailHold}[v]`;
   let aChain: string;
   if (musicPath) {
     aChain =
@@ -126,6 +131,17 @@ export async function applyColorGrade(
     '-c:a', 'copy', outputPath,
   ]);
   return outputPath;
+}
+
+/**
+ * Seconds of freeze-frame padding needed for the b-roll to cover the voiceover.
+ * A shortfall must never be covered by looping the b-roll input — playback
+ * wraps to shot 0 (the hook) under the closing CTA. Pure — exported for tests.
+ */
+export function tailPadSeconds(voDur: number, brollDur: number): number {
+  if (!Number.isFinite(voDur) || voDur <= 0) throw new Error(`tailPadSeconds: bad VO duration (${voDur})`);
+  if (!Number.isFinite(brollDur) || brollDur <= 0) throw new Error(`tailPadSeconds: bad b-roll duration (${brollDur})`);
+  return Math.max(0, voDur - brollDur);
 }
 
 /**

@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { resolveDims, mapWithConcurrency, scriptToSrt, parseIntOr, parseFloatOr, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult, resolveVideoTier, resolveReplicateRoute, clampSegLen } from '../../src/pipeline/runner-helpers.ts';
+import { resolveDims, mapWithConcurrency, scriptToSrt, parseIntOr, parseFloatOr, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult, resolveVideoTier, resolveReplicateRoute, clampSegLen, targetShotCount } from '../../src/pipeline/runner-helpers.ts';
 
 const PHASE_NAMES = ['voiceover', 'avatar', 'broll', 'music', 'render', 'assembly', 'captions'];
 
@@ -371,5 +371,25 @@ test('resolveReplicateRoute carries allowedLengths', async (t) => {
   });
   await t.test('raw slugs have no enum', () => {
     assert.equal(resolveReplicateRoute('x/y', 'replicate', TABLE, undefined)?.allowedLengths, undefined);
+  });
+});
+
+test('targetShotCount', async (t) => {
+  await t.test('rounds UP so total b-roll covers the VO (live regression: 32.256s VO @ 5s segments)', () => {
+    // Math.round gave 6 shots = 30s < 32.256s VO -> 2.07s -stream_loop wrap
+    // that replayed the opening hook under the closing CTA.
+    assert.equal(targetShotCount(32.256, 5), 7);
+  });
+  await t.test('exact multiples are unchanged', () => {
+    assert.equal(targetShotCount(32, 4), 8);
+    assert.equal(targetShotCount(30, 5), 6);
+  });
+  await t.test('floor of 3 shots', () => {
+    assert.equal(targetShotCount(4.2, 5), 3);
+  });
+  await t.test('fallback when VO duration is unknown', () => {
+    assert.equal(targetShotCount(0, 5), 8);
+    assert.equal(targetShotCount(NaN, 5), 8);
+    assert.equal(targetShotCount(30, 0), 8);
   });
 });
