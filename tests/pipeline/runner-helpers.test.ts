@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { resolveDims, mapWithConcurrency, scriptToSrt, parseIntOr, parseFloatOr, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult, resolveVideoTier, resolveReplicateRoute, clampSegLen, targetShotCount, parseShotList, parseVariants, pruneForRegen, parseFormats, formatToDims, formatSuffix } from '../../src/pipeline/runner-helpers.ts';
+import { resolveDims, mapWithConcurrency, scriptToSrt, parseIntOr, parseFloatOr, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult, resolveVideoTier, resolveReplicateRoute, clampSegLen, targetShotCount, parseShotList, parseVariants, pruneForRegen, parseFormats, formatToDims, formatSuffix, brollCoverageOk } from '../../src/pipeline/runner-helpers.ts';
 
 const PHASE_NAMES = ['voiceover', 'avatar', 'broll', 'music', 'render', 'assembly', 'captions'];
 
@@ -485,5 +485,18 @@ test('kling-3 routes to current-generation Kling with start_image and no duratio
   assert.deepEqual(resolveReplicateRoute('kling-3', 'replicate', TABLE, undefined), {
     model: 'kwaivgi/kling-v3-video',
     imageInputKey: 'start_image',
+  });
+});
+
+test('brollCoverageOk', async (t) => {
+  await t.test('live B8 hero case: 24.0s b-roll under a 32.26s VO fails', () => {
+    assert.equal(brollCoverageOk(24.0, 32.26), false);
+  });
+  await t.test('the draft leg (30.2/32.26 = 93.6%) passes', () => {
+    assert.equal(brollCoverageOk(30.2, 32.26), true);
+  });
+  await t.test('unknown durations stay null — never-ran must not block', () => {
+    assert.equal(brollCoverageOk(0, 32), null);
+    assert.equal(brollCoverageOk(NaN, 32), null);
   });
 });

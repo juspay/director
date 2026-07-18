@@ -107,3 +107,12 @@ test('withDoctor', async (t) => {
     assert.equal(calls, 1);
   });
 });
+
+// Live B8 regression: "must be 500 characters or less (got 503)" contains two
+// bare numbers the transient bucket's status-code heuristic matched — the
+// invalid_param check must win, or the same doomed call retries on spend.
+test('prompt-length rejections classify invalid_param, not transient', () => {
+  const d = diagnoseError("Invalid parameters for tool 'video-generation': Video prompt must be 500 characters or less (got 503)");
+  assert.equal(d.kind, 'invalid_param');
+  assert.equal(d.retryable, false);
+});
