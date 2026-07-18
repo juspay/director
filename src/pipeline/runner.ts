@@ -417,7 +417,9 @@ async function phaseAvatar(nl: NeuroLink, opts: PipelineOptions): Promise<unknow
     const { width, height } = resolveDims(opts.resolution);
     const text = await readScript(opts.scriptPath);
     const { renderHeyGenAvatar } = await import('../avatar/heygen-direct.ts');
-    return renderHeyGenAvatar(outputPath, { apiKey, avatarId, voiceId, text, width, height });
+    const rendered = await renderHeyGenAvatar(outputPath, { apiKey, avatarId, voiceId, text, width, height });
+    await logMediaCost('heygen', 'avatar-render', outputPath);
+    return rendered;
   }
 
   // D-ID / Replicate: lip-sync a source portrait to the voiceover via NeuroLink.
@@ -426,7 +428,21 @@ async function phaseAvatar(nl: NeuroLink, opts: PipelineOptions): Promise<unknow
   try { await fs.access(voiceoverPath); } catch {
     return { status: 'skipped', reason: 'Voiceover not found — run phase 1 first' };
   }
-  return avatar.generate(nl, provider, opts.avatarSource, { audio: voiceoverPath }, outputPath, opts.avatarId ? { avatarId: opts.avatarId } : {});
+  const result = await avatar.generate(nl, provider, opts.avatarSource, { audio: voiceoverPath }, outputPath, opts.avatarId ? { avatarId: opts.avatarId } : {});
+  await logMediaCost(provider, 'avatar-render', outputPath);
+  return result;
+}
+
+/**
+ * Record a billable media call in the cost log, params carrying the output's
+ * duration. Providers without a page-verified rate estimate to $0 — the entry
+ * still exists, so "phase ran, nothing logged" can't recur (avatar and paid
+ * music were invisible to every audit until 2026-07-18). Never throws: cost
+ * accounting must not fail a phase that already paid for its output.
+ */
+async function logMediaCost(provider: string, operation: string, mediaPath: string): Promise<void> {
+  const seconds = await probeDuration(mediaPath).catch(() => 0);
+  await costTracker.log(provider, operation, seconds > 0 ? { seconds } : {}).catch(() => undefined);
 }
 
 const VIDEO_ALIAS: Record<string, generators.VideoProvider> = {
@@ -956,15 +972,21 @@ async function phaseMusic(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
   if (opts.dryRun) return { status: 'dry-run' };
   const outDir = opts.outputDir ?? OUTPUT_DIR;
   const gen = opts.musicGenerator ?? 'numpy';
-  if (gen === 'numpy') return synthesizeMusic(path.join(outDir, 'music.wav'));
+  if (gen === 'numpy') {
+    const synth = await synthesizeMusic(path.join(outDir, 'music.wav'));
+    await costTracker.log('local', 'music-gen', {}, 0).catch(() => undefined);
+    return synth;
+  }
   const provider = MUSIC_ALIAS[gen] ?? 'beatoven';
   const outFile = provider === 'beatoven' || provider === 'elevenlabs-music' || provider === 'replicate'
     ? path.join(outDir, 'music.mp3')
     : path.join(outDir, 'music.wav');
-  return music.generate(nl, provider, 'Cinematic background music for a product video', outFile, {
+  const generated = await music.generate(nl, provider, 'Cinematic background music for a product video', outFile, {
     format: outFile.endsWith('.wav') ? 'wav' : 'mp3',
     mood: 'cinematic',
   });
+  await logMediaCost(provider, 'music-gen', outFile);
+  return generated;
 }
 
 async function phaseRender(_nl: NeuroLink, opts: PipelineOptions): Promise<unknown> {
