@@ -307,3 +307,15 @@ export function pruneForRegen(results: Record<string, unknown>): Record<string, 
   const invalidated: ReadonlySet<string> = new Set(REGEN_INVALIDATES);
   return Object.fromEntries(Object.entries(results).filter(([k]) => !invalidated.has(k)));
 }
+
+/**
+ * Does the generated b-roll actually cover the voiceover? Lost segments are
+ * masked downstream by freeze-frame padding (the correct assembly behavior),
+ * which turns "shots silently failed" into "26% of the ad is a still" — the
+ * live B8 hero leg shipped 24.0s of b-roll under a 32.26s VO. Deterministic,
+ * cheap, and independent of any judge. Pure — exported for tests.
+ */
+export function brollCoverageOk(brollDur: number, voDur: number, minRatio = 0.85): boolean | null {
+  if (!(brollDur > 0) || !(voDur > 0)) return null;
+  return brollDur / voDur >= minRatio;
+}

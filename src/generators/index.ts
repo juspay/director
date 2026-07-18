@@ -27,6 +27,20 @@ const SHELL_PROVIDER: Record<VideoProvider, string> = {
   runway: 'vertex',
 };
 
+/**
+ * NeuroLink's video-generation tool rejects prompts over 500 characters
+ * outright — live B8 run: art-director animate prompts of 503-590 chars lost
+ * 4 of 16 segments across both legs. Truncate on a word boundary instead of
+ * failing the shot: a clipped prompt generates; an overlong one never does.
+ * Pure — exported for tests.
+ */
+export function clampVideoPrompt(prompt: string, limit = 500): string {
+  if (prompt.length <= limit) return prompt;
+  const cut = prompt.slice(0, limit);
+  const lastSpace = cut.lastIndexOf(' ');
+  return (lastSpace > limit * 0.6 ? cut.slice(0, lastSpace) : cut).trimEnd();
+}
+
 export async function generate(
   nl: NeuroLink,
   provider: VideoProvider,
@@ -38,13 +52,15 @@ export async function generate(
   if (Buffer.isBuffer(options.inputImage)) images.push(options.inputImage);
   else if (typeof options.inputImage === 'string') images.push(await fs.readFile(options.inputImage));
 
-  console.log(`[video] ${provider}: ${prompt.slice(0, 60)}...`);
+  const clamped = clampVideoPrompt(prompt);
+  if (clamped.length !== prompt.length) console.log(`[video] prompt clamped ${prompt.length}→${clamped.length} chars (tool limit)`);
+  console.log(`[video] ${provider}: ${clamped.slice(0, 60)}...`);
   // Paid submit: globally spaced (VIDEO_SUBMIT_INTERVAL_MS) and retried on
   // rate-limit errors only — see generators/pacing.ts for the live failure
   // this guards against.
   const intervalMs = Math.max(0, Number(process.env.VIDEO_SUBMIT_INTERVAL_MS ?? 0) || 0);
   const result = await pacedVideoCall(() => nl.generate({
-    input: { text: prompt, images: images.length ? images : undefined },
+    input: { text: clamped, images: images.length ? images : undefined },
     provider: SHELL_PROVIDER[provider] ?? 'vertex',
     region: options.region ?? process.env.VERTEX_LOCATION,
     output: {

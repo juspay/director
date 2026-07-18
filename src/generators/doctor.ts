@@ -37,13 +37,16 @@ export function diagnoseError(message: string): DoctorDiagnosis {
   if (/quota|rate.?limit|\b429\b|resource.?exhaust|too many requests/i.test(m)) {
     return { kind: 'quota', retryable: true, rewritePrompt: false };
   }
-  if (/timeout|timed out|econnreset|econnrefused|unavailable|\b(500|502|503|504)\b|network|socket/i.test(m)) {
-    return { kind: 'transient', retryable: true, rewritePrompt: false };
-  }
   if (/invalid|unsupported|must be|not supported|bad request|\b400\b/i.test(m)) {
     // Same params → same rejection; retrying without changing the call is spend
-    // without hope. The caller's own fallbacks handle this class.
+    // without hope. The caller's own fallbacks handle this class. Checked BEFORE
+    // the transient bucket: its bare status-code heuristic (\b500\b etc.) fires
+    // on messages like "must be 500 characters or less (got 503)" — which is
+    // exactly how two lost B8 segments got retried as "transient" live.
     return { kind: 'invalid_param', retryable: false, rewritePrompt: false };
+  }
+  if (/timeout|timed out|econnreset|econnrefused|unavailable|\b(500|502|503|504)\b|network|socket/i.test(m)) {
+    return { kind: 'transient', retryable: true, rewritePrompt: false };
   }
   return { kind: 'unknown', retryable: false, rewritePrompt: false };
 }

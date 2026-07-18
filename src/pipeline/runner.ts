@@ -21,7 +21,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { OUTPUT_DIR } from './config.ts';
 import { appendToLog, loadState, saveState, stateDirFor } from './state.ts';
-import { mapWithConcurrency, resolveDims, resolveVideoTier, resolveReplicateRoute, clampSegLen, targetShotCount, scriptToSrt, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult, parseShotList, parseVariants, pruneForRegen, parseFormats, formatToDims, formatSuffix } from './runner-helpers.ts';
+import { mapWithConcurrency, resolveDims, resolveVideoTier, resolveReplicateRoute, clampSegLen, targetShotCount, scriptToSrt, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult, parseShotList, parseVariants, pruneForRegen, parseFormats, formatToDims, formatSuffix, brollCoverageOk } from './runner-helpers.ts';
 import { runFidelityGateAgent, fidelityPassed } from '../agents/fidelity-gate.ts';
 import type { ReplicateRoute } from './runner-helpers.ts';
 import type { PipelineState } from '../types/index.ts';
@@ -312,8 +312,22 @@ export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineS
             // judge's cta score only when the tail check couldn't run.
             const judgeOk = judge ? fidelityPassed(judge) : null;
             const ctaOk = tail ? tail.passed : judge ? judge.cta_ending.score >= 3 : null;
-            const passed = judgeOk === null && ctaOk === null ? null : judgeOk !== false && ctaOk !== false;
-            return { judge, judgeOk, tail, ctaOk, passed };
+            // Coverage: lost segments hide behind freeze-padding — measure the
+            // b-roll against the VO directly (B8: 24.0s under a 32.26s VO).
+            const coverage = await (async () => {
+              try {
+                const [b, v] = await Promise.all([
+                  rendering.getDuration(path.join(outDir, 'broll.mp4')),
+                  rendering.getDuration(path.join(outDir, 'voiceover.mp3')),
+                ]);
+                const ok = brollCoverageOk(b, v);
+                if (ok !== null) console.log(`[FidelityGate] coverage ${ok ? 'PASS' : 'FAIL'} (b-roll ${b.toFixed(1)}s / VO ${v.toFixed(1)}s)`);
+                return ok;
+              } catch { return null; }
+            })();
+            const signals = [judgeOk, ctaOk, coverage];
+            const passed = signals.every((x) => x === null) ? null : signals.every((x) => x !== false);
+            return { judge, judgeOk, tail, ctaOk, coverage, passed };
           });
           if (gateRes.result) state.results['fidelity-gate'] = gateRes.result;
         }
@@ -762,7 +776,11 @@ async function directorScenes(nl: NeuroLink, opts: PipelineOptions, ctx: BrollCt
       return null;
     }
   });
-  return results.filter((r): r is string => !!r);
+  const ok = results.filter((r): r is string => !!r);
+  if (ok.length < shots.length) {
+    console.warn(`[B-roll] WARNING: ${shots.length - ok.length} of ${shots.length} segments FAILED — the cut will freeze-pad the gap; re-roll with --regen-shot (the fidelity gate flags coverage below 85%)`);
+  }
+  return ok;
 }
 
 // Doctor loop config for paid animate calls: DOCTOR_RETRIES extra attempts
