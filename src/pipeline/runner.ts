@@ -9,6 +9,9 @@
  * Phase 5: Render (Remotion local or Lambda)
  * Phase 6: Assembly (FFmpeg assembler + color grade)
  * Phase 7: Captions (WhisperX + SRT burn-in)
+ * Post-render (opt-in via --formats): additional aspect-ratio re-encodes
+ *   (9:16, 1:1) of the finished captioned cut via center-crop — generation
+ *   itself stays 16:9.
  *
  * Single NeuroLink instance for AI scoring. Resume-safe via JSON state.
  * TypeScript primary — Python only for NumPy/SciPy DSP via execa.
@@ -18,7 +21,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { OUTPUT_DIR } from './config.ts';
 import { appendToLog, loadState, saveState, stateDirFor } from './state.ts';
-import { mapWithConcurrency, resolveDims, resolveVideoTier, resolveReplicateRoute, clampSegLen, targetShotCount, scriptToSrt, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult, parseShotList, parseVariants, pruneForRegen } from './runner-helpers.ts';
+import { mapWithConcurrency, resolveDims, resolveVideoTier, resolveReplicateRoute, clampSegLen, targetShotCount, scriptToSrt, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult, parseShotList, parseVariants, pruneForRegen, parseFormats, formatToDims, formatSuffix } from './runner-helpers.ts';
 import { runFidelityGateAgent, fidelityPassed } from '../agents/fidelity-gate.ts';
 import type { ReplicateRoute } from './runner-helpers.ts';
 import type { PipelineState } from '../types/index.ts';
@@ -184,6 +187,32 @@ export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineS
     for (const p of [5, 6, 7]) {
       if (phasesToRun.includes(p)) {
         await runPhase(PHASES[p - 1], state, neurolink, opts);
+      }
+    }
+
+    // Multi-aspect outputs (B9): generation stays 16:9 — anything else here is
+    // a post-render center-crop re-encode of the finished captioned cut, so it
+    // only has work to do once phase 7 has actually produced one. Never runs
+    // on a dry-run (there's nothing real to re-encode).
+    if (!opts.dryRun) {
+      const formats = parseFormats(opts.formats?.join(','));
+      const extraFormats = formats.filter((f) => f !== '16:9');
+      if (extraFormats.length > 0) {
+        const finalCaptioned = path.join(outDir, 'final_captioned.mp4');
+        let haveFinal = false;
+        try { await fs.access(finalCaptioned); haveFinal = true; } catch { /* not produced this run */ }
+        if (haveFinal) {
+          console.log('\n--- Multi-format outputs ---\n');
+          const resKey = resolveDims(opts.resolution).veo;
+          for (const format of extraFormats) {
+            const dims = formatToDims(format, resKey);
+            const outPath = path.join(outDir, `final_captioned_${formatSuffix(format)}.mp4`);
+            await rendering.reencodeAspect(finalCaptioned, outPath, dims);
+            console.log(`[Formats] ${format} (${dims.width}×${dims.height}) → ${outPath}`);
+          }
+        } else {
+          console.warn('[Formats] final_captioned.mp4 not found — skipping multi-format outputs');
+        }
       }
     }
 
@@ -1154,6 +1183,7 @@ Options:
   --narration MODE     Voiceover: script (default — file + TTS) | narrator (model writes narration + TTS)
   --regen-shot N[,M]   Re-roll specific b-roll shots: clears their cached keyframe+segment, re-runs b-roll/assembly/captions; upstream phases stay cached (pair with --phases 3,6,7 for the fastest loop)
   --variants T1,T2     One pipeline run per b-roll tier into <output>-<tier>; exactly two variants auto-compare through the product-aware judge into <output>-variants-compare.json
+  --formats LIST       Extra output aspect ratios, comma-separated: 16:9 (default, no extra work) | 9:16 | 1:1 — post-render center-crop re-encodes of the finished captioned cut; generation itself stays 16:9
   --skip-scoring       Skip post-pipeline AI scoring
   --dry-run            Print plan without executing
   (env) BROLL_CONCURRENCY=N  parallel b-roll scenes (default 3)
@@ -1187,6 +1217,7 @@ Options:
     if (args[i] === '--narration') opts.narrationMode = args[++i];
     if (args[i] === '--regen-shot') opts.regenShots = parseShotList(args[++i]);
     if (args[i] === '--variants') opts.variants = parseVariants(args[++i]);
+    if (args[i] === '--formats') opts.formats = parseFormats(args[++i]);
     if (args[i] === '--skip-scoring') opts.skipScoring = true;
     if (args[i] === '--dry-run') opts.dryRun = true;
   }
