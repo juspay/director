@@ -38,6 +38,14 @@ const MODEL_RATES: Record<string, number> = {
   // v2.1 standard $0.05/s; v3 defaults mode=pro + generate_audio=false → $0.224/s.
   'replicate:kwaivgi/kling-v2.1': 0.05,
   'replicate:kwaivgi/kling-v3-video': 0.224,
+  // Reference-to-video routes — UPPER-BOUND estimates (prices not exposed by
+  // the Replicate API; docs/plans/2026-07-19-reference-conditioning.md). The
+  // rate pilot replaces these with measured figures; over-estimating keeps
+  // the budget pre-flight conservative, never generous.
+  'replicate:wan-video/wan-2.7-r2v': 0.10,
+  'replicate:bytedance/seedance-2.0': 0.30,
+  'replicate:bytedance/seedance-2.0-fast': 0.15,
+  'replicate:kwaivgi/kling-v3-omni-video': 0.168,
 };
 
 /**

@@ -23,6 +23,7 @@ import { OUTPUT_DIR } from './config.ts';
 import { appendToLog, loadState, saveState, stateDirFor } from './state.ts';
 import { mapWithConcurrency, resolveDims, resolveVideoTier, resolveReplicateRoute, clampSegLen, targetShotCount, scriptToSrt, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult, parseShotList, parseVariants, pruneForRegen, parseFormats, formatToDims, formatSuffix, brollCoverageOk } from './runner-helpers.ts';
 import { runFidelityGateAgent, fidelityPassed, buildStoryboardContext } from '../agents/fidelity-gate.ts';
+import { resolveReferenceMode, generateWithReferences, type ReferenceRoute } from '../generators/replicate-reference.ts';
 import type { ReplicateRoute } from './runner-helpers.ts';
 import type { PipelineState } from '../types/index.ts';
 
@@ -618,6 +619,8 @@ type BrollCtx = {
   model?: string;
   /** Replicate models disagree on the image field name — threaded to the generator (neurolink#1150). */
   imageInputKey?: string;
+  /** BROLL_REFERENCE_MODE route: product shots condition on the hero still instead of i2v. Hero tier only. */
+  refRoute?: ReferenceRoute | null;
   dims: ReturnType<typeof resolveDims>;
   seedImg: string;
   segLen: number;
@@ -787,8 +790,16 @@ async function directorScenes(nl: NeuroLink, opts: PipelineOptions, ctx: BrollCt
       keyframe = keyframe169;
     } catch { /* use original keyframe if crop fails */ }
 
-    // Animate with the shot's deliberate camera move.
+    // Animate with the shot's deliberate camera move. In reference mode,
+    // product shots condition the video model on the canonical hero still
+    // (identity in the model, not just the keyframe chain); lifestyle shots
+    // and hero-less runs keep the normal i2v path.
     try {
+      if (ctx.refRoute && shot.shows_product && heroBuf) {
+        await generateWithReferences(ctx.refRoute, buildAnimationPrompt(shot), [heroPath], segOut, { length: ctx.segLen, aspectRatio: '16:9' });
+        await logMediaCost('replicate', 'broll-video', segOut, ctx.refRoute.model);
+        return segOut;
+      }
       await withDoctor((p) => generators.generate(nl, ctx.provider, p, segOut, {
         inputImage: keyframe, length: ctx.segLen, resolution: ctx.dims.veo, aspectRatio: '16:9', audio: false,
         ...(ctx.model ? { model: ctx.model } : {}),
@@ -944,7 +955,11 @@ async function phaseBroll(nl: NeuroLink, opts: PipelineOptions): Promise<unknown
 
   if (mode === 'director') {
     try {
-      const dirSegs = await directorScenes(nl, opts, { outDir, provider, model, imageInputKey, dims, seedImg, segLen, concurrency, targetShots });
+      // Reference-conditioning is a hero-tier experiment: the draft tier exists
+      // to be cheap, and reference models bill at hero-class rates.
+      const refRoute = tier === 'hero' ? resolveReferenceMode(process.env) : null;
+      if (refRoute) console.log(`[B-roll] reference mode → ${refRoute.model} (product shots condition on the hero still)`);
+      const dirSegs = await directorScenes(nl, opts, { outDir, provider, model, imageInputKey, dims, seedImg, segLen, concurrency, targetShots, refRoute });
       for (const s of dirSegs) segPaths.push(s);
     } catch (e) {
       // A budget abort must fail the phase — the fallback modes below also pay
