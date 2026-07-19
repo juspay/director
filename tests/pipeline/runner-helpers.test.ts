@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { resolveDims, mapWithConcurrency, scriptToSrt, parseIntOr, parseFloatOr, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult, resolveVideoTier, resolveReplicateRoute, clampSegLen, targetShotCount, parseShotList, parseVariants, pruneForRegen, parseFormats, formatToDims, formatSuffix, brollCoverageOk } from '../../src/pipeline/runner-helpers.ts';
+import { resolveDims, mapWithConcurrency, scriptToSrt, parseIntOr, parseFloatOr, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult, resolveVideoTier, resolveReplicateRoute, clampSegLen, targetShotCount, parseShotList, parseVariants, pruneForRegen, pruneForBrandChange, parseFormats, formatToDims, formatSuffix, brollCoverageOk } from '../../src/pipeline/runner-helpers.ts';
 
 const PHASE_NAMES = ['voiceover', 'avatar', 'broll', 'music', 'render', 'assembly', 'captions'];
 
@@ -475,6 +475,23 @@ test('pruneForRegen', async (t) => {
   await t.test('does not mutate the input', () => {
     pruneForRegen(results);
     assert.ok('broll' in results && 'assembly' in results);
+  });
+});
+
+test('pruneForBrandChange', async (t) => {
+  const results = {
+    voiceover: { ok: true }, avatar: { ok: true }, music: { ok: true },
+    broll: { ok: true }, assembly: 'final.mp4', captions: 'final_captioned.mp4',
+    scoring: {}, cost: {},
+  };
+  await t.test('drops only assembly + captions — b-roll survives so re-branding never re-pays for video', () => {
+    const pruned = pruneForBrandChange(results);
+    assert.deepEqual(Object.keys(pruned).sort(), ['avatar', 'broll', 'cost', 'music', 'scoring', 'voiceover']);
+    assert.ok(!('assembly' in pruned) && !('captions' in pruned));
+  });
+  await t.test('does not mutate the input', () => {
+    pruneForBrandChange(results);
+    assert.ok('assembly' in results && 'captions' in results);
   });
 });
 

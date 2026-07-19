@@ -58,4 +58,6 @@ export type PipelineState = {
   errors: string[];
   startedAt: string;
   updatedAt: string;
+  /** Brand-kit fingerprint at the last assembly; a change invalidates assembly + captions on resume. */
+  brandSig?: string;
 };
