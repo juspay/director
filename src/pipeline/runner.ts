@@ -68,7 +68,7 @@ import { startReporter, stopReporter } from '../observability/reporter.ts';
 import { runSuperObserver } from '../observability/super-observer.ts';
 
 // Scoring
-import { CostTracker, runRegressionGate, estimatePreflight, formatPreflight, assertWithinBudget, pendingShotCounts, BudgetExceededError } from '../scoring/index.ts';
+import { CostTracker, runRegressionGate, estimatePreflight, formatPreflight, assertWithinBudget, pendingShotCounts, BudgetExceededError, composeProductionVerdict } from '../scoring/index.ts';
 import type { PreflightInputs } from '../scoring/index.ts';
 
 const PHASES = [
@@ -254,8 +254,25 @@ export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineS
           }
         } else {
           console.log('\n--- Post-pipeline: AI Scoring ---\n');
-          const score = await observe('video-scoring', () => runVideoScorerAgent(neurolink, finalVideo, 'dev', scoreContext));
-          if (score.result) state.results['scoring'] = score.result; // don't persist null on scorer failure
+          // The dev videoScore is noise-dominated (σ≈1.0). VIDEO_SCORE_SAMPLES>1
+          // averages N draws and records the spread, so a score used to gate/rank
+          // (see composeProductionVerdict) is a mean, not a single lucky draw.
+          const samples = Math.max(1, Math.round(Number(process.env.VIDEO_SCORE_SAMPLES ?? 1) || 1));
+          const scored = await observe('video-scoring', async () => {
+            const runs = [] as NonNullable<Awaited<ReturnType<typeof runVideoScorerAgent>>>[];
+            for (let s = 0; s < samples; s++) {
+              const r = await runVideoScorerAgent(neurolink, finalVideo, 'dev', scoreContext);
+              if (r) runs.push(r);
+            }
+            if (runs.length === 0) return null;
+            if (runs.length === 1) return runs[0];
+            const overalls = runs.map((r) => r.weighted_overall);
+            const mean = overalls.reduce((a, b) => a + b, 0) / overalls.length;
+            const spread = Math.max(...overalls) - Math.min(...overalls);
+            console.log(`[VideoScorer] mean ${mean.toFixed(2)}/10 over ${runs.length} samples (spread ±${(spread / 2).toFixed(2)})`);
+            return { ...runs[0], weighted_overall: mean, samples: runs.length, spread };
+          });
+          if (scored.result) state.results['scoring'] = scored.result; // don't persist null on scorer failure
         }
       } catch {
         // Final video not found — skip scoring
@@ -361,34 +378,33 @@ export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineS
       // Production verdict — combine the (visual) video score, the (content)
       // quality gates, the (deterministic) regression gate, and the (product)
       // fidelity gate into one ship/no-ship signal.
-      const videoScore = (state.results['scoring'] as { weighted_overall?: number } | undefined)?.weighted_overall;
+      const scoring = state.results['scoring'] as { weighted_overall?: number; samples?: number; spread?: number } | undefined;
+      const videoScore = scoring?.weighted_overall;
       const gates = state.results['quality-gates'] as { passed?: boolean } | undefined;
       const regression = state.results['regression-gate'] as { passed?: boolean } | undefined;
       const fidelity = state.results['fidelity-gate'] as { passed?: boolean | null } | undefined;
       if (typeof videoScore === 'number' || gates || regression || fidelity) {
-        const gatesPassed = gates?.passed ?? null;
-        // null = gate didn't run (no tools / no final video) → non-blocking.
-        // false = a *measured* regression → hard downgrade.
-        const regressionPassed = regression?.passed ?? null;
-        const fidelityOk = fidelity?.passed ?? null;
-        const videoOk = typeof videoScore === 'number' && videoScore >= 7;
-        // SHIP-READY needs a good video score, no failing content gates, no
-        // measured quality regression, and no failed fidelity gate. Signals that
-        // never ran don't block; only a definitive failure does. When content
-        // gates never ran (no script), we can't claim content was verified —
-        // flag that rather than imply a pass.
-        const shipReady = videoOk && gatesPassed !== false && regressionPassed !== false && fidelityOk !== false;
-        const verdict = shipReady
-          ? (gatesPassed === null ? 'SHIP-READY (no content gates)' : 'SHIP-READY')
-          : 'NEEDS WORK';
+        // Ship decision composes the deterministic + content gates; the videoScore
+        // is advisory (noise-dominated) and only gates when averaged (≥2 samples).
+        const pv = composeProductionVerdict({
+          videoScore: videoScore ?? null,
+          videoScoreSamples: scoring?.samples,
+          videoScoreSpread: scoring?.spread ?? null,
+          gatesPassed: gates?.passed ?? null,
+          regressionPassed: regression?.passed ?? null,
+          fidelityPassed: fidelity?.passed ?? null,
+        });
         const parts = [
           `video ${typeof videoScore === 'number' ? `${videoScore.toFixed(2)}/10` : 'n/a'}`,
-          gates ? `gates ${gatesPassed ? 'PASS' : 'FAIL'}` : 'gates not run',
-          regression ? `regression ${regressionPassed ? 'PASS' : 'FAIL'}` : 'regression not run',
-          fidelity ? `fidelity ${fidelityOk === null ? 'n/a' : fidelityOk ? 'PASS' : 'FAIL'}` : 'fidelity not run',
+          gates ? `gates ${pv.gatesPassed ? 'PASS' : 'FAIL'}` : 'gates not run',
+          regression ? `regression ${pv.regressionPassed ? 'PASS' : 'FAIL'}` : 'regression not run',
+          fidelity ? `fidelity ${pv.fidelityPassed === null ? 'n/a' : pv.fidelityPassed ? 'PASS' : 'FAIL'}` : 'fidelity not run',
         ];
-        console.log(`\n[Production Verdict] ${verdict} — ${parts.join(' · ')}`);
-        state.results['production-verdict'] = { verdict, videoScore: videoScore ?? null, gatesPassed, regressionPassed, fidelityPassed: fidelityOk };
+        console.log(`\n[Production Verdict] ${pv.verdict} — ${parts.join(' · ')}`);
+        state.results['production-verdict'] = {
+          verdict: pv.verdict, videoScore: pv.videoScore, gatesPassed: pv.gatesPassed,
+          regressionPassed: pv.regressionPassed, fidelityPassed: pv.fidelityPassed, advisory: pv.advisory,
+        };
       }
 
       console.log('\n--- Post-pipeline: Observability Report ---\n');
