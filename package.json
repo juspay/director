@@ -14,6 +14,7 @@
     "analyze": "node --import tsx src/agents/scene-analyzer.ts",
     "compare": "node --import tsx src/agents/video-comparator.ts",
     "fidelity": "node --import tsx src/agents/fidelity-gate.ts",
+    "ref-pilot": "node --import tsx src/generators/replicate-reference.ts",
     "gate": "node --import tsx src/scoring/regression-gate.ts",
     "direct": "node --import tsx src/agents/creative-director.ts",
     "observe": "node --import tsx src/observability/super-observer.ts",
