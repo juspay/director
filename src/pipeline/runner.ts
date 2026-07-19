@@ -254,10 +254,16 @@ export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineS
           }
         } else {
           console.log('\n--- Post-pipeline: AI Scoring ---\n');
-          // The dev videoScore is noise-dominated (σ≈1.0). VIDEO_SCORE_SAMPLES>1
-          // averages N draws and records the spread, so a score used to gate/rank
-          // (see composeProductionVerdict) is a mean, not a single lucky draw.
-          const samples = Math.max(1, Math.round(Number(process.env.VIDEO_SCORE_SAMPLES ?? 1) || 1));
+          // The dev videoScore is noise-dominated (σ≈1.0 — one unchanged file
+          // scored 6.6–9.0). Default to a 3-sample MEAN so the verdict's score is
+          // stable (σ drops to ~0.58) and can gate a confident low instead of a
+          // lucky draw (see composeProductionVerdict). Costs ~3× the scoring
+          // call (~$0.02, ~+40s); set VIDEO_SCORE_SAMPLES=1 for fast iteration.
+          const DEFAULT_VIDEO_SCORE_SAMPLES = 3;
+          const samplesEnv = Number(process.env.VIDEO_SCORE_SAMPLES);
+          const samples = Number.isFinite(samplesEnv) && samplesEnv >= 1
+            ? Math.round(samplesEnv)
+            : DEFAULT_VIDEO_SCORE_SAMPLES;
           const scored = await observe('video-scoring', async () => {
             const runs = [] as NonNullable<Awaited<ReturnType<typeof runVideoScorerAgent>>>[];
             for (let s = 0; s < samples; s++) {
@@ -1290,6 +1296,7 @@ Options:
   --formats LIST       Extra output aspect ratios, comma-separated: 16:9 (default, no extra work) | 9:16 | 1:1 — post-render center-crop re-encodes of the finished captioned cut; generation itself stays 16:9
   --skip-scoring       Skip post-pipeline AI scoring
   --dry-run            Print plan without executing
+  (env) VIDEO_SCORE_SAMPLES=N  average N dev-scorer draws for the verdict (default 3 — the score is noisy; set 1 for fast iteration)
   (env) BROLL_CONCURRENCY=N  parallel b-roll scenes (default 3)
   (env) VIDEO_SUBMIT_INTERVAL_MS=N  space paid video submits N ms apart (rate-limited accounts, e.g. 12000; rate-limit backoff is always on)
   (env) BRAND_LOGO=path.png  composite a logo bug onto the final cut (deterministic — survives any b-roll model)
