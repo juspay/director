@@ -90,6 +90,48 @@ test('classifyGate', async (t) => {
   await t.test('Infinity confidence → inconclusive', () => {
     assert.equal(classifyGate({ passed: true, confidence: Infinity }), 'inconclusive');
   });
+
+  await t.test('borderline: a near-miss within the margin is inconclusive, not failed', () => {
+    // The live case: biasDetection 0.7 vs threshold 0.8 on ad copy that scored
+    // 0.8 on two other legs. Within one point → inconclusive.
+    const bias = { passed: false, normalizedScore: 0.7, threshold: 0.8, confidence: 0.9 };
+    assert.equal(classifyGate(bias, 0.5, 0.1), 'inconclusive');
+    // A confident failure beyond the band still fails.
+    assert.equal(classifyGate({ passed: false, normalizedScore: 0.6, threshold: 0.8, confidence: 0.9 }, 0.5, 0.1), 'failed');
+    // Margin 0 (strict) → the near-miss fails as before.
+    assert.equal(classifyGate(bias, 0.5, 0), 'failed');
+    // The border is inclusive at exactly threshold - margin.
+    assert.equal(classifyGate({ passed: false, normalizedScore: 0.7, threshold: 0.8, confidence: 0.9 }, 0.5, 0.1), 'inconclusive');
+  });
+
+  await t.test('borderline never rescues a low-confidence or unparseable score into a pass', () => {
+    // Still inconclusive (not passed) — the band only softens failed→inconclusive.
+    assert.equal(classifyGate({ passed: false, normalizedScore: 0.79, threshold: 0.8, confidence: 0.1 }, 0.5, 0.1), 'inconclusive');
+  });
+});
+
+test('buildQualityGateReport borderline band', async (t) => {
+  const biasFul = (passed: boolean, normalizedScore: number): PromiseSettledResult<ScorerResult> => ({
+    status: 'fulfilled',
+    value: { scorerId: 'biasDetection', scorerName: 'biasDetection', score: normalizedScore, normalizedScore, passed, threshold: 0.8, reasoning: 'ad copy', confidence: 0.9 },
+  });
+  await t.test('a 1-point bias near-miss no longer sinks the gate when one gate passes', () => {
+    const r = buildQualityGateReport(
+      [ful('toxicity', { passed: true, normalizedScore: 0.9 }), biasFul(false, 0.7)],
+      ['toxicity', 'biasDetection'], { toxicity: 0.8, biasDetection: 0.8 }, 0.5, 0.1,
+    );
+    assert.equal(r.passed, true);
+    assert.deepEqual(r.overall.failedGates, []);
+    assert.deepEqual(r.overall.inconclusiveGates, ['biasDetection']);
+  });
+  await t.test('with margin 0 (strict) the same near-miss fails the gate', () => {
+    const r = buildQualityGateReport(
+      [ful('toxicity', { passed: true, normalizedScore: 0.9 }), biasFul(false, 0.7)],
+      ['toxicity', 'biasDetection'], { toxicity: 0.8, biasDetection: 0.8 }, 0.5, 0,
+    );
+    assert.equal(r.passed, false);
+    assert.deepEqual(r.overall.failedGates, ['biasDetection']);
+  });
 });
 
 test('NARRATION_GATES excludes the Q&A-relationship scorers', () => {
