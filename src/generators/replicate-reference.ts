@@ -38,8 +38,11 @@ export const REFERENCE_ROUTES: Record<string, ReferenceRoute> = {
     tag: (n) => `[Image${n}]`, extraInput: { generate_audio: false, resolution: '1080p' },
   },
   'seedance-2-fast': {
+    // seedance-2.0-FAST caps at 720p (resolution enum ['480p','720p']) — unlike
+    // the non-fast seedance-2.0, which allows up to 4k. Passing '1080p' here 422s
+    // at submit (schema-verified 2026-07-19), so this route pins 720p.
     model: 'bytedance/seedance-2.0-fast', referenceKey: 'reference_images',
-    tag: (n) => `[Image${n}]`, extraInput: { generate_audio: false, resolution: '1080p' },
+    tag: (n) => `[Image${n}]`, extraInput: { generate_audio: false, resolution: '720p' },
   },
   'kling-omni': {
     model: 'kwaivgi/kling-v3-omni-video', referenceKey: 'reference_images',
