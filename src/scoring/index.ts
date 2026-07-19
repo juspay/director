@@ -10,5 +10,7 @@ export { checkRegression } from './vmaf-gating.ts';
 export { checkTemporalQuality } from './vbench-checker.ts';
 export { runRegressionGate, aggregateRegressionGate } from './regression-gate.ts';
 export { CostTracker } from './cost-tracker.ts';
+export { composeProductionVerdict } from './production-verdict.ts';
+export type { VerdictInputs, ProductionVerdict } from './production-verdict.ts';
 export { estimatePreflight, formatPreflight, assertWithinBudget, pendingShotCounts, BudgetExceededError } from './preflight.ts';
 export type { PreflightInputs, PreflightEstimate } from './preflight.ts';
