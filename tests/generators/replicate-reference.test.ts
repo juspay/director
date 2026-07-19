@@ -32,6 +32,20 @@ test('composeReferencePrompt — binding tags always survive the clamp', async (
   });
 });
 
+test('seedance routes pin a resolution their model actually accepts', async (t) => {
+  // Schema-verified 2026-07-19: seedance-2.0-fast resolution enum is
+  // ['480p','720p'] (no 1080p → a 1080p submit 422s), while seedance-2.0
+  // allows up to 4k. A regression guard so the fast route never re-acquires 1080p.
+  await t.test('seedance-2-fast is 720p (its max), seedance-2 is 1080p', () => {
+    assert.equal(REFERENCE_ROUTES['seedance-2-fast'].extraInput?.resolution, '720p');
+    assert.equal(REFERENCE_ROUTES['seedance-2'].extraInput?.resolution, '1080p');
+  });
+  await t.test('the fast route still bundles its other verified extras', () => {
+    assert.equal(REFERENCE_ROUTES['seedance-2-fast'].extraInput?.generate_audio, false);
+    assert.equal(REFERENCE_ROUTES['seedance-2-fast'].referenceKey, 'reference_images');
+  });
+});
+
 test('buildPredictionInput', async (t) => {
   await t.test('carries refs under the route key with pinned extras', () => {
     const input = buildPredictionInput(REFERENCE_ROUTES['wan-r2v'], 'macro shot', ['https://x/ref.png'], { length: 4 });
