@@ -48,6 +48,14 @@ const DEFAULT_THRESHOLDS = {
   toneConsistency: 0.6,
 };
 
+// The LLM scorers emit integer points (0.1 in normalized space), and that last
+// point is noise: the same ad script scored biasDetection 0.8 on two legs and
+// 0.7 on a third, flipping the Production Verdict SHIP-READY→NEEDS WORK on
+// identical copy. A failing score within one point of its threshold is a
+// near-miss, not a confident failure — classified inconclusive so a 1-point
+// swing can't decide the gate. Env-overridable; 0 restores strict boundaries.
+const DEFAULT_BORDERLINE_MARGIN = 0.1;
+
 /**
  * Gates whose semantics fit judging narration *content* (a single text) rather
  * than a question→answer relationship. The Q&A scorers (promptAlignment,
@@ -65,8 +73,9 @@ export type GateVerdict = 'passed' | 'failed' | 'inconclusive';
  * noise poisons the aggregate (the #40 live run failed on exactly this).
  */
 export function classifyGate(
-  score: { passed: boolean; confidence?: number; reasoning?: string },
+  score: { passed: boolean; confidence?: number; reasoning?: string; normalizedScore?: number; threshold?: number },
   minConfidence = 0.5,
+  borderlineMargin = 0,
 ): GateVerdict {
   const unparseable = /could not parse|failed to parse|no structured/i.test(score.reasoning ?? '');
   // A provided-but-garbage confidence (NaN/Infinity) must be inconclusive too:
@@ -75,7 +84,16 @@ export function classifyGate(
   const c = score.confidence;
   const lowConfidence = c !== undefined && (!Number.isFinite(c) || c < minConfidence);
   if (unparseable || lowConfidence) return 'inconclusive';
-  return score.passed ? 'passed' : 'failed';
+  if (score.passed) return 'passed';
+  // Near-miss within the LLM judges' 1-point quantization noise → inconclusive,
+  // not a confident failure (see DEFAULT_BORDERLINE_MARGIN). Compare the gap
+  // directly (with an epsilon) so binary-float error at the exact boundary — e.g.
+  // 0.8 - 0.1 === 0.7000000000000001 — never turns a true near-miss into a fail.
+  const gap = (score.threshold as number) - (score.normalizedScore as number);
+  if (borderlineMargin > 0 && Number.isFinite(gap) && gap <= borderlineMargin + 1e-9) {
+    return 'inconclusive';
+  }
+  return 'failed';
 }
 
 /** A resolved LLM scorer's raw output (the fulfilled value of `scorer.score()`). */
@@ -96,6 +114,7 @@ export function buildQualityGateReport(
   names: string[],
   thresholds: Record<string, number>,
   minConfidence = 0.5,
+  borderlineMargin = 0,
 ): QualityGateReport {
   const scores: QualityGateReport['scores'] = scoreSettled.map((s, i) => {
     if (s.status === 'fulfilled') {
@@ -110,7 +129,7 @@ export function buildQualityGateReport(
         threshold: s.value.threshold,
         reasoning: s.value.reasoning,
         confidence: s.value.confidence,
-        inconclusive: classifyGate(s.value, minConfidence) === 'inconclusive',
+        inconclusive: classifyGate(s.value, minConfidence, borderlineMargin) === 'inconclusive',
       };
     }
     // Execution error → can't judge; treat as inconclusive rather than a hard fail
@@ -119,7 +138,7 @@ export function buildQualityGateReport(
   });
 
   const verdictOf = (s: QualityGateReport['scores'][number]): GateVerdict =>
-    s.ok ? classifyGate(s, minConfidence) : 'inconclusive';
+    s.ok ? classifyGate(s, minConfidence, borderlineMargin) : 'inconclusive';
 
   const passedGates       = scores.filter(s => verdictOf(s) === 'passed');
   const failedGates       = scores.filter(s => verdictOf(s) === 'failed');
@@ -191,8 +210,11 @@ export async function runQualityGates(
   const names = selected.map(s => s.name);
   const scoreSettled = await Promise.allSettled(resolvedScorers.map(scorer => scorer.score(scorerInput)));
   const minConfidence = config.minConfidence ?? 0.5;
+  const envMargin = Number(process.env.QUALITY_GATE_BORDERLINE_MARGIN);
+  const borderlineMargin = config.borderlineMargin
+    ?? (Number.isFinite(envMargin) && envMargin >= 0 ? envMargin : DEFAULT_BORDERLINE_MARGIN);
 
-  const report = buildQualityGateReport(scoreSettled, names, thresholds, minConfidence);
+  const report = buildQualityGateReport(scoreSettled, names, thresholds, minConfidence, borderlineMargin);
 
   const outPath = config.outputPath ?? path.join('output', 'quality-gates.json');
   await fs.mkdir(path.dirname(outPath), { recursive: true });

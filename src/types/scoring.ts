@@ -95,6 +95,13 @@ export type QualityGateConfig = {
   gates?: string[];
   /** Judgments below this confidence (or unparseable) are inconclusive, not failures. Default 0.5. */
   minConfidence?: number;
+  /**
+   * A failing score within this margin (0..1) of its threshold is a near-miss —
+   * classified inconclusive, not failed — so the LLM judges' ~1-point
+   * quantization noise can't flip the verdict. Default 0.1 (env
+   * QUALITY_GATE_BORDERLINE_MARGIN); set 0 for strict boundary behavior.
+   */
+  borderlineMargin?: number;
 };
 
 export type QualityGateScore =
