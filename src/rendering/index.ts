@@ -5,5 +5,5 @@ export { renderLocal, renderOnLambda, deploySite } from './remotion-renderer.ts'
 export { validateAssets } from './asset-validator.ts';
 export { exportProject, collectRunAssets, buildFcpXml, toFcpTime } from './project-export.ts';
 export { PRESETS, getPreset, type EncodingPreset } from './presets.ts';
-export { resolveBrandKit, logoOverlayXY, buildBrandFilter, applyBrandOverlay, type BrandKit, type LogoCorner } from './brand-overlay.ts';
+export { resolveBrandKit, brandKitFingerprint, logoOverlayXY, buildBrandFilter, applyBrandOverlay, type BrandKit, type LogoCorner } from './brand-overlay.ts';
 export { runTailCheck, frameDiffScore, type TailCheck } from './tail-check.ts';

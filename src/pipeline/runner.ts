@@ -21,7 +21,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { OUTPUT_DIR } from './config.ts';
 import { appendToLog, loadState, saveState, stateDirFor } from './state.ts';
-import { mapWithConcurrency, resolveDims, resolveVideoTier, resolveReplicateRoute, clampSegLen, targetShotCount, scriptToSrt, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult, parseShotList, parseVariants, pruneForRegen, parseFormats, formatToDims, formatSuffix, brollCoverageOk } from './runner-helpers.ts';
+import { mapWithConcurrency, resolveDims, resolveVideoTier, resolveReplicateRoute, clampSegLen, targetShotCount, scriptToSrt, resolveNarrationMode, pickCaptionText, completedPhaseCount, isCompletedResult, parseShotList, parseVariants, pruneForRegen, pruneForBrandChange, parseFormats, formatToDims, formatSuffix, brollCoverageOk } from './runner-helpers.ts';
 import { runFidelityGateAgent, fidelityPassed, buildStoryboardContext } from '../agents/fidelity-gate.ts';
 import { resolveReferenceMode, generateWithReferences, type ReferenceRoute } from '../generators/replicate-reference.ts';
 import type { ReplicateRoute } from './runner-helpers.ts';
@@ -152,6 +152,20 @@ export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineS
     await saveState('pipeline-state.json', state);
     console.log(`[Regen] Cleared shot(s) ${opts.regenShots.join(', ')} — b-roll, assembly, captions will re-run`);
   }
+
+  // Brand kit changed since assembly last baked it? The overlay (corner logo +
+  // end-card) is composited into final.mp4 at assembly, so a new, removed or
+  // edited brand kit must invalidate assembly + captions — otherwise the resume
+  // checkpoints skip them and the change is silently dropped (observed: a resume
+  // with a new BRAND_END_CARD no-op'd, shipping the un-branded cut). b-roll is
+  // left intact so re-branding never re-pays for video.
+  const brandSig = await rendering.brandKitFingerprint(rendering.resolveBrandKit());
+  if (state.brandSig !== undefined && state.brandSig !== brandSig && isCompletedResult(state.results['assembly'])) {
+    state.results = pruneForBrandChange(state.results);
+    console.log('[Brand] Brand kit changed since last assembly — re-running assembly + captions');
+  }
+  state.brandSig = brandSig;
+  await saveState('pipeline-state.json', state);
 
   const phasesToRun = opts.phases ?? PHASES.map((_, i) => i + 1);
   // Only truncate the cost log on a *fresh* run. On a resume (state already has

@@ -1,6 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { resolveBrandKit, logoOverlayXY, buildBrandFilter, type BrandKit } from '../../src/rendering/brand-overlay.ts';
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import { resolveBrandKit, brandKitFingerprint, logoOverlayXY, buildBrandFilter, type BrandKit } from '../../src/rendering/brand-overlay.ts';
 
 test('resolveBrandKit', async (t) => {
   await t.test('null when nothing configured — compositing is opt-in', () => {
@@ -30,6 +33,40 @@ test('resolveBrandKit', async (t) => {
     assert.equal(kit?.logoCorner, 'top-right');
     assert.equal(kit?.logoWidthFrac, 0.12);
     assert.equal(kit?.endCardSeconds, 2);
+  });
+});
+
+test('brandKitFingerprint', async (t) => {
+  await t.test('null kit is "none"', async () => {
+    assert.equal(await brandKitFingerprint(null), 'none');
+  });
+
+  await t.test('captures layout params and tracks file content, not just path', async () => {
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'brandfp-'));
+    const logo = path.join(dir, 'logo.png');
+    await fs.writeFile(logo, 'AAAA');
+    const kit: BrandKit = { logoPath: logo, logoCorner: 'top-right', logoWidthFrac: 0.12, endCardPath: undefined, endCardSeconds: 2 };
+
+    const a = await brandKitFingerprint(kit);
+    assert.match(a, /corner=top-right\|w=0\.12\|sec=2/);
+    assert.match(a, /logo=.*:4:/);      // size 4 bytes
+    assert.match(a, /card=none/);
+
+    // same bytes → same fingerprint (stable across calls)
+    assert.equal(await brandKitFingerprint(kit), a);
+
+    // editing the file in place (same path) changes the fingerprint
+    await fs.writeFile(logo, 'BBBBBBBB');
+    assert.notEqual(await brandKitFingerprint(kit), a);
+
+    // a layout-only change also moves the fingerprint
+    assert.notEqual(await brandKitFingerprint({ ...kit, logoCorner: 'bottom-left' }), await brandKitFingerprint(kit));
+    await fs.rm(dir, { recursive: true, force: true });
+  });
+
+  await t.test('missing asset is marked, not thrown', async () => {
+    const kit: BrandKit = { logoPath: '/no/such/logo.png', logoCorner: 'top-right', logoWidthFrac: 0.12, endCardPath: undefined, endCardSeconds: 2 };
+    assert.match(await brandKitFingerprint(kit), /logo=\/no\/such\/logo\.png:missing/);
   });
 });
 

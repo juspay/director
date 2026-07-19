@@ -308,6 +308,22 @@ export function pruneForRegen(results: Record<string, unknown>): Record<string, 
   return Object.fromEntries(Object.entries(results).filter(([k]) => !invalidated.has(k)));
 }
 
+// A changed brand kit only re-bakes the overlay at assembly — the generated
+// b-roll is untouched, so (unlike regen) broll is deliberately NOT invalidated:
+// re-running assembly + captions is free, while re-running broll would re-pay
+// for video. Downstream gates always recompute on the rerun.
+const BRAND_CHANGE_INVALIDATES = ['assembly', 'captions'] as const;
+
+/**
+ * Results object with the brand-dependent checkpoints (assembly, captions)
+ * removed so they re-run under a changed brand kit — b-roll and every upstream
+ * paid phase survive untouched. Pure — the caller persists it.
+ */
+export function pruneForBrandChange(results: Record<string, unknown>): Record<string, unknown> {
+  const invalidated: ReadonlySet<string> = new Set(BRAND_CHANGE_INVALIDATES);
+  return Object.fromEntries(Object.entries(results).filter(([k]) => !invalidated.has(k)));
+}
+
 /**
  * Does the generated b-roll actually cover the voiceover? Lost segments are
  * masked downstream by freeze-frame padding (the correct assembly behavior),

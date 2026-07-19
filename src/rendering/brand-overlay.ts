@@ -45,6 +45,27 @@ export function resolveBrandKit(env: NodeJS.ProcessEnv = process.env): BrandKit 
 }
 
 /**
+ * A stable fingerprint of the brand kit's identity — the layout params plus,
+ * for each asset, its path, byte size and mtime. Editing a logo/end-card file
+ * in place (same path) changes size/mtime, so the fingerprint tracks content,
+ * not just the path. `'none'` when no kit is configured. The resume machinery
+ * compares this across invocations: a changed fingerprint means the overlay
+ * baked into final.mp4 is stale and assembly must re-run.
+ */
+export async function brandKitFingerprint(kit: BrandKit | null): Promise<string> {
+  if (!kit) return 'none';
+  const parts = [`corner=${kit.logoCorner}`, `w=${kit.logoWidthFrac}`, `sec=${kit.endCardSeconds}`];
+  for (const [label, p] of [['logo', kit.logoPath], ['card', kit.endCardPath]] as const) {
+    if (!p) { parts.push(`${label}=none`); continue; }
+    try {
+      const st = await fs.stat(p);
+      parts.push(`${label}=${p}:${st.size}:${Math.round(st.mtimeMs)}`);
+    } catch { parts.push(`${label}=${p}:missing`); }
+  }
+  return parts.join('|');
+}
+
+/**
  * Overlay x/y expressions for a corner logo at a 3%-of-width margin.
  * Pure — exported for tests.
  */
