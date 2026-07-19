@@ -53,6 +53,15 @@ terms before using outputs in paid campaigns.
 4. **Full-leg A/B** — `--variants` run: current keyframe-chain hero vs reference-conditioned
    hero, gates + comparator decide. Only after this does any route earn a default.
 
+## Results (2026-07-19)
+
+Credit landed; steps 1–2 ran on `wan-video/wan-2.7-r2v` via the [#122](https://github.com/juspay/director/pull/122) plumbing (`BROLL_REFERENCE_MODE`).
+
+- **Step 1 — rate:** measured `predict_time` **88.2s for a 4s 1080p clip** (real, downloaded, 1920×1080 h264). Replicate still exposes **no per-prediction $** via the API or a JS-free page, so the exact wan-r2v $/s stays an owner-dashboard read — `MODEL_RATES` keeps its flagged upper bound rather than an invented figure.
+- **Step 2 — identity pilot (shots 2 & 8, conditioned on the canonical `.hero.png`):** decisive on the hero closer (shot 8) — the **i2v baseline drifted the ring silver → gold** (it inherits the per-shot keyframe, which had drifted from the canonical hero), while **reference-conditioning locked the silver titanium finish**. Shot 2 shows the same pattern more subtly (i2v warms the palette; reference mode holds the cool tone). This is the product-identity failure mode the battle-plan flagged as unaddressed by generative-consistency-plus-critics — reference-conditioning closes it. Evidence montages: `director-artifacts/reference-pilot/identity-cmp-shot{2,8}.png`.
+
+**Still to do:** step 1 across seedance-2.0-fast / kling-v3-omni for the price bake-off; step 4 full-leg A/B (reference-conditioned hero vs keyframe-chain hero, gates + comparator decide) before any route earns the hero default. Steps 3's plumbing shipped early in [#122](https://github.com/juspay/director/pull/122).
+
 Decision rule carried over from the leaderboard snapshot discipline: no route swap on
 unverified rank or price data; every number in this doc marked *est.* must be replaced by
 a measured one before it appears in any external claim.

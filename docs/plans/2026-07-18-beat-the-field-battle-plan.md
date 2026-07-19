@@ -128,6 +128,33 @@ Comparator: hero wins at 0.9 confidence with a regression flag on draft — alig
 
 **Scorecard readout:** the draft tier now clears the bar the plan set for hero — $2.35/30s at a full fidelity PASS — while hero's $14.33/30s is raw Veo economics ($0.40/s × 36s = $14.40 floor), not waste; the credible path to a ≤$5 hero is a route change (Kling 3 Pro via fal ≈ $0.112/s → ~$4.03/36s, pending B5/B6 discipline), not micro-optimization. The legacy scorer preferred the broken cut (8.15 frozen-tail vs 7.30 completed) — one more reason the verdict composes gates, not scores. Caveats that stand: n=1 brief; the judge's cta dimension remains tail-blind (deterministic tail check owns the ending, by design); and product identity still rests on generative consistency + critics — reference-conditioned generation remains the durable frontier for true drift, which this run happened not to exhibit.
 
+## 8 · Kling 3 Pro third leg + the reference-conditioning frontier (2026-07-19)
+
+Same brief/script/voiceover/keyframes as §7's hero, **only the hero-tier animator changed** — `kwaivgi/kling-v3-video` (Kling 3 Pro, $0.224/s) instead of Veo ($0.40/s) — to test the §7 hypothesis that a route change buys a cheaper hero without losing quality. The seeded run animated the same 9 cached keyframes (zero image spend) for **$8.15 true** (9 × 4.04s × $0.224/s).
+
+**Fully-gated scorecard — the animator is the only variable:**
+
+| Leg | Animator | Rate | videoScore† | Fidelity gate | tail | Verdict |
+|---|---|---|---|---|---|---|
+| hero | Veo | $0.40/s | 7.30 | PASS 5/5/5 | 0.003 | SHIP-READY |
+| draft | Kling v2.1 | $0.05/s | 7.60 | PASS 5/5/5 | 0.003 | SHIP-READY |
+| **kling-3** | **Kling 3 Pro** | **$0.224/s** | **7.70** | **PASS 5/5/5** | **0.0001** | NEEDS WORK\* |
+
+**Kling 3 Pro matched both legs at full fidelity (5/5/5) and the cleanest tail (0.0001) at ~56% of Veo's per-second rate** ($8.15 video vs Veo's $14.40) — direct evidence for §7's "route change, not micro-optimization" path to a cheaper hero. Note this is a **quality tie at lower cost, not a quality win**: see the videoScore-noise finding (C) below. \*Its NEEDS WORK verdict was driven **solely** by a `biasDetection` reading of 0.7 vs a 0.8 threshold — the *same* ad script scored 0.8 (pass) on the hero and draft legs. That is judge quantization noise, not a defect (see finding B below); with it fixed the leg is SHIP-READY on every substantive gate.
+
+†The dev-tier `videoScore` is **noise-dominated** — see finding C: these single-sample numbers cannot rank the three legs.
+
+**Three findings surfaced while producing this leg — two fixed the same day, one is a measurement caveat:**
+
+- **A · Brand kit silently dropped on resume** — re-running `--phases 6,7` with a new `BRAND_END_CARD` no-op'd (`[Assembly] Already complete, skipping`), shipping the un-branded cut; the tail check then failed against an end-card that was never composited. → [#123](https://github.com/juspay/director/pull/123): fingerprint the brand kit (path+size+mtime) in the pipeline state and re-run assembly + captions when it changes — b-roll stays cached so re-branding never re-pays for video.
+- **B · A 1-point judge swing flips the verdict** — the LLM quality-gate scorers quantize to integer points (0.1 normalized); `biasDetection` flags ad copy structurally, so 0.7↔0.8 is sample-to-sample noise, yet it flipped SHIP-READY→NEEDS WORK on identical copy. → [#124](https://github.com/juspay/director/pull/124): a borderline band classifies a near-miss (within one point of threshold) as *inconclusive*, not *failed*, reusing the gate's existing noise semantics; default 0.1, `QUALITY_GATE_BORDERLINE_MARGIN=0` for strict mode.
+
+- **C · The dev-tier `videoScore` cannot rank the legs** — re-scoring the *identical* kling-3 file 5× (gemini-2.5-flash, dev tier) returned **6.6, 7.5, 7.85, 8.9, 9.0** — a 2.4-point spread (mean ≈ 8.0, σ ≈ 1.0) on one unchanged video. So 7.30 / 7.60 / 7.70 across the three legs is a statistical tie; the legacy `videoScore` is a smoke test, not a ranking instrument, and the Production Verdict is right to compose deterministic gates rather than this score. *Follow-up (not yet done): rank on the `official` multi-judge tier and/or average N samples before any videoScore-based decision; consider making the dev-tier number advisory-only in the verdict.*
+
+**Reference-conditioning frontier — first identity data (the §7 "durable frontier").** With live Replicate credit, `wan-video/wan-2.7-r2v` conditioned shots 2 & 8 on the canonical hero still (`.hero.png`) via the `BROLL_REFERENCE_MODE` plumbing ([#122](https://github.com/juspay/director/pull/122)); ~$1–2, measured `predict_time` 88.2s per 4s @ 1080p. The result is decisive on the hero shot: the **i2v baseline drifted the ring silver → gold** (it inherits the per-shot keyframe, which had itself drifted from the canonical hero), while **reference-conditioning locked the silver titanium finish** to the canonical still. Shot 2 shows the same pattern more subtly (i2v warms the palette; reference mode holds the cool tone). This is the exact product-identity failure mode §7 flagged as unaddressed by generative-consistency-plus-critics — reference-conditioning demonstrably closes it. (Replicate does not expose per-prediction $ via API; the exact wan-r2v $/s remains an owner dashboard read, so `MODEL_RATES` keeps its flagged upper bound.)
+
+**Caveats:** the dev `videoScore` is both ending-sensitive (the same b-roll scored 6.1 un-branded vs 7.70 branded) *and* noise-dominated (finding C: 2.4-point spread on the identical file), so quality parity — not a win — is all it supports; the confident differentiators are cost (kling-3 at ~56% of Veo's rate) and fidelity (all three PASS 5/5/5). A fresh-generation repeat plus `official`-tier scoring is the confirming step before any hero-animator swap. The reference-conditioning pilot is n=2 shots, one model — decisive on shot 8's silver→gold drift, but a full-leg A/B is the next step.
+
 ## Method note
 
 Produced by a 4-phase orchestrated analysis (5 corpus readers — docs, quantitative evidence, code, vision teardown of both finished videos, live web SOTA → gap synthesis → completeness + rigor critics → planning), 9 agents, ~768k tokens, 2026-07-18. Every code claim was then re-verified by hand in the working tree the same day (frame extractions, cost-log audits, per-claim greps); that pass proved B2's root cause (`assembler.ts:87–92` VO-targeting + `-stream_loop -1`, wrap measured at 0.27s hero / 2.07s draft) and corrected two workflow claims (§3.7). The critics' corrections (§3) are folded in above. Full structured outputs: session scratchpad `gap-matrix.json`.
