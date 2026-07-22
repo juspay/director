@@ -20,7 +20,7 @@ ledger since [#119](https://github.com/juspay/director/pull/119)).
 |---|---|---|---|---|
 | **`wan-video/wan-2.7-r2v`** (Replicate) | `reference_images` array — described for "character/**object**" identity | 2–10s (2–5s recommended), 720p/1080p, 16:9/9:16/1:1/4:3/3:4 | est. $0.056–$0.10/s (unverified) | LOW — existing NeuroLink Replicate path, new array param |
 | **`google/veo-3.1` R2V** (Vertex native or Replicate wrapper) | `referenceImages`/`reference_images`, 1–3 images, `referenceType: "asset"` | **reference mode locks 16:9 + 8s exactly** (documented) | est. $0.20–$0.40/s class (unverified for R2V mode) | LOW via Replicate wrapper; Vertex-native needs NeuroLink multi-image support |
-| **`bytedance/seedance-2.0`** / `-fast` (Replicate) | `reference_images` up to **9**, in-prompt `[Image1]` tags; exclusive with i2v `image` | int durations or adaptive, up to 4K (4K+refs unconfirmed), any aspect incl. adaptive | est. $0.045–$0.30/s — **6× spread, least certain** | LOW — same pattern |
+| **`bytedance/seedance-2.0`** / `-fast` (Replicate) | `reference_images` up to **9**, in-prompt `[Image1]` tags; exclusive with i2v `image` | int durations or adaptive, any aspect incl. adaptive. **Resolution differs by variant: `-2.0` → 480p/720p/1080p/4k; `-2.0-fast` → 480p/720p ONLY** (a 1080p submit 422s — [#127](https://github.com/juspay/director/pull/127)) | est. $0.045–$0.30/s — **6× spread, least certain** | LOW — same pattern |
 | `kwaivgi/kling-v3-omni-video` (Replicate) | `reference_images` up to 7, `<<<image_1>>>` tags; `multi_prompt` up to 6 shots/call | 3–15s, standard/pro/4K | est. $0.112–$0.168/s (unverified) | LOW — add alongside once array plumbing exists |
 | Gemini Omni Flash (`gemini-omni-flash-preview`) | up to 7 ref images + 3 clips, `<IMAGE_REF_N>` tags, `task: "reference_to_video"` | **720p only**, 3–10s, 16:9/9:16 | **$0.10/s — officially documented (verified)** | MEDIUM-HIGH — new Interactions API surface, not the NeuroLink video call shape |
 
@@ -40,8 +40,8 @@ terms before using outputs in paid campaigns.
 
 1. **Rate verification** — one ~5s generation per candidate (wan-2.7-r2v, seedance-2.0-fast,
    kling-v3-omni), read the actual charge from the Replicate dashboard against the ledger
-   entry. Kills the 6× price uncertainty for ~$1–2 total. **Blocked today: Replicate credit
-   < $5 (hard-throttle threshold, same blocker as the kling-3 hero leg) — needs a top-up first.**
+   entry. Kills the 6× price uncertainty for ~$1–2 total. **Done — see the Results bake-off
+   table below** (predict_time measured for all three; exact $/s still needs the dashboard).
 2. **Identity pilot** — same AETHER brief, same shot plan: generate shots 2 and 8 (the macro
    product shot and the hero closer) on each candidate with `reference_images: [hero.png]`
    and the shot prompt, then run the frame-audit + fidelity judge against them. Measures
@@ -59,8 +59,18 @@ Credit landed; steps 1–2 ran on `wan-video/wan-2.7-r2v` via the [#122](https:/
 
 - **Step 1 — rate:** measured `predict_time` **88.2s for a 4s 1080p clip** (real, downloaded, 1920×1080 h264). Replicate still exposes **no per-prediction $** via the API or a JS-free page, so the exact wan-r2v $/s stays an owner-dashboard read — `MODEL_RATES` keeps its flagged upper bound rather than an invented figure.
 - **Step 2 — identity pilot (shots 2 & 8, conditioned on the canonical `.hero.png`):** decisive on the hero closer (shot 8) — the **i2v baseline drifted the ring silver → gold** (it inherits the per-shot keyframe, which had drifted from the canonical hero), while **reference-conditioning locked the silver titanium finish**. Shot 2 shows the same pattern more subtly (i2v warms the palette; reference mode holds the cool tone). This is the product-identity failure mode the battle-plan flagged as unaddressed by generative-consistency-plus-critics — reference-conditioning closes it. Evidence montages: `director-artifacts/reference-pilot/identity-cmp-shot{2,8}.png`.
+- **Step 1 rate bake-off (all three candidates):** each route submitted one 4s clip conditioned on `.hero.png`. **wan-2.7-r2v** and **kling-v3-omni** both produced valid clips; **seedance-2.0-fast 422'd at submit** — its `resolution` enum is `['480p','720p']`, so the shared `1080p` config was rejected before a prediction was even created (fixed to 720p in [#127](https://github.com/juspay/director/pull/127)). Measured `predict_time` (the only cost proxy the API exposes — no per-prediction **$** is returned, so exact $/s remains an owner-dashboard read):
 
-**Still to do:** step 1 across seedance-2.0-fast / kling-v3-omni for the price bake-off; step 4 full-leg A/B (reference-conditioned hero vs keyframe-chain hero, gates + comparator decide) before any route earns the hero default. Steps 3's plumbing shipped early in [#122](https://github.com/juspay/director/pull/122).
+  | Route | predict_time (4s @ 1080p) | Status | Notes |
+  |---|---|---|---|
+  | `wan-video/wan-2.7-r2v` | **88–94 s** | ✅ works | fastest; identity-lock winner in step 2 |
+  | `kwaivgi/kling-v3-video` (i2v baseline) | 135 s | ✅ works | non-reference, for scale |
+  | `kwaivgi/kling-v3-omni-video` | **249 s** | ✅ works | functional but ~2.8× wan's compute; `mode=pro` |
+  | `bytedance/seedance-2.0-fast` | — | ⚠️ 422 → fixed | 1080p rejected; now pinned 720p ([#127](https://github.com/juspay/director/pull/127)) |
+
+  On compute time, **wan-2.7-r2v is both the identity winner and the cheapest**, which makes it the lead candidate for the step-4 A/B regardless of the (still-unread) exact $/s.
+
+**Still to do:** exact $/s per route (owner dashboard read — the API won't give it); a seedance-2.0-fast re-run now that #127 unblocks it; and **step 4 full-leg A/B** (reference-conditioned hero vs keyframe-chain hero, gates + comparator decide) before any route earns the hero default — the A/B leg dir (`output-b9-refcond/`, product shots → wan-r2v) is seeded and one-command-ready, blocked only on a Replicate top-up. Step 3's plumbing shipped early in [#122](https://github.com/juspay/director/pull/122).
 
 Decision rule carried over from the leaderboard snapshot discipline: no route swap on
 unverified rank or price data; every number in this doc marked *est.* must be replaced by
