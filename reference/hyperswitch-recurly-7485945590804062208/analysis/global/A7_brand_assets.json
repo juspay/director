@@ -1,0 +1,70 @@
+{
+  "brands": [
+    {
+      "name": "Recurly",
+      "role": "Partner brand, likely a subscription management or billing platform.",
+      "logo_mark_desc": "A stylized, lowercase 'r' in black, formed by a loop connected to a vertical line.",
+      "wordmark_desc": "The word 'Recurly' in black, using a sans-serif font. The 'R' is capitalized, and the remaining letters are lowercase.",
+      "primary_hex": "#FFD100",
+      "keycap_or_tile": "A prominent, rounded rectangular tile in a bright yellow color.",
+      "appears_s": [4.5, 14.5],
+      "hero_moment_s": 4.8
+    },
+    {
+      "name": "Juspay Hyperswitch",
+      "role": "Partner brand, likely a payment orchestration platform.",
+      "logo_mark_desc": "A white circle with a counter-clockwise arrow inside. The circle has a small break at the top-right where the arrow's head points out.",
+      "wordmark_desc": "The text 'JUSPAY' in all-caps white sans-serif font, stacked above 'hyperswitch' in all-lowercase white sans-serif font.",
+      "primary_hex": "#254CFF",
+      "keycap_or_tile": "A prominent, rounded rectangular tile in a deep blue color.",
+      "appears_s": [6.5, 14.5],
+      "hero_moment_s": 6.8
+    }
+  ],
+  "cta": {
+    "text": "Live Now",
+    "style_desc": "A white, pill-shaped button with a blue outline. The text is in a blue sans-serif font.",
+    "hex": "#3B5BFF",
+    "appears_s": [8.5, 14.5]
+  },
+  "capability_tiles": [
+    {
+      "label": "Renewal Success",
+      "icon_desc": "A blue circle with a white checkmark inside, surrounded by a light and dark blue progress ring.",
+      "hex": "#3B5BFF"
+    },
+    {
+      "label": "Secure Payments",
+      "icon_desc": "A blue shield with a white checkmark inside.",
+      "hex": "#3B5BFF"
+    },
+    {
+      "label": "Subscriptions",
+      "icon_desc": "A blue square containing a white icon of a payment card with a circular arrow around it.",
+      "hex": "#3B5BFF"
+    },
+    {
+      "label": "Retries",
+      "icon_desc": "A blue square containing a white circular arrow.",
+      "hex": "#3B5BFF"
+    },
+    {
+      "label": "APMs",
+      "icon_desc": "A blue square containing a white icon of a globe with grid lines.",
+      "hex": "#3B5BFF"
+    },
+    {
+      "label": "Revenue Analytics",
+      "icon_desc": "A yellow bar chart icon with three bars of increasing height.",
+      "hex": "#FFC700"
+    }
+  ],
+  "metrics": [
+    {
+      "text": "Success rate 99.999%",
+      "context": "Displayed on a tile that also features a simple line graph trending upwards, indicating a performance metric."
+    }
+  ],
+  "final_lockup": "The final composition shows the yellow 'Recurly' tile in the upper-left quadrant and the blue 'JUSPAY hyperswitch' tile in the lower-right quadrant. The 'Live Now' button is positioned horizontally in the center, between the two brand tiles, against a background of light grey tiles.",
+  "partnership_message": "The video announces that the Recurly subscription platform's integration with the Juspay Hyperswitch payment platform is now live."
+}

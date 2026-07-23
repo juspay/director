@@ -1,0 +1,244 @@
+{
+  "elements": [
+    {
+      "label": "Renewal Success",
+      "kind": "capability-tile",
+      "icon": "Blue circle with a white checkmark, surrounded by a light-blue progress ring.",
+      "first_seen_s": 0.0,
+      "last_seen_s": 1.9,
+      "peak_focus_s": 0.5,
+      "approx_position": {
+        "x": 0.5,
+        "y": 0.2
+      },
+      "fill_hex": "#FFFFFF",
+      "text_hex": "#222222",
+      "notes": "Visible at the start of the video, camera pans away from it."
+    },
+    {
+      "label": "Secure Payments",
+      "kind": "capability-tile",
+      "icon": "Blue shield with a white checkmark.",
+      "first_seen_s": 0.0,
+      "last_seen_s": 6.5,
+      "peak_focus_s": 0.5,
+      "approx_position": {
+        "x": 0.5,
+        "y": 0.55
+      },
+      "fill_hex": "#FFFFFF",
+      "text_hex": "#222222",
+      "notes": "Starts in focus, camera pans away to reveal other elements."
+    },
+    {
+      "label": "Success",
+      "kind": "capability-tile",
+      "icon": "Not clearly visible.",
+      "first_seen_s": 0.0,
+      "last_seen_s": 1.9,
+      "peak_focus_s": 0.5,
+      "approx_position": {
+        "x": 0.95,
+        "y": 0.3
+      },
+      "fill_hex": "#FFFFFF",
+      "text_hex": "#222222",
+      "notes": "Partially visible on the right edge at the start."
+    },
+    {
+      "label": "(none)",
+      "kind": "background-ui",
+      "icon": "A grid of small grey dots.",
+      "first_seen_s": 0.0,
+      "last_seen_s": 4.5,
+      "peak_focus_s": 0.5,
+      "approx_position": {
+        "x": 0.1,
+        "y": 0.15
+      },
+      "fill_hex": "#F5F5F5",
+      "text_hex": null,
+      "notes": "A background texture tile."
+    },
+    {
+      "label": "(none)",
+      "kind": "background-ui",
+      "icon": "Solid blue color.",
+      "first_seen_s": 0.0,
+      "last_seen_s": 4.5,
+      "peak_focus_s": 0.5,
+      "approx_position": {
+        "x": 0.05,
+        "y": 0.5
+      },
+      "fill_hex": "#3B5BFF",
+      "text_hex": null,
+      "notes": "A background color tile on the left edge."
+    },
+    {
+      "label": "(none)",
+      "kind": "background-ui",
+      "icon": "Solid yellow color.",
+      "first_seen_s": 0.0,
+      "last_seen_s": 4.5,
+      "peak_focus_s": 0.5,
+      "approx_position": {
+        "x": 0.5,
+        "y": 0.9
+      },
+      "fill_hex": "#FFD700",
+      "text_hex": null,
+      "notes": "A background color tile at the bottom."
+    },
+    {
+      "label": "Subscriptions",
+      "kind": "capability-tile",
+      "icon": "Blue square with a credit card and a plus/refresh symbol.",
+      "first_seen_s": 1.9,
+      "last_seen_s": 8.8,
+      "peak_focus_s": 3.0,
+      "approx_position": {
+        "x": 0.5,
+        "y": 0.3
+      },
+      "fill_hex": "#FFFFFF",
+      "text_hex": "#3B5BFF",
+      "notes": "Camera pans to reveal this tile. Fades into the background later."
+    },
+    {
+      "label": "Retries",
+      "kind": "capability-tile",
+      "icon": "Blue square with a circular arrow.",
+      "first_seen_s": 1.9,
+      "last_seen_s": 8.8,
+      "peak_focus_s": 3.0,
+      "approx_position": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "fill_hex": "#FFFFFF",
+      "text_hex": "#3B5BFF",
+      "notes": "Camera pans to reveal this tile. Fades into the background later."
+    },
+    {
+      "label": "APMs",
+      "kind": "capability-tile",
+      "icon": "Blue square with a globe icon.",
+      "first_seen_s": 1.9,
+      "last_seen_s": 4.5,
+      "peak_focus_s": 3.0,
+      "approx_position": {
+        "x": 0.5,
+        "y": 0.7
+      },
+      "fill_hex": "#FFFFFF",
+      "text_hex": "#3B5BFF",
+      "notes": "Camera pans to reveal this tile, then pans away."
+    },
+    {
+      "label": "LOGO:Recurly",
+      "kind": "brand-logo",
+      "icon": "The Recurly 'R' logo mark.",
+      "first_seen_s": 4.5,
+      "last_seen_s": 14.5,
+      "peak_focus_s": 5.5,
+      "approx_position": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "fill_hex": "#FFD700",
+      "text_hex": "#222222",
+      "notes": "Camera pans to focus on this logo, then pulls back to show it in the final composition."
+    },
+    {
+      "label": "Success rate 99.999%",
+      "kind": "metric",
+      "icon": "A simple blue line graph squiggle.",
+      "first_seen_s": 4.5,
+      "last_seen_s": 8.8,
+      "peak_focus_s": 5.5,
+      "approx_position": {
+        "x": 0.8,
+        "y": 0.2
+      },
+      "fill_hex": "#FFFFFF",
+      "text_hex": "#222222",
+      "notes": "A UI tile showing a performance metric."
+    },
+    {
+      "label": "LOGO:JUSPAY hyperswitch",
+      "kind": "brand-logo",
+      "icon": "The Juspay logo mark (circle with an arrow inside).",
+      "first_seen_s": 6.5,
+      "last_seen_s": 14.5,
+      "peak_focus_s": 7.5,
+      "approx_position": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "fill_hex": "#3B5BFF",
+      "text_hex": "#FFFFFF",
+      "notes": "Camera pans to focus on this logo, then pulls back to show it in the final composition."
+    },
+    {
+      "label": "Revenue Analytics",
+      "kind": "capability-tile",
+      "icon": "Yellow bar chart icon.",
+      "first_seen_s": 6.5,
+      "last_seen_s": 9.0,
+      "peak_focus_s": 7.5,
+      "approx_position": {
+        "x": 0.8,
+        "y": 0.2
+      },
+      "fill_hex": "#FFFFFF",
+      "text_hex": "#222222",
+      "notes": "A UI tile that appears as the camera pans down."
+    },
+    {
+      "label": "PSP",
+      "kind": "capability-tile",
+      "icon": "None.",
+      "first_seen_s": 6.5,
+      "last_seen_s": 8.8,
+      "peak_focus_s": 7.5,
+      "approx_position": {
+        "x": 0.5,
+        "y": 0.9
+      },
+      "fill_hex": "#F0F0F0",
+      "text_hex": "#3B5BFF",
+      "notes": "A small tile at the bottom of the frame."
+    },
+    {
+      "label": "Live Now",
+      "kind": "cta-pill",
+      "icon": "None.",
+      "first_seen_s": 8.5,
+      "last_seen_s": 14.5,
+      "peak_focus_s": 9.5,
+      "approx_position": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "fill_hex": "#FFFFFF",
+      "text_hex": "#3B5BFF",
+      "notes": "Appears as the camera pulls back to the final composition, positioned between the two brand logos."
+    },
+    {
+      "label": "Billing",
+      "kind": "background-ui",
+      "icon": "None.",
+      "first_seen_s": 2.5,
+      "last_seen_s": 8.8,
+      "peak_focus_s": 4.0,
+      "approx_position": {
+        "x": 0.1,
+        "y": 0.4
+      },
+      "fill_hex": "#F5F5F5",
+      "text_hex": "#CCCCCC",
+      "notes": "Faint text on a background tile, partially visible."
+    }
+  ]
+}
