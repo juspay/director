@@ -1,0 +1,29 @@
+{
+  "name": "recurly-hyperswitch-repro",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Deterministic 3D reproduction of the Recurly × JUSPAY Hyperswitch 'Live Now' announcement video (Remotion + three.js). Self-contained sub-project — isolated from the root repo's TypeScript 7 toolchain.",
+  "scripts": {
+    "still": "remotion still index.ts",
+    "render": "remotion render index.ts RecurlyHyperswitch out/repro.mp4",
+    "studio": "remotion studio index.ts"
+  },
+  "dependencies": {
+    "@react-three/drei": "10.7.7",
+    "@react-three/fiber": "9.6.1",
+    "@react-three/postprocessing": "3.0.4",
+    "@remotion/cli": "4.0.498",
+    "@remotion/three": "4.0.498",
+    "postprocessing": "6.39.3",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "remotion": "4.0.498",
+    "three": "0.169.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@types/three": "^0.169.0",
+    "typescript": "5.9.3"
+  }
+}
