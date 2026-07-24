@@ -215,6 +215,46 @@ export function liveNowFace(): THREE.CanvasTexture {
   });
 }
 
+// Success rate metric: up-trend line graph + "Success rate" + "99.999%".
+export function successRateFace(): THREE.CanvasTexture {
+  return tex(768, 512, (ctx) => {
+    ctx.fillStyle = C.grey;
+    ctx.font = `600 52px ${FONT}`;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('Success rate', 90, 120);
+    ctx.fillStyle = '#333333';
+    ctx.font = `700 92px ${FONT}`;
+    ctx.fillText('99.999%', 88, 200);
+    // line graph trending up
+    ctx.strokeStyle = C.blue;
+    ctx.lineWidth = 10;
+    ctx.lineJoin = 'round';
+    ctx.beginPath();
+    const pts = [
+      [110, 420],
+      [230, 380],
+      [340, 400],
+      [470, 320],
+      [600, 300],
+      [690, 250],
+    ];
+    pts.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
+    ctx.stroke();
+  });
+}
+
+// PSP chip: small blue chip with white "PSP".
+export function pspFace(): THREE.CanvasTexture {
+  return tex(512, 512, (ctx) => {
+    ctx.fillStyle = '#fff';
+    ctx.font = `700 150px ${FONT}`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('PSP', 256, 260);
+  });
+}
+
 // Tiled panel floor — light panels with visible seams + soft dapple (light & shadow).
 export function floorTexture(): THREE.CanvasTexture {
   const t = tex(1024, 1024, (ctx) => {

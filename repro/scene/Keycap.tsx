@@ -11,6 +11,8 @@ type Props = {
   socket?: boolean;
   radius?: number;
   roughness?: number;
+  opacity?: number;
+  lift?: number; // vertical offset added to the keycap body + face (for rise/press)
 };
 
 export const Keycap: React.FC<Props> = ({
@@ -22,9 +24,13 @@ export const Keycap: React.FC<Props> = ({
   socket = false,
   radius,
   roughness = 0.62,
+  opacity = 1,
+  lift = 0,
 }) => {
   const [w, t, l] = size;
   const r = radius ?? Math.min(w, l) * 0.14;
+  const transparent = opacity < 1;
+  if (opacity <= 0.001) return null;
   return (
     <group position={position}>
       {socket && (
@@ -32,21 +38,22 @@ export const Keycap: React.FC<Props> = ({
           args={[w * 1.16, t * 0.7, l * 1.18]}
           radius={r * 0.5}
           smoothness={3}
-          position={[0, -t * 0.28, 0]}
+          position={[0, -t * 0.18, 0]}
         >
-          <meshStandardMaterial color="#b7bcc6" roughness={0.42} metalness={0.55} />
+          <meshStandardMaterial color="#b7bcc6" roughness={0.42} metalness={0.55} transparent={transparent} opacity={opacity} />
         </RoundedBox>
       )}
-      <RoundedBox args={[w, t, l]} radius={r} smoothness={4} castShadow receiveShadow>
-        <meshStandardMaterial color={color} roughness={roughness} metalness={0.0} />
+      <RoundedBox args={[w, t, l]} radius={r} smoothness={4} position={[0, lift, 0]} castShadow receiveShadow>
+        <meshStandardMaterial color={color} roughness={roughness} metalness={0.0} transparent={transparent} opacity={opacity} />
       </RoundedBox>
       {face && (
-        <mesh position={[0, t / 2 + 0.012, 0]} rotation={[-Math.PI / 2, 0, 0]} renderOrder={10}>
+        <mesh position={[0, t / 2 + 0.012 + lift, 0]} rotation={[-Math.PI / 2, 0, 0]} renderOrder={10}>
           <planeGeometry args={[w * faceScale, l * faceScale]} />
           <meshBasicMaterial
             map={face}
             transparent
             alphaTest={0.01}
+            opacity={opacity}
             side={THREE.DoubleSide}
             depthWrite={false}
             depthTest={false}
