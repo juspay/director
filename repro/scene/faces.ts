@@ -145,22 +145,23 @@ export function recurlyFace(): THREE.CanvasTexture {
   return tex(1024, 512, (ctx) => {
     ctx.fillStyle = C.ink;
     ctx.strokeStyle = C.ink;
-    // looped mark (approx of Recurly 'ru' double-loop)
-    const cx = 210;
+    // Recurly mark: a single continuous looped stroke (stylised "r" swirl).
+    const cx = 200;
     const cy = 256;
-    ctx.lineWidth = 46;
+    ctx.lineWidth = 44;
     ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
     ctx.beginPath();
-    ctx.arc(cx - 34, cy - 6, 52, Math.PI * 0.15, Math.PI * 1.7);
+    // lower hook
+    ctx.arc(cx - 26, cy + 26, 48, Math.PI * 0.5, Math.PI * 1.9, false);
+    // sweep up into the upper loop
+    ctx.arc(cx + 30, cy - 24, 48, Math.PI * 1.1, Math.PI * 2.7, false);
     ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(cx + 46, cy + 24, 52, Math.PI * 1.15, Math.PI * 2.7);
-    ctx.stroke();
-    // wordmark
-    ctx.font = `700 150px ${FONT}`;
+    // wordmark (slightly lighter weight)
+    ctx.font = `600 150px ${FONT}`;
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
-    ctx.fillText('Recurly', 330, 262);
+    ctx.fillText('Recurly', 322, 262);
   });
 }
 
@@ -215,6 +216,54 @@ export function liveNowFace(): THREE.CanvasTexture {
   });
 }
 
+// Brushed-metal texture for the hero-key sockets.
+export function metalTexture(): THREE.CanvasTexture {
+  const t = tex(512, 512, (ctx) => {
+    ctx.fillStyle = '#b7bcc6';
+    ctx.fillRect(0, 0, 512, 512);
+    for (let i = 0; i < 900; i++) {
+      const y = Math.floor((i * 97) % 512);
+      const a = 0.04 + ((i * 31) % 10) / 120;
+      const dark = i % 2 === 0;
+      ctx.strokeStyle = dark ? `rgba(90,96,108,${a})` : `rgba(240,244,250,${a})`;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(0, y + 0.5);
+      ctx.lineTo(512, y + 0.5);
+      ctx.stroke();
+    }
+  });
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  return t;
+}
+
+// Soft cloud/dapple layer (transparent) for the drifting atmospheric light.
+export function cloudTexture(): THREE.CanvasTexture {
+  const t = tex(1024, 1024, (ctx) => {
+    ctx.clearRect(0, 0, 1024, 1024);
+    for (let k = 0; k < 34; k++) {
+      const x = (k * 173) % 1024;
+      const y = (k * 311) % 1024;
+      const r = 120 + ((k * 71) % 260);
+      const shadow = k % 2 === 0;
+      const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+      if (shadow) {
+        g.addColorStop(0, 'rgba(120,132,154,0.20)');
+        g.addColorStop(1, 'rgba(120,132,154,0)');
+      } else {
+        g.addColorStop(0, 'rgba(255,255,255,0.28)');
+        g.addColorStop(1, 'rgba(255,255,255,0)');
+      }
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  });
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  return t;
+}
+
 // Success rate metric: up-trend line graph + "Success rate" + "99.999%".
 export function successRateFace(): THREE.CanvasTexture {
   return tex(768, 512, (ctx) => {
@@ -258,14 +307,14 @@ export function pspFace(): THREE.CanvasTexture {
 // Tiled panel floor — light panels with visible seams + soft dapple (light & shadow).
 export function floorTexture(): THREE.CanvasTexture {
   const t = tex(1024, 1024, (ctx) => {
-    ctx.fillStyle = '#e4e9f0'; // seam color (soft, shows between panels)
+    ctx.fillStyle = '#c2cad6'; // seam color (shows between panels)
     ctx.fillRect(0, 0, 1024, 1024);
     const cols = 3;
     const cell = 1024 / cols;
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < cols; j++) {
-        const shade = 231 + ((i * 5 + j * 11) % 7);
-        ctx.fillStyle = `rgb(${shade},${shade + 3},${shade + 9})`;
+        const shade = 205 + ((i * 5 + j * 11) % 9);
+        ctx.fillStyle = `rgb(${shade},${shade + 4},${shade + 11})`;
         const pad = 5;
         roundRect(ctx, i * cell + pad, j * cell + pad, cell - pad * 2, cell - pad * 2, 10);
         ctx.fill();
@@ -289,6 +338,13 @@ export function floorTexture(): THREE.CanvasTexture {
       ctx.beginPath();
       ctx.arc(x, y, r, 0, Math.PI * 2);
       ctx.fill();
+    }
+    // fine paper grain
+    for (let n = 0; n < 9000; n++) {
+      const gx = Math.random() * 1024;
+      const gy = Math.random() * 1024;
+      ctx.fillStyle = Math.random() > 0.5 ? 'rgba(255,255,255,0.05)' : 'rgba(120,130,150,0.05)';
+      ctx.fillRect(gx, gy, 1.4, 1.4);
     }
   });
   t.wrapS = t.wrapT = THREE.RepeatWrapping;

@@ -12,7 +12,23 @@ import {
   revenueFace,
   successRateFace,
   pspFace,
+  metalTexture,
+  cloudTexture,
 } from './faces';
+
+// Drifting cloudy/dappled light overlay just above the floor.
+export const CloudOverlay: React.FC = () => {
+  const frame = useCurrentFrame();
+  const tex = useMemo(() => cloudTexture(), []);
+  tex.repeat.set(1.3, 1.3);
+  tex.offset.set(frame * 0.0006, frame * 0.0004);
+  return (
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.015, 0]}>
+      <planeGeometry args={[22, 22]} />
+      <meshBasicMaterial map={tex} transparent depthWrite={false} toneMapped={false} />
+    </mesh>
+  );
+};
 
 const easeInOut = (t: number) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
 
@@ -76,6 +92,7 @@ export const Timeline: React.FC = () => {
       revenue: revenueFace(),
       success: successRateFace(),
       psp: pspFace(),
+      metal: metalTexture(),
     }),
     [],
   );
@@ -86,6 +103,11 @@ export const Timeline: React.FC = () => {
   const oS3 = fade(frame, 142, 152, 192, 203);
   const oS4 = fade(frame, 196, 205, 236, 250);
   const oFinal = fade(frame, 240, 258, 9999, 10000);
+  const liveSpin = interpolate(
+    spring({ frame: frame - 256, fps: FPS, config: { damping: 200, mass: 0.8 } }),
+    [0, 1],
+    [-0.55, 0],
+  );
 
   return (
     <>
@@ -111,7 +133,7 @@ export const Timeline: React.FC = () => {
       {/* S3 — Recurly hero + Success rate */}
       {oS3 > 0.01 && (
         <group>
-          <Keycap position={[0, 0.1, 0]} size={BRAND} color={C.gold} face={f.recurly} socket opacity={oS3} lift={rise(frame, 147, 10)} />
+          <Keycap position={[0, 0.1, 0]} size={BRAND} color={C.gold} face={f.recurly} socket metalMap={f.metal} opacity={oS3} lift={rise(frame, 147, 10)} />
           <Keycap position={[1.25, 0.09, -1.0]} size={CAP} color={C.tile} face={f.success} opacity={oS3} />
         </group>
       )}
@@ -119,7 +141,7 @@ export const Timeline: React.FC = () => {
       {/* S4 — Hyperswitch hero + Revenue Analytics + PSP */}
       {oS4 > 0.01 && (
         <group>
-          <Keycap position={[0, 0.1, 0]} size={BRAND} color={C.blue} face={f.hyper} socket opacity={oS4} lift={rise(frame, 200, 10)} />
+          <Keycap position={[0, 0.1, 0]} size={BRAND} color={C.blue} face={f.hyper} socket metalMap={f.metal} opacity={oS4} lift={rise(frame, 200, 10)} />
           <Keycap position={[1.25, 0.09, -1.0]} size={CAP} color={C.tile} face={f.revenue} opacity={oS4} />
           <Keycap position={[-1.1, 0.08, 1.05]} size={[0.55, 0.1, 0.55]} radius={0.1} color={C.blue} face={f.psp} opacity={oS4} />
         </group>
@@ -128,7 +150,7 @@ export const Timeline: React.FC = () => {
       {/* Final lockup — Recurly / Live Now / Hyperswitch */}
       {oFinal > 0.01 && (
         <group>
-          <Keycap position={[-1.15, 0.09, -1.3]} size={BRAND} color={C.gold} face={f.recurly} socket opacity={oFinal} />
+          <Keycap position={[-1.15, 0.09, -1.3]} size={BRAND} color={C.gold} face={f.recurly} socket metalMap={f.metal} opacity={oFinal} />
           <Keycap
             position={[0, 0.06, 0.12]}
             size={[1.5, 0.1, 0.6]}
@@ -138,8 +160,9 @@ export const Timeline: React.FC = () => {
             faceScale={1.0}
             opacity={oFinal}
             lift={rise(frame, 256, 10, -0.18)}
+            rotation={[0, liveSpin, 0]}
           />
-          <Keycap position={[1.15, 0.09, 1.5]} size={BRAND} color={C.blue} face={f.hyper} socket opacity={oFinal} />
+          <Keycap position={[1.15, 0.09, 1.5]} size={BRAND} color={C.blue} face={f.hyper} socket metalMap={f.metal} opacity={oFinal} />
         </group>
       )}
     </>

@@ -13,6 +13,8 @@ type Props = {
   roughness?: number;
   opacity?: number;
   lift?: number; // vertical offset added to the keycap body + face (for rise/press)
+  rotation?: [number, number, number];
+  metalMap?: THREE.Texture | null;
 };
 
 export const Keycap: React.FC<Props> = ({
@@ -23,24 +25,27 @@ export const Keycap: React.FC<Props> = ({
   faceScale = 0.9,
   socket = false,
   radius,
-  roughness = 0.62,
+  roughness = 0.85,
   opacity = 1,
   lift = 0,
+  rotation = [0, 0, 0],
+  metalMap = null,
 }) => {
   const [w, t, l] = size;
   const r = radius ?? Math.min(w, l) * 0.14;
   const transparent = opacity < 1;
   if (opacity <= 0.001) return null;
   return (
-    <group position={position}>
+    <group position={position} rotation={rotation}>
       {socket && (
         <RoundedBox
-          args={[w * 1.16, t * 0.7, l * 1.18]}
+          args={[w * 1.18, t * 0.85, l * 1.2]}
           radius={r * 0.5}
           smoothness={3}
-          position={[0, -t * 0.18, 0]}
+          position={[0, -t * 0.22, 0]}
+          receiveShadow
         >
-          <meshStandardMaterial color="#b7bcc6" roughness={0.42} metalness={0.55} transparent={transparent} opacity={opacity} />
+          <meshStandardMaterial map={metalMap ?? undefined} color="#c2c7d0" roughness={0.35} metalness={0.7} transparent={transparent} opacity={opacity} />
         </RoundedBox>
       )}
       <RoundedBox args={[w, t, l]} radius={r} smoothness={4} position={[0, lift, 0]} castShadow receiveShadow>
