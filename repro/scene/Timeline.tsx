@@ -114,8 +114,8 @@ export const Timeline: React.FC = () => {
       {/* S1 — Open: Secure Payments + Renewal Success + peripheral */}
       {oS1 > 0.01 && (
         <group>
-          <Keycap position={[0, 0.09, 0.1]} size={CAP} color={C.tile} face={f.secure} opacity={oS1} />
-          <Keycap position={[1.05, 0.09, -0.95]} size={CAP} color={C.tile} face={f.renewal} opacity={oS1} />
+          <Keycap position={[0, 0.09, 0.1]} size={CAP} color={C.tile} face={f.secure} well opacity={oS1} />
+          <Keycap position={[1.05, 0.09, -0.95]} size={CAP} color={C.tile} face={f.renewal} well opacity={oS1} />
           <Keycap position={[-1.55, 0.06, 0.5]} size={[1.0, 0.1, 1.0]} color={C.blue} opacity={oS1} />
           <Keycap position={[0.35, 0.06, 1.6]} size={[1.1, 0.1, 0.7]} color={C.gold} opacity={oS1} />
         </group>
@@ -124,9 +124,9 @@ export const Timeline: React.FC = () => {
       {/* S2 — Column: Subscriptions / Retries / APMs */}
       {oS2 > 0.01 && (
         <group>
-          <Keycap position={[0, 0.09, -1.02]} size={CAP} color={C.tile} face={f.subs} opacity={oS2} lift={rise(frame, 66, 8)} />
-          <Keycap position={[0, 0.09, 0]} size={CAP} color={C.tile} face={f.retries} opacity={oS2} lift={rise(frame, 70, 8)} />
-          <Keycap position={[0, 0.09, 1.02]} size={CAP} color={C.tile} face={f.apms} opacity={oS2} lift={rise(frame, 74, 8)} />
+          <Keycap position={[0, 0.09, -1.02]} size={CAP} color={C.tile} face={f.subs} well opacity={oS2} lift={rise(frame, 66, 8)} />
+          <Keycap position={[0, 0.09, 0]} size={CAP} color={C.tile} face={f.retries} well opacity={oS2} lift={rise(frame, 70, 8)} />
+          <Keycap position={[0, 0.09, 1.02]} size={CAP} color={C.tile} face={f.apms} well opacity={oS2} lift={rise(frame, 74, 8)} />
         </group>
       )}
 
@@ -134,7 +134,7 @@ export const Timeline: React.FC = () => {
       {oS3 > 0.01 && (
         <group>
           <Keycap position={[0, 0.1, 0]} size={BRAND} color={C.gold} face={f.recurly} socket metalMap={f.metal} opacity={oS3} lift={rise(frame, 147, 10)} />
-          <Keycap position={[1.25, 0.09, -1.0]} size={CAP} color={C.tile} face={f.success} opacity={oS3} />
+          <Keycap position={[1.25, 0.09, -1.0]} size={CAP} color={C.tile} face={f.success} well opacity={oS3} />
         </group>
       )}
 
@@ -142,7 +142,7 @@ export const Timeline: React.FC = () => {
       {oS4 > 0.01 && (
         <group>
           <Keycap position={[0, 0.1, 0]} size={BRAND} color={C.blue} face={f.hyper} socket metalMap={f.metal} opacity={oS4} lift={rise(frame, 200, 10)} />
-          <Keycap position={[1.25, 0.09, -1.0]} size={CAP} color={C.tile} face={f.revenue} opacity={oS4} />
+          <Keycap position={[1.25, 0.09, -1.0]} size={CAP} color={C.tile} face={f.revenue} well opacity={oS4} />
           <Keycap position={[-1.1, 0.08, 1.05]} size={[0.55, 0.1, 0.55]} radius={0.1} color={C.blue} face={f.psp} opacity={oS4} />
         </group>
       )}

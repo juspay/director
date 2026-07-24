@@ -309,15 +309,53 @@ export function floorTexture(): THREE.CanvasTexture {
   const t = tex(1024, 1024, (ctx) => {
     ctx.fillStyle = '#c2cad6'; // seam color (shows between panels)
     ctx.fillRect(0, 0, 1024, 1024);
-    const cols = 3;
+    const cols = 4;
     const cell = 1024 / cols;
+    // Varied panel materials: plain, dot-grid, brushed-metal strip, accent line.
+    const kinds = [0, 1, 0, 2, 0, 0, 3, 0, 2, 0, 1, 0, 0, 3, 0, 0];
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < cols; j++) {
+        const idx = j * cols + i;
+        const kind = kinds[idx % kinds.length];
         const shade = 205 + ((i * 5 + j * 11) % 9);
-        ctx.fillStyle = `rgb(${shade},${shade + 4},${shade + 11})`;
+        const x = i * cell;
+        const y = j * cell;
         const pad = 5;
-        roundRect(ctx, i * cell + pad, j * cell + pad, cell - pad * 2, cell - pad * 2, 10);
+        ctx.fillStyle = `rgb(${shade},${shade + 4},${shade + 11})`;
+        roundRect(ctx, x + pad, y + pad, cell - pad * 2, cell - pad * 2, 10);
         ctx.fill();
+        if (kind === 1) {
+          // dot grid
+          ctx.fillStyle = 'rgba(120,130,150,0.5)';
+          for (let a = 0; a < 5; a++)
+            for (let b = 0; b < 5; b++) {
+              ctx.beginPath();
+              ctx.arc(x + 40 + a * 36, y + 40 + b * 36, 4, 0, Math.PI * 2);
+              ctx.fill();
+            }
+        } else if (kind === 2) {
+          // brushed-metal strip
+          const g = ctx.createLinearGradient(x, y, x, y + cell);
+          g.addColorStop(0, '#c6cbd4');
+          g.addColorStop(0.5, '#aeb4bf');
+          g.addColorStop(1, '#c6cbd4');
+          ctx.fillStyle = g;
+          roundRect(ctx, x + pad, y + pad, cell - pad * 2, cell - pad * 2, 10);
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(150,156,168,0.35)';
+          ctx.lineWidth = 1;
+          for (let s = 0; s < 40; s++) {
+            ctx.beginPath();
+            ctx.moveTo(x + 8, y + 12 + s * 6);
+            ctx.lineTo(x + cell - 8, y + 12 + s * 6);
+            ctx.stroke();
+          }
+        } else if (kind === 3) {
+          // thin accent line (brand yellow/blue)
+          ctx.fillStyle = idx % 2 ? '#ffd11e' : '#2e52d6';
+          roundRect(ctx, x + 24, y + cell * 0.5, cell * 0.55, 7, 4);
+          ctx.fill();
+        }
       }
     }
     // soft dapple — larger, stronger light & shadow pools (light through leaves)

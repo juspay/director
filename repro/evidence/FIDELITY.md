@@ -11,12 +11,14 @@ each round against the original with `reference/.../compare-fidelity.mjs`.
 | v4 | + Matte keycap material + softer lighting | **72** ← peak |
 | v5 | + Image-based lighting (procedural environment) | 65 (floor washed out) |
 | v6 | + Darker floor to balance the IBL exposure | **70** |
+| v7 | + Recessed wells (tiles sit *in* the floor), varied floor materials (metal/dot/accent), softer bevels | **65** |
 
-**Plateau:** scores bounce in a **65–72 band**. The comparator samples at ~4fps and
-recycles the same generic critique ("harsh lighting / no DOF") even on builds that
-demonstrably have soft IBL + DOF + soft shadows — so it can't reliably separate the
-top versions. v4 (72) and v6 (70) are statistically tied; **v6 ships** for its
-superior material quality (IBL) with the floor-wash fixed.
+**Plateau confirmed:** across 7 builds the score bounces in a **65–72 band**. The
+comparator samples at ~4fps and recycles the same generic critique ("harsh lighting /
+no DOF") even on builds that demonstrably have soft IBL + DOF + soft shadows + recessed
+wells — so it **cannot reliably reward improvements past ~72**. v7 visibly adds the
+recessed-well look (the #1 recurring critique) on top of v6, so **v7 ships** as the
+most complete build; further fidelity should be judged by eye, not this score.
 
 ## What the reproduction gets right
 - Full choreography & timing (Secure Payments → capability column → Recurly →
