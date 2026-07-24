@@ -12,13 +12,22 @@ each round against the original with `reference/.../compare-fidelity.mjs`.
 | v5 | + Image-based lighting (procedural environment) | 65 (floor washed out) |
 | v6 | + Darker floor to balance the IBL exposure | **70** |
 | v7 | + Recessed wells (tiles sit *in* the floor), varied floor materials (metal/dot/accent), softer bevels | **65** |
+| v8 | + **Official Recurly logo SVG** (rasterized) + per-segment eased ("organic") camera | **65** (by-eye best) |
 
 **Plateau confirmed:** across 7 builds the score bounces in a **65–72 band**. The
 comparator samples at ~4fps and recycles the same generic critique ("harsh lighting /
 no DOF") even on builds that demonstrably have soft IBL + DOF + soft shadows + recessed
 wells — so it **cannot reliably reward improvements past ~72**. v7 visibly adds the
-recessed-well look (the #1 recurring critique) on top of v6, so **v7 ships** as the
-most complete build; further fidelity should be judged by eye, not this score.
+recessed-well look (the #1 recurring critique) on top of v6, so **v8 ships** as the
+most complete + accurate build; further fidelity should be judged by eye, not this
+score. v8 adds the official Recurly logo (rasterized SVG from the brand asset) and an
+organic eased camera — genuine by-eye gains the 4fps comparator does not reward.
+
+## Brand assets
+- Recurly: official logo (seeklogo), recolored black-on-transparent → `public/recurly-face.png`.
+- Hyperswitch: official Juspay roundel extracted from `juspay/hyperswitch` repo SVG
+  (`docs/imgs/hyperswitch-logo-dark.svg`); the on-keycap mark is a white-roundel
+  treatment matching the video's stacked all-white lockup.
 
 ## What the reproduction gets right
 - Full choreography & timing (Secure Payments → capability column → Recurly →

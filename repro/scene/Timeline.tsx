@@ -1,7 +1,22 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useThree } from '@react-three/fiber';
-import { interpolate, spring, useCurrentFrame } from 'remotion';
+import { continueRender, delayRender, interpolate, spring, staticFile, useCurrentFrame } from 'remotion';
 import * as THREE from 'three';
+
+// Load a PNG (e.g. an official brand SVG rasterized) as a texture, Remotion-safely.
+function usePngTexture(src: string): THREE.Texture | null {
+  const [tex, setTex] = useState<THREE.Texture | null>(null);
+  const [handle] = useState(() => delayRender(`tex ${src}`));
+  useEffect(() => {
+    new THREE.TextureLoader().load(src, (t) => {
+      t.colorSpace = THREE.SRGBColorSpace;
+      t.anisotropy = 8;
+      setTex(t);
+      continueRender(handle);
+    });
+  }, [src, handle]);
+  return tex;
+}
 import { Keycap } from './Keycap';
 import { C, FPS } from './theme';
 import {
@@ -60,16 +75,17 @@ const CAM = [
 export const CameraRig: React.FC = () => {
   const camera = useThree((s) => s.camera);
   const frame = useCurrentFrame();
-  const frames = CAM.map((k) => k.f);
-  const ax = (i: 0 | 1 | 2, key: 'pos' | 'tgt') =>
-    interpolate(frame, frames, CAM.map((k) => k[key][i]), {
-      extrapolateLeft: 'clamp',
-      extrapolateRight: 'clamp',
-    });
-  // subtle continuous drift for life
+  // Per-segment ease-in-out interpolation → organic, non-linear camera motion.
+  let seg = 0;
+  while (seg < CAM.length - 2 && frame >= CAM[seg + 1].f) seg++;
+  const a = CAM[seg];
+  const b = CAM[seg + 1];
+  const raw = Math.max(0, Math.min(1, (frame - a.f) / (b.f - a.f)));
+  const t = easeInOut(raw);
+  const lerp = (k: 'pos' | 'tgt', i: number) => a[k][i] + (b[k][i] - a[k][i]) * t;
   const wob = Math.sin(frame / 40) * 0.03;
-  camera.position.set(ax(0, 'pos') + wob, ax(1, 'pos'), ax(2, 'pos'));
-  camera.lookAt(new THREE.Vector3(ax(0, 'tgt'), ax(1, 'tgt'), ax(2, 'tgt')));
+  camera.position.set(lerp('pos', 0) + wob, lerp('pos', 1), lerp('pos', 2));
+  camera.lookAt(new THREE.Vector3(lerp('tgt', 0), lerp('tgt', 1), lerp('tgt', 2)));
   camera.updateProjectionMatrix();
   return null;
 };
@@ -79,6 +95,7 @@ const BRAND: [number, number, number] = [1.55, 0.13, 0.95];
 
 export const Timeline: React.FC = () => {
   const frame = useCurrentFrame();
+  const recurlyTex = usePngTexture(staticFile('recurly-face.png'));
   const f = useMemo(
     () => ({
       secure: capabilityFace('Secure Payments', 'shield'),
@@ -133,7 +150,7 @@ export const Timeline: React.FC = () => {
       {/* S3 — Recurly hero + Success rate */}
       {oS3 > 0.01 && (
         <group>
-          <Keycap position={[0, 0.1, 0]} size={BRAND} color={C.gold} face={f.recurly} socket metalMap={f.metal} opacity={oS3} lift={rise(frame, 147, 10)} />
+          <Keycap position={[0, 0.1, 0]} size={BRAND} color={C.gold} face={recurlyTex ?? f.recurly} socket metalMap={f.metal} opacity={oS3} lift={rise(frame, 147, 10)} />
           <Keycap position={[1.25, 0.09, -1.0]} size={CAP} color={C.tile} face={f.success} well opacity={oS3} />
         </group>
       )}
@@ -150,7 +167,7 @@ export const Timeline: React.FC = () => {
       {/* Final lockup — Recurly / Live Now / Hyperswitch */}
       {oFinal > 0.01 && (
         <group>
-          <Keycap position={[-1.15, 0.09, -1.3]} size={BRAND} color={C.gold} face={f.recurly} socket metalMap={f.metal} opacity={oFinal} />
+          <Keycap position={[-1.15, 0.09, -1.3]} size={BRAND} color={C.gold} face={recurlyTex ?? f.recurly} socket metalMap={f.metal} opacity={oFinal} />
           <Keycap
             position={[0, 0.06, 0.12]}
             size={[1.5, 0.1, 0.6]}
