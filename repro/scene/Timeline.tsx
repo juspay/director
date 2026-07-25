@@ -1,26 +1,13 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useThree } from '@react-three/fiber';
-import { continueRender, delayRender, interpolate, spring, staticFile, useCurrentFrame } from 'remotion';
+import { interpolate, spring, useCurrentFrame } from 'remotion';
 import * as THREE from 'three';
-
-// Load a PNG (e.g. an official brand SVG rasterized) as a texture, Remotion-safely.
-function usePngTexture(src: string): THREE.Texture | null {
-  const [tex, setTex] = useState<THREE.Texture | null>(null);
-  const [handle] = useState(() => delayRender(`tex ${src}`));
-  useEffect(() => {
-    new THREE.TextureLoader().load(src, (t) => {
-      t.colorSpace = THREE.SRGBColorSpace;
-      t.anisotropy = 8;
-      setTex(t);
-      continueRender(handle);
-    });
-  }, [src, handle]);
-  return tex;
-}
 import { Keycap } from './Keycap';
+import { SetDressing, Peripherals } from './SetDressing';
 import { C, FPS } from './theme';
 import {
-  capabilityFace,
+  pillFaceH,
+  capabilityFaceV,
   recurlyFace,
   hyperswitchFace,
   liveNowFace,
@@ -31,23 +18,27 @@ import {
   cloudTexture,
 } from './faces';
 
-// Drifting cloudy/dappled light overlay just above the floor.
+/**
+ * Dappled light pooling on the floor. This has to stay BELOW the card faces —
+ * a full-scene haze sheet drawn over the top washes every logo and label out.
+ * The actual atmospheric depth comes from scene fog instead, which falls off
+ * with distance and so leaves the in-focus hero alone.
+ */
 export const CloudOverlay: React.FC = () => {
   const frame = useCurrentFrame();
-  const tex = useMemo(() => cloudTexture(), []);
-  tex.repeat.set(1.3, 1.3);
-  tex.offset.set(frame * 0.0006, frame * 0.0004);
+  const a = useMemo(() => cloudTexture(), []);
+  a.repeat.set(1.15, 1.15);
+  a.offset.set(frame * 0.0007, frame * 0.0004);
   return (
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.015, 0]}>
-      <planeGeometry args={[22, 22]} />
-      <meshBasicMaterial map={tex} transparent depthWrite={false} toneMapped={false} />
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.012, 0]}>
+      <planeGeometry args={[30, 30]} />
+      <meshBasicMaterial map={a} transparent opacity={0.8} depthWrite={false} toneMapped={false} />
     </mesh>
   );
 };
 
 const easeInOut = (t: number) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
 
-// opacity that ramps in over [inA,inB] and out over [outA,outB]
 function fade(frame: number, inA: number, inB: number, outA: number, outB: number): number {
   return (
     interpolate(frame, [inA, inB], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }) *
@@ -55,54 +46,83 @@ function fade(frame: number, inA: number, inB: number, outA: number, outB: numbe
   );
 }
 
-// rise from below to 0 with an ease-out over [start, start+dur]
+/**
+ * Keycap rise out of its socket. `damping: 200` is so overdamped the spring
+ * needs ~2s to settle, which left hero caps sunk inside their trays for most
+ * of their scene; durationInFrames pins the settle to `dur` and the lighter
+ * damping gives the crisp mechanical snap the target has.
+ */
 function rise(frame: number, start: number, dur = 10, from = -0.32): number {
-  const s = spring({ frame: frame - start, fps: FPS, config: { damping: 200, mass: 0.7 } });
+  const s = spring({
+    frame: frame - start,
+    fps: FPS,
+    config: { damping: 16, stiffness: 150, mass: 0.5 },
+    durationInFrames: dur,
+  });
   return interpolate(s, [0, 1], [from, 0]);
 }
 
-const CAM = [
-  { f: 0, pos: [0.7, 5.6, 4.2], tgt: [0.2, 0, 0.3] },
-  { f: 64, pos: [-0.3, 5.4, 4.0], tgt: [0, 0, 0.2] },
-  { f: 110, pos: [0.2, 5.2, 3.95], tgt: [0, 0, 0.2] },
-  { f: 172, pos: [0.15, 5.0, 3.8], tgt: [0, 0, 0.15] },
-  { f: 222, pos: [-0.1, 5.15, 3.9], tgt: [0, 0, 0.3] },
-  { f: 262, pos: [0, 8.6, 3.0], tgt: [0, 0, 0.4] },
-  { f: 300, pos: [0, 12.5, 1.7], tgt: [0, 0, 0.35] },
-  { f: 435, pos: [0, 12.6, 1.72], tgt: [0, 0, 0.35] },
+/**
+ * Camera path. Much closer and much lower than a survey shot: the target is a
+ * macro lens roughly 5 units out at ~38° elevation, and the whole world is
+ * rolled ~9-13° so nothing is square to the frame.
+ */
+const CAM: Array<{ f: number; pos: [number, number, number]; tgt: [number, number, number]; roll: number; fov: number }> = [
+  { f: 0, pos: [1.28, 3.20, 3.53], tgt: [0.12, 0.14, 0.05], roll: -0.20, fov: 34 },
+  { f: 64, pos: [-0.58, 3.09, 3.72], tgt: [-0.04, 0.14, 0.0], roll: -0.13, fov: 34 },
+  { f: 110, pos: [0.31, 2.89, 3.48], tgt: [0.0, 0.15, 0.0], roll: -0.17, fov: 34 },
+  { f: 172, pos: [0.93, 2.69, 3.29], tgt: [0.04, 0.15, 0.0], roll: -0.23, fov: 34 },
+  { f: 222, pos: [-0.72, 2.82, 3.42], tgt: [-0.02, 0.15, 0.05], roll: -0.11, fov: 34 },
+  { f: 262, pos: [-0.20, 7.40, 3.20], tgt: [0.0, 0.06, 0.15], roll: -0.07, fov: 27 },
+  { f: 300, pos: [0.0, 13.80, 2.60], tgt: [0.0, 0.0, 0.10], roll: -0.05, fov: 20 },
+  { f: 435, pos: [0.0, 13.95, 2.63], tgt: [0.0, 0.0, 0.10], roll: -0.04, fov: 20 },
 ];
 
 export const CameraRig: React.FC = () => {
   const camera = useThree((s) => s.camera);
   const frame = useCurrentFrame();
-  // Per-segment ease-in-out interpolation → organic, non-linear camera motion.
   let seg = 0;
   while (seg < CAM.length - 2 && frame >= CAM[seg + 1].f) seg++;
   const a = CAM[seg];
   const b = CAM[seg + 1];
   const raw = Math.max(0, Math.min(1, (frame - a.f) / (b.f - a.f)));
   const t = easeInOut(raw);
-  const lerp = (k: 'pos' | 'tgt', i: number) => a[k][i] + (b[k][i] - a[k][i]) * t;
-  const wob = Math.sin(frame / 40) * 0.03;
-  camera.position.set(lerp('pos', 0) + wob, lerp('pos', 1), lerp('pos', 2));
-  camera.lookAt(new THREE.Vector3(lerp('tgt', 0), lerp('tgt', 1), lerp('tgt', 2)));
+  const mix = (u: number, v: number) => u + (v - u) * t;
+  const wob = Math.sin(frame / 37) * 0.035;
+  const bob = Math.cos(frame / 51) * 0.025;
+  camera.position.set(
+    mix(a.pos[0], b.pos[0]) + wob,
+    mix(a.pos[1], b.pos[1]) + bob,
+    mix(a.pos[2], b.pos[2]),
+  );
+  camera.lookAt(new THREE.Vector3(mix(a.tgt[0], b.tgt[0]), mix(a.tgt[1], b.tgt[1]), mix(a.tgt[2], b.tgt[2])));
+  camera.rotateZ(mix(a.roll, b.roll));
+  (camera as THREE.PerspectiveCamera).fov = mix(a.fov, b.fov);
   camera.updateProjectionMatrix();
   return null;
 };
 
-const CAP: [number, number, number] = [1.32, 0.13, 0.86];
-const BRAND: [number, number, number] = [1.55, 0.13, 0.95];
+const CAP: [number, number, number] = [1.34, 0.125, 0.88];
+const BRAND: [number, number, number] = [1.60, 0.145, 0.98];
+
+// Face-plane sizes, derived from each texture's own aspect so nothing is squashed.
+const F_PILL: [number, number] = [1.20, 1.20 / 1.65];
+const F_COL: [number, number] = [1.20, 1.20 / 1.55];
+const F_RECURLY: [number, number] = [1.32, 1.32 / 4.0];
+const F_HYPER: [number, number] = [1.34, 1.34 / 3.0];
+const F_LIVE: [number, number] = [1.36, 1.36 / 2.67];
+const F_SUCCESS: [number, number] = [1.18, 1.18 / 1.5];
+const F_REVENUE: [number, number] = [1.18, 1.18 / 1.8];
 
 export const Timeline: React.FC = () => {
   const frame = useCurrentFrame();
-  const recurlyTex = usePngTexture(staticFile('recurly-face.png'));
   const f = useMemo(
     () => ({
-      secure: capabilityFace('Secure Payments', 'shield'),
-      renewal: capabilityFace('Renewal Success', 'ring'),
-      subs: capabilityFace('Subscriptions', 'card'),
-      retries: capabilityFace('Retries', 'refresh'),
-      apms: capabilityFace('APMs', 'globe', true),
+      secure: pillFaceH('Secure', 'Payments', 'shield'),
+      renewal: pillFaceH('Renewal', 'Success', 'ring'),
+      subs: capabilityFaceV('Subscriptions', 'card'),
+      retries: capabilityFaceV('Retries', 'refresh'),
+      apms: capabilityFaceV('APMs', 'globe', true),
       recurly: recurlyFace(),
       hyper: hyperswitchFace(),
       live: liveNowFace(),
@@ -114,72 +134,80 @@ export const Timeline: React.FC = () => {
     [],
   );
 
-  // ---- scene opacities ----
   const oS1 = fade(frame, 0, 1, 58, 70);
   const oS2 = fade(frame, 60, 72, 140, 152);
   const oS3 = fade(frame, 142, 152, 192, 203);
   const oS4 = fade(frame, 196, 205, 236, 250);
   const oFinal = fade(frame, 240, 258, 9999, 10000);
+  // The floor blows out toward white as the camera pulls up into the final
+  // lockup. Emissive wash, not opacity: fading alpha turned the whole set
+  // (heroes included) translucent and pale instead of bright.
+  const whiten = interpolate(frame, [262, 300], [0, 0.12], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
   const liveSpin = interpolate(
-    spring({ frame: frame - 256, fps: FPS, config: { damping: 200, mass: 0.8 } }),
+    spring({ frame: frame - 256, fps: FPS, config: { damping: 18, stiffness: 140, mass: 0.6 }, durationInFrames: 12 }),
     [0, 1],
     [-0.55, 0],
   );
 
   return (
     <>
-      {/* S1 — Open: Secure Payments + Renewal Success + peripheral */}
+      <SetDressing whiten={whiten} />
+      <Peripherals whiten={whiten} />
+
+      {/* S1 — Secure Payments + Renewal Success */}
       {oS1 > 0.01 && (
         <group>
-          <Keycap position={[0, 0.09, 0.1]} size={CAP} color={C.tile} face={f.secure} well opacity={oS1} />
-          <Keycap position={[1.05, 0.09, -0.95]} size={CAP} color={C.tile} face={f.renewal} well opacity={oS1} />
-          <Keycap position={[-1.55, 0.06, 0.5]} size={[1.0, 0.1, 1.0]} color={C.blue} opacity={oS1} />
-          <Keycap position={[0.35, 0.06, 1.6]} size={[1.1, 0.1, 0.7]} color={C.gold} opacity={oS1} />
+          <Keycap position={[-0.06, 0.145, 0.30]} size={CAP} color={C.tile} face={f.secure} faceSize={F_PILL} opacity={oS1} />
+          <Keycap position={[1.00, 0.155, -0.92]} size={CAP} color={C.tile} face={f.renewal} faceSize={F_PILL} opacity={oS1} rotation={[0, -0.06, 0]} />
         </group>
       )}
 
-      {/* S2 — Column: Subscriptions / Retries / APMs */}
+      {/* S2 — Subscriptions / Retries / APMs column */}
       {oS2 > 0.01 && (
-        <group>
-          <Keycap position={[0, 0.09, -1.02]} size={CAP} color={C.tile} face={f.subs} well opacity={oS2} lift={rise(frame, 66, 8)} />
-          <Keycap position={[0, 0.09, 0]} size={CAP} color={C.tile} face={f.retries} well opacity={oS2} lift={rise(frame, 70, 8)} />
-          <Keycap position={[0, 0.09, 1.02]} size={CAP} color={C.tile} face={f.apms} well opacity={oS2} lift={rise(frame, 74, 8)} />
+        <group rotation={[0, 0.04, 0]}>
+          <Keycap position={[-0.05, 0.165, -1.10]} size={CAP} color={C.tile} face={f.subs} faceSize={F_COL} opacity={oS2} lift={rise(frame, 66, 8)} />
+          <Keycap position={[-0.05, 0.165, 0.02]} size={CAP} color={C.tile} face={f.retries} faceSize={F_COL} opacity={oS2} lift={rise(frame, 70, 8)} />
+          <Keycap position={[-0.05, 0.165, 1.14]} size={CAP} color={C.tile} face={f.apms} faceSize={F_COL} opacity={oS2} lift={rise(frame, 74, 8)} />
         </group>
       )}
 
-      {/* S3 — Recurly hero + Success rate */}
+      {/* S3 — Recurly hero */}
       {oS3 > 0.01 && (
         <group>
-          <Keycap position={[0, 0.1, 0]} size={BRAND} color={C.gold} face={recurlyTex ?? f.recurly} socket metalMap={f.metal} opacity={oS3} lift={rise(frame, 147, 10)} />
-          <Keycap position={[1.25, 0.09, -1.0]} size={CAP} color={C.tile} face={f.success} well opacity={oS3} />
+          <Keycap position={[0.05, 0.225, 0.05]} size={BRAND} color={C.gold} face={f.recurly} faceSize={F_RECURLY} tray metalMap={f.metal} opacity={oS3} lift={rise(frame, 147, 10)} rotation={[0, -0.05, 0]} />
+          <Keycap position={[-1.30, 0.155, -1.25]} size={[1.15, 0.13, 0.72]} color={C.tile} face={f.secure} faceSize={[1.02, 1.02 / 1.65]} opacity={oS3 * 0.95} />
+          <Keycap position={[1.55, 0.165, -1.45]} size={CAP} color={C.tile} face={f.success} faceSize={F_SUCCESS} opacity={oS3 * 0.9} rotation={[0, -0.1, 0]} />
         </group>
       )}
 
-      {/* S4 — Hyperswitch hero + Revenue Analytics + PSP */}
+      {/* S4 — Hyperswitch hero */}
       {oS4 > 0.01 && (
         <group>
-          <Keycap position={[0, 0.1, 0]} size={BRAND} color={C.blue} face={f.hyper} socket metalMap={f.metal} opacity={oS4} lift={rise(frame, 200, 10)} />
-          <Keycap position={[1.25, 0.09, -1.0]} size={CAP} color={C.tile} face={f.revenue} well opacity={oS4} />
-          <Keycap position={[-1.1, 0.08, 1.05]} size={[0.55, 0.1, 0.55]} radius={0.1} color={C.blue} face={f.psp} opacity={oS4} />
+          <Keycap position={[0.05, 0.225, 0.05]} size={BRAND} color={C.blue} face={f.hyper} faceSize={F_HYPER} tray metalMap={f.metal} opacity={oS4} lift={rise(frame, 200, 10)} rotation={[0, -0.04, 0]} />
+          <Keycap position={[1.60, 0.165, -1.40]} size={CAP} color={C.tile} face={f.revenue} faceSize={F_REVENUE} opacity={oS4 * 0.9} rotation={[0, -0.09, 0]} />
+          <Keycap position={[-1.35, 0.15, 1.20]} size={[0.60, 0.12, 0.60]} radius={0.12} color={C.blue} face={f.psp} faceSize={[0.5, 0.5]} opacity={oS4 * 0.9} />
         </group>
       )}
 
-      {/* Final lockup — Recurly / Live Now / Hyperswitch */}
+      {/* Final lockup */}
       {oFinal > 0.01 && (
         <group>
-          <Keycap position={[-1.15, 0.09, -1.3]} size={BRAND} color={C.gold} face={recurlyTex ?? f.recurly} socket metalMap={f.metal} opacity={oFinal} />
+          <Keycap position={[-1.02, 0.20, -1.22]} size={BRAND} color={C.gold} face={f.recurly} faceSize={F_RECURLY} tray metalMap={f.metal} opacity={oFinal} />
           <Keycap
-            position={[0, 0.06, 0.12]}
-            size={[1.5, 0.1, 0.6]}
-            radius={0.28}
+            position={[0, 0.16, 0.12]}
+            size={[1.52, 0.12, 0.62]}
+            radius={0.29}
             color={C.white}
             face={f.live}
-            faceScale={1.0}
+            faceSize={F_LIVE}
             opacity={oFinal}
             lift={rise(frame, 256, 10, -0.18)}
             rotation={[0, liveSpin, 0]}
           />
-          <Keycap position={[1.15, 0.09, 1.5]} size={BRAND} color={C.blue} face={f.hyper} socket metalMap={f.metal} opacity={oFinal} />
+          <Keycap position={[1.02, 0.20, 1.40]} size={BRAND} color={C.blue} face={f.hyper} faceSize={F_HYPER} tray metalMap={f.metal} opacity={oFinal} />
         </group>
       )}
     </>

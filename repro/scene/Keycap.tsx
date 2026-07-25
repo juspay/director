@@ -1,21 +1,24 @@
 import React from 'react';
-import { RoundedBox } from '@react-three/drei';
 import * as THREE from 'three';
+import { Slab } from './Slab';
 
 type Props = {
   position: [number, number, number];
   size: [number, number, number]; // [width x, thickness y, length z]
   color: string;
   face?: THREE.Texture | null;
+  /** Explicit face-plane size in world units, matched to the texture's aspect. */
+  faceSize?: [number, number];
   faceScale?: number;
-  socket?: boolean;
+  /** Recessed brushed-metal tray the hero keys sit inside. */
+  tray?: boolean;
   radius?: number;
   roughness?: number;
+  clearcoat?: number;
   opacity?: number;
-  lift?: number; // vertical offset added to the keycap body + face (for rise/press)
+  lift?: number;
   rotation?: [number, number, number];
   metalMap?: THREE.Texture | null;
-  well?: boolean; // soft recessed groove under a capability tile
 };
 
 export const Keycap: React.FC<Props> = ({
@@ -23,58 +26,88 @@ export const Keycap: React.FC<Props> = ({
   size,
   color,
   face = null,
-  faceScale = 0.9,
-  socket = false,
+  faceSize,
+  faceScale = 0.88,
+  tray = false,
   radius,
-  roughness = 0.85,
+  roughness = 0.34,
+  clearcoat = 0.55,
   opacity = 1,
   lift = 0,
   rotation = [0, 0, 0],
   metalMap = null,
-  well = false,
 }) => {
   const [w, t, l] = size;
-  const r = radius ?? Math.min(w, l) * 0.16;
+  const r = radius ?? Math.min(w, l) * 0.22;
   const transparent = opacity < 1;
-  if (opacity <= 0.001) return null;
+  const [fw, fl] = faceSize ?? [w * faceScale, l * faceScale];
+  const trayT = t * 0.30;
+  const wellT = t * 0.55;
+  if (opacity <= 0.002) return null;
   return (
     <group position={position} rotation={rotation}>
-      {well && (
-        <RoundedBox
-          args={[w * 1.13, t * 0.55, l * 1.15]}
-          radius={r * 0.7}
-          smoothness={3}
-          position={[0, -t * 0.36, 0]}
-          receiveShadow
-        >
-          <meshStandardMaterial color="#d2d8e1" roughness={0.9} metalness={0.05} transparent={transparent} opacity={opacity} />
-        </RoundedBox>
+      {tray && (
+        <>
+          {/* bright brushed-metal rim, sitting proud of the floor */}
+          <Slab
+            size={[w * 1.26, trayT, l * 1.36]}
+            radius={Math.min(w, l) * 0.1}
+            position={[0, -t * 0.5 - trayT * 0.2, 0]}
+            castShadow
+            receiveShadow
+          >
+            {/* Near-full metalness renders almost black without a rich
+                environment to reflect; this reads as machined aluminium. */}
+            <meshPhysicalMaterial
+              map={metalMap ?? undefined}
+              color="#e3e7ed"
+              roughness={0.33}
+              metalness={0.45}
+              clearcoat={0.55}
+              transparent={transparent}
+              opacity={opacity}
+            />
+          </Slab>
+          {/* Shadow gap between cap and rim. Kept tight and mid-grey — a wide
+              charcoal recess reads as a heavy plinth, not a machined socket. */}
+          <Slab
+            size={[w * 1.05, wellT, l * 1.09]}
+            radius={Math.min(w, l) * 0.17}
+            position={[0, -t * 0.34, 0]}
+            receiveShadow
+          >
+            <meshStandardMaterial
+              color="#9299a5"
+              roughness={0.78}
+              metalness={0.2}
+              transparent={transparent}
+              opacity={opacity}
+            />
+          </Slab>
+        </>
       )}
-      {socket && (
-        <RoundedBox
-          args={[w * 1.18, t * 0.85, l * 1.2]}
-          radius={r * 0.5}
-          smoothness={3}
-          position={[0, -t * 0.22, 0]}
-          receiveShadow
-        >
-          <meshStandardMaterial map={metalMap ?? undefined} color="#c2c7d0" roughness={0.35} metalness={0.7} transparent={transparent} opacity={opacity} />
-        </RoundedBox>
-      )}
-      <RoundedBox args={[w, t, l]} radius={r} smoothness={6} position={[0, lift, 0]} castShadow receiveShadow>
-        <meshStandardMaterial color={color} roughness={roughness} metalness={0.0} transparent={transparent} opacity={opacity} />
-      </RoundedBox>
+      <Slab size={[w, t, l]} radius={r} position={[0, lift, 0]} castShadow receiveShadow>
+        <meshPhysicalMaterial
+          color={color}
+          roughness={roughness}
+          metalness={0.0}
+          clearcoat={clearcoat}
+          clearcoatRoughness={0.3}
+          reflectivity={0.6}
+          transparent={transparent}
+          opacity={opacity}
+        />
+      </Slab>
       {face && (
-        <mesh position={[0, t / 2 + 0.012 + lift, 0]} rotation={[-Math.PI / 2, 0, 0]} renderOrder={10}>
-          <planeGeometry args={[w * faceScale, l * faceScale]} />
+        <mesh position={[0, t / 2 + 0.004 + lift, 0]} rotation={[-Math.PI / 2, 0, 0]} renderOrder={20}>
+          <planeGeometry args={[fw, fl]} />
           <meshBasicMaterial
             map={face}
             transparent
-            alphaTest={0.01}
+            alphaTest={0.004}
             opacity={opacity}
             side={THREE.DoubleSide}
             depthWrite={false}
-            depthTest={false}
             toneMapped={false}
           />
         </mesh>
