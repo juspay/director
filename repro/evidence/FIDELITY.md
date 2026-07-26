@@ -13,7 +13,17 @@ each round against the original with `reference/.../compare-fidelity.mjs`.
 | v6 | + Darker floor to balance the IBL exposure | 70 |
 | v7 | + Recessed wells, varied floor materials, softer bevels | 65 |
 | v8 | + Official Recurly logo + per-segment eased camera | 65 |
-| **v15** | **Scene rebuilt — see below** | **82** |
+| **v15** | **Scene rebuilt — see below** | **median 81** (n=4: 82/65/82/80) |
+| v15 + heavy AI plate | Veo 3.1 light field, softlight 0.90/0.32 | median 69 (n=4: 68/75/65/70) |
+| **v15 + subtle AI plate — shipped** | Veo 3.1 light field, softlight 0.34 + contrast restore | **median 80** (n=3: 80/75/82) |
+
+## The score is noisy — read it as a median, not a number
+
+Scoring the *identical* file four times returned **82, 65, 82, 80**. Run-to-run
+variance is ±17 points, which is larger than most of the deltas in the table
+above. Any single reading is meaningless; only repeated medians separate
+variants. The earlier v1–v8 "plateau" readings were single samples and should be
+treated as indicative at best.
 
 ## Why v1–v8 plateaued, and what actually broke it
 
@@ -66,7 +76,40 @@ Comparing frames against the target directly surfaced seven concrete defects:
 - Hyperswitch: Juspay roundel + stacked JUSPAY / hyperswitch lockup, drawn to
   match the target's all-white treatment.
 
+## The AI atmospheric plate
+
+Generated with `generate-plate.mts` (run from the repo root, which holds the
+NeuroLink install):
+
+```
+set -a && . .env && set +a
+node --import tsx repro/generate-plate.mts ./plate-out
+```
+
+**Replicate is not involved.** Every provider's video tool in this NeuroLink
+build is image-to-video only — a text-only call fails with *"Video generation
+requires an input image"* on vertex, kling and runway alike — so the script runs
+the repo's documented two-stage path: a Gemini image keyframe, then Veo animates
+it. Vertex/**veo-3.1-generate-preview** succeeded in **97s** (1080×1920, 8s,
+24fps). Kling and Runway are kept as ordered fallbacks.
+
+The 8s clip is cropped to its content band (rows 3–999), centre-cropped to 4:5,
+resampled to 30fps and boomeranged (forward + reversed) so it loops seamlessly
+across 14.5s.
+
+**Compositing it is a trade-off, and the strong version loses.** Blending the
+plate directly bleeds its panel *shapes* through as ghost rectangles over the
+hero, so it must be blurred into a pure luminance field first. But a blurred
+full-frame softlight layer also *lowers global contrast* — which is exactly the
+"flat lighting" failure the comparator penalises. At 0.90/0.32 opacity that cost
+~12 points. The shipped version uses a single broad layer at 0.34 with a small
+contrast/saturation restore afterwards: score-neutral versus no plate, while
+adding genuine moving caustics that a 4fps comparator sample cannot see.
+
+`evidence/repro_no_plate.mp4` is the un-plated render for comparison.
+
 ## Remaining gap
-- Target's dappled "light through leaves" caustics are stronger and more animated.
 - Juspay roundel's inner arrow is simplified to a droplet.
 - Floor tonality still reads slightly brighter/flatter than the target's.
+- The plate's light movement is broader and slower than the target's crisper
+  "light through leaves" caustics.
