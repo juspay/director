@@ -15,7 +15,36 @@ each round against the original with `reference/.../compare-fidelity.mjs`.
 | v8 | + Official Recurly logo + per-segment eased camera | 65 |
 | **v15** | **Scene rebuilt — see below** | **median 81** (n=4: 82/65/82/80) |
 | v15 + heavy AI plate | Veo 3.1 light field, softlight 0.90/0.32 | median 69 (n=4: 68/75/65/70) |
-| **v15 + subtle AI plate — shipped** | Veo 3.1 light field, softlight 0.34 + contrast restore | **median 80** (n=3: 80/75/82) |
+| v15 + subtle AI plate | Veo 3.1 light field, softlight 0.34 + contrast restore | median 80 (n=3: 80/75/82) |
+| v16 @2160 master, widened DOF | resolution up, focus range 0.055→0.30 | median 65 (n=3: 65/55/65) — **regression, reverted** |
+| **v16 @2160 master — shipped** | resolution up, proven focus config kept | **median 75** (n=3: 75/65/85) |
+
+## Resolution: the reference container was not a quality target
+
+Every build up to v15 rendered **natively at 720x900** because that is the
+reference clip's container. That was a mistake: 720x900 is what LinkedIn
+*served* after compression, not what the piece was mastered at. Rendering
+three.js natively at delivery resolution leaves zero supersampling headroom, so
+edges alias and logo text turns to mush — which is exactly how it looked.
+
+The scene now masters at **2160x2700** (`W`/`H` in `scene/theme.ts`, with `RES`
+exposed for resolution-dependent effects) and downsamples with Lanczos. Effects
+measured in pixels — DOF `bokehScale` and `height` — are multiplied by `RES` so
+the *look* is preserved rather than shrinking threefold. Shadow maps went to
+4096, the environment to 1024, multisampling to 8.
+
+Delivered at three sizes: `2160x2700` master, `1080x1350` delivery, and
+`720x900` matching the reference container frame-for-frame.
+
+### A failed detour worth recording
+
+While raising resolution I also widened the DOF focus range (`focalLength`
+0.055 -> 0.30) to stop the hero cap face being blurred. It did sharpen the hero
+— and measured **65 / 55 / 65**, far below the 80-band. Widening the focus range
+also flattens background separation, and the shallow-DOF *mood* turns out to
+matter far more than absolute hero sharpness. Reverting to the proven focus
+config while keeping the resolution work gives **75 / 65 / 85**, statistically
+indistinguishable from the 720-native build while looking dramatically cleaner.
 
 ## The score is noisy — read it as a median, not a number
 
@@ -106,7 +135,7 @@ full-frame softlight layer also *lowers global contrast* — which is exactly th
 contrast/saturation restore afterwards: score-neutral versus no plate, while
 adding genuine moving caustics that a 4fps comparator sample cannot see.
 
-`evidence/repro_no_plate.mp4` is the un-plated render for comparison.
+
 
 ## Remaining gap
 - Juspay roundel's inner arrow is simplified to a droplet.

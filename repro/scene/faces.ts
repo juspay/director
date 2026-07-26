@@ -386,14 +386,14 @@ export function panelPlain(seed = 1): THREE.CanvasTexture {
 
 /** Grey dot-grid panel. */
 export function panelDots(): THREE.CanvasTexture {
-  return tex(512, 512, (ctx) => {
+  return tex(1024, 1024, (ctx) => {
     ctx.fillStyle = '#e6eaf0';
-    ctx.fillRect(0, 0, 512, 512);
+    ctx.fillRect(0, 0, 1024, 1024);
     ctx.fillStyle = 'rgba(142,152,170,0.6)';
     for (let a = 0; a < 13; a++)
       for (let b = 0; b < 13; b++) {
         ctx.beginPath();
-        ctx.arc(30 + a * 38, 30 + b * 38, 5.5, 0, Math.PI * 2);
+        ctx.arc(60 + a * 76, 60 + b * 76, 11, 0, Math.PI * 2);
         ctx.fill();
       }
   });

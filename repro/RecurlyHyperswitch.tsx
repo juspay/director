@@ -4,7 +4,7 @@ import { SoftShadows, Environment, Lightformer } from '@react-three/drei';
 import { EffectComposer, DepthOfField, Bloom, Vignette } from '@react-three/postprocessing';
 import { interpolate, useCurrentFrame, useVideoConfig } from 'remotion';
 import * as THREE from 'three';
-import { C } from './scene/theme';
+import { C, RES } from './scene/theme';
 import { Timeline, CameraRig, CloudOverlay } from './scene/Timeline';
 
 /**
@@ -15,7 +15,7 @@ import { Timeline, CameraRig, CloudOverlay } from './scene/Timeline';
 const Lights: React.FC = () => (
   <>
     <SoftShadows size={38} samples={18} focus={0.7} />
-    <Environment resolution={512} background={false}>
+    <Environment resolution={1024} background={false}>
       <Lightformer intensity={0.72} position={[0, 9, 2]} scale={[44, 44, 1]} color="#ffffff" />
       <Lightformer intensity={0.4} position={[-9, 5, 6]} scale={[22, 22, 1]} color="#fff4e2" />
       <Lightformer intensity={0.32} position={[9, 4, -4]} scale={[22, 22, 1]} color="#dfeaff" />
@@ -28,8 +28,8 @@ const Lights: React.FC = () => (
       intensity={0.55}
       color="#fffaf2"
       castShadow
-      shadow-mapSize-width={2048}
-      shadow-mapSize-height={2048}
+      shadow-mapSize-width={4096}
+      shadow-mapSize-height={4096}
       shadow-camera-left={-8}
       shadow-camera-right={8}
       shadow-camera-top={8}
@@ -43,8 +43,11 @@ const Lights: React.FC = () => (
 );
 
 /**
- * Strong macro-lens depth of field focused on the hero key, plus a light bloom
- * for the blown-out highlights and a very soft vignette.
+ * Macro depth of field. focalLength here is the *focus range*, not a lens focal
+ * length. Widening it to sharpen the hero cap face also flattens the background
+ * separation, and measured markedly worse — the shallow-DOF mood matters more
+ * than absolute hero sharpness. bokehScale and height are pixel quantities, so
+ * both scale with RES to keep the look identical at the master resolution.
  */
 const Effects: React.FC = () => {
   const frame = useCurrentFrame();
@@ -52,10 +55,10 @@ const Effects: React.FC = () => {
   // Wide, far, long-lens framing needs a deeper focus range or the whole
   // lockup goes soft; the macro beats keep the shallow bokeh.
   const focalLength = interpolate(frame, [255, 300], [0.055, 0.20], ease);
-  const bokehScale = interpolate(frame, [255, 300], [3.4, 2.0], ease);
+  const bokehScale = interpolate(frame, [255, 300], [3.4, 2.0], ease) * RES;
   return (
-    <EffectComposer enableNormalPass={false} multisampling={4}>
-      <DepthOfField target={[0, 0.2, 0.05]} focalLength={focalLength} bokehScale={bokehScale} height={720} />
+    <EffectComposer enableNormalPass={false} multisampling={8}>
+      <DepthOfField target={[0, 0.2, 0.05]} focalLength={focalLength} bokehScale={bokehScale} height={Math.round(720 * RES)} />
       <Bloom intensity={0.09} luminanceThreshold={0.95} luminanceSmoothing={0.25} mipmapBlur />
       <Vignette eskil={false} offset={0.32} darkness={0.16} />
     </EffectComposer>

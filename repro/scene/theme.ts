@@ -1,7 +1,15 @@
 // Palette (albedo — the high-key lighting desaturates on screen), dimensions, timeline.
 export const FPS = 30;
-export const W = 720;
-export const H = 900;
+/**
+ * Master resolution. The reference clip is 720x900 because that is what
+ * LinkedIn served after compression — not what it was mastered at. Rendering
+ * natively at 720x900 leaves no supersampling headroom, which is what made
+ * earlier cuts look soft and aliased. Master at 2160x2700 and downsample.
+ */
+export const W = 2160;
+export const H = 2700;
+/** Scale factor vs the 720x900 reference, for resolution-dependent effects. */
+export const RES = W / 720;
 export const DUR = 435;
 
 export const C = {
