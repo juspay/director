@@ -19,7 +19,10 @@
  *   --fps <n>                 video sampling fps (default 5)
  *   --mediaRes <low|high>     media resolution for video/images (default high)
  */
-import { GoogleGenAI } from '@google/genai';
+// Primitives (client construction, key resolution, upload polling, retry with
+// quota-aware backoff, shared rate-limit gate) live in gemini-lib.mjs so fixes
+// land in one place instead of drifting between the two harnesses.
+import { generate, inlineImagePart, uploadAndWait } from './gemini-lib.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -30,47 +33,15 @@ const arg = (k, d) => {
 };
 const has = (k) => argv.includes(`--${k}`);
 
-const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_AI_API_KEY || process.env.GOOGLE_GENERATIVE_AI_API_KEY;
-if (!apiKey) { console.error('No GEMINI_API_KEY / GOOGLE_AI_API_KEY in env'); process.exit(1); }
-const ai = new GoogleGenAI({ apiKey });
-
 const model = arg('model', 'gemini-2.5-pro');
 const fps = parseFloat(arg('fps', '5'));
-const mediaRes = arg('mediaRes', 'high') === 'high' ? 'MEDIA_RESOLUTION_HIGH' : 'MEDIA_RESOLUTION_LOW';
+// Kept as the raw 'high' | 'low' token — gemini-lib's generate() maps it to the
+// MEDIA_RESOLUTION_* enum.
+const mediaRes = arg('mediaRes', 'high');
 const wantJson = has('json');
 
 const promptFile = arg('prompt');
 const prompt = promptFile ? fs.readFileSync(promptFile, 'utf8') : arg('promptText', 'Describe this in exhaustive detail.');
-
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-
-function mimeFor(p) {
-  const e = path.extname(p).toLowerCase();
-  if (e === '.jpg' || e === '.jpeg') return 'image/jpeg';
-  if (e === '.png') return 'image/png';
-  if (e === '.mp4') return 'video/mp4';
-  if (e === '.wav') return 'audio/wav';
-  if (e === '.mp3') return 'audio/mp3';
-  return 'application/octet-stream';
-}
-
-async function uploadAndWait(p) {
-  const up = await ai.files.upload({ file: p, config: { mimeType: mimeFor(p) } });
-  let f = up;
-  let tries = 0;
-  while (f.state === 'PROCESSING' && tries < 120) {
-    await sleep(1500);
-    f = await ai.files.get({ name: up.name });
-    tries++;
-  }
-  if (f.state !== 'ACTIVE') throw new Error(`file not active: ${f.state}`);
-  return f;
-}
-
-function inlineImagePart(p) {
-  const data = fs.readFileSync(p).toString('base64');
-  return { inlineData: { mimeType: mimeFor(p), data } };
-}
 
 async function main() {
   const parts = [];
@@ -111,15 +82,13 @@ async function main() {
 
   parts.push({ text: prompt + labelNote });
 
-  const config = { mediaResolution: mediaRes, temperature: 0.2, maxOutputTokens: 32768 };
-  if (wantJson) config.responseMimeType = 'application/json';
-
-  const resp = await ai.models.generateContent({ model, contents: [{ role: 'user', parts }], config });
-  const text = resp.text ?? '';
+  // Via gemini-lib: inherits quota-aware backoff and the shared rate-limit
+  // gate, which this harness previously had no retry for at all.
+  const { text, usage } = await generate({ parts, model, mediaRes, json: wantJson });
   const outFile = arg('out');
   if (outFile) fs.writeFileSync(outFile, text);
   process.stdout.write(text);
-  process.stderr.write(`\n[usage] ${JSON.stringify(resp.usageMetadata ?? {})}\n`);
+  process.stderr.write(`\n[usage] ${JSON.stringify(usage ?? {})}\n`);
 }
 
 main().catch((e) => { console.error('ERROR:', e?.message || e); process.exit(1); });
