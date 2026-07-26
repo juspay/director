@@ -83,9 +83,9 @@ export const SetDressing: React.FC<{ whiten?: number }> = ({ whiten = 0 }) => {
       doc: panelDoc('Billing', 'gold'),
       doc2: panelDoc('Invoices', 'blue'),
       chart: panelChart(),
-      blue: panelSolid(C.blue),
+      blue: panelSolid('#6d8fdd'),
       gold: panelSolid(C.gold),
-      lightblue: panelSolid('#93b4f5'),
+      lightblue: panelSolid('#a8c1f0'),
     }),
     [],
   );

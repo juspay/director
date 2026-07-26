@@ -1,18 +1,36 @@
 import * as THREE from 'three';
-import { C } from './theme';
+import { C, RES } from './theme';
 import { RECURLY_ALPHA_RLE, RECURLY_W, RECURLY_H } from './recurlyLogo';
 
 type Ctx = CanvasRenderingContext2D;
 const FONT = 'Helvetica, Arial, sans-serif';
 
+/** GPUs handle 8192+, but there is no point exceeding the on-screen footprint. */
+const MAX_TEX = 4096;
+
+/**
+ * Build a canvas texture at the MASTER resolution.
+ *
+ * Every face here is authored in 720-era coordinates (a card face is 1024px
+ * wide). At the 2160x2700 master a capability card spans ~1435px on screen, so
+ * a 1024px texture gets magnified ~1.4x — which is what made icons and labels
+ * look pixelated and mushy after the resolution bump. The backing store is
+ * scaled by RES and the context pre-scaled to match, so all existing drawing
+ * coordinates keep working while the texture actually resolves the master.
+ */
 function tex(w: number, h: number, draw: (ctx: Ctx) => void): THREE.CanvasTexture {
+  const scale = Math.min(RES, MAX_TEX / w, MAX_TEX / h);
   const cv = document.createElement('canvas');
-  cv.width = w;
-  cv.height = h;
+  cv.width = Math.round(w * scale);
+  cv.height = Math.round(h * scale);
   const ctx = cv.getContext('2d')!;
+  ctx.scale(scale, scale);
   draw(ctx);
   const t = new THREE.CanvasTexture(cv);
   t.anisotropy = 16;
+  t.minFilter = THREE.LinearMipmapLinearFilter;
+  t.magFilter = THREE.LinearFilter;
+  t.generateMipmaps = true;
   t.colorSpace = THREE.SRGBColorSpace;
   t.needsUpdate = true;
   return t;
@@ -172,7 +190,7 @@ export function pillFaceH(
     ctx.fillStyle = '#3b4250';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
-    fitFont(ctx, line1.length > line2.length ? line1 : line2, 112, 590, '400');
+    fitFont(ctx, line1.length > line2.length ? line1 : line2, 116, 590, '500');
     ctx.fillText(line1, 386, cy - 60);
     ctx.fillText(line2, 386, cy + 66);
     // indigo hairline along the lower edge of the card
@@ -199,9 +217,9 @@ export function capabilityFaceV(
   gradient = false,
 ): THREE.CanvasTexture {
   return tex(1024, 660, (ctx) => {
-    const badge = 250;
+    const badge = 330;
     const bx = (1024 - badge) / 2;
-    const by = 96;
+    const by = 74;
     if (gradient) {
       const g = ctx.createLinearGradient(bx, by, bx + badge, by + badge);
       g.addColorStop(0, '#5a74ff');
@@ -219,8 +237,8 @@ export function capabilityFaceV(
     ctx.fillStyle = C.indigo;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    fitFont(ctx, label, 122, 830, '500');
-    ctx.fillText(label, 512, 482);
+    fitFont(ctx, label, 132, 860, '600');
+    ctx.fillText(label, 512, 512);
     const hg = ctx.createLinearGradient(60, 0, 964, 0);
     hg.addColorStop(0, 'rgba(70,92,230,0.05)');
     hg.addColorStop(0.45, 'rgba(54,70,230,0.8)');
@@ -241,7 +259,16 @@ export function capabilityFaceV(
 export function recurlyFace(): THREE.CanvasTexture {
   return tex(RECURLY_W, RECURLY_H, (ctx) => {
     const bin = atob(RECURLY_ALPHA_RLE);
-    const img = ctx.createImageData(RECURLY_W, RECURLY_H);
+    // Decode onto an offscreen canvas at the mask's native size, then blit.
+    // putImageData writes raw device pixels and IGNORES the context transform,
+    // so writing it straight into the RES-scaled canvas left the mark filling
+    // only the top-left corner — the logo rendered at a third of its size.
+    // drawImage respects the transform, so the blit scales correctly.
+    const off = document.createElement('canvas');
+    off.width = RECURLY_W;
+    off.height = RECURLY_H;
+    const octx = off.getContext('2d')!;
+    const img = octx.createImageData(RECURLY_W, RECURLY_H);
     const d = img.data;
     // Recurly's mark is near-black; the mask carries the shape.
     const [ir, ig, ib] = [22, 26, 34];
@@ -258,7 +285,8 @@ export function recurlyFace(): THREE.CanvasTexture {
         p++;
       }
     }
-    ctx.putImageData(img, 0, 0);
+    octx.putImageData(img, 0, 0);
+    ctx.drawImage(off, 0, 0, RECURLY_W, RECURLY_H);
   });
 }
 
@@ -268,19 +296,46 @@ export function hyperswitchFace(): THREE.CanvasTexture {
     const cx = 190;
     const cy = 256;
     const r = 118;
+    // Solid white disc.
     ctx.fillStyle = '#fff';
     ctx.beginPath();
     ctx.arc(cx, cy, r, 0, Math.PI * 2);
     ctx.fill();
+    // The mark inside is a BLUE two-fold-symmetric lens with opposing barbs —
+    // two arrowheads chasing each other, i.e. a "switch" glyph. The previous
+    // version drew a blue disc with a WHITE droplet on top, which inverted the
+    // figure/ground AND replaced the arrows with a teardrop. Reference: the
+    // target's own lockup frame.
+    const rr = r * 0.62;
+    const tilt = -0.20; // radians; the mark leans slightly anticlockwise
+    const px = Math.sin(tilt);
+    const py = -Math.cos(tilt);
+    const tipA = [cx + rr * px, cy + rr * py];
+    const tipB = [cx - rr * px, cy - rr * py];
+    const bulge = rr * 0.60;
+    // Perpendicular to the tip axis, for the two opposing bellies.
+    const qx = -py;
+    const qy = px;
     ctx.fillStyle = C.blue;
     ctx.beginPath();
-    ctx.arc(cx, cy, r * 0.66, 0, Math.PI * 2);
+    ctx.moveTo(tipA[0], tipA[1]);
+    ctx.quadraticCurveTo(cx + qx * bulge, cy + qy * bulge, tipB[0], tipB[1]);
+    ctx.quadraticCurveTo(cx - qx * bulge, cy - qy * bulge, tipA[0], tipA[1]);
+    ctx.closePath();
     ctx.fill();
-    ctx.fillStyle = '#fff';
+    // Barbs: a short flick off each tip, perpendicular to the axis and on
+    // opposite sides, which is what makes the lens read as two arrowheads
+    // rather than an eye.
+    const barb = rr * 0.42;
     ctx.beginPath();
-    ctx.moveTo(cx, cy - r * 0.56);
-    ctx.quadraticCurveTo(cx + r * 0.52, cy - r * 0.08, cx + r * 0.1, cy + r * 0.52);
-    ctx.quadraticCurveTo(cx - r * 0.16, cy + r * 0.02, cx, cy - r * 0.56);
+    ctx.moveTo(tipA[0], tipA[1]);
+    ctx.lineTo(tipA[0] - qx * barb, tipA[1] - qy * barb);
+    ctx.lineTo(tipA[0] - px * barb * 0.85, tipA[1] - py * barb * 0.85);
+    ctx.closePath();
+    ctx.moveTo(tipB[0], tipB[1]);
+    ctx.lineTo(tipB[0] + qx * barb, tipB[1] + qy * barb);
+    ctx.lineTo(tipB[0] + px * barb * 0.85, tipB[1] + py * barb * 0.85);
+    ctx.closePath();
     ctx.fill();
     ctx.fillStyle = '#fff';
     ctx.textAlign = 'left';

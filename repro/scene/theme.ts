@@ -15,7 +15,7 @@ export const DUR = 435;
 export const C = {
   bg: '#eef2f7',
   floor: '#e9edf2',
-  tile: '#ffffff',
+  tile: '#eef1f6',
   indigo: '#3646e6', // capability icon + label
   gold: '#ffd11e', // Recurly keycap
   goldBar: '#ffc700',

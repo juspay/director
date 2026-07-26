@@ -32,7 +32,10 @@ export const CloudOverlay: React.FC = () => {
   return (
     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.012, 0]}>
       <planeGeometry args={[30, 30]} />
-      <meshBasicMaterial map={a} transparent opacity={0.8} depthWrite={false} toneMapped={false} />
+      {/* toneMapped={false} means this veil bypasses ACES entirely, so at 0.8 it
+          painted a near-white sheet over the floor (measured floor spread 12 vs
+          the target's 69). 0.34 keeps the dapple without flattening the plate. */}
+      <meshBasicMaterial map={a} transparent opacity={0.34} depthWrite={false} toneMapped={false} />
     </mesh>
   );
 };
@@ -68,14 +71,14 @@ function rise(frame: number, start: number, dur = 10, from = -0.32): number {
  * rolled ~9-13° so nothing is square to the frame.
  */
 const CAM: Array<{ f: number; pos: [number, number, number]; tgt: [number, number, number]; roll: number; fov: number }> = [
-  { f: 0, pos: [1.28, 3.20, 3.53], tgt: [0.12, 0.14, 0.05], roll: -0.20, fov: 34 },
-  { f: 64, pos: [-0.58, 3.09, 3.72], tgt: [-0.04, 0.14, 0.0], roll: -0.13, fov: 34 },
-  { f: 110, pos: [0.31, 2.89, 3.48], tgt: [0.0, 0.15, 0.0], roll: -0.17, fov: 34 },
-  { f: 172, pos: [0.93, 2.69, 3.29], tgt: [0.04, 0.15, 0.0], roll: -0.23, fov: 34 },
-  { f: 222, pos: [-0.72, 2.82, 3.42], tgt: [-0.02, 0.15, 0.05], roll: -0.11, fov: 34 },
-  { f: 262, pos: [-0.20, 7.40, 3.20], tgt: [0.0, 0.06, 0.15], roll: -0.07, fov: 27 },
-  { f: 300, pos: [0.0, 13.80, 2.60], tgt: [0.0, 0.0, 0.10], roll: -0.05, fov: 20 },
-  { f: 435, pos: [0.0, 13.95, 2.63], tgt: [0.0, 0.0, 0.10], roll: -0.04, fov: 20 },
+  { f: 0, pos: [1.74, 4.42, 4.92], tgt: [0.12, 0.14, 0.05], roll: -0.20, fov: 34 },
+  { f: 64, pos: [-0.80, 4.27, 5.21], tgt: [-0.04, 0.14, 0.0], roll: -0.13, fov: 34 },
+  { f: 110, pos: [0.43, 3.99, 4.87], tgt: [0.0, 0.15, 0.0], roll: -0.17, fov: 34 },
+  { f: 172, pos: [1.29, 3.71, 4.61], tgt: [0.04, 0.15, 0.0], roll: -0.23, fov: 34 },
+  { f: 222, pos: [-1.00, 3.89, 4.77], tgt: [-0.02, 0.15, 0.05], roll: -0.11, fov: 34 },
+  { f: 262, pos: [-0.20, 9.20, 3.90], tgt: [0.0, 0.06, 0.15], roll: -0.07, fov: 27 },
+  { f: 300, pos: [0.0, 13.80, 2.60], tgt: [0.0, 0.0, 0.10], roll: -0.012, fov: 20 },
+  { f: 435, pos: [0.0, 13.95, 2.63], tgt: [0.0, 0.0, 0.10], roll: 0.0, fov: 20 },
 ];
 
 export const CameraRig: React.FC = () => {
@@ -188,14 +191,14 @@ export const Timeline: React.FC = () => {
         <group>
           <Keycap position={[0.05, 0.225, 0.05]} size={BRAND} color={C.blue} face={f.hyper} faceSize={F_HYPER} tray metalMap={f.metal} opacity={oS4} lift={rise(frame, 200, 10)} rotation={[0, -0.04, 0]} />
           <Keycap position={[1.60, 0.165, -1.40]} size={CAP} color={C.tile} face={f.revenue} faceSize={F_REVENUE} opacity={oS4 * 0.9} rotation={[0, -0.09, 0]} />
-          <Keycap position={[-1.35, 0.15, 1.20]} size={[0.60, 0.12, 0.60]} radius={0.12} color={C.blue} face={f.psp} faceSize={[0.5, 0.5]} opacity={oS4 * 0.9} />
+          <Keycap position={[-1.28, 0.14, 0.62]} size={[0.34, 0.10, 0.34]} radius={0.07} color={C.blue} face={f.psp} faceSize={[0.27, 0.27]} opacity={oS4 * 0.9} />
         </group>
       )}
 
       {/* Final lockup */}
       {oFinal > 0.01 && (
         <group>
-          <Keycap position={[-1.02, 0.20, -1.22]} size={BRAND} color={C.gold} face={f.recurly} faceSize={F_RECURLY} tray metalMap={f.metal} opacity={oFinal} />
+          <Keycap position={[-0.74, 0.20, -0.98]} size={BRAND} color={C.gold} face={f.recurly} faceSize={F_RECURLY} tray metalMap={f.metal} opacity={oFinal} />
           <Keycap
             position={[0, 0.16, 0.12]}
             size={[1.52, 0.12, 0.62]}
@@ -207,7 +210,7 @@ export const Timeline: React.FC = () => {
             lift={rise(frame, 256, 10, -0.18)}
             rotation={[0, liveSpin, 0]}
           />
-          <Keycap position={[1.02, 0.20, 1.40]} size={BRAND} color={C.blue} face={f.hyper} faceSize={F_HYPER} tray metalMap={f.metal} opacity={oFinal} />
+          <Keycap position={[0.74, 0.20, 1.12]} size={BRAND} color={C.blue} face={f.hyper} faceSize={F_HYPER} tray metalMap={f.metal} opacity={oFinal} />
         </group>
       )}
     </>

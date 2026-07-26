@@ -109,6 +109,7 @@ export const Keycap: React.FC<Props> = ({
             side={THREE.DoubleSide}
             depthWrite={false}
             toneMapped={false}
+            fog={false}
           />
         </mesh>
       )}

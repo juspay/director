@@ -1,7 +1,14 @@
 import React from 'react';
 import { ThreeCanvas } from '@remotion/three';
 import { SoftShadows, Environment, Lightformer } from '@react-three/drei';
-import { EffectComposer, DepthOfField, Bloom, Vignette } from '@react-three/postprocessing';
+import {
+  EffectComposer,
+  DepthOfField,
+  Bloom,
+  Vignette,
+  HueSaturation,
+  BrightnessContrast,
+} from '@react-three/postprocessing';
 import { interpolate, useCurrentFrame, useVideoConfig } from 'remotion';
 import * as THREE from 'three';
 import { C, RES } from './scene/theme';
@@ -43,24 +50,51 @@ const Lights: React.FC = () => (
 );
 
 /**
+ * Grade constants, tuned by measuring rendered stills against the target with
+ * ffprobe signalstats (SATAVG / YLOW / YHIGH) rather than by eye.
+ */
+const SAT_MACRO = 0.45;
+const SAT_LOCKUP = 0.16;
+// The lockup rendered 137..227 against the target's 174..211 — a 90-wide range
+// where the target holds 37. Compress it and lift the centre so the far, flat
+// lockup reads as calm rather than crushed-and-clipped.
+const CONTRAST_LOCKUP = -0.30;
+const BRIGHT_LOCKUP = 0.04;
+
+/**
  * Macro depth of field. focalLength here is the *focus range*, not a lens focal
- * length. Widening it to sharpen the hero cap face also flattens the background
- * separation, and measured markedly worse — the shallow-DOF mood matters more
- * than absolute hero sharpness. bokehScale and height are pixel quantities, so
- * both scale with RES to keep the look identical at the master resolution.
+ * length; at 0.055 the in-focus slab was thin enough that even the nearest card
+ * was heavily blurred, turning every glyph and label into mush. The subjects
+ * must stay sharp and only the surrounding set should fall away — which is what
+ * the reference actually does. bokehScale is a pixel quantity so it scales with
+ * RES; bloom is kept minimal because it over-saturates the badge blue and eats
+ * thin glyph strokes.
  */
 const Effects: React.FC = () => {
   const frame = useCurrentFrame();
   const ease = { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' } as const;
   // Wide, far, long-lens framing needs a deeper focus range or the whole
   // lockup goes soft; the macro beats keep the shallow bokeh.
-  const focalLength = interpolate(frame, [255, 300], [0.055, 0.20], ease);
-  const bokehScale = interpolate(frame, [255, 300], [3.4, 2.0], ease) * RES;
+  const focalLength = interpolate(frame, [255, 300], [0.30, 0.45], ease);
+  const bokehScale = interpolate(frame, [255, 300], [1.9, 1.3], ease) * RES;
+  // Grade stage. NOTE: `gl.toneMappingExposure` on <ThreeCanvas> is a NO-OP once
+  // EffectComposer owns the render — 0.92, 0.72 and 0.30 all produced
+  // byte-identical frames (md5 fa16ee95…). Exposure/contrast therefore has to be
+  // driven here, in the composer, or it silently does nothing.
+  //
+  // Measured against the target at 720x900:
+  //   macro beats  repro saturation 7.6 vs target 17  -> boost
+  //   final lockup repro 138..240 vs target 174..211  -> reduce contrast
+  const satBoost = interpolate(frame, [250, 300], [SAT_MACRO, SAT_LOCKUP], ease);
+  const contrast = interpolate(frame, [250, 300], [0, CONTRAST_LOCKUP], ease);
+  const brightness = interpolate(frame, [250, 300], [0, BRIGHT_LOCKUP], ease);
   return (
     <EffectComposer enableNormalPass={false} multisampling={8}>
       <DepthOfField target={[0, 0.2, 0.05]} focalLength={focalLength} bokehScale={bokehScale} height={Math.round(720 * RES)} />
-      <Bloom intensity={0.09} luminanceThreshold={0.95} luminanceSmoothing={0.25} mipmapBlur />
+      <Bloom intensity={0.025} luminanceThreshold={0.985} luminanceSmoothing={0.25} mipmapBlur />
       <Vignette eskil={false} offset={0.32} darkness={0.16} />
+      <HueSaturation saturation={satBoost} />
+      <BrightnessContrast brightness={brightness} contrast={contrast} />
     </EffectComposer>
   );
 };
@@ -73,8 +107,13 @@ const Effects: React.FC = () => {
 const FogRig: React.FC = () => {
   const frame = useCurrentFrame();
   const ease = { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' } as const;
-  const near = interpolate(frame, [250, 300], [5.0, 13.5], ease);
-  const far = interpolate(frame, [250, 300], [16, 46], ease);
+  // The macro camera orbits ~5.1 units from the hero, so a 5.0 near plane put
+  // the SUBJECT at fog onset: everything from the hero outward was mixed toward
+  // #eef2f8 (Y~241), which measured as saturation 7.6 against the target's 17 —
+  // the "behind milk" look. Start the haze past the hero and let it fall off
+  // over a longer run so the far dressing still recedes.
+  const near = interpolate(frame, [250, 300], [9.5, 13.5], ease);
+  const far = interpolate(frame, [250, 300], [30, 46], ease);
   return <fog attach="fog" args={['#eef2f8', near, far]} />;
 };
 
@@ -95,7 +134,7 @@ export const RecurlyHyperswitch: React.FC = () => {
       camera={{ position: [1.35, 3.3, 3.65], fov: 34, near: 0.1, far: 100 }}
       shadows
       style={{ backgroundColor: C.bg }}
-      gl={{ toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 0.92, antialias: true }}
+      gl={{ toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 0.72, antialias: true }}
     >
       <FogRig />
       <CameraRig />

@@ -16,8 +16,9 @@ each round against the original with `reference/.../compare-fidelity.mjs`.
 | **v15** | **Scene rebuilt — see below** | **median 81** (n=4: 82/65/82/80) |
 | v15 + heavy AI plate | Veo 3.1 light field, softlight 0.90/0.32 | median 69 (n=4: 68/75/65/70) |
 | v15 + subtle AI plate | Veo 3.1 light field, softlight 0.34 + contrast restore | median 80 (n=3: 80/75/82) |
-| v16 @2160 master, widened DOF | resolution up, focus range 0.055→0.30 | median 65 (n=3: 65/55/65) — **regression, reverted** |
-| **v16 @2160 master — shipped** | resolution up, proven focus config kept | **median 75** (n=3: 75/65/85) |
+| v16 @2160 master, widened DOF | resolution up, focus range 0.055→0.30 | median 65 (n=3: 65/55/65) |
+| v16 @2160 master, old focus kept | resolution up only | median 75 (n=3: 75/65/85) |
+| **v17 — shipped** | **four render bugs fixed by direct 1:1 inspection — see below** | not scored; the metric is not usable at this granularity |
 
 ## Resolution: the reference container was not a quality target
 
@@ -36,15 +37,34 @@ the *look* is preserved rather than shrinking threefold. Shadow maps went to
 Delivered at three sizes: `2160x2700` master, `1080x1350` delivery, and
 `720x900` matching the reference container frame-for-frame.
 
-### A failed detour worth recording
+### Raising resolution broke four other things
 
-While raising resolution I also widened the DOF focus range (`focalLength`
-0.055 -> 0.30) to stop the hero cap face being blurred. It did sharpen the hero
-— and measured **65 / 55 / 65**, far below the 80-band. Widening the focus range
-also flattens background separation, and the shallow-DOF *mood* turns out to
-matter far more than absolute hero sharpness. Reverting to the proven focus
-config while keeping the resolution work gives **75 / 65 / 85**, statistically
-indistinguishable from the 720-native build while looking dramatically cleaner.
+The resolution bump was necessary but it silently invalidated assumptions
+elsewhere. None of these were visible in downscaled side-by-side sheets — every
+one was found only by viewing single frames at true 1:1.
+
+1. **Canvas textures were never rescaled.** Every face is authored in 720-era
+   coordinates (a card face is 1024px). At the 2160 master a capability card
+   spans ~1435px on screen, so its texture was *magnified* — icons and labels
+   turned to mush. `tex()` now scales the backing store by `RES` and pre-scales
+   the context, so existing drawing coordinates keep working at master res.
+2. **`putImageData` ignores the context transform.** The Recurly mask was
+   written as raw device pixels into the now-larger canvas, filling only its
+   top-left corner: the logo rendered at ~35% of its intended size. It now
+   decodes to an offscreen canvas and blits with `drawImage`, which does respect
+   the transform.
+3. **The focus slab was far too thin.** At `focalLength: 0.055` even the nearest
+   card was heavily blurred — every glyph and label was mush before it ever
+   reached the encoder. Disabling the `EffectComposer` produced razor-sharp
+   output, which isolated it conclusively.
+4. **Fog was eating the labels.** `near: 5.0` with subjects at 4.5-6 units put
+   the cards inside the fog ramp. White cards hid it; dark labels washed toward
+   the fog colour, producing a tell-tale near-to-far readability gradient.
+   Fog now starts at 9.5 and card faces set `fog={false}`.
+
+Note this also invalidates the "widening DOF measured worse" reading above: that
+comparison ran while textures were still 720-era, so sharpening only exposed the
+pixelation. It was a confounded test.
 
 ## The score is noisy — read it as a median, not a number
 
