@@ -6,7 +6,13 @@
  *   windows  — dense per-window frame-by-frame passes (15 frames each, ~0.5s windows)
  *   verify   — adversarial re-check of each window description against its frames
  *
- * Usage: node run-analysis.mjs --stage <global|windows|verify|all> [--fps N] [--force] [--conc 4]
+ * Usage: node run-analysis.mjs --stage <global|windows|verify|all> [--fps N] [--force] [--conc 1..16]
+ *                              [--frames-dir <path>]
+ *
+ * Frames dir resolves as: --frames-dir > $FRAMES_DIR > ./frames_all (next to
+ * this script). Concurrency is additionally gated process-wide by gemini-lib
+ * ($GEMINI_MAX_INFLIGHT, $GEMINI_MIN_INTERVAL_MS) so parallel passes cannot
+ * stampede the Gemini quota.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -15,9 +21,14 @@ import {
 } from './gemini-lib.mjs';
 
 const HERE = path.dirname(new URL(import.meta.url).pathname);
+// Resolution order: --frames-dir > $FRAMES_DIR > ./frames_all next to this
+// script. Never a machine-specific absolute path — that leaks a local FS
+// layout and makes the harness unrunnable anywhere else.
 const FRAMES_DIR =
-  process.env.FRAMES_DIR ||
-  '/private/tmp/claude-501/-Users-sachinsharma-Developer-temp-director/0ede4d9c-b28d-46a2-8e82-e49c80920933/scratchpad/li-download/frames_all';
+  ((k, d) => { const i = process.argv.indexOf(`--${k}`); return i >= 0 ? process.argv[i + 1] : d; })(
+    'frames-dir',
+    process.env.FRAMES_DIR || path.join(HERE, 'frames_all'),
+  );
 const VIDEO = path.join(HERE, 'target.mp4');
 const AUDIO = path.join(HERE, 'audio.mp3');
 const OUT = path.join(HERE, 'analysis');
@@ -29,6 +40,20 @@ const has = (k) => process.argv.includes(`--${k}`);
 const STAGE = arg('stage', 'all');
 const FORCE = has('force');
 const CONC = parseInt(arg('conc', '4'), 10);
+if (!Number.isFinite(CONC) || CONC < 1 || CONC > 16) {
+  console.error(`--conc must be an integer between 1 and 16 (got: ${arg('conc', '4')})`);
+  process.exit(1);
+}
+
+// Stages that read frames need the directory to exist; fail fast with a clear
+// message instead of silently producing empty windows.
+if (STAGE === 'windows' || STAGE === 'verify' || STAGE === 'all') {
+  if (!fs.existsSync(FRAMES_DIR)) {
+    console.error(`Frames directory not found: ${FRAMES_DIR}`);
+    console.error('Pass --frames-dir <path> or set FRAMES_DIR.');
+    process.exit(1);
+  }
+}
 
 fs.mkdirSync(path.join(OUT, 'global'), { recursive: true });
 fs.mkdirSync(path.join(OUT, 'windows'), { recursive: true });
