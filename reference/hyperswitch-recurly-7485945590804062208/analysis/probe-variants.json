@@ -1,0 +1,364 @@
+[
+  {
+    "name": "3.1pro  fps24 med  native",
+    "src": "native",
+    "model": "gemini-3.1-pro-preview",
+    "fps": 24,
+    "mediaRes": "medium",
+    "runs": 5,
+    "results": [
+      {
+        "hits": 3,
+        "fp": 1,
+        "err": 0.014111111111110889,
+        "cuts": [
+          2.042,
+          4.917,
+          6.667,
+          8.125
+        ],
+        "tok": 22377
+      },
+      {
+        "hits": 3,
+        "fp": 1,
+        "err": 0.014111111111110889,
+        "cuts": [
+          2.042,
+          4.917,
+          6.667,
+          8.125
+        ],
+        "tok": 22377
+      },
+      {
+        "hits": 4,
+        "fp": 0,
+        "err": 0.012583333333333169,
+        "cuts": [
+          2.208,
+          4.917,
+          6.667,
+          8.125
+        ],
+        "tok": 22377
+      },
+      {
+        "hits": 4,
+        "fp": 0,
+        "err": 0.012583333333333169,
+        "cuts": [
+          2.208,
+          4.917,
+          6.667,
+          8.125
+        ],
+        "tok": 22377
+      },
+      {
+        "hits": 4,
+        "fp": 0,
+        "err": 0.02283333333333326,
+        "cuts": [
+          2.208,
+          4.958,
+          6.667,
+          8.125
+        ],
+        "tok": 22377
+      }
+    ]
+  },
+  {
+    "name": "3.5flash fps24 med native",
+    "src": "native",
+    "model": "gemini-3.5-flash",
+    "fps": 24,
+    "mediaRes": "medium",
+    "runs": 5,
+    "results": [
+      {
+        "hits": 4,
+        "fp": 0,
+        "err": 0.010583333333332945,
+        "cuts": [
+          2.208,
+          4.917,
+          6.667,
+          8.083
+        ],
+        "tok": 22377
+      },
+      {
+        "hits": 4,
+        "fp": 0,
+        "err": 0.010583333333332945,
+        "cuts": [
+          2.208,
+          4.917,
+          6.667,
+          8.083
+        ],
+        "tok": 22377
+      },
+      {
+        "hits": 4,
+        "fp": 0,
+        "err": 0.013333333333332975,
+        "cuts": [
+          2.21,
+          4.92,
+          6.67,
+          8.08
+        ],
+        "tok": 22377
+      },
+      {
+        "hits": 4,
+        "fp": 0,
+        "err": 0.010583333333332945,
+        "cuts": [
+          2.208,
+          4.917,
+          6.667,
+          8.083
+        ],
+        "tok": 22377
+      },
+      {
+        "hits": 4,
+        "fp": 0,
+        "err": 0.010583333333332945,
+        "cuts": [
+          2.208,
+          4.917,
+          6.667,
+          8.083
+        ],
+        "tok": 22377
+      }
+    ]
+  },
+  {
+    "name": "3.1pro  fps24 med  slow2x",
+    "src": "slow2x",
+    "model": "gemini-3.1-pro-preview",
+    "fps": 24,
+    "mediaRes": "medium",
+    "runs": 5,
+    "scale": 2,
+    "results": [
+      {
+        "hits": 4,
+        "fp": 0,
+        "err": 0.004166666666666652,
+        "cuts": [
+          2.2085,
+          4.896,
+          6.6665,
+          8.104
+        ],
+        "tok": 43875
+      },
+      {
+        "hits": 4,
+        "fp": 0,
+        "err": 0.004166666666666652,
+        "cuts": [
+          2.2085,
+          4.896,
+          6.6665,
+          8.104
+        ],
+        "tok": 43875
+      },
+      {
+        "hits": 4,
+        "fp": 0,
+        "err": 0.004166666666666652,
+        "cuts": [
+          2.2085,
+          4.896,
+          6.6665,
+          8.104
+        ],
+        "tok": 43875
+      },
+      {
+        "hits": 4,
+        "fp": 0,
+        "err": 0.004166666666666652,
+        "cuts": [
+          2.2085,
+          4.896,
+          6.6665,
+          8.104
+        ],
+        "tok": 43875
+      },
+      {
+        "hits": 4,
+        "fp": 0,
+        "err": 0.004166666666666652,
+        "cuts": [
+          2.2085,
+          4.896,
+          6.6665,
+          8.104
+        ],
+        "tok": 43875
+      }
+    ]
+  },
+  {
+    "name": "3.5flash fps24 med slow2x",
+    "src": "slow2x",
+    "model": "gemini-3.5-flash",
+    "fps": 24,
+    "mediaRes": "medium",
+    "runs": 5,
+    "scale": 2,
+    "results": [
+      {
+        "hits": 4,
+        "fp": 0,
+        "err": 0.004166666666666652,
+        "cuts": [
+          2.2085,
+          4.896,
+          6.6665,
+          8.104
+        ],
+        "tok": 43875
+      },
+      {
+        "hits": 4,
+        "fp": 0,
+        "err": 0.005416666666667069,
+        "cuts": [
+          2.21,
+          4.895,
+          6.665,
+          8.105
+        ],
+        "tok": 43875
+      },
+      {
+        "hits": 4,
+        "fp": 0,
+        "err": 0.004166666666666652,
+        "cuts": [
+          2.2085,
+          4.896,
+          6.6665,
+          8.104
+        ],
+        "tok": 43875
+      },
+      {
+        "hits": 4,
+        "fp": 0,
+        "err": 0.004166666666666652,
+        "cuts": [
+          2.2085,
+          4.896,
+          6.6665,
+          8.104
+        ],
+        "tok": 43875
+      },
+      {
+        "hits": 4,
+        "fp": 0,
+        "err": 0.004166666666666652,
+        "cuts": [
+          2.2085,
+          4.896,
+          6.6665,
+          8.104
+        ],
+        "tok": 43875
+      }
+    ]
+  },
+  {
+    "name": "3.1pro  fps24 partHIGH   ",
+    "src": "native",
+    "model": "gemini-3.1-pro-preview",
+    "fps": 24,
+    "partRes": "MEDIA_RESOLUTION_HIGH",
+    "runs": 2,
+    "results": [
+      {
+        "hits": 4,
+        "fp": 0,
+        "err": 0.03308333333333335,
+        "cuts": [
+          2.208,
+          4.958,
+          6.708,
+          8.125
+        ],
+        "tok": 88149
+      },
+      {
+        "hits": 4,
+        "fp": 0,
+        "err": 0.016833333333333034,
+        "cuts": [
+          2.167,
+          4.917,
+          6.667,
+          8.083
+        ],
+        "tok": 88149
+      }
+    ]
+  },
+  {
+    "name": "3.1pro  fps24 partULTRA  ",
+    "src": "native",
+    "model": "gemini-3.1-pro-preview",
+    "fps": 24,
+    "partRes": "MEDIA_RESOLUTION_ULTRA_HIGH",
+    "runs": 2,
+    "results": [
+      {
+        "hits": null,
+        "error": "{\"error\":{\"code\":400,\"message\":\"Request contains an invalid argument.\",\"status\":\"INVALID_ARGUMENT\"}}"
+      },
+      {
+        "hits": null,
+        "error": "{\"error\":{\"code\":400,\"message\":\"Request contains an invalid argument.\",\"status\":\"INVALID_ARGUMENT\"}}"
+      }
+    ]
+  },
+  {
+    "name": "2.5pro  fps1  low BASELINE",
+    "src": "native",
+    "model": "gemini-2.5-pro",
+    "fps": 1,
+    "mediaRes": "low",
+    "runs": 2,
+    "results": [
+      {
+        "hits": 0,
+        "fp": 1,
+        "err": null,
+        "cuts": [
+          9
+        ],
+        "tok": 1635
+      },
+      {
+        "hits": 0,
+        "fp": 1,
+        "err": null,
+        "cuts": [
+          8.9
+        ],
+        "tok": 1635
+      }
+    ]
+  }
+]

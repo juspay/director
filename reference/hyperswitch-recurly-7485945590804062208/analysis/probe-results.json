@@ -1,0 +1,223 @@
+{
+  "video": "target.mp4",
+  "truth": [
+    2.2,
+    4.9,
+    6.666666666666667,
+    8.1
+  ],
+  "tolerance": 0.15,
+  "rows": [
+    {
+      "name": "2.5pro-fps1-low",
+      "model": "gemini-2.5-pro",
+      "fps": 1,
+      "mediaRes": "low",
+      "hits": 0,
+      "missed": 4,
+      "false_positives": 1,
+      "mean_err": null,
+      "matched": [
+        {
+          "t": 2.2,
+          "got": null,
+          "err": null
+        },
+        {
+          "t": 4.9,
+          "got": null,
+          "err": null
+        },
+        {
+          "t": 6.666666666666667,
+          "got": null,
+          "err": null
+        },
+        {
+          "t": 8.1,
+          "got": null,
+          "err": null
+        }
+      ],
+      "cuts": [
+        9
+      ],
+      "secs": 13.374,
+      "tokens": 1672,
+      "notes": "The single cut is very clear and easy to time."
+    },
+    {
+      "name": "2.5pro-fps24-low",
+      "model": "gemini-2.5-pro",
+      "fps": 24,
+      "mediaRes": "low",
+      "hits": 2,
+      "missed": 2,
+      "false_positives": 2,
+      "mean_err": 0.1030000000000002,
+      "matched": [
+        {
+          "t": 2.2,
+          "got": 2.135,
+          "err": 0.06500000000000039
+        },
+        {
+          "t": 4.9,
+          "got": null,
+          "err": null
+        },
+        {
+          "t": 6.666666666666667,
+          "got": null,
+          "err": null
+        },
+        {
+          "t": 8.1,
+          "got": 8.241,
+          "err": 0.14100000000000001
+        }
+      ],
+      "cuts": [
+        2.135,
+        4.637,
+        6.439,
+        8.241
+      ],
+      "secs": 21.245,
+      "tokens": 26167,
+      "notes": "Timings are confident; cuts are distinct and instantaneous."
+    },
+    {
+      "name": "2.5pro-fps24-med",
+      "model": "gemini-2.5-pro",
+      "fps": 24,
+      "mediaRes": "medium",
+      "hits": 0,
+      "missed": 4,
+      "false_positives": 0,
+      "mean_err": null,
+      "matched": [
+        {
+          "t": 2.2,
+          "got": null,
+          "err": null
+        },
+        {
+          "t": 4.9,
+          "got": null,
+          "err": null
+        },
+        {
+          "t": 6.666666666666667,
+          "got": null,
+          "err": null
+        },
+        {
+          "t": 8.1,
+          "got": null,
+          "err": null
+        }
+      ],
+      "cuts": [],
+      "secs": 13.912,
+      "tokens": 95287,
+      "notes": "Confident in the timings; the entire video is a single continuous shot with no hard cuts."
+    },
+    {
+      "name": "3.1pro-fps1-low",
+      "model": "gemini-3.1-pro-preview",
+      "fps": 1,
+      "mediaRes": "low",
+      "error": "Expected ',' or '}' after property value in JSON at position 334 (line 21 column 30)"
+    },
+    {
+      "name": "3.1pro-fps24-low",
+      "model": "gemini-3.1-pro-preview",
+      "fps": 24,
+      "mediaRes": "low",
+      "hits": 3,
+      "missed": 1,
+      "false_positives": 0,
+      "mean_err": 0.041777777777777615,
+      "matched": [
+        {
+          "t": 2.2,
+          "got": null,
+          "err": null
+        },
+        {
+          "t": 4.9,
+          "got": 5,
+          "err": 0.09999999999999964
+        },
+        {
+          "t": 6.666666666666667,
+          "got": 6.667,
+          "err": 0.00033333333333285253
+        },
+        {
+          "t": 8.1,
+          "got": 8.125,
+          "err": 0.025000000000000355
+        }
+      ],
+      "cuts": [
+        5,
+        6.667,
+        8.125
+      ],
+      "secs": 13.932,
+      "tokens": 22414,
+      "notes": "High confidence in frame-accurate cut detection."
+    },
+    {
+      "name": "3.1pro-fps24-med",
+      "model": "gemini-3.1-pro-preview",
+      "fps": 24,
+      "mediaRes": "medium",
+      "hits": 4,
+      "missed": 0,
+      "false_positives": 1,
+      "mean_err": 0.010583333333332945,
+      "matched": [
+        {
+          "t": 2.2,
+          "got": 2.208,
+          "err": 0.008000000000000007
+        },
+        {
+          "t": 4.9,
+          "got": 4.917,
+          "err": 0.01699999999999946
+        },
+        {
+          "t": 6.666666666666667,
+          "got": 6.667,
+          "err": 0.00033333333333285253
+        },
+        {
+          "t": 8.1,
+          "got": 8.083,
+          "err": 0.01699999999999946
+        }
+      ],
+      "cuts": [
+        2.208,
+        4.917,
+        6.667,
+        8.083,
+        8.708
+      ],
+      "secs": 15.689,
+      "tokens": 22414,
+      "notes": "High confidence in all cut timings as they are distinct single-frame transitions."
+    },
+    {
+      "name": "3-pro-fps24-low",
+      "model": "gemini-3-pro-preview",
+      "fps": 24,
+      "mediaRes": "low",
+      "error": "{\"error\":{\"code\":404,\"message\":\"This model models/gemini-3-pro-preview is no longer available. Please update your code to use a newer model for the latest featu"
+    }
+  ]
+}
