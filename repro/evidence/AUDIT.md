@@ -115,7 +115,7 @@ tripped, and that unverified output was written into the spec as fact.
 The reference is **five shots, hard cut**, each with its own camera move:
 `[0-65] [66-146] [147-199] [200-242] [243-434]`.
 
-## Results after the fix pass
+## Results after the fix passes
 
 | Defect | Before | After | Reference |
 |---|---|---|---|
@@ -129,9 +129,33 @@ The reference is **five shots, hard cut**, each with its own camera move:
 | Ghosted/dissolved frames | ~60 | **0** | 0 |
 | Camera-stall frames | 39 | **0** | — |
 | Edge-clipping frames | 92 | **0** | — |
-| Global edge detail | 0.00117 (56%) | **0.00176 (85%)** | 0.00207 |
-| Centre detail | 0.00407 | **0.00552** | 0.00494 |
-| Exposure offset | +0.0353 | **+0.0056** | 0 |
+| Global edge detail | 0.00117 (56%) | **0.00196 (95%)** | 0.00207 |
+| Centre detail | 0.00407 | **0.00585** | 0.00494 |
+| Exposure offset | +0.0353 | **−0.0062** | 0 |
+| Brand colour coverage | 0.16248 | **0.14704** | 0.14710 |
+
+### Per-shot motion, after tuning
+
+| Shot | Frames | Reference | Repro | Ratio |
+|---|---|---|---|---|
+| 1 | 0–65 | 0.01562 | 0.01173 | 0.75 |
+| 2 | 66–146 | 0.01354 | 0.01299 | 0.96 |
+| 3 | 147–199 | 0.01636 | 0.01413 | 0.86 |
+| 4 | 200–242 | 0.02200 | 0.02010 | 0.91 |
+| 5 | 243–434 | 0.00189 | 0.00195 | 1.03 |
+| **overall median** | | 0.01208 | **0.01003** | **0.83** |
+
+### Orbit, not travel — a correction
+
+The first attempt at closing the motion gap scaled each shot's *positional
+travel* about its mean. It hit median 1.01× and looked worse: scaling position
+changes camera **distance**, so subjects shrank at the path extremes. At f8 the
+Secure Payments card was a speck. The metric improved while the picture got
+worse — the exact failure mode this audit exists to catch.
+
+Shots 1–4 are now **constant-radius orbits** about their look-at point. Frame
+delta comes from parallax rather than from dollying, so subject size is held
+while the camera moves.
 
 ### What changed
 
@@ -152,11 +176,9 @@ The reference is **five shots, hard cut**, each with its own camera move:
 
 ## Still outstanding
 
-- **Motion is 0.59× the reference, not 1.0×.** Within-shot camera travel is
-  still roughly half. Pushing further risks the framing regressions seen when
-  the dolly-back overshot, so this needs per-shot tuning against the reference
-  rather than another global scale.
-- **Brand colour coverage 0.127 vs 0.147.**
+- **Motion is 0.83× overall; shot 1 is 0.75×.** Widening shot 1's orbit further
+  starts to swing set dressing through frame edges, so the remaining gap needs
+  more on-screen subject matter in that shot rather than more camera.
 - **No true blacks** (0.00000 vs 0.00042). Deepening the socket bought the
   metric but read as a heavy plinth, so it was reverted; the reference's darks
   come from tighter contact shadows.
