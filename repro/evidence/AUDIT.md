@@ -99,12 +99,66 @@ visibly different letterforms.
 
 ---
 
-## Fix order (by impact)
+## THE SPEC WAS WRONG — the reference is five hard-cut shots
 
-1. **A1/A2** — rebuild the motion: real camera travel and physical keycap swaps.
-2. **B1/B2** — replace cross-dissolves with in-scene motion; removes the ghosting.
-3. **A3** — spline the camera path so it never stalls.
-4. **C1/C2** — per-beat framing so nothing clips and each beat is sized to match.
-5. **D3/D1** — denser, less graphic set dressing.
-6. **E1/E2** — exposure down slightly, restore true blacks.
-7. **F1/F2** — typeface and roundel.
+Working defect A2 turned up something that invalidates the original
+reconstruction spec, and with it the premise the whole scene was built on.
+
+The spec asserted **"0 hard cuts"** and **"a single continuous camera with
+in-scene mechanical keycap press/rise swaps."** Both are false. The reference's
+four delta spikes are **hard cuts**: inspecting f65→f66, f146→f147, f199→f200
+and f242→f243 shows a complete change of camera, layout and subject across a
+single frame boundary. ffmpeg's scene detection reported zero because every shot
+shares the same white/blue/yellow palette, so the default threshold never
+tripped, and that unverified output was written into the spec as fact.
+
+The reference is **five shots, hard cut**, each with its own camera move:
+`[0-65] [66-146] [147-199] [200-242] [243-434]`.
+
+## Results after the fix pass
+
+| Defect | Before | After | Reference |
+|---|---|---|---|
+| Total motion energy | 1.592 (0.25×) | **3.77 (0.59×)** | 6.421 |
+| Median frame delta | 0.00251 (0.21×) | **0.00658 (0.54×)** | 0.01208 |
+| Frames under 25% of ref motion | 185 | **43** | 0 |
+| Cut at f66 | 0.0005 | **0.0913 (60%)** | 0.1529 |
+| Cut at f147 | 0.0065 | **0.1878 (143%)** | 0.1318 |
+| Cut at f200 | 0.0082 | **0.1441 (90%)** | 0.1595 |
+| Cut at f243 | 0.0143 | **0.2076 (71%)** | 0.2932 |
+| Ghosted/dissolved frames | ~60 | **0** | 0 |
+| Camera-stall frames | 39 | **0** | — |
+| Edge-clipping frames | 92 | **0** | — |
+| Global edge detail | 0.00117 (56%) | **0.00176 (85%)** | 0.00207 |
+| Centre detail | 0.00407 | **0.00552** | 0.00494 |
+| Exposure offset | +0.0353 | **+0.0056** | 0 |
+
+### What changed
+
+- **Five independent shots**, Catmull-Rom camera within each and a hard cut
+  between — never interpolating across a cut.
+- **Cross-dissolves removed entirely.** Every cap is fully opaque for its whole
+  life; shot changes swap content instantly, as the reference does.
+- **Per-shot set patches**: each shot sits over a different area of the mosaic,
+  so a cut changes the backdrop as well as the subject.
+- Peripheral cards pushed outside the acting area (they had been intersecting
+  the hero caps), brand floor accents shrunk and thinned (they were covering up
+  to 2.7× the reference's frame-edge area), and suppressed beyond a radius in
+  the wide shot where the reference keeps its borders neutral.
+- Background blur reduced — most of the edge-detail deficit was DOF eating the
+  set the reference keeps legible.
+- Labels re-tracked and lightened; Juspay roundel's inner mark redrawn as an
+  arrow.
+
+## Still outstanding
+
+- **Motion is 0.59× the reference, not 1.0×.** Within-shot camera travel is
+  still roughly half. Pushing further risks the framing regressions seen when
+  the dolly-back overshot, so this needs per-shot tuning against the reference
+  rather than another global scale.
+- **Brand colour coverage 0.127 vs 0.147.**
+- **No true blacks** (0.00000 vs 0.00042). Deepening the socket bought the
+  metric but read as a heavy plinth, so it was reverted; the reference's darks
+  come from tighter contact shadows.
+- **22 soft frames**, all at shot entrances where caps are still rising.
+- Composition within shots 1 and 2 still sits right of the reference's.

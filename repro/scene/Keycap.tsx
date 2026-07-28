@@ -77,8 +77,8 @@ export const Keycap: React.FC<Props> = ({
             receiveShadow
           >
             <meshStandardMaterial
-              color="#9299a5"
-              roughness={0.78}
+              color="#6b7280"
+              roughness={0.86}
               metalness={0.2}
               transparent={transparent}
               opacity={opacity}

@@ -76,7 +76,7 @@ const Effects: React.FC = () => {
   // Wide, far, long-lens framing needs a deeper focus range or the whole
   // lockup goes soft; the macro beats keep the shallow bokeh.
   const focalLength = interpolate(frame, [255, 300], [0.30, 0.45], ease);
-  const bokehScale = interpolate(frame, [255, 300], [1.9, 1.3], ease) * RES;
+  const bokehScale = interpolate(frame, [255, 300], [1.25, 0.9], ease) * RES;
   // Grade stage. NOTE: `gl.toneMappingExposure` on <ThreeCanvas> is a NO-OP once
   // EffectComposer owns the render — 0.92, 0.72 and 0.30 all produced
   // byte-identical frames (md5 fa16ee95…). Exposure/contrast therefore has to be

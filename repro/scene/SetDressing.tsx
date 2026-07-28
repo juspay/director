@@ -35,9 +35,10 @@ function buildSlabs(): Slab[] {
   const r = rng(20260725);
   const slabs: Slab[] = [];
   const kinds: Kind[] = [
-    'plain', 'plain', 'dots', 'plain', 'metal', 'plain',
-    'doc', 'plain', 'chart', 'plain', 'blue', 'plain',
-    'gold', 'plain', 'metal', 'lightblue', 'plain', 'dots',
+    'plain', 'doc', 'dots', 'gold', 'metal', 'plain',
+    'doc', 'blue', 'chart', 'plain', 'lightblue', 'blue',
+    'doc', 'plain', 'metal', 'gold', 'doc', 'dots',
+    'chart', 'gold', 'plain', 'chart', 'lightblue', 'dots',
   ];
   let i = 0;
   for (let gx = -3; gx <= 3; gx++) {
@@ -47,8 +48,11 @@ function buildSlabs(): Slab[] {
       const jitter = 0.22;
       // Panels are broad and shallow and butt right up against each other —
       // tall slabs read as a city of boxes instead of a panelled surface.
-      const w = 2.15 + r() * 1.2;
-      const l = 2.15 + r() * 1.2;
+      const kind = kinds[i % kinds.length];
+      const brandish = kind === 'blue' || kind === 'gold' || kind === 'lightblue';
+      // brand accents stay small; structural panels stay broad
+      const w = brandish ? 1.05 + r() * 0.5 : 2.15 + r() * 1.2;
+      const l = brandish ? 1.05 + r() * 0.5 : 2.15 + r() * 1.2;
       const x = gx * 2.32 + (r() - 0.5) * jitter;
       const z = gz * 2.32 + (r() - 0.5) * jitter;
       const h = 0.05 + r() * 0.055;
@@ -56,7 +60,7 @@ function buildSlabs(): Slab[] {
         pos: [x, h / 2, z],
         size: [w, h, l],
         rotY: (r() - 0.5) * 0.06,
-        kind: kinds[i % kinds.length],
+        kind,
       });
       i++;
     }
@@ -65,14 +69,27 @@ function buildSlabs(): Slab[] {
   // reads as panelled floor rather than a hole.
   slabs.push({ pos: [-0.15, 0.035, 0.1], size: [3.3, 0.07, 3.2], rotY: 0.02, kind: 'plain' });
   slabs.push({ pos: [1.95, 0.04, -1.7], size: [2.4, 0.08, 2.2], rotY: -0.03, kind: 'plain' });
-  slabs.push({ pos: [-2.55, 0.05, 0.75], size: [1.55, 0.09, 2.05], rotY: 0.04, kind: 'lightblue' });
-  slabs.push({ pos: [1.15, 0.05, 2.45], size: [2.0, 0.09, 1.45], rotY: -0.02, kind: 'gold' });
-  slabs.push({ pos: [-1.85, 0.05, -2.35], size: [1.7, 0.08, 1.5], rotY: 0.03, kind: 'blue' });
+  slabs.push({ pos: [-2.55, 0.05, 0.75], size: [0.95, 0.09, 1.25], rotY: 0.04, kind: 'lightblue' });
+  slabs.push({ pos: [2.35, 0.05, -0.55], size: [0.80, 0.09, 1.05], rotY: -0.06, kind: 'blue' });
+  slabs.push({ pos: [-0.95, 0.05, 3.05], size: [1.05, 0.09, 0.80], rotY: 0.05, kind: 'gold' });
+  slabs.push({ pos: [3.05, 0.05, 2.85], size: [0.90, 0.09, 0.95], rotY: -0.03, kind: 'lightblue' });
+  slabs.push({ pos: [1.15, 0.05, 2.45], size: [1.15, 0.09, 0.85], rotY: -0.02, kind: 'gold' });
+  slabs.push({ pos: [-1.85, 0.05, -2.35], size: [0.95, 0.08, 0.85], rotY: 0.03, kind: 'blue' });
   slabs.push({ pos: [2.75, 0.05, 1.15], size: [1.5, 0.08, 1.9], rotY: -0.05, kind: 'chart' });
   return slabs;
 }
 
-export const SetDressing: React.FC<{ whiten?: number }> = ({ whiten = 0 }) => {
+export const SetDressing: React.FC<{
+  whiten?: number;
+  offset?: [number, number, number];
+  spin?: number;
+  /**
+   * Radius beyond which brand-coloured accents are suppressed. The wide lockup
+   * shot frames a much larger area, so outlying accents land on the frame
+   * border — the reference keeps its borders neutral through that shot.
+   */
+  brandRadius?: number;
+}> = ({ whiten = 0, offset = [0, 0, 0], spin = 0, brandRadius = Infinity }) => {
   const slabs = useMemo(buildSlabs, []);
   const maps = useMemo(
     () => ({
@@ -84,7 +101,7 @@ export const SetDressing: React.FC<{ whiten?: number }> = ({ whiten = 0 }) => {
       doc2: panelDoc('Invoices', 'blue'),
       chart: panelChart(),
       blue: panelSolid('#6d8fdd'),
-      gold: panelSolid(C.gold),
+      gold: panelSolid('#f2c93a'),
       lightblue: panelSolid('#a8c1f0'),
     }),
     [],
@@ -104,10 +121,11 @@ export const SetDressing: React.FC<{ whiten?: number }> = ({ whiten = 0 }) => {
   };
 
   return (
-    <group>
+    <group position={offset} rotation={[0, spin, 0]}>
       {slabs.map((s, i) => {
         const metalish = s.kind === 'metal';
         const brand = s.kind === 'blue' || s.kind === 'gold' || s.kind === 'lightblue';
+        if (brand && Math.hypot(s.pos[0] + offset[0], s.pos[2] + offset[2]) > brandRadius) return null;
         return (
           <Slab
             key={i}
@@ -121,7 +139,7 @@ export const SetDressing: React.FC<{ whiten?: number }> = ({ whiten = 0 }) => {
             <meshPhysicalMaterial
               map={pick(s.kind, i)}
               roughness={metalish ? 0.34 : brand ? 0.42 : 0.62}
-              metalness={metalish ? 0.72 : 0.0}
+              metalness={metalish ? 0.35 : 0.0}
               clearcoat={brand ? 0.7 : 0.28}
               clearcoatRoughness={0.42}
               emissive="#ffffff"
@@ -139,17 +157,19 @@ export const SetDressing: React.FC<{ whiten?: number }> = ({ whiten = 0 }) => {
  * They exist purely to give the bokeh something to chew on — in the target
  * there is never empty space, only progressively blurrier furniture.
  */
-export const Peripherals: React.FC<{ whiten?: number }> = ({ whiten = 0 }) => {
+export const Peripherals: React.FC<{ whiten?: number; offset?: [number, number, number]; spin?: number }> = ({ whiten = 0, offset = [0, 0, 0], spin = 0 }) => {
   const items = useMemo(() => {
     const r = rng(778812);
     const out: Array<{ pos: [number, number, number]; size: [number, number, number]; rotY: number; color: string }> = [];
+    // Pushed well outside the acting area — the subjects occupy roughly
+    // |x| < 1.9, |z| < 1.9 across every shot.
     const ring = [
-      [-3.3, 1.9], [-4.0, -1.1], [-2.6, -3.2], [0.9, -3.9], [3.5, -2.4],
-      [4.1, 0.7], [3.0, 3.1], [-0.6, 4.0], [-4.4, 3.4], [2.0, 4.6],
-      [-5.2, 0.4], [5.0, 2.6], [-1.9, -5.0], [4.6, -4.2],
+      [-4.3, 2.6], [-4.9, -1.5], [-3.4, -4.0], [1.2, -4.8], [4.4, -3.1],
+      [5.0, 0.9], [3.8, 3.9], [-0.8, 4.9], [-5.4, 4.2], [2.6, 5.6],
+      [-6.2, 0.5], [6.0, 3.2], [-2.4, -6.0], [5.6, -5.1],
     ];
     for (const [x, z] of ring) {
-      const w = 1.0 + r() * 0.9;
+      const w = 0.85 + r() * 0.7;
       out.push({
         pos: [x + (r() - 0.5) * 0.4, 0.14 + r() * 0.06, z + (r() - 0.5) * 0.4],
         size: [w, 0.085, w * (0.55 + r() * 0.25)],
@@ -160,7 +180,7 @@ export const Peripherals: React.FC<{ whiten?: number }> = ({ whiten = 0 }) => {
     return out;
   }, []);
   return (
-    <group>
+    <group position={offset} rotation={[0, spin, 0]}>
       {items.map((it, i) => (
         <Slab
           key={i}

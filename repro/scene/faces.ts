@@ -36,8 +36,13 @@ function tex(w: number, h: number, draw: (ctx: Ctx) => void): THREE.CanvasTextur
   return t;
 }
 
-/** Pick the largest font size at or below `size` that fits `max` px wide. */
-function fitFont(ctx: Ctx, text: string, size: number, max: number, weight: string): void {
+/**
+ * Pick the largest font size at or below `size` that fits `max` px wide.
+ * `track` applies letter-spacing — the reference's labels are noticeably more
+ * open than default Helvetica metrics.
+ */
+function fitFont(ctx: Ctx, text: string, size: number, max: number, weight: string, track = 0): void {
+  (ctx as Ctx & { letterSpacing: string }).letterSpacing = `${track}px`;
   let px = size;
   do {
     ctx.font = `${weight} ${px}px ${FONT}`;
@@ -190,7 +195,7 @@ export function pillFaceH(
     ctx.fillStyle = '#3b4250';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
-    fitFont(ctx, line1.length > line2.length ? line1 : line2, 116, 590, '500');
+    fitFont(ctx, line1.length > line2.length ? line1 : line2, 116, 590, '400', 2);
     ctx.fillText(line1, 386, cy - 60);
     ctx.fillText(line2, 386, cy + 66);
     // indigo hairline along the lower edge of the card
@@ -237,7 +242,7 @@ export function capabilityFaceV(
     ctx.fillStyle = C.indigo;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    fitFont(ctx, label, 132, 860, '600');
+    fitFont(ctx, label, 132, 860, '500', 3);
     ctx.fillText(label, 512, 512);
     const hg = ctx.createLinearGradient(60, 0, 964, 0);
     hg.addColorStop(0, 'rgba(70,92,230,0.05)');
@@ -457,12 +462,12 @@ export function panelDots(): THREE.CanvasTexture {
 /** Vertically-ribbed brushed-metal panel. */
 export function panelMetal(): THREE.CanvasTexture {
   const t = tex(512, 512, (ctx) => {
-    ctx.fillStyle = '#b9bec8';
+    ctx.fillStyle = '#d6dae2';
     ctx.fillRect(0, 0, 512, 512);
     for (let i = 0; i < 512; i += 7) {
       ctx.fillStyle = 'rgba(255,255,255,0.35)';
       ctx.fillRect(i, 0, 3, 512);
-      ctx.fillStyle = 'rgba(112,119,132,0.32)';
+      ctx.fillStyle = 'rgba(150,157,170,0.30)';
       ctx.fillRect(i + 3, 0, 2, 512);
     }
     const g = ctx.createLinearGradient(0, 0, 512, 512);
