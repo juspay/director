@@ -1,0 +1,188 @@
+[
+  {
+    "model": "gemini-3.1-pro-preview",
+    "run": 0,
+    "a": {
+      "hits": 4,
+      "fp": 0,
+      "err": 0.004166666666666652
+    },
+    "b": {
+      "hits": 4,
+      "fp": 0,
+      "err": 0.004166666666666652
+    },
+    "j": {
+      "a_cuts": [
+        4.417,
+        9.792,
+        13.333,
+        16.208
+      ],
+      "b_cuts": [
+        4.417,
+        9.792,
+        13.333,
+        16.208
+      ],
+      "difference": "In Video B, the Recurly and Juspay tiles initially appear as blank grey rectangles before their logos and colors are revealed, whereas in Video A they are fully rendered from the very first frame of their respective shots.",
+      "kept_them_distinct": true
+    },
+    "tok": 87762
+  },
+  {
+    "model": "gemini-3.1-pro-preview",
+    "run": 1,
+    "a": {
+      "hits": 4,
+      "fp": 0,
+      "err": 0.004166666666666652
+    },
+    "b": {
+      "hits": 4,
+      "fp": 0,
+      "err": 0.004166666666666652
+    },
+    "j": {
+      "a_cuts": [
+        4.4,
+        9.8,
+        13.3,
+        16.2
+      ],
+      "b_cuts": [
+        4.4,
+        9.8,
+        13.3,
+        16.2
+      ],
+      "difference": "In Video B, the Recurly and Juspay tiles initially appear as blank dark grey rectangles before their colors and logos pop in, whereas in Video A they are fully colored and branded immediately after the cuts.",
+      "kept_them_distinct": true
+    },
+    "tok": 87762
+  },
+  {
+    "model": "gemini-3.1-pro-preview",
+    "run": 2,
+    "a": {
+      "hits": 4,
+      "fp": 0,
+      "err": 0.004166666666666652
+    },
+    "b": {
+      "hits": 4,
+      "fp": 0,
+      "err": 0.004166666666666652
+    },
+    "j": {
+      "a_cuts": [
+        4.4,
+        9.8,
+        13.3,
+        16.2
+      ],
+      "b_cuts": [
+        4.4,
+        9.8,
+        13.3,
+        16.2
+      ],
+      "difference": "Video B features a prominent dotted pattern on the background surfaces, whereas Video A has smooth, solid-colored backgrounds.",
+      "kept_them_distinct": true
+    },
+    "tok": 87762
+  },
+  {
+    "model": "gemini-3.5-flash",
+    "run": 0,
+    "a": {
+      "hits": 4,
+      "fp": 0,
+      "err": 0.004166666666666652
+    },
+    "b": {
+      "hits": 4,
+      "fp": 0,
+      "err": 0.004166666666666652
+    },
+    "j": {
+      "a_cuts": [
+        4.417,
+        9.792,
+        13.333,
+        16.208
+      ],
+      "b_cuts": [
+        4.417,
+        9.792,
+        13.333,
+        16.208
+      ],
+      "difference": "In Video B, the cards and buttons animate by popping up onto the screen after each cut, whereas in Video A they are already present on the tiles.",
+      "kept_them_distinct": true
+    },
+    "tok": 87762
+  },
+  {
+    "model": "gemini-3.5-flash",
+    "run": 1,
+    "a": {
+      "hits": 4,
+      "fp": 0,
+      "err": 0.004166666666666652
+    },
+    "b": {
+      "hits": 4,
+      "fp": 0,
+      "err": 0.004166666666666652
+    },
+    "j": {
+      "a_cuts": [
+        4.417,
+        9.792,
+        13.333,
+        16.208
+      ],
+      "b_cuts": [
+        4.417,
+        9.792,
+        13.333,
+        16.208
+      ],
+      "difference": "In Video B, the text and logos on the cards animate and pop into view after the cards appear, whereas in Video A they are already present on the cards.",
+      "kept_them_distinct": true
+    },
+    "tok": 87762
+  },
+  {
+    "model": "gemini-3.5-flash",
+    "run": 2,
+    "a": {
+      "hits": 4,
+      "fp": 0,
+      "err": 0.004166666666666652
+    },
+    "b": {
+      "hits": 4,
+      "fp": 0,
+      "err": 0.004166666666666652
+    },
+    "j": {
+      "a_cuts": [
+        4.417,
+        9.792,
+        13.333,
+        16.208
+      ],
+      "b_cuts": [
+        4.417,
+        9.792,
+        13.333,
+        16.208
+      ],
+      "difference": "In Video A, the buttons are fully rendered with text and icons immediately at the start of each shot, whereas in Video B, the buttons initially appear blank and their text and icons animate into view shortly after each cut.",
+      "kept_them_distinct": true
+    },
+    "tok": 87762
+  }
+]
