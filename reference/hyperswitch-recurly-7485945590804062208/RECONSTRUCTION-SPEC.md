@@ -20,7 +20,7 @@
 | Duration | **14.506 s** |
 | Video | H.264, **720 × 900** (portrait **4:5**), **30 fps**, 435 frames, yuv420p, ~637 kb/s |
 | Audio | AAC-LC, stereo, 44.1 kHz, ~130 kb/s |
-| Scene cuts (ffmpeg scenedetect ≥0.03) | **0 hard cuts** — one continuous render; section changes are 1-frame in-scene "keycap swaps" (see §3) |
+| Shot structure | **5 shots, 4 hard cuts** at frames **66 / 147 / 200 / 243** (see §3a). ⚠️ An earlier revision of this table claimed "0 hard cuts — one continuous render" on the strength of `ffmpeg scenedetect ≥0.03` returning nothing. That was wrong: every shot shares the same high-key white/blue/yellow palette, so the default threshold never trips. Frame-differencing finds the cuts unambiguously. |
 
 ---
 
@@ -43,7 +43,33 @@ A 14.5-second, portrait (4:5) **3D motion-graphics announcement**. A glossy, hig
 
 ## 3. Frame-accurate timeline (the spine)
 
-Times in seconds @30 fps (frame N ⇒ t=(N−1)/30). "Swap" = a 1-frame mechanical keycap change integrated into the moving camera (no cut).
+Times in seconds @30 fps (frame N ⇒ t=(N−1)/30).
+
+> **Correction.** This section previously described the section changes as
+> "1-frame mechanical keycap swaps integrated into the moving camera (no cut)".
+> They are **hard cuts between separate shots**. See §3a.
+
+### 3a. Shot structure — measured, not inferred
+
+Mean absolute frame-to-frame luma difference over the whole clip is **0.0148**.
+Four frames exceed that by 9–20×:
+
+| Cut at frame | Δ | × mean | Boundary |
+|---|---|---|---|
+| **66** | 0.153 | 10.3× | Capability pair → capability column |
+| **147** | 0.132 | 8.9× | Column → Recurly hero |
+| **200** | 0.160 | 10.8× | Recurly hero → Hyperswitch hero |
+| **243** | 0.293 | 19.8× | Hyperswitch hero → wide lockup |
+
+Inspecting each boundary pair (f65/f66, f146/f147, f199/f200, f242/f243) shows a
+complete change of camera position, layout and subject across a single frame.
+These are cuts.
+
+**Shots:** `[0–65] [66–146] [147–199] [200–242] [243–434]` — five shots, each
+with its own continuous camera move. Within a shot the median frame delta is
+~0.012; reproduce the camera per shot and never interpolate across a cut.
+
+*(Reproducible with `repro/audit-frames.py`.)*
 
 | # | t (s) | frames | On-screen (focal in **bold**) | Motion / event |
 |---|---|---|---|---|
@@ -159,10 +185,11 @@ Deterministic **3D render** (Blender/Cinema 4D/Houdini + PBR engine such as Cycl
 
 ## 11. Fidelity checklist (what proves an exact match)
 
-- [ ] 720×900, 30 fps, 14.51 s, no hard cuts.
+- [ ] 720×900, 30 fps, 14.51 s, **4 hard cuts at frames 66 / 147 / 200 / 243**.
 - [ ] Verbatim text set (§2) correct, correctly cased, crisp/stable (no warble).
 - [ ] Recurly (gold, black looped mark) top-left; Hyperswitch (blue, Juspay roundel) bottom-right; Live-Now pill center — final diagonal lockup.
-- [ ] The **3 keycap swaps** at ≈2.13 / 4.83 / 6.60 s and the **press/rise mechanics** (Recurly depress ↔ Hyperswitch rise).
+- [ ] The **4 shot changes** are instantaneous cuts, not dissolves or in-scene swaps. Each shot has its own camera setup and layout.
+- [ ] Per-shot camera travel matches: reference median frame-delta **0.0121**, total motion energy **6.42**.
 - [ ] Icon micro-anims: renewal ring fill, subscriptions card↔plus morph, retries 360° spin, hyperswitch keycap press ~7.5 s.
 - [ ] Live-Now pill **rises 0.333 s** ease-out at ~8.5 s; background fades ~8.9 s.
 - [ ] Shallow DOF with a **traveling** focal plane; high-key soft light; brushed-metal sockets; drifting dappled caustics; end brighten.

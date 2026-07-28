@@ -149,11 +149,34 @@ table.el tbody tr:hover{background:var(--panel2)}
     <span class="chip"><b>30fps</b> · 435 frames</span>
     <span class="chip"><b>14.51s</b></span>
     <span class="chip"><b>H.264</b> · AAC stereo</span>
-    <span class="chip chip--warn">0 hard cuts</span>
+    <span class="chip chip--warn">5 shots &middot; 4 hard cuts</span>
     <span class="chip chip--warn">no voiceover</span>
   </div>
   <button class="themebtn" id="themebtn" aria-label="Toggle theme">◐</button>
 </header>
+
+<section class="sec" style="border-left:4px solid #d97706;padding-left:1rem">
+  <h2>Correction &mdash; shot structure</h2>
+  <p>An earlier version of this dossier stated <b>&ldquo;0 hard cuts &mdash; one
+  continuous render&rdquo;</b>, on the basis that <code>ffmpeg</code> scene
+  detection at threshold 0.03 returned nothing. <b>That was wrong.</b> Every shot
+  shares the same high-key white/blue/yellow palette, so the default threshold
+  never trips.</p>
+  <p>Frame-differencing finds four unambiguous cuts. The clip&rsquo;s mean
+  frame-to-frame luma delta is <b>0.0148</b>; these four frames exceed it by
+  9&ndash;20&times;, and each boundary pair shows a complete change of camera,
+  layout and subject across a single frame:</p>
+  <ul>
+    <li><b>f66</b> &mdash; &Delta;0.153 (10.3&times;) &mdash; capability pair &rarr; capability column</li>
+    <li><b>f147</b> &mdash; &Delta;0.132 (8.9&times;) &mdash; column &rarr; Recurly hero</li>
+    <li><b>f200</b> &mdash; &Delta;0.160 (10.8&times;) &mdash; Recurly hero &rarr; Hyperswitch hero</li>
+    <li><b>f243</b> &mdash; &Delta;0.293 (19.8&times;) &mdash; Hyperswitch hero &rarr; wide lockup</li>
+  </ul>
+  <p>The reference is <b>five shots</b> &mdash;
+  <code>[0&ndash;65] [66&ndash;146] [147&ndash;199] [200&ndash;242] [243&ndash;434]</code>
+  &mdash; each with its own continuous camera move. Any reproduction must cut
+  between them and never interpolate across a cut.</p>
+</section>
 
 <section class="sec">
   <div class="sec__head"><span class="sec__no">01</span><h2>Storyboard — 14 beats</h2><p>Continuous camera; section changes are in-scene <em>keycap swaps</em>, not cuts. Scroll →</p></div>
