@@ -184,3 +184,106 @@ while the camera moves.
   come from tighter contact shadows.
 - **22 soft frames**, all at shot entrances where caps are still rising.
 - Composition within shots 1 and 2 still sits right of the reference's.
+
+---
+
+# Pass 3 — per-second craft analysis
+
+Numeric auditing caught structure (cuts, stalls, clipping, framing) but said
+nothing about *craft*, which is what still read as wrong. `analyze-seconds.mjs`
+walks the clip one second at a time and sends every frame of that second from
+BOTH videos to Gemini, interleaved and labelled, asking for concrete motion and
+design differences. Output in `evidence/per-second/`.
+
+## Treat its specific claims as hypotheses, not facts
+
+The analyser asserted "B frames 90-119 are identical — the shot is a complete
+still". Measured: mean frame delta 0.0128, matching the reference. **False.**
+It also claimed B's blue is `#0000FF` and white `#FFFFFF`; measured (82,129,239)
+and (234,247,246). **Both false.**
+
+But its *directional* readings were right, and measuring them found real bugs.
+Every claim below was confirmed numerically before being acted on.
+
+## The one finding all 15 seconds agreed on
+
+Thirteen of fifteen seconds independently named the same root cause: **lighting**
+— specifically soft area-light shadows, bounced light, and *moving dappled light*
+("light through leaves"). The scene had none of it on objects; the only dapple
+was a static decal on the floor drawn with a basic material, which cannot affect
+anything.
+
+Fixed with a real projected gobo: a spotlight carrying a greyscale texture
+(`goboTexture()` + `SpotLight.map`), so the pattern modulates light landing on
+every surface and drifts across caps, panels and shadows together.
+
+Side effect worth noting: the gobo's drifting light supplied the motion that
+per-shot camera tuning could not. Median frame delta went 0.83× → **1.04×**.
+
+## Colour, measured across the whole clip
+
+| | Before | After | Reference |
+|---|---|---|---|
+| Blue | (87,119,225) | (79,105,217) | (70,106,215) |
+| White | (232,243,240) | (236,233,228) | (243,245,238) |
+| Gold | (228,197,**27**) | (220,195,**71**) | (216,196,**74**) |
+| Overall | (194,208,208) | (196,197,198) | (189,199,201) |
+| **Total abs error** | **92.4** | **77.2** | 0 |
+
+The whites carried a cyan-green cast (R deficient), the gold was acid rather
+than creamy, and every "neutral" in the set was blue-tinted.
+
+## Two corrections to earlier conclusions
+
+**`gl.toneMappingExposure` is a no-op** once EffectComposer owns the render —
+0.92, 0.72 and 0.30 produce byte-identical frames. Earlier commits credited
+exposure for level changes that were actually caused by light-intensity and
+albedo edits made at the same time. Grade is now driven in the composer.
+
+**Highlight clipping.** Chasing contrast blew up to **19% of a frame** to flat
+white against the reference's 0.07%. Blown highlights erase all surface detail
+and are a large part of the "cheap render" read. Caught only by measuring pure-
+white pixel fraction; the earlier `blown` metric (luma > 0.99 on a downscale)
+missed it entirely.
+
+## Candidate scoring, to stop the thrashing
+
+Seven grade/lighting variants were rendered and scored objectively on colour
+error plus a clipping penalty, rather than picked by eye:
+
+| | colour err | blown | score |
+|---|---|---|---|
+| **S (shipped)** | **77.2** | **0.0000** | **77.3** |
+| V | 71.4 | 0.0045 | 78.1 |
+| W | 70.5 | 0.0332 | 120.3 |
+| X | 149.9 | 0.0007 | 150.9 |
+| Y | 114.8 | 0.0186 | 142.7 |
+| Z (AGX tonemap) | 300.5 | 0.0000 | 300.5 |
+| AA (NEUTRAL tonemap) | 131.9 | 0.0796 | 251.2 |
+
+AGX removes clipping completely but desaturates hard — wrong for a high-key
+reference. V and W score marginally better on colour but clip up to 19% of a
+frame, which is the worse defect.
+
+## Final state
+
+| Metric | Reference | Repro |
+|---|---|---|
+| Motion, median frame delta | 0.01208 | **0.01260 (1.04×)** |
+| Per-shot motion | 1.00× | 0.96 / 1.12 / 1.09 / 1.04 / 1.09 |
+| Cuts | 66/147/200/243 | **exact** |
+| Exposure offset | 0 | **+0.0001** |
+| Blown highlights | 0.0002 | **0.0000** |
+| Centre detail | 0.00494 | **0.00743** |
+| Edge clipping / stalls / ghosting | 0 | **0 / 0 / 0** |
+| Colour error | 0 | 77.2 |
+
+The AI plate is now redundant: it was a post blend approximating moving dappled
+light, and the gobo does that in-scene and better. With plate 78.9 vs 77.2
+without, so it ships without.
+
+## Still outstanding
+- Colour error 77.2, mostly whites (−7,−12,−11) and blue's red (+9.6).
+- Brand coverage 0.132 vs 0.147.
+- No true blacks (0.0000 vs 0.00042).
+- 20 soft frames, all at shot entrances.

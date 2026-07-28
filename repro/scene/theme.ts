@@ -13,13 +13,13 @@ export const RES = W / 720;
 export const DUR = 435;
 
 export const C = {
-  bg: '#eef2f7',
-  floor: '#e9edf2',
-  tile: '#eef1f6',
+  bg: '#f1f0ed',
+  floor: '#eceae6',
+  tile: '#f0efec',
   indigo: '#3646e6', // capability icon + label
-  gold: '#ffd11e', // Recurly keycap
+  gold: '#e1d067', // Recurly keycap — reference gold carries far more blue than pure #ffd11e
   goldBar: '#ffc700',
-  blue: '#2e52d6', // Hyperswitch keycap
+  blue: '#1743c9', // Hyperswitch keycap — reference blue is deeper, not lifted
   metalTop: '#cfd3db',
   metalMid: '#b6bcc7',
   metalDark: '#9aa0ad',

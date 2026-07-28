@@ -434,11 +434,11 @@ export function panelPlain(seed = 1): THREE.CanvasTexture {
   const r = rng(seed);
   const base = 222 + Math.floor(r() * 16);
   return tex(512, 512, (ctx) => {
-    ctx.fillStyle = `rgb(${base},${base},${base + 2})`;
+    ctx.fillStyle = `rgb(${base + 3},${base + 1},${base - 2})`;
     ctx.fillRect(0, 0, 512, 512);
     const g = ctx.createLinearGradient(0, 0, 380, 512);
     g.addColorStop(0, 'rgba(255,255,255,0.5)');
-    g.addColorStop(1, 'rgba(206,214,226,0.28)');
+    g.addColorStop(1, 'rgba(218,215,208,0.28)');
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, 512, 512);
   });
@@ -447,7 +447,7 @@ export function panelPlain(seed = 1): THREE.CanvasTexture {
 /** Grey dot-grid panel. */
 export function panelDots(): THREE.CanvasTexture {
   return tex(1024, 1024, (ctx) => {
-    ctx.fillStyle = '#e6eaf0';
+    ctx.fillStyle = '#eae9e4';
     ctx.fillRect(0, 0, 1024, 1024);
     ctx.fillStyle = 'rgba(142,152,170,0.6)';
     for (let a = 0; a < 13; a++)
@@ -462,7 +462,7 @@ export function panelDots(): THREE.CanvasTexture {
 /** Vertically-ribbed brushed-metal panel. */
 export function panelMetal(): THREE.CanvasTexture {
   const t = tex(512, 512, (ctx) => {
-    ctx.fillStyle = '#d6dae2';
+    ctx.fillStyle = '#dcdad5';
     ctx.fillRect(0, 0, 512, 512);
     for (let i = 0; i < 512; i += 7) {
       ctx.fillStyle = 'rgba(255,255,255,0.35)';
@@ -483,7 +483,7 @@ export function panelMetal(): THREE.CanvasTexture {
 /** Document-ish panel: a caption plus ruled lines and a thin brand accent. */
 export function panelDoc(label: string, accent: 'gold' | 'blue' = 'gold'): THREE.CanvasTexture {
   return tex(512, 512, (ctx) => {
-    ctx.fillStyle = '#eef1f6';
+    ctx.fillStyle = '#efeeea';
     ctx.fillRect(0, 0, 512, 512);
     ctx.fillStyle = '#6b7280';
     ctx.font = `400 30px ${FONT}`;
@@ -507,7 +507,7 @@ export function panelDoc(label: string, accent: 'gold' | 'blue' = 'gold'): THREE
 /** Chart panel: the "Success rate 99.999%" sheet seen behind the hero. */
 export function panelChart(): THREE.CanvasTexture {
   return tex(512, 512, (ctx) => {
-    ctx.fillStyle = '#eef1f6';
+    ctx.fillStyle = '#efeeea';
     ctx.fillRect(0, 0, 512, 512);
     ctx.fillStyle = '#8d94a3';
     ctx.font = `400 22px ${FONT}`;
@@ -590,6 +590,41 @@ export function cloudTexture(): THREE.CanvasTexture {
       ctx.fillStyle = g;
       ctx.beginPath();
       ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  });
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  return t;
+}
+
+/**
+ * Gobo map for the key light — soft overlapping pools of light and shade.
+ *
+ * Greyscale and opaque, unlike `cloudTexture()`: this is projected THROUGH a
+ * spotlight (`SpotLight.map`), so it modulates light landing on every surface
+ * rather than being a decal on the floor. Mid-grey is neutral.
+ */
+export function goboTexture(): THREE.CanvasTexture {
+  const t = tex(1024, 1024, (ctx) => {
+    ctx.fillStyle = '#9b9b9b';
+    ctx.fillRect(0, 0, 1024, 1024);
+    const r = rng(90210);
+    for (let k = 0; k < 46; k++) {
+      const x = r() * 1024;
+      const y = r() * 1024;
+      const rad = 120 + r() * 300;
+      const light = k % 2 === 0;
+      const g = ctx.createRadialGradient(x, y, 0, x, y, rad);
+      if (light) {
+        g.addColorStop(0, 'rgba(255,255,255,0.55)');
+        g.addColorStop(1, 'rgba(255,255,255,0)');
+      } else {
+        g.addColorStop(0, 'rgba(40,44,54,0.34)');
+        g.addColorStop(1, 'rgba(40,44,54,0)');
+      }
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(x, y, rad, 0, Math.PI * 2);
       ctx.fill();
     }
   });
