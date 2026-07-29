@@ -1,0 +1,172 @@
+{
+  "sec": 10,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Subtle, slow camera drift panning and zooming out with smooth easing",
+        "Soft light and shadow travel across the card surfaces as the camera moves"
+      ],
+      "b_motion": [
+        "Stiff, linear camera drift with minimal easing",
+        "Static lighting with no dynamic shadow or reflection shifts"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "a_does": "Uses soft, highly diffused global illumination with smooth ambient occlusion, creating realistic soft shadows.",
+          "b_does": "Has harsh, high-contrast contact shadows and flat lighting, making the cards look cheap and disconnected.",
+          "fix": "Increase shadow diffusion/softness by 80% and enable high-quality ambient occlusion to ground the cards.",
+          "severity": 4
+        },
+        {
+          "category": "camera",
+          "a_does": "Employs a wider focal length with dynamic perspective and smooth, organic camera drift easing.",
+          "b_does": "Uses a flatter, more orthographic-like camera perspective with stiff, linear camera drift.",
+          "fix": "Widen the camera FOV by 15 degrees, adjust the camera path to match A's perspective, and apply a smooth cubic ease-in/ease-out.",
+          "severity": 4
+        },
+        {
+          "category": "layout",
+          "a_does": "Keeps background card details (lines, text, borders) extremely faint and low-contrast to maintain focus on the primary cards.",
+          "b_does": "Renders background card elements with high-contrast, dark grey lines, creating a cluttered and distracting composition.",
+          "fix": "Reduce the opacity/contrast of background card graphics and lines by 60% to match the subtle reference style.",
+          "severity": 3
+        },
+        {
+          "category": "material",
+          "a_does": "Applies a subtle sheen/gradient to the blue Hyperswitch card and a warm, vibrant yellow to the Recurly card.",
+          "b_does": "Uses flat, solid colors without material depth or specular highlights.",
+          "fix": "Add a subtle specular map to the card materials and increase the saturation/warmth of the yellow card shader.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Soften the harsh contact shadows and enable high-quality ambient occlusion to match the reference's premium, diffused global illumination."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Slow camera pull-back revealing the structured grid of cards.",
+        "Subtle light sweep across the yellow Recurly card."
+      ],
+      "b_motion": [
+        "Yellow Recurly card pops up from a slot at 10.12s.",
+        "Camera pans back over a chaotic floating collage."
+      ],
+      "absent_in_b": [
+        "Structured keyboard-like grid layout.",
+        "Soft ambient occlusion between keys."
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Arranges cards in a clean, structured 3D keyboard grid.",
+          "b_does": "Piles cards in a chaotic, overlapping floating collage.",
+          "fix": "Realign all cards to a rigid, structured grid layout.",
+          "severity": 4
+        },
+        {
+          "category": "motion",
+          "a_does": "Keeps the yellow Recurly card static on its grid slot.",
+          "b_does": "Animates the Recurly card popping up from beneath a dark blue card at 10.12s.",
+          "fix": "Remove the pop-up animation and keep the card static in its slot.",
+          "severity": 3
+        },
+        {
+          "category": "lighting",
+          "a_does": "Uses soft, diffused global illumination with realistic contact shadows.",
+          "b_does": "Uses flat, high-contrast lighting with harsh, unrealistic shadows.",
+          "fix": "Increase shadow diffusion and add ambient occlusion passes.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Rebuild the scene layout to match the structured keyboard grid of the reference instead of the floating collage."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Smooth diagonal camera pull-back creating perspective shift",
+        "Subtle light sweep across key edges"
+      ],
+      "b_motion": [
+        "Linear camera pull-back with stiff easing",
+        "Central key translates upward and changes texture from blue to yellow at original second 10.1"
+      ],
+      "absent_in_b": [
+        "Tight keyboard grid structure",
+        "Realistic key edge bevel reflections"
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Keys are nested in a tight, realistic keyboard deck.",
+          "b_does": "Keys float disconnectedly in 3D space over a plain background.",
+          "fix": "Assemble keys into a solid grid with minimal gaps.",
+          "severity": 4
+        },
+        {
+          "category": "motion",
+          "a_does": "Yellow Recurly key is static and pre-settled.",
+          "b_does": "Yellow Recurly key pops up and changes color mid-shot.",
+          "fix": "Remove the pop-up transition; keep key static from start.",
+          "severity": 4
+        },
+        {
+          "category": "camera",
+          "a_does": "Camera pulls back with smooth exponential easing.",
+          "b_does": "Camera pulls back with linear, mechanical movement.",
+          "fix": "Apply cubic-bezier easing to camera translation curves.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Re-assemble the floating elements into a tight, cohesive keyboard grid and make the yellow key static."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "a_does": "Uses soft, diffused global illumination with realistic contact shadows.",
+        "b_does": "Uses flat, high-contrast lighting with harsh, unrealistic shadows.",
+        "fix": "Increase shadow diffusion and enable high-quality ambient occlusion.",
+        "severity": 4,
+        "supported_by": 2
+      },
+      {
+        "category": "staging",
+        "a_does": "Arranges cards/keys in a clean, structured 3D keyboard grid layout.",
+        "b_does": "Piles cards/keys in a chaotic, overlapping floating collage disconnected in 3D space.",
+        "fix": "Realign and assemble the elements into a tight, structured keyboard grid.",
+        "severity": 4,
+        "supported_by": 2
+      },
+      {
+        "category": "motion",
+        "a_does": "Keeps the yellow Recurly card/key static and pre-settled in its slot.",
+        "b_does": "Animates the yellow Recurly card/key popping up mid-shot.",
+        "fix": "Remove the pop-up animation and keep the yellow card static from the start.",
+        "severity": 4,
+        "supported_by": 2
+      },
+      {
+        "category": "camera",
+        "a_does": "Employs smooth, organic camera drift with exponential/cubic easing.",
+        "b_does": "Uses stiff, linear camera movement with minimal easing.",
+        "fix": "Apply smooth cubic-bezier easing to the camera translation curves.",
+        "severity": 3,
+        "supported_by": 2
+      }
+    ],
+    "agreed_absent_in_b": [
+      "Structured keyboard grid layout"
+    ],
+    "highest_impact_fix": "Rebuild the scene layout to assemble the floating elements into a tight, structured keyboard grid.",
+    "dropped_unsupported": 4
+  }
+}

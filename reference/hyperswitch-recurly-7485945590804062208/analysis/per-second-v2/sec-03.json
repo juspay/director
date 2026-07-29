@@ -1,0 +1,177 @@
+{
+  "sec": 3,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Slow, organic camera pan and rotation to the right.",
+        "Subtle shifting of soft specular highlights across the keycap surfaces."
+      ],
+      "b_motion": [
+        "Linear, robotic camera drift with uniform speed.",
+        "Static, sharp shadows moving rigidly with the camera."
+      ],
+      "absent_in_b": [
+        "Shallow depth-of-field blur on background elements.",
+        "Brushed-metal texture on the keycap borders."
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Uses a wide-angle perspective camera with shallow depth of field, creating dynamic diagonals and soft background blur.",
+          "b_does": "Uses a flatter camera angle with infinite depth of field, making the composition feel flat and sterile.",
+          "fix": "Increase camera field of view to 50 degrees and enable depth of field with a wide aperture focused on the center card.",
+          "severity": 4
+        },
+        {
+          "category": "material",
+          "a_does": "Features realistic brushed metal borders on the keycaps and subtle plastic roughness.",
+          "b_does": "Uses flat, matte white shaders without texture, giving a cheap clay-render appearance.",
+          "fix": "Apply a brushed metal texture with anisotropic reflections to the keycap borders.",
+          "severity": 3
+        },
+        {
+          "category": "lighting",
+          "a_does": "Employs soft, gradient lighting with rich ambient occlusion in the crevices.",
+          "b_does": "Uses harsh, direct lighting with sharp, dark shadows and no realistic ambient occlusion.",
+          "fix": "Soften the light source radius to blur shadow edges and increase ambient occlusion intensity.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Match the camera's focal length and shallow depth of field to restore the cinematic perspective and background separation seen in the reference."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera translates slowly down-right, maintaining a tight perspective on the vertical key stack.",
+        "Subtle soft shadow movement across the bevels as the camera perspective shifts."
+      ],
+      "b_motion": [
+        "Camera performs a slow, linear pan/zoom-out over the floating cards.",
+        "Static cards relative to the background grid, lacking any secondary organic drift."
+      ],
+      "absent_in_b": [
+        "Continuous solid white block structure housing the three keys.",
+        "Warm, soft-focused background elements from A."
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Presents 'Subscriptions', 'Retries', and 'APMs' on a single, unified white block structure with realistic physical grooves.",
+          "b_does": "Presents them as separate, thin floating cards layered over a dotted grid background.",
+          "fix": "Rebuild the geometry to match the solid, interconnected block layout of A, removing the dotted grid background.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Uses soft, diffused global illumination with deep ambient occlusion in the crevices.",
+          "b_does": "Uses flat, uniform lighting with weak contact shadows, reducing depth.",
+          "fix": "Increase shadow softness, enable high-quality ambient occlusion, and add a warm directional key light.",
+          "severity": 3
+        },
+        {
+          "category": "camera",
+          "a_does": "Employs a tight, dramatic perspective angle with a shallow depth of field focusing on the labels.",
+          "b_does": "Uses a wider, flatter camera lens with a deeper depth of field.",
+          "fix": "Narrow the camera field of view, adjust the angle to match A's perspective tilt, and enable a shallow depth of field.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Rebuild the staging and geometry of the 'Subscriptions/Retries/APMs' shot to use a single unified block structure rather than separate floating cards over a dotted grid."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Slow, continuous diagonal camera drift down and to the right.",
+        "Subtle shift in soft shadows across the card track."
+      ],
+      "b_motion": [
+        "Stiffer diagonal camera pan with linear easing.",
+        "Slightly jittery shadow movement on the flat background."
+      ],
+      "absent_in_b": [
+        "Brushed metal texture with anisotropic reflections on the right panel.",
+        "Soft warm-to-cool color gradient in the global illumination."
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Places cards on a single continuous white track, flanked by a brushed metallic panel on the right.",
+          "b_does": "Places cards on separate segmented blocks over a flat grey and blue grid layout.",
+          "fix": "Rebuild the layout to group the cards on a single white track and add the metallic panel on the right side.",
+          "severity": 4
+        },
+        {
+          "category": "material",
+          "a_does": "Uses a realistic brushed metal shader with anisotropic highlights on the right-hand strip.",
+          "b_does": "Uses a flat, matte grey plastic material with no texture or metallic reflection.",
+          "fix": "Apply an anisotropic metal material with a fine brushed bump map to the right-side panel.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Employs soft, directional studio lighting with a subtle yellow-to-blue color gradient.",
+          "b_does": "Uses flat, uniform white lighting that lacks contrast and color depth.",
+          "fix": "Adjust light sources to introduce a warm key light and a cool fill light, softening the shadow falloff.",
+          "severity": 3
+        },
+        {
+          "category": "camera",
+          "a_does": "Maintains a flatter, more orthographic-leaning perspective with a subtle diagonal drift.",
+          "b_does": "Uses a wider focal length causing noticeable perspective distortion on the grid.",
+          "fix": "Increase the camera's focal length to reduce perspective distortion and match the flatter reference angle.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Recreate the brushed metal panel material and align the card staging to match the single-track layout of the reference."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "staging",
+        "a_does": "Groups the cards or keys on a single, continuous, unified white block or track structure.",
+        "b_does": "Places them on separate, segmented floating cards or blocks over a grid background.",
+        "fix": "Rebuild the geometry to group the elements onto a single, continuous white block structure and remove the segmented grid layout.",
+        "severity": 4,
+        "supported_by": 2
+      },
+      {
+        "category": "lighting",
+        "a_does": "Employs soft, diffused lighting with rich ambient occlusion in the crevices and subtle color gradients.",
+        "b_does": "Uses flat, uniform, or harsh lighting with weak or sharp shadows and minimal ambient occlusion.",
+        "fix": "Soften the light sources, enable high-quality ambient occlusion, and introduce subtle color gradients to the lighting.",
+        "severity": 3,
+        "supported_by": 3
+      },
+      {
+        "category": "camera",
+        "a_does": "Uses a camera with a shallow depth of field, creating a soft background blur.",
+        "b_does": "Uses a camera with a deep or infinite depth of field, leaving background elements in sharp focus.",
+        "fix": "Enable shallow depth of field with a wide aperture focused on the foreground elements.",
+        "severity": 3,
+        "supported_by": 2
+      },
+      {
+        "category": "material",
+        "a_does": "Features a realistic brushed metal material with anisotropic reflections on the borders or panels.",
+        "b_does": "Uses flat, matte shaders without texture or metallic reflections.",
+        "fix": "Apply a brushed metal texture with anisotropic reflections to the metallic borders and panels.",
+        "severity": 3,
+        "supported_by": 2
+      }
+    ],
+    "agreed_absent_in_b": [
+      "Shallow depth-of-field blur on background elements.",
+      "Brushed-metal texture on the borders or panels.",
+      "Continuous, unified white block or track structure housing the keys."
+    ],
+    "highest_impact_fix": "Rebuild the staging geometry to group the cards on a single, continuous white block structure rather than separate segmented cards over a grid.",
+    "dropped_unsupported": 5
+  }
+}

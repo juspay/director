@@ -1,0 +1,10 @@
+[
+  {
+    "sec": 6,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 4,
+    "dropped": 7,
+    "top": "Ensure the logo on the blue card/button is fully visible immediately after the cut instead of animating its opacity late."
+  }
+]

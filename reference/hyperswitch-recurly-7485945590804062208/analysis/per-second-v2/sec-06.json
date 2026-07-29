@@ -1,0 +1,182 @@
+{
+  "sec": 6,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "Slow, elegant camera drift panning slightly right and tilting down over the stacked cards.",
+        "After the cut at 6.67s, the blue Hyperswitch card tilts slightly upwards with a subtle spring ease."
+      ],
+      "b_motion": [
+        "Camera drifts with a faster, less eased translation before the cut.",
+        "After the cut, the Hyperswitch logo abruptly fades/pops onto the blue card face at t=6.9s."
+      ],
+      "absent_in_b": [
+        "Brushed metal anisotropic texture on the card tray.",
+        "Hyperswitch logo on the blue card immediately after the cut."
+      ],
+      "differences": [
+        {
+          "category": "motion",
+          "a_does": "Displays the Hyperswitch logo fully printed on the blue card from the first frame of the cut.",
+          "b_does": "Fades/pops the logo onto the card 0.2s after the cut.",
+          "fix": "Ensure the logo texture is visible on frame 1 of the shot instead of animating its opacity late.",
+          "severity": 4
+        },
+        {
+          "category": "camera",
+          "a_does": "Maintains a tight, low-angle perspective on the stacked cards before the cut, and a close dramatic angle on the Hyperswitch card after.",
+          "b_does": "Uses a much wider, higher-angle camera path, exposing too much background and losing the intimate scale.",
+          "fix": "Adjust camera focal length and bring the camera closer to the cards by 25% to match the tight framing.",
+          "severity": 3
+        },
+        {
+          "category": "material",
+          "a_does": "Renders the card tray with a realistic brushed steel anisotropic metal material.",
+          "b_does": "Renders the tray as a flat, matte grey plastic.",
+          "fix": "Apply an anisotropic roughness map and increase metalness to 1.0 on the tray material.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Ensure the Hyperswitch logo is present on the blue card immediately at the cut instead of fading in late, and tighten the camera framing to match the reference's elegant close-up composition."
+    },
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "Camera drifts diagonally with slow, elegant easing.",
+        "Yellow Recurly card remains static in its keyboard slot.",
+        "After the cut, the blue Hyperswitch card springs upward slightly as it settles."
+      ],
+      "b_motion": [
+        "Camera moves with faster, less eased linear motion.",
+        "Yellow Recurly card floats loosely over the background.",
+        "After the cut, the blue Hyperswitch card rotates and slides into place with stiff easing."
+      ],
+      "absent_in_b": [
+        "The clean keyboard-key grid structure surrounding the cards.",
+        "Soft, realistic ambient occlusion shadows in the card slots."
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Cards are neatly integrated as keys within a structured keyboard grid.",
+          "b_does": "Cards float loosely in a scattered, disorganized 3D layout.",
+          "fix": "Rebuild the grid layout to constrain cards within defined keyboard-like slots.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Soft, diffused warm lighting with deep ambient occlusion in the crevices.",
+          "b_does": "Flat, cool lighting with weak shadows and a lack of depth.",
+          "fix": "Add a warm key light and enable high-quality ambient occlusion contact shadows.",
+          "severity": 3
+        },
+        {
+          "category": "camera",
+          "a_does": "Tight focal length with subtle, elegant diagonal drift.",
+          "b_does": "Wider focal length causing perspective distortion and faster linear camera movement.",
+          "fix": "Increase camera focal length to match A's flatter perspective and slow down the keyframes.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Rebuild the keyboard grid structure to properly stage the cards as keys rather than letting them float loosely in space."
+    },
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "Camera pans and zooms out slowly from the yellow Recurly button.",
+        "After the cut at 6.667s, the camera pans down-right over the blue Juspay button."
+      ],
+      "b_motion": [
+        "Camera pans out faster with less easing before the cut.",
+        "The Juspay logo and text fade into view on the blue button at 6.896s instead of being present instantly."
+      ],
+      "absent_in_b": [
+        "The Juspay logo and text on the blue button from 6.667s to 6.896s."
+      ],
+      "differences": [
+        {
+          "category": "motion",
+          "a_does": "Shows the Juspay logo fully present on the blue button immediately after the cut at 6.667s.",
+          "b_does": "Fades the logo in late at 6.896s, leaving the button blank for the first few frames.",
+          "fix": "Ensure the logo texture is fully visible from the first frame of the shot at 6.667s.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Uses soft, diffused area lighting with realistic ambient occlusion and soft shadow penumbras.",
+          "b_does": "Displays harsh, dark, and sharp shadows under the buttons.",
+          "fix": "Increase the light source size/radius to soften the shadows and adjust shadow density.",
+          "severity": 4
+        },
+        {
+          "category": "material",
+          "a_does": "Features a satin, semi-matte finish on the yellow button with subtle specular highlights.",
+          "b_does": "Renders a flat, highly saturated yellow button lacking texture depth.",
+          "fix": "Adjust the roughness and specular values of the yellow material and desaturate the diffuse color by 10%.",
+          "severity": 3
+        },
+        {
+          "category": "camera",
+          "a_does": "Maintains a wider perspective with the yellow button offset to the right.",
+          "b_does": "Frames the yellow button larger and more centered in the shot.",
+          "fix": "Pull the camera back by approximately 15% and match the tilt angle of the reference.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Make the Juspay logo visible immediately upon the cut at 6.667s to fix the broken visual continuity."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "motion",
+        "a_does": "Displays the logo fully printed on the blue card/button from the first frame of the cut.",
+        "b_does": "Fades or pops the logo onto the card/button late (approximately 0.2 seconds after the cut).",
+        "fix": "Ensure the logo texture is fully visible on frame 1 of the shot instead of animating its opacity late.",
+        "severity": 4,
+        "supported_by": 2
+      },
+      {
+        "category": "camera",
+        "a_does": "Moves the camera with a slow, elegant, and well-eased drift before the cut.",
+        "b_does": "Moves the camera with a faster, less eased, and more linear translation before the cut.",
+        "fix": "Slow down the camera translation and apply smoother easing curves to match the reference.",
+        "severity": 3,
+        "supported_by": 3
+      },
+      {
+        "category": "camera",
+        "a_does": "Maintains a tight, close-up perspective on the cards.",
+        "b_does": "Uses a wider focal length/perspective, exposing too much background.",
+        "fix": "Increase the camera focal length and bring the camera closer to match the tight framing.",
+        "severity": 3,
+        "supported_by": 2
+      },
+      {
+        "category": "lighting",
+        "a_does": "Uses soft, diffused lighting with realistic ambient occlusion shadows in the crevices.",
+        "b_does": "Renders flat or harsh lighting with weak ambient occlusion and poor shadow depth.",
+        "fix": "Enable high-quality ambient occlusion contact shadows and soften the light source to create realistic penumbras.",
+        "severity": 3,
+        "supported_by": 2
+      }
+    ],
+    "agreed_absent_in_b": [
+      "The logo on the blue card/button immediately after the cut."
+    ],
+    "highest_impact_fix": "Ensure the logo on the blue card/button is fully visible immediately after the cut instead of animating its opacity late.",
+    "dropped_unsupported": 7
+  }
+}

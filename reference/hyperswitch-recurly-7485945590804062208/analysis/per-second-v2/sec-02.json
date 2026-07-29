@@ -1,0 +1,179 @@
+{
+  "sec": 2,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        2.208
+      ],
+      "a_motion": [
+        "Camera drifts diagonally over the keyboard keys.",
+        "Hard cut at original t=2.208s.",
+        "Camera pans down-right over a metallic background.",
+        "Three cards ('Subscriptions', 'Retries', 'APMs') pop up vertically with springy easing."
+      ],
+      "b_motion": [
+        "Camera drifts diagonally over the keyboard keys.",
+        "Hard cut at original t=2.208s.",
+        "Camera pans down-right over a cluttered layout.",
+        "Three cards slide in horizontally from the left with flat, linear easing."
+      ],
+      "absent_in_b": [
+        "The clean metallic background plate behind the vertical card stack.",
+        "The vertical spring-up animation of the cards."
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Centers a clean vertical stack of three cards on a metallic background.",
+          "b_does": "Clutters the frame with a large 'Success rate' graph card on the right, forcing the three cards to the left.",
+          "fix": "Remove the 'Success rate' graph card from this shot and center the vertical stack of three cards.",
+          "severity": 4
+        },
+        {
+          "category": "motion",
+          "a_does": "Animates cards popping up vertically with a springy, elastic ease-out.",
+          "b_does": "Animates cards sliding in horizontally from the left with stiff, linear motion.",
+          "fix": "Change the translation axis to vertical and apply a strong spring easing curve with a 10% overshoot.",
+          "severity": 3
+        },
+        {
+          "category": "lighting",
+          "a_does": "Features soft, realistic contact shadows beneath the rising cards.",
+          "b_does": "Features flat, diffuse lighting with weak contact shadows, making cards look pasted on.",
+          "fix": "Increase shadow density and softness to create realistic contact shadows as the cards rise.",
+          "severity": 2
+        }
+      ],
+      "highest_impact_fix": "Re-stage the post-cut shot to remove the 'Success rate' graph card, center the three vertical cards, and animate them popping up vertically with spring easing instead of sliding in horizontally."
+    },
+    {
+      "cuts_in_window": [
+        2.208
+      ],
+      "a_motion": [
+        "Slow camera drift backwards and downwards before the cut.",
+        "After the cut, camera pans down-right while Subscriptions, Retries, and APMs cards slide up vertically with a staggered offset."
+      ],
+      "b_motion": [
+        "Camera pans back-left before the cut.",
+        "After the cut, camera pans down-right while Subscriptions, Retries, and APMs cards slide in diagonally from the left."
+      ],
+      "absent_in_b": [
+        "Brushed metal background texture on the right side of the second shot.",
+        "Clean vertical column alignment for the three cards."
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Arranges Subscriptions, Retries, and APMs in a clean, centered vertical column on a dedicated panel.",
+          "b_does": "Staggers the three cards diagonally over a busy background containing a Success rate chart and blue squares.",
+          "fix": "Remove the chart and blue squares from the background of the second shot. Align the three cards into a single vertical column.",
+          "severity": 4
+        },
+        {
+          "category": "motion",
+          "a_does": "Slides the cards vertically upwards with a smooth ease-out.",
+          "b_does": "Slides the cards in diagonally from the left with a linear, abrupt motion.",
+          "fix": "Restrict card animation to the Y-axis (vertical slide) and apply a cubic-bezier ease-out curve.",
+          "severity": 4
+        },
+        {
+          "category": "material",
+          "a_does": "Features a realistic brushed metal texture on the right-side background panel.",
+          "b_does": "Uses a flat grey/white background with a dotted pattern instead of the metal texture.",
+          "fix": "Replace the dotted pattern with a brushed metal texture on the right background panel.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Re-stage the second shot to align the Subscriptions, Retries, and APMs cards in a clean vertical column, removing the incorrect background chart and blue squares."
+    },
+    {
+      "cuts_in_window": [
+        2.208
+      ],
+      "a_motion": [
+        "Camera: Smooth, continuous diagonal pan and tilt over the grid.",
+        "Subtle light reflection shifts across the matte plastic key surfaces."
+      ],
+      "b_motion": [
+        "Camera: Linear, less organic pan and tilt.",
+        "Objects: 'Subscriptions', 'Retries', and 'APMs' cards slide in sequentially from the left side of the frame between t=2.33s and t=2.58s."
+      ],
+      "absent_in_b": [
+        "Clean, solid-color key surfaces without dot patterns.",
+        "Integrated, embossed card designs on the key faces."
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Displays the 'Subscriptions', 'Retries', and 'APMs' cards as pre-existing, integrated elements on the key block.",
+          "b_does": "Animates these cards sliding in sequentially from the left margin after the cut.",
+          "fix": "Remove the slide-in keyframes for the three cards and place them statically on the block to match the reference layout.",
+          "severity": 4
+        },
+        {
+          "category": "material",
+          "a_does": "Uses clean, solid matte white plastic keys with subtle bevels.",
+          "b_does": "Adds a grey dot-grid texture pattern to the key faces and uses floating plates with harsh drop shadows.",
+          "fix": "Remove the dot-grid texture map and integrate the card designs directly into the key geometry.",
+          "severity": 3
+        },
+        {
+          "category": "lighting",
+          "a_does": "Employs soft, directional light casting realistic contact shadows in the gaps between keys.",
+          "b_does": "Uses flat, overly bright ambient lighting with weak contact shadows.",
+          "fix": "Increase directional light contribution and enable high-quality contact shadows in the crevices.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Disable the sequential slide-in animation of the 'Subscriptions', 'Retries', and 'APMs' cards, placing them statically on the key block to match the reference staging."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "staging",
+        "a_does": "Arranges the Subscriptions, Retries, and APMs cards in a clean, centered vertical column.",
+        "b_does": "Clutters the frame with a 'Success rate' graph/chart, disrupting the vertical alignment of the cards.",
+        "fix": "Remove the 'Success rate' graph/chart and align the three cards in a clean, centered vertical column.",
+        "severity": 4,
+        "supported_by": 2
+      },
+      {
+        "category": "motion",
+        "a_does": "Animates the cards rising vertically with a smooth ease-out or spring curve.",
+        "b_does": "Animates the cards sliding in horizontally or diagonally from the left with a stiff, linear motion.",
+        "fix": "Restrict the card animation to the vertical axis and apply a smooth ease-out or spring curve.",
+        "severity": 4,
+        "supported_by": 2
+      },
+      {
+        "category": "material",
+        "a_does": "Features clean, solid background surfaces with a realistic brushed metal texture.",
+        "b_does": "Uses a flat background with an incorrect dotted or dot-grid pattern.",
+        "fix": "Remove the dotted pattern and apply a clean, brushed metal texture to the background panel.",
+        "severity": 3,
+        "supported_by": 2
+      },
+      {
+        "category": "lighting",
+        "a_does": "Employs soft, realistic contact shadows beneath the cards and in crevices.",
+        "b_does": "Uses flat, diffuse lighting with weak or unrealistic contact shadows.",
+        "fix": "Increase directional light contribution and shadow softness to produce realistic contact shadows.",
+        "severity": 3,
+        "supported_by": 2
+      }
+    ],
+    "agreed_absent_in_b": [
+      "The clean, brushed metal background texture behind the cards.",
+      "The clean vertical column alignment of the three cards."
+    ],
+    "highest_impact_fix": "Re-stage the shot to remove the incorrect 'Success rate' chart, align the Subscriptions, Retries, and APMs cards in a clean vertical column, and animate them rising vertically with a smooth ease-out instead of sliding in horizontally.",
+    "dropped_unsupported": 3
+  }
+}

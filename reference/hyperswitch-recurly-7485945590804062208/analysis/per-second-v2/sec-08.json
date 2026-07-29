@@ -1,0 +1,176 @@
+{
+  "sec": 8,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        8.104
+      ],
+      "a_motion": [
+        "Before cut: Camera pans slowly right-to-left over the blue Juspay card.",
+        "After cut: Camera pulls back and pans left, while floating cards (Recurly, Juspay, Subscriptions, Success Rate) drift smoothly in 3D space with subtle rotational easing."
+      ],
+      "b_motion": [
+        "Before cut: Camera pans right-to-left over the blue card.",
+        "After cut: Camera pulls back linearly. Floating cards drift with rigid, linear translation and minimal rotation; the 'Live Now' pill slides up with stiff easing."
+      ],
+      "absent_in_b": [
+        "Soft, warm directional light reflections on the card surfaces.",
+        "Deep ambient occlusion shadows between overlapping floating cards."
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Arranges floating cards with varied 3D rotations (X/Y tilts), creating a dynamic depth of field.",
+          "b_does": "Aligns cards mostly flat and parallel to the camera plane, resulting in a sterile, grid-like layout.",
+          "fix": "Rotate the floating cards individually by 10 to 15 degrees on their X and Y axes to break the flat grid alignment.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Uses soft, warm directional lighting with rich ambient occlusion and soft contact shadows.",
+          "b_does": "Uses flat, cool ambient lighting with weak, sharp shadows, making the cards look detached.",
+          "fix": "Add a warm key light from the top-left, increase shadow blur radius to 25%, and enable strong ambient occlusion.",
+          "severity": 4
+        },
+        {
+          "category": "motion",
+          "a_does": "Animates card drift and the 'Live Now' pill with smooth, organic bezier easing.",
+          "b_does": "Animates card drift linearly, making the motion feel robotic and stiff.",
+          "fix": "Apply ease-in-out bezier curves to all translation and rotation keyframes for the floating elements.",
+          "severity": 3
+        },
+        {
+          "category": "color",
+          "a_does": "Presents a warm, off-white background with subtle colorful color bleeding.",
+          "b_does": "Presents a cold, sterile grey-white background.",
+          "fix": "Adjust the background material color to a warm cream tone and add a subtle colorful gradient overlay.",
+          "severity": 2
+        }
+      ],
+      "highest_impact_fix": "Tilt the floating cards on their X and Y axes to match the dynamic 3D staging of the reference, and add soft directional key lighting with ambient occlusion."
+    },
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "Subtle camera rotation over the blue card before the cut.",
+        "Smooth diagonal camera drift post-cut with cards translating across the frame."
+      ],
+      "b_motion": [
+        "Camera pan over the blue card before the cut.",
+        "Cards slide in from off-screen with stiffer, linear easing post-cut."
+      ],
+      "absent_in_b": [
+        "Soft ambient occlusion shadows between overlapping card layers.",
+        "Subtle specular reflections on card surfaces."
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Positions the yellow and blue cards partially in-frame immediately after the cut.",
+          "b_does": "Starts with a mostly empty layout, sliding the colored cards in late.",
+          "fix": "Reposition the yellow and blue cards at frame 243 to match the reference composition.",
+          "severity": 3
+        },
+        {
+          "category": "lighting",
+          "a_does": "Features soft, diffuse shadows and realistic contact occlusion.",
+          "b_does": "Displays flat lighting with harsh, dark, and uniform shadows.",
+          "fix": "Increase shadow blur and add an ambient occlusion pass to soften card contact areas.",
+          "severity": 3
+        },
+        {
+          "category": "motion",
+          "a_does": "Uses smooth, organic easing for the card translation.",
+          "b_does": "Uses stiff, linear easing that makes the card movement feel robotic.",
+          "fix": "Adjust the keyframe interpolation curves to add more ease-in and ease-out.",
+          "severity": 2
+        }
+      ],
+      "highest_impact_fix": "Adjust the post-cut staging at t=8.1s so the yellow and blue cards are immediately visible in their correct starting positions."
+    },
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "Before cut: Camera slowly tilts and pans around the blue Juspay card.",
+        "After cut: Camera slowly zooms out while cards drift with a gentle, organic hover.",
+        "Moving dappled shadows from foliage sweep across the entire scene."
+      ],
+      "b_motion": [
+        "Before cut: Camera tilts stiffly with linear easing.",
+        "After cut: Cards animate in sequentially (yellow card slides in at 8.25s, blue card at 8.4s, Live Now pill at 8.7s).",
+        "Lighting and shadows remain completely static."
+      ],
+      "absent_in_b": [
+        "Dynamic, moving dappled leaf shadows across the scene.",
+        "Pre-staged layout of the floating cards immediately after the cut."
+      ],
+      "differences": [
+        {
+          "category": "motion",
+          "a_does": "Presents the main cards pre-staged and drifting gently from the start of the cut at 8.1s.",
+          "b_does": "Animates the cards sequentially (sliding in one by one between 8.25s and 8.7s).",
+          "fix": "Remove the slide-in entry keyframes; pre-position the cards so they are already floating at 8.1s.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Uses moving dappled light and leaf shadows to create an organic, high-end look.",
+          "b_does": "Uses flat, static studio lighting with no shadow movement.",
+          "fix": "Add an animated light gobo/shadow map simulating wind-blown foliage over the scene.",
+          "severity": 4
+        },
+        {
+          "category": "camera",
+          "a_does": "Employs a dynamic perspective angle with a shallow depth of field.",
+          "b_does": "Uses a flatter, more orthographic angle with a deep depth of field.",
+          "fix": "Increase camera perspective tilt and widen the aperture to blur background cards.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Remove the sequential slide-in animations for the cards after the 8.1s cut, keeping them pre-staged and drifting to match the reference's pacing."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "staging",
+        "a_does": "Pre-stages the floating cards so they are already in-frame and drifting immediately after the cut.",
+        "b_does": "Starts with an empty layout and slides the cards in late or sequentially after the cut.",
+        "fix": "Remove the slide-in entry animations and pre-position the cards so they are already floating in-frame at the start of the cut.",
+        "severity": 4,
+        "supported_by": 2
+      },
+      {
+        "category": "lighting",
+        "a_does": "Uses soft, diffuse lighting with rich ambient occlusion and soft contact shadows.",
+        "b_does": "Uses flat lighting with harsh, dark, or weak shadows and lacks realistic contact occlusion.",
+        "fix": "Increase shadow blur and enable an ambient occlusion pass to soften contact areas between overlapping elements.",
+        "severity": 4,
+        "supported_by": 2
+      },
+      {
+        "category": "motion",
+        "a_does": "Animates card movement with smooth, organic bezier easing.",
+        "b_does": "Animates card movement with stiff, linear easing, making the motion feel robotic.",
+        "fix": "Apply ease-in-out bezier curves to the translation and rotation keyframes of the floating elements.",
+        "severity": 3,
+        "supported_by": 2
+      }
+    ],
+    "agreed_absent_in_b": [
+      "Ambient occlusion shadows between overlapping cards.",
+      "Specular reflections on card surfaces."
+    ],
+    "highest_impact_fix": "Remove the sequential slide-in animations for the cards after the 8.1s cut, pre-positioning them so they are already floating in-frame immediately after the cut.",
+    "dropped_unsupported": 6
+  }
+}

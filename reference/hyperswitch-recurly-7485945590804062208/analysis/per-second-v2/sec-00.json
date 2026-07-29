@@ -1,0 +1,159 @@
+{
+  "sec": 0,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera slowly pans and zooms out with a smooth, organic ease.",
+        "The 'Secure Payments' card rises smoothly from its slot, casting a soft, realistic contact shadow."
+      ],
+      "b_motion": [
+        "Camera moves with a more linear, mechanical pan.",
+        "The 'Secure Payments' card is absent initially, then abruptly slides up and pops into view at original 0.12s."
+      ],
+      "absent_in_b": [
+        "The 'Secure Payments' card during the first 0.12 seconds.",
+        "Clean, solid-beveled background plates (replaced by dotted grid patterns in B)."
+      ],
+      "differences": [
+        {
+          "category": "motion",
+          "a_does": "The 'Secure Payments' card is present at start and rises with elegant, eased timing.",
+          "b_does": "The card is completely missing for the first 0.12s, then pops up with a stiff, linear motion.",
+          "fix": "Ensure the card is present from frame 0 and ease the rise animation over 15 frames.",
+          "severity": 4
+        },
+        {
+          "category": "staging",
+          "a_does": "Uses clean, solid-colored plastic plates for the keyboard structure.",
+          "b_does": "Introduces a distracting dotted grid pattern on the background plates.",
+          "fix": "Remove the dotted texture map and use a clean, solid white material with subtle roughness.",
+          "severity": 3
+        },
+        {
+          "category": "lighting",
+          "a_does": "Renders soft, diffuse ambient occlusion and contact shadows beneath the rising card.",
+          "b_does": "Renders sharp, dark, unrealistic drop shadows that lack proper light bounce.",
+          "fix": "Increase shadow softness/light source radius and enable global illumination.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Fix the entry animation of the 'Secure Payments' card so it is present from the start and rises with smooth easing instead of popping in late."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Smooth camera drift downwards and right.",
+        "Subtle reflection shifts on keys."
+      ],
+      "b_motion": [
+        "Stiffer camera drift.",
+        "Secure Payments card slides up onto the key at original 0.12s."
+      ],
+      "absent_in_b": [
+        "Secure Payments card at the very start of the video."
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Secure Payments card is present on the key from the first frame.",
+          "b_does": "Key starts blank, and the card animates in by sliding up at original 0.12s.",
+          "fix": "Remove the slide-in animation of the card and make it visible from frame 0.",
+          "severity": 4
+        },
+        {
+          "category": "material",
+          "a_does": "Clean background keys with minimal, low-contrast textures.",
+          "b_does": "Background keys have a prominent, high-contrast grey dotted pattern.",
+          "fix": "Remove or fade the dotted pattern on the background keys.",
+          "severity": 3
+        },
+        {
+          "category": "lighting",
+          "a_does": "Soft, realistic ambient occlusion and diffuse shadows.",
+          "b_does": "Harsh, high-contrast drop shadows under the card.",
+          "fix": "Soften shadow maps and increase light diffusion.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Remove the slide-in animation of the Secure Payments card so it is present from the first frame."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Subtle, smooth camera drift downwards and to the right.",
+        "Static raised tiles with soft shadow casting."
+      ],
+      "b_motion": [
+        "Camera drift is faster and less smooth.",
+        "The 'Secure Payments' tile rises up abruptly from a flat state at original 0.12s."
+      ],
+      "absent_in_b": [
+        "Raised state of 'Secure Payments' tile at start.",
+        "Text and icon on 'Secure Payments' tile before original 0.12s."
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Secure Payments tile is already raised and fully visible at the start.",
+          "b_does": "Tile starts flat and empty, popping up at original 0.12s.",
+          "fix": "Set the initial state of the tile to be raised and fully populated from frame 0.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Soft, warm studio lighting with rich contact shadows under the keys.",
+          "b_does": "Flat, cool, washed-out lighting with weak shadows.",
+          "fix": "Add a warm key light from the top-left and increase ambient occlusion/shadow depth by 30%.",
+          "severity": 3
+        },
+        {
+          "category": "camera",
+          "a_does": "Slow, high-inertia cinematic drift.",
+          "b_does": "Faster, more linear camera movement with different framing.",
+          "fix": "Match the slow camera path and apply heavy easing to the translation curves.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Ensure the 'Secure Payments' tile is fully raised and populated from the very first frame to match the reference staging."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "staging",
+        "a_does": "The 'Secure Payments' card is present and visible from the first frame.",
+        "b_does": "The card is missing initially and abruptly animates or pops in at 0.12 seconds.",
+        "fix": "Ensure the 'Secure Payments' card is present and visible from frame 0.",
+        "severity": 4,
+        "supported_by": 3
+      },
+      {
+        "category": "material",
+        "a_does": "Uses clean, solid-colored background plates or keys with minimal texture.",
+        "b_does": "Introduces a distracting, high-contrast dotted grid pattern on the background plates or keys.",
+        "fix": "Remove the dotted texture map and use a clean, solid material.",
+        "severity": 3,
+        "supported_by": 2
+      },
+      {
+        "category": "lighting",
+        "a_does": "Renders soft, diffuse ambient occlusion and contact shadows.",
+        "b_does": "Renders harsh, sharp, high-contrast drop shadows under the card.",
+        "fix": "Soften the shadow maps and increase light diffusion to create realistic ambient occlusion.",
+        "severity": 3,
+        "supported_by": 2
+      }
+    ],
+    "agreed_absent_in_b": [
+      "The 'Secure Payments' card/tile at the start of the video (before 0.12 seconds)"
+    ],
+    "highest_impact_fix": "Ensure the 'Secure Payments' card is present and visible from the very first frame.",
+    "dropped_unsupported": 2
+  }
+}

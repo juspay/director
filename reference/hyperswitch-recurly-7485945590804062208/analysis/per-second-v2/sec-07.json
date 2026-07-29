@@ -1,0 +1,163 @@
+{
+  "sec": 7,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera slowly zooms out and pans up-left with smooth easing.",
+        "The blue 'JUSPAY hyperswitch' card extrudes upwards from its recess.",
+        "Subtle specular reflection sweeps across the glossy blue card surface."
+      ],
+      "b_motion": [
+        "Camera zooms out with a wider, more skewed perspective.",
+        "The blue card rises from its recess.",
+        "Static lighting on the card with no specular movement."
+      ],
+      "absent_in_b": [
+        "Metallic silver border around the card recess.",
+        "Clean isometric grid alignment of background cards."
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Background cards are aligned to a clean, tight isometric grid.",
+          "b_does": "Background cards are scattered, rotated haphazardly, and cluttered.",
+          "fix": "Align all background elements to a strict isometric grid matching the reference angles.",
+          "severity": 4
+        },
+        {
+          "category": "material",
+          "a_does": "Blue card has a semi-glossy finish with specular highlights and a metallic silver recess frame.",
+          "b_does": "Blue card is completely matte, and the recess frame is a flat dark grey.",
+          "fix": "Add a glossy specular map to the blue card and apply a metallic chrome material to the recess border.",
+          "severity": 4
+        },
+        {
+          "category": "camera",
+          "a_does": "Camera maintains a high-angle, elegant isometric perspective during the zoom-out.",
+          "b_does": "Camera angle is lower, more skewed, and has a wider field of view.",
+          "fix": "Increase focal length to reduce perspective distortion and match the high-angle pitch of the reference camera.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Re-align the background cards to a clean isometric grid and adjust the camera's focal length to eliminate perspective distortion."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Slow, smooth camera dolly-out",
+        "Subtle glossy reflection sweep across the blue JUSPAY card"
+      ],
+      "b_motion": [
+        "Fast, mechanical camera dolly-out with abrupt easing",
+        "Static reflections on the blue card surface"
+      ],
+      "absent_in_b": [
+        "Soft ambient occlusion in card crevices",
+        "Subtle metallic sheen on the card edges"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Slow, smooth, elegant dolly-out with organic easing.",
+          "b_does": "Fast, linear, mechanical dolly-out that feels rushed and lacks proper ease-in/ease-out curves.",
+          "fix": "Adjust camera animation curves in the graph editor to match the slower, more gradual dolly-out speed of A, reducing speed by approximately 40%.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Soft, diffused studio lighting with realistic ambient occlusion in the card slots and subtle glossy reflections on the blue card.",
+          "b_does": "Harsh, direct lighting that blows out the white cards and lacks realistic contact shadows in the crevices.",
+          "fix": "Soften the key light source by increasing the area light size and enable a stronger ambient occlusion pass to ground the cards.",
+          "severity": 3
+        },
+        {
+          "category": "staging",
+          "a_does": "Clean, tight composition focusing closely on the JUSPAY hyperswitch card with balanced surrounding elements.",
+          "b_does": "Wider, misaligned framing showing too much of the Billing card at the bottom and empty spaces.",
+          "fix": "Adjust the camera's focal length and initial position to match the tighter, more centered framing of the reference.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Smooth out the camera dolly-out animation curves to match the elegant, slow easing of the reference."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera slowly zooms out and pans across the 'JUSPAY hyperswitch' key with a dynamic, low-angle tilt.",
+        "Soft shadows shift subtly across the keyboard grid."
+      ],
+      "b_motion": [
+        "Camera pans back from the blue button with a flatter, more top-down perspective.",
+        "Harsh drop shadow moves linearly beneath the floating blue card."
+      ],
+      "absent_in_b": [
+        "The tight, cohesive keyboard-like grid layout.",
+        "Soft ambient occlusion and realistic matte plastic key textures."
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Uses a dynamic, highly tilted low-angle perspective to emphasize 3D depth.",
+          "b_does": "Uses a flatter, more top-down camera angle that reduces the sense of depth.",
+          "fix": "Tilt the camera down by 15 degrees and lower its height to match the reference perspective.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Displays soft, diffused contact shadows and realistic ambient occlusion.",
+          "b_does": "Displays harsh, dark, and sharp drop shadows under the keys.",
+          "fix": "Increase the light source size to soften shadow edges and reduce shadow density by 40%.",
+          "severity": 4
+        },
+        {
+          "category": "layout",
+          "a_does": "Arranges keys in a tight, overlapping keyboard grid.",
+          "b_does": "Spaces keys far apart, leaving large gaps that expose a flat grey background.",
+          "fix": "Reposition the keys closer together to eliminate the wide gaps.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle to a lower, more dramatic tilt and soften the harsh drop shadows under the keys."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "staging",
+        "a_does": "Background elements are aligned to a clean, tight isometric grid.",
+        "b_does": "Background elements are scattered, poorly spaced, or cluttered with large gaps.",
+        "fix": "Align all background elements to a tight, cohesive isometric grid.",
+        "severity": 4,
+        "supported_by": 2
+      },
+      {
+        "category": "lighting",
+        "a_does": "Soft, diffused lighting with realistic ambient occlusion and soft contact shadows.",
+        "b_does": "Harsh, direct lighting with dark, sharp drop shadows and lacking realistic ambient occlusion.",
+        "fix": "Soften the key light source to create diffused shadows and enable a stronger ambient occlusion pass.",
+        "severity": 4,
+        "supported_by": 2
+      },
+      {
+        "category": "camera",
+        "a_does": "Clean, tight camera framing with a narrower field of view.",
+        "b_does": "Wider, misaligned framing with perspective distortion.",
+        "fix": "Adjust the camera's focal length and position to achieve a tighter, more centered framing.",
+        "severity": 3,
+        "supported_by": 2
+      }
+    ],
+    "agreed_absent_in_b": [
+      "Soft ambient occlusion in card crevices",
+      "Clean, tight isometric grid layout of background elements"
+    ],
+    "highest_impact_fix": "Align the background elements to a tight isometric grid, soften the lighting to introduce realistic ambient occlusion, and adjust the camera's focal length to correct the framing.",
+    "dropped_unsupported": 6
+  }
+}

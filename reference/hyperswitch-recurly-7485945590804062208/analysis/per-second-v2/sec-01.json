@@ -1,0 +1,166 @@
+{
+  "sec": 1,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera slowly zooms out and tilts down-right with smooth easing.",
+        "Subtle shadow movement across the key crevices as camera perspective shifts."
+      ],
+      "b_motion": [
+        "Camera zooms out with a flatter, more linear motion path."
+      ],
+      "absent_in_b": [
+        "Shallow depth of field blur on background elements.",
+        "Clean, solid matte texture on the keyboard base."
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Uses clean, solid matte grey/white keyboard keys.",
+          "b_does": "Displays a blue polka-dot pattern on the keyboard keys.",
+          "fix": "Remove the polka-dot texture map from the keyboard base material.",
+          "severity": 4
+        },
+        {
+          "category": "camera",
+          "a_does": "Employs a shallow depth of field with a dynamic three-quarter perspective tilt.",
+          "b_does": "Uses a flatter camera angle with infinite depth of field, keeping everything sharp.",
+          "fix": "Enable depth of field, set a wider aperture, and tilt the camera angle down by approximately 10 degrees.",
+          "severity": 4
+        },
+        {
+          "category": "layout",
+          "a_does": "Presents clean text for 'Secure Payments' without decorative lines.",
+          "b_does": "Adds a thin blue underline beneath the 'Secure Payments' text.",
+          "fix": "Remove the underline vector element from the card graphic template.",
+          "severity": 3
+        },
+        {
+          "category": "lighting",
+          "a_does": "Features soft, warm directional lighting with rich ambient occlusion in crevices.",
+          "b_does": "Uses flat, uniform ambient lighting with weak contact shadows.",
+          "fix": "Add a warm directional key light and increase ambient occlusion intensity in render settings.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Remove the polka-dot pattern from the keyboard keys and adjust the camera's depth of field to match the reference's cinematic focus."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera performs a slow, elegant pan upwards and slightly right with a subtle rotation.",
+        "Soft shadow gradients shift across the matte keycap surfaces as the perspective changes."
+      ],
+      "b_motion": [
+        "Camera pans diagonally with a flatter, more linear motion path.",
+        "No visible shifting of shadow gradients on the keycap surfaces."
+      ],
+      "absent_in_b": [
+        "Shallow depth of field blurring the background elements.",
+        "Warm-to-cool lighting gradients across the white keycaps."
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Uses a dynamic low-angle perspective with strong perspective distortion and a shallow depth of field.",
+          "b_does": "Uses a flat, nearly isometric camera angle with infinite focus.",
+          "fix": "Adjust the camera focal length to match A's dramatic perspective and enable depth of field to blur the background.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Features soft, diffused ambient occlusion and contact shadows under the card edges.",
+          "b_does": "Lacks soft contact shadows, making the cards look flat and detached from the base.",
+          "fix": "Enable ambient occlusion and soften the contact shadows beneath the card edges.",
+          "severity": 4
+        },
+        {
+          "category": "staging",
+          "a_does": "Arranges the keys with a natural, slightly organic tilt relative to the frame.",
+          "b_does": "Aligns the keys strictly to a rigid, sterile grid.",
+          "fix": "Rotate the entire key layout slightly to break the rigid grid alignment.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Match the camera's focal length and dynamic low-angle perspective from A, and enable a shallow depth of field to restore depth."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Slow, elegant camera drift panning across the card layout.",
+        "Subtle light sweep shifting across the matte white plastic surfaces."
+      ],
+      "b_motion": [
+        "Camera pans with stiffer, more linear interpolation.",
+        "Static lighting with no dynamic specular highlight shifts."
+      ],
+      "absent_in_b": [
+        "Soft, warm volumetric glow and subtle lens diffusion.",
+        "Refined geometric sans-serif typeface on the cards."
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Uses a clean white background with extremely subtle, small recessed pinholes.",
+          "b_does": "Features a highly distracting, high-contrast blue dotted grid pattern.",
+          "fix": "Remove the blue dots from the background texture and replace with a subtle, low-contrast micro-hole pattern.",
+          "severity": 3
+        },
+        {
+          "category": "lighting",
+          "a_does": "Employs soft, diffused lighting with a warm volumetric glow.",
+          "b_does": "Uses flat, cool-toned lighting with sharper, sterile shadows.",
+          "fix": "Add a warm volumetric light source from the top-right and apply a subtle diffusion pass.",
+          "severity": 3
+        },
+        {
+          "category": "typography",
+          "a_does": "Uses a clean geometric sans-serif font with generous letter-spacing.",
+          "b_does": "Uses a default sans-serif font with tighter tracking.",
+          "fix": "Match the font to a geometric sans-serif and increase tracking by 15%.",
+          "severity": 2
+        }
+      ],
+      "highest_impact_fix": "Replace the high-contrast dotted background texture in B with the clean, subtle pinhole texture of A to eliminate the distracting pattern."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "a_does": "Employs a dynamic perspective tilt with a shallow depth of field.",
+        "b_does": "Uses a flatter, nearly isometric camera angle with infinite depth of field.",
+        "fix": "Adjust the camera angle and focal length to match A's dynamic perspective, and enable a shallow depth of field to blur the background.",
+        "severity": 4,
+        "supported_by": 2
+      },
+      {
+        "category": "staging",
+        "a_does": "Uses clean, solid white or grey surfaces.",
+        "b_does": "Displays a distracting blue dot or polka-dot pattern on the surfaces.",
+        "fix": "Remove the blue dot/polka-dot texture map from the materials.",
+        "severity": 4,
+        "supported_by": 2
+      },
+      {
+        "category": "lighting",
+        "a_does": "Features soft, warm, diffused lighting with rich ambient occlusion and soft contact shadows.",
+        "b_does": "Uses flat, uniform lighting with weak or sterile contact shadows.",
+        "fix": "Add a warm directional key light and enable/increase ambient occlusion to soften contact shadows.",
+        "severity": 3,
+        "supported_by": 3
+      }
+    ],
+    "agreed_absent_in_b": [
+      "Shallow depth of field blur on background elements."
+    ],
+    "highest_impact_fix": "Adjust the camera to match the dynamic perspective and shallow depth of field of A, and remove the distracting blue dot pattern from B's textures.",
+    "dropped_unsupported": 7
+  }
+}

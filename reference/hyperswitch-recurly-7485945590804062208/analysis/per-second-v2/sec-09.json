@@ -1,0 +1,164 @@
+{
+  "sec": 9,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera slowly dollies out and pans to reveal the keyboard grid.",
+        "Subtle specular reflections sweep across the matte keycap surfaces."
+      ],
+      "b_motion": [
+        "Camera zooms out from a flat, layered collage of cards.",
+        "No dynamic lighting or surface reflections are visible on the cards."
+      ],
+      "absent_in_b": [
+        "The physical 3D keyboard grid structure and keycap recesses.",
+        "Realistic contact shadows and ambient occlusion beneath the keys."
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Embeds the buttons as physical keycaps within a structured 3D keyboard grid.",
+          "b_does": "Floats the cards as flat, overlapping layers in a chaotic collage.",
+          "fix": "Rebuild the scene layout to place the buttons into a solid 3D grid frame with proper recesses.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Uses soft directional lighting with rich contact shadows in the recesses.",
+          "b_does": "Uses flat, ambient lighting with almost no contact shadows.",
+          "fix": "Add a directional key light and enable high-quality ambient occlusion to ground the keys.",
+          "severity": 3
+        },
+        {
+          "category": "camera",
+          "a_does": "Maintains a low-angle perspective looking across the keys to emphasize depth.",
+          "b_does": "Uses a flatter, more top-down perspective.",
+          "fix": "Lower the camera angle and match the focal length of the reference camera.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Rebuild the staging to place the buttons into a structured 3D keyboard grid instead of floating them as flat, overlapping layers."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera pans back and rotates to reveal the grid.",
+        "Cards settle into grid slots with soft easing.",
+        "Soft light sweeps across tactile key surfaces."
+      ],
+      "b_motion": [
+        "Camera zooms out flatly.",
+        "Floating cards drift on a 2D plane.",
+        "Drop shadows move uniformly."
+      ],
+      "absent_in_b": [
+        "Tactile 3D keyboard grid structure",
+        "Ambient occlusion in key recesses",
+        "Perspective depth of field"
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Arranges elements as physical 3D keys in a grid.",
+          "b_does": "Floats elements as flat 2D cards stacked loosely.",
+          "fix": "Rebuild the scene as a cohesive 3D grid with recessed slots.",
+          "severity": 3
+        },
+        {
+          "category": "camera",
+          "a_does": "Uses a low-angle perspective camera with depth of field.",
+          "b_does": "Uses a flat, high-angle camera with linear zoom.",
+          "fix": "Lower camera angle by 15 degrees and enable depth of field.",
+          "severity": 3
+        },
+        {
+          "category": "lighting",
+          "a_does": "Features soft ambient occlusion and directional light.",
+          "b_does": "Uses flat lighting with uniform 2D drop shadows.",
+          "fix": "Add soft directional light and enable ambient occlusion.",
+          "severity": 2
+        }
+      ],
+      "highest_impact_fix": "Reconstruct the flat floating cards into a physical 3D keyboard grid layout."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera slowly zooms out and pans up-right, maintaining a shallow depth of field.",
+        "Subtle light sweep moves across the grid, catching the edges of the Recurly and Hyperswitch cards."
+      ],
+      "b_motion": [
+        "Camera zooms out more rapidly with a wider focal length.",
+        "Cards float statically in 3D space without any interactive light changes."
+      ],
+      "absent_in_b": [
+        "Structured keyboard-like grid housing the cards.",
+        "Soft contact shadows and specular highlights on card edges."
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Cards are neatly embedded into a physical, recessed keyboard-like grid structure.",
+          "b_does": "Cards float loosely in empty 3D space over a flat, unstructured background.",
+          "fix": "Recreate the recessed grid geometry and snap the cards into their respective slots to match the physical layout of A.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Directional lighting with soft contact shadows and specular highlights on card edges.",
+          "b_does": "Flat, ambient lighting with almost no directional shadows or edge highlights.",
+          "fix": "Add a strong directional light source from the top-left and enable high-quality soft shadows and specular reflections.",
+          "severity": 3
+        },
+        {
+          "category": "camera",
+          "a_does": "Smooth, slow zoom-out with a narrower field of view, keeping the composition tight.",
+          "b_does": "Faster zoom-out with a wider field of view, causing perspective distortion.",
+          "fix": "Increase the camera focal length and slow down the zoom-out keyframes by 30%.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Rebuild the recessed grid geometry to embed the cards physically rather than letting them float in empty space."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "staging",
+        "a_does": "Embeds the buttons/cards as physical elements within a structured 3D keyboard grid.",
+        "b_does": "Floats the elements as flat, overlapping layers in an unstructured space.",
+        "fix": "Rebuild the scene layout to place the elements into a solid 3D grid frame with proper recesses.",
+        "severity": 4,
+        "supported_by": 3
+      },
+      {
+        "category": "lighting",
+        "a_does": "Uses soft directional lighting with rich contact shadows and ambient occlusion.",
+        "b_does": "Uses flat, ambient lighting with almost no contact shadows.",
+        "fix": "Add a directional key light and enable high-quality ambient occlusion to ground the elements.",
+        "severity": 3,
+        "supported_by": 3
+      },
+      {
+        "category": "camera",
+        "a_does": "Maintains a low-angle perspective looking across the elements to emphasize depth.",
+        "b_does": "Uses a flatter, more top-down or high-angle perspective.",
+        "fix": "Lower the camera angle to match the low-angle perspective of the reference.",
+        "severity": 3,
+        "supported_by": 2
+      }
+    ],
+    "agreed_absent_in_b": [
+      "Physical 3D keyboard grid structure",
+      "Ambient occlusion and contact shadows in the recesses"
+    ],
+    "highest_impact_fix": "Rebuild the scene layout to place the cards/buttons into a structured 3D keyboard grid instead of letting them float as flat, unstructured layers.",
+    "dropped_unsupported": 2
+  }
+}

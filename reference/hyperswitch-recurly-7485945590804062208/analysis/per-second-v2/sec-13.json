@@ -1,0 +1,119 @@
+{
+  "sec": 13,
+  "meta": {
+    "verified": 2,
+    "attempted": 3
+  },
+  "rejected": [
+    "reported 1 cuts, truth has 0"
+  ],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera pulls back smoothly with elegant easing, revealing the structured isometric grid.",
+        "Subtle shadow and light travel across the recessed card slots."
+      ],
+      "b_motion": [
+        "Camera pulls back rigidly with flat perspective.",
+        "Cards float and drift in a disorganized, overlapping stack."
+      ],
+      "absent_in_b": [
+        "Recessed keyboard-like grid geometry.",
+        "Soft ambient occlusion and realistic shadow depth."
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Integrates cards into a structured, recessed physical grid tray.",
+          "b_does": "Floats cards in a chaotic, overlapping stack in mid-air.",
+          "fix": "Rebuild the grid geometry and snap cards into recessed slots.",
+          "severity": 4
+        },
+        {
+          "category": "camera",
+          "a_does": "Pulls back with dynamic perspective and smooth easing.",
+          "b_does": "Pulls back rigidly with flat, orthographic-like perspective.",
+          "fix": "Match camera focal length and apply a smooth ease-out curve.",
+          "severity": 3
+        },
+        {
+          "category": "lighting",
+          "a_does": "Uses soft directional shadows and ambient occlusion for depth.",
+          "b_does": "Uses flat, uniform lighting with minimal shadow definition.",
+          "fix": "Add a soft directional light and enable ambient occlusion.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Rebuild the structured grid geometry and snap the cards into their recessed slots to match the physical tray layout of Video A."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera zooms out smoothly to reveal the keyboard grid.",
+        "The blue 'Juspay hyperswitch' key depresses along the Z-axis at original 13.6s.",
+        "Crevice shadows deepen realistically as the key is pressed."
+      ],
+      "b_motion": [
+        "Camera pans and zooms out over scattered, floating cards.",
+        "The blue 'Juspay hyperswitch' card moves downward in isolation.",
+        "Harsh drop shadows cast onto the background charts."
+      ],
+      "absent_in_b": [
+        "Interlocking keyboard grid structure.",
+        "Crevice ambient occlusion.",
+        "Physical key-press socket mechanics."
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Nests keys tightly within an interlocking keyboard grid.",
+          "b_does": "Floats cards in 3D space with large gaps showing background charts.",
+          "fix": "Rebuild the layout as a solid keyboard grid with keys nested in physical sockets.",
+          "severity": 4
+        },
+        {
+          "category": "motion",
+          "a_does": "Depresses the key realistically into its socket at original 13.6s.",
+          "b_does": "Moves the card downward in empty space without physical boundaries.",
+          "fix": "Animate the key depressing into a physical socket with subtle spring-back easing.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Uses soft ambient occlusion in crevices.",
+          "b_does": "Uses flat, bright lighting with harsh drop shadows.",
+          "fix": "Enable ambient occlusion and soften shadow map filters for a diffuse look.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Rebuild the floating card layout into a solid, interlocking keyboard grid to restore the physical staging of the reference."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "staging",
+        "a_does": "Integrates cards into a structured, recessed physical grid tray.",
+        "b_does": "Floats cards in a chaotic, overlapping stack in mid-air.",
+        "fix": "Rebuild the grid geometry and snap cards into recessed slots.",
+        "severity": 4,
+        "supported_by": 2
+      },
+      {
+        "category": "lighting",
+        "a_does": "Uses soft directional shadows and ambient occlusion for depth.",
+        "b_does": "Uses flat lighting with minimal shadow definition.",
+        "fix": "Enable ambient occlusion and soften shadow maps to restore realistic depth.",
+        "severity": 3,
+        "supported_by": 2
+      }
+    ],
+    "agreed_absent_in_b": [
+      "Structured keyboard grid geometry",
+      "Ambient occlusion and realistic shadow depth"
+    ],
+    "highest_impact_fix": "Rebuild the floating card layout into a structured, interlocking keyboard grid geometry to restore the physical staging of the reference.",
+    "dropped_unsupported": 3
+  }
+}
