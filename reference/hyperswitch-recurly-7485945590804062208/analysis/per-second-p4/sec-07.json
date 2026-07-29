@@ -1,0 +1,186 @@
+{
+  "sec": 7,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera slowly pans back and tilts down, creating a smooth parallax effect across the grid of cards.",
+        "Subtle light reflection shifts across the metallic frame of the JUSPAY card."
+      ],
+      "b_motion": [
+        "Camera zooms out much faster with a flatter perspective.",
+        "No dynamic light or reflection changes on the card surfaces."
+      ],
+      "absent_in_b": [
+        "Brushed metal texture on the JUSPAY card's frame.",
+        "Shallow depth of field blur on background elements."
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Low-angle perspective with a shallow depth of field, creating a strong sense of scale and depth.",
+          "b_does": "High-angle, flatter perspective with a wide focal length and infinite depth of field, making the scene look flat.",
+          "fix": "Lower the camera angle by 15 degrees, increase the focal length, and enable depth of field with a wide aperture.",
+          "severity": 4
+        },
+        {
+          "category": "material",
+          "a_does": "Brushed metal texture on the frame surrounding the JUSPAY card, and a subtle matte texture on the blue card.",
+          "b_does": "Flat, textureless grey and blue shaders with no specular highlights or micro-roughness.",
+          "fix": "Add a brushed anisotropic metal shader to the frame and a subtle noise-based roughness map to the blue card.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Soft, directional key light casting realistic contact shadows beneath the raised JUSPAY card.",
+          "b_does": "Flat, ambient-heavy lighting with weak, diffuse shadows that fail to ground the cards.",
+          "fix": "Increase key light intensity, reduce ambient fill, and enable high-resolution contact shadows.",
+          "severity": 3
+        },
+        {
+          "category": "typography",
+          "a_does": "JUSPAY hyperswitch logo and text are finely proportioned and perfectly centered.",
+          "b_does": "Logo icon is oversized relative to the text, and the font weight is slightly too heavy.",
+          "fix": "Scale down the logo icon by 15% and use a lighter font weight for the text.",
+          "severity": 2
+        }
+      ],
+      "highest_impact_fix": "Match the camera's low-angle perspective and shallow depth of field to restore the cinematic scale and depth of the reference."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera performs a slow, sweeping low-angle orbital pan around the JUSPAY hyperswitch card",
+        "Subtle shifting of specular highlights across the blue card face and metallic beveled border",
+        "Soft shadow travel across the white background tiles as the camera rotates"
+      ],
+      "b_motion": [
+        "Camera performs a flatter, higher-angle pan with less perspective distortion",
+        "Static lighting with no visible specular shift or shadow travel on the card surfaces"
+      ],
+      "absent_in_b": [
+        "Brushed metal texture and beveled reflection on the hyperswitch card border",
+        "Custom Hyperswitch logo icon (replaced by a generic circular icon)",
+        "Rich ambient occlusion and soft contact shadows beneath the cards"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Uses a dramatic, low-angle close-up perspective with a wider focal length, creating strong depth.",
+          "b_does": "Uses a flatter, higher-angle perspective that feels orthographic and distant.",
+          "fix": "Lower the camera height by 30 degrees, push in closer, and decrease the focal length to match the dynamic perspective of A.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Features soft, directional lighting with rich contact shadows and a subtle specular gradient across the blue card.",
+          "b_does": "Features flat, uniform lighting with weak shadows and no specular highlights.",
+          "fix": "Add a strong, soft key light from the top-left and enable high-quality ambient occlusion to ground the cards.",
+          "severity": 4
+        },
+        {
+          "category": "material",
+          "a_does": "Renders the card border with a distinct brushed metallic texture and reflective bevel.",
+          "b_does": "Renders the card border as a flat, matte grey plastic.",
+          "fix": "Apply a metallic material with anisotropic roughness to the card border bevel.",
+          "severity": 3
+        },
+        {
+          "category": "typography",
+          "a_does": "Displays the custom Hyperswitch logo icon and precise sans-serif branding.",
+          "b_does": "Displays a generic circular icon and a default sans-serif typeface.",
+          "fix": "Import the correct vector assets for the Hyperswitch logo and match the font weight.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera to match the low-angle, wide-focal-length perspective of Video A, and implement soft directional lighting with ambient occlusion."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Smooth diagonal camera drift creating organic parallax.",
+        "Subtle 3D tilt on the JUSPAY card with responsive soft shadows."
+      ],
+      "b_motion": [
+        "Camera is nearly static with linear, rigid movement.",
+        "No micro-tilt or dynamic shadow animation on the card."
+      ],
+      "absent_in_b": [
+        "Metallic brushed bezel surrounding the blue JUSPAY card.",
+        "Soft contact shadows and ambient occlusion between keyboard keys."
+      ],
+      "differences": [
+        {
+          "category": "material",
+          "a_does": "JUSPAY card has a distinct metallic brushed bezel with physical inset.",
+          "b_does": "Card is a flat blue rounded rectangle with no bezel or depth.",
+          "fix": "Model a metallic frame around the card with a 5% inset.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Directional key light creates rich contact shadows and realistic depth.",
+          "b_does": "Flat ambient lighting with almost no contact shadows.",
+          "fix": "Add a directional light source at 45 degrees and enable ambient occlusion.",
+          "severity": 4
+        },
+        {
+          "category": "staging",
+          "a_does": "Logo features a stylized crescent icon with precise typography.",
+          "b_does": "Logo uses a generic circle-slash icon with incorrect font.",
+          "fix": "Replace icon with correct crescent vector and match font weight.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Add the metallic bezel frame to the JUSPAY card and enable directional key lighting with soft contact shadows."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "a_does": "Uses a low-angle, close-up perspective with a shallow depth of field to create scale and depth.",
+        "b_does": "Uses a flatter, higher-angle perspective with a wider focal length and infinite depth of field, making the scene look flat.",
+        "fix": "Lower the camera angle, push in closer, and enable depth of field with a wider aperture.",
+        "severity": 4,
+        "supported_by": 2
+      },
+      {
+        "category": "material",
+        "a_does": "Renders a distinct brushed metallic bezel/frame surrounding the JUSPAY card.",
+        "b_does": "Renders the card as a flat blue rounded rectangle with a flat, textureless grey border.",
+        "fix": "Model a metallic frame around the card with a physical inset and apply a brushed anisotropic metal shader.",
+        "severity": 4,
+        "supported_by": 3
+      },
+      {
+        "category": "lighting",
+        "a_does": "Features soft, directional key lighting casting realistic contact shadows and ambient occlusion beneath the cards.",
+        "b_does": "Features flat, ambient-heavy lighting with weak or missing contact shadows.",
+        "fix": "Add a strong, soft directional key light and enable high-resolution contact shadows and ambient occlusion.",
+        "severity": 4,
+        "supported_by": 3
+      },
+      {
+        "category": "typography",
+        "a_does": "Displays the custom Hyperswitch logo icon (stylized crescent) and precise sans-serif branding.",
+        "b_does": "Displays a generic circular/circle-slash icon and an incorrect, heavier font weight.",
+        "fix": "Import the correct vector assets for the Hyperswitch logo and match the font weight.",
+        "severity": 3,
+        "supported_by": 3
+      }
+    ],
+    "agreed_absent_in_b": [
+      "Brushed metal texture and beveled frame on the JUSPAY card's border.",
+      "Custom Hyperswitch logo icon.",
+      "Soft contact shadows and ambient occlusion beneath the cards."
+    ],
+    "highest_impact_fix": "Adjust the camera to a low-angle perspective with shallow depth of field, add a metallic bezel frame with a brushed anisotropic shader to the JUSPAY card, and implement directional key lighting with soft contact shadows.",
+    "dropped_unsupported": 2
+  }
+}

@@ -1,0 +1,180 @@
+{
+  "sec": 6,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "Camera dollying out diagonally from the yellow Recurly button.",
+        "Hard cut at 6.67s.",
+        "Blue Juspay button depresses vertically into the grid with realistic shadow contraction."
+      ],
+      "b_motion": [
+        "Camera zooming out linearly from a flat angle.",
+        "Hard cut at 6.67s.",
+        "Blue Juspay button remains static with no vertical depression animation."
+      ],
+      "absent_in_b": [
+        "Tactile button-press animation on the Juspay card.",
+        "Dynamic diagonal camera perspective and shallow depth of field."
+      ],
+      "differences": [
+        {
+          "category": "motion",
+          "a_does": "The blue Juspay card depresses vertically into the slot immediately after the cut.",
+          "b_does": "The blue card remains completely static on its vertical axis.",
+          "fix": "Animate the blue card's Z-translation down by 5% of its height over 10 frames starting at t=6.67s, easing out.",
+          "severity": 4
+        },
+        {
+          "category": "camera",
+          "a_does": "Uses a highly dynamic, low-angle perspective camera with dramatic depth of field.",
+          "b_does": "Uses a flat, high-angle camera with minimal perspective distortion, looking orthographic.",
+          "fix": "Lower the camera pitch by 15 degrees and increase focal length to match the dynamic 3D perspective of A.",
+          "severity": 3
+        },
+        {
+          "category": "lighting",
+          "a_does": "Clean studio lighting with bright white bounces and soft, realistic contact shadows.",
+          "b_does": "Flat, greyish lighting with muddy, low-contrast shadows.",
+          "fix": "Increase key light intensity by 20% and adjust shadow softness to match A's clean studio look.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Animate the blue Juspay card's vertical depression immediately after the cut to restore the tactile physical interaction."
+    },
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "Camera slowly pans backward and rotates around the yellow Recurly keycap.",
+        "After the cut at 6.67s, the camera tracks the blue Hyperswitch keycap as it smoothly extrudes upwards."
+      ],
+      "b_motion": [
+        "Camera pans backward over the flat yellow Recurly keycap.",
+        "After the cut at 6.67s, the camera pans over a completely static, flat blue Hyperswitch keycap."
+      ],
+      "absent_in_b": [
+        "Vertical extrusion animation of the Hyperswitch keycap.",
+        "Brushed metal texture and anisotropic reflections on the keycap slot borders."
+      ],
+      "differences": [
+        {
+          "category": "motion",
+          "a_does": "The blue Hyperswitch keycap dynamically extrudes upwards from its slot after the cut.",
+          "b_does": "The keycap remains completely static and flush with the keyboard surface.",
+          "fix": "Animate the keycap translating upwards along the Z-axis by 15% of its height starting at t=6.67s with a smooth ease-out.",
+          "severity": 4
+        },
+        {
+          "category": "camera",
+          "a_does": "Uses a dramatic low-angle perspective that emphasizes the depth and thickness of the keycaps.",
+          "b_does": "Uses a flatter, more top-down camera angle, reducing three-dimensional depth.",
+          "fix": "Lower the camera height and tilt it upwards by approximately 15 degrees to match the reference perspective.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Features rich, soft contact shadows under the keycaps and a metallic brushed finish on the slot borders.",
+          "b_does": "Has weak contact shadows, making keys look like flat decals, with flat grey slot borders.",
+          "fix": "Increase shadow density, reduce ambient light wrap, and apply a brushed metal shader to slot borders.",
+          "severity": 3
+        },
+        {
+          "category": "color",
+          "a_does": "Uses highly saturated, warm golden yellow and deep royal blue colors.",
+          "b_does": "Uses desaturated, pale yellow and a flatter, less vibrant blue.",
+          "fix": "Adjust diffuse color values to increase saturation by 20% on both keycaps.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Animate the vertical extrusion of the blue Hyperswitch keycap after the cut at t=6.67s to restore the primary motion design element."
+    },
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "Camera pans and zooms out diagonally from the yellow Recurly button.",
+        "The yellow Recurly button depresses and springs back up with tactile easing.",
+        "After the cut, the blue Juspay Hyperswitch button is pressed down.",
+        "A glossy specular reflection sweeps across the blue button surface."
+      ],
+      "b_motion": [
+        "Camera pans out from a much flatter, wider angle.",
+        "The yellow button has a weak, linear compression animation.",
+        "After the cut, the blue button remains static with no visible press or reflection sweep."
+      ],
+      "absent_in_b": [
+        "Tactile button press physics and spring bounce.",
+        "Dynamic specular reflection sweep on the blue button.",
+        "Shallow depth of field."
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Uses a dynamic close-up, high-angle perspective with strong depth of field and dramatic diagonal composition.",
+          "b_does": "Uses a flat, wide-angle perspective with minimal depth of field and incorrect tile layout.",
+          "fix": "Adjust camera focal length to match A's perspective and match the close-up framing and rotation.",
+          "severity": 4
+        },
+        {
+          "category": "motion",
+          "a_does": "Snappy button press animation with realistic easing (fast down, springy bounce back).",
+          "b_does": "Linear, barely visible vertical movement lacking weight and springiness.",
+          "fix": "Animate the Z-translation of the buttons with a snappy Bezier curve and overshoot.",
+          "severity": 3
+        },
+        {
+          "category": "lighting",
+          "a_does": "Soft global illumination with a distinct glossy specular reflection sweeping across the blue button.",
+          "b_does": "Flat, uniform lighting with no specular highlights or dynamic reflection sweeps.",
+          "fix": "Add a directional light source to create a sharp specular reflection, and animate its position to sweep across the button.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Match the camera focal length and close-up diagonal framing of Video A to restore the dramatic perspective and depth."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "motion",
+        "a_does": "The blue button (Juspay/Hyperswitch) has a dynamic vertical animation (depression or extrusion) after the cut.",
+        "b_does": "The blue button remains completely static.",
+        "fix": "Animate the vertical Z-axis translation of the blue button after the cut at t=6.67s with realistic easing.",
+        "severity": 4,
+        "supported_by": 3
+      },
+      {
+        "category": "camera",
+        "a_does": "Uses a dynamic perspective camera with dramatic depth of field and a strong sense of 3D depth.",
+        "b_does": "Uses a flatter, less dynamic camera angle with minimal depth of field and reduced perspective distortion.",
+        "fix": "Adjust the camera angle, focal length, and depth of field to match the dynamic 3D perspective of A.",
+        "severity": 4,
+        "supported_by": 3
+      },
+      {
+        "category": "lighting",
+        "a_does": "Features clean, soft studio lighting with realistic contact shadows and specular highlights.",
+        "b_does": "Features flat, uniform, low-contrast lighting with weak or muddy shadows.",
+        "fix": "Improve lighting contrast, increase shadow density/softness, and add specular highlights to match A's clean studio look.",
+        "severity": 3,
+        "supported_by": 3
+      }
+    ],
+    "agreed_absent_in_b": [
+      "Vertical button-press animation on the blue keycap",
+      "Shallow depth of field and dynamic camera perspective"
+    ],
+    "highest_impact_fix": "Animate the vertical translation (depression/extrusion) of the blue button after the cut at t=6.67s to restore the tactile physical interaction.",
+    "dropped_unsupported": 3
+  }
+}

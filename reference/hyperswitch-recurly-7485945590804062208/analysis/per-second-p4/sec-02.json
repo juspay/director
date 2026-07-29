@@ -1,0 +1,167 @@
+{
+  "sec": 2,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        2.208
+      ],
+      "a_motion": [
+        "Before cut: Camera drifts down-right with subtle rotation, showing 'Secure Payments' button casting soft shadow.",
+        "After cut: Camera performs smooth diagonal pan down-right across 'Subscriptions', 'Retries', and 'APMs' buttons with organic deceleration."
+      ],
+      "b_motion": [
+        "Before cut: Camera moves in a flatter, less dynamic diagonal path.",
+        "After cut: Camera translates linearly down-right over the three buttons with robotic, constant velocity."
+      ],
+      "absent_in_b": [
+        "Deep, rich contact shadows under the button edges.",
+        "Subtle specular highlights sweeping across the matte button faces."
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Uses a dynamic, tight isometric angle with telephoto compression.",
+          "b_does": "Uses a flatter, wider, more top-down camera perspective.",
+          "fix": "Increase camera focal length to 85mm and tilt camera down by 15 degrees to match A's perspective.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Features high-contrast directional key light casting distinct, soft shadows.",
+          "b_does": "Features flat, uniform ambient lighting with barely visible shadows.",
+          "fix": "Add a strong directional key light from the top-right and reduce ambient fill by 40%.",
+          "severity": 4
+        },
+        {
+          "category": "motion",
+          "a_does": "Applies smooth, organic ease-in/ease-out curves to camera translation.",
+          "b_does": "Applies linear, robotic interpolation to camera keyframes.",
+          "fix": "Adjust camera translation keyframes to use Bezier easing with 60% influence.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and focal length to match the tight, dynamic isometric perspective of the reference film."
+    },
+    {
+      "cuts_in_window": [
+        2.208
+      ],
+      "a_motion": [
+        "Camera drifts smoothly around the 'Secure Payments' card before the cut.",
+        "Post-cut, camera performs a sweeping tilt-up and slide over the vertical card stack.",
+        "Soft shadows shift dynamically with the camera's perspective change."
+      ],
+      "b_motion": [
+        "Camera motion is stiff and linear, lacking organic ease-in/out curves.",
+        "Cards remain static and flat against the background grid."
+      ],
+      "absent_in_b": [
+        "Z-axis elevation of the cards creating physical depth.",
+        "Rich ambient occlusion and soft contact shadows."
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Smooth, sweeping camera path with organic easing and a tight, dynamic perspective.",
+          "b_does": "Stiff, linear camera translation with a flatter, wider angle.",
+          "fix": "Apply ease-in/ease-out curves to camera keyframes and adjust the camera FOV to match the close-up perspective.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Pronounced soft contact shadows and ambient occlusion under elevated cards.",
+          "b_does": "Flat lighting with minimal shadow depth, making cards look like 2D textures.",
+          "fix": "Elevate cards along their local Z-axis and enable high-quality soft shadows in the render settings.",
+          "severity": 4
+        },
+        {
+          "category": "typography",
+          "a_does": "Bold, well-proportioned typography and cleanly scaled icons.",
+          "b_does": "Thin font weight with poorly scaled, misaligned text and icons.",
+          "fix": "Increase font weight, adjust kerning, and scale up icons by approximately 15%.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Elevate the cards along their local Z-axis to cast deep, soft contact shadows, and apply smooth easing curves to the camera translation keyframes."
+    },
+    {
+      "cuts_in_window": [
+        2.2
+      ],
+      "a_motion": [
+        "Slow, elegant camera drift over the Secure Payments card prior to the cut.",
+        "Smooth, decelerating downward camera pan over the Subscriptions, Retries, and APMs card stack after the cut."
+      ],
+      "b_motion": [
+        "Faster, less eased camera drift before the cut.",
+        "Linear downward camera pan after the cut, lacking elegant deceleration."
+      ],
+      "absent_in_b": [
+        "Subtle grid pattern texture on the background plate.",
+        "Rich ambient occlusion shadows beneath the card edges."
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Uses a tight, macro-style framing with a narrow field of view, creating a premium close-up look.",
+          "b_does": "Uses a wider camera framing and wider FOV, making the cards appear small and flat.",
+          "fix": "Increase focal length to match the macro look and reposition the camera closer to the cards.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Features soft directional lighting with rich ambient occlusion and realistic drop shadows.",
+          "b_does": "Features flat, washed-out lighting with weak shadows, reducing 3D depth.",
+          "fix": "Add a directional key light from the top-left and enable high-quality ambient occlusion.",
+          "severity": 4
+        },
+        {
+          "category": "motion",
+          "a_does": "Applies smooth, eased camera panning with natural deceleration.",
+          "b_does": "Applies linear camera movement with abrupt keyframe transitions.",
+          "fix": "Apply a cubic ease-out curve to the camera's translation keyframes.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera focal length and position to match the tight macro framing of Video A, and add soft directional lighting with ambient occlusion to restore 3D depth."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "a_does": "Uses a tight, dynamic close-up perspective (isometric/macro framing) with a narrow field of view.",
+        "b_does": "Uses a flatter, wider camera perspective, making elements appear smaller and less dynamic.",
+        "fix": "Increase camera focal length to narrow the field of view and adjust the camera position/angle to match the tight, close-up framing of A.",
+        "severity": 4,
+        "supported_by": 3
+      },
+      {
+        "category": "lighting",
+        "a_does": "Features soft directional lighting casting distinct, realistic contact shadows and ambient occlusion.",
+        "b_does": "Features flat, uniform lighting with weak, barely visible shadows, reducing 3D depth.",
+        "fix": "Add a directional key light and enable high-quality soft shadows and ambient occlusion beneath the cards.",
+        "severity": 4,
+        "supported_by": 3
+      },
+      {
+        "category": "motion",
+        "a_does": "Applies smooth, organic ease-in/ease-out curves to camera translation.",
+        "b_does": "Applies linear, stiff, and robotic interpolation to camera keyframes.",
+        "fix": "Apply Bezier/cubic ease-in/ease-out curves to the camera translation keyframes to ensure natural deceleration.",
+        "severity": 3,
+        "supported_by": 3
+      }
+    ],
+    "agreed_absent_in_b": [
+      "Rich ambient occlusion and soft contact shadows beneath the card/button edges."
+    ],
+    "highest_impact_fix": "Adjust the camera focal length and position to achieve a tight, dynamic close-up perspective, and add soft directional lighting with ambient occlusion to restore realistic 3D depth and shadows.",
+    "dropped_unsupported": 4
+  }
+}

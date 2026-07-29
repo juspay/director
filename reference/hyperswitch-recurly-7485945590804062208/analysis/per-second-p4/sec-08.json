@@ -1,0 +1,171 @@
+{
+  "sec": 8,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        8.104
+      ],
+      "a_motion": [
+        "Camera drifts backward and rotates slightly.",
+        "The 'Live Now' pill button rises up from the keyboard grid.",
+        "Dappled light shadows shift subtly across the surface."
+      ],
+      "b_motion": [
+        "Camera has a very slow, linear zoom out.",
+        "The 'Live Now' pill button remains completely static."
+      ],
+      "absent_in_b": [
+        "Dappled leaf shadow pattern overlay",
+        "Brushed metal texture on the side panels",
+        "Dynamic rising animation of the 'Live Now' key"
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "a_does": "Uses a complex dappled shadow pattern (gobo) to simulate natural outdoor light filtering through trees.",
+          "b_does": "Uses flat, uniform studio lighting with no shadow patterns.",
+          "fix": "Add a light gobo with an organic leaf silhouette and soft blur to cast shadows over the keys.",
+          "severity": 4
+        },
+        {
+          "category": "motion",
+          "a_does": "Animates the 'Live Now' pill button rising up from a flush position to a raised position.",
+          "b_does": "Keeps the 'Live Now' button static and pre-raised.",
+          "fix": "Animate the Z-position of the 'Live Now' button from 0 to its final height between t=8.1s and t=8.8s.",
+          "severity": 4
+        },
+        {
+          "category": "material",
+          "a_does": "Applies realistic matte plastic shaders with subtle roughness and contact shadows.",
+          "b_does": "Uses flat, untextured shaders that look like solid vector graphics.",
+          "fix": "Add a subtle noise bump map to the key materials and enable ambient occlusion.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Animate the 'Live Now' button rising up from the grid starting at t=8.1s and add a dappled light gobo overlay to match the reference's organic lighting."
+    },
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "Camera pulls back diagonally with smooth easing",
+        "Live Now button slides up vertically with snappy ease-out",
+        "Dappled leaf shadows drift across the white surface"
+      ],
+      "b_motion": [
+        "Camera pulls back linearly",
+        "Live Now button rises with stiff linear interpolation",
+        "Static soft shadows beneath cards"
+      ],
+      "absent_in_b": [
+        "Dappled leaf shadow overlay",
+        "Subtle metallic edge highlights on the cards"
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "a_does": "Rich, high-contrast dappled leaf shadows drift across the white grid.",
+          "b_does": "Flat, uniform studio lighting with no dappled shadow overlay.",
+          "fix": "Add a directional light source with a leaf cookie map to project moving dappled shadows.",
+          "severity": 4
+        },
+        {
+          "category": "camera",
+          "a_does": "Oblique camera angle with strong perspective depth.",
+          "b_does": "Flatter, more top-down camera angle reducing 3D depth.",
+          "fix": "Adjust camera pitch by 15 degrees to match the oblique reference angle.",
+          "severity": 3
+        },
+        {
+          "category": "motion",
+          "a_does": "Live Now button pops up with a snappy ease-out.",
+          "b_does": "Live Now button rises with stiff, linear motion.",
+          "fix": "Adjust Z-translation animation curves to apply a strong ease-out.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Add the moving dappled leaf shadow overlay to the lighting setup to restore visual depth."
+    },
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "Camera pans and zooms out smoothly with organic ease-out.",
+        "Soft directional light shifts slightly, casting moving shadows."
+      ],
+      "b_motion": [
+        "Camera pulls back with a linear, mechanical easing curve.",
+        "Static, flat lighting with no noticeable shadow travel."
+      ],
+      "absent_in_b": [
+        "Pronounced 3D bevels on the yellow Recurly card.",
+        "Deep drop shadows beneath the floating cards.",
+        "Realistic tile seams and gaps in the background grid."
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Uses a dynamic low-angle perspective with a wide focal length, creating dramatic depth.",
+          "b_does": "Uses a flatter, more top-down angle with a narrow field of view, making the scene look orthographic.",
+          "fix": "Match the camera's focal length and lower the pitch angle by approximately 15 degrees to restore perspective depth.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Casts soft, realistic drop shadows beneath the raised cards, defining their 3D volume.",
+          "b_does": "Lacks distinct drop shadows, making the cards appear flat and pasted onto the background.",
+          "fix": "Enable contact shadows and increase the shadow bias/softness to match the reference's ambient occlusion.",
+          "severity": 3
+        },
+        {
+          "category": "staging",
+          "a_does": "Models the cards (Recurly, Live Now) with clear 3D thickness and rounded bevels.",
+          "b_does": "Renders the cards as flat 2D planes with minimal extrusion and sharp edges.",
+          "fix": "Add a bevel modifier to the card meshes and extrude them by an additional 5% to match the reference thickness.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera's focal length and angle to match the dramatic low-angle perspective of the reference, and enable soft drop shadows for all cards."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "a_does": "Uses a complex dappled leaf shadow pattern to simulate natural light filtering.",
+        "b_does": "Uses flat, uniform studio lighting with no dappled shadow patterns.",
+        "fix": "Add a light gobo with an organic leaf silhouette to project moving dappled shadows.",
+        "severity": 4,
+        "supported_by": 2
+      },
+      {
+        "category": "motion",
+        "a_does": "Animates the 'Live Now' button rising up from the grid with a smooth, snappy ease-out.",
+        "b_does": "Keeps the 'Live Now' button static or animates it with stiff, linear motion.",
+        "fix": "Animate the Z-position of the 'Live Now' button with a strong ease-out curve.",
+        "severity": 4,
+        "supported_by": 2
+      },
+      {
+        "category": "camera",
+        "a_does": "Uses an oblique, low-angle camera perspective with strong depth.",
+        "b_does": "Uses a flatter, more top-down camera angle that reduces 3D depth.",
+        "fix": "Adjust the camera pitch angle and focal length to restore the dramatic perspective depth.",
+        "severity": 3,
+        "supported_by": 2
+      }
+    ],
+    "agreed_absent_in_b": [
+      "Dappled leaf shadow overlay"
+    ],
+    "highest_impact_fix": "Add a light gobo with an organic leaf silhouette to project moving dappled shadows and adjust the camera pitch to restore perspective depth.",
+    "dropped_unsupported": 8
+  }
+}

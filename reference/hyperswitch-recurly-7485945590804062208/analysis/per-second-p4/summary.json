@@ -1,0 +1,114 @@
+[
+  {
+    "sec": 0,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 3,
+    "dropped": 2,
+    "top": "Adjust the camera's starting position and focal length to match the tight, dynamic close-up framing of the reference, and restore the vibrant blue and yellow tile colors."
+  },
+  {
+    "sec": 1,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 3,
+    "dropped": 8,
+    "top": "Adjust the camera focal length and angle to restore the dramatic 3D perspective depth, and implement soft directional lighting with ambient occlusion to bring back the tactile quality."
+  },
+  {
+    "sec": 2,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 3,
+    "dropped": 4,
+    "top": "Adjust the camera focal length and position to achieve a tight, dynamic close-up perspective, and add soft directional lighting with ambient occlusion to restore realistic 3D depth and shadows."
+  },
+  {
+    "sec": 4,
+    "verified": 1,
+    "attempted": 3,
+    "corroborated": 3,
+    "dropped": 0,
+    "top": "Match the camera focal length and perspective angle of Video A to eliminate the flat, orthographic look of the card stack."
+  },
+  {
+    "sec": 5,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 4,
+    "dropped": 3,
+    "top": "Enable ambient occlusion and soften the directional light source to eliminate harsh shadows, and adjust the camera to a low-angle perspective with a shallow depth of field focusing on the main card."
+  },
+  {
+    "sec": 6,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 3,
+    "dropped": 3,
+    "top": "Animate the vertical translation (depression/extrusion) of the blue button after the cut at t=6.67s to restore the tactile physical interaction."
+  },
+  {
+    "sec": 7,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 4,
+    "dropped": 2,
+    "top": "Adjust the camera to a low-angle perspective with shallow depth of field, add a metallic bezel frame with a brushed anisotropic shader to the JUSPAY card, and implement directional key lighting with soft contact shadows."
+  },
+  {
+    "sec": 8,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 3,
+    "dropped": 8,
+    "top": "Add a light gobo with an organic leaf silhouette to project moving dappled shadows and adjust the camera pitch to restore perspective depth."
+  },
+  {
+    "sec": 9,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 3,
+    "dropped": 3,
+    "top": "Add an animated dappled leaf shadow gobo to the primary light source to project moving shadows across the scene."
+  },
+  {
+    "sec": 10,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 3,
+    "dropped": 8,
+    "top": "Adjust the ambient occlusion and contact shadows to be softer and more realistic, and re-animate the camera path with organic easing curves to restore natural depth and motion."
+  },
+  {
+    "sec": 11,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 3,
+    "dropped": 2,
+    "top": "Add the animated dappled leaf shadows and tighten the layout/framing to eliminate the flat, empty look."
+  },
+  {
+    "sec": 12,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 3,
+    "dropped": 5,
+    "top": "Increase the light source radius to soften harsh shadows and enable ambient occlusion to eliminate the flat, sterile look in B."
+  },
+  {
+    "sec": 13,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 4,
+    "dropped": 6,
+    "top": "Apply a smooth ease-out curve to the camera translation keyframes and adjust the camera's focal length and tilt to restore the dynamic perspective and organic motion of the reference."
+  },
+  {
+    "sec": 14,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 3,
+    "dropped": 8,
+    "top": "Bring the camera closer to match the tight, dynamic perspective of the reference, enable ambient occlusion to ground the blocks, and add bevels to the edges to catch specular highlights."
+  }
+]
