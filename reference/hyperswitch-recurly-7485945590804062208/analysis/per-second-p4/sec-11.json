@@ -1,0 +1,161 @@
+{
+  "sec": 11,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Smooth camera pull-back and tilt-up with easing.",
+        "Dappled tree leaf shadows sliding diagonally across the tiles from top-left to bottom-right."
+      ],
+      "b_motion": [
+        "Linear camera pull-back with abrupt deceleration.",
+        "Static flat lighting with no dynamic shadow movement."
+      ],
+      "absent_in_b": [
+        "Dappled tree leaf shadow animation.",
+        "Tight grid layout of the surrounding tiles."
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "a_does": "Uses a dynamic light source with a gobo to project moving dappled tree shadows across the entire grid.",
+          "b_does": "Uses flat, uniform studio lighting with zero shadow animation, making the scene look sterile.",
+          "fix": "Add a directional light with a sliding noise texture map to project soft, moving shadows.",
+          "severity": 4
+        },
+        {
+          "category": "layout",
+          "a_does": "Arranges tiles in a dense, interlocking keyboard-like grid with minimal gaps.",
+          "b_does": "Spaces tiles extremely far apart, leaving massive empty white gaps.",
+          "fix": "Reposition the tiles to reduce the gap width to approximately 5% of their current spacing.",
+          "severity": 4
+        },
+        {
+          "category": "camera",
+          "a_does": "Executes a smooth, eased camera pull-back with subtle perspective depth.",
+          "b_does": "Uses a flatter, orthographic-leaning perspective with linear camera easing.",
+          "fix": "Adjust the camera focal length and apply a cubic ease-out curve to the translation keyframes.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Add the animated dappled leaf shadows and tighten the tile grid layout to eliminate the massive empty white gaps."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera pans and zooms out smoothly with ease-out.",
+        "Dappled leafy shadows drift across the white keyboard grid.",
+        "Specular highlights glide over the glossy yellow card."
+      ],
+      "b_motion": [
+        "Camera performs a slow, linear zoom-out.",
+        "No shadow or highlight movement on the surfaces."
+      ],
+      "absent_in_b": [
+        "Animated dappled leafy shadows",
+        "Glossy specular reflections on the yellow card"
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "a_does": "Uses dynamic, animated dappled leafy shadows and glossy specular highlights.",
+          "b_does": "Uses flat, static, uniform lighting with no shadow movement.",
+          "fix": "Add an animated light gobo with a leafy texture and increase specular contrast on the yellow card.",
+          "severity": 4
+        },
+        {
+          "category": "camera",
+          "a_does": "Dynamic zoom-out with strong ease-out.",
+          "b_does": "Slow, linear zoom-out.",
+          "fix": "Increase camera zoom speed by 30% and apply a stronger cubic ease-out curve.",
+          "severity": 3
+        },
+        {
+          "category": "staging",
+          "a_does": "Presents a small, elegant 'Live Now' button in the center.",
+          "b_does": "Presents a much larger 'Live Now' button that dominates the composition.",
+          "fix": "Scale down the 'Live Now' button by 40% to match the reference.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Add the animated leafy shadow gobo and specular highlights to match the organic, high-end look of the reference lighting."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera slowly pans up-right and zooms out with a smooth ease-out.",
+        "Organic dappled leaf shadows sway gently across the white tiles and cards."
+      ],
+      "b_motion": [
+        "Camera is nearly static with a very slight, linear zoom out.",
+        "No shadow animation; lighting remains completely static."
+      ],
+      "absent_in_b": [
+        "Animated dappled leaf shadows",
+        "Dynamic camera zoom-out curve"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Closer framing with a dynamic, easing zoom-out.",
+          "b_does": "Extremely wide framing with almost no camera movement.",
+          "fix": "Match the camera focal length and animate a smooth zoom-out from a closer starting position.",
+          "severity": 3
+        },
+        {
+          "category": "lighting",
+          "a_does": "Animated dappled leaf shadows moving across the grid.",
+          "b_does": "Flat, static lighting with no shadow play.",
+          "fix": "Add a directional light with a moving leaf cookie to project animated shadows.",
+          "severity": 3
+        },
+        {
+          "category": "layout",
+          "a_does": "Tight grid spacing with prominent card sizes relative to the frame.",
+          "b_does": "Loose spacing with small cards lost in a vast white background.",
+          "fix": "Adjust the scale of the grid elements and bring them closer together.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Recreate the animated dappled leaf shadows and match the tighter camera framing to restore the organic, premium feel."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "a_does": "Uses dynamic, animated dappled leaf shadows moving across the grid.",
+        "b_does": "Uses flat, static, uniform lighting with no shadow movement.",
+        "fix": "Add a directional light with an animated gobo/cookie texture to project moving dappled leaf shadows.",
+        "severity": 4,
+        "supported_by": 3
+      },
+      {
+        "category": "layout",
+        "a_does": "Arranges tiles in a tight, dense grid layout with minimal gaps.",
+        "b_does": "Spaces tiles/cards far apart, leaving large empty white gaps.",
+        "fix": "Reposition and scale the grid elements to reduce the gaps and tighten the layout.",
+        "severity": 4,
+        "supported_by": 2
+      },
+      {
+        "category": "camera",
+        "a_does": "Executes a smooth, dynamic camera pull-back/zoom-out with strong ease-out.",
+        "b_does": "Uses a linear, slow, or nearly static camera zoom-out.",
+        "fix": "Apply a cubic ease-out curve to the camera translation/zoom keyframes.",
+        "severity": 3,
+        "supported_by": 3
+      }
+    ],
+    "agreed_absent_in_b": [
+      "Animated dappled leaf shadows"
+    ],
+    "highest_impact_fix": "Add the animated dappled leaf shadows and tighten the layout/framing to eliminate the flat, empty look.",
+    "dropped_unsupported": 2
+  }
+}

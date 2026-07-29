@@ -1,0 +1,170 @@
+{
+  "sec": 0,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera slowly pulls back and rotates, creating a smooth parallax effect across the tile grid.",
+        "Subtle light travel across the matte plastic surfaces of the tiles."
+      ],
+      "b_motion": [
+        "Camera drifts back from a much wider, flatter starting angle.",
+        "Static, flat lighting with no visible shadow travel."
+      ],
+      "absent_in_b": [
+        "Vibrant royal blue tile on the left.",
+        "Bright yellow tile at the bottom."
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Frames the central white tiles with vibrant blue and yellow tiles.",
+          "b_does": "Replaces the colored tiles with dull grey and off-white tiles.",
+          "fix": "Replace the grey tiles with the correct blue and yellow materials to restore the color composition.",
+          "severity": 4
+        },
+        {
+          "category": "camera",
+          "a_does": "Starts with a tight, dramatic close-up on the 'Secure Payments' tile.",
+          "b_does": "Starts with a much wider, less engaging camera framing.",
+          "fix": "Adjust the camera's starting position and focal length to match the tight close-up of the reference.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Features soft, realistic contact shadows and rich ambient occlusion.",
+          "b_does": "Uses flat, washed-out lighting with weak shadows.",
+          "fix": "Increase shadow density and add soft ambient occlusion passes to define the depth of the raised tiles.",
+          "severity": 3
+        },
+        {
+          "category": "typography",
+          "a_does": "Uses a bold, well-spaced sans-serif font balanced with the shield icon.",
+          "b_does": "Uses a thinner, smaller font with poor vertical alignment.",
+          "fix": "Increase the font weight and scale of the text to match the reference layout.",
+          "severity": 2
+        }
+      ],
+      "highest_impact_fix": "Restore the vibrant blue and yellow tiles to match the reference composition, and adjust the camera's starting position to achieve the tight close-up framing."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera drifts slowly downwards with subtle rotation",
+        "Secure Payments key depresses snappily and springs back up",
+        "Checkmark icon inside the blue shield scales up slightly upon keypress"
+      ],
+      "b_motion": [
+        "Camera pans diagonally at a wider, flatter angle",
+        "Secure Payments key remains static with no organic keypress animation"
+      ],
+      "absent_in_b": [
+        "Vibrant blue key on the left of the frame",
+        "Vibrant yellow key at the bottom of the frame"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Tight, dramatic close-up framing with dynamic tilt.",
+          "b_does": "Flat, wide framing showing too many surrounding keys.",
+          "fix": "Move camera 40% closer to the Secure Payments key and match the reference tilt angle.",
+          "severity": 4
+        },
+        {
+          "category": "color",
+          "a_does": "Surrounding keys feature vibrant blue and yellow colors.",
+          "b_does": "Surrounding keys are flat white and gray.",
+          "fix": "Apply correct color materials to adjacent keys (blue on left, yellow on bottom).",
+          "severity": 4
+        },
+        {
+          "category": "motion",
+          "a_does": "Snappy keypress animation with organic spring-back easing.",
+          "b_does": "Key remains completely static.",
+          "fix": "Animate key depression on the Z-axis by 5% with a springy ease-out.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and focal length to match the tight, dynamic close-up framing of the reference."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Slow, elegant camera pull-back and slight rotation, revealing the keyboard-like grid layout.",
+        "Subtle shifting of soft shadows and specular highlights across the matte plastic tiles."
+      ],
+      "b_motion": [
+        "Camera pulls back from a much wider, flatter starting position.",
+        "Lacks the subtle perspective shift and dynamic shadow movement seen in A."
+      ],
+      "absent_in_b": [
+        "Vibrant blue and yellow color tones",
+        "Soft, high-contrast directional key lighting",
+        "Tight, macro-lens camera framing"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Starts with a tight, dynamic macro shot of the 'Secure Payments' tile, tilted at a steep angle with shallow depth of field.",
+          "b_does": "Starts with a much wider, flatter, and less angled camera composition.",
+          "fix": "Adjust the camera's starting focal length and position to match the tight macro framing of A, increasing the tilt angle by roughly 15 degrees.",
+          "severity": 4
+        },
+        {
+          "category": "color",
+          "a_does": "Features vibrant, saturated blues and yellows with clean, bright white tiles.",
+          "b_does": "Colors are extremely washed out and muddy, with gray-toned tiles and a dull blue shield.",
+          "fix": "Increase the saturation of the blue and yellow materials by 30% and brighten the white tile diffuse color to match A's clean aesthetic.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Uses soft, directional key lighting that creates distinct, smooth shadows and realistic ambient occlusion between tiles.",
+          "b_does": "Flat, uniform lighting with weak shadows, making the tiles look 2D and rendering the scene lifeless.",
+          "fix": "Add a strong, soft directional key light from the top-left and enable high-quality ambient occlusion to define tile depth.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Re-align the camera's starting position and focal length to match the tight, high-angle macro framing of the reference video."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "a_does": "Starts with a tight, dynamic close-up framing of the central tile.",
+        "b_does": "Starts with a much wider, flatter camera framing.",
+        "fix": "Adjust the camera's starting position and focal length to match the tight close-up framing of the reference.",
+        "severity": 4,
+        "supported_by": 3
+      },
+      {
+        "category": "color",
+        "a_does": "Features vibrant blue and yellow tiles surrounding the central white tiles.",
+        "b_does": "Replaces the colored tiles with dull grey and off-white tiles.",
+        "fix": "Apply the correct vibrant blue and yellow materials to the surrounding tiles.",
+        "severity": 4,
+        "supported_by": 3
+      },
+      {
+        "category": "lighting",
+        "a_does": "Features soft, realistic directional lighting with distinct shadows and ambient occlusion.",
+        "b_does": "Uses flat, uniform, and washed-out lighting with weak shadows.",
+        "fix": "Add soft directional key lighting and enable ambient occlusion to define the depth of the tiles.",
+        "severity": 3,
+        "supported_by": 2
+      }
+    ],
+    "agreed_absent_in_b": [
+      "Vibrant blue tile on the left",
+      "Vibrant yellow tile at the bottom"
+    ],
+    "highest_impact_fix": "Adjust the camera's starting position and focal length to match the tight, dynamic close-up framing of the reference, and restore the vibrant blue and yellow tile colors.",
+    "dropped_unsupported": 2
+  }
+}

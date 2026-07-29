@@ -1,0 +1,172 @@
+{
+  "sec": 13,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera executes a smooth, easing pull-back and pan.",
+        "Subtle shift in soft shadows and specular highlights across the tile surfaces."
+      ],
+      "b_motion": [
+        "Camera performs a linear, robotic drift without natural easing."
+      ],
+      "absent_in_b": [
+        "Beveled tile edges",
+        "Deep ambient occlusion shadows",
+        "Subtle grid textures on the background"
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Arranges tiles with distinct 3D thickness, bevels, and deep contact shadows.",
+          "b_does": "Renders tiles as flat, thin planes lacking physical depth.",
+          "fix": "Increase tile extrusion by 150% and add a 0.05m bevel modifier.",
+          "severity": 3
+        },
+        {
+          "category": "lighting",
+          "a_does": "Uses soft directional lighting creating realistic contact shadows and specular reflections.",
+          "b_does": "Employs flat, uniform lighting that washes out depth.",
+          "fix": "Add a soft area light from top-left and enable ambient occlusion.",
+          "severity": 3
+        },
+        {
+          "category": "camera",
+          "a_does": "Features a smooth camera pull-back with organic ease-out.",
+          "b_does": "Uses a linear, robotic camera drift.",
+          "fix": "Apply Bezier interpolation with 80% ease-out influence to camera keyframes.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Increase the physical extrusion and beveling of the tiles to restore the 3D depth of the grid."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera pulls back dynamically with a smooth ease-out and slight tilt.",
+        "Soft shadows shift realistically in the crevices between keys.",
+        "Subtle specular highlights glint off the metallic key borders."
+      ],
+      "b_motion": [
+        "Camera drifts backward slowly with a flat, linear motion.",
+        "Static, uniform lighting with no dynamic shadow response."
+      ],
+      "absent_in_b": [
+        "Brushed metal borders around the keys",
+        "Dynamic camera tilt and perspective depth",
+        "Correct grid layout staging"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Uses a dynamic, close-up perspective with a dramatic tilt and smooth ease-out pull-back.",
+          "b_does": "Uses a flat, wide-angle perspective with a linear, slow drift that lacks depth.",
+          "fix": "Increase camera focal length, add a 15-degree tilt, and apply a strong ease-out curve to the translation.",
+          "severity": 4
+        },
+        {
+          "category": "material",
+          "a_does": "Keys feature distinct brushed metal borders and realistic matte plastic finishes.",
+          "b_does": "Keys use flat, uniform white/grey shaders with no metallic borders.",
+          "fix": "Add a metallic material with brushed anisotropic noise to the key borders.",
+          "severity": 3
+        },
+        {
+          "category": "staging",
+          "a_does": "Focuses closely on the Juspay key, hiding the Recurly and Live Now keys until later.",
+          "b_does": "Stages too far back, revealing the Recurly and Live Now keys prematurely in a flat layout.",
+          "fix": "Reposition the keys to match the reference grid and start the camera much closer to the Juspay key.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera's focal length and tilt to match the dynamic perspective of the reference, starting much closer to the Juspay key."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera pans up and zooms out with smooth exponential easing",
+        "Dappled light shadows drift slowly across the white grid tiles",
+        "Cards settle into their final wide-shot layout"
+      ],
+      "b_motion": [
+        "Camera zooms out with linear, robotic interpolation",
+        "Static lighting with no shadow movement"
+      ],
+      "absent_in_b": [
+        "Animated dappled light/leaf shadows",
+        "Soft 3D bevels and realistic contact shadows on the cards"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Dynamic camera pull-back with exponential easing, creating a sense of depth and scale.",
+          "b_does": "Stiff, linear camera zoom-out that feels robotic and lacks organic easing.",
+          "fix": "Apply a smooth cubic-bezier easing curve (ease-out) to the camera translation keyframes.",
+          "severity": 3
+        },
+        {
+          "category": "lighting",
+          "a_does": "Soft, moving dappled light shadows sweeping across the grid, adding organic realism.",
+          "b_does": "Static, uniform studio lighting with no dappled shadow animation, making the scene look sterile.",
+          "fix": "Add an animated gobo light source with a leaf texture map moving slowly across the scene.",
+          "severity": 3
+        },
+        {
+          "category": "staging",
+          "a_does": "Isometric-style perspective with a distinct tilt and tight framing emphasizing card depth.",
+          "b_does": "Flatter, wider camera angle with less perspective distortion, making cards look like 2D planes.",
+          "fix": "Adjust camera focal length and tilt to match the isometric angle and tighter framing of A.",
+          "severity": 2
+        }
+      ],
+      "highest_impact_fix": "Add animated dappled light shadows (gobos) and apply exponential ease-out curves to the camera zoom to match the organic feel of the reference."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "a_does": "Executes a smooth camera pull-back with organic ease-out easing.",
+        "b_does": "Uses a stiff, linear camera zoom-out/drift that feels robotic.",
+        "fix": "Apply a smooth cubic-bezier ease-out curve to the camera translation keyframes.",
+        "severity": 3,
+        "supported_by": 3
+      },
+      {
+        "category": "camera",
+        "a_does": "Uses a dynamic, close-up perspective with a distinct camera tilt and tight framing.",
+        "b_does": "Uses a flatter, wider camera angle with less perspective depth.",
+        "fix": "Adjust the camera focal length and tilt to match the dynamic perspective and tighter framing.",
+        "severity": 3,
+        "supported_by": 2
+      },
+      {
+        "category": "lighting",
+        "a_does": "Employs soft directional lighting that creates realistic contact shadows and specular highlights.",
+        "b_does": "Uses flat, uniform, static lighting that washes out depth.",
+        "fix": "Add a soft directional or area light source and enable ambient occlusion to generate realistic contact shadows.",
+        "severity": 3,
+        "supported_by": 2
+      },
+      {
+        "category": "staging",
+        "a_does": "Renders tiles/cards with distinct physical 3D thickness and beveled edges.",
+        "b_does": "Renders tiles/cards as flat, thin 2D planes lacking physical depth.",
+        "fix": "Increase the physical extrusion of the tiles/cards and add a bevel modifier.",
+        "severity": 3,
+        "supported_by": 2
+      }
+    ],
+    "agreed_absent_in_b": [
+      "Beveled tile/card edges",
+      "Realistic contact and ambient occlusion shadows"
+    ],
+    "highest_impact_fix": "Apply a smooth ease-out curve to the camera translation keyframes and adjust the camera's focal length and tilt to restore the dynamic perspective and organic motion of the reference.",
+    "dropped_unsupported": 6
+  }
+}

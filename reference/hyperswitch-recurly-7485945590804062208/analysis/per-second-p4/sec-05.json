@@ -1,0 +1,175 @@
+{
+  "sec": 5,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Smooth diagonal camera pan and tilt rotating around the yellow Recurly card.",
+        "Subtle shifting of soft shadows across the card crevices.",
+        "Dynamic depth-of-field shift keeping the main card sharp while background elements blur."
+      ],
+      "b_motion": [
+        "Linear, mechanical camera translation along a rigid path.",
+        "Static, flat lighting with no visible shadow travel or depth-of-field changes."
+      ],
+      "absent_in_b": [
+        "Soft contact shadows/ambient occlusion under the cards.",
+        "Tactile matte plastic material reflections.",
+        "Shallow depth-of-field blur on background elements."
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "a_does": "Uses soft global illumination with realistic ambient occlusion and subtle specular highlights on matte card surfaces.",
+          "b_does": "Renders with flat, uniform lighting and basic diffuse shaders, making the 3D cards look like flat 2D shapes.",
+          "fix": "Enable ambient occlusion, add a soft key light with a large radius, and add a subtle specular gloss to the card materials.",
+          "severity": 4
+        },
+        {
+          "category": "camera",
+          "a_does": "Applies a shallow depth of field to naturally blur background cards and focus attention on the Recurly card.",
+          "b_does": "Keeps the entire scene in sharp focus, flattening the composition.",
+          "fix": "Enable camera depth of field, set focus to the yellow card, and adjust the aperture to blur background elements.",
+          "severity": 3
+        },
+        {
+          "category": "motion",
+          "a_does": "Executes a smooth, sweeping camera path with organic ease-in/ease-out curves.",
+          "b_does": "Moves the camera on a rigid, linear path with abrupt starts and stops.",
+          "fix": "Adjust camera keyframe interpolation in the graph editor to use smooth bezier curves with generous easing.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Upgrade the lighting and materials by adding ambient occlusion and soft specular highlights to restore the tactile 3D quality of the cards."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera dollies out and pans right at a low angle.",
+        "Soft contact shadows shift beneath the Recurly button.",
+        "Subtle specular highlights glide across beveled key edges."
+      ],
+      "b_motion": [
+        "Camera dollies out on a steep, top-down path.",
+        "Static, uniform drop shadows remain unchanged.",
+        "No specular response or material texture animation."
+      ],
+      "absent_in_b": [
+        "Beveled keycap geometry and tight keyboard layout.",
+        "Warm ambient occlusion in key crevices.",
+        "Realistic matte plastic material textures."
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Tightly packed keyboard grid with realistic keycap profiles and narrow gaps.",
+          "b_does": "Flat, widely spaced rectangular panels floating over a plain background.",
+          "fix": "Rebuild grid geometry to match tight keycap spacing, reducing gaps by 80%.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Soft, diffused lighting with realistic contact shadows and edge speculars.",
+          "b_does": "Flat lighting with a harsh, artificial dark inset border around the yellow button.",
+          "fix": "Remove the dark inset border, soften shadows, and add specular highlights to bevels.",
+          "severity": 3
+        },
+        {
+          "category": "camera",
+          "a_does": "Low-angle perspective emphasizing 3D depth and volume.",
+          "b_does": "Steep, top-down angle that flattens the composition.",
+          "fix": "Lower camera pitch by 15 degrees and adjust focal length to restore depth.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Rebuild the keycap geometry and layout to eliminate the flat, widely spaced panel look."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Slow, organic camera pan upwards and to the right with a subtle rotation.",
+        "Subtle shift of soft specular highlights across the matte yellow card."
+      ],
+      "b_motion": [
+        "Camera drifts with a more linear, less eased motion path.",
+        "Hard-edged shadows slide rigidly across the flat white background tiles."
+      ],
+      "absent_in_b": [
+        "Shallow depth-of-field blur on background elements.",
+        "Soft shadow penumbra and realistic ambient occlusion."
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Tight, low-angle close-up with strong shallow depth of field focusing on the yellow card.",
+          "b_does": "Wide, high-angle shot with flat perspective and no depth of field, keeping everything sharp.",
+          "fix": "Increase camera focal length to ~85mm, move closer to the yellow card, lower the pitch angle, and enable depth of field.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Soft, diffused directional lighting with realistic shadow falloff and ambient occlusion.",
+          "b_does": "Harsh, sharp-edged shadows with no soft penumbra, making the scene look flat and artificial.",
+          "fix": "Increase the physical size of the primary light source to soften shadow edges and enable ambient occlusion.",
+          "severity": 4
+        },
+        {
+          "category": "material",
+          "a_does": "Clean, seamless 3D bevel on the yellow card defined purely by soft lighting.",
+          "b_does": "Yellow card has a harsh, dark grey outline/stroke effect along its edges.",
+          "fix": "Remove the dark outline stroke from the card geometry and rely on soft specular highlights to define the bevel.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera focal length and position to match the tight, shallow depth-of-field close-up of the yellow card, and soften the directional light source to eliminate the harsh, sharp shadows."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "a_does": "Uses soft, diffused lighting with realistic ambient occlusion and subtle specular highlights.",
+        "b_does": "Renders with flat, uniform lighting and harsh, sharp-edged shadows.",
+        "fix": "Enable ambient occlusion, increase the light source size to soften shadow edges, and add subtle specular highlights to the card surfaces.",
+        "severity": 4,
+        "supported_by": 3
+      },
+      {
+        "category": "camera",
+        "a_does": "Applies a shallow depth of field to naturally blur background elements and focus on the main card.",
+        "b_does": "Keeps the entire scene in sharp focus, flattening the composition.",
+        "fix": "Enable camera depth of field, set focus to the main card, and adjust the aperture to blur background elements.",
+        "severity": 3,
+        "supported_by": 2
+      },
+      {
+        "category": "camera",
+        "a_does": "Uses a low-angle perspective to emphasize 3D depth and volume.",
+        "b_does": "Uses a steep, high-angle or top-down perspective that flattens the composition.",
+        "fix": "Lower the camera pitch angle and adjust the position/focal length to restore a low-angle perspective with 3D depth.",
+        "severity": 3,
+        "supported_by": 2
+      },
+      {
+        "category": "material",
+        "a_does": "Defines card edges naturally using soft lighting and bevels.",
+        "b_does": "Adds an artificial, harsh dark outline or stroke effect along the edges of the card.",
+        "fix": "Remove the dark outline/stroke from the card geometry and rely on soft specular highlights and bevels to define the edges.",
+        "severity": 3,
+        "supported_by": 2
+      }
+    ],
+    "agreed_absent_in_b": [
+      "Soft contact shadows and realistic ambient occlusion.",
+      "Shallow depth-of-field blur on background elements.",
+      "Realistic matte plastic material textures and reflections."
+    ],
+    "highest_impact_fix": "Enable ambient occlusion and soften the directional light source to eliminate harsh shadows, and adjust the camera to a low-angle perspective with a shallow depth of field focusing on the main card.",
+    "dropped_unsupported": 3
+  }
+}

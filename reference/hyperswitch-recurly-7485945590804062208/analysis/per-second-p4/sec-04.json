@@ -1,0 +1,88 @@
+{
+  "sec": 4,
+  "meta": {
+    "verified": 1,
+    "attempted": 3
+  },
+  "rejected": [
+    "missed cut at 4.900s (got 4.42)",
+    "missed cut at 4.900s (got 4.42)"
+  ],
+  "runs": [
+    {
+      "cuts_in_window": [
+        4.896
+      ],
+      "a_motion": [
+        "Slow, organic camera drift downwards and rightwards over the three-card stack.",
+        "Hard cut at 4.896s to a dynamic diagonal pan over the yellow Recurly card."
+      ],
+      "b_motion": [
+        "Linear, robotic camera pan over a flatly staged three-card stack.",
+        "Hard cut at 4.896s to a flat, top-down pan over the yellow Recurly card."
+      ],
+      "absent_in_b": [
+        "Dramatic perspective convergence and shallow depth of field on the card stack.",
+        "Satin specular reflections on the background grid."
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Uses a wide-angle lens close to the cards, creating dramatic perspective convergence and depth.",
+          "b_does": "Uses a telephoto lens far away, resulting in a flat, orthographic-like appearance.",
+          "fix": "Decrease camera focal length to 50mm and move the camera closer to the cards to restore perspective depth.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Features directional key lighting casting soft, realistic contact shadows under the cards.",
+          "b_does": "Features flat, ambient lighting with weak, indistinct shadows.",
+          "fix": "Add a directional key light from the top-left and enable high-quality contact shadows with a 15% soft radius.",
+          "severity": 3
+        },
+        {
+          "category": "motion",
+          "a_does": "Camera pan has smooth, organic ease-in and ease-out curves.",
+          "b_does": "Camera pan is linear and robotic.",
+          "fix": "Apply bezier interpolation to camera translation keyframes to match the organic easing.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Match the camera focal length and perspective angle of Video A to eliminate the flat, orthographic look of the card stack."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "a_does": "Uses a wide-angle lens close to the cards, creating dramatic perspective convergence and depth.",
+        "b_does": "Uses a telephoto lens far away, resulting in a flat, orthographic-like appearance.",
+        "fix": "Decrease camera focal length to 50mm and move the camera closer to the cards to restore perspective depth.",
+        "severity": 4,
+        "supported_by": 1
+      },
+      {
+        "category": "lighting",
+        "a_does": "Features directional key lighting casting soft, realistic contact shadows under the cards.",
+        "b_does": "Features flat, ambient lighting with weak, indistinct shadows.",
+        "fix": "Add a directional key light from the top-left and enable high-quality contact shadows with a 15% soft radius.",
+        "severity": 3,
+        "supported_by": 1
+      },
+      {
+        "category": "motion",
+        "a_does": "Camera pan has smooth, organic ease-in and ease-out curves.",
+        "b_does": "Camera pan is linear and robotic.",
+        "fix": "Apply bezier interpolation to camera translation keyframes to match the organic easing.",
+        "severity": 3,
+        "supported_by": 1
+      }
+    ],
+    "agreed_absent_in_b": [
+      "Dramatic perspective convergence and shallow depth of field on the card stack.",
+      "Satin specular reflections on the background grid."
+    ],
+    "highest_impact_fix": "Match the camera focal length and perspective angle of Video A to eliminate the flat, orthographic look of the card stack.",
+    "dropped_unsupported": 0
+  }
+}

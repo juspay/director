@@ -1,0 +1,166 @@
+{
+  "sec": 10,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Slow, organic camera drift rotating around the yellow Recurly card",
+        "Subtle movement of dappled leaf shadows across the white and yellow surfaces"
+      ],
+      "b_motion": [
+        "Stiff, linear camera zoom-out",
+        "Completely static lighting and shadows"
+      ],
+      "absent_in_b": [
+        "Animated dappled leaf shadows",
+        "Soft ambient occlusion under the yellow card",
+        "Tactile matte texture reflections on the yellow button"
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "a_does": "Uses dynamic, moving dappled leaf shadows to create an organic, high-end outdoor aesthetic.",
+          "b_does": "Uses flat, static studio lighting with no environmental shadow play.",
+          "fix": "Add an animated gobo filter to the primary light source to project moving leaf shadows.",
+          "severity": 4
+        },
+        {
+          "category": "camera",
+          "a_does": "Executes a smooth, sweeping rotational drift with natural easing around the yellow card.",
+          "b_does": "Performs a rigid, linear zoom-out that feels mechanical.",
+          "fix": "Re-animate the camera path using bezier curves to match the rotational drift and ease-in/out of the reference.",
+          "severity": 3
+        },
+        {
+          "category": "material",
+          "a_does": "Renders the yellow card with a warm, tactile matte finish, soft bevels, and realistic depth.",
+          "b_does": "Renders a flat, solid yellow block with sharp, CG-looking edges and no specular variation.",
+          "fix": "Increase the bevel radius on the yellow card and apply a subtle noise/roughness map to soften the specular highlights.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Implement an animated leaf-shadow gobo on the key light to replicate the organic, dappled lighting environment of the reference."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Slow, elegant camera pan and tilt maintaining a close-up perspective on the yellow Recurly card.",
+        "Subtle light reflection shift across the matte plastic surface of the Recurly card.",
+        "Soft, realistic contact shadows shifting slightly beneath the raised cards."
+      ],
+      "b_motion": [
+        "Camera drifts at a flatter, more distant angle, lacking the dynamic perspective of the reference.",
+        "Static, flat lighting with no visible reflection travel across the yellow card.",
+        "Harsh, uniform ambient occlusion shadows that do not react to the camera's movement."
+      ],
+      "absent_in_b": [
+        "The close-up, high-angle perspective (focal length/camera distance is too far in B).",
+        "The subtle bevel highlight on the edges of the yellow Recurly card.",
+        "The realistic soft shadow falloff (replaced by a harsh dark outline in B)."
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Uses a tight, dynamic close-up framing with a shallow depth of field, making the yellow Recurly card dominant and tactile.",
+          "b_does": "Positions the camera much further away with a wider field of view, flattening the composition and making the cards look small and distant.",
+          "fix": "Bring the camera closer to the yellow card by approximately 40% and adjust the focal length to match the reference's perspective and depth of field.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Renders soft, realistic contact shadows and subtle edge bevel highlights that define the card's 3D volume.",
+          "b_does": "Applies a harsh, dark ambient occlusion outline around the card, making it look like a flat 2D element pasted onto the background.",
+          "fix": "Reduce the ambient occlusion radius and intensity by 60%, and soften the contact shadows using a larger light source size.",
+          "severity": 3
+        },
+        {
+          "category": "color",
+          "a_does": "Features a warm, vibrant golden-yellow hue on the Recurly card under soft white light.",
+          "b_does": "Displays a duller, slightly greenish-mustard yellow hue with flat shading.",
+          "fix": "Adjust the diffuse color of the yellow material to increase saturation by 15% and shift the hue slightly towards warm orange.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Re-align the camera distance and focal length to match the tight, dynamic close-up framing of the reference, which is crucial for the tactile design aesthetic."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera slowly zooms out and tilts upward, creating a dynamic perspective shift.",
+        "The white 'Live Now' pill button floats upward, casting a soft, realistic shadow on the surface below.",
+        "Subtle light reflections shift across the glossy surfaces of the yellow Recurly card and blue Juspay card."
+      ],
+      "b_motion": [
+        "Camera performs a flat, linear zoom-out with no tilt or organic drift.",
+        "The 'Live Now' pill button rises vertically but lacks realistic shadow scaling or soft contact shadows."
+      ],
+      "absent_in_b": [
+        "The recessed grey slots/wells that house the cards, which give A its tactile keyboard-like depth.",
+        "Rich ambient occlusion shadows in the crevices between the grid keys."
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "a_does": "Uses soft, directional studio lighting with rich ambient occlusion and deep contact shadows in the recessed wells, giving the keys a tactile, physical quality.",
+          "b_does": "Uses extremely flat, washed-out ambient lighting with almost no contact shadows or ambient occlusion, making the 3D elements look flat and pasted-on.",
+          "fix": "Add a strong directional light source and enable high-quality ambient occlusion. Darken the contact shadows beneath and around the keys by 40%.",
+          "severity": 4
+        },
+        {
+          "category": "staging",
+          "a_does": "Places the keys inside distinct recessed wells with grey borders, creating a clear keyboard-like mechanical structure.",
+          "b_does": "Places the keys on a flat white grid with thin grey outlines, losing the mechanical depth and recess.",
+          "fix": "Model actual recessed wells for the keys to sit in, matching the depth and bevels of the reference keyboard structure.",
+          "severity": 4
+        },
+        {
+          "category": "camera",
+          "a_does": "Executes a dynamic camera pullback with a subtle tilt and organic easing.",
+          "b_does": "Executes a rigid, linear zoom-out with no perspective tilt.",
+          "fix": "Animate the camera with a slight pitch tilt (approx 5 degrees) and apply an exponential ease-out curve to the zoom.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Recreate the recessed key wells and enable high-quality ambient occlusion to restore the tactile 3D depth and mechanical realism of the scene."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "a_does": "Executes a smooth, dynamic camera movement with organic easing and subtle drift or tilt.",
+        "b_does": "Performs a rigid, linear zoom-out that feels mechanical and lacks perspective shift.",
+        "fix": "Re-animate the camera path using bezier curves to introduce natural easing and a subtle perspective drift.",
+        "severity": 3,
+        "supported_by": 2
+      },
+      {
+        "category": "lighting",
+        "a_does": "Renders soft, realistic contact shadows and rich ambient occlusion that define the depth and volume of the elements.",
+        "b_does": "Uses flat lighting with either missing contact shadows or harsh, uniform, unrealistic outlines.",
+        "fix": "Enable high-quality ambient occlusion and soften the contact shadows using a larger light source size and realistic falloff.",
+        "severity": 3,
+        "supported_by": 3
+      },
+      {
+        "category": "material",
+        "a_does": "Renders the yellow card with soft, realistic edge bevels that catch subtle highlights.",
+        "b_does": "Renders the yellow card with sharp, flat, CG-looking edges and no specular variation.",
+        "fix": "Increase the bevel radius on the yellow card to soften the edges and allow them to catch highlights.",
+        "severity": 3,
+        "supported_by": 2
+      }
+    ],
+    "agreed_absent_in_b": [
+      "Realistic soft ambient occlusion and contact shadows",
+      "Subtle bevel highlights on the edges of the yellow card"
+    ],
+    "highest_impact_fix": "Adjust the ambient occlusion and contact shadows to be softer and more realistic, and re-animate the camera path with organic easing curves to restore natural depth and motion.",
+    "dropped_unsupported": 8
+  }
+}

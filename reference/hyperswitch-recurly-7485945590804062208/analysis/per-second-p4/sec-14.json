@@ -1,0 +1,176 @@
+{
+  "sec": 14,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera slowly pulls back and tilts up slightly, creating a smooth parallax effect across the grid.",
+        "Subtle light reflections shift across the semi-gloss surfaces of the yellow Recurly and blue Hyperswitch blocks."
+      ],
+      "b_motion": [
+        "Camera pulls back much faster with a wider field of view, causing rapid scale reduction and perspective distortion.",
+        "Flat lighting remains static across the blocks with no dynamic specular shifts."
+      ],
+      "absent_in_b": [
+        "Subtle dot grid texture on the white floor tiles.",
+        "Soft contact shadows and ambient occlusion between the blocks and the floor."
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Uses a narrow field of view with a gentle, slow pull-back, maintaining a flat, isometric-like perspective.",
+          "b_does": "Uses a wide-angle lens and pulls back too far, causing extreme perspective distortion.",
+          "fix": "Reduce camera FOV by 15 degrees and scale back the zoom-out keyframes by 30% to match the flatter perspective.",
+          "severity": 4
+        },
+        {
+          "category": "staging",
+          "a_does": "Arranges blocks in a tight, compact grid with minimal gaps, creating a cohesive layout.",
+          "b_does": "Spaces the blocks far apart, leaving large empty gaps of white floor.",
+          "fix": "Decrease the spacing between the yellow, blue, and button blocks by 45% to tighten the composition.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Features soft, realistic contact shadows (ambient occlusion) that ground the blocks.",
+          "b_does": "Lacks contact shadows, making the blocks appear to float flatly on the floor.",
+          "fix": "Enable ambient occlusion and add a soft directional light to cast subtle contact shadows under the block edges.",
+          "severity": 3
+        },
+        {
+          "category": "material",
+          "a_does": "Applies rounded bevels to the block edges, catching soft specular highlights.",
+          "b_does": "Uses sharp, unbeveled edges with flat, non-reflective shaders.",
+          "fix": "Add a 2% bevel to all block geometries and increase material glossiness slightly to catch highlights.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera's field of view and zoom keyframes to eliminate the wide-angle perspective distortion and match the flat, cinematic composition of the reference."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera pulls back and tilts up smoothly, decelerating to reveal the full grid layout.",
+        "Subtle shadow shifts across the grid elements as the camera angle changes."
+      ],
+      "b_motion": [
+        "Camera pulls back linearly with abrupt easing.",
+        "Static grid elements with flat, unchanging shadows."
+      ],
+      "absent_in_b": [
+        "Tactile matte texture on the cards",
+        "Rich color saturation and realistic specular highlights",
+        "Subtle bevel reflections on the card edges"
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "a_does": "Rich, directional soft lighting with deep ambient occlusion and realistic shadow falloff.",
+          "b_does": "Extremely flat, washed-out ambient lighting with weak shadows and no depth.",
+          "fix": "Add a strong directional key light with soft shadow maps and enable high-quality ambient occlusion.",
+          "severity": 4
+        },
+        {
+          "category": "camera",
+          "a_does": "Dynamic perspective with a wider focal length, creating strong depth and parallax during the pull-back.",
+          "b_does": "Flat perspective with a narrower focal length, making the grid look almost orthographic.",
+          "fix": "Decrease focal length by approximately 15% and adjust camera distance to match the perspective distortion of A.",
+          "severity": 4
+        },
+        {
+          "category": "color",
+          "a_does": "Vibrant, saturated yellow and deep royal blue.",
+          "b_does": "Dull, desaturated pastel yellow and flat blue.",
+          "fix": "Match the diffuse color hex codes exactly and adjust the color grading/gamma curve.",
+          "severity": 3
+        },
+        {
+          "category": "material",
+          "a_does": "Tactile matte plastic with subtle roughness variation and soft specular highlights on the edges.",
+          "b_does": "Perfectly smooth, default-looking shaders with no specular response or texture.",
+          "fix": "Add a subtle noise bump map and increase specular intensity on the card edges.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Re-light the scene with a soft directional key light and enable high-quality ambient occlusion to match the depth and tactile feel of Video A."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera pulls back slowly, easing to a gentle stop.",
+        "Subtle animated dappled leaf shadows drift across the white tiles."
+      ],
+      "b_motion": [
+        "Camera remains virtually static with a flat perspective.",
+        "Lighting and shadows are completely static."
+      ],
+      "absent_in_b": [
+        "Animated dappled leaf shadows",
+        "Metallic bevel reflections on the buttons",
+        "Realistic depth of field"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Camera is closely framed with a dynamic perspective angle and realistic depth of field.",
+          "b_does": "Camera is zoomed extremely far back, creating a flat, orthographic-like composition with massive empty space.",
+          "fix": "Bring the camera closer by approximately 50%, match the tilt angle, and enable depth of field.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Uses dynamic dappled light and shadow patterns simulating moving tree leaves.",
+          "b_does": "Flat, uniform white lighting with static, soft shadows.",
+          "fix": "Add a directional light with an animated leaf-gobo texture map to simulate wind movement.",
+          "severity": 4
+        },
+        {
+          "category": "material",
+          "a_does": "Buttons have realistic tactile materials, subtle gloss, and distinct reflective bevels.",
+          "b_does": "Buttons look like flat vector shapes with basic solid colors and no material depth.",
+          "fix": "Increase roughness variation and add a specular map to the bevels to catch highlights.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Bring the camera closer to match the tight, dynamic perspective of the reference and add animated dappled leaf shadows across the scene."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "a_does": "Features soft, realistic contact shadows and ambient occlusion that ground the blocks.",
+        "b_does": "Lacks contact shadows and ambient occlusion, making the blocks appear flat or floating.",
+        "fix": "Enable ambient occlusion and add a soft directional key light to cast subtle contact shadows under the blocks.",
+        "severity": 4,
+        "supported_by": 2
+      },
+      {
+        "category": "camera",
+        "a_does": "Closely framed with a dynamic perspective.",
+        "b_does": "Zoomed too far back, creating a flat, orthographic-like composition with excessive empty space.",
+        "fix": "Bring the camera closer and adjust the focal length to match the closer, more dynamic framing of the reference.",
+        "severity": 4,
+        "supported_by": 2
+      },
+      {
+        "category": "material",
+        "a_does": "Blocks and buttons feature rounded bevels with subtle gloss and realistic specular highlights on the edges.",
+        "b_does": "Blocks and buttons have sharp, unbeveled edges with flat, non-reflective shaders.",
+        "fix": "Add a bevel to the block and button geometries and increase material glossiness/specular intensity to catch edge highlights.",
+        "severity": 3,
+        "supported_by": 3
+      }
+    ],
+    "agreed_absent_in_b": [
+      "Bevel reflections on the edges of the blocks and buttons"
+    ],
+    "highest_impact_fix": "Bring the camera closer to match the tight, dynamic perspective of the reference, enable ambient occlusion to ground the blocks, and add bevels to the edges to catch specular highlights.",
+    "dropped_unsupported": 8
+  }
+}

@@ -1,0 +1,166 @@
+{
+  "sec": 1,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Slow diagonal camera drift with organic rotation.",
+        "Subtle shadow shifting under the elevated keys."
+      ],
+      "b_motion": [
+        "Linear camera pan with rigid easing.",
+        "Static, flat shadows."
+      ],
+      "absent_in_b": [
+        "Vibrant blue key on the left.",
+        "Yellow key at the bottom frame edge."
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Dynamic low-angle perspective with strong diagonal grid alignment.",
+          "b_does": "Flatter, more top-down camera angle with weak perspective.",
+          "fix": "Increase camera FOV and rotate camera 15 degrees on Y/Z axes to match diagonal alignment.",
+          "severity": 3
+        },
+        {
+          "category": "lighting",
+          "a_does": "Soft directional lighting with rich ambient occlusion and key gradients.",
+          "b_does": "Flat, uniform lighting with washed-out shadows.",
+          "fix": "Add a strong top-left key light and enable contact ambient occlusion.",
+          "severity": 3
+        },
+        {
+          "category": "typography",
+          "a_does": "Bold, clean geometric sans-serif with tight tracking.",
+          "b_does": "Thin font with loose tracking and poor vertical alignment.",
+          "fix": "Switch to a heavier sans-serif weight and reduce tracking by 5%.",
+          "severity": 2
+        }
+      ],
+      "highest_impact_fix": "Match the camera's low-angle perspective and diagonal orientation to restore 3D depth."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Slow, organic diagonal camera drift down and to the right",
+        "Subtle parallax shift between the foreground card and background grid",
+        "Soft shadow movement across the card crevices as the camera perspective shifts"
+      ],
+      "b_motion": [
+        "Linear, mechanical camera drift with less organic easing",
+        "Flatter parallax due to a wider camera lens perspective"
+      ],
+      "absent_in_b": [
+        "Soft directional key light shadows",
+        "Subtle color bounce and reflections on the white card edges"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Uses a tight, dramatic telephoto camera angle close to the card, creating strong perspective depth.",
+          "b_does": "Uses a wider focal length and flatter angle, making the composition look flat and orthographic.",
+          "fix": "Increase camera focal length to approximately 85mm and reposition closer to match the reference perspective.",
+          "severity": 3
+        },
+        {
+          "category": "lighting",
+          "a_does": "Employs soft, directional key lighting with realistic contact shadows and subtle global illumination.",
+          "b_does": "Uses flat, uniform ambient lighting with muddy, low-contrast shadows.",
+          "fix": "Add a large, soft area light from the top-left and enable high-quality global illumination.",
+          "severity": 3
+        },
+        {
+          "category": "color",
+          "a_does": "The blue shield icon features a vibrant, saturated cobalt blue color.",
+          "b_does": "The shield icon is a duller, darker navy blue with flat shading.",
+          "fix": "Adjust the diffuse color of the shield material to a more vibrant cobalt blue.",
+          "severity": 2
+        }
+      ],
+      "highest_impact_fix": "Match the camera focal length and staging angle of the reference to restore the dramatic 3D depth and parallax."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Subtle, organic camera drift and pan",
+        "Soft shadow shifting across the key crevices"
+      ],
+      "b_motion": [
+        "Linear, robotic camera pan",
+        "No visible shadow movement or depth changes"
+      ],
+      "absent_in_b": [
+        "Shallow depth of field blur",
+        "Deep ambient occlusion shadows in the key gaps"
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "a_does": "Rich, soft directional lighting with deep ambient occlusion in the crevices between keys, creating a tactile 3D feel.",
+          "b_does": "Extremely flat, washed-out lighting with almost no ambient occlusion or contact shadows, making the keys look like flat 2D planes.",
+          "fix": "Add a strong directional key light from the top-left and enable high-quality ambient occlusion with a radius of 15cm to define the gaps.",
+          "severity": 4
+        },
+        {
+          "category": "camera",
+          "a_does": "Subtle, organic camera drift with a shallow depth of field, keeping the foreground card sharp while background elements blur softly.",
+          "b_does": "Linear, robotic camera pan with infinite focus and no depth of field.",
+          "fix": "Match the camera's focal length (85mm) and set the aperture to f/2.8 focused on the 'Secure Payments' card. Use bezier easing for the pan.",
+          "severity": 4
+        },
+        {
+          "category": "typography",
+          "a_does": "Uses a clean, medium-weight sans-serif font with tight line spacing and precise center alignment relative to the card.",
+          "b_does": "Uses a thinner, generic sans-serif font with wider line spacing, positioned too low on the card.",
+          "fix": "Switch to a heavier font weight, reduce line height by 15%, and shift the text block up by 8 pixels.",
+          "severity": 3
+        },
+        {
+          "category": "staging",
+          "a_does": "The 'Secure Payments' card is nested snugly within a tight, high-density grid of keys with minimal gaps.",
+          "b_does": "The keys are spaced much further apart, exposing large flat grey gaps between them.",
+          "fix": "Reduce the spacing between the key blocks by 40% to create a cohesive, dense keyboard-like surface.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Implement high-quality ambient occlusion and a shallow depth of field (f/2.8) focused on the main card to restore the 3D depth and tactile quality of the original."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "a_does": "Dynamic, organic camera perspective with strong depth and diagonal alignment.",
+        "b_does": "Flat, linear camera angle with weak perspective and infinite focus.",
+        "fix": "Increase camera focal length (e.g., 85mm), adjust the angle to match the perspective depth, and use organic easing for the camera movement.",
+        "severity": 3,
+        "supported_by": 3
+      },
+      {
+        "category": "lighting",
+        "a_does": "Soft directional key lighting with rich ambient occlusion and contact shadows.",
+        "b_does": "Flat, uniform lighting with washed-out shadows and minimal ambient occlusion.",
+        "fix": "Add a strong directional key light from the top-left and enable high-quality contact ambient occlusion.",
+        "severity": 3,
+        "supported_by": 3
+      },
+      {
+        "category": "typography",
+        "a_does": "Bold/medium-weight sans-serif font with tight tracking and precise alignment.",
+        "b_does": "Thinner font with loose tracking/spacing and poor alignment.",
+        "fix": "Switch to a heavier sans-serif font weight and reduce tracking/line spacing.",
+        "severity": 2,
+        "supported_by": 2
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera focal length and angle to restore the dramatic 3D perspective depth, and implement soft directional lighting with ambient occlusion to bring back the tactile quality.",
+    "dropped_unsupported": 8
+  }
+}

@@ -1,0 +1,164 @@
+{
+  "sec": 9,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera zooms out continuously with a wide-angle perspective.",
+        "Organic dappled leaf shadows sweep diagonally across the grid.",
+        "Subtle glossy reflections shift on the card surfaces."
+      ],
+      "b_motion": [
+        "Camera zooms out with a flat, telephoto-like perspective.",
+        "Static, uniform lighting with no moving shadows."
+      ],
+      "absent_in_b": [
+        "Dappled leaf shadows (gobo light effect).",
+        "UI details and illustrations on the surrounding background tiles.",
+        "Dynamic perspective distortion."
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "a_does": "Casts organic, sweeping leaf shadows across the grid using a moving gobo filter.",
+          "b_does": "Uses flat, static, uniform lighting with no environmental shadows.",
+          "fix": "Add a directional light with a leaf texture map and animate its position to sweep diagonally.",
+          "severity": 4
+        },
+        {
+          "category": "staging",
+          "a_does": "Populates surrounding tiles with detailed UI elements, text, and icons.",
+          "b_does": "Leaves the surrounding background tiles completely blank and white.",
+          "fix": "Map the missing UI textures and graphics onto the surrounding grid tiles.",
+          "severity": 3
+        },
+        {
+          "category": "camera",
+          "a_does": "Uses a wider focal length creating dynamic perspective convergence.",
+          "b_does": "Uses a narrow focal length that makes the grid look flat and orthographic.",
+          "fix": "Increase the camera Field of View (FOV) and adjust camera distance to match.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Add the animated dappled leaf shadow gobo to the main light source to break up the flat white surfaces."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera pulls back and tilts upward, creating a dynamic perspective shift.",
+        "Dappled light shadows drift softly across the tiles, simulating outdoor foliage."
+      ],
+      "b_motion": [
+        "Camera drifts back very slowly with minimal perspective change.",
+        "Lighting remains completely static with no animated shadow overlays."
+      ],
+      "absent_in_b": [
+        "Animated dappled light/shadow overlay.",
+        "Soft, realistic contact shadows around the card edges."
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "a_does": "Dynamic dappled light shadow animation simulating wind-blown foliage.",
+          "b_does": "Flat, static studio lighting with no animated shadow overlays.",
+          "fix": "Add an animated gobo map to the primary light source to project moving leaf shadows.",
+          "severity": 4
+        },
+        {
+          "category": "camera",
+          "a_does": "Wide-angle lens with noticeable perspective distortion during a dynamic pull-back.",
+          "b_does": "Narrow FOV / flatter lens, making the layout look orthographic and rigid.",
+          "fix": "Decrease camera focal length to ~35mm and increase physical distance to match perspective.",
+          "severity": 3
+        },
+        {
+          "category": "staging",
+          "a_does": "Soft, diffused contact shadows beneath the cards.",
+          "b_does": "Harsh, dark gray outlines acting as drop shadows, looking artificial.",
+          "fix": "Increase light source size to soften shadow penumbra and adjust ambient occlusion.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Implement an animated dappled light gobo to match the organic shadow movement of the reference."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera pulls back and pans up-right with smooth easing",
+        "The 'Live Now' pill button rises vertically out of its slot",
+        "Subtle soft shadow travel across the white keys"
+      ],
+      "b_motion": [
+        "Camera pulls back faster with linear interpolation",
+        "The 'Live Now' pill button rises with abrupt easing"
+      ],
+      "absent_in_b": [
+        "The tight, overlapping keyboard-like grid structure",
+        "Deep contact shadows in the key recesses"
+      ],
+      "differences": [
+        {
+          "category": "layout",
+          "a_does": "Densely packed grid of cards with precise spacing and realistic depth.",
+          "b_does": "Sparse layout with massive empty white gaps between the cards.",
+          "fix": "Reduce the spacing between the cards by 60% to match the tight, nested layout of the reference.",
+          "severity": 4
+        },
+        {
+          "category": "camera",
+          "a_does": "Smooth, slow camera pullback with heavy easing and a dramatic low angle.",
+          "b_does": "Faster, linear camera pullback that feels mechanical and lacks perspective.",
+          "fix": "Adjust camera animation curves to add ease-out and slow down the translation speed by 30%.",
+          "severity": 3
+        },
+        {
+          "category": "lighting",
+          "a_does": "Soft global illumination with deep, realistic contact shadows in the card slots.",
+          "b_does": "Flat, bright lighting with weak, washed-out shadows.",
+          "fix": "Increase shadow density and reduce ambient light contribution to restore depth in the recessed wells.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Tighten the layout grid spacing to eliminate the large empty gaps between cards."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "a_does": "Casts organic, sweeping leaf shadows across the grid using an animated gobo filter.",
+        "b_does": "Uses flat, static, uniform lighting with no moving environmental shadows.",
+        "fix": "Add an animated gobo map with a leaf texture to the primary light source to project moving shadows.",
+        "severity": 4,
+        "supported_by": 2
+      },
+      {
+        "category": "camera",
+        "a_does": "Uses a wider focal length / wide-angle lens creating dynamic perspective distortion.",
+        "b_does": "Uses a narrow focal length / flatter lens, making the layout look flat and orthographic.",
+        "fix": "Decrease camera focal length and adjust camera distance to match the dynamic perspective.",
+        "severity": 3,
+        "supported_by": 2
+      },
+      {
+        "category": "lighting",
+        "a_does": "Displays soft, realistic contact shadows beneath the cards/keys.",
+        "b_does": "Displays harsh, weak, or artificial-looking shadows with flat lighting.",
+        "fix": "Increase light source size or adjust ambient occlusion to soften the shadow penumbra and create realistic contact shadows.",
+        "severity": 3,
+        "supported_by": 2
+      }
+    ],
+    "agreed_absent_in_b": [
+      "Animated dappled leaf shadows (gobo light effect)",
+      "Soft, realistic contact shadows around the card/key edges"
+    ],
+    "highest_impact_fix": "Add an animated dappled leaf shadow gobo to the primary light source to project moving shadows across the scene.",
+    "dropped_unsupported": 3
+  }
+}

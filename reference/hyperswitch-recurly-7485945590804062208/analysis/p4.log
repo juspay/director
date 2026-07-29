@@ -1,0 +1,19 @@
+uploaded A=target_slow2x.mp4 B=pass4_slow2x.mp4 | model gemini-3.5-flash | 3 runs/second
+
+[sec 2] 3/3 runs verified · 3 corroborated · dropped 4 — Adjust the camera focal length and position to achieve a tight, dynamic close-up perspecti
+[sec 0] 3/3 runs verified · 3 corroborated · dropped 2 — Adjust the camera's starting position and focal length to match the tight, dynamic close-u
+[sec 1] 3/3 runs verified · 3 corroborated · dropped 8 — Adjust the camera focal length and angle to restore the dramatic 3D perspective depth, and
+[sec 4] 1/3 runs verified · 3 corroborated · dropped 0 — Match the camera focal length and perspective angle of Video A to eliminate the flat, orth
+[sec 3] FAILED: unterminated JSON object
+[sec 5] 3/3 runs verified · 4 corroborated · dropped 3 — Enable ambient occlusion and soften the directional light source to eliminate harsh shadow
+[sec 7] 3/3 runs verified · 4 corroborated · dropped 2 — Adjust the camera to a low-angle perspective with shallow depth of field, add a metallic b
+[sec 6] 3/3 runs verified · 3 corroborated · dropped 3 — Animate the vertical translation (depression/extrusion) of the blue button after the cut a
+[sec 8] 3/3 runs verified · 3 corroborated · dropped 8 — Add a light gobo with an organic leaf silhouette to project moving dappled shadows and adj
+[sec 9] 3/3 runs verified · 3 corroborated · dropped 3 — Add an animated dappled leaf shadow gobo to the primary light source to project moving sha
+[sec 10] 3/3 runs verified · 3 corroborated · dropped 8 — Adjust the ambient occlusion and contact shadows to be softer and more realistic, and re-a
+[sec 11] 3/3 runs verified · 3 corroborated · dropped 2 — Add the animated dappled leaf shadows and tighten the layout/framing to eliminate the flat
+[sec 12] 3/3 runs verified · 3 corroborated · dropped 5 — Increase the light source radius to soften harsh shadows and enable ambient occlusion to e
+[sec 14] 3/3 runs verified · 3 corroborated · dropped 8 — Bring the camera closer to match the tight, dynamic perspective of the reference, enable a
+[sec 13] 3/3 runs verified · 4 corroborated · dropped 6 — Apply a smooth ease-out curve to the camera translation keyframes and adjust the camera's 
+
+-> analysis/per-second-p4
