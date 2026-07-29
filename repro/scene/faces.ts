@@ -430,6 +430,43 @@ export function pspFace(): THREE.CanvasTexture {
 // ---------------------------------------------------------------------------
 
 /** Blank panel with a soft vertical sheen. */
+/**
+ * Fine matte grain, drawn via an offscreen canvas.
+ *
+ * `putImageData` ignores the context transform, so writing pixels directly into
+ * a tex() context — which is pre-scaled by RES — lands the noise at a fraction
+ * of the intended size. Compositing through drawImage respects the transform.
+ */
+function grain(ctx: CanvasRenderingContext2D, w: number, h: number, seed: number, amp = 7): void {
+  const off = document.createElement('canvas');
+  off.width = w;
+  off.height = h;
+  const octx = off.getContext('2d')!;
+  const img = octx.createImageData(w, h);
+  const r = rng(seed);
+  for (let i = 0; i < img.data.length; i += 4) {
+    const n = (r() - 0.5) * 2 * amp;
+    img.data[i] = img.data[i + 1] = img.data[i + 2] = 128 + n;
+    img.data[i + 3] = 255;
+  }
+  octx.putImageData(img, 0, 0);
+  ctx.save();
+  ctx.globalCompositeOperation = 'overlay';
+  ctx.globalAlpha = 0.55;
+  ctx.drawImage(off, 0, 0, w, h);
+  ctx.restore();
+}
+
+/**
+ * Plain wall panel.
+ *
+ * This texture covers most of the set, and it used to be a flat fill plus a
+ * single linear gradient — no high-frequency content at all. Measuring
+ * Laplacian energy in the IN-FOCUS centre of frame showed 43% of the
+ * reference's, which ruled out depth of field as the cause and pointed here:
+ * the reference's surfaces carry a fine matte grain that catches the key light,
+ * and a dead-flat panel cannot.
+ */
 export function panelPlain(seed = 1): THREE.CanvasTexture {
   const r = rng(seed);
   const base = 222 + Math.floor(r() * 16);
@@ -441,6 +478,7 @@ export function panelPlain(seed = 1): THREE.CanvasTexture {
     g.addColorStop(1, 'rgba(218,215,208,0.28)');
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, 512, 512);
+    grain(ctx, 512, 512, seed * 7919 + 13);
   });
 }
 
@@ -606,7 +644,11 @@ export function cloudTexture(): THREE.CanvasTexture {
  */
 export function goboTexture(): THREE.CanvasTexture {
   const t = tex(1024, 1024, (ctx) => {
-    ctx.fillStyle = '#9b9b9b';
+    // Higher contrast than it looks like it needs. A gobo is a MULTIPLIER on
+    // the key, so a low-contrast pattern under a strong fill is invisible;
+    // fifteen of fifteen seconds reported no dappled shadows at all while this
+    // texture was a near-flat grey.
+    ctx.fillStyle = '#7c7c7c';
     ctx.fillRect(0, 0, 1024, 1024);
     const r = rng(90210);
     for (let k = 0; k < 46; k++) {
@@ -616,11 +658,11 @@ export function goboTexture(): THREE.CanvasTexture {
       const light = k % 2 === 0;
       const g = ctx.createRadialGradient(x, y, 0, x, y, rad);
       if (light) {
-        g.addColorStop(0, 'rgba(255,255,255,0.55)');
+        g.addColorStop(0, 'rgba(255,255,255,0.85)');
         g.addColorStop(1, 'rgba(255,255,255,0)');
       } else {
-        g.addColorStop(0, 'rgba(40,44,54,0.34)');
-        g.addColorStop(1, 'rgba(40,44,54,0)');
+        g.addColorStop(0, 'rgba(28,32,42,0.55)');
+        g.addColorStop(1, 'rgba(28,32,42,0)');
       }
       ctx.fillStyle = g;
       ctx.beginPath();

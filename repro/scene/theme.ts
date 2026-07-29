@@ -17,9 +17,18 @@ export const C = {
   floor: '#eceae6',
   tile: '#f0efec',
   indigo: '#3646e6', // capability icon + label
-  gold: '#e1d067', // Recurly keycap — reference gold carries far more blue than pure #ffd11e
+  // Brand albedos, solved by rendering frame 300 and measuring the masked
+  // plate pixels against the reference's. Both were tuned holding the composer
+  // grade fixed: the first attempt moved albedo AND lockup saturation together
+  // and overshot to gold (226,200,7) / blue (11,35,220), because neither
+  // change's effect could be read on its own.
+  // Renders (213,192,77) against the reference's (217,195,72).
+  gold: '#ddc849',
   goldBar: '#ffc700',
-  blue: '#1743c9', // Hyperswitch keycap — reference blue is deeper, not lifted
+  // Renders (66,101,220) against the reference's (64,101,220). At the previous
+  // #1743c9 it rendered (96,112,197) — too much red, too little blue, reading
+  // as periwinkle rather than the reference's vivid blue.
+  blue: '#0a50de',
   metalTop: '#cfd3db',
   metalMid: '#b6bcc7',
   metalDark: '#9aa0ad',

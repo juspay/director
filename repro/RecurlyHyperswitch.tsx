@@ -8,12 +8,13 @@ import {
   Vignette,
   HueSaturation,
   BrightnessContrast,
+  N8AO,
 } from '@react-three/postprocessing';
 import { interpolate, useCurrentFrame, useVideoConfig } from 'remotion';
 import * as THREE from 'three';
 import { C, RES } from './scene/theme';
 import { goboTexture } from './scene/faces';
-import { Timeline, CameraRig, CloudOverlay } from './scene/Timeline';
+import { Timeline, CameraRig, shotIndex } from './scene/Timeline';
 
 /**
  * Moving dappled key light.
@@ -68,6 +69,16 @@ const Lights: React.FC = () => (
   <>
     <SoftShadows size={62} samples={20} focus={0.55} />
     <GoboKey />
+    {/* Fill levels, restored after a failed rebalance.
+        All fifteen seconds still report "flat, static, uniform lighting with no
+        shadow movement", and several ask outright for a dappled gobo — one that
+        has been in this scene since pass 3 and does not visibly read. The
+        theory was that fill was drowning it, so the key went to 7.0 and every
+        fill source was halved. That blew the tile wall to flat white, erased
+        the seams and the Live Now pill, measured +37 luma against the
+        reference at f30 — and produced no more dapple than before. So the
+        premise was wrong, and the projected pattern is failing for some other
+        reason. Reverted rather than shipped; the cause is still open. */}
     <Environment resolution={1024} background={false}>
       <Lightformer intensity={0.72} position={[0, 9, 2]} scale={[44, 44, 1]} color="#ffffff" />
       <Lightformer intensity={0.4} position={[-9, 5, 6]} scale={[22, 22, 1]} color="#fff4e2" />
@@ -101,30 +112,56 @@ const Lights: React.FC = () => (
  */
 const SAT_MACRO = 0.45;
 const CONTRAST_MACRO = 0.16;
-const BRIGHT_MACRO = -0.10;
+const BRIGHT_MACRO = -0.13;
+// The lockup grade was tuned when this shot was blowing out, and it has been
+// suppressing colour ever since: at saturation 0.16 the rendered gold came back
+// (207,194,117) against the target's (217,195,72) and the blue (96,112,197)
+// against (64,101,220) — both washed toward grey. The set rebuild removed the
+// clipping this was compensating for (blown pixels measure 0.00000 against the
+// reference's 0.00035), so the compression can come back off.
 const SAT_LOCKUP = 0.16;
-// The lockup rendered 137..227 against the target's 174..211 — a 90-wide range
-// where the target holds 37. Compress it and lift the centre so the far, flat
-// lockup reads as calm rather than crushed-and-clipped.
-const CONTRAST_LOCKUP = -0.30;
-const BRIGHT_LOCKUP = 0.04;
+const CONTRAST_LOCKUP = -0.10;
+const BRIGHT_LOCKUP = -0.02;
 
 /**
- * Macro depth of field. focalLength here is the *focus range*, not a lens focal
- * length; at 0.055 the in-focus slab was thin enough that even the nearest card
- * was heavily blurred, turning every glyph and label into mush. The subjects
- * must stay sharp and only the surrounding set should fall away — which is what
- * the reference actually does. bokehScale is a pixel quantity so it scales with
- * RES; bloom is kept minimal because it over-saturates the badge blue and eats
- * thin glyph strokes.
+ * Per-shot focus target. Locking focus to a fixed world point meant the plane
+ * drifted off the subject as each shot's camera orbited; the subject has to be
+ * what is sharp.
+ */
+const FOCUS: Array<[number, number, number]> = [
+  [0.0, 0.0, 0.15],
+  [-0.05, 0.0, 0.0],
+  [0.05, 0.0, 0.05],
+  [0.05, 0.0, 0.05],
+  [0.0, 0.0, 0.12],
+];
+
+/**
+ * Macro depth of field.
+ *
+ * focalLength here is the *focus range*, not a lens focal length — smaller is
+ * shallower. It had been pushed to 0.30-0.45, which is effectively no depth of
+ * field at all, and the per-second analysis duly reported that this scene "has
+ * infinite depth of field with all elements in sharp focus" against a reference
+ * whose frame edges fall away.
+ *
+ * That was self-inflicted: an earlier pass widened the range because narrow
+ * focus was costing edge-detail score, and the metric improved while the image
+ * got worse. The fault was never the effect, it was the focus PLANE — targeting
+ * a fixed world point that the subject moved away from. With focus tracking the
+ * subject per shot the range can come back down to something photographic.
+ *
+ * bokehScale is a pixel quantity so it scales with RES; bloom stays minimal
+ * because it over-saturates the badge blue and eats thin glyph strokes.
  */
 const Effects: React.FC = () => {
   const frame = useCurrentFrame();
   const ease = { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' } as const;
-  // Wide, far, long-lens framing needs a deeper focus range or the whole
-  // lockup goes soft; the macro beats keep the shallow bokeh.
-  const focalLength = interpolate(frame, [255, 300], [0.30, 0.45], ease);
-  const bokehScale = interpolate(frame, [255, 300], [1.25, 0.9], ease) * RES;
+  // The lockup is a long-lens wide sitting ~16 units out; the same range that
+  // reads as shallow up close would soften the plates themselves there.
+  const focalLength = interpolate(frame, [255, 300], [0.12, 0.20], ease);
+  const bokehScale = interpolate(frame, [255, 300], [2.4, 1.8], ease) * RES;
+  const focus = FOCUS[shotIndex(frame)];
   // Grade stage. NOTE: `gl.toneMappingExposure` on <ThreeCanvas> is a NO-OP once
   // EffectComposer owns the render — 0.92, 0.72 and 0.30 all produced
   // byte-identical frames (md5 fa16ee95…). Exposure/contrast therefore has to be
@@ -138,7 +175,17 @@ const Effects: React.FC = () => {
   const brightness = interpolate(frame, [250, 300], [BRIGHT_MACRO, BRIGHT_LOCKUP], ease);
   return (
     <EffectComposer enableNormalPass={false} multisampling={8}>
-      <DepthOfField target={[0, 0.2, 0.05]} focalLength={focalLength} bokehScale={bokehScale} height={Math.round(720 * RES)} />
+      {/* Contact occlusion. This was the ONLY finding present in all fifteen
+          seconds of the A/B analysis: flat lighting, harsh shadows, "lacking
+          realistic ambient occlusion". Pass 3 read the same signal as moving
+          dappled light and answered it with a projected gobo — which supplied
+          light movement but not darkening where surfaces meet. It also could
+          not have worked before the set rebuild, because nothing in the scene
+          was in contact with anything. aoRadius is in world units and the caps
+          are ~1.3 across, so a third of a unit catches seams and well walls
+          without shading whole panels. */}
+      <N8AO aoRadius={0.34} distanceFalloff={0.7} intensity={2.1} quality="high" halfRes={false} color="#2b2f3a" />
+      <DepthOfField target={focus} focalLength={focalLength} bokehScale={bokehScale} height={Math.round(720 * RES)} />
       <Bloom intensity={0.025} luminanceThreshold={0.985} luminanceSmoothing={0.25} mipmapBlur />
       <Vignette eskil={false} offset={0.32} darkness={0.16} />
       <HueSaturation saturation={satBoost} />
@@ -165,11 +212,15 @@ const FogRig: React.FC = () => {
   return <fog attach="fog" args={['#f0efec', near, far]} />;
 };
 
-/** Base plate so the seams between mosaic slabs never show background through. */
+/**
+ * Base plate so the seams between tiles never show background through. It sits
+ * just under the tile slabs — the tiles are 0.42 deep, so the old -0.02 plate
+ * would have cut straight through them.
+ */
 const Underplate: React.FC = () => (
-  <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.02, 0]} receiveShadow>
+  <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.40, 0]} receiveShadow>
     <planeGeometry args={[40, 40]} />
-    <meshStandardMaterial color="#dcdbd7" roughness={0.9} metalness={0} />
+    <meshStandardMaterial color="#c9c8c4" roughness={0.9} metalness={0} />
   </mesh>
 );
 
@@ -188,7 +239,9 @@ export const RecurlyHyperswitch: React.FC = () => {
       <CameraRig />
       <Lights />
       <Underplate />
-      <CloudOverlay />
+      {/* CloudOverlay removed: it was a flat unlit decal on the floor plane,
+          which cannot dapple anything it does not lie on and now z-fights the
+          raised tiles. GoboKey projects the same pattern as real light. */}
       <Timeline />
       <Effects />
     </ThreeCanvas>

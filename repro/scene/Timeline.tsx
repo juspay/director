@@ -3,9 +3,8 @@ import { useThree } from '@react-three/fiber';
 import { interpolate, useCurrentFrame } from 'remotion';
 import * as THREE from 'three';
 import { Keycap } from './Keycap';
-import { Slab } from './Slab';
-import { SetDressing, Peripherals } from './SetDressing';
-import { C, T } from './theme';
+import { SetDressing, Peripherals, Well, TILE_TOP, WELL_FLOOR } from './SetDressing';
+import { C } from './theme';
 import {
   pillFaceH,
   capabilityFaceV,
@@ -38,38 +37,22 @@ export const CloudOverlay: React.FC = () => {
 };
 
 const clamp01 = (t: number) => Math.max(0, Math.min(1, t));
-const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
-const easeInCubic = (t: number) => t * t * t;
-const easeInOut = (t: number) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
-
-/** How far below the floor a retired cap sits. Deep enough to be fully hidden. */
-const SINK = 0.55;
 
 /**
- * A keycap slot: the cap rises out of the floor aperture at `inAt` and presses
- * back down into it at `outAt`.
+ * SHOTS ARRIVE RESOLVED.
  *
- * This replaces the previous cross-dissolve between duplicated groups, which
- * put two Hyperswitch caps on screen simultaneously at f243 and ghosted ~14% of
- * the runtime. The reference never dissolves — a cap physically presses down and
- * another rises through the same hole — so the swap is modelled as motion, and
- * every cap stays fully opaque for its whole life.
+ * There is deliberately no entrance animation here. The per-second analysis
+ * found, in seconds 0, 4, 5, 6, 8 and 10, that this scene "starts with an empty
+ * layout and slides the cards in late or sequentially after the cut" while the
+ * reference cuts to shots that are already staged. At the f147 cut the old
+ * build showed a BLANK card and the Recurly logo arrived 0.229s later.
+ *
+ * The earlier `rise()` helper drove every cap up out of the floor from the
+ * start of its shot. Its symptom was logged in AUDIT.md as "20 soft frames at
+ * shot entrances" and treated as a sharpness problem; it is a staging problem.
+ * Motion within a shot now comes from the camera alone, which is what the
+ * reference does.
  */
-function slot(
-  frame: number,
-  inAt: number,
-  outAt: number,
-  riseDur = 9,
-  sinkDur = 7,
-): { y: number; visible: boolean } {
-  let y: number;
-  if (frame < inAt) y = -SINK;
-  else if (frame < inAt + riseDur) y = -SINK + SINK * easeOutCubic((frame - inAt) / riseDur);
-  else if (outAt === Infinity || frame < outAt) y = 0;
-  else if (frame < outAt + sinkDur) y = -SINK * easeInCubic((frame - outAt) / sinkDur);
-  else y = -SINK;
-  return { y, visible: y > -SINK + 0.004 };
-}
 
 /**
  * FIVE SHOTS, HARD CUT.
@@ -148,11 +131,92 @@ function catmull(p0: number, p1: number, p2: number, p3: number, t: number): num
   return 0.5 * ((2 * p1) + (-p0 + p2) * t + (2 * p0 - 5 * p1 + 4 * p2 - p3) * t2 + (-p0 + 3 * p1 - 3 * p2 + p3) * t3);
 }
 
+/**
+ * Per-shot dolly-back, applied about the look-at point.
+ *
+ * Subjects were rendering markedly larger than the reference's, to the point of
+ * leaving the frame: at f30 the "Renewal Success" cap was clipped mid-word by
+ * the right edge, and through all of shot 2 the APMs cap sat entirely outside
+ * the frame with only two of three ever visible. The audit scored edge-clipping
+ * as zero throughout, because it counted brand-coloured pixels touching the
+ * border and neither of those is brand-coloured.
+ *
+ * Scaling about the target rather than editing positions keeps each shot's
+ * angle and roll exactly as tuned and only changes how much set is in frame.
+ *
+ * Kept deliberately small. A previous revision paired a 1.54 dolly with a
+ * 27-degree lens to flatten perspective convergence, and the analysis rejected
+ * it in fourteen of fifteen seconds — "flat, orthographic-like appearance",
+ * "zoomed too far back", "excessive empty space". The reference genuinely does
+ * shoot these macro beats close with a dramatic perspective; what actually
+ * needed fixing was the AZIMUTH rotating the type off-horizontal, which SWEEP
+ * handles. This now backs off only far enough to keep subjects inside frame.
+ */
+const DOLLY = [1.14, 1.16, 1.12, 1.12, 1.0];
+
+/**
+ * Per-shot azimuth sweep, applied about the shot's own mean bearing.
+ *
+ * Removing the entrance animations cost 40% of measured motion (median frame
+ * delta 1.04x -> 0.60x), which is worth stating plainly: the motion metric had
+ * been substantially satisfied by the pop-in staging that the analysis
+ * identified as a defect. Chasing that number is what kept the defect alive.
+ *
+ * The replacement has to be camera movement, and it has to be ANGULAR. An
+ * earlier pass tried scaling positional travel, hit the metric, and looked
+ * worse — scaling position changes camera distance, so subjects ballooned and
+ * shrank at the path extremes. Widening the azimuth instead holds radius and
+ * elevation exactly, so parallax increases while subject size does not move.
+ *
+ * Shot 2 is deliberately left at 1.0. Its subjects are three axis-aligned
+ * label cards, and azimuth is exactly what rotates their type in frame: at 1.5
+ * the sweep reached +-36 degrees off-axis and set the labels running at ~40
+ * degrees, against roughly 10 in the reference. Legible type wins over the
+ * motion metric here — that metric has already been shown to reward the wrong
+ * thing once in this scene.
+ */
+const SWEEP = [1.35, 1.0, 1.3, 1.3, 1.0];
+
+/** Widen a keyframe's bearing about the shot's mean, at constant radius. */
+function sweepPos(
+  pos: [number, number, number],
+  tgt: [number, number, number],
+  meanAz: number,
+  k: number,
+): [number, number, number] {
+  const dx = pos[0] - tgt[0];
+  const dz = pos[2] - tgt[2];
+  const r = Math.hypot(dx, dz);
+  let d = Math.atan2(dx, dz) - meanAz;
+  while (d > Math.PI) d -= 2 * Math.PI;
+  while (d < -Math.PI) d += 2 * Math.PI;
+  const az = meanAz + d * k;
+  return [tgt[0] + Math.sin(az) * r, pos[1], tgt[2] + Math.cos(az) * r];
+}
+
+/** Mean bearing of a shot's keyframes, the axis its sweep widens about. */
+function meanAzimuth(s: Shot): number {
+  let sx = 0;
+  let sz = 0;
+  for (const k of s.keys) {
+    const a = Math.atan2(k.pos[0] - k.tgt[0], k.pos[2] - k.tgt[2]);
+    sx += Math.sin(a);
+    sz += Math.cos(a);
+  }
+  return Math.atan2(sx, sz);
+}
+
 export const CameraRig: React.FC = () => {
   const camera = useThree((s) => s.camera);
   const frame = useCurrentFrame();
-  const shot = SHOTS[shotIndex(frame)];
-  const ks = shot.keys;
+  const si = shotIndex(frame);
+  const shot = SHOTS[si];
+  const dolly = DOLLY[si];
+  const az = useMemo(() => meanAzimuth(shot), [shot]);
+  const ks = useMemo(
+    () => shot.keys.map((k) => ({ ...k, pos: sweepPos(k.pos, k.tgt, az, SWEEP[si]) })),
+    [shot, az, si],
+  );
   let i = 0;
   while (i < ks.length - 2 && frame >= ks[i + 1].f) i++;
   const a = ks[i];
@@ -164,8 +228,15 @@ export const CameraRig: React.FC = () => {
   const lin = (k: 'roll' | 'fov') => a[k] + (b[k] - a[k]) * t;
   const wob = Math.sin(frame / 23) * 0.055;
   const bob = Math.cos(frame / 37) * 0.045;
-  camera.position.set(cr('pos', 0) + wob, cr('pos', 1) + bob, cr('pos', 2));
-  camera.lookAt(new THREE.Vector3(cr('tgt', 0), cr('tgt', 1), cr('tgt', 2)));
+  const tx = cr('tgt', 0);
+  const ty = cr('tgt', 1);
+  const tz = cr('tgt', 2);
+  camera.position.set(
+    tx + (cr('pos', 0) - tx) * dolly + wob,
+    ty + (cr('pos', 1) - ty) * dolly + bob,
+    tz + (cr('pos', 2) - tz) * dolly,
+  );
+  camera.lookAt(new THREE.Vector3(tx, ty, tz));
   camera.rotateZ(lin('roll'));
   (camera as THREE.PerspectiveCamera).fov = lin('fov');
   camera.updateProjectionMatrix();
@@ -183,7 +254,16 @@ const F_LIVE: [number, number] = [1.36, 1.36 / 2.67];
 const F_SUCCESS: [number, number] = [1.18, 1.18 / 1.5];
 const F_REVENUE: [number, number] = [1.18, 1.18 / 1.8];
 
-/** Each shot sits over a different patch of the mosaic. */
+/**
+ * Each shot sits over a different patch of the wall, so a cut changes the
+ * backdrop as well as the subject.
+ *
+ * There is no longer a per-shot Y spin. Rotating the whole set was what made
+ * the tiles read as a scattered pile rather than a wall — the reference's
+ * surface is strictly axis-aligned in every shot, and the analysis flagged the
+ * skew as far as "plates rotated off-axis" in the lockup. Translation alone
+ * changes the backdrop without destroying the grid.
+ */
 const SET_OFFSET: Array<[number, number, number]> = [
   [0, 0, 0],
   [3.15, 0, -2.40],
@@ -191,12 +271,23 @@ const SET_OFFSET: Array<[number, number, number]> = [
   [4.20, 0, 2.10],
   [-1.45, 0, -3.60],
 ];
-const SET_SPIN = [0, 0.22, -0.35, 0.48, -0.18];
 
-/** Hero slot — both brand caps rise and sink through this one tray. */
-const HERO: [number, number, number] = [0.05, 0.225, 0.05];
-const LOCK_RECURLY: [number, number, number] = [-0.74, 0.20, -0.98];
-const LOCK_HYPER: [number, number, number] = [0.74, 0.20, 1.12];
+/**
+ * Seat heights, measured against the tiled surface at TILE_TOP.
+ *
+ * A plain cap sinks a few millimetres into the wall so it has something to cast
+ * a contact shadow onto; a brand plate sits down inside a WELL_DEPTH recess so
+ * its bezel surrounds it, proud by a few millimetres exactly as the reference's
+ * plates sit in their metal frames.
+ */
+const CAP_Y = TILE_TOP + 0.125 / 2 - 0.008;
+const BRAND_Y = WELL_FLOOR + 0.145 / 2;
+
+/** Hero slot — both brand plates occupy this one well, one per shot. */
+const HERO: [number, number, number] = [0.05, BRAND_Y, 0.05];
+const HERO_WELL: [number, number, number] = [0.05, TILE_TOP, 0.05];
+const LOCK_RECURLY: [number, number, number] = [-0.74, BRAND_Y, -0.98];
+const LOCK_HYPER: [number, number, number] = [0.74, BRAND_Y, 1.12];
 
 export const Timeline: React.FC = () => {
   const frame = useCurrentFrame();
@@ -224,89 +315,70 @@ export const Timeline: React.FC = () => {
     extrapolateRight: 'clamp',
   });
 
-  /** Entrance rise, measured from the start of the current shot. */
-  const rise = (delay: number, dur = 10) => {
-    const s0 = SHOTS[shot].start;
-    return -SINK * (1 - easeOutCubic(clamp01((frame - s0 - delay) / dur)));
-  };
-
-  const heroTray = (pos: [number, number, number]) => (
-    <group position={pos}>
-      <Slab
-        size={[BRAND[0] * 1.26, BRAND[1] * 0.30, BRAND[2] * 1.36]}
-        radius={Math.min(BRAND[0], BRAND[2]) * 0.1}
-        position={[0, -BRAND[1] * 0.56, 0]}
-        castShadow
-        receiveShadow
-      >
-        <meshPhysicalMaterial map={f.metal} color="#e3e7ed" roughness={0.33} metalness={0.45} clearcoat={0.55} />
-      </Slab>
-      <Slab
-        size={[BRAND[0] * 1.05, BRAND[1] * 0.55, BRAND[2] * 1.09]}
-        radius={Math.min(BRAND[0], BRAND[2]) * 0.17}
-        position={[0, -BRAND[1] * 0.34, 0]}
-        receiveShadow
-      >
-        <meshStandardMaterial color="#6b7280" roughness={0.86} metalness={0.2} />
-      </Slab>
-    </group>
-  );
-
   return (
     <>
-      <SetDressing whiten={whiten} offset={SET_OFFSET[shot]} spin={SET_SPIN[shot]} brandRadius={shot === 4 ? 2.6 : 3.5} />
+      <SetDressing
+        whiten={whiten}
+        offset={SET_OFFSET[shot]}
+        brandRadius={shot === 4 ? 2.6 : 3.5}
+        plainOnly={shot === 4}
+      />
       <Peripherals whiten={whiten} />
 
       {/* Shot 1 — Secure Payments / Renewal Success */}
       {shot === 0 && (
         <>
-          <Keycap position={[-0.06, 0.145, 0.30]} size={CAP} color={C.tile} face={f.secure} faceSize={F_PILL} lift={rise(0)} />
-          <Keycap position={[1.00, 0.155, -0.92]} size={CAP} color={C.tile} face={f.renewal} faceSize={F_PILL} lift={rise(4)} rotation={[0, -0.06, 0]} />
+          <Keycap position={[-0.06, CAP_Y, 0.30]} size={CAP} color={C.tile} face={f.secure} faceSize={F_PILL} />
+          <Keycap position={[0.86, CAP_Y, -0.92]} size={CAP} color={C.tile} face={f.renewal} faceSize={F_PILL} />
         </>
       )}
 
-      {/* Shot 2 — Subscriptions / Retries / APMs column */}
+      {/* Shot 2 — Subscriptions / Retries / APMs column.
+          Spacing tightened from 1.12 to 0.94: at the old pitch the APMs cap sat
+          entirely outside the frame for the whole shot and only two of the
+          three were ever visible. */}
       {shot === 1 && (
         <>
-          <Keycap position={[-0.05, 0.165, -1.10]} size={CAP} color={C.tile} face={f.subs} faceSize={F_COL} lift={rise(0)} />
-          <Keycap position={[-0.05, 0.165, 0.02]} size={CAP} color={C.tile} face={f.retries} faceSize={F_COL} lift={rise(4)} />
-          <Keycap position={[-0.05, 0.165, 1.14]} size={CAP} color={C.tile} face={f.apms} faceSize={F_COL} lift={rise(8)} />
+          <Keycap position={[-0.05, CAP_Y, -0.94]} size={CAP} color={C.tile} face={f.subs} faceSize={F_COL} />
+          <Keycap position={[-0.05, CAP_Y, 0.00]} size={CAP} color={C.tile} face={f.retries} faceSize={F_COL} />
+          <Keycap position={[-0.05, CAP_Y, 0.94]} size={CAP} color={C.tile} face={f.apms} faceSize={F_COL} />
         </>
       )}
 
       {/* Shot 3 — Recurly hero */}
       {shot === 2 && (
         <>
-          {heroTray(HERO)}
-          <Keycap position={HERO} size={BRAND} color={C.gold} face={f.recurly} faceSize={F_RECURLY} lift={rise(2)} rotation={[0, -0.05, 0]} />
-          <Keycap position={[-1.32, 0.15, -1.30]} size={[1.15, 0.115, 0.72]} color={C.tile} face={f.secure} faceSize={[1.02, 1.02 / 1.65]} lift={rise(6)} />
-          <Keycap position={[1.55, 0.165, -1.45]} size={CAP} color={C.tile} face={f.success} faceSize={F_SUCCESS} lift={rise(8)} rotation={[0, -0.1, 0]} />
+          <Well position={HERO_WELL} size={[BRAND[0], BRAND[2]]} metalMap={f.metal} whiten={whiten} />
+          <Keycap position={HERO} size={BRAND} color={C.gold} face={f.recurly} faceSize={F_RECURLY} />
+          <Keycap position={[-1.32, CAP_Y, -1.30]} size={[1.15, 0.115, 0.72]} color={C.tile} face={f.secure} faceSize={[1.02, 1.02 / 1.65]} />
+          <Keycap position={[1.44, CAP_Y, -1.45]} size={CAP} color={C.tile} face={f.success} faceSize={F_SUCCESS} />
         </>
       )}
 
       {/* Shot 4 — Hyperswitch hero */}
       {shot === 3 && (
         <>
-          {heroTray(HERO)}
-          <Keycap position={HERO} size={BRAND} color={C.blue} face={f.hyper} faceSize={F_HYPER} lift={rise(2)} rotation={[0, -0.04, 0]} />
-          <Keycap position={[1.60, 0.165, -1.40]} size={CAP} color={C.tile} face={f.revenue} faceSize={F_REVENUE} lift={rise(6)} rotation={[0, -0.09, 0]} />
-          <Keycap position={[-1.28, 0.14, 0.62]} size={[0.34, 0.10, 0.34]} radius={0.07} color={C.blue} face={f.psp} faceSize={[0.27, 0.27]} lift={rise(9)} />
+          <Well position={HERO_WELL} size={[BRAND[0], BRAND[2]]} metalMap={f.metal} whiten={whiten} />
+          <Keycap position={HERO} size={BRAND} color={C.blue} face={f.hyper} faceSize={F_HYPER} />
+          <Keycap position={[1.48, CAP_Y, -1.40]} size={CAP} color={C.tile} face={f.revenue} faceSize={F_REVENUE} />
+          <Keycap position={[-1.28, TILE_TOP + 0.05 - 0.008, 0.62]} size={[0.34, 0.10, 0.34]} radius={0.07} color={C.blue} face={f.psp} faceSize={[0.27, 0.27]} />
         </>
       )}
 
       {/* Shot 5 — wide lockup */}
       {shot === 4 && (
         <>
-          <Keycap position={LOCK_RECURLY} size={BRAND} color={C.gold} face={f.recurly} faceSize={F_RECURLY} tray metalMap={f.metal} lift={rise(0, 12)} />
-          <Keycap position={LOCK_HYPER} size={BRAND} color={C.blue} face={f.hyper} faceSize={F_HYPER} tray metalMap={f.metal} lift={rise(3, 12)} />
+          <Well position={[LOCK_RECURLY[0], TILE_TOP, LOCK_RECURLY[2]]} size={[BRAND[0], BRAND[2]]} metalMap={f.metal} whiten={whiten} />
+          <Keycap position={LOCK_RECURLY} size={BRAND} color={C.gold} face={f.recurly} faceSize={F_RECURLY} />
+          <Well position={[LOCK_HYPER[0], TILE_TOP, LOCK_HYPER[2]]} size={[BRAND[0], BRAND[2]]} metalMap={f.metal} whiten={whiten} />
+          <Keycap position={LOCK_HYPER} size={BRAND} color={C.blue} face={f.hyper} faceSize={F_HYPER} />
           <Keycap
-            position={[0, 0.16, 0.12]}
+            position={[0, TILE_TOP + 0.12 / 2 - 0.008, 0.12]}
             size={[1.52, 0.12, 0.62]}
             radius={0.29}
             color={C.white}
             face={f.live}
             faceSize={F_LIVE}
-            lift={rise(T.liveRiseStart - 243, 12)}
           />
         </>
       )}
