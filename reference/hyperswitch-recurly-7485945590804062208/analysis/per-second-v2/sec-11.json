@@ -1,0 +1,152 @@
+{
+  "sec": 11,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera slowly pulls back from the yellow Recurly card, then pans rapidly down-right to focus on the blue Juspay card.",
+        "Subtle lighting shifts across the card surfaces during camera movement."
+      ],
+      "b_motion": [
+        "Camera performs a very slow, flat drift over a static collage of floating cards."
+      ],
+      "absent_in_b": [
+        "Dynamic close-up framing of individual cards.",
+        "Rapid pan-down transition between the Recurly and Juspay cards.",
+        "Tactile, interlocking grid layout."
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Uses a dynamic close-up camera path with a rapid pan-down transition between cards.",
+          "b_does": "Uses a flat, slow drift showing multiple cards simultaneously in a wide shot.",
+          "fix": "Re-animate camera to match the close-up framing and rapid pan transition.",
+          "severity": 3
+        },
+        {
+          "category": "layout",
+          "a_does": "Arranges cards in a tight, tactile physical grid.",
+          "b_does": "Floats cards loosely in 3D space with large gaps.",
+          "fix": "Re-align cards into a cohesive, interlocking grid structure.",
+          "severity": 3
+        },
+        {
+          "category": "lighting",
+          "a_does": "Employs warm, directional lighting with soft contact shadows.",
+          "b_does": "Uses flat, desaturated ambient lighting with weak shadows.",
+          "fix": "Add a strong directional light source and enable soft contact shadows.",
+          "severity": 2
+        }
+      ],
+      "highest_impact_fix": "Re-animate the camera path to match the dynamic close-up framing and rapid pan-down transition of the reference."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Smooth camera pull-back and slight rotation",
+        "Parallax effect from isometric grid layout"
+      ],
+      "b_motion": [
+        "Camera zooms out",
+        "Individual cards slide and scale inward to form a loose cluster"
+      ],
+      "absent_in_b": [
+        "Physical modular grid structure housing the cards",
+        "Realistic contact shadows and bevels"
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Cards are embedded in a physical 3D grid with realistic bevels and gaps.",
+          "b_does": "Cards float loosely in empty space over a flat background without a physical grid structure.",
+          "fix": "Model a cohesive 3D grid base and snap the cards into defined slots with physical depth.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Soft, directional studio lighting with realistic contact shadows and ambient occlusion.",
+          "b_does": "Flat, uniform lighting with simple, harsh 2D drop shadows.",
+          "fix": "Add a directional key light at a 45-degree angle and enable soft raytraced shadows.",
+          "severity": 3
+        },
+        {
+          "category": "motion",
+          "a_does": "Clean, unified camera zoom-out with static card positions relative to the grid.",
+          "b_does": "Individual cards slide and animate independently to cluster together during the zoom-out.",
+          "fix": "Keep card positions static relative to each other and animate only the camera's pull-back.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Model a solid physical grid structure to house the cards instead of letting them float loosely over a flat background."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Slow camera pull-back and pan up-right with smooth easing",
+        "Soft dappled leaf shadows drifting across the grid surface"
+      ],
+      "b_motion": [
+        "Linear camera zoom-out with mechanical easing",
+        "Static, flat lighting with no shadow movement"
+      ],
+      "absent_in_b": [
+        "Dappled leaf shadow animation",
+        "Recessed grid structure"
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Arranges cards in a clean, structured recessed grid layout.",
+          "b_does": "Piles cards in a chaotic, overlapping floating stack in 3D space.",
+          "fix": "Rebuild the layout to align cards into a structured grid instead of a messy stack.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Uses high-contrast dappled sunlight with animated leaf shadows.",
+          "b_does": "Uses flat, uniform lighting with no shadow patterns.",
+          "fix": "Add a directional light with an animated leaf gobo texture to create moving shadows.",
+          "severity": 3
+        },
+        {
+          "category": "camera",
+          "a_does": "Executes a slow, elegant pull-back with smooth ease-out curves.",
+          "b_does": "Executes a faster, linear zoom-out that feels mechanical.",
+          "fix": "Apply bezier easing to the camera translation and reduce speed by 30%.",
+          "severity": 2
+        }
+      ],
+      "highest_impact_fix": "Rebuild the scene layout to match the structured grid of A and add the animated dappled leaf shadows."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "layout",
+        "a_does": "Arranges cards in a structured, physical 3D grid.",
+        "b_does": "Floats cards loosely in 3D space without a physical grid structure.",
+        "fix": "Rebuild the layout to align cards into a structured, physical 3D grid.",
+        "severity": 4,
+        "supported_by": 3
+      },
+      {
+        "category": "lighting",
+        "a_does": "Uses directional lighting with realistic, soft contact shadows.",
+        "b_does": "Uses flat, uniform lighting with weak or non-existent shadows.",
+        "fix": "Add a directional light source and enable soft contact shadows.",
+        "severity": 3,
+        "supported_by": 3
+      }
+    ],
+    "agreed_absent_in_b": [
+      "A structured, physical grid layout to house the cards"
+    ],
+    "highest_impact_fix": "Rebuild the scene layout to align the cards into a structured, physical 3D grid.",
+    "dropped_unsupported": 7
+  }
+}

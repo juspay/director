@@ -1,0 +1,165 @@
+{
+  "sec": 14,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Subtle organic camera drift with minor rotation.",
+        "Dappled leaf shadows moving dynamically across the white tiled background."
+      ],
+      "b_motion": [
+        "Static camera with no organic drift.",
+        "Flat, static lighting with no moving shadow overlays."
+      ],
+      "absent_in_b": [
+        "Dynamic dappled leaf shadow animation.",
+        "Soft ambient occlusion shadows beneath floating cards."
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "a_does": "Uses dynamic, moving dappled leaf shadows to create depth and organic realism.",
+          "b_does": "Uses flat, static lighting with no leaf shadow animation.",
+          "fix": "Add an animated gobo map of tree leaves moving slowly across the key light source.",
+          "severity": 4
+        },
+        {
+          "category": "staging",
+          "a_does": "Arranges background cards in a tight, balanced grid composition.",
+          "b_does": "Scatters background cards loosely, creating a messy layout.",
+          "fix": "Re-align background cards to match the exact spacing and rotation of the reference grid.",
+          "severity": 3
+        },
+        {
+          "category": "camera",
+          "a_does": "Exhibits smooth, organic camera drift with subtle rotation.",
+          "b_does": "Remains nearly static, lacking organic movement.",
+          "fix": "Add subtle noise/drift to the camera's translation and rotation keys.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Add the animated dappled leaf shadow gobo to the main light source to match the organic atmosphere of the reference."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera drifts backward with a gentle ease-out and shallow depth of field.",
+        "Cards float with subtle, organic micro-rotations.",
+        "Soft dappled light patterns shift across the background."
+      ],
+      "b_motion": [
+        "Camera pulls back linearly with infinite depth of field.",
+        "Cards remain completely static and coplanar."
+      ],
+      "absent_in_b": [
+        "Shallow depth of field blur on background elements.",
+        "Soft ambient occlusion and contact shadows under floating cards.",
+        "Dappled light and shadow textures on the background."
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "a_does": "Uses a perspective camera with shallow depth of field, blurring background elements.",
+          "b_does": "Uses a flat, near-orthographic camera with infinite depth of field.",
+          "fix": "Switch to a perspective camera with a 50mm lens and enable depth of field with a wide aperture focused on the central cards.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Features warm directional lighting with dappled shadows and rich ambient occlusion.",
+          "b_does": "Has flat, uniform ambient lighting with weak shadows.",
+          "fix": "Add a warm directional light source at a low angle and enable high-quality ambient occlusion.",
+          "severity": 3
+        },
+        {
+          "category": "motion",
+          "a_does": "Camera pullback has a smooth, organic ease-out curve.",
+          "b_does": "Camera movement is linear and lacks natural deceleration.",
+          "fix": "Apply a cubic ease-out curve to the camera translation keyframes.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Match the perspective camera focal length and enable shallow depth of field to restore the cinematic 3D depth of Video A."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Subtle camera drift and zoom-out",
+        "Soft light sweep across the flat grid surface"
+      ],
+      "b_motion": [
+        "Camera zooming out",
+        "Cards floating and drifting slightly in 3D space"
+      ],
+      "absent_in_b": [
+        "Structured flat-grid layout",
+        "Soft depth of field and clean ambient occlusion"
+      ],
+      "differences": [
+        {
+          "category": "layout",
+          "a_does": "Arranges cards in a clean, structured flat grid.",
+          "b_does": "Floats cards chaotically in overlapping 3D space.",
+          "fix": "Align all cards to a single flat plane and arrange them in a structured grid.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Uses bright studio lighting with soft contact shadows.",
+          "b_does": "Has flat, dull lighting with harsh grey shadows.",
+          "fix": "Soften shadow maps and enable high-quality ambient occlusion.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Align all cards to a flat grid layout to match the structured composition of the reference."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "layout",
+        "a_does": "Arranges cards in a clean, structured, balanced grid layout.",
+        "b_does": "Scatters cards loosely or chaotically.",
+        "fix": "Align all cards to a structured, balanced grid layout.",
+        "severity": 4,
+        "supported_by": 2
+      },
+      {
+        "category": "camera",
+        "a_does": "Uses a shallow depth of field to blur background elements.",
+        "b_does": "Has infinite depth of field with all elements in sharp focus.",
+        "fix": "Enable shallow depth of field focused on the central cards to blur background elements.",
+        "severity": 4,
+        "supported_by": 2
+      },
+      {
+        "category": "lighting",
+        "a_does": "Uses dynamic lighting with soft ambient occlusion, contact shadows, and dappled patterns.",
+        "b_does": "Uses flat, uniform lighting with weak or harsh shadows and lacks ambient occlusion.",
+        "fix": "Enable high-quality ambient occlusion and add soft, dynamic shadow/light patterns.",
+        "severity": 3,
+        "supported_by": 3
+      },
+      {
+        "category": "camera",
+        "a_does": "Features smooth, organic camera movement with natural drift or ease-out curves.",
+        "b_does": "Has static or linear camera movement lacking natural organic feel.",
+        "fix": "Add subtle organic drift/noise and apply natural ease-out curves to the camera keyframes.",
+        "severity": 3,
+        "supported_by": 2
+      }
+    ],
+    "agreed_absent_in_b": [
+      "Soft ambient occlusion and contact shadows under floating cards",
+      "Shallow depth of field blur on background elements",
+      "Dappled light and shadow patterns"
+    ],
+    "highest_impact_fix": "Enable high-quality ambient occlusion and soft contact shadows to resolve the flat, unrealistic lighting in Video B.",
+    "dropped_unsupported": 3
+  }
+}

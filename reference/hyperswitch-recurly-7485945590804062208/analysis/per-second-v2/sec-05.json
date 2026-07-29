@@ -1,0 +1,151 @@
+{
+  "sec": 5,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera drifts smoothly in a diagonal path across the structured grid.",
+        "Subtle light and shadow shifts across the block surfaces."
+      ],
+      "b_motion": [
+        "Camera pans and rotates at a faster pace.",
+        "The yellow Recurly block pops up abruptly at original 5.1s."
+      ],
+      "absent_in_b": [
+        "Tight, structured keyboard grid layout",
+        "Soft, realistic ambient occlusion in the block crevices"
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Presents a clean, flat, tightly-spaced keyboard grid layout.",
+          "b_does": "Uses scattered, floating cards with uneven heights and large gaps.",
+          "fix": "Align all cards into a cohesive, flat grid with uniform 2mm gaps.",
+          "severity": 4
+        },
+        {
+          "category": "motion",
+          "a_does": "Maintains a static layout with only smooth, slow camera drift.",
+          "b_does": "Has the yellow Recurly card pop up abruptly at original 5.1s.",
+          "fix": "Remove the pop-up animation; ensure all cards are pre-settled in the grid.",
+          "severity": 3
+        },
+        {
+          "category": "lighting",
+          "a_does": "Features soft, diffused studio lighting with realistic ambient occlusion.",
+          "b_does": "Displays flat lighting with harsh, unrealistic shadows.",
+          "fix": "Soften the key light and enable high-quality ambient occlusion in the render settings.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Realign the floating cards into a flat, structured grid to match the reference keyboard layout."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Slow camera drift back and slightly right with a gentle rotation.",
+        "Subtle light reflection shifts across the yellow Recurly card's beveled edge."
+      ],
+      "b_motion": [
+        "Camera drifts backward.",
+        "The Recurly card texture abruptly snaps from dark grey to yellow at original second 5.125."
+      ],
+      "absent_in_b": [
+        "Soft ambient occlusion shadows beneath the yellow card.",
+        "Subtle bevel reflections on the yellow card."
+      ],
+      "differences": [
+        {
+          "category": "motion",
+          "a_does": "The yellow Recurly card is fully textured and colored from the start of the shot.",
+          "b_does": "The Recurly card texture abruptly snaps from dark grey to yellow at original second 5.125.",
+          "fix": "Ensure the yellow Recurly texture is applied statically from the beginning of the shot, removing the keyframe pop.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Features soft directional lighting from the top-left, casting realistic soft shadows and ambient occlusion under the card.",
+          "b_does": "Has flat, uniform lighting with weak shadows, making the cards look ungrounded.",
+          "fix": "Add a soft directional light from the top-left and increase ambient occlusion shadow strength under the cards.",
+          "severity": 3
+        },
+        {
+          "category": "camera",
+          "a_does": "Uses a shallow depth of field, keeping background cards like 'Success rate' softly blurred.",
+          "b_does": "Has a deep depth of field, leaving background elements too sharp and distracting.",
+          "fix": "Adjust the camera's aperture/f-stop to match the shallow depth of field of the reference.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Apply the yellow Recurly card texture statically from the beginning of the shot to eliminate the abrupt texture pop at original second 5.125."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Slow, smooth diagonal camera pan across the yellow Recurly card",
+        "Subtle shifts in soft shadows and specular highlights on the card surface"
+      ],
+      "b_motion": [
+        "Camera pans diagonally with rigid, linear easing",
+        "The card animates and flips from a blank dark grey block to the yellow Recurly logo at original 5.125s"
+      ],
+      "absent_in_b": [
+        "The yellow Recurly card being fully present and static on the grid at the start of the second"
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "The yellow Recurly card is fully present and static on the grid as the camera pans.",
+          "b_does": "The card starts as a blank grey block and animates/flips into the yellow Recurly card at original 5.125s.",
+          "fix": "Ensure the yellow Recurly card is fully loaded and static on the grid from the start of the shot at original 4.9s.",
+          "severity": 4
+        },
+        {
+          "category": "camera",
+          "a_does": "Smooth, organic camera drift with natural bezier easing.",
+          "b_does": "Rigid, linear camera movement with abrupt path transitions.",
+          "fix": "Adjust camera keyframe interpolation to use bezier curves with gentle ease-in and ease-out.",
+          "severity": 3
+        },
+        {
+          "category": "lighting",
+          "a_does": "Soft, diffused studio lighting with realistic ambient occlusion and soft contact shadows.",
+          "b_does": "Flat, slightly overexposed lighting with weak contact shadows under the card.",
+          "fix": "Increase ambient occlusion intensity and soften the light source to ground the card on the surface.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Ensure the yellow Recurly card is fully staged and static from the beginning of the shot rather than animating/flipping in mid-scene."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "motion",
+        "a_does": "The yellow Recurly card is fully textured and static on the grid from the start of the shot.",
+        "b_does": "The card abruptly pops up, flashes, or animates into view at original second 5.1.",
+        "fix": "Ensure the yellow Recurly card is statically present and fully textured from the beginning of the shot, removing the abrupt pop/animation.",
+        "severity": 4,
+        "supported_by": 3
+      },
+      {
+        "category": "lighting",
+        "a_does": "Features soft, diffused studio lighting with realistic ambient occlusion and soft contact shadows.",
+        "b_does": "Displays flat lighting with weak or unrealistic shadows and ambient occlusion.",
+        "fix": "Soften the light source and increase ambient occlusion intensity to create realistic soft contact shadows under the cards.",
+        "severity": 3,
+        "supported_by": 3
+      }
+    ],
+    "agreed_absent_in_b": [
+      "Soft ambient occlusion shadows beneath the cards"
+    ],
+    "highest_impact_fix": "Ensure the yellow Recurly card is statically present and fully textured from the beginning of the shot to eliminate the abrupt pop/animation at original second 5.1.",
+    "dropped_unsupported": 6
+  }
+}

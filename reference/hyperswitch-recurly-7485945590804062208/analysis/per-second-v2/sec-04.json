@@ -1,0 +1,88 @@
+{
+  "sec": 4,
+  "meta": {
+    "verified": 1,
+    "attempted": 3
+  },
+  "rejected": [
+    "reported 2 cuts, truth has 1",
+    "missed cut at 4.900s (got 4.42)"
+  ],
+  "runs": [
+    {
+      "cuts_in_window": [
+        4.896
+      ],
+      "a_motion": [
+        "Slow diagonal camera drift with subtle tilt",
+        "Soft shadow movement across the card crevices"
+      ],
+      "b_motion": [
+        "Linear, mechanical camera pan",
+        "Sudden pop-in of background elements"
+      ],
+      "absent_in_b": [
+        "Yellow Recurly card immediately post-cut",
+        "Soft ambient occlusion in card gaps"
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Cuts directly to the yellow Recurly card at t=4.896s with the card fully visible.",
+          "b_does": "Cuts to a blank dark blue card at t=4.896s, delaying the yellow Recurly card's appearance until t=5.125s.",
+          "fix": "Align the cut transition so the yellow Recurly card is immediately present upon the cut at t=4.896s.",
+          "severity": 4
+        },
+        {
+          "category": "camera",
+          "a_does": "Smooth, organic camera drift with natural ease-out.",
+          "b_does": "Linear, mechanical camera pan that feels robotic.",
+          "fix": "Apply a cubic-bezier ease-out curve to the camera translation keyframes.",
+          "severity": 3
+        },
+        {
+          "category": "lighting",
+          "a_does": "Soft, diffused ambient occlusion and realistic contact shadows.",
+          "b_does": "Flat lighting with harsh, low-resolution contact shadows.",
+          "fix": "Increase shadow map resolution and soften the shadow bias for a more diffused look.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Synchronize the cut at t=4.896s to immediately display the yellow Recurly card rather than delaying its appearance with an extra transition."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "staging",
+        "a_does": "Cuts directly to the yellow Recurly card at t=4.896s with the card fully visible.",
+        "b_does": "Cuts to a blank dark blue card at t=4.896s, delaying the yellow Recurly card's appearance until t=5.125s.",
+        "fix": "Align the cut transition so the yellow Recurly card is immediately present upon the cut at t=4.896s.",
+        "severity": 4,
+        "supported_by": 1
+      },
+      {
+        "category": "camera",
+        "a_does": "Smooth, organic camera drift with natural ease-out.",
+        "b_does": "Linear, mechanical camera pan that feels robotic.",
+        "fix": "Apply a cubic-bezier ease-out curve to the camera translation keyframes.",
+        "severity": 3,
+        "supported_by": 1
+      },
+      {
+        "category": "lighting",
+        "a_does": "Soft, diffused ambient occlusion and realistic contact shadows.",
+        "b_does": "Flat lighting with harsh, low-resolution contact shadows.",
+        "fix": "Increase shadow map resolution and soften the shadow bias for a more diffused look.",
+        "severity": 3,
+        "supported_by": 1
+      }
+    ],
+    "agreed_absent_in_b": [
+      "Yellow Recurly card immediately post-cut",
+      "Soft ambient occlusion in card gaps"
+    ],
+    "highest_impact_fix": "Synchronize the cut at t=4.896s to immediately display the yellow Recurly card rather than delaying its appearance with an extra transition.",
+    "dropped_unsupported": 0
+  }
+}

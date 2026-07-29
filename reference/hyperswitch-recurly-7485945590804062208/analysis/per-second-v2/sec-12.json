@@ -1,0 +1,154 @@
+{
+  "sec": 12,
+  "meta": {
+    "verified": 3,
+    "attempted": 3
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Slow, smooth camera pan and tilt focusing on the nested JUSPAY hyperswitch card.",
+        "Subtle shift in soft shadows across the keyboard grid as the camera moves."
+      ],
+      "b_motion": [
+        "Camera zooms out and pans back with a flat, orthographic-like perspective.",
+        "Floating cards remain static relative to each other in 3D space."
+      ],
+      "absent_in_b": [
+        "The solid, physical keyboard grid structure nesting the cards.",
+        "Realistic ambient occlusion and soft shadows within the card slots."
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Nests cards neatly into a solid, cohesive keyboard-like grid structure with physical slots.",
+          "b_does": "Floats cards loosely in a disorganized 3D void over a flat grey background.",
+          "fix": "Rebuild the keyboard grid geometry to physically slot the cards instead of letting them float.",
+          "severity": 4
+        },
+        {
+          "category": "camera",
+          "a_does": "Uses a perspective camera with a shallow depth of field focused closely on the active card.",
+          "b_does": "Uses a wider, more orthographic camera angle lacking depth of field.",
+          "fix": "Match the focal length to approximately 50mm and enable depth of field to focus on the card.",
+          "severity": 3
+        },
+        {
+          "category": "lighting",
+          "a_does": "Employs soft, warm directional lighting with realistic ambient occlusion.",
+          "b_does": "Uses flat, cool, uniform lighting with weak shadows.",
+          "fix": "Add a warm directional key light and enable high-quality ambient occlusion in render settings.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Rebuild the keyboard grid geometry to physically nest the cards instead of letting them float in a void."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera pulls back smoothly with a slight counter-clockwise roll.",
+        "Yellow Recurly card shifts slightly down and left relative to the frame.",
+        "Soft shadow from the top-left sweeps across the background grid."
+      ],
+      "b_motion": [
+        "Camera pulls back rapidly along a linear path with minimal easing.",
+        "Cards float statically in 3D space with no relative organic drift."
+      ],
+      "absent_in_b": [
+        "Keyboard-like interlocking grid layout",
+        "Soft, dynamic contact shadows and ambient occlusion between nested cards"
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Nests cards tightly together like physical keyboard keys.",
+          "b_does": "Floats cards loosely in 3D space over a flat background.",
+          "fix": "Rebuild the layout to interlock the cards tightly, removing the empty gaps.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Uses soft studio lighting with realistic ambient occlusion and smooth shadow falloff.",
+          "b_does": "Uses flat, high-contrast lighting with harsh, uniform drop shadows.",
+          "fix": "Increase light source size, enable soft shadows, and add a subtle ambient occlusion pass.",
+          "severity": 3
+        },
+        {
+          "category": "camera",
+          "a_does": "Executes a slow, highly-eased pull-back with subtle rotation.",
+          "b_does": "Executes a faster, linear zoom-out with stiff easing.",
+          "fix": "Adjust camera keyframes to match A's slow speed and apply a strong cubic ease-out.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Rebuild the layout to tightly interlock the cards like keyboard keys instead of floating them loosely in open space."
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Camera pulls back slowly with a smooth, high-angle isometric perspective.",
+        "Subtle leafy gobo shadow drifts across the tiled white surface."
+      ],
+      "b_motion": [
+        "Camera pulls back rapidly with a wide-angle perspective.",
+        "Floating cards drift slightly in a scattered, layered 3D space."
+      ],
+      "absent_in_b": [
+        "Clean white tiled grid floor",
+        "Organic moving leaf gobo shadow overlay"
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "a_does": "Arranges cards neatly on a flat, clean, white tiled grid floor.",
+          "b_does": "Scatters cards chaotically in a floating, layered 3D stack over background charts.",
+          "fix": "Align all cards to a flat, clean grid surface and remove the cluttered background documents.",
+          "severity": 4
+        },
+        {
+          "category": "lighting",
+          "a_does": "Uses soft ambient lighting with a subtle moving leaf gobo shadow.",
+          "b_does": "Employs flat, uniform lighting with harsh, dark drop shadows.",
+          "fix": "Soften shadow penumbras and add a moving leaf gobo light filter.",
+          "severity": 3
+        },
+        {
+          "category": "camera",
+          "a_does": "Maintains a tight, isometric-leaning perspective during the pull-back.",
+          "b_does": "Uses a wide-angle lens that distorts the edges and reveals too much clutter.",
+          "fix": "Reduce the camera's field of view to match the flatter perspective of A.",
+          "severity": 3
+        }
+      ],
+      "highest_impact_fix": "Re-align the floating cards onto a flat, clean grid surface instead of scattering them in a chaotic 3D stack."
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "staging",
+        "a_does": "Nests cards neatly into a structured, cohesive grid layout (like a keyboard grid or tiled surface).",
+        "b_does": "Floats cards loosely and disorganized in 3D space.",
+        "fix": "Rebuild the layout to align and nest the cards tightly into a structured grid, eliminating the loose floating gaps.",
+        "severity": 4,
+        "supported_by": 3
+      },
+      {
+        "category": "lighting",
+        "a_does": "Uses soft, realistic studio lighting with smooth shadow falloff and ambient occlusion.",
+        "b_does": "Uses flat, uniform lighting with harsh or weak shadows and poor depth.",
+        "fix": "Soften shadow penumbras, increase light source size, and enable high-quality ambient occlusion.",
+        "severity": 3,
+        "supported_by": 3
+      }
+    ],
+    "agreed_absent_in_b": [
+      "Keyboard-like interlocking grid layout",
+      "Realistic ambient occlusion and soft contact shadows between cards"
+    ],
+    "highest_impact_fix": "Rebuild the layout to tightly nest the cards into a structured grid instead of letting them float loosely in 3D space.",
+    "dropped_unsupported": 5
+  }
+}
