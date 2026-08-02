@@ -1,0 +1,271 @@
+{
+  "sec": 0,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [
+        "blue card",
+        "yellow card",
+        "vibrant colors"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 0,
+          "a_observable": "Close-up angled shot of the 'Secure Payments' card.",
+          "b_observable": "Distant, flatter camera perspective showing more of the grid.",
+          "fix": "Match the close-up camera framing and angle.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "color",
+          "t": 0,
+          "a_observable": "Vibrant blue and yellow cards are visible.",
+          "b_observable": "Dull, monochromatic gray and white cards.",
+          "fix": "Apply saturated blue and yellow materials.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0,
+          "a_observable": "High-contrast lighting with defined shadows.",
+          "b_observable": "Flat, low-contrast lighting.",
+          "fix": "Increase light contrast and shadow depth.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        }
+      ],
+      "highest_impact_fix": "Re-align the camera to match the close-up perspective and apply the vibrant blue and yellow materials to the cards.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera slide"
+      ],
+      "b_motion": [
+        "slow camera slide"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 0.1,
+          "a_observable": "The camera is positioned at a steep angle, showing the blue block on the left and yellow block at the bottom.",
+          "b_observable": "The camera is at a shallow, tilted perspective, and the surrounding blocks are grey.",
+          "fix": "Adjust the camera angle to match the steeper perspective of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 0.5,
+          "a_observable": "The blue and yellow blocks are highly saturated and vibrant.",
+          "b_observable": "The blocks are desaturated, appearing mostly grey and white.",
+          "fix": "Increase color saturation and adjust hues to match the reference.",
+          "severity": 4,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.8,
+          "a_observable": "Distinct corner vignette and soft shadows between the blocks.",
+          "b_observable": "Flat, uniform lighting across the frame with minimal corner falloff.",
+          "fix": "Add a vignette and deepen the shadows to increase contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera perspective to match the steeper angle of the reference, and apply vibrant color grading with a vignette.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan",
+        "subtle rotation"
+      ],
+      "b_motion": [
+        "slow camera pan",
+        "subtle rotation"
+      ],
+      "absent_in_b": [
+        "vibrant blue tile on the left",
+        "yellow tile at the bottom"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 0.2,
+          "a_observable": "Camera is positioned close to the main tile, creating a tight, angled composition.",
+          "b_observable": "Camera is positioned much further back, resulting in a wider, flatter composition.",
+          "fix": "Move camera closer to the main tile to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "color",
+          "t": 0.5,
+          "a_observable": "Vibrant blue and yellow colors with a distinct cool color cast.",
+          "b_observable": "Muted, desaturated colors with a neutral grey appearance.",
+          "fix": "Increase color saturation and apply a cool blue color cast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "full"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.8,
+          "a_observable": "Strong vignette with noticeable light falloff at the corners.",
+          "b_observable": "Flat, uniform lighting across the frame with minimal vignette.",
+          "fix": "Add a vignette to darken the corners.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Reposition the camera closer to the tiles to match the tight reference framing.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 0.1,
+        "a_observable": "The camera is positioned at a steep angle, showing the blue block on the left and yellow block at the bottom.",
+        "b_observable": "The camera is at a shallow, tilted perspective, and the surrounding blocks are grey.",
+        "fix": "Adjust the camera angle to match the steeper perspective of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 3,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "The claim accurately describes the visual differences between the two clips. Clip A shows a steep camera angle with a blue block on the left and a yellow block at the bottom, while Clip B shows a shallow, tilted perspective with grey surrounding blocks."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "Real, but the driver is ELEVATION not distance: A shoots ~70deg down into a dense frame (Renewal+blue+yellow all in frame, type horizontal); B orbits low-oblique (~35-40deg) with type rotated ~40deg and sparse pale surroundings."
+        }
+      },
+      {
+        "category": "color",
+        "t": 0.5,
+        "a_observable": "The blue and yellow blocks are highly saturated and vibrant.",
+        "b_observable": "The blocks are desaturated, appearing mostly grey and white.",
+        "fix": "Increase color saturation and adjust hues to match the reference.",
+        "severity": 4,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 189.28,
+            "g": 198.82,
+            "b": 201.38,
+            "rb_delta": -12.1,
+            "saturation": 0.2001
+          },
+          "B": {
+            "r": 188.18,
+            "g": 195.19,
+            "b": 210.91,
+            "rb_delta": -22.72,
+            "saturation": 0.106
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 0.8,
+        "a_observable": "Distinct corner vignette and soft shadows between the blocks.",
+        "b_observable": "Flat, uniform lighting across the frame with minimal corner falloff.",
+        "fix": "Add a vignette and deepen the shadows to increase contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 204.05,
+            "center_mean": 203.81,
+            "falloff_pct": -0.11
+          },
+          "B": {
+            "corner_mean": 196.51,
+            "center_mean": 203.26,
+            "falloff_pct": 3.32
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [
+      "blue card",
+      "yellow card"
+    ],
+    "highest_impact_fix": "Adjust the camera perspective to match the steeper angle of the reference, and apply vibrant color grading with a vignette.",
+    "dropped_unsupported": 0
+  }
+}

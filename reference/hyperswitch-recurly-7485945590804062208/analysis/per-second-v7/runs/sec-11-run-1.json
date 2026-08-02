@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 11.5,
+        "a_observable": "Camera is at a low oblique angle, showing card depth.",
+        "b_observable": "Camera is at a flatter, more top-down angle.",
+        "fix": "Match the oblique camera angle of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "Warm color cast with yellow-green reflections on white surfaces.",
+        "b_observable": "Neutral, cool grey color cast with flat white lighting.",
+        "fix": "Add warm light sources and environment reflections.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "Deep shadows under the cards create strong contrast.",
+        "b_observable": "Faint, washed-out shadows reduce contrast.",
+        "fix": "Deepen shadows and increase contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_blacks"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust camera angle to match the oblique perspective and deepen shadows."
+  }
+}

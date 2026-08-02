@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 0,
+    "idx": 0,
+    "t": 0.1,
+    "category": "camera",
+    "a_observable": "The camera is positioned at a steep angle, showing the blue block on the left and yellow block at the bottom.",
+    "b_observable": "The camera is at a shallow, tilted perspective, and the surrounding blocks are grey.",
+    "frames": {
+      "A": "analysis/per-second-v7/eyewitness/sec-00-c0-A.png",
+      "B": "analysis/per-second-v7/eyewitness/sec-00-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "The claim accurately describes the visual differences between the two clips. Clip A shows a steep camera angle with a blue block on the left and a yellow block at the bottom, while Clip B shows a shallow, tilted perspective with grey surrounding blocks."
+    }
+  }
+]

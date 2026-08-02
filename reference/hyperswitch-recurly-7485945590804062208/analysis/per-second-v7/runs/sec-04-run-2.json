@@ -1,0 +1,68 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      4.9
+    ],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 4.1,
+        "a_observable": "A yellow card is visible in the top-left corner.",
+        "b_observable": "The top-left corner displays only white tiles.",
+        "fix": "Reposition the background tiles to match the reference layout.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 4.2,
+        "a_observable": "The scene has a cool blue color cast.",
+        "b_observable": "The scene is neutral white and grey.",
+        "fix": "Add a cool color grade to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 4.5,
+        "a_observable": "A strong vignette darkens the corners.",
+        "b_observable": "The lighting is flat and even across the frame.",
+        "fix": "Apply a vignette effect to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 4.95,
+        "a_observable": "The yellow card is framed closely.",
+        "b_observable": "The camera is further away, making the card smaller.",
+        "fix": "Adjust camera zoom to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing and color grading to match the close-up, cool-toned aesthetic of the reference."
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera zoom out and tilt"
+    ],
+    "b_motion": [
+      "wider camera zoom out and tilt"
+    ],
+    "absent_in_b": [
+      "warm color cast",
+      "soft contact shadows between tiles"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 11.5,
+        "a_observable": "Camera is closer to the tiles, framing the buttons tightly.",
+        "b_observable": "Camera is much further away, showing a very wide view of the tiles.",
+        "fix": "Adjust camera distance and field of view to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.2,
+        "a_observable": "Soft contact shadows are visible in the tile crevices and under buttons.",
+        "b_observable": "Crevices and button edges lack realistic contact shadows, appearing flat.",
+        "fix": "Increase ambient occlusion and shadow depth to define tile edges.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 11.5,
+        "a_observable": "Tiles have a warm off-white tone and the Recurly button is a saturated yellow.",
+        "b_observable": "Tiles are stark white and the Recurly button is a cooler, less saturated yellow.",
+        "fix": "Adjust color grading to introduce warmer tones to the scene.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera distance and field of view to correct the framing of the scene."
+  }
+}

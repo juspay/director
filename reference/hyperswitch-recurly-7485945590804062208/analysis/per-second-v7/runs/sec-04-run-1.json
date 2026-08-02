@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      4.9
+    ],
+    "a_motion": [
+      "pan",
+      "tilt"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 4.2,
+        "a_observable": "Vibrant blue and yellow tiles are visible at the bottom and left edges of the frame.",
+        "b_observable": "The tiles are desaturated, appearing gray and white with no blue or yellow visible.",
+        "fix": "Add the colored background tiles to match the reference palette.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 4.5,
+        "a_observable": "The camera angle is steep, looking almost directly down at the cards.",
+        "b_observable": "The camera angle is shallow, viewing the cards from a lower perspective.",
+        "fix": "Adjust the camera pitch to match the steeper top-down angle.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 4.95,
+        "a_observable": "The yellow Recurly card has strong contrast with deep shadows underneath.",
+        "b_observable": "The yellow Recurly card has softer shadows and lower overall contrast.",
+        "fix": "Increase shadow depth and contrast on the Recurly card.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      }
+    ],
+    "highest_impact_fix": "Add the missing blue and yellow background tiles to restore the vibrant color palette."
+  }
+}

@@ -1,0 +1,267 @@
+{
+  "sec": 9,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "color",
+          "t": 9.5,
+          "a_observable": "The yellow tile for 'Recurly' has a warm, golden hue with rich saturation.",
+          "b_observable": "The yellow tile for 'Recurly' is a cooler, desaturated greenish-yellow.",
+          "fix": "Adjust the color of the Recurly tile to match the warm golden yellow of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 9.5,
+          "a_observable": "The camera is positioned at a low, oblique angle relative to the tiles, creating a strong sense of depth.",
+          "b_observable": "The camera is positioned at a higher, more top-down angle, reducing the perspective depth.",
+          "fix": "Lower the camera height and adjust the pitch to match the low-angle perspective of the reference.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 9.5,
+          "a_observable": "There is a distinct vignette with darker corners and a warm-to-cool light gradient across the scene.",
+          "b_observable": "The lighting is extremely flat and uniform across the entire frame, with no noticeable vignette.",
+          "fix": "Add a vignette and introduce a directional light gradient to match the reference's lighting depth.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and position to match the low-angle perspective of the reference video, which is crucial for capturing the intended depth and composition.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan and zoom out"
+      ],
+      "b_motion": [
+        "slow camera pan and zoom out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 9,
+          "a_observable": "Camera is positioned closer, framing the cards tightly.",
+          "b_observable": "Camera is positioned further back, showing a wider view with more empty space.",
+          "fix": "Adjust camera position and focal length to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 9.5,
+          "a_observable": "Warm, neutral color balance with natural white tones.",
+          "b_observable": "Cool blue-grey color cast across the entire frame.",
+          "fix": "Adjust white balance and color grading to eliminate the cool cast.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust camera position and focal length to match the close-up framing of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera zoom out",
+        "camera pan"
+      ],
+      "b_motion": [
+        "camera zoom out",
+        "camera pan"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 9.2,
+          "a_observable": "The camera is positioned closer to the tiles, framing 'Recurly' and 'hyperswitch' tightly.",
+          "b_observable": "The camera is positioned much further back, showing a wider view of the surrounding tiles.",
+          "fix": "Adjust camera position and focal length to match the close-up framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "material",
+          "t": 9.2,
+          "a_observable": "The yellow 'Recurly' tile has clean edges fitting directly into the slot.",
+          "b_observable": "The yellow 'Recurly' tile has a distinct dark grey border around it.",
+          "fix": "Remove the grey border from the yellow tile.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 9.5,
+          "a_observable": "The white tiles have a warm, cream-colored tone.",
+          "b_observable": "The white tiles have a cooler, greyish-blue color cast.",
+          "fix": "Adjust white balance to introduce warmer tones.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 9.5,
+          "a_observable": "The lighting has higher contrast with brighter highlights on the tile surfaces.",
+          "b_observable": "The lighting is flatter with dimmer highlights and lower contrast.",
+          "fix": "Increase key light intensity and adjust contrast curve.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and focal length to match the close-up framing of the reference video.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 9.2,
+        "a_observable": "The camera is positioned closer to the tiles, framing 'Recurly' and 'hyperswitch' tightly.",
+        "b_observable": "The camera is positioned much further back, showing a wider view of the surrounding tiles.",
+        "fix": "Adjust camera position and focal length to match the close-up framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 2,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "Clip A shows a close-up view of the 'Recurly' and 'hyperswitch' tiles, while Clip B shows a much wider shot with the camera positioned further back, revealing more of the surrounding tiles."
+        },
+        "channelA": {
+          "verdict": "refuted",
+          "note": "Card widths near-parity (A Recurly ~310px vs B ~300px of 720). 'Much further back, smaller cards' is pass-6's stale claim; the dolly fix landed. Channel B endorsed it against the pixels — correlated-error catch."
+        }
+      },
+      {
+        "category": "color",
+        "t": 9.5,
+        "a_observable": "Warm, neutral color balance with natural white tones.",
+        "b_observable": "Cool blue-grey color cast across the entire frame.",
+        "fix": "Adjust white balance and color grading to eliminate the cool cast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "full"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_cooler",
+          "A": {
+            "r": 187.83,
+            "g": 198.44,
+            "b": 204.9,
+            "rb_delta": -17.08,
+            "saturation": 0.1734
+          },
+          "B": {
+            "r": 163.82,
+            "g": 172.61,
+            "b": 187.35,
+            "rb_delta": -23.53,
+            "saturation": 0.2283
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "The lighting has higher contrast with brighter highlights on the tile surfaces.",
+        "b_observable": "The lighting is flatter with dimmer highlights and lower contrast.",
+        "fix": "Increase key light intensity and adjust contrast curve.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_higher_contrast",
+          "A": {
+            "p01": 62.41,
+            "p1": 94.19,
+            "p5": 107.96,
+            "p50": 202.15,
+            "p95": 246.35,
+            "p99": 249.79,
+            "p999": 253,
+            "span_p5_p95": 138.39
+          },
+          "B": {
+            "p01": 53.28,
+            "p1": 54.86,
+            "p5": 60.51,
+            "p50": 190.67,
+            "p95": 209.98,
+            "p99": 219.35,
+            "p999": 246.07,
+            "span_p5_p95": 149.47
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera position and focal length to match the close-up framing of the reference video.",
+    "dropped_unsupported": 2
+  }
+}

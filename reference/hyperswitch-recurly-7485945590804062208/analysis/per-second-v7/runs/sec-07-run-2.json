@@ -1,0 +1,42 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 7.5,
+        "a_observable": "Deep contact shadows are visible under the cards, giving them a distinct 3D depth.",
+        "b_observable": "The contact shadows are very faint, making the cards look flat and poorly integrated.",
+        "fix": "Increase ambient occlusion and shadow strength to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 7,
+        "a_observable": "The camera is positioned closer to the central blue card, framing it more tightly.",
+        "b_observable": "The camera is positioned further back, resulting in a wider composition.",
+        "fix": "Adjust camera distance or focal length to match the reference framing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Increase shadow density and ambient occlusion to restore the deep contact shadows under the cards."
+  }
+}

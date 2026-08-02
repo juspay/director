@@ -1,0 +1,272 @@
+{
+  "sec": 11,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera zoom out and tilt"
+      ],
+      "b_motion": [
+        "wider camera zoom out and tilt"
+      ],
+      "absent_in_b": [
+        "warm color cast",
+        "soft contact shadows between tiles"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 11.5,
+          "a_observable": "Camera is closer to the tiles, framing the buttons tightly.",
+          "b_observable": "Camera is much further away, showing a very wide view of the tiles.",
+          "fix": "Adjust camera distance and field of view to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.2,
+          "a_observable": "Soft contact shadows are visible in the tile crevices and under buttons.",
+          "b_observable": "Crevices and button edges lack realistic contact shadows, appearing flat.",
+          "fix": "Increase ambient occlusion and shadow depth to define tile edges.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 11.5,
+          "a_observable": "Tiles have a warm off-white tone and the Recurly button is a saturated yellow.",
+          "b_observable": "Tiles are stark white and the Recurly button is a cooler, less saturated yellow.",
+          "fix": "Adjust color grading to introduce warmer tones to the scene.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera distance and field of view to correct the framing of the scene.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 11.5,
+          "a_observable": "Camera is at a low oblique angle, showing card depth.",
+          "b_observable": "Camera is at a flatter, more top-down angle.",
+          "fix": "Match the oblique camera angle of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.5,
+          "a_observable": "Warm color cast with yellow-green reflections on white surfaces.",
+          "b_observable": "Neutral, cool grey color cast with flat white lighting.",
+          "fix": "Add warm light sources and environment reflections.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.5,
+          "a_observable": "Deep shadows under the cards create strong contrast.",
+          "b_observable": "Faint, washed-out shadows reduce contrast.",
+          "fix": "Deepen shadows and increase contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_blacks"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust camera angle to match the oblique perspective and deepen shadows.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan and zoom out"
+      ],
+      "b_motion": [
+        "slow camera pan and zoom out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 11,
+          "a_observable": "The camera is close to the cards, framing the Recurly and hyperswitch cards prominently.",
+          "b_observable": "The camera is much further back, showing a wider view with many surrounding tiles.",
+          "fix": "Adjust camera distance and focal length to match the close-up framing of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.5,
+          "a_observable": "Strong corner vignette and soft shadow falloff are visible across the tiles.",
+          "b_observable": "The lighting is flat and uniform with minimal vignette or shadow depth.",
+          "fix": "Add a vignette and adjust light sources to create softer shadows and realistic falloff.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 11.2,
+          "a_observable": "The overall scene has a warm color cast with rich golden-yellow tones.",
+          "b_observable": "The scene has a cool, desaturated color cast with bright white tiles.",
+          "fix": "Adjust the color grading and white balance to match the warm tones of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera distance and focal length to match the close-up framing and composition of the reference video.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 11.5,
+        "a_observable": "Camera is closer to the tiles, framing the buttons tightly.",
+        "b_observable": "Camera is much further away, showing a very wide view of the tiles.",
+        "fix": "Adjust camera distance and field of view to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_sharper",
+          "A": {
+            "lap_var": 342.53
+          },
+          "B": {
+            "lap_var": 42.19
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "Deep shadows under the cards create strong contrast.",
+        "b_observable": "Faint, washed-out shadows reduce contrast.",
+        "fix": "Deepen shadows and increase contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_blacks"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_deeper_blacks",
+          "A": {
+            "p01": 5.74,
+            "p1": 85.8,
+            "p5": 90.3,
+            "p50": 209.07,
+            "p95": 230.56,
+            "p99": 236.33,
+            "p999": 251.64,
+            "span_p5_p95": 140.26
+          },
+          "B": {
+            "p01": 60.08,
+            "p1": 62.14,
+            "p5": 66.95,
+            "p50": 192.8,
+            "p95": 209.67,
+            "p99": 213.88,
+            "p999": 239.3,
+            "span_p5_p95": 142.72
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "color",
+        "t": 11.5,
+        "a_observable": "Tiles have a warm off-white tone and the Recurly button is a saturated yellow.",
+        "b_observable": "Tiles are stark white and the Recurly button is a cooler, less saturated yellow.",
+        "fix": "Adjust color grading to introduce warmer tones to the scene.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 193.46,
+            "g": 203.74,
+            "b": 200.33,
+            "rb_delta": -6.87,
+            "saturation": 0.1922
+          },
+          "B": {
+            "r": 165.83,
+            "g": 175.29,
+            "b": 190.47,
+            "rb_delta": -24.64,
+            "saturation": 0.2194
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera distance and field of view to correct the framing of the scene.",
+    "dropped_unsupported": 1
+  }
+}

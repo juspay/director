@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 3.5,
+        "a_observable": "Tight framing on the three cards, occupying most of the screen height.",
+        "b_observable": "Distant framing, leaving large empty spaces around the smaller cards.",
+        "fix": "Move camera closer to match reference framing.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 3.5,
+        "a_observable": "Deep, dark contact shadows under the cards.",
+        "b_observable": "Faint, washed-out shadows under the cards.",
+        "fix": "Darken contact shadows and increase ambient occlusion.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 3.5,
+        "a_observable": "Vibrant, highly saturated blue icons and background elements.",
+        "b_observable": "Muted, desaturated colors with a greyish tone.",
+        "fix": "Increase overall color saturation.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and focal length to match the tight framing of the reference video."
+  }
+}

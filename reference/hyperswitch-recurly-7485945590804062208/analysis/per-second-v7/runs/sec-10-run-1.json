@@ -1,0 +1,67 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 10.5,
+        "a_observable": "The camera is positioned closer to the yellow button, creating a dynamic perspective.",
+        "b_observable": "The camera is further away, resulting in a flatter perspective and smaller button.",
+        "fix": "Adjust camera position and focal length to match the close-up framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "There is a distinct vignette with darker corners and a brighter center.",
+        "b_observable": "The lighting is uniform across the frame with no noticeable vignette.",
+        "fix": "Add a vignette effect to darken the corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "The shadows in the recesses around the buttons are deep and dark.",
+        "b_observable": "The shadows are light and washed out, leading to lower contrast.",
+        "fix": "Increase shadow depth and overall contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 10.5,
+        "a_observable": "The yellow button has a warm golden hue, and the scene is warmer.",
+        "b_observable": "The yellow button has a cooler greenish-yellow hue, and the scene is cooler.",
+        "fix": "Adjust the color temperature and yellow hue to match the warm reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust camera position and focal length to match the close-up framing and perspective of the reference."
+  }
+}

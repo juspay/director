@@ -1,0 +1,66 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zoom out",
+      "camera pan"
+    ],
+    "b_motion": [
+      "camera zoom out",
+      "camera pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 9.2,
+        "a_observable": "The camera is positioned closer to the tiles, framing 'Recurly' and 'hyperswitch' tightly.",
+        "b_observable": "The camera is positioned much further back, showing a wider view of the surrounding tiles.",
+        "fix": "Adjust camera position and focal length to match the close-up framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "material",
+        "t": 9.2,
+        "a_observable": "The yellow 'Recurly' tile has clean edges fitting directly into the slot.",
+        "b_observable": "The yellow 'Recurly' tile has a distinct dark grey border around it.",
+        "fix": "Remove the grey border from the yellow tile.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 9.5,
+        "a_observable": "The white tiles have a warm, cream-colored tone.",
+        "b_observable": "The white tiles have a cooler, greyish-blue color cast.",
+        "fix": "Adjust white balance to introduce warmer tones.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "The lighting has higher contrast with brighter highlights on the tile surfaces.",
+        "b_observable": "The lighting is flatter with dimmer highlights and lower contrast.",
+        "fix": "Increase key light intensity and adjust contrast curve.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and focal length to match the close-up framing of the reference video."
+  }
+}

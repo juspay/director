@@ -39,6 +39,14 @@ def frame(video, t):
              "-frames:v", "1", "-y", out],
             check=True,
         )
+        if os.path.getsize(out) == 0:
+            # Cited time past the video's end (model cited t=14.9 in a 14.5s
+            # clip); step back rather than crash the whole second.
+            subprocess.run(
+                ["ffmpeg", "-v", "error", "-ss", f"{max(0.0, t - 0.3):.4f}",
+                 "-i", video, "-frames:v", "1", "-y", out],
+                check=True,
+            )
         with Image.open(out) as im:
             return np.asarray(im.convert("RGB"), dtype=np.float64)
     finally:

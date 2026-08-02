@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera rotation and zoom-out"
+    ],
+    "b_motion": [
+      "slow camera rotation and zoom-out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 14,
+        "a_observable": "The 'PSP' card is centered below the blue 'hyperswitch' card.",
+        "b_observable": "The 'PSP' card is offset to the bottom-left of the blue 'hyperswitch' card.",
+        "fix": "Re-align the 'PSP' card to be centered below the main blue card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 14.5,
+        "a_observable": "Surrounding tiles show vibrant yellow and blue colors with a warm tint.",
+        "b_observable": "Surrounding tiles are mostly desaturated white and grey with a cold tint.",
+        "fix": "Increase saturation and adjust color temperature to match the warm, vibrant tones.",
+        "severity": 4,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 14.2,
+        "a_observable": "Strong contact shadows are visible in the crevices between the tiles.",
+        "b_observable": "Crevice shadows are very faint and flat, lacking depth.",
+        "fix": "Enhance ambient occlusion and shadow depth to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the color grading to restore the warm, saturated yellow and blue tones of the reference."
+  }
+}

@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 4,
+    "idx": 0,
+    "t": 4.2,
+    "category": "camera",
+    "a_observable": "Close-up framing of stacked cards with yellow card visible top-left.",
+    "b_observable": "Distant framing making cards appear smaller; top-left yellow card is out of frame.",
+    "frames": {
+      "A": "analysis/per-second-v7/eyewitness/sec-04-c0-A.png",
+      "B": "analysis/per-second-v7/eyewitness/sec-04-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.95,
+      "note": "Clip A shows a close-up view of the stacked cards with a yellow bar/card clearly visible in the top-left corner. Clip B has a more distant framing where the cards appear smaller, and the yellow card in the top-left is out of frame."
+    }
+  }
+]

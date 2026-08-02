@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and zoom out"
+    ],
+    "b_motion": [
+      "slow camera pan and zoom out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 11,
+        "a_observable": "The camera is close to the cards, framing the Recurly and hyperswitch cards prominently.",
+        "b_observable": "The camera is much further back, showing a wider view with many surrounding tiles.",
+        "fix": "Adjust camera distance and focal length to match the close-up framing of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "Strong corner vignette and soft shadow falloff are visible across the tiles.",
+        "b_observable": "The lighting is flat and uniform with minimal vignette or shadow depth.",
+        "fix": "Add a vignette and adjust light sources to create softer shadows and realistic falloff.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 11.2,
+        "a_observable": "The overall scene has a warm color cast with rich golden-yellow tones.",
+        "b_observable": "The scene has a cool, desaturated color cast with bright white tiles.",
+        "fix": "Adjust the color grading and white balance to match the warm tones of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera distance and focal length to match the close-up framing and composition of the reference video."
+  }
+}

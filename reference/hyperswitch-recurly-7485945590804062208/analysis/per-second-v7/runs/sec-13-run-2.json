@@ -1,0 +1,57 @@
+{
+  "ok": false,
+  "why": "reported 1 cuts, truth has 0",
+  "json": {
+    "cuts_in_window": [
+      13.33
+    ],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 13.5,
+        "a_observable": "The camera is positioned directly above the tiles, looking down with a flat perspective.",
+        "b_observable": "The camera is at a low, oblique angle, looking across the tiles with perspective skew.",
+        "fix": "Adjust the camera angle to match the top-down perspective of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 13.8,
+        "a_observable": "The white tiles are bright white and the blue tile is highly saturated.",
+        "b_observable": "The white tiles have a greyish-blue color cast and the blue tile is desaturated.",
+        "fix": "Adjust color grading and saturation to match the vibrant tones of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 14,
+        "a_observable": "The scene has bright, soft lighting with gentle shadow falloff.",
+        "b_observable": "The scene is darker with higher contrast and deeper shadows.",
+        "fix": "Increase ambient light intensity and soften shadow settings.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle to match the top-down perspective of the reference."
+  }
+}

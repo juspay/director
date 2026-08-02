@@ -1,0 +1,284 @@
+{
+  "sec": 12,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 12.1,
+          "a_observable": "The camera is positioned closer to the yellow card, creating a more dynamic perspective.",
+          "b_observable": "The camera is further away, resulting in a flatter perspective and smaller card size.",
+          "fix": "Adjust camera distance and angle to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "color",
+          "t": 12.3,
+          "a_observable": "The tiles exhibit a warm, cream-colored tone.",
+          "b_observable": "The tiles are neutral white and grey.",
+          "fix": "Apply a warm color grade to the scene.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "full"
+          }
+        },
+        {
+          "category": "material",
+          "t": 12.4,
+          "a_observable": "The yellow card has a glossy finish with visible specular reflections.",
+          "b_observable": "The yellow card has a flat, matte appearance with no specular highlights.",
+          "fix": "Increase the specular and adjust roughness of the yellow card material.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 12.5,
+          "a_observable": "Stronger vignette and deeper shadows are present around the edges.",
+          "b_observable": "The lighting is flat and uniform across the frame.",
+          "fix": "Add a vignette and deepen the shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera focal length and position to match the close-up perspective of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "color",
+          "t": 12.2,
+          "a_observable": "The overall image has a warm, yellowish color cast, especially visible on the white cards.",
+          "b_observable": "The image has a neutral to cool white color cast with very little warmth.",
+          "fix": "Add a warm color temperature adjustment or warm ambient light to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 12.5,
+          "a_observable": "Deep, dark shadows are present in the gaps between the cards, creating high contrast.",
+          "b_observable": "The gaps between the cards are brightly lit with minimal shadow depth, resulting in low contrast.",
+          "fix": "Increase shadow intensity or add ambient occlusion to darken the gaps between the cards.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 12.8,
+          "a_observable": "The camera angle is low and oblique, creating a dynamic perspective view of the cards.",
+          "b_observable": "The camera angle is higher and flatter, making the card layout look more two-dimensional.",
+          "fix": "Lower the camera height and tilt it upwards to match the oblique perspective of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Lower the camera height and tilt it upwards to match the oblique perspective of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 12.2,
+          "a_observable": "The camera is positioned close to the cards, creating a tight composition.",
+          "b_observable": "The camera is positioned much further back, resulting in a wide shot.",
+          "fix": "Bring the camera closer to match the reference's tight framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 12.5,
+          "a_observable": "The cards and 'Live Now' button are tightly spaced in a compact grid.",
+          "b_observable": "The cards are spaced far apart with large gaps of empty space.",
+          "fix": "Tighten the spacing of the cards to match the reference grid.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 12,
+          "a_observable": "The yellow card has a highly saturated, warm golden-yellow color.",
+          "b_observable": "The yellow card is desaturated with a cooler, greenish tint.",
+          "fix": "Increase saturation and warmth on the yellow card material.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera distance and angle to match the close-up framing of the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 12.1,
+        "a_observable": "The camera is positioned closer to the yellow card, creating a more dynamic perspective.",
+        "b_observable": "The camera is further away, resulting in a flatter perspective and smaller card size.",
+        "fix": "Adjust camera distance and angle to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_sharper",
+          "A": {
+            "lap_var": 440.46
+          },
+          "B": {
+            "lap_var": 42.97
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "color",
+        "t": 12.2,
+        "a_observable": "The overall image has a warm, yellowish color cast, especially visible on the white cards.",
+        "b_observable": "The image has a neutral to cool white color cast with very little warmth.",
+        "fix": "Add a warm color temperature adjustment or warm ambient light to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_cooler",
+          "A": {
+            "r": 194.49,
+            "g": 204.8,
+            "b": 200.59,
+            "rb_delta": -6.1,
+            "saturation": 0.1879
+          },
+          "B": {
+            "r": 165.5,
+            "g": 175.02,
+            "b": 190.8,
+            "rb_delta": -25.29,
+            "saturation": 0.2211
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "Deep, dark shadows are present in the gaps between the cards, creating high contrast.",
+        "b_observable": "The gaps between the cards are brightly lit with minimal shadow depth, resulting in low contrast.",
+        "fix": "Increase shadow intensity or add ambient occlusion to darken the gaps between the cards.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_higher_contrast",
+          "A": {
+            "p01": 4.04,
+            "p1": 86.3,
+            "p5": 91.09,
+            "p50": 208.88,
+            "p95": 231.19,
+            "p99": 236.33,
+            "p999": 252.45,
+            "span_p5_p95": 140.1
+          },
+          "B": {
+            "p01": 60.08,
+            "p1": 61.43,
+            "p5": 66.01,
+            "p50": 192.3,
+            "p95": 209.09,
+            "p99": 213.31,
+            "p999": 239.5,
+            "span_p5_p95": 143.08
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera distance and angle to match the close-up framing of the reference.",
+    "dropped_unsupported": 3
+  }
+}

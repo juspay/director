@@ -1,0 +1,82 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "camera pan",
+      "camera zoom",
+      "camera tilt"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom",
+      "camera tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 6,
+        "a_observable": "A yellow tile is visible in the top-left corner of the frame.",
+        "b_observable": "The top-left tile is white/grey.",
+        "fix": "Change the material color of the top-left tile to yellow.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.2,
+        "a_observable": "A warm yellow light glow is visible in the top-left area of the frame.",
+        "b_observable": "The lighting is cool and white, lacking the warm yellow glow.",
+        "fix": "Add a warm yellow light source in the top-left to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 6.8,
+        "a_observable": "The 'JUSPAY hyperswitch' tile is framed closely, filling most of the screen width.",
+        "b_observable": "The tile is framed further away, showing more surrounding tiles.",
+        "fix": "Adjust camera framing to match the close-up composition of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 6.8,
+        "a_observable": "The small 'PSP' icon at the bottom of the frame is grey.",
+        "b_observable": "The 'PSP' icon is blue.",
+        "fix": "Change the color of the PSP icon from blue to grey.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "material",
+        "t": 6.8,
+        "a_observable": "The blue tile has a metallic bevel with bright specular reflections on its edges.",
+        "b_observable": "The bevel is flat grey with no specular reflections.",
+        "fix": "Apply a metallic material with specular reflections to the tile bevel.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_brighter_highlights"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust camera framing and focal length to match the close-up compositions of the reference."
+  }
+}

@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 2,
+    "idx": 1,
+    "t": 2.1,
+    "category": "camera",
+    "a_observable": "The camera is positioned closer to the keys with a steeper angle of view, showing less of the surrounding grid.",
+    "b_observable": "The camera is further back with a shallower angle, showing more of the surrounding grid and creating a different perspective.",
+    "frames": {
+      "A": "analysis/per-second-v7/eyewitness/sec-02-c1-A.png",
+      "B": "analysis/per-second-v7/eyewitness/sec-02-c1-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "The comparison is accurate. Clip A shows a close-up, top-down (steeper) view of the 'Secure Payments' and 'Renewal Success' keys, showing very little of the surrounding grid. Clip B is shot from a further distance and a shallower, more oblique angle, revealing more of the surrounding grid and keys."
+    }
+  }
+]

@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.2
+    ],
+    "a_motion": [
+      "pan"
+    ],
+    "b_motion": [
+      "pan"
+    ],
+    "absent_in_b": [
+      "colored_tiles"
+    ],
+    "differences": [
+      {
+        "category": "material",
+        "t": 2.1,
+        "a_observable": "The tiles surrounding the central card have blue and yellow colors.",
+        "b_observable": "The surrounding tiles are plain white and grey.",
+        "fix": "Assign the correct blue and yellow materials to the background tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.6,
+        "a_observable": "The tiles exhibit high contrast with distinct shadows in the crevices.",
+        "b_observable": "The lighting is flat and uniform with almost no visible shadows between tiles.",
+        "fix": "Adjust the lighting setup to increase contrast and shadow depth.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 2.4,
+        "a_observable": "The camera perspective shows less distortion, indicating a longer focal length.",
+        "b_observable": "The camera perspective shows more pronounced distortion, indicating a wider field of view.",
+        "fix": "Increase the camera focal length and adjust the distance to match the reference perspective.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Apply the blue and yellow materials to the background tiles to match the reference color scheme."
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "zoom",
+      "pan"
+    ],
+    "b_motion": [
+      "zoom",
+      "pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 13,
+        "a_observable": "Camera is closer to the buttons with a dynamic, low-angle perspective.",
+        "b_observable": "Camera is further away with a flatter, more orthographic perspective.",
+        "fix": "Adjust camera focal length and position to match the reference perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 13.5,
+        "a_observable": "Stronger vignette with distinct darkening towards the corners.",
+        "b_observable": "Flat lighting with minimal corner falloff.",
+        "fix": "Add a vignette effect to darken the corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 13.2,
+        "a_observable": "Pronounced contact shadows cast by the buttons onto the tiles.",
+        "b_observable": "Faint contact shadows, making the buttons appear flat.",
+        "fix": "Increase ambient occlusion and contact shadow strength.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust camera perspective and enhance contact shadows to match the reference."
+  }
+}

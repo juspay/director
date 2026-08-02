@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 12.1,
+        "a_observable": "The camera is positioned closer to the yellow card, creating a more dynamic perspective.",
+        "b_observable": "The camera is further away, resulting in a flatter perspective and smaller card size.",
+        "fix": "Adjust camera distance and angle to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "color",
+        "t": 12.3,
+        "a_observable": "The tiles exhibit a warm, cream-colored tone.",
+        "b_observable": "The tiles are neutral white and grey.",
+        "fix": "Apply a warm color grade to the scene.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "full"
+        }
+      },
+      {
+        "category": "material",
+        "t": 12.4,
+        "a_observable": "The yellow card has a glossy finish with visible specular reflections.",
+        "b_observable": "The yellow card has a flat, matte appearance with no specular highlights.",
+        "fix": "Increase the specular and adjust roughness of the yellow card material.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "Stronger vignette and deeper shadows are present around the edges.",
+        "b_observable": "The lighting is flat and uniform across the frame.",
+        "fix": "Add a vignette and deepen the shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera focal length and position to match the close-up perspective of the reference."
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 12.2,
+        "a_observable": "The camera is positioned close to the cards, creating a tight composition.",
+        "b_observable": "The camera is positioned much further back, resulting in a wide shot.",
+        "fix": "Bring the camera closer to match the reference's tight framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 12.5,
+        "a_observable": "The cards and 'Live Now' button are tightly spaced in a compact grid.",
+        "b_observable": "The cards are spaced far apart with large gaps of empty space.",
+        "fix": "Tighten the spacing of the cards to match the reference grid.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 12,
+        "a_observable": "The yellow card has a highly saturated, warm golden-yellow color.",
+        "b_observable": "The yellow card is desaturated with a cooler, greenish tint.",
+        "fix": "Increase saturation and warmth on the yellow card material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera distance and angle to match the close-up framing of the reference."
+  }
+}

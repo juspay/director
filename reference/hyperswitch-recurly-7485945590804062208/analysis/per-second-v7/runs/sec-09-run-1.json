@@ -1,0 +1,41 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and zoom out"
+    ],
+    "b_motion": [
+      "slow camera pan and zoom out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 9,
+        "a_observable": "Camera is positioned closer, framing the cards tightly.",
+        "b_observable": "Camera is positioned further back, showing a wider view with more empty space.",
+        "fix": "Adjust camera position and focal length to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 9.5,
+        "a_observable": "Warm, neutral color balance with natural white tones.",
+        "b_observable": "Cool blue-grey color cast across the entire frame.",
+        "fix": "Adjust white balance and color grading to eliminate the cool cast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust camera position and focal length to match the close-up framing of the reference video."
+  }
+}

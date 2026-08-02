@@ -1,0 +1,202 @@
+{
+  "sec": 8,
+  "meta": {
+    "verified": 2,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [
+    "{\"error\":{\"code\":503,\"message\":\"This model is currently experiencing high demand. Spikes in demand are usually temporary"
+  ],
+  "runs": [
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "camera pans over the blue card, then cuts to a zoom out from the grid"
+      ],
+      "b_motion": [
+        "camera pans over the blue card, then cuts to a zoom out from the grid"
+      ],
+      "absent_in_b": [
+        "Secure Payments card",
+        "Billing card",
+        "Success rate graph",
+        "Subscriptions card",
+        "Retries card",
+        "APMs card"
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "t": 8.5,
+          "a_observable": "Multiple labeled cards like 'Secure Payments' and 'Billing' are visible on the surrounding tiles.",
+          "b_observable": "The surrounding tiles are completely blank white blocks with no cards or labels.",
+          "fix": "Add the missing labeled cards to the grid layout.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 8.5,
+          "a_observable": "Strong shadows are cast between the tiles, creating depth and contrast.",
+          "b_observable": "The lighting is flat and overexposed, with almost no shadows between the tiles.",
+          "fix": "Adjust the light source angle and intensity to cast deeper shadows.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "color",
+          "t": 8.5,
+          "a_observable": "The 'Recurly' card has a vibrant, warm yellow color.",
+          "b_observable": "The 'Recurly' card has a dull, desaturated yellow color.",
+          "fix": "Increase the saturation and warmth of the yellow material.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "material",
+          "t": 8,
+          "a_observable": "The border of the blue card has a brushed metallic texture.",
+          "b_observable": "The border of the blue card is a flat, matte grey material.",
+          "fix": "Apply a brushed metal texture to the card border.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Add the missing labeled cards to the grid layout to populate the empty white tiles.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "pan",
+        "tilt",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 8.05,
+          "a_observable": "Camera is close to the blue Hyperswitch tile, filling the frame.",
+          "b_observable": "Camera is further back, showing a wider view with surrounding tiles.",
+          "fix": "Move camera closer to match reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "motion",
+          "t": 8.5,
+          "a_observable": "The 'Live Now' tile slides up into its slot.",
+          "b_observable": "The 'Live Now' tile is static and fully seated.",
+          "fix": "Animate the 'Live Now' tile to slide up.",
+          "severity": 4,
+          "prediction": {
+            "metric": "motion",
+            "expect": "A_more",
+            "region": "full"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 8.3,
+          "a_observable": "Deep ambient occlusion shadows are visible in the tile crevices.",
+          "b_observable": "Crevices are flatly lit with almost no contact shadows.",
+          "fix": "Add stronger contact shadows around the tiles.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "full"
+          }
+        },
+        {
+          "category": "color",
+          "t": 8.4,
+          "a_observable": "White tiles have a warm cream tint.",
+          "b_observable": "White tiles are neutral gray/white.",
+          "fix": "Add a warm color cast to the tiles.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Animate the 'Live Now' tile to slide up into place instead of keeping it static.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 8.3,
+        "a_observable": "Deep ambient occlusion shadows are visible in the tile crevices.",
+        "b_observable": "Crevices are flatly lit with almost no contact shadows.",
+        "fix": "Add stronger contact shadows around the tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 45.71,
+            "p1": 86.53,
+            "p5": 104.03,
+            "p50": 180.57,
+            "p95": 244.44,
+            "p99": 248.86,
+            "p999": 250.51,
+            "span_p5_p95": 140.41
+          },
+          "B": {
+            "p01": 52.79,
+            "p1": 54.3,
+            "p5": 59.94,
+            "p50": 192.67,
+            "p95": 213.8,
+            "p99": 234.81,
+            "p999": 255,
+            "span_p5_p95": 153.86
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Add stronger contact shadows around the tiles.",
+    "dropped_unsupported": 12
+  }
+}

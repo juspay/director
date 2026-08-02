@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 1,
+    "idx": 0,
+    "t": 1.5,
+    "category": "camera",
+    "a_observable": "The camera is positioned close to the 'Secure Payments' card, creating a tight close-up composition.",
+    "b_observable": "The camera is positioned further away, resulting in a wider shot where the card occupies a smaller portion of the frame.",
+    "frames": {
+      "A": "analysis/per-second-v7/eyewitness/sec-01-c0-A.png",
+      "B": "analysis/per-second-v7/eyewitness/sec-01-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "Clip A shows a close-up shot of the 'Secure Payments' card, while Clip B shows a wider shot where the card is smaller and more of the surrounding elements are visible."
+    }
+  }
+]

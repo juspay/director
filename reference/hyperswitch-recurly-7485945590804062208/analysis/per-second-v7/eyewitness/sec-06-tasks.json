@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 6,
+    "idx": 0,
+    "t": 6.8,
+    "category": "camera",
+    "a_observable": "The 'JUSPAY hyperswitch' tile is framed closely, filling most of the screen width.",
+    "b_observable": "The tile is framed further away, showing more surrounding tiles.",
+    "frames": {
+      "A": "analysis/per-second-v7/eyewitness/sec-06-c0-A.png",
+      "B": "analysis/per-second-v7/eyewitness/sec-06-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "The comparison is accurate. In Clip A, the 'JUSPAY hyperswitch' tile is framed closely and occupies most of the screen width, whereas in Clip B, the camera is positioned further back, revealing more of the surrounding tiles and grid layout."
+    }
+  }
+]

@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "camera zoom out",
+      "camera pan"
+    ],
+    "b_motion": [
+      "camera zoom out",
+      "camera pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 6.75,
+        "a_observable": "The camera is positioned closer to the blue button, framing it as a prominent close-up.",
+        "b_observable": "The camera is positioned further away, showing more surrounding tiles.",
+        "fix": "Move the camera closer to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 6.25,
+        "a_observable": "The yellow button has a highly saturated, vibrant yellow color.",
+        "b_observable": "The yellow button is noticeably less saturated and duller.",
+        "fix": "Increase the saturation of the yellow button material.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "color",
+        "t": 7,
+        "a_observable": "The blue button displays a deep, rich royal blue hue.",
+        "b_observable": "The blue button is lighter and less saturated.",
+        "fix": "Adjust the blue material to be deeper and more saturated.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing and distance to match the close-up composition of the reference."
+  }
+}
