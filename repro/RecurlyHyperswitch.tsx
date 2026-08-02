@@ -185,7 +185,7 @@ function dappleTexture(): THREE.Texture {
   // (-6..-22) but NEVER goes warm; a neutral base made frame tint a lottery
   // decided by whichever pool drifted over the view (measured +24 one round,
   // -55 another).
-  x.fillStyle = '#e8effa';
+  x.fillStyle = '#eef3fa';
   x.fillRect(0, 0, 1024, 1024);
   const r = rng(20260802);
   const pool = (fill: [number, number, number], count: number, alpha: number) => {

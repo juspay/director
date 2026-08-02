@@ -38,7 +38,7 @@ export const C = {
   gold: '#ddc849',
   // A's analytics bars measure (227,205,86); #ffc700 through the unlit
   // toneMapped=false face path + grade rendered neon orange.
-  goldBar: '#dcc465',
+  goldBar: '#e0c96e',
   // Renders (66,101,220) against the reference's (64,101,220). At the previous
   // #1743c9 it rendered (96,112,197) — too much red, too little blue, reading
   // as periwinkle rather than the reference's vivid blue.

@@ -98,7 +98,7 @@ function buildTiles(): Tile[] {
   // Kind is chosen by area and position rather than a repeating list: large
   // tiles are the structural wall and stay plain, small ones carry the detail.
   // Brand-coloured tiles are rare — the reference's wall is overwhelmingly pale.
-  return rects.map(([x0, z0, x1, z1]) => {
+  return rects.map(([x0, z0, x1, z1], idx) => {
     const w = x1 - x0 - SEAM;
     const l = z1 - z0 - SEAM;
     const area = w * l;
@@ -108,7 +108,19 @@ function buildTiles(): Tile[] {
     // accents — ruled paper and chart lines are punctuation, not the surface.
     const u = r();
     let kind: Kind = 'plain';
-    if (area > 14) kind = 'plain';
+    // Verified in three seconds of the pass-7 analysis: the reference keeps
+    // large SOLID blue and yellow tiles immediately beside its heroes, while
+    // the probabilistic wall almost never landed an accent next to the
+    // subject. Force the two mid-size tiles nearest the acting area (per the
+    // fixed seed) into brand colours.
+    const cx = (x0 + x1) / 2;
+    const cz = (z0 + z1) / 2;
+    // Mid-size tiles only, sparse — the per-shot brandRadius gate below trims
+    // them to the acting area in WORLD space (this test runs pre-offset, which
+    // is how round one parked a giant gold tile mid-frame in shot 2).
+    const accent = area > 3 && area < 8 && idx % 4 === 0;
+    if (accent) kind = cx < 0 ? 'blue' : 'gold';
+    else if (area > 14) kind = 'plain';
     else if (u > 0.94) kind = 'gold';
     else if (u > 0.89) kind = 'blue';
     else if (u > 0.84) kind = 'lightblue';
