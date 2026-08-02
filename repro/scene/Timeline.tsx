@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
 import { useThree } from '@react-three/fiber';
-import { interpolate, useCurrentFrame } from 'remotion';
+import { interpolate, spring, useCurrentFrame } from 'remotion';
 import * as THREE from 'three';
 import { Keycap } from './Keycap';
 import { SetDressing, Peripherals, Well, TILE_TOP, WELL_FLOOR } from './SetDressing';
-import { C } from './theme';
+import { C, FPS, T } from './theme';
 import {
   pillFaceH,
   capabilityFaceV,
@@ -377,11 +377,21 @@ export const Timeline: React.FC = () => {
         </>
       )}
 
-      {/* Shot 4 — Hyperswitch hero */}
+      {/* Shot 4 — Hyperswitch hero. The cap arrives raised and PRESSES into
+          its socket at T.hyPressStart — an in-shot action the reference
+          performs with a spring settle (reconstruction spec §3). This is
+          Remotion's spring(), not an entrance animation: the shot still cuts
+          in fully staged. */}
       {shot === 3 && (
         <>
           <Well position={HERO_WELL} size={[BRAND[0], BRAND[2]]} metalMap={f.metal} whiten={whiten} />
-          <Keycap position={HERO} size={BRAND} color={C.blue} face={f.hyper} faceSize={F_HYPER} />
+          <Keycap
+            position={[HERO[0], Math.max(HERO[1] + 0.005, HERO[1] + 0.035 + 0.125 * (1 - spring({ frame: frame - T.hyPressStart, fps: FPS, config: { damping: 11, stiffness: 170, mass: 0.8 } }))), HERO[2]]}
+            size={BRAND}
+            color={C.blue}
+            face={f.hyper}
+            faceSize={F_HYPER}
+          />
           <Keycap position={[1.48, CAP_Y, -1.40]} size={CAP} color={C.card} face={f.revenue} faceSize={F_REVENUE} />
           <Keycap position={[-1.28, TILE_TOP + 0.05 - 0.008, 0.62]} size={[0.34, 0.10, 0.34]} radius={0.07} color={C.blue} face={f.psp} faceSize={[0.27, 0.27]} />
         </>
@@ -394,14 +404,19 @@ export const Timeline: React.FC = () => {
           <Keycap position={LOCK_RECURLY} size={BRAND} color={C.gold} face={f.recurly} faceSize={F_RECURLY} />
           <Well position={[LOCK_HYPER[0], TILE_TOP, LOCK_HYPER[2]]} size={[BRAND[0], BRAND[2]]} metalMap={f.metal} whiten={whiten} />
           <Keycap position={LOCK_HYPER} size={BRAND} color={C.blue} face={f.hyper} faceSize={F_HYPER} />
-          <Keycap
-            position={[0, TILE_TOP + 0.12 / 2 - 0.008, 0.12]}
-            size={[1.52, 0.12, 0.62]}
-            radius={0.29}
-            color={C.white}
-            face={f.live}
-            faceSize={F_LIVE}
-          />
+          {/* The pill RISES at T.liveRiseStart with a spring overshoot —
+              the reference's one true entrance, timed by the spec. Before
+              that it is simply absent, exactly as in the reference. */}
+          {frame >= T.liveRiseStart && (
+            <Keycap
+              position={[0, TILE_TOP + 0.12 / 2 - 0.008 - 0.22 * (1 - spring({ frame: frame - T.liveRiseStart, fps: FPS, config: { damping: 9, stiffness: 150, mass: 0.9 } })), 0.12]}
+              size={[1.52, 0.12, 0.62]}
+              radius={0.29}
+              color={C.white}
+              face={f.live}
+              faceSize={F_LIVE}
+            />
+          )}
         </>
       )}
     </>
