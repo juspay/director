@@ -192,7 +192,11 @@ export function pillFaceH(
       ctx.lineTo(x + 42, cy - 28);
       ctx.stroke();
     }
-    ctx.fillStyle = '#3b4250';
+    // Label ink lightened from #3b4250: through the macro grade that rendered
+    // at luma ~17, planting a near-black spike in every macro frame that the
+    // verified analysis flagged (reference's darkest macro pixels are 48-84 —
+    // its label text never goes truly black).
+    ctx.fillStyle = '#5a647a';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
     fitFont(ctx, line1.length > line2.length ? line1 : line2, 116, 590, '400', 2);

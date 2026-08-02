@@ -152,7 +152,15 @@ function catmull(p0: number, p1: number, p2: number, p3: number, t: number): num
  * needed fixing was the AZIMUTH rotating the type off-horizontal, which SWEEP
  * handles. This now backs off only far enough to keep subjects inside frame.
  */
-const DOLLY = [1.14, 1.16, 1.12, 1.12, 1.0];
+// Shot 1 pulled back in (1.14 -> 1.06): the verified eyewitness finding has
+// the reference closer with heavier edge falloff, and 1.14 was an
+// overcorrection — the clipping it fixed is re-checked by still at f30.
+// Shot 5 pushed in (1.0 -> 0.88): the lockup's brand cards measured ~12-15%
+// smaller in frame than the reference's.
+// 1.06 re-clipped "Renewal Success" mid-word at the right edge (checked by
+// still at f30) — 1.11 is the closest the verified "reference is closer"
+// finding can get without reintroducing that regression.
+const DOLLY = [1.11, 1.16, 1.12, 1.12, 0.88];
 
 /**
  * Per-shot azimuth sweep, applied about the shot's own mean bearing.
@@ -266,7 +274,9 @@ const F_REVENUE: [number, number] = [1.18, 1.18 / 1.8];
  */
 const SET_OFFSET: Array<[number, number, number]> = [
   [0, 0, 0],
-  [3.15, 0, -2.40],
+  // Shot 2's patch chosen so a dotted tile lands LEFT of the capability
+  // column — verified layout finding: dots left in the reference, right here.
+  [-2.2, 0, -1.1],
   [-2.60, 0, 3.35],
   [4.20, 0, 2.10],
   [-1.45, 0, -3.60],
@@ -328,8 +338,8 @@ export const Timeline: React.FC = () => {
       {/* Shot 1 — Secure Payments / Renewal Success */}
       {shot === 0 && (
         <>
-          <Keycap position={[-0.06, CAP_Y, 0.30]} size={CAP} color={C.tile} face={f.secure} faceSize={F_PILL} />
-          <Keycap position={[0.86, CAP_Y, -0.92]} size={CAP} color={C.tile} face={f.renewal} faceSize={F_PILL} />
+          <Keycap position={[-0.06, CAP_Y, 0.30]} size={CAP} color={C.card} face={f.secure} faceSize={F_PILL} />
+          <Keycap position={[0.86, CAP_Y, -0.92]} size={CAP} color={C.card} face={f.renewal} faceSize={F_PILL} />
         </>
       )}
 
@@ -339,9 +349,9 @@ export const Timeline: React.FC = () => {
           three were ever visible. */}
       {shot === 1 && (
         <>
-          <Keycap position={[-0.05, CAP_Y, -0.94]} size={CAP} color={C.tile} face={f.subs} faceSize={F_COL} />
-          <Keycap position={[-0.05, CAP_Y, 0.00]} size={CAP} color={C.tile} face={f.retries} faceSize={F_COL} />
-          <Keycap position={[-0.05, CAP_Y, 0.94]} size={CAP} color={C.tile} face={f.apms} faceSize={F_COL} />
+          <Keycap position={[-0.05, CAP_Y, -0.94]} size={CAP} color={C.card} face={f.subs} faceSize={F_COL} />
+          <Keycap position={[-0.05, CAP_Y, 0.00]} size={CAP} color={C.card} face={f.retries} faceSize={F_COL} />
+          <Keycap position={[-0.05, CAP_Y, 0.94]} size={CAP} color={C.card} face={f.apms} faceSize={F_COL} />
         </>
       )}
 
@@ -350,8 +360,8 @@ export const Timeline: React.FC = () => {
         <>
           <Well position={HERO_WELL} size={[BRAND[0], BRAND[2]]} metalMap={f.metal} whiten={whiten} />
           <Keycap position={HERO} size={BRAND} color={C.gold} face={f.recurly} faceSize={F_RECURLY} />
-          <Keycap position={[-1.32, CAP_Y, -1.30]} size={[1.15, 0.115, 0.72]} color={C.tile} face={f.secure} faceSize={[1.02, 1.02 / 1.65]} />
-          <Keycap position={[1.44, CAP_Y, -1.45]} size={CAP} color={C.tile} face={f.success} faceSize={F_SUCCESS} />
+          <Keycap position={[-1.32, CAP_Y, -1.30]} size={[1.15, 0.115, 0.72]} color={C.card} face={f.secure} faceSize={[1.02, 1.02 / 1.65]} />
+          <Keycap position={[1.44, CAP_Y, -1.45]} size={CAP} color={C.card} face={f.success} faceSize={F_SUCCESS} />
         </>
       )}
 
@@ -360,7 +370,7 @@ export const Timeline: React.FC = () => {
         <>
           <Well position={HERO_WELL} size={[BRAND[0], BRAND[2]]} metalMap={f.metal} whiten={whiten} />
           <Keycap position={HERO} size={BRAND} color={C.blue} face={f.hyper} faceSize={F_HYPER} />
-          <Keycap position={[1.48, CAP_Y, -1.40]} size={CAP} color={C.tile} face={f.revenue} faceSize={F_REVENUE} />
+          <Keycap position={[1.48, CAP_Y, -1.40]} size={CAP} color={C.card} face={f.revenue} faceSize={F_REVENUE} />
           <Keycap position={[-1.28, TILE_TOP + 0.05 - 0.008, 0.62]} size={[0.34, 0.10, 0.34]} radius={0.07} color={C.blue} face={f.psp} faceSize={[0.27, 0.27]} />
         </>
       )}

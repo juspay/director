@@ -178,6 +178,16 @@ export const SetDressing: React.FC<{
 
   return (
     <group position={offset}>
+      {/* Grout fill just below the tile tops. The seam gaps used to look 0.42
+          units down an unlit crevice to the underplate, which is where the
+          verified near-black spike came from: the render measured p1≈17 in the
+          macro seconds against the reference's 48-84. A pale floor 5cm under
+          the surface makes seams read as shallow machined joins; the darkening
+          that remains comes from AO, which is soft and lit like the reference's. */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.05, 0]} receiveShadow>
+        <planeGeometry args={[30, 30]} />
+        <meshStandardMaterial color="#98a0ac" roughness={0.9} metalness={0} />
+      </mesh>
       {tiles.map((t, i) => {
         const brand = t.kind === 'blue' || t.kind === 'gold' || t.kind === 'lightblue';
         if (brand && Math.hypot(t.x + offset[0], t.z + offset[2]) > brandRadius) return null;

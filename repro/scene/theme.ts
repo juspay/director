@@ -13,10 +13,22 @@ export const RES = W / 720;
 export const DUR = 435;
 
 export const C = {
-  bg: '#f1f0ed',
-  floor: '#eceae6',
-  tile: '#f0efec',
-  indigo: '#3646e6', // capability icon + label
+  // Whites are COOL. The verified analysis confirmed a cool blue cast on the
+  // reference's whites in seven separate seconds (full-frame rb_delta -6..-22)
+  // while this scene measured warm (+3..+15). The old warm-grey whites made
+  // that unreachable by lighting alone: an albedo with r>b cannot render b>r
+  // under near-white light.
+  bg: '#eaeef5',
+  floor: '#e4e7ee',
+  tile: '#e9edf5',
+  // Cards are WHITER than the wall — the reference's caps read bright white
+  // against a grey-beige tile field; sharing the wall albedo made them grey.
+  card: '#f6f8fc',
+  // Was #3646e6, which the macro grade railed to pure (0,0,240) — the verified
+  // "crushed blacks" spike was actually these badges at 7% luma weight. The
+  // reference's badge blue measures (74,94,193) at t=2.5 with zero pixels on
+  // the rail.
+  indigo: '#7688e8',
   // Brand albedos, solved by rendering frame 300 and measuring the masked
   // plate pixels against the reference's. Both were tuned holding the composer
   // grade fixed: the first attempt moved albedo AND lockup saturation together
