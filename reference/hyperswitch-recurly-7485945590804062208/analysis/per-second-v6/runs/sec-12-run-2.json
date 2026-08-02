@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zoom out",
+      "camera pan"
+    ],
+    "b_motion": [
+      "camera zoom out",
+      "camera pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 12.2,
+        "a_observable": "The yellow card is framed closely, occupying most of the screen width.",
+        "b_observable": "The camera is zoomed out much further, showing a wide view of surrounding cards.",
+        "fix": "Adjust camera zoom and position to match the close-up framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "material",
+        "t": 12.2,
+        "a_observable": "The yellow card has clean, borderless edges.",
+        "b_observable": "The yellow card has a thick grey border around its perimeter.",
+        "fix": "Remove the grey border from the yellow card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "Deep shadows are visible in the crevices between the cards, creating high contrast.",
+        "b_observable": "Crevice shadows are extremely faint and bright, resulting in a flat look.",
+        "fix": "Increase shadow depth and overall contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera zoom and position to match the close-up framing of the reference video."
+  }
+}

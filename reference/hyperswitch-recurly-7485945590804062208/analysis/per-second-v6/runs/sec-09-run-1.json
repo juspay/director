@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zoom out",
+      "camera rotation"
+    ],
+    "b_motion": [
+      "camera zoom out",
+      "camera rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 9.5,
+        "a_observable": "The camera is closer to the cards, making the 'Recurly' and 'Juspay' cards dominate the frame.",
+        "b_observable": "The camera is further away, showing more background tiles and making the cards appear smaller.",
+        "fix": "Adjust camera position and focal length to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.2,
+        "a_observable": "Soft, dark contact shadows ground the cards onto the background tiles.",
+        "b_observable": "Contact shadows are nearly absent, making the cards look flat and floating.",
+        "fix": "Enable ambient occlusion and strengthen contact shadows under the cards.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 9.8,
+        "a_observable": "The 'Recurly' card features a warm, saturated golden-yellow hue.",
+        "b_observable": "The 'Recurly' card has a cooler, desaturated greenish-yellow hue.",
+        "fix": "Adjust the yellow material's hue and saturation to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera distance and focal length to match the reference framing, and increase the overall contrast and contact shadow strength to eliminate the flat, washed-out look."
+  }
+}

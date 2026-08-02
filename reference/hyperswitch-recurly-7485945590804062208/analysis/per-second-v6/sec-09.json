@@ -1,0 +1,192 @@
+{
+  "sec": 9,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "panning",
+        "zooming out"
+      ],
+      "b_motion": [
+        "panning",
+        "zooming out"
+      ],
+      "absent_in_b": [
+        "dappled lighting",
+        "shallow depth of field"
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 9.5,
+          "a_observable": "Dappled shadows from tree leaves are cast across the tiles, creating organic dark and light patterns.",
+          "b_observable": "The lighting is uniform and clean, with no organic leaf shadows visible on the tiles.",
+          "fix": "Add a gobo or light cookie with a leaf pattern to the main light source to project dappled shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 9.5,
+          "a_observable": "The background tiles, such as the 'Secure Payments' tile, are blurred due to a shallow depth of field.",
+          "b_observable": "The background tiles remain in sharp focus, indicating a deep depth of field.",
+          "fix": "Enable camera depth of field and decrease the f-stop to blur the background elements.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "top"
+          }
+        }
+      ],
+      "highest_impact_fix": "Add dappled leaf shadows using a light gobo and enable camera depth of field to match the organic look and focus of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera zoom out",
+        "camera rotation"
+      ],
+      "b_motion": [
+        "camera zoom out",
+        "camera rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 9.5,
+          "a_observable": "The camera is closer to the cards, making the 'Recurly' and 'Juspay' cards dominate the frame.",
+          "b_observable": "The camera is further away, showing more background tiles and making the cards appear smaller.",
+          "fix": "Adjust camera position and focal length to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 9.2,
+          "a_observable": "Soft, dark contact shadows ground the cards onto the background tiles.",
+          "b_observable": "Contact shadows are nearly absent, making the cards look flat and floating.",
+          "fix": "Enable ambient occlusion and strengthen contact shadows under the cards.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 9.8,
+          "a_observable": "The 'Recurly' card features a warm, saturated golden-yellow hue.",
+          "b_observable": "The 'Recurly' card has a cooler, desaturated greenish-yellow hue.",
+          "fix": "Adjust the yellow material's hue and saturation to match the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera distance and focal length to match the reference framing, and increase the overall contrast and contact shadow strength to eliminate the flat, washed-out look.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 9.5,
+          "a_observable": "The camera is tilted at an oblique angle with a shallow depth of field blurring the background.",
+          "b_observable": "The camera is positioned directly overhead with a deep depth of field keeping all elements in focus.",
+          "fix": "Tilt the camera to match the oblique perspective and enable depth of field.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 9.5,
+          "a_observable": "The white cards and background exhibit a cool, blue-tinted color cast.",
+          "b_observable": "The white cards and background are neutral white with no blue tint.",
+          "fix": "Apply a cool blue color grade to the scene.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 9.5,
+          "a_observable": "The corners of the frame are significantly darker than the center due to a vignette.",
+          "b_observable": "The corners of the frame are bright and uniform with the center.",
+          "fix": "Introduce a vignette effect to darken the corners.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle to match the oblique perspective and enable depth of field.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 9.5,
+        "a_observable": "The background tiles, such as the 'Secure Payments' tile, are blurred due to a shallow depth of field.",
+        "b_observable": "The background tiles remain in sharp focus, indicating a deep depth of field.",
+        "fix": "Enable camera depth of field and decrease the f-stop to blur the background elements.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "B_sharper",
+          "A": {
+            "lap_var": 10.41
+          },
+          "B": {
+            "lap_var": 3.22
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Enable camera depth of field and decrease the f-stop to blur the background elements.",
+    "dropped_unsupported": 6
+  }
+}

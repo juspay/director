@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "subtle camera pan",
+      "slow rotation"
+    ],
+    "b_motion": [
+      "subtle camera pan",
+      "slow rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 3.5,
+        "a_observable": "The top-left background block is bright yellow and card icons are vibrant blue.",
+        "b_observable": "The top-left block is grey and card icons are desaturated, making the scene look monochromatic.",
+        "fix": "Apply the correct yellow material to the background block and increase icon saturation.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 3.5,
+        "a_observable": "Soft, distinct shadows are visible beneath the cards, defining depth.",
+        "b_observable": "Shadows beneath the cards are extremely faint, making the layout look flat.",
+        "fix": "Increase shadow density or ambient occlusion under the cards.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 3.5,
+        "a_observable": "Background elements in the corners show a soft depth-of-field blur.",
+        "b_observable": "Background elements in the corners remain relatively sharp.",
+        "fix": "Enable or strengthen depth of field to blur the background corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Apply the correct yellow material to the background block and increase color saturation across the scene to match the reference's vibrant look."
+  }
+}

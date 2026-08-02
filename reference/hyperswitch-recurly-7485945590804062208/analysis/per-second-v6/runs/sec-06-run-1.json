@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "pan",
+      "tilt"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 6.2,
+        "a_observable": "Close-up view of the yellow Recurly card with shallow depth of field.",
+        "b_observable": "Wider camera view showing more surrounding cards with deep depth of field.",
+        "fix": "Adjust camera distance and aperture to match the reference's close-up focus.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.8,
+        "a_observable": "High-contrast lighting with bright highlights and deep shadows.",
+        "b_observable": "Flat, low-contrast lighting making the scene look grey.",
+        "fix": "Increase contrast and adjust light sources for stronger highlights and shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 6.8,
+        "a_observable": "The PSP card is grey with a blue icon and white text.",
+        "b_observable": "The PSP card is solid blue with white text and no icon.",
+        "fix": "Redesign the PSP card to match the reference's grey material and icon.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the lighting setup to match the high-contrast look and fix the camera framing to match the reference close-ups."
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      4.9
+    ],
+    "a_motion": [
+      "camera pans down-right across three vertical cards, then cuts to a close-up of a yellow card"
+    ],
+    "b_motion": [
+      "camera pans down-right across three vertical cards, then cuts to a close-up of a yellow card"
+    ],
+    "absent_in_b": [
+      "warm yellow light gradient",
+      "metallic textures on card tiles",
+      "dark recessed border around the yellow card"
+    ],
+    "differences": [
+      {
+        "category": "color",
+        "t": 4.2,
+        "a_observable": "The scene has a warm yellow light gradient and highly saturated blue icons.",
+        "b_observable": "The scene has flat neutral white lighting with desaturated colors.",
+        "fix": "Add a warm light source and increase color saturation.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "material",
+        "t": 4.5,
+        "a_observable": "The card tiles have a metallic texture with high contrast shadows.",
+        "b_observable": "The card tiles are flat matte white with soft low-contrast shadows.",
+        "fix": "Apply metallic textures and increase shadow contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 4.95,
+        "a_observable": "The yellow card is recessed into a dark grey border.",
+        "b_observable": "The yellow card sits flat on a white tile with no recessed border.",
+        "fix": "Add a dark recessed frame around the yellow card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Implement warm directional lighting and metallic textures to match the high-contrast, vibrant look of the reference video."
+  }
+}

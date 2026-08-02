@@ -1,0 +1,68 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 8.05,
+        "a_observable": "The card in the bottom-left corner is bright blue.",
+        "b_observable": "The card in the bottom-left corner is light grey.",
+        "fix": "Change the material color of the bottom-left card to blue.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 8.5,
+        "a_observable": "The camera is closely framed on the cards, cropping the left and right elements.",
+        "b_observable": "The camera is zoomed out, leaving large empty spaces around the cards.",
+        "fix": "Adjust camera distance or focal length for a tighter composition.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "Strong contact shadows are visible beneath the cards, creating depth.",
+        "b_observable": "Shadows are extremely faint, making the cards look flat.",
+        "fix": "Increase contact shadow intensity and ambient occlusion.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 8.5,
+        "a_observable": "The yellow card is highly saturated with a warm golden tone.",
+        "b_observable": "The yellow card is pale and desaturated.",
+        "fix": "Increase saturation and adjust hue of the yellow card material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing to match the tighter composition of the reference video."
+  }
+}

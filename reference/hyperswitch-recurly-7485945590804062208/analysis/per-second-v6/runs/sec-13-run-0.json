@@ -1,0 +1,70 @@
+{
+  "ok": false,
+  "why": "reported 1 cuts, truth has 0",
+  "json": {
+    "cuts_in_window": [
+      13.33
+    ],
+    "a_motion": [
+      "slow camera pan and zoom"
+    ],
+    "b_motion": [
+      "slow camera pan and zoom"
+    ],
+    "absent_in_b": [
+      "metallic reflections on the Hyperswitch card frame"
+    ],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 13.1,
+        "a_observable": "The Recurly card is positioned closer to the center with a white card overlapping its bottom edge.",
+        "b_observable": "The Recurly card is at the top left, separated from other cards by a larger gap.",
+        "fix": "Adjust the 3D layout and camera framing to match the composition of the reference video.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "material",
+        "t": 13.6,
+        "a_observable": "The blue Hyperswitch card has a distinct metallic silver frame with specular reflections.",
+        "b_observable": "The blue Hyperswitch card is set into a dark gray recess without metallic reflections.",
+        "fix": "Apply a metallic material with appropriate roughness and metalness maps to the card's border.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 13.8,
+        "a_observable": "Deep ambient occlusion shadows are visible in the crevices between the tiles, creating strong contrast.",
+        "b_observable": "The crevices between the tiles are brightly lit with very faint shadows.",
+        "fix": "Increase the intensity of ambient occlusion and adjust the shadow settings to deepen the crevices.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      },
+      {
+        "category": "typography",
+        "t": 13.6,
+        "a_observable": "The 'hyperswitch' text uses a geometric sans-serif font with specific letter shapes.",
+        "b_observable": "The 'hyperswitch' text uses a different sans-serif font with tighter tracking.",
+        "fix": "Use the correct geometric sans-serif font to match the reference typography.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Re-align the 3D layout of the tiles to match the reference composition, and improve the material properties of the Hyperswitch card frame to include metallic reflections."
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "translation"
+    ],
+    "b_motion": [
+      "translation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 6.25,
+        "a_observable": "The tiles have a distinct blue color cast and high saturation.",
+        "b_observable": "The tiles are desaturated and have a neutral grey appearance.",
+        "fix": "Add a blue color cast and increase saturation to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.25,
+        "a_observable": "High contrast with deep shadows between the tiles.",
+        "b_observable": "Low contrast with flat, washed-out shadows.",
+        "fix": "Adjust the lighting and shadow settings to increase contrast and depth.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 6.8,
+        "a_observable": "Close-up, low-angle camera perspective on the Hyperswitch card.",
+        "b_observable": "High-angle, distant camera perspective on the Hyperswitch card.",
+        "fix": "Match the camera position, angle, and focal length to Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera perspective and color grading to match the high-contrast blue aesthetic and dynamic low-angle framing of Video A."
+  }
+}

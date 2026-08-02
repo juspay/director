@@ -1,0 +1,251 @@
+{
+  "sec": 3,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan and tilt down-right over a vertical stack of three cards"
+      ],
+      "b_motion": [
+        "slow camera pan and tilt down-right over a vertical stack of three cards"
+      ],
+      "absent_in_b": [
+        "shallow depth of field blur",
+        "soft drop shadows from the cards"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 3.2,
+          "a_observable": "The top card 'Subscriptions' and bottom card 'APMs' are blurred due to a shallow depth of field.",
+          "b_observable": "All three cards are uniformly sharp with no depth of field blur.",
+          "fix": "Enable camera depth of field and focus on the middle card.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "top"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 3.5,
+          "a_observable": "The cards cast soft, distinct drop shadows onto the background surface.",
+          "b_observable": "The cards cast almost no visible drop shadows, appearing flat.",
+          "fix": "Add a directional light source to cast soft drop shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Enable shallow depth of field on the camera and add a directional light source to cast soft drop shadows from the cards.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt"
+      ],
+      "absent_in_b": [
+        "yellow_tile",
+        "blue_tile"
+      ],
+      "differences": [
+        {
+          "category": "material",
+          "t": 3.2,
+          "a_observable": "The bottom tile is bright yellow, and the left tile is blue.",
+          "b_observable": "The bottom tile is grey with horizontal lines, and the left tile is grey.",
+          "fix": "Apply yellow and blue materials to the background tiles.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 3.5,
+          "a_observable": "The camera is closer to the tiles with a flatter angle.",
+          "b_observable": "The camera is further away with a more oblique angle.",
+          "fix": "Adjust camera distance and tilt angle.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        }
+      ],
+      "highest_impact_fix": "Apply the correct yellow and blue materials to the background tiles and adjust the camera distance and angle to match the reference framing.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "subtle camera pan",
+        "slow rotation"
+      ],
+      "b_motion": [
+        "subtle camera pan",
+        "slow rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "color",
+          "t": 3.5,
+          "a_observable": "The top-left background block is bright yellow and card icons are vibrant blue.",
+          "b_observable": "The top-left block is grey and card icons are desaturated, making the scene look monochromatic.",
+          "fix": "Apply the correct yellow material to the background block and increase icon saturation.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 3.5,
+          "a_observable": "Soft, distinct shadows are visible beneath the cards, defining depth.",
+          "b_observable": "Shadows beneath the cards are extremely faint, making the layout look flat.",
+          "fix": "Increase shadow density or ambient occlusion under the cards.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 3.5,
+          "a_observable": "Background elements in the corners show a soft depth-of-field blur.",
+          "b_observable": "Background elements in the corners remain relatively sharp.",
+          "fix": "Enable or strengthen depth of field to blur the background corners.",
+          "severity": 2,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Apply the correct yellow material to the background block and increase color saturation across the scene to match the reference's vibrant look.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 3.5,
+        "a_observable": "The cards cast soft, distinct drop shadows onto the background surface.",
+        "b_observable": "The cards cast almost no visible drop shadows, appearing flat.",
+        "fix": "Add a directional light source to cast soft drop shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 61.56,
+            "p1": 75.51,
+            "p5": 122.88,
+            "p50": 204.54,
+            "p95": 246.64,
+            "p99": 249.22,
+            "p999": 252.08,
+            "span_p5_p95": 123.76
+          },
+          "B": {
+            "p01": 72.64,
+            "p1": 96.41,
+            "p5": 172.14,
+            "p50": 195.86,
+            "p95": 218.37,
+            "p99": 220.37,
+            "p999": 254,
+            "span_p5_p95": 46.23
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "camera",
+        "t": 3.5,
+        "a_observable": "Background elements in the corners show a soft depth-of-field blur.",
+        "b_observable": "Background elements in the corners remain relatively sharp.",
+        "fix": "Enable or strengthen depth of field to blur the background corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "B_sharper",
+          "A": {
+            "lap_var": 37.06
+          },
+          "B": {
+            "lap_var": 1.55
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 3.5,
+        "a_observable": "The top-left background block is bright yellow and card icons are vibrant blue.",
+        "b_observable": "The top-left block is grey and card icons are desaturated, making the scene look monochromatic.",
+        "fix": "Apply the correct yellow material to the background block and increase icon saturation.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 189.85,
+            "g": 201.25,
+            "b": 211.47,
+            "rb_delta": -21.62,
+            "saturation": 0.121
+          },
+          "B": {
+            "r": 195.17,
+            "g": 195.88,
+            "b": 198.29,
+            "rb_delta": -3.13,
+            "saturation": 0.0547
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Apply the correct yellow and blue materials to the background, enable camera depth of field, and add a directional light source to cast soft drop shadows.",
+    "dropped_unsupported": 1
+  }
+}

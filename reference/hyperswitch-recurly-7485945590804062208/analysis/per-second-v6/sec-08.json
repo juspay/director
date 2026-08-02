@@ -1,0 +1,334 @@
+{
+  "sec": 8,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "color",
+          "t": 8.05,
+          "a_observable": "The card in the bottom-left corner is bright blue.",
+          "b_observable": "The card in the bottom-left corner is light grey.",
+          "fix": "Change the material color of the bottom-left card to blue.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 8.5,
+          "a_observable": "The camera is closely framed on the cards, cropping the left and right elements.",
+          "b_observable": "The camera is zoomed out, leaving large empty spaces around the cards.",
+          "fix": "Adjust camera distance or focal length for a tighter composition.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 8.5,
+          "a_observable": "Strong contact shadows are visible beneath the cards, creating depth.",
+          "b_observable": "Shadows are extremely faint, making the cards look flat.",
+          "fix": "Increase contact shadow intensity and ambient occlusion.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 8.5,
+          "a_observable": "The yellow card is highly saturated with a warm golden tone.",
+          "b_observable": "The yellow card is pale and desaturated.",
+          "fix": "Increase saturation and adjust hue of the yellow card material.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera framing to match the tighter composition of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "camera pan",
+        "camera zoom",
+        "button flip animation"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [
+        "button flip animation"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 8.3,
+          "a_observable": "The camera is close to the cards, creating a shallow depth of field and dynamic perspective.",
+          "b_observable": "The camera is far away, showing a flat, wide-angle view of the grid layout.",
+          "fix": "Adjust camera position and focal length to match the close-up perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "motion",
+          "t": 8.7,
+          "a_observable": "The central button flips to reveal the 'Live Now' text.",
+          "b_observable": "The central button is static with the text already visible.",
+          "fix": "Animate the button to flip and reveal the text.",
+          "severity": 3,
+          "prediction": {
+            "metric": "motion",
+            "expect": "A_more"
+          }
+        },
+        {
+          "category": "material",
+          "t": 8.05,
+          "a_observable": "The Juspay card has a thick, beveled metallic frame.",
+          "b_observable": "The Juspay card has a flat, thin grey border.",
+          "fix": "Add a metallic material and bevels to the card frame.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 8.5,
+          "a_observable": "The yellow and blue cards are highly saturated with rich contrast.",
+          "b_observable": "The cards are desaturated and washed out under flat lighting.",
+          "fix": "Increase color saturation and adjust lighting contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera framing and position after the cut to match the close-up perspective of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "camera zoom",
+        "camera pan",
+        "button rising"
+      ],
+      "b_motion": [
+        "camera zoom",
+        "camera pan"
+      ],
+      "absent_in_b": [
+        "button rising"
+      ],
+      "differences": [
+        {
+          "category": "motion",
+          "t": 8.6,
+          "a_observable": "The 'Live Now' button rises vertically from its slot.",
+          "b_observable": "The 'Live Now' button is static and already resting on the surface.",
+          "fix": "Animate the button to rise up from the slot.",
+          "severity": 3,
+          "prediction": {
+            "metric": "motion",
+            "expect": "A_more"
+          }
+        },
+        {
+          "category": "color",
+          "t": 8.5,
+          "a_observable": "The yellow Recurly card is highly saturated and vibrant.",
+          "b_observable": "The yellow Recurly card is pale and desaturated.",
+          "fix": "Increase saturation on the yellow card material.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 8.5,
+          "a_observable": "Crevice shadows between tiles are deep black, creating high contrast.",
+          "b_observable": "Crevice shadows are light grey, making the image look flat.",
+          "fix": "Deepen the shadow levels in the cracks.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Animate the 'Live Now' button to rise up from its slot to match the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 8.3,
+        "a_observable": "The camera is close to the cards, creating a shallow depth of field and dynamic perspective.",
+        "b_observable": "The camera is far away, showing a flat, wide-angle view of the grid layout.",
+        "fix": "Adjust camera position and focal length to match the close-up perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_sharper",
+          "A": {
+            "lap_var": 135.28
+          },
+          "B": {
+            "lap_var": 29.4
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "Strong contact shadows are visible beneath the cards, creating depth.",
+        "b_observable": "Shadows are extremely faint, making the cards look flat.",
+        "fix": "Increase contact shadow intensity and ambient occlusion.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 42.84,
+            "p1": 86.54,
+            "p5": 101.16,
+            "p50": 180.58,
+            "p95": 242.72,
+            "p99": 246.19,
+            "p999": 250.36,
+            "span_p5_p95": 141.56
+          },
+          "B": {
+            "p01": 48.07,
+            "p1": 50.21,
+            "p5": 55.93,
+            "p50": 189.8,
+            "p95": 208.28,
+            "p99": 224.08,
+            "p999": 253.57,
+            "span_p5_p95": 152.35
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 8.5,
+        "a_observable": "The yellow Recurly card is highly saturated and vibrant.",
+        "b_observable": "The yellow Recurly card is pale and desaturated.",
+        "fix": "Increase saturation on the yellow card material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 168.23,
+            "g": 177.79,
+            "b": 186.98,
+            "rb_delta": -18.75,
+            "saturation": 0.2316
+          },
+          "B": {
+            "r": 167.8,
+            "g": 172.7,
+            "b": 180.15,
+            "rb_delta": -12.35,
+            "saturation": 0.1986
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "motion",
+        "t": 8.6,
+        "a_observable": "The 'Live Now' button rises vertically from its slot.",
+        "b_observable": "The 'Live Now' button is static and already resting on the surface.",
+        "fix": "Animate the button to rise up from the slot.",
+        "severity": 3,
+        "prediction": {
+          "metric": "motion",
+          "expect": "A_more"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_more",
+          "A": {
+            "mean_abs_delta": 3.7387,
+            "frames": 30
+          },
+          "B": {
+            "mean_abs_delta": 0.6422,
+            "frames": 30
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [
+      "button animation"
+    ],
+    "highest_impact_fix": "Adjust the camera framing and position after the cut to match the close-up perspective of the reference.",
+    "dropped_unsupported": 2
+  }
+}

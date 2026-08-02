@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and tilt"
+    ],
+    "b_motion": [
+      "slow camera pan with wider perspective"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 7.3,
+        "a_observable": "The camera is positioned close to the JUSPAY card, creating a tight framing with a shallow depth of field focusing on the logo.",
+        "b_observable": "The camera is positioned further away, showing a wider view of the surrounding tiles with a flatter perspective.",
+        "fix": "Adjust the camera focal length and position closer to the main card to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 7.6,
+        "a_observable": "The lighting has a warm tone with a soft vignette, creating deep shadows around the card slots.",
+        "b_observable": "The lighting is flat and uniform, lacking a vignette and realistic shadow depth in the crevices.",
+        "fix": "Add a subtle vignette and increase shadow contact intensity in the render settings.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 7.8,
+        "a_observable": "The blue JUSPAY card has a highly saturated, vibrant blue color.",
+        "b_observable": "The blue card is desaturated and has a cooler, greyish color cast.",
+        "fix": "Adjust the material color of the card to a more saturated blue and match the color temperature of the scene.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and focal length to match the close-up perspective and shallow depth of field of the reference."
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "stationary"
+    ],
+    "b_motion": [
+      "stationary"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 14.2,
+        "a_observable": "The white tiles are bright and have high-contrast highlights.",
+        "b_observable": "The white tiles are dimmer and gray, showing lower overall contrast.",
+        "fix": "Increase highlight brightness and overall contrast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "full"
+        }
+      },
+      {
+        "category": "color",
+        "t": 14,
+        "a_observable": "The blue Juspay card is highly saturated and vibrant.",
+        "b_observable": "The blue Juspay card is noticeably desaturated and duller.",
+        "fix": "Increase the saturation of the blue card to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the lighting and contrast to match the bright, high-contrast look of the reference video."
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and zoom",
+      "subtle sliding of layout elements"
+    ],
+    "b_motion": [
+      "slow camera pan",
+      "subtle sliding of layout elements"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 12,
+        "a_observable": "The camera is positioned at a low angle, creating a dynamic perspective with visible depth.",
+        "b_observable": "The camera is positioned at a high, nearly top-down angle, making the layout look flat.",
+        "fix": "Lower the camera angle and adjust the focal length to match the perspective of Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 12.5,
+        "a_observable": "The white surfaces exhibit a cool, blue color cast.",
+        "b_observable": "The white surfaces are neutral grey and lack any cool color cast.",
+        "fix": "Apply a cool color grade or adjust the white balance to introduce a blue tint.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "The shadows beneath the buttons are deep and well-defined, providing high contrast.",
+        "b_observable": "The shadows are extremely soft and faint, resulting in a flat, low-contrast appearance.",
+        "fix": "Increase the intensity of the key light and darken the shadows to match Video A.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and focal length in Video B to match the dynamic low-angle perspective of Video A."
+  }
+}

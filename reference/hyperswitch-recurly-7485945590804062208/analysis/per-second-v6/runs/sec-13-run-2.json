@@ -1,0 +1,72 @@
+{
+  "ok": false,
+  "why": "reported 1 cuts, truth has 0",
+  "json": {
+    "cuts_in_window": [
+      13.33
+    ],
+    "a_motion": [
+      "pan",
+      "tilt"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt"
+    ],
+    "absent_in_b": [
+      "metallic_borders",
+      "silver_psp_button"
+    ],
+    "differences": [
+      {
+        "category": "material",
+        "t": 13.5,
+        "a_observable": "The blue Juspay card has a reflective metallic silver border framing it.",
+        "b_observable": "The blue Juspay card has a flat grey border with no metallic reflections.",
+        "fix": "Add a metallic silver material to the border of the Juspay card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 13.5,
+        "a_observable": "The PSP button below the Juspay card is a silver metallic square with blue text.",
+        "b_observable": "The PSP button is a solid blue square with white text.",
+        "fix": "Change the PSP button to be metallic silver with blue text.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 13.5,
+        "a_observable": "The camera is positioned at an oblique angle, showing the depth of the cards.",
+        "b_observable": "The camera is positioned at a flatter, more top-down angle.",
+        "fix": "Adjust the camera angle to match the reference video.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 13.5,
+        "a_observable": "The shadows around the tiles are deep and well-defined, creating high contrast.",
+        "b_observable": "The lighting is flat with shallow shadows, resulting in lower contrast.",
+        "fix": "Deepen the shadows and increase overall contrast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Add metallic silver materials to the card borders and the PSP button to match the premium look of the reference."
+  }
+}

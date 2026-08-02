@@ -1,0 +1,58 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.2
+    ],
+    "a_motion": [
+      "camera tilts and pans over 3D cards"
+    ],
+    "b_motion": [
+      "camera tilts and pans over 3D cards"
+    ],
+    "absent_in_b": [
+      "brushed metal texture",
+      "vibrant blue and yellow tile colors"
+    ],
+    "differences": [
+      {
+        "category": "color",
+        "t": 2.1,
+        "a_observable": "Vibrant blue and yellow tiles are visible surrounding the central white cards.",
+        "b_observable": "The surrounding tiles are muted grey and beige, lacking vibrant colors.",
+        "fix": "Increase saturation and adjust colors of the surrounding tiles to match Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "material",
+        "t": 2.5,
+        "a_observable": "A brushed metal texture with horizontal grain is visible on the right side of the frame.",
+        "b_observable": "The right side of the frame consists of a flat, smooth grey material with no texture.",
+        "fix": "Apply a brushed metal material with horizontal grain to the right background element.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "right"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 2.5,
+        "a_observable": "The camera is positioned at a high angle, looking down at the cards, with a yellow card visible in the top-left corner.",
+        "b_observable": "The camera is at a lower, more direct angle, and the top-left yellow card is absent from the frame.",
+        "fix": "Adjust the camera angle and position to match the high-angle perspective and framing of Video A.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Apply the vibrant blue and yellow colors to the background tiles and add the brushed metal texture to the background element in the second shot."
+  }
+}

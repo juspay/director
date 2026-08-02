@@ -1,0 +1,58 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      4.9
+    ],
+    "a_motion": [
+      "pan",
+      "tilt",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 4.2,
+        "a_observable": "Vibrant blue and yellow background tiles surround the central white tile.",
+        "b_observable": "Background tiles are desaturated grey and white, lacking color.",
+        "fix": "Add vibrant blue and yellow colors to the background tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 4.6,
+        "a_observable": "Glossy highlights and deep shadows create high contrast on the tiles.",
+        "b_observable": "Flat, diffuse lighting results in low contrast and a matte look.",
+        "fix": "Increase contrast and add glossy directional highlights.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "color",
+        "t": 4.95,
+        "a_observable": "The Recurly button is a warm, saturated golden-yellow.",
+        "b_observable": "The Recurly button is a cooler, less saturated greenish-yellow.",
+        "fix": "Adjust the yellow hue to be warmer and more saturated.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Match the vibrant color palette and high-contrast glossy lighting of the reference tiles."
+  }
+}

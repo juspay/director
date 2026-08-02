@@ -1,0 +1,66 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "panning",
+      "zooming out"
+    ],
+    "b_motion": [
+      "panning",
+      "zooming out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 11,
+        "a_observable": "The camera is positioned close to the cards, showing them at a dynamic angle with prominent perspective distortion.",
+        "b_observable": "The camera is positioned far away, showing the cards from a high angle with minimal perspective distortion.",
+        "fix": "Adjust the camera focal length and position to match the close-up, dynamic perspective of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.2,
+        "a_observable": "The scene features high contrast with deep shadows between the keyboard tiles and a soft, realistic light falloff.",
+        "b_observable": "The scene is flatly lit with very bright, washed-out shadows and lacks realistic contrast and depth.",
+        "fix": "Adjust the lighting setup to increase contrast, deepen the shadows in the crevices, and add a subtle vignette.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "color",
+        "t": 11,
+        "a_observable": "The Recurly card has a highly saturated, warm golden-yellow color.",
+        "b_observable": "The Recurly card has a desaturated, pale greenish-yellow color.",
+        "fix": "Adjust the color grading of the yellow card to be warmer and more saturated.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 11.5,
+        "a_observable": "The camera performs a continuous, dynamic zoom-out and pan across the grid.",
+        "b_observable": "The camera is nearly static, with very minimal movement.",
+        "fix": "Animate the camera to match the smooth zoom-out and panning motion of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "motion",
+          "expect": "A_more"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera focal length and position to match the close-up, dynamic perspective of the reference, which will significantly improve the composition and depth of the shot."
+  }
+}

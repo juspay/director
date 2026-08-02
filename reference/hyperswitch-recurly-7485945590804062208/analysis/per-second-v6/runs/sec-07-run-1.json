@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and zoom-out"
+    ],
+    "b_motion": [
+      "slow camera pan and zoom-out"
+    ],
+    "absent_in_b": [
+      "brushed metal texture on card borders",
+      "vibrant color saturation on tiles"
+    ],
+    "differences": [
+      {
+        "category": "material",
+        "t": 7.5,
+        "a_observable": "The card border shows a brushed metal texture with anisotropic reflections.",
+        "b_observable": "The card border is a flat, non-reflective grey.",
+        "fix": "Apply a brushed metal material to the card border.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 7.3,
+        "a_observable": "The blue card is highly saturated and vibrant.",
+        "b_observable": "The blue card is desaturated and dull.",
+        "fix": "Increase saturation of the blue material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 7.4,
+        "a_observable": "The scene has high contrast with deep shadows and bright highlights.",
+        "b_observable": "The scene has flat, low-contrast lighting.",
+        "fix": "Increase key light intensity to boost contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      }
+    ],
+    "highest_impact_fix": "Recreate the brushed metal material on the card borders and increase overall scene contrast and color saturation."
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera tilt"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera tilt"
+    ],
+    "absent_in_b": [
+      "vibrant blue and yellow tile colors"
+    ],
+    "differences": [
+      {
+        "category": "color",
+        "t": 1.5,
+        "a_observable": "The bottom tile is bright yellow and the left tile is solid blue.",
+        "b_observable": "The bottom and left tiles are plain grey and white.",
+        "fix": "Assign the correct yellow and blue materials to the surrounding tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "material",
+        "t": 1.5,
+        "a_observable": "The white tiles have smooth, solid surfaces.",
+        "b_observable": "The white tiles have dark horizontal lines etched onto them.",
+        "fix": "Remove the horizontal line textures from the tiles.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "The scene has a strong vignette with darker corners and a soft color gradient.",
+        "b_observable": "The scene is evenly lit with no vignette.",
+        "fix": "Add a vignette and adjust the light sources to create a soft gradient.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Assign the correct yellow and blue materials to the surrounding tiles to restore the color palette of the reference."
+  }
+}

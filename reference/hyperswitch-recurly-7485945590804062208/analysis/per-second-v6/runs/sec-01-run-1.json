@@ -1,0 +1,59 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera translation",
+      "camera rotation"
+    ],
+    "b_motion": [
+      "camera translation",
+      "camera rotation"
+    ],
+    "absent_in_b": [
+      "blue background tile",
+      "yellow background tile"
+    ],
+    "differences": [
+      {
+        "category": "color",
+        "t": 1,
+        "a_observable": "The tile on the left is bright blue and the tile at the bottom is bright yellow.",
+        "b_observable": "The tiles on the left and bottom are light grey/beige.",
+        "fix": "Apply the correct blue and yellow materials to the background tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "full"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "The corners of the frame are significantly darker than the center, creating a strong vignette effect.",
+        "b_observable": "The illumination is uniform across the entire frame, with no corner falloff.",
+        "fix": "Add a vignette effect or adjust the light source to create corner falloff.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 1.2,
+        "a_observable": "The camera is positioned closer to the central 'Secure Payments' card, resulting in a tighter crop.",
+        "b_observable": "The camera is further back, showing a wider view of the surrounding tiles.",
+        "fix": "Adjust the camera focal length or position to match the closer framing of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Apply the correct blue and yellow materials to the background tiles to match the vibrant color scheme of the reference."
+  }
+}

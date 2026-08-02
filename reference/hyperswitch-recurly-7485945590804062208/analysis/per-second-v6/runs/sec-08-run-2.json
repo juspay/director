@@ -1,0 +1,59 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "camera zoom",
+      "camera pan",
+      "button rising"
+    ],
+    "b_motion": [
+      "camera zoom",
+      "camera pan"
+    ],
+    "absent_in_b": [
+      "button rising"
+    ],
+    "differences": [
+      {
+        "category": "motion",
+        "t": 8.6,
+        "a_observable": "The 'Live Now' button rises vertically from its slot.",
+        "b_observable": "The 'Live Now' button is static and already resting on the surface.",
+        "fix": "Animate the button to rise up from the slot.",
+        "severity": 3,
+        "prediction": {
+          "metric": "motion",
+          "expect": "A_more"
+        }
+      },
+      {
+        "category": "color",
+        "t": 8.5,
+        "a_observable": "The yellow Recurly card is highly saturated and vibrant.",
+        "b_observable": "The yellow Recurly card is pale and desaturated.",
+        "fix": "Increase saturation on the yellow card material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "Crevice shadows between tiles are deep black, creating high contrast.",
+        "b_observable": "Crevice shadows are light grey, making the image look flat.",
+        "fix": "Deepen the shadow levels in the cracks.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Animate the 'Live Now' button to rise up from its slot to match the reference."
+  }
+}

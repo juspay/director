@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and zoom-out on the tiles"
+    ],
+    "b_motion": [
+      "slow camera pan and zoom-out on the tiles"
+    ],
+    "absent_in_b": [
+      "blue and yellow colored tiles in the surrounding grid"
+    ],
+    "differences": [
+      {
+        "category": "color",
+        "t": 1,
+        "a_observable": "The tile to the left of 'Secure Payments' is bright blue, and the tile below it is bright yellow.",
+        "b_observable": "The tiles to the left and below 'Secure Payments' are off-white and gray, completely lacking blue and yellow colors.",
+        "fix": "Apply the correct blue and yellow materials/colors to the surrounding tiles in the layout.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "full"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "There are distinct, soft shadows cast by the tiles, creating depth and high contrast.",
+        "b_observable": "The lighting is flat and diffuse, with almost no visible shadows, resulting in a low-contrast appearance.",
+        "fix": "Adjust the light sources to cast stronger, softer shadows and increase the overall contrast of the render.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "full"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 1.2,
+        "a_observable": "The camera has a tight focal length and perspective tilt, showing the 'Secure Payments' tile at a steep angle close to the lens.",
+        "b_observable": "The camera is positioned further back with a flatter angle of view, showing more of the surrounding grid.",
+        "fix": "Match the camera's position, rotation, and focal length to the reference video to capture the same dramatic perspective.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Add the blue and yellow materials to the surrounding tiles and adjust the camera perspective and lighting contrast to match the reference."
+  }
+}

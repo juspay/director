@@ -1,0 +1,271 @@
+{
+  "sec": 7,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan down-right",
+        "subtle zoom out"
+      ],
+      "b_motion": [
+        "slow camera pan down-right",
+        "subtle zoom out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "material",
+          "t": 7,
+          "a_observable": "The PSP icon at the bottom is a metallic silver square with blue text.",
+          "b_observable": "The PSP icon is a solid blue square with white text.",
+          "fix": "Change the PSP icon material to metallic silver with blue text.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "material",
+          "t": 7.5,
+          "a_observable": "The frame surrounding the blue JUSPAY button has a reflective brushed-metal texture.",
+          "b_observable": "The frame surrounding the blue JUSPAY button is flat matte grey.",
+          "fix": "Apply a reflective brushed-metal material to the button frame.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 7.5,
+          "a_observable": "The scene has high contrast with bright specular highlights on metallic edges and deep shadows.",
+          "b_observable": "The scene has low contrast with flat, diffused lighting and soft grey shadows.",
+          "fix": "Increase directional lighting contrast to create stronger highlights and shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Apply metallic materials to the PSP icon and the JUSPAY button frame to match the reference's reflective look.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan and zoom-out"
+      ],
+      "b_motion": [
+        "slow camera pan and zoom-out"
+      ],
+      "absent_in_b": [
+        "brushed metal texture on card borders",
+        "vibrant color saturation on tiles"
+      ],
+      "differences": [
+        {
+          "category": "material",
+          "t": 7.5,
+          "a_observable": "The card border shows a brushed metal texture with anisotropic reflections.",
+          "b_observable": "The card border is a flat, non-reflective grey.",
+          "fix": "Apply a brushed metal material to the card border.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 7.3,
+          "a_observable": "The blue card is highly saturated and vibrant.",
+          "b_observable": "The blue card is desaturated and dull.",
+          "fix": "Increase saturation of the blue material.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 7.4,
+          "a_observable": "The scene has high contrast with deep shadows and bright highlights.",
+          "b_observable": "The scene has flat, low-contrast lighting.",
+          "fix": "Increase key light intensity to boost contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        }
+      ],
+      "highest_impact_fix": "Recreate the brushed metal material on the card borders and increase overall scene contrast and color saturation.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan and tilt"
+      ],
+      "b_motion": [
+        "slow camera pan with wider perspective"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 7.3,
+          "a_observable": "The camera is positioned close to the JUSPAY card, creating a tight framing with a shallow depth of field focusing on the logo.",
+          "b_observable": "The camera is positioned further away, showing a wider view of the surrounding tiles with a flatter perspective.",
+          "fix": "Adjust the camera focal length and position closer to the main card to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 7.6,
+          "a_observable": "The lighting has a warm tone with a soft vignette, creating deep shadows around the card slots.",
+          "b_observable": "The lighting is flat and uniform, lacking a vignette and realistic shadow depth in the crevices.",
+          "fix": "Add a subtle vignette and increase shadow contact intensity in the render settings.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 7.8,
+          "a_observable": "The blue JUSPAY card has a highly saturated, vibrant blue color.",
+          "b_observable": "The blue card is desaturated and has a cooler, greyish color cast.",
+          "fix": "Adjust the material color of the card to a more saturated blue and match the color temperature of the scene.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler",
+            "region": "center"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and focal length to match the close-up perspective and shallow depth of field of the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "material",
+        "t": 7.5,
+        "a_observable": "The card border shows a brushed metal texture with anisotropic reflections.",
+        "b_observable": "The card border is a flat, non-reflective grey.",
+        "fix": "Apply a brushed metal material to the card border.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 2,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "In Clip A, the border around the blue 'JUSPAY hyperswitch' card clearly shows a brushed metal texture with horizontal anisotropic reflections. In Clip B, the border is a flat, solid grey with no texture or reflections."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "A's plinth shows strong brushed striations with directional highlight response. B's bezel is a near-uniform mid-grey with only a faint texture and no anisotropic behaviour — the difference as stated is plainly visible. (Unrelated observation for the next round: B's Revenue Analytics bars render emissive neon-orange against A's flat gold.)"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 7.5,
+        "a_observable": "The scene has high contrast with bright specular highlights on metallic edges and deep shadows.",
+        "b_observable": "The scene has low contrast with flat, diffused lighting and soft grey shadows.",
+        "fix": "Increase directional lighting contrast to create stronger highlights and shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "full"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_higher_contrast",
+          "A": {
+            "p01": 65.23,
+            "p1": 69.47,
+            "p5": 75.95,
+            "p50": 200.32,
+            "p95": 246.42,
+            "p99": 247.86,
+            "p999": 253.09,
+            "span_p5_p95": 170.47
+          },
+          "B": {
+            "p01": 13.8,
+            "p1": 29.68,
+            "p5": 31.76,
+            "p50": 185.93,
+            "p95": 207.5,
+            "p99": 209.36,
+            "p999": 254.86,
+            "span_p5_p95": 175.74
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 7.3,
+        "a_observable": "The blue card is highly saturated and vibrant.",
+        "b_observable": "The blue card is desaturated and dull.",
+        "fix": "Increase saturation of the blue material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 174.9,
+            "g": 184.56,
+            "b": 199.52,
+            "rb_delta": -24.62,
+            "saturation": 0.2429
+          },
+          "B": {
+            "r": 154.94,
+            "g": 159.77,
+            "b": 188.1,
+            "rb_delta": -33.16,
+            "saturation": 0.1898
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Increase overall scene contrast, apply a brushed metal material to the card border, and increase the saturation of the blue card.",
+    "dropped_unsupported": 3
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and tilt down-right over a vertical stack of three cards"
+    ],
+    "b_motion": [
+      "slow camera pan and tilt down-right over a vertical stack of three cards"
+    ],
+    "absent_in_b": [
+      "shallow depth of field blur",
+      "soft drop shadows from the cards"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 3.2,
+        "a_observable": "The top card 'Subscriptions' and bottom card 'APMs' are blurred due to a shallow depth of field.",
+        "b_observable": "All three cards are uniformly sharp with no depth of field blur.",
+        "fix": "Enable camera depth of field and focus on the middle card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 3.5,
+        "a_observable": "The cards cast soft, distinct drop shadows onto the background surface.",
+        "b_observable": "The cards cast almost no visible drop shadows, appearing flat.",
+        "fix": "Add a directional light source to cast soft drop shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Enable shallow depth of field on the camera and add a directional light source to cast soft drop shadows from the cards."
+  }
+}

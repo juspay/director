@@ -1,0 +1,175 @@
+{
+  "sec": 13,
+  "meta": {
+    "verified": 1,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [
+    "reported 1 cuts, truth has 0",
+    "reported 1 cuts, truth has 0"
+  ],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 13.5,
+          "a_observable": "Background cards are heavily blurred due to a shallow depth of field.",
+          "b_observable": "Background cards are sharp and fully in focus.",
+          "fix": "Reduce the camera f-stop to achieve a shallower depth of field.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "top"
+          }
+        },
+        {
+          "category": "material",
+          "t": 13.7,
+          "a_observable": "The border of the Juspay card is a highly reflective metallic silver.",
+          "b_observable": "The border is a flat matte grey with no metallic reflection.",
+          "fix": "Apply a metallic material with high specularity to the card border.",
+          "severity": 4,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_brighter_highlights"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 13.8,
+          "a_observable": "Deep shadows are visible in the crevices between the tiles, creating high contrast.",
+          "b_observable": "Crevices have very soft, light shadows, resulting in a flat look.",
+          "fix": "Adjust the shadow settings and key light to deepen contact shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        }
+      ],
+      "highest_impact_fix": "Apply a metallic material with high specularity to the borders of the cards to match the reflective look of the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 13.5,
+        "a_observable": "Background cards are heavily blurred due to a shallow depth of field.",
+        "b_observable": "Background cards are sharp and fully in focus.",
+        "fix": "Reduce the camera f-stop to achieve a shallower depth of field.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        },
+        "supported_by": 1,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_sharper",
+          "A": {
+            "lap_var": 0.96
+          },
+          "B": {
+            "lap_var": 3.06
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "material",
+        "t": 13.7,
+        "a_observable": "The border of the Juspay card is a highly reflective metallic silver.",
+        "b_observable": "The border is a flat matte grey with no metallic reflection.",
+        "fix": "Apply a metallic material with high specularity to the card border.",
+        "severity": 4,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_brighter_highlights"
+        },
+        "supported_by": 1,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_brighter_highlights",
+          "A": {
+            "p01": 4.25,
+            "p1": 86.3,
+            "p5": 91.09,
+            "p50": 209.01,
+            "p95": 231.47,
+            "p99": 236.33,
+            "p999": 252.02,
+            "span_p5_p95": 140.38
+          },
+          "B": {
+            "p01": 60.08,
+            "p1": 61.43,
+            "p5": 66.51,
+            "p50": 190.74,
+            "p95": 207.5,
+            "p99": 210.73,
+            "p999": 237.14,
+            "span_p5_p95": 140.99
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 13.8,
+        "a_observable": "Deep shadows are visible in the crevices between the tiles, creating high contrast.",
+        "b_observable": "Crevices have very soft, light shadows, resulting in a flat look.",
+        "fix": "Adjust the shadow settings and key light to deepen contact shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        },
+        "supported_by": 1,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_higher_contrast",
+          "A": {
+            "p01": 4.46,
+            "p1": 86.3,
+            "p5": 91.72,
+            "p50": 209.01,
+            "p95": 231.47,
+            "p99": 236.33,
+            "p999": 252.02,
+            "span_p5_p95": 139.75
+          },
+          "B": {
+            "p01": 60.08,
+            "p1": 61.43,
+            "p5": 66.66,
+            "p50": 190.72,
+            "p95": 207.5,
+            "p99": 210.8,
+            "p999": 237.35,
+            "span_p5_p95": 140.84
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Apply a metallic material with high specularity to the borders of the cards to match the reflective look of the reference.",
+    "dropped_unsupported": 0
+  }
+}

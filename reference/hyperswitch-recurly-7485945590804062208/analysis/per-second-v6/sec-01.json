@@ -1,0 +1,266 @@
+{
+  "sec": 1,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan and zoom-out on the tiles"
+      ],
+      "b_motion": [
+        "slow camera pan and zoom-out on the tiles"
+      ],
+      "absent_in_b": [
+        "blue and yellow colored tiles in the surrounding grid"
+      ],
+      "differences": [
+        {
+          "category": "color",
+          "t": 1,
+          "a_observable": "The tile to the left of 'Secure Payments' is bright blue, and the tile below it is bright yellow.",
+          "b_observable": "The tiles to the left and below 'Secure Payments' are off-white and gray, completely lacking blue and yellow colors.",
+          "fix": "Apply the correct blue and yellow materials/colors to the surrounding tiles in the layout.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "full"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 1.5,
+          "a_observable": "There are distinct, soft shadows cast by the tiles, creating depth and high contrast.",
+          "b_observable": "The lighting is flat and diffuse, with almost no visible shadows, resulting in a low-contrast appearance.",
+          "fix": "Adjust the light sources to cast stronger, softer shadows and increase the overall contrast of the render.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast",
+            "region": "full"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 1.2,
+          "a_observable": "The camera has a tight focal length and perspective tilt, showing the 'Secure Payments' tile at a steep angle close to the lens.",
+          "b_observable": "The camera is positioned further back with a flatter angle of view, showing more of the surrounding grid.",
+          "fix": "Match the camera's position, rotation, and focal length to the reference video to capture the same dramatic perspective.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Add the blue and yellow materials to the surrounding tiles and adjust the camera perspective and lighting contrast to match the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera translation",
+        "camera rotation"
+      ],
+      "b_motion": [
+        "camera translation",
+        "camera rotation"
+      ],
+      "absent_in_b": [
+        "blue background tile",
+        "yellow background tile"
+      ],
+      "differences": [
+        {
+          "category": "color",
+          "t": 1,
+          "a_observable": "The tile on the left is bright blue and the tile at the bottom is bright yellow.",
+          "b_observable": "The tiles on the left and bottom are light grey/beige.",
+          "fix": "Apply the correct blue and yellow materials to the background tiles.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "full"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 1.5,
+          "a_observable": "The corners of the frame are significantly darker than the center, creating a strong vignette effect.",
+          "b_observable": "The illumination is uniform across the entire frame, with no corner falloff.",
+          "fix": "Add a vignette effect or adjust the light source to create corner falloff.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 1.2,
+          "a_observable": "The camera is positioned closer to the central 'Secure Payments' card, resulting in a tighter crop.",
+          "b_observable": "The camera is further back, showing a wider view of the surrounding tiles.",
+          "fix": "Adjust the camera focal length or position to match the closer framing of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Apply the correct blue and yellow materials to the background tiles to match the vibrant color scheme of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "camera tilt"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera tilt"
+      ],
+      "absent_in_b": [
+        "vibrant blue and yellow tile colors"
+      ],
+      "differences": [
+        {
+          "category": "color",
+          "t": 1.5,
+          "a_observable": "The bottom tile is bright yellow and the left tile is solid blue.",
+          "b_observable": "The bottom and left tiles are plain grey and white.",
+          "fix": "Assign the correct yellow and blue materials to the surrounding tiles.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "material",
+          "t": 1.5,
+          "a_observable": "The white tiles have smooth, solid surfaces.",
+          "b_observable": "The white tiles have dark horizontal lines etched onto them.",
+          "fix": "Remove the horizontal line textures from the tiles.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 1.5,
+          "a_observable": "The scene has a strong vignette with darker corners and a soft color gradient.",
+          "b_observable": "The scene is evenly lit with no vignette.",
+          "fix": "Add a vignette and adjust the light sources to create a soft gradient.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Assign the correct yellow and blue materials to the surrounding tiles to restore the color palette of the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "color",
+        "t": 1,
+        "a_observable": "The tile to the left of 'Secure Payments' is bright blue, and the tile below it is bright yellow.",
+        "b_observable": "The tiles to the left and below 'Secure Payments' are off-white and gray, completely lacking blue and yellow colors.",
+        "fix": "Apply the correct blue and yellow materials/colors to the surrounding tiles in the layout.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "full"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 190.87,
+            "g": 200.41,
+            "b": 203.06,
+            "rb_delta": -12.19,
+            "saturation": 0.1984
+          },
+          "B": {
+            "r": 196.2,
+            "g": 196.64,
+            "b": 195.83,
+            "rb_delta": 0.37,
+            "saturation": 0.0371
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "camera",
+        "t": 1.2,
+        "a_observable": "The camera has a tight focal length and perspective tilt, showing the 'Secure Payments' tile at a steep angle close to the lens.",
+        "b_observable": "The camera is positioned further back with a flatter angle of view, showing more of the surrounding grid.",
+        "fix": "Match the camera's position, rotation, and focal length to the reference video to capture the same dramatic perspective.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "refuted",
+          "certainty": 0.95,
+          "note": "The claim swaps the descriptions of the camera angles. In Clip A, the 'Secure Payments' tile is viewed almost straight-on (flat angle), whereas in Clip B, the camera is positioned at a steep, oblique angle relative to the tile."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "The corners of the frame are significantly darker than the center, creating a strong vignette effect.",
+        "b_observable": "The illumination is uniform across the entire frame, with no corner falloff.",
+        "fix": "Add a vignette effect or adjust the light source to create corner falloff.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 203.84,
+            "center_mean": 204.62,
+            "falloff_pct": 0.39
+          },
+          "B": {
+            "corner_mean": 194.27,
+            "center_mean": 201.44,
+            "falloff_pct": 3.56
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [
+      "blue and yellow colored tiles in the surrounding grid"
+    ],
+    "highest_impact_fix": "Apply the correct blue and yellow materials to the background tiles to match the vibrant color scheme of the reference.",
+    "dropped_unsupported": 2
+  }
+}
