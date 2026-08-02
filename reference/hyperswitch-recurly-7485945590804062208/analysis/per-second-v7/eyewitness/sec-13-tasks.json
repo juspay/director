@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 13,
+    "idx": 0,
+    "t": 13,
+    "category": "camera",
+    "a_observable": "Camera is closer to the buttons with a dynamic, low-angle perspective.",
+    "b_observable": "Camera is further away with a flatter, more orthographic perspective.",
+    "frames": {
+      "A": "analysis/per-second-v7/eyewitness/sec-13-c0-A.png",
+      "B": "analysis/per-second-v7/eyewitness/sec-13-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.9,
+      "note": "Clip A shows a closer view of the buttons with a dynamic, low-angle background perspective, while Clip B shows a wider, further-away view with a flatter, more orthographic grid perspective."
+    }
+  }
+]

@@ -1,0 +1,237 @@
+{
+  "sec": 6,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 2
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "camera zoom out",
+        "camera pan"
+      ],
+      "b_motion": [
+        "camera zoom out",
+        "camera pan"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 6.75,
+          "a_observable": "The camera is positioned closer to the blue button, framing it as a prominent close-up.",
+          "b_observable": "The camera is positioned further away, showing more surrounding tiles.",
+          "fix": "Move the camera closer to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 6.25,
+          "a_observable": "The yellow button has a highly saturated, vibrant yellow color.",
+          "b_observable": "The yellow button is noticeably less saturated and duller.",
+          "fix": "Increase the saturation of the yellow button material.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "color",
+          "t": 7,
+          "a_observable": "The blue button displays a deep, rich royal blue hue.",
+          "b_observable": "The blue button is lighter and less saturated.",
+          "fix": "Adjust the blue material to be deeper and more saturated.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera framing and distance to match the close-up composition of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "camera pan",
+        "camera zoom",
+        "camera tilt"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom",
+        "camera tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 6.2,
+          "a_observable": "A warm yellow light glow is visible in the top-left area of the frame.",
+          "b_observable": "The lighting is cool and white, lacking the warm yellow glow.",
+          "fix": "Add a warm yellow light source in the top-left to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 6.8,
+          "a_observable": "The 'JUSPAY hyperswitch' tile is framed closely, filling most of the screen width.",
+          "b_observable": "The tile is framed further away, showing more surrounding tiles.",
+          "fix": "Adjust camera framing to match the close-up composition of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "material",
+          "t": 6.8,
+          "a_observable": "The blue tile has a metallic bevel with bright specular reflections on its edges.",
+          "b_observable": "The bevel is flat grey with no specular reflections.",
+          "fix": "Apply a metallic material with specular reflections to the tile bevel.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_brighter_highlights"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust camera framing and focal length to match the close-up compositions of the reference.",
+      "layer1_rejected": [
+        {
+          "claim": {
+            "category": "color",
+            "t": 6,
+            "a_observable": "A yellow tile is visible in the top-left corner of the frame.",
+            "b_observable": "The top-left tile is white/grey.",
+            "fix": "Change the material color of the top-left tile to yellow.",
+            "severity": 2,
+            "prediction": {
+              "metric": "none",
+              "expect": "none"
+            }
+          },
+          "why": "color claim carries no prediction"
+        },
+        {
+          "claim": {
+            "category": "color",
+            "t": 6.8,
+            "a_observable": "The small 'PSP' icon at the bottom of the frame is grey.",
+            "b_observable": "The 'PSP' icon is blue.",
+            "fix": "Change the color of the PSP icon from blue to grey.",
+            "severity": 2,
+            "prediction": {
+              "metric": "none",
+              "expect": "none"
+            }
+          },
+          "why": "color claim carries no prediction"
+        }
+      ]
+    },
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 6.3,
+          "a_observable": "The yellow Recurly button is framed closely, occupying a large portion of the screen.",
+          "b_observable": "The camera is further back, making the Recurly button appear much smaller.",
+          "fix": "Adjust camera position and focal length to match the close-up framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 6.8,
+          "a_observable": "Deep, dark contact shadows are visible under the blue Juspay button.",
+          "b_observable": "Contact shadows under the blue button are extremely faint and light.",
+          "fix": "Increase ambient occlusion and contact shadow depth.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 6.8,
+          "a_observable": "The 'PSP' button is centered directly below the blue button.",
+          "b_observable": "The 'PSP' button is offset to the bottom-left.",
+          "fix": "Align the 'PSP' button vertically with the main blue button.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust camera focal length and position to match the close-up framing of the reference video.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 6.8,
+        "a_observable": "The 'JUSPAY hyperswitch' tile is framed closely, filling most of the screen width.",
+        "b_observable": "The tile is framed further away, showing more surrounding tiles.",
+        "fix": "Adjust camera framing to match the close-up composition of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 2,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "The comparison is accurate. In Clip A, the 'JUSPAY hyperswitch' tile is framed closely and occupies most of the screen width, whereas in Clip B, the camera is positioned further back, revealing more of the surrounding tiles and grid layout."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "A near-top-down, card filling width, dense dressed surroundings; B oblique with rotated type and sparse tiles. Elevation + set density again."
+        }
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust camera framing and distance to match the close-up composition of the reference.",
+    "dropped_unsupported": 7
+  }
+}

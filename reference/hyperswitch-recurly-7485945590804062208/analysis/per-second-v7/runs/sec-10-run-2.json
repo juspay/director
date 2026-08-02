@@ -1,0 +1,53 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera motion"
+    ],
+    "b_motion": [
+      "camera motion"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 10,
+        "a_observable": "The corners of the frame are significantly darker than the center, showing a strong vignette.",
+        "b_observable": "The illumination is flat and even across the entire frame, lacking a vignette.",
+        "fix": "Add a vignette effect to darken the corners of the frame.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 10.5,
+        "a_observable": "The yellow tile has a warm, highly saturated golden hue.",
+        "b_observable": "The yellow tile is desaturated and has a cooler, greenish-yellow tint.",
+        "fix": "Adjust the color of the yellow material to increase saturation and warmth.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 11,
+        "a_observable": "The background tiles in the corners are softly blurred due to a shallow depth of field.",
+        "b_observable": "The background tiles in the corners remain sharp and in focus.",
+        "fix": "Enable depth of field on the camera and adjust the aperture to blur the background.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adding a strong vignette and deepening the shadows to match Video A's high-contrast lighting."
+  }
+}

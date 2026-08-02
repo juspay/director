@@ -1,0 +1,303 @@
+{
+  "sec": 2,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        2.208
+      ],
+      "a_motion": [
+        "camera pan and tilt"
+      ],
+      "b_motion": [
+        "camera pan and tilt"
+      ],
+      "absent_in_b": [
+        "blue block material",
+        "yellow block material"
+      ],
+      "differences": [
+        {
+          "category": "color",
+          "t": 2.1,
+          "a_observable": "The keyboard blocks surrounding the 'Secure Payments' key have distinct blue and yellow colors.",
+          "b_observable": "The surrounding keyboard blocks are entirely gray and white, lacking any color.",
+          "fix": "Apply the blue and yellow materials to the surrounding keyboard blocks to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 2.1,
+          "a_observable": "The camera is positioned closer to the keys with a steeper angle of view, showing less of the surrounding grid.",
+          "b_observable": "The camera is further back with a shallower angle, showing more of the surrounding grid and creating a different perspective.",
+          "fix": "Adjust the camera's position and focal length to match the reference framing.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 2.5,
+          "a_observable": "A yellow block is clearly visible in the top-left corner of the frame.",
+          "b_observable": "The top-left background block is white, matching the rest of the grid.",
+          "fix": "Color the top-left block yellow to match the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 2.5,
+          "a_observable": "The lighting has higher contrast with deeper shadows between the keys.",
+          "b_observable": "The lighting is flat and washed out, with very faint shadows.",
+          "fix": "Increase the contrast and adjust the shadow settings to create more depth.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        }
+      ],
+      "highest_impact_fix": "Apply the correct blue and yellow materials to the keyboard blocks to restore the color scheme of the scene.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        2.21
+      ],
+      "a_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [
+        "blue and yellow background cards",
+        "brushed metal texture"
+      ],
+      "differences": [
+        {
+          "category": "color",
+          "t": 2.1,
+          "a_observable": "Vibrant blue and yellow cards are visible around the central white card.",
+          "b_observable": "The surrounding cards are desaturated grey with no blue or yellow hues.",
+          "fix": "Match the color palette of the surrounding cards to the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 2.1,
+          "a_observable": "The camera angle is steep, looking almost directly down at the cards.",
+          "b_observable": "The camera angle is shallow and oblique, viewing the cards from a low perspective.",
+          "fix": "Adjust the camera pitch and position to match the top-down perspective of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "material",
+          "t": 2.5,
+          "a_observable": "A distinct brushed metal texture is visible on the right side of the frame.",
+          "b_observable": "The surface on the right is a flat, smooth grey material with no texture.",
+          "fix": "Apply a brushed metal texture to the right-hand surface.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 2.5,
+          "a_observable": "The scene has high contrast with deep shadows between the cards.",
+          "b_observable": "The lighting is very flat and bright, with soft, shallow shadows.",
+          "fix": "Increase the contrast and deepen the shadows to match the reference lighting.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle to match the steep top-down perspective and restore the vibrant blue and yellow color palette to the surrounding cards.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        2.2
+      ],
+      "a_motion": [
+        "pan"
+      ],
+      "b_motion": [
+        "pan"
+      ],
+      "absent_in_b": [
+        "colored_tiles"
+      ],
+      "differences": [
+        {
+          "category": "material",
+          "t": 2.1,
+          "a_observable": "The tiles surrounding the central card have blue and yellow colors.",
+          "b_observable": "The surrounding tiles are plain white and grey.",
+          "fix": "Assign the correct blue and yellow materials to the background tiles.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 2.6,
+          "a_observable": "The tiles exhibit high contrast with distinct shadows in the crevices.",
+          "b_observable": "The lighting is flat and uniform with almost no visible shadows between tiles.",
+          "fix": "Adjust the lighting setup to increase contrast and shadow depth.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 2.4,
+          "a_observable": "The camera perspective shows less distortion, indicating a longer focal length.",
+          "b_observable": "The camera perspective shows more pronounced distortion, indicating a wider field of view.",
+          "fix": "Increase the camera focal length and adjust the distance to match the reference perspective.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Apply the blue and yellow materials to the background tiles to match the reference color scheme.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "color",
+        "t": 2.1,
+        "a_observable": "The keyboard blocks surrounding the 'Secure Payments' key have distinct blue and yellow colors.",
+        "b_observable": "The surrounding keyboard blocks are entirely gray and white, lacking any color.",
+        "fix": "Apply the blue and yellow materials to the surrounding keyboard blocks to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 188.21,
+            "g": 200.46,
+            "b": 204.01,
+            "rb_delta": -15.8,
+            "saturation": 0.2023
+          },
+          "B": {
+            "r": 200.45,
+            "g": 203.64,
+            "b": 208.47,
+            "rb_delta": -8.01,
+            "saturation": 0.0377
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "camera",
+        "t": 2.1,
+        "a_observable": "The camera is positioned closer to the keys with a steeper angle of view, showing less of the surrounding grid.",
+        "b_observable": "The camera is further back with a shallower angle, showing more of the surrounding grid and creating a different perspective.",
+        "fix": "Adjust the camera's position and focal length to match the reference framing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "The comparison is accurate. Clip A shows a close-up, top-down (steeper) view of the 'Secure Payments' and 'Renewal Success' keys, showing very little of the surrounding grid. Clip B is shot from a further distance and a shallower, more oblique angle, revealing more of the surrounding grid and keys."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "Verified on frames: A near-top-down and dense; B raked low with cards nearly edge-on and type at ~50deg."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.5,
+        "a_observable": "The lighting has higher contrast with deeper shadows between the keys.",
+        "b_observable": "The lighting is flat and washed out, with very faint shadows.",
+        "fix": "Increase the contrast and adjust the shadow settings to create more depth.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_higher_contrast",
+          "A": {
+            "p01": 69.86,
+            "p1": 84.41,
+            "p5": 110.45,
+            "p50": 207.96,
+            "p95": 246.13,
+            "p99": 249,
+            "p999": 250.96,
+            "span_p5_p95": 135.68
+          },
+          "B": {
+            "p01": 72.53,
+            "p1": 98.72,
+            "p5": 169.65,
+            "p50": 201.72,
+            "p95": 222.31,
+            "p99": 224.31,
+            "p999": 254,
+            "span_p5_p95": 52.66
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [
+      "blue and yellow background cards"
+    ],
+    "highest_impact_fix": "Adjust the camera angle to match the steep top-down perspective and restore the vibrant blue and yellow color palette to the surrounding cards.",
+    "dropped_unsupported": 3
+  }
+}

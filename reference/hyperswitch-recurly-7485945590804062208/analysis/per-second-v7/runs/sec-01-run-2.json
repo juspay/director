@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and tilt over the grid of cards"
+    ],
+    "b_motion": [
+      "slow camera pan over the grid of cards"
+    ],
+    "absent_in_b": [
+      "blue card on the left",
+      "yellow card at the bottom of the grid"
+    ],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 1.5,
+        "a_observable": "The 'Secure Payments' card is surrounded by a vibrant blue card on the left and a yellow card at the bottom.",
+        "b_observable": "All surrounding cards are plain white or light grey, lacking the blue and yellow colored cards.",
+        "fix": "Add the blue and yellow colored cards to the grid layout surrounding the 'Secure Payments' card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 1.5,
+        "a_observable": "The camera angle is nearly top-down, showing the cards flat with a slight tilt.",
+        "b_observable": "The camera angle is highly oblique and rotated, viewing the cards from a sharp perspective.",
+        "fix": "Adjust the camera rotation and angle to match the flatter, more top-down perspective of Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "Deep, dark shadows are visible in the crevices between the cards, creating high contrast.",
+        "b_observable": "The crevices between the cards have very faint, light grey shadows, resulting in a flat, low-contrast look.",
+        "fix": "Increase shadow density and ambient occlusion in the crevices to match the high contrast of Video A.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Recreate the correct layout and color scheme of the grid cards surrounding the 'Secure Payments' card, including the blue and yellow cards, and adjust the camera angle to be less oblique."
+  }
+}

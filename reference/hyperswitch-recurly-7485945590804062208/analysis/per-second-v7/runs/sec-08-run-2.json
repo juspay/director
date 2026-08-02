@@ -1,0 +1,74 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "pan",
+      "tilt",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 8.05,
+        "a_observable": "Camera is close to the blue Hyperswitch tile, filling the frame.",
+        "b_observable": "Camera is further back, showing a wider view with surrounding tiles.",
+        "fix": "Move camera closer to match reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "motion",
+        "t": 8.5,
+        "a_observable": "The 'Live Now' tile slides up into its slot.",
+        "b_observable": "The 'Live Now' tile is static and fully seated.",
+        "fix": "Animate the 'Live Now' tile to slide up.",
+        "severity": 4,
+        "prediction": {
+          "metric": "motion",
+          "expect": "A_more",
+          "region": "full"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.3,
+        "a_observable": "Deep ambient occlusion shadows are visible in the tile crevices.",
+        "b_observable": "Crevices are flatly lit with almost no contact shadows.",
+        "fix": "Add stronger contact shadows around the tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      },
+      {
+        "category": "color",
+        "t": 8.4,
+        "a_observable": "White tiles have a warm cream tint.",
+        "b_observable": "White tiles are neutral gray/white.",
+        "fix": "Add a warm color cast to the tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Animate the 'Live Now' tile to slide up into place instead of keeping it static."
+  }
+}

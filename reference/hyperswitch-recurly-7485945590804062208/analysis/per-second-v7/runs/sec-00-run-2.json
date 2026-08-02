@@ -1,0 +1,60 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan",
+      "subtle rotation"
+    ],
+    "b_motion": [
+      "slow camera pan",
+      "subtle rotation"
+    ],
+    "absent_in_b": [
+      "vibrant blue tile on the left",
+      "yellow tile at the bottom"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 0.2,
+        "a_observable": "Camera is positioned close to the main tile, creating a tight, angled composition.",
+        "b_observable": "Camera is positioned much further back, resulting in a wider, flatter composition.",
+        "fix": "Move camera closer to the main tile to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "color",
+        "t": 0.5,
+        "a_observable": "Vibrant blue and yellow colors with a distinct cool color cast.",
+        "b_observable": "Muted, desaturated colors with a neutral grey appearance.",
+        "fix": "Increase color saturation and apply a cool blue color cast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "full"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.8,
+        "a_observable": "Strong vignette with noticeable light falloff at the corners.",
+        "b_observable": "Flat, uniform lighting across the frame with minimal vignette.",
+        "fix": "Add a vignette to darken the corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Reposition the camera closer to the tiles to match the tight reference framing."
+  }
+}

@@ -1,0 +1,36 @@
+[
+  {
+    "sec": 5,
+    "idx": 0,
+    "t": 5.3,
+    "category": "camera",
+    "a_observable": "The camera is zoomed in close on the Recurly tile.",
+    "b_observable": "The camera is pulled back, showing a wider view of the tiles.",
+    "frames": {
+      "A": "analysis/per-second-v7/eyewitness/sec-05-c0-A.png",
+      "B": "analysis/per-second-v7/eyewitness/sec-05-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "The claim is accurate. In Clip A, the camera is zoomed in much closer to the yellow Recurly tile, making it appear larger and showing less of the surrounding grid. In Clip B, the camera is pulled back, showing a wider view of the tiles and the surrounding layout."
+    }
+  },
+  {
+    "sec": 5,
+    "idx": 1,
+    "t": 5.2,
+    "category": "material",
+    "a_observable": "The yellow button features a reflective metallic bevel.",
+    "b_observable": "The yellow button has a flat grey border with no metallic reflections.",
+    "frames": {
+      "A": "analysis/per-second-v7/eyewitness/sec-05-c1-A.png",
+      "B": "analysis/per-second-v7/eyewitness/sec-05-c1-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "The comparison is accurate. In Clip A, the yellow 'Recurly' button has a shiny, reflective metallic bevel around it, whereas in Clip B, it has a flat grey border with no reflections."
+    }
+  }
+]

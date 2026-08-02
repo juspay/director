@@ -1,0 +1,71 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.21
+    ],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [
+      "blue and yellow background cards",
+      "brushed metal texture"
+    ],
+    "differences": [
+      {
+        "category": "color",
+        "t": 2.1,
+        "a_observable": "Vibrant blue and yellow cards are visible around the central white card.",
+        "b_observable": "The surrounding cards are desaturated grey with no blue or yellow hues.",
+        "fix": "Match the color palette of the surrounding cards to the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 2.1,
+        "a_observable": "The camera angle is steep, looking almost directly down at the cards.",
+        "b_observable": "The camera angle is shallow and oblique, viewing the cards from a low perspective.",
+        "fix": "Adjust the camera pitch and position to match the top-down perspective of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "material",
+        "t": 2.5,
+        "a_observable": "A distinct brushed metal texture is visible on the right side of the frame.",
+        "b_observable": "The surface on the right is a flat, smooth grey material with no texture.",
+        "fix": "Apply a brushed metal texture to the right-hand surface.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.5,
+        "a_observable": "The scene has high contrast with deep shadows between the cards.",
+        "b_observable": "The lighting is very flat and bright, with soft, shallow shadows.",
+        "fix": "Increase the contrast and deepen the shadows to match the reference lighting.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle to match the steep top-down perspective and restore the vibrant blue and yellow color palette to the surrounding cards."
+  }
+}

@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 10,
+    "idx": 0,
+    "t": 10.5,
+    "category": "camera",
+    "a_observable": "Tighter camera framing on the yellow card.",
+    "b_observable": "Wider camera framing showing more surrounding grid.",
+    "frames": {
+      "A": "analysis/per-second-v7/eyewitness/sec-10-c0-A.png",
+      "B": "analysis/per-second-v7/eyewitness/sec-10-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "Clip A shows a tighter framing where the yellow and blue cards are closer to the edges of the frame, whereas Clip B shows a wider framing with more of the surrounding grid tiles visible on all sides."
+    }
+  }
+]

@@ -1,0 +1,59 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [
+      "blue card",
+      "yellow card",
+      "vibrant colors"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 0,
+        "a_observable": "Close-up angled shot of the 'Secure Payments' card.",
+        "b_observable": "Distant, flatter camera perspective showing more of the grid.",
+        "fix": "Match the close-up camera framing and angle.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "color",
+        "t": 0,
+        "a_observable": "Vibrant blue and yellow cards are visible.",
+        "b_observable": "Dull, monochromatic gray and white cards.",
+        "fix": "Apply saturated blue and yellow materials.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0,
+        "a_observable": "High-contrast lighting with defined shadows.",
+        "b_observable": "Flat, low-contrast lighting.",
+        "fix": "Increase light contrast and shadow depth.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      }
+    ],
+    "highest_impact_fix": "Re-align the camera to match the close-up perspective and apply the vibrant blue and yellow materials to the cards."
+  }
+}

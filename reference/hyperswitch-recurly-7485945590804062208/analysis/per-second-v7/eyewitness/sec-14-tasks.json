@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 14,
+    "idx": 0,
+    "t": 14,
+    "category": "camera",
+    "a_observable": "The camera is positioned closer to the grid, framing the Recurly and hyperswitch tiles prominently.",
+    "b_observable": "The camera is positioned much further away, resulting in a wider shot with smaller tiles.",
+    "frames": {
+      "A": "analysis/per-second-v7/eyewitness/sec-14-c0-A.png",
+      "B": "analysis/per-second-v7/eyewitness/sec-14-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "Clip A shows a close-up view where the Recurly and hyperswitch tiles fill most of the frame. Clip B shows a wider shot from further away, making the tiles appear smaller and revealing more of the surrounding grid."
+    }
+  }
+]

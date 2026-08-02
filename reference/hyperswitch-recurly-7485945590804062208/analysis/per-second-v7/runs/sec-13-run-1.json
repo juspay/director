@@ -1,0 +1,57 @@
+{
+  "ok": false,
+  "why": "reported 1 cuts, truth has 0",
+  "json": {
+    "cuts_in_window": [
+      13.33
+    ],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 13.1,
+        "a_observable": "Stronger vignette and deeper shadows between the tiles.",
+        "b_observable": "Flatter lighting with weaker vignette and brighter shadows.",
+        "fix": "Increase vignette strength and ambient occlusion.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "material",
+        "t": 13.5,
+        "a_observable": "The blue tile has a metallic border with specular reflections.",
+        "b_observable": "The blue tile border is flat grey without metallic reflections.",
+        "fix": "Add metallic and roughness maps to the tile border.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 14,
+        "a_observable": "Tighter framing on the Juspay tile with a flatter overhead perspective.",
+        "b_observable": "Wider framing and a more oblique, tilted camera angle.",
+        "fix": "Adjust camera focal length and tilt angle.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and focal length to match the tighter, flatter perspective of the reference film."
+  }
+}

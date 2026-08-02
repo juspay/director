@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "zoom"
+    ],
+    "b_motion": [
+      "translation",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 3.5,
+        "a_observable": "Warm, yellowish-green tint on the white cards.",
+        "b_observable": "Cool, neutral grey tone on the cards.",
+        "fix": "Apply a warm color grade to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 3.2,
+        "a_observable": "Deep, dark shadows in the crevices between cards.",
+        "b_observable": "Brighter, washed-out shadows in the crevices.",
+        "fix": "Deepen shadows and increase ambient occlusion.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 3.5,
+        "a_observable": "Subtle organic camera drift.",
+        "b_observable": "Rigid, perfectly linear camera movement.",
+        "fix": "Introduce organic camera shake or drift.",
+        "severity": 2,
+        "prediction": {
+          "metric": "motion",
+          "expect": "A_more"
+        }
+      }
+    ],
+    "highest_impact_fix": "Apply a warm color grade to match the reference's yellowish-green tint and deepen the shadows to improve contrast."
+  }
+}

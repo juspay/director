@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan and tilt",
+      "subtle rotation of the yellow button"
+    ],
+    "b_motion": [
+      "camera pan and tilt",
+      "subtle rotation of the yellow button"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 5.5,
+        "a_observable": "Camera is closer to the yellow button with a wider field of view, creating distinct perspective distortion.",
+        "b_observable": "Camera is further away with a narrower field of view, making the perspective appear flatter.",
+        "fix": "Adjust camera distance and focal length to match the reference perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "material",
+        "t": 5.2,
+        "a_observable": "The yellow button features a reflective metallic bevel.",
+        "b_observable": "The yellow button has a flat grey border with no metallic reflections.",
+        "fix": "Apply a metallic material to the button's bevel.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.8,
+        "a_observable": "Stronger vignette with noticeable darkening in the corners.",
+        "b_observable": "Even lighting across the frame with minimal corner falloff.",
+        "fix": "Increase vignette strength in post-processing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera focal length and position to match the dynamic perspective of the reference."
+  }
+}

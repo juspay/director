@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "rotation",
+      "pan"
+    ],
+    "b_motion": [
+      "rotation",
+      "pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 7.5,
+        "a_observable": "The camera is positioned nearly directly above the blue card, showing a flat top-down perspective.",
+        "b_observable": "The camera is at a highly oblique angle, showing a skewed perspective of the card.",
+        "fix": "Align the camera to a top-down angle.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 7.5,
+        "a_observable": "The corners of the frame are noticeably darker than the center due to a vignette.",
+        "b_observable": "The illumination is flat and uniform across the entire frame.",
+        "fix": "Add a vignette to darken the corners.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 7.5,
+        "a_observable": "The white tiles have a warm, cream-colored cast.",
+        "b_observable": "The white tiles appear neutral grey and cooler.",
+        "fix": "Warm up the lighting color temperature.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle to match the top-down perspective of the reference video."
+  }
+}

@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 9,
+    "idx": 0,
+    "t": 9.2,
+    "category": "camera",
+    "a_observable": "The camera is positioned closer to the tiles, framing 'Recurly' and 'hyperswitch' tightly.",
+    "b_observable": "The camera is positioned much further back, showing a wider view of the surrounding tiles.",
+    "frames": {
+      "A": "analysis/per-second-v7/eyewitness/sec-09-c0-A.png",
+      "B": "analysis/per-second-v7/eyewitness/sec-09-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "Clip A shows a close-up view of the 'Recurly' and 'hyperswitch' tiles, while Clip B shows a much wider shot with the camera positioned further back, revealing more of the surrounding tiles."
+    }
+  }
+]

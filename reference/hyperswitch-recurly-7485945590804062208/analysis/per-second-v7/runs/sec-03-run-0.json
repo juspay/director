@@ -1,0 +1,42 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera drift"
+    ],
+    "b_motion": [
+      "slow camera drift"
+    ],
+    "absent_in_b": [
+      "yellow background tiles"
+    ],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 3.5,
+        "a_observable": "Yellow tiles and yellow accent lines are visible in the top-left background.",
+        "b_observable": "The top-left background consists entirely of plain white and grey tiles.",
+        "fix": "Add the yellow background elements to match the reference layout.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 3.5,
+        "a_observable": "Strong shadows in the tile crevices create high contrast and depth.",
+        "b_observable": "The tile crevices have very weak shadows, making the layout look flat.",
+        "fix": "Increase ambient occlusion or shadow strength to deepen the crevices.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Add the missing yellow background tiles and deepen the shadows in the crevices to match the reference staging and contrast."
+  }
+}

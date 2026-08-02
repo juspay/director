@@ -1,0 +1,58 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera drift"
+    ],
+    "b_motion": [
+      "slow camera drift"
+    ],
+    "absent_in_b": [
+      "blue and yellow key colors",
+      "close-up camera framing",
+      "soft shadows"
+    ],
+    "differences": [
+      {
+        "category": "color",
+        "t": 1.5,
+        "a_observable": "The key on the left is bright blue and the key at the bottom is bright yellow.",
+        "b_observable": "The keys on the left and bottom are plain light grey.",
+        "fix": "Assign the correct blue and yellow materials to the keys surrounding the central 'Secure Payments' key.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "full"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 1,
+        "a_observable": "The camera is closely zoomed in on the 'Secure Payments' key, which dominates the center of the frame.",
+        "b_observable": "The camera is pulled back, showing a wider view with more surrounding keys visible.",
+        "fix": "Match the camera's position, rotation, and field of view to replicate the tight close-up framing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.8,
+        "a_observable": "Stronger corner shading and soft contact shadows are visible around the edges of the keys.",
+        "b_observable": "The lighting is flat and uniform, with very bright, washed-out shadows.",
+        "fix": "Adjust the lighting setup to increase contrast and add a vignette to darken the corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Apply the correct blue and yellow materials to the surrounding keys to match the vibrant color scheme of the reference."
+  }
+}

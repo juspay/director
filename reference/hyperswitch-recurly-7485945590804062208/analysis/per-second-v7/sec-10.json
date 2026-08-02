@@ -1,0 +1,269 @@
+{
+  "sec": 10,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 10.5,
+          "a_observable": "Tighter camera framing on the yellow card.",
+          "b_observable": "Wider camera framing showing more surrounding grid.",
+          "fix": "Adjust camera distance to match reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 10.2,
+          "a_observable": "Cool blue color cast on white surfaces.",
+          "b_observable": "Neutral white surfaces without blue tint.",
+          "fix": "Add a cool color grade to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.8,
+          "a_observable": "Stronger vignette with darker corners.",
+          "b_observable": "Uniform lighting with bright corners.",
+          "fix": "Increase vignette strength.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust camera framing and position to match the tighter composition of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 10.5,
+          "a_observable": "The camera is positioned closer to the yellow button, creating a dynamic perspective.",
+          "b_observable": "The camera is further away, resulting in a flatter perspective and smaller button.",
+          "fix": "Adjust camera position and focal length to match the close-up framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.5,
+          "a_observable": "There is a distinct vignette with darker corners and a brighter center.",
+          "b_observable": "The lighting is uniform across the frame with no noticeable vignette.",
+          "fix": "Add a vignette effect to darken the corners.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.5,
+          "a_observable": "The shadows in the recesses around the buttons are deep and dark.",
+          "b_observable": "The shadows are light and washed out, leading to lower contrast.",
+          "fix": "Increase shadow depth and overall contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 10.5,
+          "a_observable": "The yellow button has a warm golden hue, and the scene is warmer.",
+          "b_observable": "The yellow button has a cooler greenish-yellow hue, and the scene is cooler.",
+          "fix": "Adjust the color temperature and yellow hue to match the warm reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust camera position and focal length to match the close-up framing and perspective of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera motion"
+      ],
+      "b_motion": [
+        "camera motion"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 10,
+          "a_observable": "The corners of the frame are significantly darker than the center, showing a strong vignette.",
+          "b_observable": "The illumination is flat and even across the entire frame, lacking a vignette.",
+          "fix": "Add a vignette effect to darken the corners of the frame.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 10.5,
+          "a_observable": "The yellow tile has a warm, highly saturated golden hue.",
+          "b_observable": "The yellow tile is desaturated and has a cooler, greenish-yellow tint.",
+          "fix": "Adjust the color of the yellow material to increase saturation and warmth.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 11,
+          "a_observable": "The background tiles in the corners are softly blurred due to a shallow depth of field.",
+          "b_observable": "The background tiles in the corners remain sharp and in focus.",
+          "fix": "Enable depth of field on the camera and adjust the aperture to blur the background.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adding a strong vignette and deepening the shadows to match Video A's high-contrast lighting.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 10.5,
+        "a_observable": "Tighter camera framing on the yellow card.",
+        "b_observable": "Wider camera framing showing more surrounding grid.",
+        "fix": "Adjust camera distance to match reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "Clip A shows a tighter framing where the yellow and blue cards are closer to the edges of the frame, whereas Clip B shows a wider framing with more of the surrounding grid tiles visible on all sides."
+        },
+        "channelA": {
+          "verdict": "refuted",
+          "note": "Same lockup at t=10.x: framing at parity, B's cards no smaller. Stale claim family."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "There is a distinct vignette with darker corners and a brighter center.",
+        "b_observable": "The lighting is uniform across the frame with no noticeable vignette.",
+        "fix": "Add a vignette effect to darken the corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 210.78,
+            "center_mean": 196.59,
+            "falloff_pct": -7.22
+          },
+          "B": {
+            "corner_mean": 181.62,
+            "center_mean": 175.86,
+            "falloff_pct": -3.28
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 10.5,
+        "a_observable": "The yellow button has a warm golden hue, and the scene is warmer.",
+        "b_observable": "The yellow button has a cooler greenish-yellow hue, and the scene is cooler.",
+        "fix": "Adjust the color temperature and yellow hue to match the warm reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_cooler",
+          "A": {
+            "r": 193.29,
+            "g": 203.73,
+            "b": 201.96,
+            "rb_delta": -8.67,
+            "saturation": 0.191
+          },
+          "B": {
+            "r": 166.37,
+            "g": 175.65,
+            "b": 189.99,
+            "rb_delta": -23.61,
+            "saturation": 0.2162
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust camera position and focal length to match the close-up framing and perspective of the reference.",
+    "dropped_unsupported": 3
+  }
+}

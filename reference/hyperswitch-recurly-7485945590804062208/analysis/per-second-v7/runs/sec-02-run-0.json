@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.208
+    ],
+    "a_motion": [
+      "camera pan and tilt"
+    ],
+    "b_motion": [
+      "camera pan and tilt"
+    ],
+    "absent_in_b": [
+      "blue block material",
+      "yellow block material"
+    ],
+    "differences": [
+      {
+        "category": "color",
+        "t": 2.1,
+        "a_observable": "The keyboard blocks surrounding the 'Secure Payments' key have distinct blue and yellow colors.",
+        "b_observable": "The surrounding keyboard blocks are entirely gray and white, lacking any color.",
+        "fix": "Apply the blue and yellow materials to the surrounding keyboard blocks to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 2.1,
+        "a_observable": "The camera is positioned closer to the keys with a steeper angle of view, showing less of the surrounding grid.",
+        "b_observable": "The camera is further back with a shallower angle, showing more of the surrounding grid and creating a different perspective.",
+        "fix": "Adjust the camera's position and focal length to match the reference framing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 2.5,
+        "a_observable": "A yellow block is clearly visible in the top-left corner of the frame.",
+        "b_observable": "The top-left background block is white, matching the rest of the grid.",
+        "fix": "Color the top-left block yellow to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.5,
+        "a_observable": "The lighting has higher contrast with deeper shadows between the keys.",
+        "b_observable": "The lighting is flat and washed out, with very faint shadows.",
+        "fix": "Increase the contrast and adjust the shadow settings to create more depth.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      }
+    ],
+    "highest_impact_fix": "Apply the correct blue and yellow materials to the keyboard blocks to restore the color scheme of the scene."
+  }
+}

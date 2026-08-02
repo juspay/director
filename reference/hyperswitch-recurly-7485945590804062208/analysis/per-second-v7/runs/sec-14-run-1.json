@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zoom out"
+    ],
+    "b_motion": [
+      "camera zoom out"
+    ],
+    "absent_in_b": [
+      "PSP tile"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 14,
+        "a_observable": "The camera is positioned closer to the grid, framing the Recurly and hyperswitch tiles prominently.",
+        "b_observable": "The camera is positioned much further away, resulting in a wider shot with smaller tiles.",
+        "fix": "Adjust the camera distance or focal length to match the closer framing of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 14.5,
+        "a_observable": "The lighting features a distinct vignette, with noticeable darkening towards the corners.",
+        "b_observable": "The lighting is flat and uniform across the entire frame, lacking corner falloff.",
+        "fix": "Introduce a vignette effect to match the corner shading of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "material",
+        "t": 14.2,
+        "a_observable": "The yellow Recurly tile has a subtle gloss and gradient reflection under the light.",
+        "b_observable": "The yellow tile is flat and matte, lacking specular reflections.",
+        "fix": "Increase the specularity and adjust the roughness of the yellow tile material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera distance and focal length to match the closer framing of the reference video."
+  }
+}

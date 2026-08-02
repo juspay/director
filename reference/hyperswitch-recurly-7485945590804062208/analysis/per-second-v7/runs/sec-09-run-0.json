@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 9.5,
+        "a_observable": "The yellow tile for 'Recurly' has a warm, golden hue with rich saturation.",
+        "b_observable": "The yellow tile for 'Recurly' is a cooler, desaturated greenish-yellow.",
+        "fix": "Adjust the color of the Recurly tile to match the warm golden yellow of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 9.5,
+        "a_observable": "The camera is positioned at a low, oblique angle relative to the tiles, creating a strong sense of depth.",
+        "b_observable": "The camera is positioned at a higher, more top-down angle, reducing the perspective depth.",
+        "fix": "Lower the camera height and adjust the pitch to match the low-angle perspective of the reference.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "There is a distinct vignette with darker corners and a warm-to-cool light gradient across the scene.",
+        "b_observable": "The lighting is extremely flat and uniform across the entire frame, with no noticeable vignette.",
+        "fix": "Add a vignette and introduce a directional light gradient to match the reference's lighting depth.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and position to match the low-angle perspective of the reference video, which is crucial for capturing the intended depth and composition."
+  }
+}

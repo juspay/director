@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and tilt around the cards"
+    ],
+    "b_motion": [
+      "slow camera pan and tilt around the cards"
+    ],
+    "absent_in_b": [
+      "vibrant blue card on the left side of the frame"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 1.5,
+        "a_observable": "The camera is positioned close to the 'Secure Payments' card, creating a tight close-up composition.",
+        "b_observable": "The camera is positioned further away, resulting in a wider shot where the card occupies a smaller portion of the frame.",
+        "fix": "Move the camera closer to the main card to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 1.2,
+        "a_observable": "The card on the left edge of the frame is colored bright blue.",
+        "b_observable": "The card on the left edge of the frame is light grey.",
+        "fix": "Apply the blue material to the card on the left to match the reference color scheme.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "left"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "There is a distinct soft shadow falloff towards the corners of the frame, creating a subtle vignette.",
+        "b_observable": "The lighting is flat and uniform across the entire frame, with no noticeable vignette.",
+        "fix": "Add a vignette or adjust the light sources to create a soft falloff towards the edges of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and focal length to match the close-up framing of Video A, and change the color of the left card to vibrant blue."
+  }
+}

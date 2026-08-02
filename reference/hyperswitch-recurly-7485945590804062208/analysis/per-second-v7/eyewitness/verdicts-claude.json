@@ -1,0 +1,13 @@
+{
+  "00:0": {"verdict": "supported", "note": "Real, but the driver is ELEVATION not distance: A shoots ~70deg down into a dense frame (Renewal+blue+yellow all in frame, type horizontal); B orbits low-oblique (~35-40deg) with type rotated ~40deg and sparse pale surroundings."},
+  "01:0": {"verdict": "supported", "note": "Same shot-1 signature as 00:0 — steep dense vs shallow sparse; elevation and set density, not just dolly."},
+  "02:1": {"verdict": "supported", "note": "Verified on frames: A near-top-down and dense; B raked low with cards nearly edge-on and type at ~50deg."},
+  "04:0": {"verdict": "supported", "note": "Shot-2 family, same signature: B wider with emptier surroundings; A packs a yellow card top-left that B's framing loses."},
+  "05:0": {"verdict": "supported", "note": "A's Recurly hero is a close low dramatic macro with heavy edge falloff; B views a smaller flat card at an oblique distance."},
+  "05:1": {"verdict": "supported", "note": "A's gold face carries a specular gradient and a glossy bevel; B's yellow is UNIFORM — the face is an unlit toneMapped=false meshBasicMaterial and cannot respond to light. That unlit-faces architecture is a root cause of the persistent 'flat' readings, beyond the bezel."},
+  "06:0": {"verdict": "supported", "note": "A near-top-down, card filling width, dense dressed surroundings; B oblique with rotated type and sparse tiles. Elevation + set density again."},
+  "09:0": {"verdict": "refuted", "note": "Card widths near-parity (A Recurly ~310px vs B ~300px of 720). 'Much further back, smaller cards' is pass-6's stale claim; the dolly fix landed. Channel B endorsed it against the pixels — correlated-error catch."},
+  "10:0": {"verdict": "refuted", "note": "Same lockup at t=10.x: framing at parity, B's cards no smaller. Stale claim family."},
+  "13:0": {"verdict": "refuted", "note": "Both A and B shoot the lockup flat top-down — A has no 'dynamic low-angle perspective' at 13.x, so the claim's A half is false; and B's cards measure BIGGER than A's here (~290 vs ~250px)."},
+  "14:0": {"verdict": "refuted", "note": "Same lockup family as 9/10/13: size parity or B larger; 'much further away, smaller cards' contradicted by the frames."}
+}

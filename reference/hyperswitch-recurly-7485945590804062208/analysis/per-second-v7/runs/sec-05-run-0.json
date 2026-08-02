@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and rotation around the tiles"
+    ],
+    "b_motion": [
+      "slow camera pan and rotation around the tiles"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 5.3,
+        "a_observable": "The camera is zoomed in close on the Recurly tile.",
+        "b_observable": "The camera is pulled back, showing a wider view of the tiles.",
+        "fix": "Adjust camera zoom and composition to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 5.5,
+        "a_observable": "The scene has a warm, cream color cast.",
+        "b_observable": "The scene has a cooler, greyish-blue color cast.",
+        "fix": "Adjust white balance to add warmth.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.7,
+        "a_observable": "Deep shadows in the gaps between tiles create high contrast.",
+        "b_observable": "Flat lighting with very weak shadows in the gaps.",
+        "fix": "Enhance contact shadows and ambient occlusion.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera zoom and framing to match the close-up composition of the reference video."
+  }
+}

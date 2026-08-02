@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 12.2,
+        "a_observable": "The overall image has a warm, yellowish color cast, especially visible on the white cards.",
+        "b_observable": "The image has a neutral to cool white color cast with very little warmth.",
+        "fix": "Add a warm color temperature adjustment or warm ambient light to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "Deep, dark shadows are present in the gaps between the cards, creating high contrast.",
+        "b_observable": "The gaps between the cards are brightly lit with minimal shadow depth, resulting in low contrast.",
+        "fix": "Increase shadow intensity or add ambient occlusion to darken the gaps between the cards.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 12.8,
+        "a_observable": "The camera angle is low and oblique, creating a dynamic perspective view of the cards.",
+        "b_observable": "The camera angle is higher and flatter, making the card layout look more two-dimensional.",
+        "fix": "Lower the camera height and tilt it upwards to match the oblique perspective of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Lower the camera height and tilt it upwards to match the oblique perspective of the reference."
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "camera pans over the blue card, then cuts to a zoom out from the grid"
+    ],
+    "b_motion": [
+      "camera pans over the blue card, then cuts to a zoom out from the grid"
+    ],
+    "absent_in_b": [
+      "Secure Payments card",
+      "Billing card",
+      "Success rate graph",
+      "Subscriptions card",
+      "Retries card",
+      "APMs card"
+    ],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 8.5,
+        "a_observable": "Multiple labeled cards like 'Secure Payments' and 'Billing' are visible on the surrounding tiles.",
+        "b_observable": "The surrounding tiles are completely blank white blocks with no cards or labels.",
+        "fix": "Add the missing labeled cards to the grid layout.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "Strong shadows are cast between the tiles, creating depth and contrast.",
+        "b_observable": "The lighting is flat and overexposed, with almost no shadows between the tiles.",
+        "fix": "Adjust the light source angle and intensity to cast deeper shadows.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "color",
+        "t": 8.5,
+        "a_observable": "The 'Recurly' card has a vibrant, warm yellow color.",
+        "b_observable": "The 'Recurly' card has a dull, desaturated yellow color.",
+        "fix": "Increase the saturation and warmth of the yellow material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "material",
+        "t": 8,
+        "a_observable": "The border of the blue card has a brushed metallic texture.",
+        "b_observable": "The border of the blue card is a flat, matte grey material.",
+        "fix": "Apply a brushed metal texture to the card border.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Add the missing labeled cards to the grid layout to populate the empty white tiles."
+  }
+}

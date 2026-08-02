@@ -1,0 +1,249 @@
+{
+  "sec": 5,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan and rotation around the tiles"
+      ],
+      "b_motion": [
+        "slow camera pan and rotation around the tiles"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 5.3,
+          "a_observable": "The camera is zoomed in close on the Recurly tile.",
+          "b_observable": "The camera is pulled back, showing a wider view of the tiles.",
+          "fix": "Adjust camera zoom and composition to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 5.5,
+          "a_observable": "The scene has a warm, cream color cast.",
+          "b_observable": "The scene has a cooler, greyish-blue color cast.",
+          "fix": "Adjust white balance to add warmth.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 5.7,
+          "a_observable": "Deep shadows in the gaps between tiles create high contrast.",
+          "b_observable": "Flat lighting with very weak shadows in the gaps.",
+          "fix": "Enhance contact shadows and ambient occlusion.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera zoom and framing to match the close-up composition of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan and tilt",
+        "subtle rotation of the yellow button"
+      ],
+      "b_motion": [
+        "camera pan and tilt",
+        "subtle rotation of the yellow button"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 5.5,
+          "a_observable": "Camera is closer to the yellow button with a wider field of view, creating distinct perspective distortion.",
+          "b_observable": "Camera is further away with a narrower field of view, making the perspective appear flatter.",
+          "fix": "Adjust camera distance and focal length to match the reference perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "material",
+          "t": 5.2,
+          "a_observable": "The yellow button features a reflective metallic bevel.",
+          "b_observable": "The yellow button has a flat grey border with no metallic reflections.",
+          "fix": "Apply a metallic material to the button's bevel.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 5.8,
+          "a_observable": "Stronger vignette with noticeable darkening in the corners.",
+          "b_observable": "Even lighting across the frame with minimal corner falloff.",
+          "fix": "Increase vignette strength in post-processing.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera focal length and position to match the dynamic perspective of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan and zoom-out"
+      ],
+      "b_motion": [
+        "slow camera pan and zoom-out"
+      ],
+      "absent_in_b": [
+        "thick dark gray base plate under the yellow Recurly card"
+      ],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 5.2,
+          "a_observable": "The yellow Recurly card is centered-right with a high-angle camera perspective.",
+          "b_observable": "The yellow Recurly card is in the lower-left with a low-angle camera perspective.",
+          "fix": "Re-align camera angle and position.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "staging",
+          "t": 5.5,
+          "a_observable": "The yellow Recurly card has a thick dark gray base plate.",
+          "b_observable": "The yellow Recurly card is flat with a thin gray border.",
+          "fix": "Add the thick dark gray base plate.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 5.8,
+          "a_observable": "Strong vignette with dark corners.",
+          "b_observable": "Flat lighting with bright corners.",
+          "fix": "Apply a vignette.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and position to correct the layout of the scene.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 5.3,
+        "a_observable": "The camera is zoomed in close on the Recurly tile.",
+        "b_observable": "The camera is pulled back, showing a wider view of the tiles.",
+        "fix": "Adjust camera zoom and composition to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 3,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "The claim is accurate. In Clip A, the camera is zoomed in much closer to the yellow Recurly tile, making it appear larger and showing less of the surrounding grid. In Clip B, the camera is pulled back, showing a wider view of the tiles and the surrounding layout."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "A's Recurly hero is a close low dramatic macro with heavy edge falloff; B views a smaller flat card at an oblique distance."
+        }
+      },
+      {
+        "category": "material",
+        "t": 5.2,
+        "a_observable": "The yellow button features a reflective metallic bevel.",
+        "b_observable": "The yellow button has a flat grey border with no metallic reflections.",
+        "fix": "Apply a metallic material to the button's bevel.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "The comparison is accurate. In Clip A, the yellow 'Recurly' button has a shiny, reflective metallic bevel around it, whereas in Clip B, it has a flat grey border with no reflections."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "A's gold face carries a specular gradient and a glossy bevel; B's yellow is UNIFORM — the face is an unlit toneMapped=false meshBasicMaterial and cannot respond to light. That unlit-faces architecture is a root cause of the persistent 'flat' readings, beyond the bezel."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.8,
+        "a_observable": "Stronger vignette with noticeable darkening in the corners.",
+        "b_observable": "Even lighting across the frame with minimal corner falloff.",
+        "fix": "Increase vignette strength in post-processing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 194.33,
+            "center_mean": 164.65,
+            "falloff_pct": -18.03
+          },
+          "B": {
+            "corner_mean": 191.5,
+            "center_mean": 164.98,
+            "falloff_pct": -16.08
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera zoom, position, and focal length to match the perspective and framing of the reference.",
+    "dropped_unsupported": 3
+  }
+}

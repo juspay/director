@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and zoom-out"
+    ],
+    "b_motion": [
+      "slow camera pan and zoom-out"
+    ],
+    "absent_in_b": [
+      "thick dark gray base plate under the yellow Recurly card"
+    ],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 5.2,
+        "a_observable": "The yellow Recurly card is centered-right with a high-angle camera perspective.",
+        "b_observable": "The yellow Recurly card is in the lower-left with a low-angle camera perspective.",
+        "fix": "Re-align camera angle and position.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "staging",
+        "t": 5.5,
+        "a_observable": "The yellow Recurly card has a thick dark gray base plate.",
+        "b_observable": "The yellow Recurly card is flat with a thin gray border.",
+        "fix": "Add the thick dark gray base plate.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.8,
+        "a_observable": "Strong vignette with dark corners.",
+        "b_observable": "Flat lighting with bright corners.",
+        "fix": "Apply a vignette.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and position to correct the layout of the scene."
+  }
+}

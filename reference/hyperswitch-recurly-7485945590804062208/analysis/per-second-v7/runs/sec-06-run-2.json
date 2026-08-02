@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 6.3,
+        "a_observable": "The yellow Recurly button is framed closely, occupying a large portion of the screen.",
+        "b_observable": "The camera is further back, making the Recurly button appear much smaller.",
+        "fix": "Adjust camera position and focal length to match the close-up framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.8,
+        "a_observable": "Deep, dark contact shadows are visible under the blue Juspay button.",
+        "b_observable": "Contact shadows under the blue button are extremely faint and light.",
+        "fix": "Increase ambient occlusion and contact shadow depth.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 6.8,
+        "a_observable": "The 'PSP' button is centered directly below the blue button.",
+        "b_observable": "The 'PSP' button is offset to the bottom-left.",
+        "fix": "Align the 'PSP' button vertically with the main blue button.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust camera focal length and position to match the close-up framing of the reference video."
+  }
+}
