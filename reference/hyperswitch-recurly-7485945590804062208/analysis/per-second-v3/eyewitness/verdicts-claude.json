@@ -1,0 +1,10 @@
+{
+  "07:0": {
+    "verdict": "refuted",
+    "note": "Revenue Analytics sits upper-RIGHT in BOTH frames (in B it is smaller, farther and angled, but clearly in the right half — not 'upper left-center'). The real positional difference is the PSP tile: bottom-centre in A vs clipped at the bottom-left edge in B. Half the claim is true, but as stated it is contradicted."
+  },
+  "07:1": {
+    "verdict": "supported",
+    "note": "A's plinth shows pronounced brushed striations with warm/cool reflection variation along the brushing direction. B's bezel reads as a near-uniform cool grey with only the faintest texture and no directional highlight response. B is not literally textureless, but the claimed difference is plainly visible."
+  }
+}

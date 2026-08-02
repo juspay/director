@@ -2,8 +2,10 @@
  * gemini-lib.mjs — shared Gemini analysis primitives (Files API + inline frames + retry).
  */
 import { GoogleGenAI } from '@google/genai';
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -117,6 +119,59 @@ export async function uploadAndWait(p) {
   }
   if (f.state !== 'ACTIVE') throw new Error(`file not active: ${f.state}`);
   return f;
+}
+
+/**
+ * Content-hash keyed upload dedup (VERIFICATION-DESIGN.md cost recovery).
+ * Files API objects live 48h; a repeated analysis run was re-uploading the
+ * same two videos every invocation. The sidecar maps sha256(file) to the
+ * uploaded name and is revalidated against ACTIVE state before being trusted,
+ * so an expired or deleted file falls through to a fresh upload.
+ */
+const UPLOAD_CACHE = path.join(path.dirname(fileURLToPath(import.meta.url)), '.upload-cache.json');
+
+export async function uploadCached(p) {
+  const sha = crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex').slice(0, 32);
+  let cache = {};
+  try { cache = JSON.parse(fs.readFileSync(UPLOAD_CACHE, 'utf8')); } catch { /* first use */ }
+  const hit = cache[sha];
+  if (hit) {
+    try {
+      const f = await withRateLimitGate(() => getAi().files.get({ name: hit.name }));
+      if (f.state === 'ACTIVE') return f;
+    } catch { /* expired/deleted — fall through */ }
+  }
+  const f = await uploadAndWait(p);
+  cache[sha] = { name: f.name, file: path.basename(p), cachedAt: new Date().toISOString() };
+  fs.writeFileSync(UPLOAD_CACHE, JSON.stringify(cache, null, 2));
+  return f;
+}
+
+/**
+ * Explicit context cache over a fixed prefix of parts (the two videos), shared
+ * by every generation in a run instead of re-tokenizing ~90k video tokens per
+ * call. Self-suppressing on "too few tokens" rejections, per the
+ * video-research-mcp pattern: one such error and the (model) pair never tries
+ * again this process. Any other failure logs and returns null — callers fall
+ * back to sending the parts inline, so caching can never break an analysis.
+ */
+const _cacheSuppressed = new Set();
+
+export async function getOrCreateContextCache({ model, parts, displayName = 'ab-video-prefix', ttlSeconds = 3600 }) {
+  if (_cacheSuppressed.has(model)) return null;
+  try {
+    return await withRateLimitGate(() =>
+      getAi().caches.create({
+        model,
+        config: { contents: [{ role: 'user', parts }], ttl: `${ttlSeconds}s`, displayName },
+      }),
+    );
+  } catch (e) {
+    const msg = String(e?.message || e);
+    if (/too few|minimum|min[_ ]?total[_ ]?token/i.test(msg)) _cacheSuppressed.add(model);
+    process.stderr.write(`[context-cache] disabled for this run: ${msg.slice(0, 140)}\n`);
+    return null;
+  }
 }
 
 export function videoPart(file, fps = 5) {

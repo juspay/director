@@ -1,0 +1,42 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation"
+    ],
+    "b_motion": [
+      "translation"
+    ],
+    "absent_in_b": [
+      "vignette"
+    ],
+    "differences": [
+      {
+        "category": "color",
+        "t": 7.25,
+        "a_observable": "The white tiles have a distinct cool blue color cast and the yellow elements are highly saturated.",
+        "b_observable": "The white tiles are neutral gray/off-white, and the overall color palette is desaturated.",
+        "fix": "Adjust the white balance to introduce a cool blue cast and increase color saturation.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 7.5,
+        "a_observable": "There is a strong vignette darkening the corners of the frame, and the shadows between tiles are deep and well-defined.",
+        "b_observable": "The lighting is flat and uniform across the frame with minimal corner falloff and soft, faint shadows.",
+        "fix": "Add a vignette effect and increase the shadow depth to match the reference lighting.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the lighting to add a strong vignette and introduce a cool blue color cast to match the reference video's grading."
+  }
+}

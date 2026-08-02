@@ -1,0 +1,55 @@
+{
+  "date": "2026-08-02",
+  "videos": {
+    "A": "target.mp4",
+    "B": "repro_pass5_720x900.mp4 (pass-5 render)"
+  },
+  "cases": [
+    {
+      "falsifier": "vignette",
+      "known_case": "the 2/2-corroborated 'A has a vignette' claim, disproven by pixel measurement last session",
+      "prediction_tested": {"metric": "vignette", "t": 1.0, "expect": "A_stronger"},
+      "result": "refuted (A falloff 0.21%, B -1.10%)",
+      "pass": true,
+      "note": "would have killed the historical hallucination before it reached the corroboration tally"
+    },
+    {
+      "falsifier": "color_cast",
+      "known_case": "compositor pixel-check: A cool-cast, B warm-cast",
+      "prediction_tested": {"metric": "color_cast", "t": 10.0, "expect": "A_cooler"},
+      "result": "confirmed (A rb_delta -13.49, B +3.66; 5.7x margin)",
+      "pass": true
+    },
+    {
+      "falsifier": "luma_curve (contrast span)",
+      "known_case": "measured tone-curve gap: reference ramps smoothly, render is flat",
+      "prediction_tested": {"metric": "luma_curve", "t": 1.0, "expect": "A_higher_contrast"},
+      "result": "confirmed (A span 143.6, B 40.0)",
+      "pass": true
+    },
+    {
+      "falsifier": "luma_curve (blacks p01)",
+      "known_case": "render's near-black spike (p0.1 ~17) vs reference ~40-56",
+      "prediction_tested": {"metric": "luma_curve", "t": 1.0, "expect": "B_deeper_blacks"},
+      "result": "confirmed (A p01 56.2, B 17.4)",
+      "pass": true
+    },
+    {
+      "falsifier": "motion (windowed)",
+      "known_case": "shot-5 motion deficit (B ~0.53x of A)",
+      "prediction_tested": {"metric": "motion", "t": 12.0, "expect": "A_more"},
+      "result": "confirmed (A 0.316 vs B 0.232 over 30 frames = 1.36x)",
+      "pass": true,
+      "fix_during_validation": "single frame-pair motion read 1.07x and would have coin-flipped; replaced with mean over a 1s window"
+    },
+    {
+      "falsifier": "region_sharpness",
+      "known_case": "reference macro DOF: centre sharp, corners fall away; planted FALSE claim 'B corners sharper'",
+      "prediction_tested": {"metric": "region_sharpness", "t": 1.0, "region": "corners", "expect": "B_sharper"},
+      "result": "refuted (A corners lap_var 42.6 vs B 4.05); A centre 372.3 vs corners 42.6 confirms DOF falloff is visible to the metric",
+      "pass": true,
+      "fix_during_validation": "corners region produced NaN when cropped before the Laplacian; now pooled after the convolution"
+    }
+  ],
+  "verdict": "all falsifiers validated; two fixed during validation (windowed motion, post-convolution pooling); margins unchanged from initial values"
+}
