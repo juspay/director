@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera motion"
+    ],
+    "b_motion": [
+      "camera motion"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 1.5,
+        "a_observable": "The 'Secure Payments' tile is surrounded by distinct 3D keyboard-like keys with clear gaps and bevels, including a bright blue key on the left and a yellow key at the bottom.",
+        "b_observable": "The 'Secure Payments' tile sits on a flat surface with thin grey lines representing key boundaries, lacking the 3D depth, bevels, and the same arrangement of colored keys.",
+        "fix": "Recreate the 3D keyboard key geometry and layout to match the reference, ensuring proper key bevels and spacing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "The scene has high contrast with bright highlights on the key surfaces and deep shadows in the crevices between keys.",
+        "b_observable": "The scene is flatly lit with low contrast, grey shadows, and no distinct highlights on the key surfaces.",
+        "fix": "Adjust the lighting setup to increase contrast, adding a stronger directional light source to create defined highlights and deeper shadows.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "color",
+        "t": 1.5,
+        "a_observable": "The colors are rich and saturated, with a vibrant blue key on the left and a warm yellow key at the bottom.",
+        "b_observable": "The colors are washed out and desaturated, appearing mostly grey and dull.",
+        "fix": "Increase color saturation and adjust the color grading to match the vibrant tones of the reference video.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Recreate the 3D keyboard key geometry and layout to match the reference, ensuring proper key bevels and spacing."
+  }
+}

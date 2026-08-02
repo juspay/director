@@ -1,0 +1,46 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 6.2,
+        "a_observable": "The camera is positioned closer with a stronger perspective tilt, creating a dynamic 3D depth.",
+        "b_observable": "The camera is further away with a flatter angle, making the layout appear more two-dimensional.",
+        "fix": "Adjust camera position and focal length to match the reference's perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.8,
+        "a_observable": "The blue card has a bright specular highlight reflecting the light source.",
+        "b_observable": "The blue card lacks bright specular highlights, appearing flat and evenly lit.",
+        "fix": "Adjust light source position and intensity to create a prominent specular highlight.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_brighter_highlights",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and focal length to match the dynamic 3D perspective of the reference."
+  }
+}

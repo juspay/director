@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pull-back",
+      "subtle camera rotation"
+    ],
+    "b_motion": [
+      "camera pull-back"
+    ],
+    "absent_in_b": [
+      "subtle camera rotation"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 12.2,
+        "a_observable": "Camera has a low oblique angle, creating a strong 3D perspective.",
+        "b_observable": "Camera is closer to a flat top-down view, reducing perspective depth.",
+        "fix": "Adjust camera pitch and focal length to match the reference's oblique perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "Strong corner shading and vignette are visible.",
+        "b_observable": "Flat lighting across the frame with minimal vignette.",
+        "fix": "Add a vignette to match the corner falloff of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 12,
+        "a_observable": "Yellow and blue tiles are highly saturated.",
+        "b_observable": "Tiles appear desaturated and washed out.",
+        "fix": "Increase color saturation to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and focal length to restore the oblique 3D perspective."
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "pan",
+      "tilt"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 8.5,
+        "a_observable": "The camera is positioned close to the cards, creating a tight composition with a distinct low-angle perspective.",
+        "b_observable": "The camera is positioned further away, resulting in a loose composition with a flatter, more top-down perspective.",
+        "fix": "Adjust camera position and focal length to match the tight, low-angle perspective of Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "The scene features high-contrast lighting with deep shadows and a prominent vignette around the frame.",
+        "b_observable": "The scene features flat, uniform lighting with very bright highlights and almost no vignette.",
+        "fix": "Increase contrast of the lighting, deepen shadows, and add a vignette to match Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "full"
+        }
+      },
+      {
+        "category": "material",
+        "t": 8.5,
+        "a_observable": "The yellow Recurly card has a satin-like finish with soft specular reflections.",
+        "b_observable": "The yellow Recurly card has a completely flat, matte texture with no specular highlights.",
+        "fix": "Adjust material roughness and specularity of the yellow card to match the satin finish in Video A.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing and angle to match the tight, dynamic composition of Video A, and increase the lighting contrast."
+  }
+}

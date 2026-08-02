@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zoom out",
+      "card rotation"
+    ],
+    "b_motion": [
+      "camera zoom out",
+      "card rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 9.5,
+        "a_observable": "The camera is positioned closer to the cards, creating a tighter and more dynamic composition.",
+        "b_observable": "The camera is further away, leaving excessive empty space around the smaller cards.",
+        "fix": "Adjust camera distance to match the tighter framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "motion",
+          "expect": "A_more"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "A strong vignette is present, with noticeable light falloff at the corners.",
+        "b_observable": "The lighting is uniform across the frame with no apparent vignette.",
+        "fix": "Apply a vignette to darken the corners.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "Shadows beneath the cards are deep and dark, providing high contrast.",
+        "b_observable": "Shadows are faint and washed out, resulting in low contrast.",
+        "fix": "Deepen the shadows to increase contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera distance and framing to bring the cards closer to the viewer, matching the dynamic composition of the reference."
+  }
+}

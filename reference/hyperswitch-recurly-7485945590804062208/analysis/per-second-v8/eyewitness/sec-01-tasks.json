@@ -1,0 +1,36 @@
+[
+  {
+    "sec": 1,
+    "idx": 0,
+    "t": 1.5,
+    "category": "camera",
+    "a_observable": "The camera has a lower perspective angle, showing the vertical depth of the tiles.",
+    "b_observable": "The camera has a higher, more top-down angle, reducing the visible depth of the tiles.",
+    "frames": {
+      "A": "analysis/per-second-v8/eyewitness/sec-01-c0-A.png",
+      "B": "analysis/per-second-v8/eyewitness/sec-01-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.95,
+      "note": "Clip A shows the tiles from a lower, more oblique angle, which highlights their 3D thickness and vertical depth. Clip B is shot from a higher, more top-down perspective, making the tiles appear flatter and reducing their visible depth."
+    }
+  },
+  {
+    "sec": 1,
+    "idx": 3,
+    "t": 1.5,
+    "category": "layout",
+    "a_observable": "The 'Secure Payments' tile is surrounded by distinct 3D keyboard-like keys with clear gaps and bevels, including a bright blue key on the left and a yellow key at the bottom.",
+    "b_observable": "The 'Secure Payments' tile sits on a flat surface with thin grey lines representing key boundaries, lacking the 3D depth, bevels, and the same arrangement of colored keys.",
+    "frames": {
+      "A": "analysis/per-second-v8/eyewitness/sec-01-c3-A.png",
+      "B": "analysis/per-second-v8/eyewitness/sec-01-c3-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "The visual differences described in the claim are accurate. Clip A shows distinct 3D keys with bevels, a blue key on the left, and a yellow key at the bottom. Clip B shows a much flatter surface with thin grey lines representing key boundaries, lacking the 3D depth and bevels of Clip A, and has a different arrangement of colored keys."
+    }
+  }
+]

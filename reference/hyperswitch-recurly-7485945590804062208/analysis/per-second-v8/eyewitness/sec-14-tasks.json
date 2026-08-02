@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 14,
+    "idx": 0,
+    "t": 14.2,
+    "category": "camera",
+    "a_observable": "Tighter framing on the Recurly and Hyperswitch blocks.",
+    "b_observable": "Wider camera composition showing more surrounding tiles.",
+    "frames": {
+      "A": "analysis/per-second-v8/eyewitness/sec-14-c0-A.png",
+      "B": "analysis/per-second-v8/eyewitness/sec-14-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "Clip A shows a tight framing on the Recurly and Hyperswitch blocks with a blurry background, while Clip B shows a wider composition with clearly visible surrounding 3D tiles."
+    }
+  }
+]

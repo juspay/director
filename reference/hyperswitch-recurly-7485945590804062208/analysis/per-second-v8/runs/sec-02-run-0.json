@@ -1,0 +1,72 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.2
+    ],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [
+      "vignette",
+      "yellow_background_elements",
+      "cool_color_cast"
+    ],
+    "differences": [
+      {
+        "category": "material",
+        "t": 2.1,
+        "a_observable": "Background tiles are solid white.",
+        "b_observable": "Background tiles have horizontal grey lines.",
+        "fix": "Remove horizontal line textures from tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 2.1,
+        "a_observable": "Camera is closer and tilted, showing the yellow card at the bottom.",
+        "b_observable": "Camera is further away, missing the yellow card entirely.",
+        "fix": "Adjust camera position and rotation.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 2.5,
+        "a_observable": "Scene has a cool blue color cast with higher contrast.",
+        "b_observable": "Scene is neutral grey and washed out.",
+        "fix": "Add cool color grading and increase contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 2.5,
+        "a_observable": "Yellow card is visible on the left.",
+        "b_observable": "No yellow card is present on the left.",
+        "fix": "Add the yellow background element.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust camera framing and staging to match the reference layout and add the missing color grading."
+  }
+}

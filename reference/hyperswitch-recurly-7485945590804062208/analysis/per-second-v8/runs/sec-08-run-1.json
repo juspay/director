@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 8.05,
+        "a_observable": "Dynamic perspective with the camera close to the Juspay card, making it appear prominent.",
+        "b_observable": "Flatter perspective with the camera positioned further away, reducing the visual impact of the card.",
+        "fix": "Bring the camera closer and widen the field of view to match the reference perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "material",
+        "t": 8.05,
+        "a_observable": "The silver border of the Juspay card has a brushed metallic texture.",
+        "b_observable": "The border is a flat, matte grey material with no texture.",
+        "fix": "Apply a brushed metal texture map to the card border material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "Strong vignette darkening the corners of the frame.",
+        "b_observable": "Flat, uniform lighting across the frame with no vignette.",
+        "fix": "Add a vignette in post-production to match the reference falloff.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 8.5,
+        "a_observable": "The Recurly card features a warm, highly saturated golden yellow.",
+        "b_observable": "The Recurly card features a cooler, less saturated pale yellow.",
+        "fix": "Adjust the diffuse color of the Recurly card to a warmer, more saturated yellow.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera field of view and distance to match the dynamic perspective, and add a vignette to correct the flat lighting."
+  }
+}

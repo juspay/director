@@ -1,0 +1,43 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 5.2,
+        "a_observable": "The camera angle is low and dynamic, creating a strong perspective with a shallow depth of field.",
+        "b_observable": "The camera angle is higher and flatter, with a deeper depth of field and less background blur.",
+        "fix": "Lower the camera height, tilt up, and increase the aperture to match the shallow depth of field.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        }
+      },
+      {
+        "category": "color",
+        "t": 5.5,
+        "a_observable": "The yellow Recurly card has a warm, golden hue, and the surrounding white cards have a cool blue color cast.",
+        "b_observable": "The yellow card is a cooler, greenish-yellow, and the surrounding cards are neutral white.",
+        "fix": "Warm up the yellow material color and add a cool blue color cast to the environment lighting.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position, angle, and depth of field to match the dynamic perspective of the reference video."
+  }
+}

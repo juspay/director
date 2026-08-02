@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 0,
+    "idx": 0,
+    "t": 0.2,
+    "category": "camera",
+    "a_observable": "Camera is close to the central tile with a dynamic perspective.",
+    "b_observable": "Camera is further back with a flatter perspective.",
+    "frames": {
+      "A": "analysis/per-second-v8/eyewitness/sec-00-c0-A.png",
+      "B": "analysis/per-second-v8/eyewitness/sec-00-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.95,
+      "note": "Clip A shows a close-up view of the 'Secure Payments' tile with a dynamic perspective that shifts as the camera moves. Clip B shows the camera positioned further back, capturing more of the surrounding tiles with a flatter, more orthographic perspective."
+    }
+  }
+]

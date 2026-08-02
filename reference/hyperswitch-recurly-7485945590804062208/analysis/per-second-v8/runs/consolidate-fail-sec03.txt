@@ -1,0 +1,53 @@
+finish=STOP
+
+{
+  "agreed_differences": [
+    {
+      "category": "camera",
+      "t": 3.5,
+      "a_observable": "The camera has a highly oblique perspective angle, showing the tiles tilted significantly relative to the frame.",
+      "b_observable": "The camera is positioned more directly overhead, resulting in a flatter, less perspective-tilted view of the tiles.",
+      "fix": "Adjust the camera angle and perspective/field-of-view to match the oblique angle of the reference.",
+      "severity": 3,
+      "prediction": {
+        "metric": "luma_curve",
+        "expect": "A_higher_contrast",
+        "region": "full"
+      },
+      "supported_by": 3
+    },
+    {
+      "category": "staging",
+      "t": 3.2,
+      "a_observable": "A yellow block is visible in the top-left corner of the frame.",
+      "b_observable": "The top-left corner contains only plain white/grey tile surfaces with no yellow block.",
+      "fix": "Add the yellow block element to the top-left area of the layout to match the reference staging.",
+      "severity": 2,
+      "prediction": {
+        "metric": "color_cast",
+        "expect": "A_more_saturated",
+        "region": "full"
+      },
+      "supported_by": 3
+    },
+    {
+      "category": "lighting",
+      "t": 3.5,
+      "a_observable": "Tiles cast distinct soft shadows to the right.",
+      "b_observable": "Shadows are extremely faint, reducing depth.",
+      "fix": "Adjust light angle and intensity for stronger shadows.",
+      "severity": 2,
+      "prediction": {
+        "metric": "luma_curve",
+        "expect": "A_deeper_shadows",
+        "region": "full"
+      },
+      "supported_by": 2
+    }
+  ],
+  "agreed_absent_in_b": [
+    "yellow_block"
+  ],
+  "highest_impact_fix": "Adjust camera angle and focal length to match the dynamic perspective of the reference.",
+  "dropped_unsupported": 
+  _unsupported": 1

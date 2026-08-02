@@ -1,0 +1,24 @@
+[
+  {
+    "sec": 3,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 3,
+    "measured_ok": 2,
+    "vetoed": 1,
+    "pending": 0,
+    "refuted": 0,
+    "layer1Rejected": 0
+  },
+  {
+    "sec": 14,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 3,
+    "measured_ok": 1,
+    "vetoed": 1,
+    "pending": 1,
+    "refuted": 0,
+    "layer1Rejected": 0
+  }
+]

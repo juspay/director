@@ -1,0 +1,70 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 6.25,
+        "a_observable": "Tilted isometric camera angle with close framing on the yellow card.",
+        "b_observable": "Flatter, more top-down camera angle with wider framing.",
+        "fix": "Adjust camera position and rotation for isometric perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.25,
+        "a_observable": "Stronger corner vignette and shadow depth around the cards.",
+        "b_observable": "Flat, uniform lighting with minimal vignette.",
+        "fix": "Add corner vignette and increase shadow contrast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 6.8,
+        "a_observable": "Close-up framing on the blue card.",
+        "b_observable": "Wider framing with the blue card appearing smaller.",
+        "fix": "Zoom in to match the close-up framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 6.8,
+        "a_observable": "Deep, highly saturated royal blue card color.",
+        "b_observable": "Lighter, less saturated blue card color.",
+        "fix": "Increase saturation and darken the blue material color.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing and perspective angles in both shots to match the dynamic isometric composition of the reference."
+  }
+}

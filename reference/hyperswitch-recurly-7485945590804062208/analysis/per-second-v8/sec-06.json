@@ -1,0 +1,318 @@
+{
+  "sec": 6,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 6.1,
+          "a_observable": "The Recurly card is angled diagonally with tight surrounding card composition.",
+          "b_observable": "The Recurly card is less rotated and centered with wider spacing of surrounding cards.",
+          "fix": "Adjust card rotation and layout spacing.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 6.1,
+          "a_observable": "Strong vignette with darker corners.",
+          "b_observable": "Weak vignette with bright corners.",
+          "fix": "Increase vignette strength.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 6.8,
+          "a_observable": "The Juspay card is large and angled, with 'Revenue Analytics' card in the top right background.",
+          "b_observable": "The Juspay card is smaller, with 'Revenue Analytics' card in the top left background.",
+          "fix": "Reposition background cards and adjust camera zoom.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 6.8,
+          "a_observable": "Deep shadows and high contrast on and around the blue card.",
+          "b_observable": "Faint shadows and lower contrast on and around the blue card.",
+          "fix": "Increase shadow depth and overall contrast.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera framing, card layout, and shadow contrast to match the reference composition.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 6.2,
+          "a_observable": "The camera is positioned closer with a stronger perspective tilt, creating a dynamic 3D depth.",
+          "b_observable": "The camera is further away with a flatter angle, making the layout appear more two-dimensional.",
+          "fix": "Adjust camera position and focal length to match the reference's perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 6.8,
+          "a_observable": "The blue card has a bright specular highlight reflecting the light source.",
+          "b_observable": "The blue card lacks bright specular highlights, appearing flat and evenly lit.",
+          "fix": "Adjust light source position and intensity to create a prominent specular highlight.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_brighter_highlights",
+            "region": "center"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and focal length to match the dynamic 3D perspective of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 6.25,
+          "a_observable": "Tilted isometric camera angle with close framing on the yellow card.",
+          "b_observable": "Flatter, more top-down camera angle with wider framing.",
+          "fix": "Adjust camera position and rotation for isometric perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 6.25,
+          "a_observable": "Stronger corner vignette and shadow depth around the cards.",
+          "b_observable": "Flat, uniform lighting with minimal vignette.",
+          "fix": "Add corner vignette and increase shadow contrast.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 6.8,
+          "a_observable": "Close-up framing on the blue card.",
+          "b_observable": "Wider framing with the blue card appearing smaller.",
+          "fix": "Zoom in to match the close-up framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 6.8,
+          "a_observable": "Deep, highly saturated royal blue card color.",
+          "b_observable": "Lighter, less saturated blue card color.",
+          "fix": "Increase saturation and darken the blue material color.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "center"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera framing and perspective angles in both shots to match the dynamic isometric composition of the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 6.2,
+        "a_observable": "The camera is positioned closer with a stronger perspective tilt, creating a dynamic 3D depth.",
+        "b_observable": "The camera is further away with a flatter angle, making the layout appear more two-dimensional.",
+        "fix": "Adjust camera position and focal length to match the reference's perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 194.13,
+            "center_mean": 166.36,
+            "falloff_pct": -16.7
+          },
+          "B": {
+            "corner_mean": 201.34,
+            "center_mean": 182.83,
+            "falloff_pct": -10.12
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 6.25,
+        "a_observable": "Stronger corner vignette and shadow depth around the cards.",
+        "b_observable": "Flat, uniform lighting with minimal vignette.",
+        "fix": "Add corner vignette and increase shadow contrast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 193.88,
+            "center_mean": 167.09,
+            "falloff_pct": -16.04
+          },
+          "B": {
+            "corner_mean": 201.14,
+            "center_mean": 182.75,
+            "falloff_pct": -10.06
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "camera",
+        "t": 6.8,
+        "a_observable": "Close-up framing on the blue card.",
+        "b_observable": "Wider framing with the blue card appearing smaller.",
+        "fix": "Zoom in to match the close-up framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 2,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "Clip A shows a close-up shot of the blue 'JUSPAY hyperswitch' card, which occupies a larger portion of the frame. Clip B shows a wider shot where the blue card is smaller and more of the surrounding elements are visible."
+        },
+        "channelA": {
+          "verdict": "refuted",
+          "note": "B's blue card occupies a larger fraction of frame than A's at this beat (~72% vs ~66% width measured in the pass-7 cycle; pass-8 framing unchanged here). Not wider."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.8,
+        "a_observable": "Deep shadows and high contrast on and around the blue card.",
+        "b_observable": "Faint shadows and lower contrast on and around the blue card.",
+        "fix": "Increase shadow depth and overall contrast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "full"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_higher_contrast",
+          "A": {
+            "p01": 54.34,
+            "p1": 67.8,
+            "p5": 74.53,
+            "p50": 203.97,
+            "p95": 246.13,
+            "p99": 247.85,
+            "p999": 253.23,
+            "span_p5_p95": 171.6
+          },
+          "B": {
+            "p01": 60.95,
+            "p1": 61.74,
+            "p5": 63.45,
+            "p50": 193.59,
+            "p95": 216.72,
+            "p99": 218.48,
+            "p999": 254.15,
+            "span_p5_p95": 153.27
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera framing and perspective angles in both shots to match the dynamic isometric composition of the reference.",
+    "dropped_unsupported": 1
+  }
+}

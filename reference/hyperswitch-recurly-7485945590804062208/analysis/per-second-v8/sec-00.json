@@ -1,0 +1,271 @@
+{
+  "sec": 0,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan and zoom out"
+      ],
+      "b_motion": [
+        "slow camera pan and zoom out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 0.2,
+          "a_observable": "The 'Secure Payments' tile is rotated counter-clockwise with blue and yellow tiles visible nearby.",
+          "b_observable": "The tile is rotated clockwise, and the surrounding tiles are different.",
+          "fix": "Realign the camera and rotate the tiles to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 0.5,
+          "a_observable": "Vibrant blue and yellow colors are visible on the tiles.",
+          "b_observable": "The tiles are desaturated and appear mostly grey.",
+          "fix": "Increase color saturation to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.8,
+          "a_observable": "Deep shadows are visible around the tile edges.",
+          "b_observable": "Flat lighting with very shallow shadows.",
+          "fix": "Adjust light source and shadow settings to increase contrast.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Realign the camera angle and adjust the layout and rotation of the tiles to match the reference composition.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "rotation",
+        "translation"
+      ],
+      "b_motion": [
+        "rotation",
+        "translation"
+      ],
+      "absent_in_b": [
+        "dot grid pattern on the left key"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 0,
+          "a_observable": "Camera is positioned closer to the keys at a shallower angle, centering the Secure Payments key.",
+          "b_observable": "Camera is further away and at a steeper, more rotated angle, tilting the layout diagonally.",
+          "fix": "Adjust camera position, rotation, and focal length to match the reference perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.5,
+          "a_observable": "Strong vignette with dark corner falloff and deep shadows between the keys.",
+          "b_observable": "Flat, uniform lighting across the frame with minimal vignette and shallow shadows.",
+          "fix": "Add a vignette effect and increase shadow depth to enhance contrast and focus.",
+          "severity": 4,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 0.5,
+          "a_observable": "Cool blue color cast on the white keys with vibrant, saturated colors.",
+          "b_observable": "Neutral greyish-white keys with lower color saturation.",
+          "fix": "Apply a cooler color temperature and increase overall saturation.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler",
+            "region": "full"
+          }
+        },
+        {
+          "category": "typography",
+          "t": 0,
+          "a_observable": "Secure Payments text uses a medium-weight sans-serif font, and the shield checkmark is thick and stylized.",
+          "b_observable": "Text uses a thinner sans-serif font, and the shield checkmark is a thin, simple v-shape.",
+          "fix": "Update the font weight and match the vector shape of the shield icon checkmark.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and framing to match the reference perspective, as the current steep diagonal angle significantly alters the composition.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "diagonal camera drift",
+        "subtle rotation"
+      ],
+      "b_motion": [
+        "diagonal camera drift",
+        "subtle rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "color",
+          "t": 0.5,
+          "a_observable": "Vibrant blue and yellow colors with high saturation.",
+          "b_observable": "Muted, desaturated colors across all tiles.",
+          "fix": "Increase saturation and contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 0.2,
+          "a_observable": "Camera is close to the central tile with a dynamic perspective.",
+          "b_observable": "Camera is further back with a flatter perspective.",
+          "fix": "Match camera focal length and position.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.8,
+          "a_observable": "Strong vignette with darker corners.",
+          "b_observable": "Flat, uniform lighting across the frame.",
+          "fix": "Add vignette falloff.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Match camera perspective and increase color saturation.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 0.2,
+        "a_observable": "Camera is close to the central tile with a dynamic perspective.",
+        "b_observable": "Camera is further back with a flatter perspective.",
+        "fix": "Match camera focal length and position.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 3,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 0.95,
+          "note": "Clip A shows a close-up view of the 'Secure Payments' tile with a dynamic perspective that shifts as the camera moves. Clip B shows the camera positioned further back, capturing more of the surrounding tiles with a flatter, more orthographic perspective."
+        },
+        "channelA": {
+          "verdict": "refuted",
+          "note": "B's subject is at comparable proximity and its perspective is steep top-down like A's — not 'further back with flatter perspective'. The true residual at t=0.5 is type rotated ~35deg at the sweep extreme, which is not this claim."
+        }
+      },
+      {
+        "category": "color",
+        "t": 0.5,
+        "a_observable": "Vibrant blue and yellow colors are visible on the tiles.",
+        "b_observable": "The tiles are desaturated and appear mostly grey.",
+        "fix": "Increase color saturation to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 189.28,
+            "g": 198.82,
+            "b": 201.38,
+            "rb_delta": -12.1,
+            "saturation": 0.2001
+          },
+          "B": {
+            "r": 198.34,
+            "g": 203.67,
+            "b": 215.2,
+            "rb_delta": -16.85,
+            "saturation": 0.0771
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 0.8,
+        "a_observable": "Strong vignette with darker corners.",
+        "b_observable": "Flat, uniform lighting across the frame.",
+        "fix": "Add vignette falloff.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 204.05,
+            "center_mean": 203.81,
+            "falloff_pct": -0.11
+          },
+          "B": {
+            "corner_mean": 181.76,
+            "center_mean": 212.89,
+            "falloff_pct": 14.62
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera angle and framing to match the reference perspective, as the current steep diagonal angle significantly alters the composition.",
+    "dropped_unsupported": 2
+  }
+}

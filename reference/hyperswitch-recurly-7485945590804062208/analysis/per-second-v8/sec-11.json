@@ -1,0 +1,276 @@
+{
+  "sec": 11,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 11.2,
+          "a_observable": "The camera is positioned further back, capturing a wider view of the tiles.",
+          "b_observable": "The camera is zoomed in closer, cropping the composition tightly.",
+          "fix": "Move the camera back to match the wider framing of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.5,
+          "a_observable": "A strong vignette is visible, with significant light falloff at the corners.",
+          "b_observable": "The lighting is uniform across the frame with no corner falloff.",
+          "fix": "Apply a vignette to darken the outer edges of the frame.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 11.8,
+          "a_observable": "The image exhibits high contrast with deep blacks and bright whites.",
+          "b_observable": "The image has a flat luma profile with washed-out shadows and greyish highlights.",
+          "fix": "Increase contrast by deepening shadows and boosting highlights.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera distance and focal length to match the wider framing of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 11,
+          "a_observable": "Tighter camera framing crops the left edge of the yellow Recurly card.",
+          "b_observable": "Wider camera framing leaves the yellow Recurly card fully visible with a margin.",
+          "fix": "Adjust camera position or focal length to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.5,
+          "a_observable": "Strong vignette with darker corners.",
+          "b_observable": "Flat, uniform lighting across the frame.",
+          "fix": "Add a vignette to match the corner falloff.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 11.2,
+          "a_observable": "Vibrant, highly saturated yellow and blue cards.",
+          "b_observable": "Muted, desaturated card colors.",
+          "fix": "Boost color saturation to match the reference vibrancy.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.8,
+          "a_observable": "Deep, dark shadows between tiles creating high contrast.",
+          "b_observable": "Faint, grey shadows resulting in a flat look.",
+          "fix": "Deepen shadows and adjust contrast curves.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera focal length and position to match the tighter framing of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "zoom_out"
+      ],
+      "b_motion": [
+        "translation",
+        "zoom_out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 11,
+          "a_observable": "The camera is positioned closer to the blocks, resulting in a tighter composition where the yellow and blue blocks occupy more screen space.",
+          "b_observable": "The camera is positioned further away, making the blocks appear smaller with more visible background tiles.",
+          "fix": "Bring the camera closer or adjust the focal length to match the framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.5,
+          "a_observable": "Stronger contrast with deeper shadows under the blocks and a clear light falloff towards the edges.",
+          "b_observable": "Flatter, more uniform lighting across the tiles with very weak shadows under the blocks.",
+          "fix": "Adjust the light sources to increase contrast and add a subtle vignette or falloff to match Video A.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "material",
+          "t": 11.8,
+          "a_observable": "The yellow Recurly card has a glossy finish with visible specular highlights and reflections.",
+          "b_observable": "The yellow Recurly card has a flat, matte finish with no specular highlights.",
+          "fix": "Increase the specularity and roughness settings of the yellow card material to match the glossy look of Video A.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera framing and increase the lighting contrast to match the tighter, more dramatic look of Video A.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 11,
+        "a_observable": "Tighter camera framing crops the left edge of the yellow Recurly card.",
+        "b_observable": "Wider camera framing leaves the yellow Recurly card fully visible with a margin.",
+        "fix": "Adjust camera position or focal length to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 2,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "In Clip A, the left edge of the yellow Recurly card is cropped by the left border of the frame. In Clip B, the camera framing is wider, showing the entire yellow card with a clear margin on its left side."
+        },
+        "channelA": {
+          "verdict": "refuted",
+          "note": "The claim's A half is false: A's Recurly card is FULLY visible with a clear margin at t=11.5, not cropped at the left edge. B's Recurly is also ~13% larger in frame than A's."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "A strong vignette is visible, with significant light falloff at the corners.",
+        "b_observable": "The lighting is uniform across the frame with no corner falloff.",
+        "fix": "Apply a vignette to darken the outer edges of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 209.75,
+            "center_mean": 196.45,
+            "falloff_pct": -6.77
+          },
+          "B": {
+            "corner_mean": 167.09,
+            "center_mean": 182.82,
+            "falloff_pct": 8.61
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 11.8,
+        "a_observable": "The image exhibits high contrast with deep blacks and bright whites.",
+        "b_observable": "The image has a flat luma profile with washed-out shadows and greyish highlights.",
+        "fix": "Increase contrast by deepening shadows and boosting highlights.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_higher_contrast",
+          "A": {
+            "p01": 4.43,
+            "p1": 86.3,
+            "p5": 126.65,
+            "p50": 208.93,
+            "p95": 230.84,
+            "p99": 236.33,
+            "p999": 252.45,
+            "span_p5_p95": 104.19
+          },
+          "B": {
+            "p01": 89.96,
+            "p1": 90.96,
+            "p5": 97.3,
+            "p50": 193.59,
+            "p95": 211.74,
+            "p99": 216.44,
+            "p999": 239.43,
+            "span_p5_p95": 114.44
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera focal length and position to match the tighter framing of the reference video.",
+    "dropped_unsupported": 3
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "pan",
+      "tilt"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 6.1,
+        "a_observable": "The Recurly card is angled diagonally with tight surrounding card composition.",
+        "b_observable": "The Recurly card is less rotated and centered with wider spacing of surrounding cards.",
+        "fix": "Adjust card rotation and layout spacing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.1,
+        "a_observable": "Strong vignette with darker corners.",
+        "b_observable": "Weak vignette with bright corners.",
+        "fix": "Increase vignette strength.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 6.8,
+        "a_observable": "The Juspay card is large and angled, with 'Revenue Analytics' card in the top right background.",
+        "b_observable": "The Juspay card is smaller, with 'Revenue Analytics' card in the top left background.",
+        "fix": "Reposition background cards and adjust camera zoom.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.8,
+        "a_observable": "Deep shadows and high contrast on and around the blue card.",
+        "b_observable": "Faint shadows and lower contrast on and around the blue card.",
+        "fix": "Increase shadow depth and overall contrast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing, card layout, and shadow contrast to match the reference composition."
+  }
+}

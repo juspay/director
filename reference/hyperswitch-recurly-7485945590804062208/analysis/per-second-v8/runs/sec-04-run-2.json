@@ -1,0 +1,71 @@
+{
+  "ok": false,
+  "why": "missed cut at 4.900s",
+  "json": {
+    "cuts_in_window": [
+      4.417
+    ],
+    "a_motion": [
+      "pan",
+      "tilt"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt"
+    ],
+    "absent_in_b": [
+      "yellow_card"
+    ],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 4,
+        "a_observable": "The card to the left of 'Secure Payments' features a grid of grey dots.",
+        "b_observable": "The card to the left of 'Secure Payments' features horizontal lines instead of dots.",
+        "fix": "Replace the horizontal lines with a grid of dots on the left card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 4.5,
+        "a_observable": "A yellow card is visible in the top-left background after the cut.",
+        "b_observable": "No yellow card is visible in the background; the area contains only white cards.",
+        "fix": "Add the yellow card to the top-left background area.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 4.5,
+        "a_observable": "The camera is positioned at a perspective angle, viewing the cards from a three-quarters perspective.",
+        "b_observable": "The camera is positioned almost directly top-down, resulting in a flatter perspective.",
+        "fix": "Adjust the camera angle to match the reference video's three-quarters view.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 4.5,
+        "a_observable": "The scene has higher contrast with brighter highlights and deeper shadows.",
+        "b_observable": "The scene has lower contrast, appearing flatter with greyer whites.",
+        "fix": "Adjust the luma curve to increase contrast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust camera angles and staging to match the perspective and card layouts of the reference video."
+  }
+}

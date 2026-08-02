@@ -1,0 +1,66 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera panning",
+      "subtle camera rotation"
+    ],
+    "b_motion": [
+      "camera panning",
+      "subtle camera rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 1.5,
+        "a_observable": "The camera is positioned closer to the 'Secure Payments' card, which is tilted at a steeper angle, showing the yellow card at the bottom.",
+        "b_observable": "The camera is further away, the 'Secure Payments' card is flatter, and the yellow card is not visible at the bottom.",
+        "fix": "Adjust the camera's focal length, position, and rotation to match the reference framing and tilt.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "The scene has a warm, golden-yellow color cast from the lighting.",
+        "b_observable": "The scene has a flat, neutral grey/white color cast.",
+        "fix": "Add a warm-colored light source to replicate the golden color cast of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "There is a strong vignette darkening the corners of the frame.",
+        "b_observable": "The lighting is uniform across the frame with no corner falloff.",
+        "fix": "Add a vignette effect to darken the corners of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "The shadows between the cards are deep and dark, creating high contrast.",
+        "b_observable": "The shadows are light grey and flat, resulting in low contrast.",
+        "fix": "Adjust the shadow density and ambient occlusion to deepen the blacks and increase contrast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and rotation to match the reference framing, and add a warm directional light source to replicate the golden color cast."
+  }
+}

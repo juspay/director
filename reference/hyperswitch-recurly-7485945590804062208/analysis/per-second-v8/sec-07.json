@@ -1,0 +1,201 @@
+{
+  "sec": 7,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "zoom"
+      ],
+      "b_motion": [
+        "translation"
+      ],
+      "absent_in_b": [
+        "contact shadows",
+        "vignette"
+      ],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 7.5,
+          "a_observable": "The JUSPAY hyperswitch button is centered, with the PSP button aligned directly below it.",
+          "b_observable": "The JUSPAY hyperswitch button is offset to the left, and the PSP button is pushed to the bottom-left edge.",
+          "fix": "Adjust camera framing and layout to center the main button.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 7.2,
+          "a_observable": "Soft contact shadows are visible beneath the buttons, creating depth.",
+          "b_observable": "Contact shadows are nearly absent, making the buttons look flat.",
+          "fix": "Add contact shadows beneath the 3D elements.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 7.8,
+          "a_observable": "The camera performs a steady pan and zoom-out.",
+          "b_observable": "The camera is nearly static with very little movement.",
+          "fix": "Match the camera animation path and speed.",
+          "severity": 2,
+          "prediction": {
+            "metric": "motion",
+            "expect": "A_more"
+          }
+        },
+        {
+          "category": "color",
+          "t": 7.4,
+          "a_observable": "The blue button has a rich, highly saturated blue color.",
+          "b_observable": "The blue button is lighter and less saturated.",
+          "fix": "Adjust the material color of the blue button to match the reference saturation.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Re-align the camera framing and layout of the buttons to center the JUSPAY hyperswitch element, and enable realistic contact shadows.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan",
+        "subtle rotation"
+      ],
+      "b_motion": [
+        "slow camera pan",
+        "subtle rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 7.5,
+          "a_observable": "The camera is positioned in a tight close-up on the 'JUSPAY hyperswitch' button.",
+          "b_observable": "The camera is pulled back, showing a wider view of the surrounding tiles.",
+          "fix": "Adjust camera distance to match the close-up framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 7.2,
+          "a_observable": "The 'Revenue Analytics' tile is aligned vertically directly above the Juspay tile.",
+          "b_observable": "The 'Revenue Analytics' tile is offset to the top-right.",
+          "fix": "Align the Revenue Analytics tile vertically with the Juspay tile.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 7.8,
+          "a_observable": "The scene has high contrast with bright highlights on the button edges and deep shadows.",
+          "b_observable": "The lighting is flat with lower contrast.",
+          "fix": "Increase contrast and adjust light sources to match the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera framing and tile layout to match the close-up composition of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "tilt",
+        "rotation"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 7.5,
+          "a_observable": "The camera angle is lower, creating a stronger perspective tilt on the card grid.",
+          "b_observable": "The camera angle is higher and flatter, reducing the 3D perspective depth.",
+          "fix": "Lower the camera height and tilt it upward to match the reference perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "color",
+          "t": 7.2,
+          "a_observable": "The white cards exhibit a cool blue-cyan color cast.",
+          "b_observable": "The white cards appear neutral gray with no color cast.",
+          "fix": "Apply a cool blue color grade to the scene lighting or environment.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera height and pitch angle to match the dramatic perspective of the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 7.5,
+        "a_observable": "The camera is positioned in a tight close-up on the 'JUSPAY hyperswitch' button.",
+        "b_observable": "The camera is pulled back, showing a wider view of the surrounding tiles.",
+        "fix": "Adjust camera distance to match the close-up framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 3,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "Clip A shows a tight close-up on the 'JUSPAY hyperswitch' button, while Clip B shows a wider view of the surrounding tiles with the camera pulled back."
+        },
+        "channelA": {
+          "verdict": "refuted",
+          "note": "Same shot-4 family: B's framing is as tight or tighter than A's. The 'pulled back' prior keeps resurfacing after two passes of parity."
+        }
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera framing and tile layout to match the close-up composition of the reference.",
+    "dropped_unsupported": 6
+  }
+}

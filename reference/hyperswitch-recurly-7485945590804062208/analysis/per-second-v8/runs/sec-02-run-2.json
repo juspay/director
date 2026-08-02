@@ -1,0 +1,71 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.21
+    ],
+    "a_motion": [
+      "camera pan",
+      "camera tilt",
+      "camera rotation"
+    ],
+    "b_motion": [
+      "camera pan",
+      "static camera"
+    ],
+    "absent_in_b": [
+      "camera motion after cut"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 2.5,
+        "a_observable": "Camera slowly pans and rotates, shifting perspective on the cards.",
+        "b_observable": "Camera remains completely static after the cut.",
+        "fix": "Animate the camera to match the reference's slow pan and rotation.",
+        "severity": 3,
+        "prediction": {
+          "metric": "motion",
+          "expect": "A_more"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 2.5,
+        "a_observable": "Cards are staggered diagonally with a distinct perspective tilt.",
+        "b_observable": "Cards are aligned in a straight vertical column with flat perspective.",
+        "fix": "Stagger the cards diagonally and adjust the camera angle for more perspective tilt.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.5,
+        "a_observable": "Deep contact shadows under the cards create a strong sense of depth.",
+        "b_observable": "Faint contact shadows make the cards appear flat against the background.",
+        "fix": "Increase the intensity of contact shadows and ambient occlusion.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.1,
+        "a_observable": "Strong vignette with darker corners and soft light falloff.",
+        "b_observable": "Flat, even lighting across the frame with no visible vignette.",
+        "fix": "Add a vignette in post-production to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Animate the camera after the cut to match the slow pan and rotation of the reference, and stagger the cards diagonally to restore the dynamic layout."
+  }
+}

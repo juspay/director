@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and zoom"
+    ],
+    "b_motion": [
+      "slow camera pan and zoom"
+    ],
+    "absent_in_b": [
+      "the square 3D tile base underneath the Secure Payments badge"
+    ],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 1.2,
+        "a_observable": "The 'Secure Payments' badge is mounted on a larger square 3D tile with bevelled edges.",
+        "b_observable": "The 'Secure Payments' badge is a standalone rounded rectangle tile with no square tile underneath it.",
+        "fix": "Model the 'Secure Payments' badge as a separate element mounted on a square tile base.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 1.5,
+        "a_observable": "The camera has a lower perspective angle, showing the vertical depth of the tiles.",
+        "b_observable": "The camera has a higher, more top-down angle, reducing the visible depth of the tiles.",
+        "fix": "Lower the camera angle to match the perspective of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 1.8,
+        "a_observable": "The overall lighting has a warm, neutral tone with cream-colored tiles.",
+        "b_observable": "The overall scene has a cool, bluish-grey color cast.",
+        "fix": "Adjust the lighting color temperature to be warmer and match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Recreate the grid as individual 3D block tiles with bevelled edges and mount the badges on top of them, rather than using a flat plane with texture lines."
+  }
+}

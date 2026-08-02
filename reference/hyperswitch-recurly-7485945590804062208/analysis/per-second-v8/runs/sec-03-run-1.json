@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "tilt"
+    ],
+    "b_motion": [
+      "pan"
+    ],
+    "absent_in_b": [
+      "yellow background block"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 3.5,
+        "a_observable": "Tilted camera angle creates strong perspective and depth.",
+        "b_observable": "Flat, top-down camera angle with minimal perspective.",
+        "fix": "Adjust camera pitch and focal length.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 3.2,
+        "a_observable": "Warm color cast on white surfaces.",
+        "b_observable": "Neutral white lighting with no warm cast.",
+        "fix": "Add warm light source to match color temperature.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 3.8,
+        "a_observable": "Deep, soft contact shadows under the buttons.",
+        "b_observable": "Faint, flat shadows under the buttons.",
+        "fix": "Deepen shadows and adjust luma curve.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust camera angle and focal length to match the dramatic perspective of the reference video."
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "subtle zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "subtle zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 5.4,
+        "a_observable": "Camera is closer to the yellow block, cropping surrounding elements.",
+        "b_observable": "Camera is further away, showing more surrounding white blocks.",
+        "fix": "Adjust camera distance and FOV.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "material",
+        "t": 5.4,
+        "a_observable": "The inner frame of the yellow block has a brushed metal texture.",
+        "b_observable": "The inner frame has a flat matte grey appearance.",
+        "fix": "Add a brushed metal texture to the inner frame.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.4,
+        "a_observable": "Darker corners due to a stronger vignette effect.",
+        "b_observable": "More uniform brightness across the frame.",
+        "fix": "Add a vignette effect in post-production.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 5.4,
+        "a_observable": "The yellow block has a warmer, more saturated yellow hue.",
+        "b_observable": "The yellow block is slightly cooler and less saturated.",
+        "fix": "Adjust color grading to increase warmth and saturation of the yellow.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera distance and field of view to match the reference framing of the yellow block."
+  }
+}

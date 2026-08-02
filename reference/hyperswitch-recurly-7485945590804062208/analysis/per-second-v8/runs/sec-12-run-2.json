@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "zoom"
+    ],
+    "b_motion": [
+      "translation",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 12.5,
+        "a_observable": "Tighter camera framing on the Recurly and Juspay buttons.",
+        "b_observable": "Wider camera framing showing more surrounding tiles.",
+        "fix": "Adjust camera zoom and position.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "Darker corners showing a distinct vignette.",
+        "b_observable": "Uniform lighting across the frame.",
+        "fix": "Add a vignette effect.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 12.5,
+        "a_observable": "Warm, creamy white tiles.",
+        "b_observable": "Cooler, neutral white tiles.",
+        "fix": "Warm up the white balance.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust camera zoom and position to match the reference framing."
+  }
+}

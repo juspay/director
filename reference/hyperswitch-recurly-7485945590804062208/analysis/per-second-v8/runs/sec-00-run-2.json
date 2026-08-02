@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "diagonal camera drift",
+      "subtle rotation"
+    ],
+    "b_motion": [
+      "diagonal camera drift",
+      "subtle rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 0.5,
+        "a_observable": "Vibrant blue and yellow colors with high saturation.",
+        "b_observable": "Muted, desaturated colors across all tiles.",
+        "fix": "Increase saturation and contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 0.2,
+        "a_observable": "Camera is close to the central tile with a dynamic perspective.",
+        "b_observable": "Camera is further back with a flatter perspective.",
+        "fix": "Match camera focal length and position.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.8,
+        "a_observable": "Strong vignette with darker corners.",
+        "b_observable": "Flat, uniform lighting across the frame.",
+        "fix": "Add vignette falloff.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Match camera perspective and increase color saturation."
+  }
+}

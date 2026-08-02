@@ -1,0 +1,58 @@
+{
+  "ok": false,
+  "why": "reported 1 cuts, truth has 0",
+  "json": {
+    "cuts_in_window": [
+      13.33
+    ],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 13.6,
+        "a_observable": "The 'Revenue Analytics' tile at the top of the frame is out of focus and blurry.",
+        "b_observable": "The 'Revenue Analytics' tile at the top of the frame is sharp and in focus.",
+        "fix": "Enable depth of field on the camera and set the focus distance to target the main blue tile.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        }
+      },
+      {
+        "category": "material",
+        "t": 13.5,
+        "a_observable": "The border of the blue 'Juspay hyperswitch' tile has a brushed metallic texture with anisotropic reflections.",
+        "b_observable": "The border of the blue tile is a flat, matte grey material without metallic reflections or texture.",
+        "fix": "Apply a brushed metal material with appropriate roughness and metallic maps to the tile border.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 13.1,
+        "a_observable": "The corners of the frame are significantly darker than the center, showing a strong vignette.",
+        "b_observable": "The corners of the frame have nearly the same brightness as the center, lacking a vignette.",
+        "fix": "Add a vignette post-process effect or adjust the camera's physical vignette settings.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Apply a brushed metallic material to the borders of the tiles to match the premium look of the reference."
+  }
+}
