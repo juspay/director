@@ -1,0 +1,59 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "pan",
+      "zoom",
+      "cut"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom",
+      "cut"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 8.5,
+        "a_observable": "The background tiles in the top-right corner are heavily blurred due to a shallow depth of field.",
+        "b_observable": "The background tiles are in sharp focus, indicating a much wider depth of field.",
+        "fix": "Enable depth of field on the camera and adjust focus distance to blur the background.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "material",
+        "t": 8.3,
+        "a_observable": "The yellow Recurly button and blue Hyperswitch button have a distinct metallic bevel around their colored inserts.",
+        "b_observable": "The buttons lack this metallic bevel, appearing as flat colored shapes on the white tiles.",
+        "fix": "Add a metallic beveled frame material around the colored inserts of the buttons.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 8.5,
+        "a_observable": "The white tiles and background have a cooler, blue-cyan color cast.",
+        "b_observable": "The white tiles are neutral grey and white with no color cast.",
+        "fix": "Adjust the white balance or add a cool blue-cyan color grading to the scene.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Enable depth of field on the camera and adjust focus distance to match the reference's shallow depth of field."
+  }
+}

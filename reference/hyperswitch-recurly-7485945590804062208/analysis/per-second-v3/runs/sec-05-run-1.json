@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 5.5,
+        "a_observable": "The camera is positioned closer to the grid, creating a dynamic perspective with the yellow card dominating the frame.",
+        "b_observable": "The camera is positioned further back, making the cards appear smaller with a flatter perspective.",
+        "fix": "Move the camera closer and adjust the field of view to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.5,
+        "a_observable": "A strong vignette is present, darkening the corners of the frame significantly.",
+        "b_observable": "The vignette is absent, leaving the corners as bright as the center.",
+        "fix": "Add a vignette post-process to match the corner falloff.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 5.5,
+        "a_observable": "The white tiles exhibit a distinct cool blue color cast.",
+        "b_observable": "The white tiles are neutral white with a warm undertone.",
+        "fix": "Apply a cool blue color grade to the scene.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler",
+          "region": "full"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.5,
+        "a_observable": "Deep shadows are visible in the gaps between the tiles, creating high contrast.",
+        "b_observable": "Shadows in the tile gaps are extremely faint and bright.",
+        "fix": "Increase shadow density and ambient occlusion in the gaps.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and field of view to match the dynamic close-up perspective of the reference."
+  }
+}

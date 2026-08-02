@@ -1,0 +1,79 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and zoom out"
+    ],
+    "b_motion": [
+      "slow camera pan and zoom out"
+    ],
+    "absent_in_b": [
+      "vibrant blue and yellow colors",
+      "vignette/shadow depth"
+    ],
+    "differences": [
+      {
+        "category": "color",
+        "t": 1.5,
+        "a_observable": "The blue shield icon and the surrounding elements have highly saturated, vibrant blue and yellow colors.",
+        "b_observable": "The scene is extremely desaturated, appearing almost entirely white and grey.",
+        "fix": "Increase color saturation and match the color grading of Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 1.5,
+        "a_observable": "The camera is positioned close to the central card with a distinct tilt and shallow depth of field.",
+        "b_observable": "The camera is further away, has a flatter angle, and a much wider depth of field.",
+        "fix": "Adjust the camera position, tilt angle, and lens aperture to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "There are deep shadows around the card edges, creating high contrast and depth.",
+        "b_observable": "The lighting is very flat and bright, lacking deep shadows and contrast.",
+        "fix": "Adjust the light sources and shadow settings to increase contrast and depth.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 1.5,
+        "a_observable": "The 'Renewal Success' card is positioned directly above the 'Secure Payments' card, and a bright blue card is visible on the left.",
+        "b_observable": "The 'Renewal Success' card is shifted to the upper right, and the card on the left is grey and positioned differently.",
+        "fix": "Re-align the 3D cards to match the layout of Video A.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "typography",
+        "t": 1.5,
+        "a_observable": "The text 'Secure Payments' is set in a bold sans-serif font with tight line spacing.",
+        "b_observable": "The text is set in a thinner sans-serif font with wider line spacing.",
+        "fix": "Change the font weight and adjust the line spacing to match Video A.",
+        "severity": 1,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Match the camera framing, angle, and focal length of Video A, and restore the vibrant color saturation and contrast."
+  }
+}

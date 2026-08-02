@@ -1,0 +1,221 @@
+{
+  "sec": 13,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera zoom out"
+      ],
+      "b_motion": [
+        "camera zoom out"
+      ],
+      "absent_in_b": [
+        "metallic borders on cards"
+      ],
+      "differences": [
+        {
+          "category": "material",
+          "t": 13.2,
+          "a_observable": "Cards have metallic silver borders.",
+          "b_observable": "Cards lack metallic borders.",
+          "fix": "Add metallic borders to the cards.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 13.7,
+          "a_observable": "Pronounced vignette with darker corners.",
+          "b_observable": "Flat, uniform lighting with bright corners.",
+          "fix": "Add a vignette to darken the corners.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Add metallic borders to the cards and apply a vignette to match the reference lighting.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 13.2,
+          "a_observable": "The camera is positioned closer to the cards, with the yellow Recurly card occupying a large portion of the upper-left quadrant.",
+          "b_observable": "The camera is positioned much further away, showing more of the surrounding white grid tiles and making the main cards appear smaller.",
+          "fix": "Adjust the camera distance and focal length to match the close-up framing of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 13.5,
+          "a_observable": "The corners of the frame are significantly darker than the center due to a strong vignette effect.",
+          "b_observable": "The lighting is uniform and flat across the entire frame, lacking any corner falloff or vignette.",
+          "fix": "Add a vignette effect to darken the edges of the frame and focus attention on the center.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 13.8,
+          "a_observable": "The yellow Recurly card has a warm, saturated golden hue.",
+          "b_observable": "The yellow card is a pale, desaturated lemon-yellow.",
+          "fix": "Adjust the color grading to increase the saturation and warmth of the yellow and blue elements.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera distance and focal length to match the close-up framing of the reference, as the current distant camera position significantly alters the composition.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera zoom out"
+      ],
+      "b_motion": [
+        "camera zoom out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 13.3,
+          "a_observable": "The camera is positioned lower and tilted upwards, creating a dynamic perspective on the 3D blocks.",
+          "b_observable": "The camera is positioned higher with a flatter, more top-down angle.",
+          "fix": "Lower the camera height and tilt it upwards to match the reference perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 13.5,
+          "a_observable": "The yellow Recurly button has a vibrant, saturated yellow color.",
+          "b_observable": "The yellow Recurly button is less saturated and has a slightly greenish tint.",
+          "fix": "Adjust the yellow material color to be more saturated and warm.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 13.1,
+          "a_observable": "The 'Live Now' button is positioned centrally between the yellow and blue buttons.",
+          "b_observable": "The 'Live Now' button is shifted higher up relative to the blue button.",
+          "fix": "Reposition the 'Live Now' button to match the reference layout.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and position to match the dynamic perspective of the reference video.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 13.5,
+        "a_observable": "The corners of the frame are significantly darker than the center due to a strong vignette effect.",
+        "b_observable": "The lighting is uniform and flat across the entire frame, lacking any corner falloff or vignette.",
+        "fix": "Add a vignette effect to darken the edges of the frame and focus attention on the center.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 209.4,
+            "center_mean": 193.52,
+            "falloff_pct": -8.2
+          },
+          "B": {
+            "corner_mean": 225.63,
+            "center_mean": 203.17,
+            "falloff_pct": -11.05
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 13.8,
+        "a_observable": "The yellow Recurly card has a warm, saturated golden hue.",
+        "b_observable": "The yellow card is a pale, desaturated lemon-yellow.",
+        "fix": "Adjust the color grading to increase the saturation and warmth of the yellow and blue elements.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 194.54,
+            "g": 204.55,
+            "b": 200.7,
+            "rb_delta": -6.16,
+            "saturation": 0.1847
+          },
+          "B": {
+            "r": 213.76,
+            "g": 212.74,
+            "b": 210.29,
+            "rb_delta": 3.47,
+            "saturation": 0.0982
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the color grading to increase the saturation of the yellow elements and apply a vignette effect to match the reference lighting.",
+    "dropped_unsupported": 4
+  }
+}

@@ -1,10 +1,18 @@
 {
-  "07:0": {
-    "verdict": "refuted",
-    "note": "Revenue Analytics sits upper-RIGHT in BOTH frames (in B it is smaller, farther and angled, but clearly in the right half — not 'upper left-center'). The real positional difference is the PSP tile: bottom-centre in A vs clipped at the bottom-left edge in B. Half the claim is true, but as stated it is contradicted."
-  },
-  "07:1": {
+  "01:1": {
     "verdict": "supported",
-    "note": "A's plinth shows pronounced brushed striations with warm/cool reflection variation along the brushing direction. B's bezel reads as a near-uniform cool grey with only the faintest texture and no directional highlight response. B is not literally textureless, but the claimed difference is plainly visible."
+    "note": "Distance and DOF halves are unmistakable: A's card fills the frame with heavy edge falloff (yellow card below is fully bokeh'd); B frames far more set and holds near-uniform sharpness to the frame edges (ruled tile crisp at right border). The 'flatter angle' qualifier is not established — B's rake looks comparable — but nothing contradicts the claim's substance."
+  },
+  "02:1": {
+    "verdict": "supported",
+    "note": "Exact: dots grid hugs the left edge in A; the dotted tile sits upper-right in B. Both halves hold as stated."
+  },
+  "07:2": {
+    "verdict": "refuted",
+    "note": "In B the Revenue Analytics tile sits up and to the RIGHT of the JUSPAY card (tile centre ~x560 vs card centre ~x390), same relative side as A — not 'top-left'. Second consecutive false left/right relative-position claim endorsed by channel B."
+  },
+  "09:0": {
+    "verdict": "supported",
+    "note": "Direction holds with modest magnitude: B's brand cards are ~12-15% smaller in frame and surrounded by more empty tile area. (Unclaimed but conspicuous at this moment: A shows strong dappled light pools across the wall and B is uniformly flat, and B's whole frame is soft.)"
   }
 }

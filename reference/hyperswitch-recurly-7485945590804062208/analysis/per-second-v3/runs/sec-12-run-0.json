@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "zoom"
+    ],
+    "b_motion": [
+      "translation",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 12.25,
+        "a_observable": "The tiles are framed closely, filling most of the screen.",
+        "b_observable": "The camera is pulled back, making the tiles appear much smaller with excess empty space.",
+        "fix": "Adjust camera distance or zoom to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 12.5,
+        "a_observable": "The white tiles exhibit a cool blue color cast.",
+        "b_observable": "The white tiles are neutral warm grey.",
+        "fix": "Apply a cool blue color grading to the scene.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "The shadows between the tiles are deep and dark, providing high contrast.",
+        "b_observable": "The shadows are bright and soft, leading to a flat, low-contrast look.",
+        "fix": "Deepen shadows and increase contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing and distance to match the close-up composition of the reference video."
+  }
+}

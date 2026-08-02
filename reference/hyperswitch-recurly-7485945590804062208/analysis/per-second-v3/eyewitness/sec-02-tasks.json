@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 2,
+    "idx": 1,
+    "t": 2.5,
+    "category": "layout",
+    "a_observable": "The grid of dots is located on the left side of the vertical stack of blocks.",
+    "b_observable": "The grid of dots is located on the right side of the vertical stack of blocks.",
+    "frames": {
+      "A": "analysis/per-second-v3/eyewitness/sec-02-c1-A.png",
+      "B": "analysis/per-second-v3/eyewitness/sec-02-c1-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "The claim is fully supported. In Clip A, the grid of dots is indeed located to the left of the vertical stack containing 'Subscriptions', 'Retries', and 'APMs'. In Clip B, the grid of dots is located to the right of this vertical stack."
+    }
+  }
+]

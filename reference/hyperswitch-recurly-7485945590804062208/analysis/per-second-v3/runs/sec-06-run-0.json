@@ -1,0 +1,71 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "pan",
+      "tilt"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 6.8,
+        "a_observable": "The background card 'Revenue Analytics' is heavily blurred due to a shallow depth of field.",
+        "b_observable": "The background card 'Revenue Analytics' is sharp and in focus.",
+        "fix": "Enable depth of field on the camera and adjust the aperture to blur the background.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        }
+      },
+      {
+        "category": "color",
+        "t": 6.2,
+        "a_observable": "The white cards have a cool, blue-tinted color cast.",
+        "b_observable": "The white cards are neutral white/grey with no blue tint.",
+        "fix": "Apply a cool color grade or adjust the light colors to introduce a blue cast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler",
+          "region": "center"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.5,
+        "a_observable": "The corners of the frame are significantly darker than the center due to a vignette.",
+        "b_observable": "The corners of the frame have similar brightness to the center.",
+        "fix": "Add a vignette to darken the corners of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "full"
+        }
+      },
+      {
+        "category": "material",
+        "t": 6.9,
+        "a_observable": "The blue card has a glossy finish with subtle specular reflections along its rounded edges.",
+        "b_observable": "The blue card has a flat, matte finish with no specular highlights on the edges.",
+        "fix": "Adjust the material roughness and specular settings of the blue card to create glossy edge highlights.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Enable depth of field on the camera and adjust the aperture to match the shallow focus of the reference, particularly in the second shot after the cut."
+  }
+}

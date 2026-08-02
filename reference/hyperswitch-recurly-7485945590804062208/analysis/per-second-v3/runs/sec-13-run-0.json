@@ -1,0 +1,43 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zoom out"
+    ],
+    "b_motion": [
+      "camera zoom out"
+    ],
+    "absent_in_b": [
+      "metallic borders on cards"
+    ],
+    "differences": [
+      {
+        "category": "material",
+        "t": 13.2,
+        "a_observable": "Cards have metallic silver borders.",
+        "b_observable": "Cards lack metallic borders.",
+        "fix": "Add metallic borders to the cards.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 13.7,
+        "a_observable": "Pronounced vignette with darker corners.",
+        "b_observable": "Flat, uniform lighting with bright corners.",
+        "fix": "Add a vignette to darken the corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Add metallic borders to the cards and apply a vignette to match the reference lighting."
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zoom out",
+      "slow pan"
+    ],
+    "b_motion": [
+      "camera zoom out",
+      "slow pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "Strong shadows between the 3D tiles, creating high contrast and depth.",
+        "b_observable": "Very weak, flat shadows between the tiles, making the grid look flat.",
+        "fix": "Increase shadow intensity and depth of the 3D tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      },
+      {
+        "category": "color",
+        "t": 11.5,
+        "a_observable": "The white background tiles have a distinct cool blue color cast.",
+        "b_observable": "The white background tiles are neutral grey/warm off-white.",
+        "fix": "Adjust color temperature to introduce a cool blue cast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler",
+          "region": "full"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 11.5,
+        "a_observable": "Background and foreground tiles are softly blurred due to shallow depth of field.",
+        "b_observable": "All tiles across the frame are uniformly sharp, lacking depth of field blur.",
+        "fix": "Enable depth of field on the camera to blur the foreground and background.",
+        "severity": 2,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Increase shadow intensity and depth of the 3D tiles to match the contrast and depth of the reference."
+  }
+}

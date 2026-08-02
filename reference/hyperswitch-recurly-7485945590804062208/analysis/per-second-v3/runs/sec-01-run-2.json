@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera drift"
+    ],
+    "b_motion": [
+      "slow camera drift"
+    ],
+    "absent_in_b": [
+      "blue and yellow tile colors",
+      "vignette lighting falloff"
+    ],
+    "differences": [
+      {
+        "category": "color",
+        "t": 1,
+        "a_observable": "The tile on the left is vibrant blue and the tile at the bottom is bright yellow.",
+        "b_observable": "The surrounding tiles are desaturated, appearing off-white or light gray.",
+        "fix": "Apply the correct blue and yellow materials to the keyboard tiles surrounding the central card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 1,
+        "a_observable": "The camera is positioned close to the 'Secure Payments' tile, creating a tight diagonal composition.",
+        "b_observable": "The camera is pulled further back, showing a wider view of the tiles with a flatter angle.",
+        "fix": "Re-align the camera's position, rotation, and field of view to match the tight, dynamic perspective of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "The scene has a soft lighting gradient with a distinct vignette that darkens the corners.",
+        "b_observable": "The illumination is flat and uniform across the frame, lacking any corner falloff.",
+        "fix": "Adjust the light sources and add a vignette pass to replicate the soft, focused lighting of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Apply the correct vibrant blue and yellow materials to the surrounding keyboard tiles to match the reference's color palette."
+  }
+}

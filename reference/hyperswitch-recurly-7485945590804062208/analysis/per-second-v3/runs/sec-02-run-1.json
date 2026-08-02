@@ -1,0 +1,46 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.21
+    ],
+    "a_motion": [
+      "camera zoom out",
+      "cut",
+      "camera pan"
+    ],
+    "b_motion": [
+      "camera zoom out",
+      "cut",
+      "camera pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 2.1,
+        "a_observable": "Vibrant blue and yellow tiles are visible in the background.",
+        "b_observable": "The background tiles are monochromatic grey.",
+        "fix": "Assign the correct blue and yellow materials to the background tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.5,
+        "a_observable": "Soft, dark drop shadows are visible under the floating tiles.",
+        "b_observable": "Drop shadows are extremely faint, making the tiles look flat.",
+        "fix": "Increase the shadow density and softness under the floating tiles.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Restore the vibrant blue and yellow materials to the background tiles to match the reference color palette."
+  }
+}

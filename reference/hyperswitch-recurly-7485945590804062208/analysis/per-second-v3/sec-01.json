@@ -1,0 +1,288 @@
+{
+  "sec": 1,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt"
+      ],
+      "absent_in_b": [
+        "blue card on the left"
+      ],
+      "differences": [
+        {
+          "category": "color",
+          "t": 1,
+          "a_observable": "The card on the left is bright blue, and the overall scene has a distinct cool blue color cast.",
+          "b_observable": "The card on the left is grey, and the overall scene has a warm grey color cast with no blue glow.",
+          "fix": "Change the material color of the left card to blue and add a cool blue light source or color grade to match the reference's color cast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 1.5,
+          "a_observable": "The camera is positioned closer to the 'Secure Payments' card with a pronounced tilted (Dutch) angle.",
+          "b_observable": "The camera is further away and has a flatter, less tilted angle relative to the cards.",
+          "fix": "Adjust the camera focal length and position to be closer, and increase the roll/tilt angle to match the reference's dynamic framing.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 1.2,
+          "a_observable": "The corners of the frame are noticeably darker than the center due to a vignette effect.",
+          "b_observable": "The corners are almost as bright as the center, resulting in flat, uniform lighting.",
+          "fix": "Add a vignette effect or adjust the light falloff to darken the corners of the frame.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Correct the color cast by making the left card blue and adding a cool blue lighting/color grade, and adjust the camera framing and tilt to match the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan and zoom out"
+      ],
+      "b_motion": [
+        "slow camera pan and zoom out"
+      ],
+      "absent_in_b": [
+        "vibrant blue and yellow colors",
+        "vignette/shadow depth"
+      ],
+      "differences": [
+        {
+          "category": "color",
+          "t": 1.5,
+          "a_observable": "The blue shield icon and the surrounding elements have highly saturated, vibrant blue and yellow colors.",
+          "b_observable": "The scene is extremely desaturated, appearing almost entirely white and grey.",
+          "fix": "Increase color saturation and match the color grading of Video A.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 1.5,
+          "a_observable": "The camera is positioned close to the central card with a distinct tilt and shallow depth of field.",
+          "b_observable": "The camera is further away, has a flatter angle, and a much wider depth of field.",
+          "fix": "Adjust the camera position, tilt angle, and lens aperture to match the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 1.5,
+          "a_observable": "There are deep shadows around the card edges, creating high contrast and depth.",
+          "b_observable": "The lighting is very flat and bright, lacking deep shadows and contrast.",
+          "fix": "Adjust the light sources and shadow settings to increase contrast and depth.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 1.5,
+          "a_observable": "The 'Renewal Success' card is positioned directly above the 'Secure Payments' card, and a bright blue card is visible on the left.",
+          "b_observable": "The 'Renewal Success' card is shifted to the upper right, and the card on the left is grey and positioned differently.",
+          "fix": "Re-align the 3D cards to match the layout of Video A.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "typography",
+          "t": 1.5,
+          "a_observable": "The text 'Secure Payments' is set in a bold sans-serif font with tight line spacing.",
+          "b_observable": "The text is set in a thinner sans-serif font with wider line spacing.",
+          "fix": "Change the font weight and adjust the line spacing to match Video A.",
+          "severity": 1,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Match the camera framing, angle, and focal length of Video A, and restore the vibrant color saturation and contrast.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera drift"
+      ],
+      "b_motion": [
+        "slow camera drift"
+      ],
+      "absent_in_b": [
+        "blue and yellow tile colors",
+        "vignette lighting falloff"
+      ],
+      "differences": [
+        {
+          "category": "color",
+          "t": 1,
+          "a_observable": "The tile on the left is vibrant blue and the tile at the bottom is bright yellow.",
+          "b_observable": "The surrounding tiles are desaturated, appearing off-white or light gray.",
+          "fix": "Apply the correct blue and yellow materials to the keyboard tiles surrounding the central card.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 1,
+          "a_observable": "The camera is positioned close to the 'Secure Payments' tile, creating a tight diagonal composition.",
+          "b_observable": "The camera is pulled further back, showing a wider view of the tiles with a flatter angle.",
+          "fix": "Re-align the camera's position, rotation, and field of view to match the tight, dynamic perspective of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 1.5,
+          "a_observable": "The scene has a soft lighting gradient with a distinct vignette that darkens the corners.",
+          "b_observable": "The illumination is flat and uniform across the frame, lacking any corner falloff.",
+          "fix": "Adjust the light sources and add a vignette pass to replicate the soft, focused lighting of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Apply the correct vibrant blue and yellow materials to the surrounding keyboard tiles to match the reference's color palette.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "color",
+        "t": 1,
+        "a_observable": "The tile on the left is vibrant blue and the tile at the bottom is bright yellow.",
+        "b_observable": "The surrounding tiles are desaturated, appearing off-white or light gray.",
+        "fix": "Apply the correct blue and yellow materials to the keyboard tiles surrounding the central card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 190.87,
+            "g": 200.41,
+            "b": 203.06,
+            "rb_delta": -12.19,
+            "saturation": 0.1984
+          },
+          "B": {
+            "r": 216.45,
+            "g": 210.44,
+            "b": 201.15,
+            "rb_delta": 15.3,
+            "saturation": 0.0794
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "camera",
+        "t": 1.5,
+        "a_observable": "The camera is positioned close to the central card with a distinct tilt and shallow depth of field.",
+        "b_observable": "The camera is further away, has a flatter angle, and a much wider depth of field.",
+        "fix": "Adjust the camera position, tilt angle, and lens aperture to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 3,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 0.95,
+          "note": "The camera in Clip A is indeed closer to the 'Secure Payments' card with a noticeable tilt and a shallow depth of field (the yellow card at the bottom and blue card on the left are blurry). In Clip B, the camera is positioned further back, showing more of the surrounding tiles, with a flatter angle and a wider depth of field where almost all elements are in sharp focus."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "Distance and DOF halves are unmistakable: A's card fills the frame with heavy edge falloff (yellow card below is fully bokeh'd); B frames far more set and holds near-uniform sharpness to the frame edges (ruled tile crisp at right border). The 'flatter angle' qualifier is not established — B's rake looks comparable — but nothing contradicts the claim's substance."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "The scene has a soft lighting gradient with a distinct vignette that darkens the corners.",
+        "b_observable": "The illumination is flat and uniform across the frame, lacking any corner falloff.",
+        "fix": "Adjust the light sources and add a vignette pass to replicate the soft, focused lighting of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 203.84,
+            "center_mean": 204.62,
+            "falloff_pct": 0.39
+          },
+          "B": {
+            "corner_mean": 208.56,
+            "center_mean": 206.05,
+            "falloff_pct": -1.22
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [
+      "blue card/tile on the left",
+      "vignette"
+    ],
+    "highest_impact_fix": "Match the camera framing, angle, and focal length of Video A, and restore the vibrant color saturation and contrast.",
+    "dropped_unsupported": 2
+  }
+}

@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 1,
+    "idx": 1,
+    "t": 1.5,
+    "category": "camera",
+    "a_observable": "The camera is positioned close to the central card with a distinct tilt and shallow depth of field.",
+    "b_observable": "The camera is further away, has a flatter angle, and a much wider depth of field.",
+    "frames": {
+      "A": "analysis/per-second-v3/eyewitness/sec-01-c1-A.png",
+      "B": "analysis/per-second-v3/eyewitness/sec-01-c1-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.95,
+      "note": "The camera in Clip A is indeed closer to the 'Secure Payments' card with a noticeable tilt and a shallow depth of field (the yellow card at the bottom and blue card on the left are blurry). In Clip B, the camera is positioned further back, showing more of the surrounding tiles, with a flatter angle and a wider depth of field where almost all elements are in sharp focus."
+    }
+  }
+]

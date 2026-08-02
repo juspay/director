@@ -1,0 +1,67 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera"
+    ],
+    "b_motion": [
+      "camera"
+    ],
+    "absent_in_b": [
+      "yellow_block",
+      "blue_block"
+    ],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 3.5,
+        "a_observable": "Yellow and blue blocks are present in the background.",
+        "b_observable": "The background contains only grey and white tiles.",
+        "fix": "Add colored blocks to the background.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "layout",
+        "t": 3.5,
+        "a_observable": "Tiles are on the right with a grid of dots on the left.",
+        "b_observable": "Tiles are centered with the grid of dots on the right.",
+        "fix": "Adjust camera framing and background element layout.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 3.5,
+        "a_observable": "High-contrast lighting with bright highlights and deep shadows.",
+        "b_observable": "Flat, low-contrast lighting with weak shadows.",
+        "fix": "Increase contrast and light intensity.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "motion",
+        "t": 3.5,
+        "a_observable": "Continuous camera panning motion.",
+        "b_observable": "Camera is nearly static.",
+        "fix": "Animate camera pan to match reference speed.",
+        "severity": 3,
+        "prediction": {
+          "metric": "motion",
+          "expect": "A_more"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing, background layout, and add the missing colored background blocks to match the reference composition."
+  }
+}

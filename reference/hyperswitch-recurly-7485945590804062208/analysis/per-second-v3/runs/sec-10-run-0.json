@@ -1,0 +1,67 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zoom out"
+    ],
+    "b_motion": [
+      "camera zoom out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 10,
+        "a_observable": "Close-up camera framing with a steep angle on the yellow Recurly button.",
+        "b_observable": "Wider camera framing with a flatter angle, making the Recurly button appear smaller.",
+        "fix": "Adjust camera FOV, position, and angle to match the reference close-up.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "Pronounced vignette with darker corners and soft shadow falloff.",
+        "b_observable": "Uniform, flat lighting across the frame with minimal corner falloff.",
+        "fix": "Add a vignette effect and adjust light source falloff to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 10.8,
+        "a_observable": "Cooler, blue-tinted shadows on the white surfaces.",
+        "b_observable": "Neutral grey shadows on the white surfaces.",
+        "fix": "Apply a cool color cast to the shadows.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler",
+          "region": "full"
+        }
+      },
+      {
+        "category": "color",
+        "t": 11,
+        "a_observable": "Deeper shadows and higher contrast on the white keyboard keys.",
+        "b_observable": "Washed out shadows with lower contrast on the white keys.",
+        "fix": "Adjust the luma curve to deepen the shadows and increase contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Match the camera framing, FOV, and angle of the reference video."
+  }
+}

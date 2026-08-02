@@ -1,0 +1,244 @@
+{
+  "sec": 5,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 5.5,
+          "a_observable": "Strong corner vignette and high contrast lighting focusing on the yellow card.",
+          "b_observable": "Flat, uniform lighting across the frame with minimal corner falloff.",
+          "fix": "Add a vignette and increase contrast to match the reference lighting.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "material",
+          "t": 5.25,
+          "a_observable": "Brushed metallic texture on the inner bezel surrounding the yellow card.",
+          "b_observable": "Flat matte grey material on the inner bezel with no texture.",
+          "fix": "Add a brushed metal texture to the bezel material.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 5.5,
+          "a_observable": "Shallow depth of field blurring the background elements.",
+          "b_observable": "Deep depth of field with background elements remaining sharp.",
+          "fix": "Enable depth of field and adjust focus distance on the camera.",
+          "severity": 2,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Match the high-contrast spotlight lighting and vignette of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 5.5,
+          "a_observable": "The camera is positioned closer to the grid, creating a dynamic perspective with the yellow card dominating the frame.",
+          "b_observable": "The camera is positioned further back, making the cards appear smaller with a flatter perspective.",
+          "fix": "Move the camera closer and adjust the field of view to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 5.5,
+          "a_observable": "A strong vignette is present, darkening the corners of the frame significantly.",
+          "b_observable": "The vignette is absent, leaving the corners as bright as the center.",
+          "fix": "Add a vignette post-process to match the corner falloff.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 5.5,
+          "a_observable": "The white tiles exhibit a distinct cool blue color cast.",
+          "b_observable": "The white tiles are neutral white with a warm undertone.",
+          "fix": "Apply a cool blue color grade to the scene.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler",
+            "region": "full"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 5.5,
+          "a_observable": "Deep shadows are visible in the gaps between the tiles, creating high contrast.",
+          "b_observable": "Shadows in the tile gaps are extremely faint and bright.",
+          "fix": "Increase shadow density and ambient occlusion in the gaps.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "center"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and field of view to match the dynamic close-up perspective of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan and zoom out from the yellow card"
+      ],
+      "b_motion": [
+        "camera pan and zoom out from the yellow card"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 5.5,
+          "a_observable": "The yellow card has a thin bezel and is positioned close to neighboring tiles.",
+          "b_observable": "The yellow card has a thick dark border and tiles are spaced further apart.",
+          "fix": "Adjust tile spacing and bezel thickness to match reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 5.5,
+          "a_observable": "Pronounced shadows in the crevices between tiles, providing depth.",
+          "b_observable": "Flat lighting with weak shadows in the crevices.",
+          "fix": "Deepen contact shadows between tiles.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the lighting setup to deepen contact shadows and correct the tile layout spacing.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 5.5,
+        "a_observable": "A strong vignette is present, darkening the corners of the frame significantly.",
+        "b_observable": "The vignette is absent, leaving the corners as bright as the center.",
+        "fix": "Add a vignette post-process to match the corner falloff.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 195.6,
+            "center_mean": 168.41,
+            "falloff_pct": -16.14
+          },
+          "B": {
+            "corner_mean": 209.17,
+            "center_mean": 185.58,
+            "falloff_pct": -12.71
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 5.5,
+        "a_observable": "Deep shadows are visible in the gaps between the tiles, creating high contrast.",
+        "b_observable": "Shadows in the tile gaps are extremely faint and bright.",
+        "fix": "Increase shadow density and ambient occlusion in the gaps.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "center"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 39.32,
+            "p1": 48.22,
+            "p5": 71.15,
+            "p50": 184.79,
+            "p95": 231.71,
+            "p99": 240.07,
+            "p999": 248.15,
+            "span_p5_p95": 160.56
+          },
+          "B": {
+            "p01": 2.07,
+            "p1": 26.67,
+            "p5": 128.18,
+            "p50": 191.78,
+            "p95": 220.63,
+            "p99": 221.63,
+            "p999": 221.77,
+            "span_p5_p95": 92.45
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Increase shadow density and ambient occlusion in the gaps.",
+    "dropped_unsupported": 5
+  }
+}

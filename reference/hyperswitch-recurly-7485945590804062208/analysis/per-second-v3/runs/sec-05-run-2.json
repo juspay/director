@@ -1,0 +1,40 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan and zoom out from the yellow card"
+    ],
+    "b_motion": [
+      "camera pan and zoom out from the yellow card"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 5.5,
+        "a_observable": "The yellow card has a thin bezel and is positioned close to neighboring tiles.",
+        "b_observable": "The yellow card has a thick dark border and tiles are spaced further apart.",
+        "fix": "Adjust tile spacing and bezel thickness to match reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.5,
+        "a_observable": "Pronounced shadows in the crevices between tiles, providing depth.",
+        "b_observable": "Flat lighting with weak shadows in the crevices.",
+        "fix": "Deepen contact shadows between tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the lighting setup to deepen contact shadows and correct the tile layout spacing."
+  }
+}
