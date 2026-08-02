@@ -1,0 +1,58 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "zoom"
+    ],
+    "b_motion": [
+      "translation",
+      "zoom"
+    ],
+    "absent_in_b": [
+      "tile_dots_texture"
+    ],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "Deep, defined shadows beneath the cards provide depth.",
+        "b_observable": "Faint, diffuse shadows make the cards look flat.",
+        "fix": "Increase shadow density and ambient occlusion.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      },
+      {
+        "category": "material",
+        "t": 12.2,
+        "a_observable": "White tiles have a grid of fine grey dots.",
+        "b_observable": "White tiles are completely solid white.",
+        "fix": "Apply the dotted texture map to the white tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 12,
+        "a_observable": "The yellow Recurly card is a warm golden-yellow.",
+        "b_observable": "The yellow Recurly card is a cooler lemon-yellow.",
+        "fix": "Adjust the yellow card color to be warmer.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Add the missing dotted texture to the white tiles and deepen the shadows under the cards to restore depth."
+  }
+}

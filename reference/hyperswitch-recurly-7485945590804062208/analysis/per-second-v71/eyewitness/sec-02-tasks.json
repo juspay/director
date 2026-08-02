@@ -1,0 +1,36 @@
+[
+  {
+    "sec": 2,
+    "idx": 0,
+    "t": 2.1,
+    "category": "camera",
+    "a_observable": "The camera has a moderate tilt, showing the yellow card at the bottom.",
+    "b_observable": "The camera is tilted much more steeply, showing the yellow card at the top-left.",
+    "frames": {
+      "A": "analysis/per-second-v71/eyewitness/sec-02-c0-A.png",
+      "B": "analysis/per-second-v71/eyewitness/sec-02-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "The claim accurately describes the camera tilt and the position of the yellow card in both clips. In Clip A, the yellow card is at the bottom, while in Clip B, the camera is tilted more steeply, showing the yellow card at the top-left."
+    }
+  },
+  {
+    "sec": 2,
+    "idx": 3,
+    "t": 2.5,
+    "category": "staging",
+    "a_observable": "A yellow card is visible in the top-left corner of the frame.",
+    "b_observable": "The top-left corner shows a white card instead of a yellow card.",
+    "frames": {
+      "A": "analysis/per-second-v71/eyewitness/sec-02-c3-A.png",
+      "B": "analysis/per-second-v71/eyewitness/sec-02-c3-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "In Clip A, at around 00:00.875, a yellow card is clearly visible in the top-left corner of the frame. In Clip B, at the same timestamp, the top-left corner shows a white card instead."
+    }
+  }
+]

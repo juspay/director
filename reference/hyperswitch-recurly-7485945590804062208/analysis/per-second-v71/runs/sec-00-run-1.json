@@ -1,0 +1,53 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and rotation"
+    ],
+    "b_motion": [
+      "slow camera pan and rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 0.5,
+        "a_observable": "Close-up camera framing centered on the 'Secure Payments' key.",
+        "b_observable": "Distant isometric camera framing with the key smaller and offset.",
+        "fix": "Match camera position and focal length to Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.5,
+        "a_observable": "Bright white highlights on keys with distinct soft shadows.",
+        "b_observable": "Dull greyish highlights and flatter overall contrast.",
+        "fix": "Adjust lighting and luma curve to increase contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "color",
+        "t": 0.5,
+        "a_observable": "The blue shield icon has high color saturation.",
+        "b_observable": "The blue shield icon is less saturated and slightly desaturated.",
+        "fix": "Increase saturation of the blue material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and focal length to match the close-up framing of Video A."
+  }
+}

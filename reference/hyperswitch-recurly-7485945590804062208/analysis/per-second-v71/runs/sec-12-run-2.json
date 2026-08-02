@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zoom out",
+      "subtle camera rotation"
+    ],
+    "b_motion": [
+      "camera zoom out",
+      "subtle camera rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 12.2,
+        "a_observable": "Background tiles in corners are heavily blurred by shallow depth of field.",
+        "b_observable": "Background tiles in corners are in sharp focus.",
+        "fix": "Enable camera depth of field and adjust aperture.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "Frame corners are darker than the center, showing a strong vignette.",
+        "b_observable": "Frame corners are bright, lacking vignette.",
+        "fix": "Add a vignette effect in post-production.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "material",
+        "t": 12,
+        "a_observable": "The recess around the yellow card has deep, dark shadows.",
+        "b_observable": "The recess around the yellow card lacks dark shadows, appearing flat.",
+        "fix": "Increase ambient occlusion or shadow depth in recessed areas.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Enable camera depth of field to match the reference blur in the background."
+  }
+}

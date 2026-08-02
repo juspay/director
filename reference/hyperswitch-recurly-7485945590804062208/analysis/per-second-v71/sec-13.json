@@ -1,0 +1,246 @@
+{
+  "sec": 13,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "zoom",
+        "pan"
+      ],
+      "b_motion": [
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 13.25,
+          "a_observable": "Camera is zoomed out further, showing a wider view of the grid.",
+          "b_observable": "Camera is closer, showing a tighter crop on the central buttons.",
+          "fix": "Adjust camera position to match the wider framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 13.25,
+          "a_observable": "White tiles are bright and clean with soft shadows.",
+          "b_observable": "White tiles are grey and underexposed with dark shadows.",
+          "fix": "Increase key light brightness and soften shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_brighter_highlights"
+          }
+        },
+        {
+          "category": "motion",
+          "t": 13.5,
+          "a_observable": "Continuous camera zoom-out and pan.",
+          "b_observable": "Camera is nearly static with minimal movement.",
+          "fix": "Increase camera animation speed and range.",
+          "severity": 2,
+          "prediction": {
+            "metric": "motion",
+            "expect": "A_more"
+          }
+        }
+      ],
+      "highest_impact_fix": "Increase key light intensity to correct the underexposed grey tiles.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "camera zoom out"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 13.2,
+          "a_observable": "The Recurly and Juspay cards are aligned horizontally with a moderate gap.",
+          "b_observable": "The Recurly card is positioned much higher and further left, creating a diagonal layout with a larger gap.",
+          "fix": "Realign the cards to match the reference horizontal spacing and composition.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 13.5,
+          "a_observable": "Deeper contact shadows are visible between the cards, with a noticeable vignette darkening the corners.",
+          "b_observable": "The lighting is flat with uniform white cards and minimal corner shading.",
+          "fix": "Increase the vignette strength and deepen the contact shadows between elements.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 13.1,
+          "a_observable": "The yellow Recurly card has a warm, golden hue.",
+          "b_observable": "The yellow Recurly card has a cooler, slightly greenish-yellow hue.",
+          "fix": "Adjust the color temperature of the yellow material to match the warm tone of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the layout and spacing of the cards to match the reference composition.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 13,
+          "a_observable": "Strong depth of field blur is visible on the background tiles and corners, with only the central buttons in sharp focus.",
+          "b_observable": "The entire frame, including background tiles and corners, is in sharp focus with negligible depth of field blur.",
+          "fix": "Enable depth of field in the camera settings with a wider aperture to match the reference blur.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 13.2,
+          "a_observable": "The lighting has a pronounced vignette with significant falloff towards the corners of the frame.",
+          "b_observable": "The lighting is flat and uniform across the entire frame, with almost no corner falloff.",
+          "fix": "Add a vignette or adjust the light source falloff to darken the corners and edges.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 13,
+          "a_observable": "The yellow button has a warm, golden-yellow hue, and the blue button has a rich, saturated royal blue color.",
+          "b_observable": "The yellow button is a cooler lemon-yellow, and the blue button is less saturated and has a different hue.",
+          "fix": "Adjust the materials' diffuse colors to match the warmer yellow and richer blue of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 13.5,
+          "a_observable": "The camera is positioned closer to the grid, making the 'Recurly' and 'JUSPAY' buttons appear larger and more prominent in the frame.",
+          "b_observable": "The camera is positioned further away, showing more of the surrounding tiles and making the main buttons appear smaller.",
+          "fix": "Adjust the camera focal length or position to match the tighter framing of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Enable depth of field on the camera with a wide aperture to match the reference's soft background blur, and adjust the camera framing to be closer to the grid.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 13.2,
+        "a_observable": "The lighting has a pronounced vignette with significant falloff towards the corners of the frame.",
+        "b_observable": "The lighting is flat and uniform across the entire frame, with almost no corner falloff.",
+        "fix": "Add a vignette or adjust the light source falloff to darken the corners and edges.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 209.26,
+            "center_mean": 193.58,
+            "falloff_pct": -8.1
+          },
+          "B": {
+            "corner_mean": 167.54,
+            "center_mean": 178,
+            "falloff_pct": 5.88
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 13.1,
+        "a_observable": "The yellow Recurly card has a warm, golden hue.",
+        "b_observable": "The yellow Recurly card has a cooler, slightly greenish-yellow hue.",
+        "fix": "Adjust the color temperature of the yellow material to match the warm tone of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_cooler",
+          "A": {
+            "r": 194.14,
+            "g": 204.13,
+            "b": 200.3,
+            "rb_delta": -6.16,
+            "saturation": 0.1878
+          },
+          "B": {
+            "r": 164.16,
+            "g": 173.26,
+            "b": 187.49,
+            "rb_delta": -23.33,
+            "saturation": 0.2162
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Add a vignette or adjust the light source falloff to darken the corners and edges.",
+    "dropped_unsupported": 6
+  }
+}

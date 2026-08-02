@@ -1,0 +1,53 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and tilt around the central yellow card"
+    ],
+    "b_motion": [
+      "slow camera pan and tilt across the yellow and white layout"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 5.1,
+        "a_observable": "The yellow Recurly card is positioned centrally, surrounded by white cards in a grid.",
+        "b_observable": "The yellow Recurly card is aligned to a solid yellow band on the left with a different layout.",
+        "fix": "Recreate the grid layout and card placement of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 5.4,
+        "a_observable": "The camera angle is tilted, showing three-dimensional depth.",
+        "b_observable": "The camera angle is flatter and more top-down, reducing depth.",
+        "fix": "Adjust the camera tilt and perspective to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.7,
+        "a_observable": "The scene has soft, diffused lighting with gentle shadows.",
+        "b_observable": "The lighting is flatter and brighter with higher contrast.",
+        "fix": "Soften the light source and adjust shadow settings.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_higher_contrast",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Realign the camera angle and recreate the grid layout to match the reference perspective and composition."
+  }
+}

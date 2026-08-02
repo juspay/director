@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zoom out",
+      "camera pan"
+    ],
+    "b_motion": [
+      "camera zoom out",
+      "camera pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 9.1,
+        "a_observable": "The corners of the frame show a distinct vignette effect with darker shading.",
+        "b_observable": "The corners are nearly as bright as the center, lacking a vignette.",
+        "fix": "Add a stronger vignette to match the reference video's corner shading.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 9.5,
+        "a_observable": "The yellow card has a warm, muted golden-yellow hue.",
+        "b_observable": "The yellow card has a highly saturated, bright lemon-yellow hue.",
+        "fix": "Adjust the color of the yellow card to be warmer and less saturated.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated",
+          "region": "center"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 9.8,
+        "a_observable": "The camera perspective is wider, showing more of the surrounding grid.",
+        "b_observable": "The camera perspective is narrower, making the cards appear larger.",
+        "fix": "Increase the camera's field of view to match the reference framing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the yellow card's color saturation and add a stronger vignette to match the reference video's aesthetic."
+  }
+}

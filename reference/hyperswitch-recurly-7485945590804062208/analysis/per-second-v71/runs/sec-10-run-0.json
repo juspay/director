@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan",
+      "slow zoom out"
+    ],
+    "b_motion": [
+      "slow camera pan",
+      "slow zoom out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 10,
+        "a_observable": "The yellow Recurly card is centered and tilted diagonally, surrounded by white and blue cards.",
+        "b_observable": "The yellow Recurly card is shifted left, with a solid yellow stripe on the left edge.",
+        "fix": "Realign the card grid and match the diagonal camera framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 10.5,
+        "a_observable": "Background cards like Secure Payments are heavily blurred due to shallow depth of field.",
+        "b_observable": "Background cards remain sharp with minimal focus falloff.",
+        "fix": "Enable shallow depth of field in camera settings.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "left"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.2,
+        "a_observable": "Corners of the frame show a distinct vignette with luminance falloff.",
+        "b_observable": "Corners are evenly bright with no visible vignette.",
+        "fix": "Apply a vignette effect to match the corner falloff.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the card layout and camera framing to match the reference's composition and diagonal tilt."
+  }
+}

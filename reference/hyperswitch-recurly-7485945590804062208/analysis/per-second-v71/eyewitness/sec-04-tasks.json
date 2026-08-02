@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 4,
+    "idx": 0,
+    "t": 4.2,
+    "category": "staging",
+    "a_observable": "A yellow tile is visible in the top-left corner.",
+    "b_observable": "No yellow tile is visible in the top-left corner.",
+    "frames": {
+      "A": "analysis/per-second-v71/eyewitness/sec-04-c0-A.png",
+      "B": "analysis/per-second-v71/eyewitness/sec-04-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.95,
+      "note": "In Clip A, a yellow horizontal tile/bar is clearly visible in the top-left corner under the word 'Billing'. In Clip B, this yellow tile is not present in the top-left corner."
+    }
+  }
+]

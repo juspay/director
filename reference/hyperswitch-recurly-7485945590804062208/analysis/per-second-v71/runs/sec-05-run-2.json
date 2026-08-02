@@ -1,0 +1,42 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera panning",
+      "camera zooming"
+    ],
+    "b_motion": [
+      "camera panning",
+      "camera zooming"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 5.5,
+        "a_observable": "The yellow Recurly tile is surrounded by white and grey tiles in a tight grid layout.",
+        "b_observable": "The yellow Recurly tile sits on a background with a prominent diagonal yellow stripe and different tile arrangement.",
+        "fix": "Re-arrange the tiles to match the reference grid layout and remove the yellow background stripe.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.2,
+        "a_observable": "Deep, soft ambient occlusion shadows are visible in the crevices between the tiles.",
+        "b_observable": "The crevices between tiles have weak, washed-out shadows with less definition.",
+        "fix": "Increase ambient occlusion or shadow depth to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Re-arrange the tiles in Video B to match the tight grid layout of Video A and remove the yellow background stripe."
+  }
+}

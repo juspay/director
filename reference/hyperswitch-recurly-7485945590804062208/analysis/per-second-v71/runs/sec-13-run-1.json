@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera zoom out"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 13.2,
+        "a_observable": "The Recurly and Juspay cards are aligned horizontally with a moderate gap.",
+        "b_observable": "The Recurly card is positioned much higher and further left, creating a diagonal layout with a larger gap.",
+        "fix": "Realign the cards to match the reference horizontal spacing and composition.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 13.5,
+        "a_observable": "Deeper contact shadows are visible between the cards, with a noticeable vignette darkening the corners.",
+        "b_observable": "The lighting is flat with uniform white cards and minimal corner shading.",
+        "fix": "Increase the vignette strength and deepen the contact shadows between elements.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 13.1,
+        "a_observable": "The yellow Recurly card has a warm, golden hue.",
+        "b_observable": "The yellow Recurly card has a cooler, slightly greenish-yellow hue.",
+        "fix": "Adjust the color temperature of the yellow material to match the warm tone of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the layout and spacing of the cards to match the reference composition."
+  }
+}

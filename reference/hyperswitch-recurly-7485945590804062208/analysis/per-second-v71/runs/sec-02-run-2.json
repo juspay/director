@@ -1,0 +1,71 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.2
+    ],
+    "a_motion": [
+      "camera pan",
+      "camera tilt"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera tilt"
+    ],
+    "absent_in_b": [
+      "yellow card in top-left background",
+      "yellow card in bottom-right background"
+    ],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 2.1,
+        "a_observable": "A bright yellow card is visible in the bottom-right corner of the frame.",
+        "b_observable": "The bottom-right corner shows a white card instead of a yellow card.",
+        "fix": "Change the material or color of the bottom-right card to yellow.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 2.5,
+        "a_observable": "A yellow card is visible in the top-left corner of the frame.",
+        "b_observable": "The top-left corner shows a white card instead of a yellow card.",
+        "fix": "Change the material or color of the top-left card to yellow.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 2.5,
+        "a_observable": "The camera angle has a steep tilt, creating a strong perspective on the cards.",
+        "b_observable": "The camera angle is flatter, resulting in less perspective distortion on the cards.",
+        "fix": "Adjust the camera pitch and focal length to match the reference perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 2.1,
+        "a_observable": "The blue shield icon on the 'Secure Payments' card is highly saturated.",
+        "b_observable": "The blue shield icon is noticeably desaturated.",
+        "fix": "Increase the saturation of the blue material on the shield icon.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and staging elements to match the composition and color scheme of the reference video."
+  }
+}

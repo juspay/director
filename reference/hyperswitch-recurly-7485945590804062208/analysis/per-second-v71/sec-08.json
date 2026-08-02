@@ -1,0 +1,141 @@
+{
+  "sec": 8,
+  "meta": {
+    "verified": 2,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [
+    "{\"error\":{\"code\":503,\"message\":\"This model is currently experiencing high demand. Spikes in demand are usually temporary"
+  ],
+  "runs": [
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "material",
+          "t": 8.05,
+          "a_observable": "The frame around the blue hyperswitch card has a brushed metal texture.",
+          "b_observable": "The frame is a flat grey plastic with no texture.",
+          "fix": "Apply a brushed metal texture to the card frame.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 8.5,
+          "a_observable": "The 'Live Now' button is hidden.",
+          "b_observable": "The 'Live Now' button is fully visible and static.",
+          "fix": "Animate the 'Live Now' button to slide out starting at t=8.7s.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 8.5,
+          "a_observable": "The frame corners are noticeably darker than the center.",
+          "b_observable": "The frame corners have nearly the same brightness as the center.",
+          "fix": "Add a vignette effect to darken the corners.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Animate the 'Live Now' button to slide out dynamically rather than remaining static from the start of the shot.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "camera zoom out and pan",
+        "button extrusion"
+      ],
+      "b_motion": [
+        "camera zoom out and pan",
+        "button extrusion"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 8.5,
+          "a_observable": "Tighter camera framing on the central cards.",
+          "b_observable": "Wider camera framing showing more of the surrounding grid.",
+          "fix": "Adjust camera position and focal length for a tighter crop.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 8.5,
+          "a_observable": "Shallow depth of field with blurry background tiles and Recurly card.",
+          "b_observable": "Deep depth of field with sharp background tiles and Recurly card.",
+          "fix": "Enable camera depth of field and adjust aperture to blur background.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 8.5,
+          "a_observable": "Prominent, soft shadows cast by the cards onto the background.",
+          "b_observable": "Faint, washed-out shadows, making the scene look flat.",
+          "fix": "Increase shadow density and adjust light source settings for softer shadows.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 8.5,
+          "a_observable": "Warm, saturated golden-yellow color on the Recurly card.",
+          "b_observable": "Cooler, desaturated yellow color on the Recurly card.",
+          "fix": "Adjust the yellow material color to be warmer and more saturated.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera's position, focal length, and depth of field settings to match the tighter framing and shallow focus of the reference video.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "",
+    "dropped_unsupported": 7
+  }
+}

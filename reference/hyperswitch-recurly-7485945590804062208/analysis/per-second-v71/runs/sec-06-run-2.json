@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 6.2,
+        "a_observable": "The card to the top-left of the yellow card displays a grid of grey dots.",
+        "b_observable": "The card in the same position displays horizontal lines instead of dots.",
+        "fix": "Replace the horizontal lines with a grid of dots on the top-left card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.2,
+        "a_observable": "There is a distinct vignette with darker corners focusing attention on the center.",
+        "b_observable": "The lighting is more uniform across the frame with minimal corner falloff.",
+        "fix": "Apply a stronger vignette to darken the corners of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 6.8,
+        "a_observable": "The 'PSP' card is directly below the blue card, and 'Revenue Analytics' is directly above it.",
+        "b_observable": "The 'PSP' card is shifted to the bottom-left, and 'Revenue Analytics' is shifted further up and right.",
+        "fix": "Adjust the layout and spacing of the surrounding cards to match the reference composition.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "material",
+        "t": 6.8,
+        "a_observable": "The central blue card is enclosed in a brushed metallic frame.",
+        "b_observable": "The blue card is a solid blue block without a metallic frame.",
+        "fix": "Add the brushed metal frame to the blue card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the layout and spacing of the cards after the cut to match the reference composition, and add the brushed metallic frame to the central blue card."
+  }
+}

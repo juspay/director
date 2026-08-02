@@ -1,0 +1,53 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "zoom_out"
+    ],
+    "b_motion": [
+      "zoom_out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 11.2,
+        "a_observable": "Top and bottom areas of the frame are heavily defocused.",
+        "b_observable": "The entire frame is in sharp focus with no depth of field blur.",
+        "fix": "Enable depth of field on the camera to match the reference's focus falloff.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "High contrast with deep shadows in the crevices between tiles.",
+        "b_observable": "Flat, washed-out lighting with very bright, greyish shadows.",
+        "fix": "Adjust light setup and shadow settings to deepen shadows and increase contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "color",
+        "t": 11.8,
+        "a_observable": "Warm, golden color cast over the white tiles.",
+        "b_observable": "Neutral to cool, greyish color cast on the white tiles.",
+        "fix": "Warm up the lighting or add a warm color grade.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Implement a strong depth of field effect on the camera to match the professional focus falloff of the reference."
+  }
+}

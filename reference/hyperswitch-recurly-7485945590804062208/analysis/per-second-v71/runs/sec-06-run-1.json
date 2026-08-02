@@ -1,0 +1,59 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [
+      "dot grid pattern on background cards"
+    ],
+    "differences": [
+      {
+        "category": "material",
+        "t": 6,
+        "a_observable": "The card on the left has a grid of grey dots.",
+        "b_observable": "The card on the left has horizontal lines.",
+        "fix": "Change the card texture from horizontal lines to a dot grid.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.25,
+        "a_observable": "Strong vignette with significant darkening towards the corners.",
+        "b_observable": "Flat, even lighting across the entire frame.",
+        "fix": "Add a vignette to darken the corners.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 6.9,
+        "a_observable": "The camera is at a low angle, tilted relative to the blue card.",
+        "b_observable": "The camera is at a higher angle, looking more directly down.",
+        "fix": "Adjust the camera angle and rotation.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angles and card layout to match the reference perspective and composition."
+  }
+}

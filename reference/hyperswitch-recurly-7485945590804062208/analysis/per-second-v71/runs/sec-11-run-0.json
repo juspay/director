@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and zoom out from the yellow Recurly card"
+    ],
+    "b_motion": [
+      "slow camera pan and zoom out from the yellow Recurly card"
+    ],
+    "absent_in_b": [
+      "low-angle 3D perspective of the cards",
+      "realistic ambient occlusion shadows around the card edges"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 11.2,
+        "a_observable": "The camera is positioned at a low angle relative to the cards, showing the 3D extrusion and depth of the yellow Recurly card.",
+        "b_observable": "The camera is positioned at a higher, more top-down angle, making the yellow Recurly card appear flatter with less visible 3D depth.",
+        "fix": "Adjust the camera angle and focal length to match the low-angle perspective of the reference video.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "The lighting is soft and diffused, creating subtle shadow gradients and ambient occlusion around the edges of the cards.",
+        "b_observable": "The lighting is flat and harsh, resulting in high-contrast white surfaces that lack subtle shadow details.",
+        "fix": "Soften the key light and increase ambient occlusion to capture the subtle shadow gradients on the white surfaces.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_higher_contrast",
+          "region": "full"
+        }
+      },
+      {
+        "category": "color",
+        "t": 11.5,
+        "a_observable": "The yellow Recurly card has a warm, golden-yellow color.",
+        "b_observable": "The yellow Recurly card has a bright, highly saturated lemon-yellow color.",
+        "fix": "Adjust the material color of the yellow card to match the warmer golden-yellow tone of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle to a lower perspective to capture the 3D depth of the cards, and soften the lighting to reduce contrast and restore subtle shadow gradients."
+  }
+}

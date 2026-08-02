@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan"
+    ],
+    "absent_in_b": [
+      "vignette",
+      "high_contrast_lighting"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 0.1,
+        "a_observable": "The camera is close to the keys with a steep tilt, tightly framing the 'Secure Payments' key.",
+        "b_observable": "The camera is further away at a flatter angle, showing more surrounding keys.",
+        "fix": "Adjust camera position and tilt to match the close-up, dynamic perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.5,
+        "a_observable": "The white keys are bright and well-lit with clean highlights.",
+        "b_observable": "The white keys appear grey and underexposed, lacking bright highlights.",
+        "fix": "Increase key light intensity and adjust exposure to brighten the white keys.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_brighter_highlights"
+        }
+      },
+      {
+        "category": "color",
+        "t": 0.2,
+        "a_observable": "The blue shield icon has a highly saturated, deep royal blue color.",
+        "b_observable": "The blue shield icon is a desaturated, lighter blue.",
+        "fix": "Adjust the material color of the blue shield to match the saturated royal blue.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position, angle, and focal length to match the close-up, dynamic framing of the reference video."
+  }
+}

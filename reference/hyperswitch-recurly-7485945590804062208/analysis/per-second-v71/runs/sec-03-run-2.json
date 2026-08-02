@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan down-right"
+    ],
+    "b_motion": [
+      "camera pan down-right"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 3.5,
+        "a_observable": "Stronger contrast with soft shadows cast between the tiles and a visible vignette.",
+        "b_observable": "Flat lighting with minimal shadows and no vignette, making the tiles look flat.",
+        "fix": "Adjust the lighting setup to cast softer, deeper shadows between the tiles and add a vignette.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 3.2,
+        "a_observable": "The camera is positioned closer to the tiles, framing them tightly with the bottom tile partially cut off.",
+        "b_observable": "The camera is further away, leaving significant empty space around the tiles.",
+        "fix": "Bring the camera closer or adjust the focal length to match the tight framing of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "material",
+        "t": 3.8,
+        "a_observable": "The tiles have a subtle matte texture with soft, realistic specular reflections.",
+        "b_observable": "The tiles have a completely smooth, flat plastic shader with no texture.",
+        "fix": "Add a subtle roughness map or adjust the material shader to introduce a matte texture.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera distance and focal length to achieve the tight framing of the reference, and enhance the lighting with soft shadows and a vignette to create depth."
+  }
+}

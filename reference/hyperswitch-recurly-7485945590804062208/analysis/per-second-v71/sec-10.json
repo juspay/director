@@ -1,0 +1,299 @@
+{
+  "sec": 10,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan",
+        "slow zoom out"
+      ],
+      "b_motion": [
+        "slow camera pan",
+        "slow zoom out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 10,
+          "a_observable": "The yellow Recurly card is centered and tilted diagonally, surrounded by white and blue cards.",
+          "b_observable": "The yellow Recurly card is shifted left, with a solid yellow stripe on the left edge.",
+          "fix": "Realign the card grid and match the diagonal camera framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 10.5,
+          "a_observable": "Background cards like Secure Payments are heavily blurred due to shallow depth of field.",
+          "b_observable": "Background cards remain sharp with minimal focus falloff.",
+          "fix": "Enable shallow depth of field in camera settings.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "left"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.2,
+          "a_observable": "Corners of the frame show a distinct vignette with luminance falloff.",
+          "b_observable": "Corners are evenly bright with no visible vignette.",
+          "fix": "Apply a vignette effect to match the corner falloff.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the card layout and camera framing to match the reference's composition and diagonal tilt.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera zoom out and pan"
+      ],
+      "b_motion": [
+        "slow camera zoom out and pan"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 10,
+          "a_observable": "The yellow Recurly card is framed closely, occupying most of the center screen.",
+          "b_observable": "The yellow Recurly card is framed from a distance, appearing much smaller.",
+          "fix": "Adjust camera position and focal length to match the close-up perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.5,
+          "a_observable": "Strong vignette with significant darkening at the corners.",
+          "b_observable": "Flat, uniform lighting across the corners.",
+          "fix": "Add a vignette post-process to darken the edges.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.2,
+          "a_observable": "Deep shadows in the crevices between tiles, creating high contrast.",
+          "b_observable": "Bright, washed-out shadows between tiles, resulting in low contrast.",
+          "fix": "Increase shadow depth and contrast in render settings.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "full"
+          }
+        },
+        {
+          "category": "color",
+          "t": 10.2,
+          "a_observable": "The yellow card has a highly saturated golden hue.",
+          "b_observable": "The yellow card is pale and desaturated.",
+          "fix": "Increase saturation and adjust hue of the yellow material.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "center"
+          }
+        }
+      ],
+      "highest_impact_fix": "Match the camera framing and focal length to the reference close-up perspective.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera rotation",
+        "slow zoom out"
+      ],
+      "b_motion": [
+        "slow camera rotation",
+        "slow zoom out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 10.2,
+          "a_observable": "Close-up framing on the Recurly card, with soft, deep shadows in the key crevices.",
+          "b_observable": "Wider camera framing showing a large yellow diagonal stripe on the left, with flat, light grey crevices.",
+          "fix": "Adjust camera focal length and position to match the close-up framing, and deepen the contact shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "full"
+          }
+        },
+        {
+          "category": "color",
+          "t": 10.5,
+          "a_observable": "The Recurly card has a warm, saturated golden-yellow color.",
+          "b_observable": "The Recurly card has a cooler, less saturated yellow hue with a prominent grey bevel.",
+          "fix": "Adjust the material color of the Recurly card to a warmer yellow and reduce the bevel width.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "center"
+          }
+        }
+      ],
+      "highest_impact_fix": "Match the camera framing and focal length of the reference video to ensure the close-up composition is preserved.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 10,
+        "a_observable": "The yellow Recurly card is framed closely, occupying most of the center screen.",
+        "b_observable": "The yellow Recurly card is framed from a distance, appearing much smaller.",
+        "fix": "Adjust camera position and focal length to match the close-up perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 3,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "refuted",
+          "certainty": 0.9,
+          "note": "In Clip A, the yellow Recurly card is located in the top-left quadrant of the screen, not the center, and it does not occupy most of the center screen (which is occupied by the 'Live Now' button)."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "Strong vignette with significant darkening at the corners.",
+        "b_observable": "Flat, uniform lighting across the corners.",
+        "fix": "Add a vignette post-process to darken the edges.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 210.78,
+            "center_mean": 196.59,
+            "falloff_pct": -7.22
+          },
+          "B": {
+            "corner_mean": 168.58,
+            "center_mean": 177.92,
+            "falloff_pct": 5.25
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 10.2,
+        "a_observable": "Deep shadows in the crevices between tiles, creating high contrast.",
+        "b_observable": "Bright, washed-out shadows between tiles, resulting in low contrast.",
+        "fix": "Increase shadow depth and contrast in render settings.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 32.26,
+            "p1": 91.11,
+            "p5": 97.95,
+            "p50": 210.07,
+            "p95": 236.9,
+            "p99": 240.58,
+            "p999": 250.79,
+            "span_p5_p95": 138.95
+          },
+          "B": {
+            "p01": 61.86,
+            "p1": 62.94,
+            "p5": 68.16,
+            "p50": 194.31,
+            "p95": 212.43,
+            "p99": 216.8,
+            "p999": 240,
+            "span_p5_p95": 144.27
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 10.5,
+        "a_observable": "The Recurly card has a warm, saturated golden-yellow color.",
+        "b_observable": "The Recurly card has a cooler, less saturated yellow hue with a prominent grey bevel.",
+        "fix": "Adjust the material color of the Recurly card to a warmer yellow and reduce the bevel width.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "center"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 188.04,
+            "g": 199.03,
+            "b": 197.63,
+            "rb_delta": -9.59,
+            "saturation": 0.2367
+          },
+          "B": {
+            "r": 169.16,
+            "g": 179.23,
+            "b": 190.79,
+            "rb_delta": -21.63,
+            "saturation": 0.2662
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Match the camera framing and focal length to the reference close-up perspective.",
+    "dropped_unsupported": 1
+  }
+}

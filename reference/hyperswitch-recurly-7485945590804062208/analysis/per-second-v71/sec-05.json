@@ -1,0 +1,238 @@
+{
+  "sec": 5,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 5.2,
+          "a_observable": "The Recurly card is surrounded by light gray tiles with a dark recessed border.",
+          "b_observable": "A large yellow block is visible on the left, and the recess border is thick and light gray.",
+          "fix": "Align tile layout and recess border thickness with the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 5.5,
+          "a_observable": "The camera is positioned further back, showing more tiles with a distinct perspective tilt.",
+          "b_observable": "The camera is closer to the card with a flatter perspective and different tilt.",
+          "fix": "Match camera focal length, position, and rotation to the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 5,
+          "a_observable": "The yellow card has a warm, desaturated mustard hue.",
+          "b_observable": "The yellow card is highly saturated with a bright lemon-yellow hue.",
+          "fix": "Adjust the yellow material's hue and saturation to match the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_more_saturated",
+            "region": "center"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the tile layout to remove the incorrect yellow block on the left and match the reference camera perspective.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan and tilt around the central yellow card"
+      ],
+      "b_motion": [
+        "slow camera pan and tilt across the yellow and white layout"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 5.1,
+          "a_observable": "The yellow Recurly card is positioned centrally, surrounded by white cards in a grid.",
+          "b_observable": "The yellow Recurly card is aligned to a solid yellow band on the left with a different layout.",
+          "fix": "Recreate the grid layout and card placement of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 5.4,
+          "a_observable": "The camera angle is tilted, showing three-dimensional depth.",
+          "b_observable": "The camera angle is flatter and more top-down, reducing depth.",
+          "fix": "Adjust the camera tilt and perspective to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 5.7,
+          "a_observable": "The scene has soft, diffused lighting with gentle shadows.",
+          "b_observable": "The lighting is flatter and brighter with higher contrast.",
+          "fix": "Soften the light source and adjust shadow settings.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_higher_contrast",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Realign the camera angle and recreate the grid layout to match the reference perspective and composition.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera panning",
+        "camera zooming"
+      ],
+      "b_motion": [
+        "camera panning",
+        "camera zooming"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 5.5,
+          "a_observable": "The yellow Recurly tile is surrounded by white and grey tiles in a tight grid layout.",
+          "b_observable": "The yellow Recurly tile sits on a background with a prominent diagonal yellow stripe and different tile arrangement.",
+          "fix": "Re-arrange the tiles to match the reference grid layout and remove the yellow background stripe.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 5.2,
+          "a_observable": "Deep, soft ambient occlusion shadows are visible in the crevices between the tiles.",
+          "b_observable": "The crevices between tiles have weak, washed-out shadows with less definition.",
+          "fix": "Increase ambient occlusion or shadow depth to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Re-arrange the tiles in Video B to match the tight grid layout of Video A and remove the yellow background stripe.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "layout",
+        "t": 5.2,
+        "a_observable": "The Recurly card is surrounded by light gray tiles with a dark recessed border.",
+        "b_observable": "A large yellow block is visible on the left, and the recess border is thick and light gray.",
+        "fix": "Align tile layout and recess border thickness with the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 3,
+        "status": "pending_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 0.95,
+          "note": "The visual details described in both claims match the clips. In Clip A, the yellow Recurly card is surrounded by light gray tiles with a dark recessed border. In Clip B, there is a large yellow block extending to the left of the Recurly card, and the recess border around the card is thick and light gray."
+        }
+      },
+      {
+        "category": "camera",
+        "t": 5.4,
+        "a_observable": "The camera angle is tilted, showing three-dimensional depth.",
+        "b_observable": "The camera angle is flatter and more top-down, reducing depth.",
+        "fix": "Adjust the camera tilt and perspective to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "pending_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 0.95,
+          "note": "Clip A shows a highly tilted, oblique camera angle that emphasizes the three-dimensional depth and shadows of the elements. In contrast, Clip B uses a much flatter, more top-down camera angle, which significantly reduces the sense of depth."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.2,
+        "a_observable": "Deep, soft ambient occlusion shadows are visible in the crevices between the tiles.",
+        "b_observable": "The crevices between tiles have weak, washed-out shadows with less definition.",
+        "fix": "Increase ambient occlusion or shadow depth to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 46.07,
+            "p1": 70.93,
+            "p5": 106.1,
+            "p50": 203.67,
+            "p95": 246.28,
+            "p99": 247.21,
+            "p999": 248.71,
+            "span_p5_p95": 140.18
+          },
+          "B": {
+            "p01": 20.76,
+            "p1": 104.05,
+            "p5": 111.98,
+            "p50": 190.82,
+            "p95": 202.31,
+            "p99": 214.67,
+            "p999": 215.89,
+            "span_p5_p95": 90.33
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Realign the camera angle and recreate the grid layout to match the reference perspective and composition.",
+    "dropped_unsupported": 1
+  }
+}
