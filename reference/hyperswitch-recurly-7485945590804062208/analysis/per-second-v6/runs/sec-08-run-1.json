@@ -1,0 +1,72 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "camera pan",
+      "camera zoom",
+      "button flip animation"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [
+      "button flip animation"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 8.3,
+        "a_observable": "The camera is close to the cards, creating a shallow depth of field and dynamic perspective.",
+        "b_observable": "The camera is far away, showing a flat, wide-angle view of the grid layout.",
+        "fix": "Adjust camera position and focal length to match the close-up perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "motion",
+        "t": 8.7,
+        "a_observable": "The central button flips to reveal the 'Live Now' text.",
+        "b_observable": "The central button is static with the text already visible.",
+        "fix": "Animate the button to flip and reveal the text.",
+        "severity": 3,
+        "prediction": {
+          "metric": "motion",
+          "expect": "A_more"
+        }
+      },
+      {
+        "category": "material",
+        "t": 8.05,
+        "a_observable": "The Juspay card has a thick, beveled metallic frame.",
+        "b_observable": "The Juspay card has a flat, thin grey border.",
+        "fix": "Add a metallic material and bevels to the card frame.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 8.5,
+        "a_observable": "The yellow and blue cards are highly saturated with rich contrast.",
+        "b_observable": "The cards are desaturated and washed out under flat lighting.",
+        "fix": "Increase color saturation and adjust lighting contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing and position after the cut to match the close-up perspective of the reference."
+  }
+}

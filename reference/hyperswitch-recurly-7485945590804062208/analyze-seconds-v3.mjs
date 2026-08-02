@@ -468,7 +468,9 @@ await Promise.all(
             try {
               const json = await analyzeOnce(sec, ctx);
               const v = verifyRun(sec, json);
-              record = v.ok ? { ok: true, json } : { ok: false, why: v.why };
+              // Rejected runs keep their JSON: when all runs fail the gate the
+              // WHERE of the phantom cut is the diagnostic.
+              record = v.ok ? { ok: true, json } : { ok: false, why: v.why, json };
             } catch (e) {
               record = { ok: false, why: String(e.message).slice(0, 120), transient: true };
             }

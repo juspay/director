@@ -1,0 +1,287 @@
+{
+  "sec": 5,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pans right and zooms out"
+      ],
+      "b_motion": [
+        "camera pans right and zooms out"
+      ],
+      "absent_in_b": [
+        "shallow depth of field",
+        "strong corner vignette",
+        "warm golden yellow saturation"
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 5.2,
+          "a_observable": "Strong vignette with darker corners.",
+          "b_observable": "Flat, uniform lighting across the frame.",
+          "fix": "Add a vignette to match the reference lighting falloff.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 5.5,
+          "a_observable": "Deep contact shadows beneath the yellow card.",
+          "b_observable": "Soft, diffuse shadows under the card.",
+          "fix": "Increase shadow density and reduce shadow blur.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 5.3,
+          "a_observable": "Warm, highly saturated golden yellow card.",
+          "b_observable": "Cooler, less saturated pale yellow card.",
+          "fix": "Adjust the yellow material's color temperature and saturation.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 5.6,
+          "a_observable": "Background elements are out of focus.",
+          "b_observable": "The entire frame is in sharp focus.",
+          "fix": "Enable camera depth of field and adjust the aperture.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Enable camera depth of field and adjust the focus distance to match the reference's shallow focus look.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan and rotation around the yellow Recurly card"
+      ],
+      "b_motion": [
+        "slow camera pan and rotation around the yellow Recurly card"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 5.5,
+          "a_observable": "Close-up framing on the yellow card.",
+          "b_observable": "Wider shot showing more surrounding keys.",
+          "fix": "Move camera closer to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 5.5,
+          "a_observable": "Saturated yellow card and cool white keys.",
+          "b_observable": "Desaturated yellow card and warm grey keys.",
+          "fix": "Increase yellow saturation and correct white balance.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 5.5,
+          "a_observable": "Soft, light grey shadows in recesses.",
+          "b_observable": "Dark, sharp shadows in recesses.",
+          "fix": "Soften shadows and increase ambient light.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust camera distance to match the close-up framing and increase the yellow card saturation.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "camera tilt"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera tilt"
+      ],
+      "absent_in_b": [
+        "grid dot texture on tiles"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 5.5,
+          "a_observable": "The camera is positioned close to the yellow Recurly card, creating a dynamic perspective with visible depth of field blur in the background.",
+          "b_observable": "The camera is positioned further away, showing more of the surrounding white tiles with less perspective distortion and a deeper depth of field.",
+          "fix": "Adjust the camera focal length and position to match the close-up perspective and shallow depth of field of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "material",
+          "t": 5,
+          "a_observable": "The background tiles feature a grid of subtle dots.",
+          "b_observable": "The background tiles feature horizontal ruled lines instead of dots.",
+          "fix": "Replace the horizontal line texture on the tiles with a grid dot pattern to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 5.2,
+          "a_observable": "The yellow Recurly card has a warm, golden-yellow hue, and the surrounding shadows have a distinct cool blue color cast.",
+          "b_observable": "The yellow card has a brighter, lemon-yellow hue, and the surrounding shadows are neutral gray without a blue cast.",
+          "fix": "Adjust the color grading to introduce a cool blue cast in the shadows and warm up the yellow card's hue.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 5.8,
+          "a_observable": "There is a strong vignette with significant light falloff towards the corners of the frame, creating high contrast.",
+          "b_observable": "The lighting is highly uniform across the frame with minimal corner falloff and lower overall contrast.",
+          "fix": "Add a vignette effect and increase the contrast to match the dramatic lighting of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and focal length to match the close-up perspective and shallow depth of field of the reference, and replace the background tile textures to use grid dots instead of horizontal lines.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 5.2,
+        "a_observable": "Strong vignette with darker corners.",
+        "b_observable": "Flat, uniform lighting across the frame.",
+        "fix": "Add a vignette to match the reference lighting falloff.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 195.2,
+            "center_mean": 181.33,
+            "falloff_pct": -7.65
+          },
+          "B": {
+            "corner_mean": 188.74,
+            "center_mean": 161.88,
+            "falloff_pct": -16.6
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "color",
+        "t": 5.3,
+        "a_observable": "Warm, highly saturated golden yellow card.",
+        "b_observable": "Cooler, less saturated pale yellow card.",
+        "fix": "Adjust the yellow material's color temperature and saturation.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 192.89,
+            "g": 198.02,
+            "b": 181.63,
+            "rb_delta": 11.26,
+            "saturation": 0.2025
+          },
+          "B": {
+            "r": 183.27,
+            "g": 183.33,
+            "b": 165.01,
+            "rb_delta": 18.26,
+            "saturation": 0.2189
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "camera",
+        "t": 5.5,
+        "a_observable": "The camera is positioned close to the yellow Recurly card, creating a dynamic perspective with visible depth of field blur in the background.",
+        "b_observable": "The camera is positioned further away, showing more of the surrounding white tiles with less perspective distortion and a deeper depth of field.",
+        "fix": "Adjust the camera focal length and position to match the close-up perspective and shallow depth of field of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "B_sharper",
+          "A": {
+            "lap_var": 18.21
+          },
+          "B": {
+            "lap_var": 4.7
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera position, focal length, and depth of field to match the close-up perspective of the reference, and correct the yellow card's color saturation.",
+    "dropped_unsupported": 3
+  }
+}

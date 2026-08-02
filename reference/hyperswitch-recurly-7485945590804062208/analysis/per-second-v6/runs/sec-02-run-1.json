@@ -1,0 +1,71 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.2
+    ],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [
+      "yellow_accents",
+      "brushed_metal_texture"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 2.1,
+        "a_observable": "The 'Secure Payments' card is shown in a tight close-up, occupying a large portion of the frame.",
+        "b_observable": "The 'Secure Payments' card is framed from a wider camera distance, appearing much smaller.",
+        "fix": "Adjust camera position to match the close-up framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.1,
+        "a_observable": "The scene has high contrast with bright highlights on the card surfaces and deep shadows.",
+        "b_observable": "The scene has flat, low-contrast lighting with dull highlights and grey shadows.",
+        "fix": "Increase key light intensity and adjust shadow depth.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "material",
+        "t": 2.5,
+        "a_observable": "The tile to the right of the cards has a distinct brushed metal texture.",
+        "b_observable": "The tile to the right of the cards has a flat, matte grey material.",
+        "fix": "Apply a brushed metal material to the right-hand tile.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 2.5,
+        "a_observable": "A bright yellow tile is visible in the top-left corner.",
+        "b_observable": "The top-left tile is white, matching the background.",
+        "fix": "Change the material color of the top-left tile to yellow.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing to match the tight close-ups and apply the missing brushed metal and yellow accent materials to the background tiles."
+  }
+}

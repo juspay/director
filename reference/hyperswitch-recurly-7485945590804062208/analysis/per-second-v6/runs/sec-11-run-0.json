@@ -1,0 +1,43 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera translation",
+      "camera rotation"
+    ],
+    "b_motion": [
+      "camera translation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 11.2,
+        "a_observable": "The camera is at a low, dramatic angle with perspective depth.",
+        "b_observable": "The camera is at a flatter, more top-down angle with less perspective.",
+        "fix": "Match the camera's low angle and focal length.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "full"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "The lighting has soft shadows and a warm color cast on the tiles.",
+        "b_observable": "The lighting is flat, bright white, and lacks soft shadows.",
+        "fix": "Adjust light direction and color temperature to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and focal length to capture the dynamic perspective of the reference, and add warm, directional lighting to eliminate the flat white look."
+  }
+}

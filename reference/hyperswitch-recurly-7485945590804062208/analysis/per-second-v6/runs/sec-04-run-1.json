@@ -1,0 +1,68 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      4.9
+    ],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 4.5,
+        "a_observable": "Yellow cards are visible at the top-left corner of the frame, and a blue card is visible on the left edge.",
+        "b_observable": "No yellow or blue cards are visible around the main three cards; the surrounding area consists entirely of plain white/grey cards.",
+        "fix": "Add the yellow and blue decorative cards to the surrounding layout to match the reference composition.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 4.5,
+        "a_observable": "Strong contrast with deep shadows between the cards and soft contact shadows under the icons.",
+        "b_observable": "Very flat lighting with almost no shadows, making the cards and icons look two-dimensional.",
+        "fix": "Adjust the lighting setup to introduce stronger directional light and enable ambient occlusion or contact shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "typography",
+        "t": 4.5,
+        "a_observable": "The text labels 'Subscriptions', 'Retries', and 'APMs' are rendered in a medium font weight.",
+        "b_observable": "The text labels are rendered in a very thin, light font weight, making them less prominent.",
+        "fix": "Increase the font weight of the card labels to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 4.95,
+        "a_observable": "The yellow 'Recurly' card has a highly saturated, warm golden-yellow color.",
+        "b_observable": "The yellow card has a duller, cooler yellow color with a slight greenish cast.",
+        "fix": "Adjust the material color of the Recurly card to be more saturated and warmer.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the lighting setup to introduce stronger shadows and higher contrast, and correct the surrounding card layout to match the reference."
+  }
+}

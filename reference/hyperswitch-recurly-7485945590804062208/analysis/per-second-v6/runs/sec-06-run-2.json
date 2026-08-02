@@ -1,0 +1,68 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "camera zoom out",
+      "camera pan"
+    ],
+    "b_motion": [
+      "camera zoom out",
+      "camera pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 6.2,
+        "a_observable": "The yellow Recurly card is framed closely, occupying a large portion of the screen.",
+        "b_observable": "The camera is much further away, showing a wider view with significant empty space around the card.",
+        "fix": "Adjust camera focal length and distance to match the close-up framing of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 6.8,
+        "a_observable": "The blue JUSPAY hyperswitch card has a highly saturated, vibrant royal blue color.",
+        "b_observable": "The blue card is desaturated and has a flatter, less vibrant appearance.",
+        "fix": "Increase the saturation and adjust the hue of the blue material to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.3,
+        "a_observable": "There is a distinct soft light falloff towards the edges of the frame, creating a subtle vignette.",
+        "b_observable": "The lighting is highly uniform across the frame, with minimal falloff in the corners.",
+        "fix": "Add a vignette or adjust the light source falloff to darken the corners of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.5,
+        "a_observable": "The shadows between the tiles are deep and well-defined, giving a strong sense of depth.",
+        "b_observable": "The shadows are very faint and washed out, making the tiles look flat.",
+        "fix": "Adjust the shadow density and contrast to achieve deeper shadows.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera focal length and distance to match the close-up framing of the reference video."
+  }
+}

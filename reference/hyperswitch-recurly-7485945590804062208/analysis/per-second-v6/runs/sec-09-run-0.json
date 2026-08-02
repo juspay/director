@@ -1,0 +1,46 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "panning",
+      "zooming out"
+    ],
+    "b_motion": [
+      "panning",
+      "zooming out"
+    ],
+    "absent_in_b": [
+      "dappled lighting",
+      "shallow depth of field"
+    ],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "Dappled shadows from tree leaves are cast across the tiles, creating organic dark and light patterns.",
+        "b_observable": "The lighting is uniform and clean, with no organic leaf shadows visible on the tiles.",
+        "fix": "Add a gobo or light cookie with a leaf pattern to the main light source to project dappled shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 9.5,
+        "a_observable": "The background tiles, such as the 'Secure Payments' tile, are blurred due to a shallow depth of field.",
+        "b_observable": "The background tiles remain in sharp focus, indicating a deep depth of field.",
+        "fix": "Enable camera depth of field and decrease the f-stop to blur the background elements.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        }
+      }
+    ],
+    "highest_impact_fix": "Add dappled leaf shadows using a light gobo and enable camera depth of field to match the organic look and focus of the reference video."
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 9.5,
+        "a_observable": "The camera is tilted at an oblique angle with a shallow depth of field blurring the background.",
+        "b_observable": "The camera is positioned directly overhead with a deep depth of field keeping all elements in focus.",
+        "fix": "Tilt the camera to match the oblique perspective and enable depth of field.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 9.5,
+        "a_observable": "The white cards and background exhibit a cool, blue-tinted color cast.",
+        "b_observable": "The white cards and background are neutral white with no blue tint.",
+        "fix": "Apply a cool blue color grade to the scene.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "The corners of the frame are significantly darker than the center due to a vignette.",
+        "b_observable": "The corners of the frame are bright and uniform with the center.",
+        "fix": "Introduce a vignette effect to darken the corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle to match the oblique perspective and enable depth of field."
+  }
+}

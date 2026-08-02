@@ -1,0 +1,42 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 10.5,
+        "a_observable": "The camera is positioned close to the yellow Recurly tile, creating a close-up shot.",
+        "b_observable": "The camera is positioned further away, resulting in a wider shot of the grid.",
+        "fix": "Move the camera closer to the yellow tile to match the close-up framing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "The frame has a distinct vignette with darker corners.",
+        "b_observable": "The frame lacks a vignette, showing uniform brightness across the corners.",
+        "fix": "Add a vignette to darken the corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera distance and focal length to match the close-up framing of the yellow tile."
+  }
+}

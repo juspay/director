@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.208
+    ],
+    "a_motion": [
+      "pan",
+      "tilt"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 2,
+        "a_observable": "Vibrant blue shield icon and highly saturated yellow card at the bottom.",
+        "b_observable": "Washed out, desaturated colors with a pale blue shield and grey/beige background.",
+        "fix": "Increase color saturation and adjust grading to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 2.5,
+        "a_observable": "Tilted camera angle creating a dynamic 3D perspective of the cards.",
+        "b_observable": "Flatter camera angle looking more directly down, reducing the 3D depth.",
+        "fix": "Match the camera tilt and perspective of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "staging",
+        "t": 2.1,
+        "a_observable": "Surrounding background cards have distinct blue and yellow colors.",
+        "b_observable": "Surrounding background cards are uniform off-white/grey.",
+        "fix": "Apply the correct color materials to the background grid elements.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Match the camera perspective and color saturation of the reference video."
+  }
+}

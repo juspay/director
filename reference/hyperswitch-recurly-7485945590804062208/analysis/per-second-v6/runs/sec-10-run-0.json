@@ -1,0 +1,41 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan"
+    ],
+    "b_motion": [
+      "slow camera pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 10.5,
+        "a_observable": "The camera is framed closer to the tiles, making the yellow Recurly tile appear larger and more prominent.",
+        "b_observable": "The camera is framed further away, showing more of the grid and making the yellow tile smaller.",
+        "fix": "Adjust camera position and focal length to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "The lighting has a distinct vignette with darker corners and soft falloff.",
+        "b_observable": "The lighting is flat and uniform across the frame with no corner falloff.",
+        "fix": "Add a vignette to match the corner darkening of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing and distance to match the close-up perspective of the reference video."
+  }
+}

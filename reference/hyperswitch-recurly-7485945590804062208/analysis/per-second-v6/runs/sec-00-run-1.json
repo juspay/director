@@ -1,0 +1,58 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [
+      "blue_tile",
+      "yellow_tile"
+    ],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 0.5,
+        "a_observable": "Vibrant blue and yellow tiles flank the central 'Secure Payments' tile.",
+        "b_observable": "The surrounding tiles are uniform light grey, missing the blue and yellow color blocks.",
+        "fix": "Apply the correct blue and yellow materials to the adjacent tiles as seen in the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 0.5,
+        "a_observable": "The camera is positioned in a tight, angled close-up with a shallow depth of field, blurring the background.",
+        "b_observable": "The camera is pulled back with a flatter angle and a deep depth of field, keeping the background tiles in focus.",
+        "fix": "Match the camera position, angle, and adjust the aperture settings to replicate the shallow depth of field.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.5,
+        "a_observable": "The scene has high contrast with bright highlights on the tiles and deep shadows in the crevices.",
+        "b_observable": "The scene is flatly lit with low contrast and washed-out shadows.",
+        "fix": "Increase the light intensity and adjust the shadow settings to create higher contrast and deeper shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position, angle, and depth of field to match the close-up, tilted perspective of the reference video."
+  }
+}

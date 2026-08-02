@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "zoom_out"
+    ],
+    "b_motion": [
+      "translation",
+      "zoom_out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 14.1,
+        "a_observable": "Stronger vignette with darker corners and softer, deeper shadows between the tiles.",
+        "b_observable": "Weaker vignette with brighter corners and flatter, less defined shadows.",
+        "fix": "Increase vignette intensity and darken contact shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 14.2,
+        "a_observable": "Warmer color cast with more saturated yellow and blue tones on the cards.",
+        "b_observable": "Cooler, more neutral color cast with desaturated tones.",
+        "fix": "Apply a warm color grade and boost saturation.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "material",
+        "t": 14.3,
+        "a_observable": "Tiles have a subtle matte texture with soft specular reflections.",
+        "b_observable": "Tiles are flat and diffuse with no specular highlights.",
+        "fix": "Add roughness and specular maps to the tile materials.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the lighting and color grading to match the warm, high-contrast look of the reference, including a stronger vignette."
+  }
+}

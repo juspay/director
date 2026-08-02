@@ -1,0 +1,286 @@
+{
+  "sec": 6,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "translation"
+      ],
+      "b_motion": [
+        "translation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "color",
+          "t": 6.25,
+          "a_observable": "The tiles have a distinct blue color cast and high saturation.",
+          "b_observable": "The tiles are desaturated and have a neutral grey appearance.",
+          "fix": "Add a blue color cast and increase saturation to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 6.25,
+          "a_observable": "High contrast with deep shadows between the tiles.",
+          "b_observable": "Low contrast with flat, washed-out shadows.",
+          "fix": "Adjust the lighting and shadow settings to increase contrast and depth.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 6.8,
+          "a_observable": "Close-up, low-angle camera perspective on the Hyperswitch card.",
+          "b_observable": "High-angle, distant camera perspective on the Hyperswitch card.",
+          "fix": "Match the camera position, angle, and focal length to Video A.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera perspective and color grading to match the high-contrast blue aesthetic and dynamic low-angle framing of Video A.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 6.2,
+          "a_observable": "Close-up view of the yellow Recurly card with shallow depth of field.",
+          "b_observable": "Wider camera view showing more surrounding cards with deep depth of field.",
+          "fix": "Adjust camera distance and aperture to match the reference's close-up focus.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 6.8,
+          "a_observable": "High-contrast lighting with bright highlights and deep shadows.",
+          "b_observable": "Flat, low-contrast lighting making the scene look grey.",
+          "fix": "Increase contrast and adjust light sources for stronger highlights and shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 6.8,
+          "a_observable": "The PSP card is grey with a blue icon and white text.",
+          "b_observable": "The PSP card is solid blue with white text and no icon.",
+          "fix": "Redesign the PSP card to match the reference's grey material and icon.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the lighting setup to match the high-contrast look and fix the camera framing to match the reference close-ups.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "camera zoom out",
+        "camera pan"
+      ],
+      "b_motion": [
+        "camera zoom out",
+        "camera pan"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 6.2,
+          "a_observable": "The yellow Recurly card is framed closely, occupying a large portion of the screen.",
+          "b_observable": "The camera is much further away, showing a wider view with significant empty space around the card.",
+          "fix": "Adjust camera focal length and distance to match the close-up framing of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 6.8,
+          "a_observable": "The blue JUSPAY hyperswitch card has a highly saturated, vibrant royal blue color.",
+          "b_observable": "The blue card is desaturated and has a flatter, less vibrant appearance.",
+          "fix": "Increase the saturation and adjust the hue of the blue material to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 6.3,
+          "a_observable": "There is a distinct soft light falloff towards the edges of the frame, creating a subtle vignette.",
+          "b_observable": "The lighting is highly uniform across the frame, with minimal falloff in the corners.",
+          "fix": "Add a vignette or adjust the light source falloff to darken the corners of the frame.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 6.5,
+          "a_observable": "The shadows between the tiles are deep and well-defined, giving a strong sense of depth.",
+          "b_observable": "The shadows are very faint and washed out, making the tiles look flat.",
+          "fix": "Adjust the shadow density and contrast to achieve deeper shadows.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera focal length and distance to match the close-up framing of the reference video.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 6.2,
+        "a_observable": "Close-up view of the yellow Recurly card with shallow depth of field.",
+        "b_observable": "Wider camera view showing more surrounding cards with deep depth of field.",
+        "fix": "Adjust camera distance and aperture to match the reference's close-up focus.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "B_sharper",
+          "A": {
+            "lap_var": 54.16
+          },
+          "B": {
+            "lap_var": 3.39
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 6.5,
+        "a_observable": "The shadows between the tiles are deep and well-defined, giving a strong sense of depth.",
+        "b_observable": "The shadows are very faint and washed out, making the tiles look flat.",
+        "fix": "Adjust the shadow density and contrast to achieve deeper shadows.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 41.94,
+            "p1": 69.56,
+            "p5": 118.51,
+            "p50": 208.47,
+            "p95": 245.7,
+            "p99": 246.71,
+            "p999": 248.43,
+            "span_p5_p95": 127.19
+          },
+          "B": {
+            "p01": 16.77,
+            "p1": 109.81,
+            "p5": 116.33,
+            "p50": 197,
+            "p95": 205.52,
+            "p99": 209.09,
+            "p999": 214.08,
+            "span_p5_p95": 89.19
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 6.8,
+        "a_observable": "The blue JUSPAY hyperswitch card has a highly saturated, vibrant royal blue color.",
+        "b_observable": "The blue card is desaturated and has a flatter, less vibrant appearance.",
+        "fix": "Increase the saturation and adjust the hue of the blue material to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 178.94,
+            "g": 190.03,
+            "b": 207.81,
+            "rb_delta": -28.87,
+            "saturation": 0.2285
+          },
+          "B": {
+            "r": 156.83,
+            "g": 160.47,
+            "b": 187.25,
+            "rb_delta": -30.42,
+            "saturation": 0.2128
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera framing to match the close-up views of the cards, and increase the contrast and color saturation of the blue elements to match the reference.",
+    "dropped_unsupported": 3
+  }
+}

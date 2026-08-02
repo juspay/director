@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and rotation around the yellow Recurly card"
+    ],
+    "b_motion": [
+      "slow camera pan and rotation around the yellow Recurly card"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 5.5,
+        "a_observable": "Close-up framing on the yellow card.",
+        "b_observable": "Wider shot showing more surrounding keys.",
+        "fix": "Move camera closer to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 5.5,
+        "a_observable": "Saturated yellow card and cool white keys.",
+        "b_observable": "Desaturated yellow card and warm grey keys.",
+        "fix": "Increase yellow saturation and correct white balance.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.5,
+        "a_observable": "Soft, light grey shadows in recesses.",
+        "b_observable": "Dark, sharp shadows in recesses.",
+        "fix": "Soften shadows and increase ambient light.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust camera distance to match the close-up framing and increase the yellow card saturation."
+  }
+}

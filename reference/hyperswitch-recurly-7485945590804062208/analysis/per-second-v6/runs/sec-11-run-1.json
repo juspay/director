@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera zoom out and pan"
+    ],
+    "b_motion": [
+      "slow camera zoom out and pan"
+    ],
+    "absent_in_b": [
+      "vignette",
+      "soft ambient shadows"
+    ],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "Strong corner vignette and soft ambient shadows around the cards create depth.",
+        "b_observable": "Flat, uniform lighting across the frame with minimal vignette and weak shadows.",
+        "fix": "Add a vignette and enable high-quality ambient occlusion or contact shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 11.5,
+        "a_observable": "The yellow and blue cards display highly saturated, vibrant colors.",
+        "b_observable": "The colors on the cards appear desaturated and washed out.",
+        "fix": "Increase the saturation and adjust the color grading to match the reference's vibrancy.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 11.5,
+        "a_observable": "The camera framing is tight, keeping the cards large and prominent in the frame.",
+        "b_observable": "The camera is positioned further back, making the cards appear smaller with excess empty space.",
+        "fix": "Bring the camera closer or increase the focal length to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera distance and focal length to match the tighter framing, and apply a vignette with stronger ambient shadows to restore depth."
+  }
+}

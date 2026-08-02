@@ -1,0 +1,204 @@
+{
+  "sec": 10,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan"
+      ],
+      "b_motion": [
+        "slow camera pan"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 10.5,
+          "a_observable": "The camera is framed closer to the tiles, making the yellow Recurly tile appear larger and more prominent.",
+          "b_observable": "The camera is framed further away, showing more of the grid and making the yellow tile smaller.",
+          "fix": "Adjust camera position and focal length to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.5,
+          "a_observable": "The lighting has a distinct vignette with darker corners and soft falloff.",
+          "b_observable": "The lighting is flat and uniform across the frame with no corner falloff.",
+          "fix": "Add a vignette to match the corner darkening of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera framing and distance to match the close-up perspective of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pans closely over the tiles with dynamic rotation"
+      ],
+      "b_motion": [
+        "camera pans at a wider, flatter angle with less rotation"
+      ],
+      "absent_in_b": [
+        "vignette",
+        "deep shadow contrast",
+        "warm yellow saturation"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 10.5,
+          "a_observable": "The Recurly button is framed closely, occupying a large portion of the screen.",
+          "b_observable": "The Recurly button is framed much further away, showing more surrounding tiles.",
+          "fix": "Bring the camera closer and adjust the focal length to match the tight framing of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.2,
+          "a_observable": "Strong shadow depth and a clear vignette are present around the tiles.",
+          "b_observable": "The scene is flatly lit with minimal shadows and no vignette.",
+          "fix": "Add a vignette and increase shadow depth to enhance contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "color",
+          "t": 10.8,
+          "a_observable": "The Recurly button has a warm, highly saturated golden-yellow color.",
+          "b_observable": "The Recurly button is pale and desaturated yellow.",
+          "fix": "Increase saturation and adjust the hue of the yellow button to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust camera framing to be much closer to the tiles and increase shadow contrast to match the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 10.5,
+          "a_observable": "The camera is positioned close to the yellow Recurly tile, creating a close-up shot.",
+          "b_observable": "The camera is positioned further away, resulting in a wider shot of the grid.",
+          "fix": "Move the camera closer to the yellow tile to match the close-up framing.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.5,
+          "a_observable": "The frame has a distinct vignette with darker corners.",
+          "b_observable": "The frame lacks a vignette, showing uniform brightness across the corners.",
+          "fix": "Add a vignette to darken the corners.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera distance and focal length to match the close-up framing of the yellow tile.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 10.5,
+        "a_observable": "The camera is framed closer to the tiles, making the yellow Recurly tile appear larger and more prominent.",
+        "b_observable": "The camera is framed further away, showing more of the grid and making the yellow tile smaller.",
+        "fix": "Adjust camera position and focal length to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_sharper",
+          "A": {
+            "lap_var": 423.16
+          },
+          "B": {
+            "lap_var": 34.38
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "The lighting has a distinct vignette with darker corners and soft falloff.",
+        "b_observable": "The lighting is flat and uniform across the frame with no corner falloff.",
+        "fix": "Add a vignette to match the corner darkening of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 210.78,
+            "center_mean": 196.59,
+            "falloff_pct": -7.22
+          },
+          "B": {
+            "corner_mean": 181.23,
+            "center_mean": 175.13,
+            "falloff_pct": -3.48
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera framing and distance to match the close-up perspective of the reference video.",
+    "dropped_unsupported": 1
+  }
+}

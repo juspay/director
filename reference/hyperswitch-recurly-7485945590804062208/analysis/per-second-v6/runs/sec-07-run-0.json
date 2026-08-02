@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan down-right",
+      "subtle zoom out"
+    ],
+    "b_motion": [
+      "slow camera pan down-right",
+      "subtle zoom out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "material",
+        "t": 7,
+        "a_observable": "The PSP icon at the bottom is a metallic silver square with blue text.",
+        "b_observable": "The PSP icon is a solid blue square with white text.",
+        "fix": "Change the PSP icon material to metallic silver with blue text.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "material",
+        "t": 7.5,
+        "a_observable": "The frame surrounding the blue JUSPAY button has a reflective brushed-metal texture.",
+        "b_observable": "The frame surrounding the blue JUSPAY button is flat matte grey.",
+        "fix": "Apply a reflective brushed-metal material to the button frame.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 7.5,
+        "a_observable": "The scene has high contrast with bright specular highlights on metallic edges and deep shadows.",
+        "b_observable": "The scene has low contrast with flat, diffused lighting and soft grey shadows.",
+        "fix": "Increase directional lighting contrast to create stronger highlights and shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Apply metallic materials to the PSP icon and the JUSPAY button frame to match the reference's reflective look."
+  }
+}

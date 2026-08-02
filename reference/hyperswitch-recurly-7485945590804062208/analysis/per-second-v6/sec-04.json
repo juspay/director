@@ -1,0 +1,298 @@
+{
+  "sec": 4,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        4.9
+      ],
+      "a_motion": [
+        "camera pans down-right across three vertical cards, then cuts to a close-up of a yellow card"
+      ],
+      "b_motion": [
+        "camera pans down-right across three vertical cards, then cuts to a close-up of a yellow card"
+      ],
+      "absent_in_b": [
+        "warm yellow light gradient",
+        "metallic textures on card tiles",
+        "dark recessed border around the yellow card"
+      ],
+      "differences": [
+        {
+          "category": "color",
+          "t": 4.2,
+          "a_observable": "The scene has a warm yellow light gradient and highly saturated blue icons.",
+          "b_observable": "The scene has flat neutral white lighting with desaturated colors.",
+          "fix": "Add a warm light source and increase color saturation.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "material",
+          "t": 4.5,
+          "a_observable": "The card tiles have a metallic texture with high contrast shadows.",
+          "b_observable": "The card tiles are flat matte white with soft low-contrast shadows.",
+          "fix": "Apply metallic textures and increase shadow contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 4.95,
+          "a_observable": "The yellow card is recessed into a dark grey border.",
+          "b_observable": "The yellow card sits flat on a white tile with no recessed border.",
+          "fix": "Add a dark recessed frame around the yellow card.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Implement warm directional lighting and metallic textures to match the high-contrast, vibrant look of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        4.9
+      ],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "staging",
+          "t": 4.5,
+          "a_observable": "Yellow cards are visible at the top-left corner of the frame, and a blue card is visible on the left edge.",
+          "b_observable": "No yellow or blue cards are visible around the main three cards; the surrounding area consists entirely of plain white/grey cards.",
+          "fix": "Add the yellow and blue decorative cards to the surrounding layout to match the reference composition.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 4.5,
+          "a_observable": "Strong contrast with deep shadows between the cards and soft contact shadows under the icons.",
+          "b_observable": "Very flat lighting with almost no shadows, making the cards and icons look two-dimensional.",
+          "fix": "Adjust the lighting setup to introduce stronger directional light and enable ambient occlusion or contact shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "typography",
+          "t": 4.5,
+          "a_observable": "The text labels 'Subscriptions', 'Retries', and 'APMs' are rendered in a medium font weight.",
+          "b_observable": "The text labels are rendered in a very thin, light font weight, making them less prominent.",
+          "fix": "Increase the font weight of the card labels to match the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 4.95,
+          "a_observable": "The yellow 'Recurly' card has a highly saturated, warm golden-yellow color.",
+          "b_observable": "The yellow card has a duller, cooler yellow color with a slight greenish cast.",
+          "fix": "Adjust the material color of the Recurly card to be more saturated and warmer.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the lighting setup to introduce stronger shadows and higher contrast, and correct the surrounding card layout to match the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        4.9
+      ],
+      "a_motion": [
+        "pan",
+        "tilt",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "color",
+          "t": 4.2,
+          "a_observable": "Vibrant blue and yellow background tiles surround the central white tile.",
+          "b_observable": "Background tiles are desaturated grey and white, lacking color.",
+          "fix": "Add vibrant blue and yellow colors to the background tiles.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 4.6,
+          "a_observable": "Glossy highlights and deep shadows create high contrast on the tiles.",
+          "b_observable": "Flat, diffuse lighting results in low contrast and a matte look.",
+          "fix": "Increase contrast and add glossy directional highlights.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "color",
+          "t": 4.95,
+          "a_observable": "The Recurly button is a warm, saturated golden-yellow.",
+          "b_observable": "The Recurly button is a cooler, less saturated greenish-yellow.",
+          "fix": "Adjust the yellow hue to be warmer and more saturated.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Match the vibrant color palette and high-contrast glossy lighting of the reference tiles.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "color",
+        "t": 4.2,
+        "a_observable": "Vibrant blue and yellow background tiles surround the central white tile.",
+        "b_observable": "Background tiles are desaturated grey and white, lacking color.",
+        "fix": "Add vibrant blue and yellow colors to the background tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 191.1,
+            "g": 203.02,
+            "b": 212.64,
+            "rb_delta": -21.55,
+            "saturation": 0.1231
+          },
+          "B": {
+            "r": 192.87,
+            "g": 194.52,
+            "b": 199.31,
+            "rb_delta": -6.45,
+            "saturation": 0.0588
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 4.5,
+        "a_observable": "Strong contrast with deep shadows between the cards and soft contact shadows under the icons.",
+        "b_observable": "Very flat lighting with almost no shadows, making the cards and icons look two-dimensional.",
+        "fix": "Adjust the lighting setup to introduce stronger directional light and enable ambient occlusion or contact shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_higher_contrast",
+          "A": {
+            "p01": 64.21,
+            "p1": 76.5,
+            "p5": 133.38,
+            "p50": 208.3,
+            "p95": 245.71,
+            "p99": 249.14,
+            "p999": 251.01,
+            "span_p5_p95": 112.33
+          },
+          "B": {
+            "p01": 72.24,
+            "p1": 95.11,
+            "p5": 166.08,
+            "p50": 193.49,
+            "p95": 215.74,
+            "p99": 217.8,
+            "p999": 253.86,
+            "span_p5_p95": 49.66
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "color",
+        "t": 4.95,
+        "a_observable": "The yellow 'Recurly' card has a highly saturated, warm golden-yellow color.",
+        "b_observable": "The yellow card has a duller, cooler yellow color with a slight greenish cast.",
+        "fix": "Adjust the material color of the Recurly card to be more saturated and warmer.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 197.85,
+            "g": 204.38,
+            "b": 188,
+            "rb_delta": 9.85,
+            "saturation": 0.2148
+          },
+          "B": {
+            "r": 181.96,
+            "g": 182.89,
+            "b": 167.24,
+            "rb_delta": 14.72,
+            "saturation": 0.2266
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Match the vibrant color palette and high-contrast glossy lighting of the reference tiles.",
+    "dropped_unsupported": 2
+  }
+}

@@ -1,0 +1,275 @@
+{
+  "sec": 11,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera translation",
+        "camera rotation"
+      ],
+      "b_motion": [
+        "camera translation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 11.2,
+          "a_observable": "The camera is at a low, dramatic angle with perspective depth.",
+          "b_observable": "The camera is at a flatter, more top-down angle with less perspective.",
+          "fix": "Match the camera's low angle and focal length.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast",
+            "region": "full"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.5,
+          "a_observable": "The lighting has soft shadows and a warm color cast on the tiles.",
+          "b_observable": "The lighting is flat, bright white, and lacks soft shadows.",
+          "fix": "Adjust light direction and color temperature to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and focal length to capture the dynamic perspective of the reference, and add warm, directional lighting to eliminate the flat white look.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera zoom out and pan"
+      ],
+      "b_motion": [
+        "slow camera zoom out and pan"
+      ],
+      "absent_in_b": [
+        "vignette",
+        "soft ambient shadows"
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 11.5,
+          "a_observable": "Strong corner vignette and soft ambient shadows around the cards create depth.",
+          "b_observable": "Flat, uniform lighting across the frame with minimal vignette and weak shadows.",
+          "fix": "Add a vignette and enable high-quality ambient occlusion or contact shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 11.5,
+          "a_observable": "The yellow and blue cards display highly saturated, vibrant colors.",
+          "b_observable": "The colors on the cards appear desaturated and washed out.",
+          "fix": "Increase the saturation and adjust the color grading to match the reference's vibrancy.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 11.5,
+          "a_observable": "The camera framing is tight, keeping the cards large and prominent in the frame.",
+          "b_observable": "The camera is positioned further back, making the cards appear smaller with excess empty space.",
+          "fix": "Bring the camera closer or increase the focal length to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera distance and focal length to match the tighter framing, and apply a vignette with stronger ambient shadows to restore depth.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "panning",
+        "zooming out"
+      ],
+      "b_motion": [
+        "panning",
+        "zooming out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 11,
+          "a_observable": "The camera is positioned close to the cards, showing them at a dynamic angle with prominent perspective distortion.",
+          "b_observable": "The camera is positioned far away, showing the cards from a high angle with minimal perspective distortion.",
+          "fix": "Adjust the camera focal length and position to match the close-up, dynamic perspective of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.2,
+          "a_observable": "The scene features high contrast with deep shadows between the keyboard tiles and a soft, realistic light falloff.",
+          "b_observable": "The scene is flatly lit with very bright, washed-out shadows and lacks realistic contrast and depth.",
+          "fix": "Adjust the lighting setup to increase contrast, deepen the shadows in the crevices, and add a subtle vignette.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "color",
+          "t": 11,
+          "a_observable": "The Recurly card has a highly saturated, warm golden-yellow color.",
+          "b_observable": "The Recurly card has a desaturated, pale greenish-yellow color.",
+          "fix": "Adjust the color grading of the yellow card to be warmer and more saturated.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 11.5,
+          "a_observable": "The camera performs a continuous, dynamic zoom-out and pan across the grid.",
+          "b_observable": "The camera is nearly static, with very minimal movement.",
+          "fix": "Animate the camera to match the smooth zoom-out and panning motion of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "motion",
+            "expect": "A_more"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera focal length and position to match the close-up, dynamic perspective of the reference, which will significantly improve the composition and depth of the shot.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 11.2,
+        "a_observable": "The camera is at a low, dramatic angle with perspective depth.",
+        "b_observable": "The camera is at a flatter, more top-down angle with less perspective.",
+        "fix": "Match the camera's low angle and focal length.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "full"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_higher_contrast",
+          "A": {
+            "p01": 12.35,
+            "p1": 85.8,
+            "p5": 89.44,
+            "p50": 209.01,
+            "p95": 232.69,
+            "p99": 238.97,
+            "p999": 251.63,
+            "span_p5_p95": 143.25
+          },
+          "B": {
+            "p01": 60.86,
+            "p1": 61.43,
+            "p5": 67.66,
+            "p50": 191.8,
+            "p95": 207.74,
+            "p99": 211.37,
+            "p999": 237.43,
+            "span_p5_p95": 140.08
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "Strong corner vignette and soft ambient shadows around the cards create depth.",
+        "b_observable": "Flat, uniform lighting across the frame with minimal vignette and weak shadows.",
+        "fix": "Add a vignette and enable high-quality ambient occlusion or contact shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 209.75,
+            "center_mean": 196.45,
+            "falloff_pct": -6.77
+          },
+          "B": {
+            "corner_mean": 182.21,
+            "center_mean": 174.16,
+            "falloff_pct": -4.62
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 11.5,
+        "a_observable": "The yellow and blue cards display highly saturated, vibrant colors.",
+        "b_observable": "The colors on the cards appear desaturated and washed out.",
+        "fix": "Increase the saturation and adjust the color grading to match the reference's vibrancy.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 193.46,
+            "g": 203.74,
+            "b": 200.33,
+            "rb_delta": -6.87,
+            "saturation": 0.1922
+          },
+          "B": {
+            "r": 167.69,
+            "g": 174.41,
+            "b": 182.69,
+            "rb_delta": -15.01,
+            "saturation": 0.192
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera distance and focal length to match the tighter, dynamic perspective of the reference, and apply a vignette with stronger ambient shadows to restore depth.",
+    "dropped_unsupported": 1
+  }
+}

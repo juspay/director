@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and zoom out"
+    ],
+    "b_motion": [
+      "slow camera pan and zoom out from a distance"
+    ],
+    "absent_in_b": [
+      "close-up framing of the main card"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 0.1,
+        "a_observable": "Tight close-up on the Secure Payments card with blurred background.",
+        "b_observable": "Zoomed-out wide view of multiple cards, all in sharp focus.",
+        "fix": "Move camera closer and enable depth of field.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 0.5,
+        "a_observable": "Vibrant blue card on the left and highly saturated blue shield.",
+        "b_observable": "Desaturated greyish palette with a dull blue shield.",
+        "fix": "Increase saturation and match blue tones.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.8,
+        "a_observable": "High contrast with deep shadows between the cards.",
+        "b_observable": "Flat lighting with very faint shadows.",
+        "fix": "Increase contrast and deepen shadows.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and focal length to match the close-up framing and depth of field of the reference video."
+  }
+}

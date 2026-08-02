@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera tilt"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera tilt"
+    ],
+    "absent_in_b": [
+      "grid dot texture on tiles"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 5.5,
+        "a_observable": "The camera is positioned close to the yellow Recurly card, creating a dynamic perspective with visible depth of field blur in the background.",
+        "b_observable": "The camera is positioned further away, showing more of the surrounding white tiles with less perspective distortion and a deeper depth of field.",
+        "fix": "Adjust the camera focal length and position to match the close-up perspective and shallow depth of field of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "material",
+        "t": 5,
+        "a_observable": "The background tiles feature a grid of subtle dots.",
+        "b_observable": "The background tiles feature horizontal ruled lines instead of dots.",
+        "fix": "Replace the horizontal line texture on the tiles with a grid dot pattern to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 5.2,
+        "a_observable": "The yellow Recurly card has a warm, golden-yellow hue, and the surrounding shadows have a distinct cool blue color cast.",
+        "b_observable": "The yellow card has a brighter, lemon-yellow hue, and the surrounding shadows are neutral gray without a blue cast.",
+        "fix": "Adjust the color grading to introduce a cool blue cast in the shadows and warm up the yellow card's hue.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.8,
+        "a_observable": "There is a strong vignette with significant light falloff towards the corners of the frame, creating high contrast.",
+        "b_observable": "The lighting is highly uniform across the frame with minimal corner falloff and lower overall contrast.",
+        "fix": "Add a vignette effect and increase the contrast to match the dramatic lighting of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and focal length to match the close-up perspective and shallow depth of field of the reference, and replace the background tile textures to use grid dots instead of horizontal lines."
+  }
+}

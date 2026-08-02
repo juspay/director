@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pans closely over the tiles with dynamic rotation"
+    ],
+    "b_motion": [
+      "camera pans at a wider, flatter angle with less rotation"
+    ],
+    "absent_in_b": [
+      "vignette",
+      "deep shadow contrast",
+      "warm yellow saturation"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 10.5,
+        "a_observable": "The Recurly button is framed closely, occupying a large portion of the screen.",
+        "b_observable": "The Recurly button is framed much further away, showing more surrounding tiles.",
+        "fix": "Bring the camera closer and adjust the focal length to match the tight framing of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.2,
+        "a_observable": "Strong shadow depth and a clear vignette are present around the tiles.",
+        "b_observable": "The scene is flatly lit with minimal shadows and no vignette.",
+        "fix": "Add a vignette and increase shadow depth to enhance contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "color",
+        "t": 10.8,
+        "a_observable": "The Recurly button has a warm, highly saturated golden-yellow color.",
+        "b_observable": "The Recurly button is pale and desaturated yellow.",
+        "fix": "Increase saturation and adjust the hue of the yellow button to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust camera framing to be much closer to the tiles and increase shadow contrast to match the reference."
+  }
+}
