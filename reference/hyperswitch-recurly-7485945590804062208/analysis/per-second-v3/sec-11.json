@@ -1,0 +1,257 @@
+{
+  "sec": 11,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera zoom out and pan"
+      ],
+      "b_motion": [
+        "slow camera zoom out and pan"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "color",
+          "t": 11.2,
+          "a_observable": "The white tiles and shadows have a distinct cool, blue-grey color cast.",
+          "b_observable": "The white tiles and shadows are warmer and more neutral grey.",
+          "fix": "Adjust the white balance to introduce a cooler blue cast in the shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.5,
+          "a_observable": "The corners of the frame are significantly darker than the center, showing a strong vignette.",
+          "b_observable": "The lighting is more uniform across the frame, with very little corner falloff.",
+          "fix": "Add a vignette to match the corner falloff of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 11,
+          "a_observable": "The buttons show stronger perspective distortion, indicating a wider camera lens.",
+          "b_observable": "The buttons appear flatter with less perspective distortion, indicating a longer focal length lens.",
+          "fix": "Adjust the camera focal length to be wider and position the camera closer.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera focal length to match the perspective and apply a cooler color grade with a vignette.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "material",
+          "t": 11,
+          "a_observable": "The yellow Recurly card features a dark metallic bezel.",
+          "b_observable": "The yellow Recurly card has a flat blue border.",
+          "fix": "Change the card border material to dark metallic.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.5,
+          "a_observable": "Pronounced darkening at the corners of the frame.",
+          "b_observable": "Uniform brightness across the frame with minimal corner falloff.",
+          "fix": "Add a vignette to match the reference lighting.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 11.8,
+          "a_observable": "Strong perspective distortion on the cards due to a wider field of view.",
+          "b_observable": "Flatter perspective with less distortion, indicating a longer focal length.",
+          "fix": "Adjust camera focal length to match the perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera focal length and perspective to match the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera zoom out",
+        "slow pan"
+      ],
+      "b_motion": [
+        "camera zoom out",
+        "slow pan"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 11.5,
+          "a_observable": "Strong shadows between the 3D tiles, creating high contrast and depth.",
+          "b_observable": "Very weak, flat shadows between the tiles, making the grid look flat.",
+          "fix": "Increase shadow intensity and depth of the 3D tiles.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "full"
+          }
+        },
+        {
+          "category": "color",
+          "t": 11.5,
+          "a_observable": "The white background tiles have a distinct cool blue color cast.",
+          "b_observable": "The white background tiles are neutral grey/warm off-white.",
+          "fix": "Adjust color temperature to introduce a cool blue cast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler",
+            "region": "full"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 11.5,
+          "a_observable": "Background and foreground tiles are softly blurred due to shallow depth of field.",
+          "b_observable": "All tiles across the frame are uniformly sharp, lacking depth of field blur.",
+          "fix": "Enable depth of field on the camera to blur the foreground and background.",
+          "severity": 2,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Increase shadow intensity and depth of the 3D tiles to match the contrast and depth of the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "color",
+        "t": 11.5,
+        "a_observable": "The white background tiles have a distinct cool blue color cast.",
+        "b_observable": "The white background tiles are neutral grey/warm off-white.",
+        "fix": "Adjust color temperature to introduce a cool blue cast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler",
+          "region": "full"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_cooler",
+          "A": {
+            "r": 193.46,
+            "g": 203.74,
+            "b": 200.33,
+            "rb_delta": -6.87,
+            "saturation": 0.1922
+          },
+          "B": {
+            "r": 213.48,
+            "g": 212.6,
+            "b": 210.12,
+            "rb_delta": 3.37,
+            "saturation": 0.1008
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "Pronounced darkening at the corners of the frame.",
+        "b_observable": "Uniform brightness across the frame with minimal corner falloff.",
+        "fix": "Add a vignette to match the reference lighting.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 209.75,
+            "center_mean": 196.45,
+            "falloff_pct": -6.77
+          },
+          "B": {
+            "corner_mean": 228,
+            "center_mean": 202.4,
+            "falloff_pct": -12.65
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "camera",
+        "t": 11.8,
+        "a_observable": "Strong perspective distortion on the cards due to a wider field of view.",
+        "b_observable": "Flatter perspective with less distortion, indicating a longer focal length.",
+        "fix": "Adjust camera focal length to match the perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 2,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "refuted",
+          "certainty": 1,
+          "note": "The claim is reversed. Clip A shows flat, 2D-like cards with no perspective distortion, while Clip B shows 3D cards and blocks with visible depth and perspective."
+        }
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera focal length to match the perspective and apply a cooler color grade with a vignette.",
+    "dropped_unsupported": 3
+  }
+}

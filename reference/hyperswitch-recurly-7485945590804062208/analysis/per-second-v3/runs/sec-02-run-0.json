@@ -1,0 +1,62 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.208
+    ],
+    "a_motion": [
+      "camera translation",
+      "camera rotation"
+    ],
+    "b_motion": [
+      "camera translation",
+      "camera rotation"
+    ],
+    "absent_in_b": [
+      "blue and yellow block colors",
+      "correct dot grid placement"
+    ],
+    "differences": [
+      {
+        "category": "color",
+        "t": 2.1,
+        "a_observable": "Vibrant blue and yellow blocks surround the white 'Secure Payments' block.",
+        "b_observable": "The surrounding blocks are flat gray, lacking the blue and yellow colors.",
+        "fix": "Apply the correct blue and yellow materials to the surrounding blocks.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "full"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 2.5,
+        "a_observable": "The grid of dots is located on the left side of the vertical stack of blocks.",
+        "b_observable": "The grid of dots is located on the right side of the vertical stack of blocks.",
+        "fix": "Move the dot grid background element to the left side of the frame.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none",
+          "region": "full"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.8,
+        "a_observable": "Crevices between the blocks have deep, dark shadows.",
+        "b_observable": "Crevices between the blocks are brightly lit with very soft shadows.",
+        "fix": "Darken the contact shadows and increase ambient occlusion.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Apply the correct blue and yellow materials to the background blocks and adjust the layout of the dot grid to match the reference."
+  }
+}

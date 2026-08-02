@@ -1,0 +1,317 @@
+{
+  "sec": 9,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 1
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "zoom",
+        "translation"
+      ],
+      "b_motion": [
+        "zoom",
+        "translation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 9,
+          "a_observable": "The camera is positioned closer to the tiles, resulting in a tighter framing of the Recurly and Hyperswitch cards.",
+          "b_observable": "The camera is positioned further back, resulting in a wider framing where the cards appear smaller.",
+          "fix": "Adjust the camera's Z-position to match the closer framing of the reference video.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 9,
+          "a_observable": "The white tiles have a cool blue-cyan color cast.",
+          "b_observable": "The white tiles are neutral white to warm cream, lacking the cool blue cast.",
+          "fix": "Apply a cool blue color temperature or color grading to the scene's lighting.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 9,
+          "a_observable": "The lighting has high contrast with bright highlights and deep, defined shadows in the tile crevices.",
+          "b_observable": "The lighting is flat and diffused, with soft shadows and lower contrast.",
+          "fix": "Increase the contrast of the key light and reduce ambient fill to deepen shadows and enhance highlights.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position to match the closer framing of the reference video, and increase the contrast and cool blue color cast of the lighting.",
+      "layer1_rejected": [
+        {
+          "claim": {
+            "category": "color",
+            "t": 9,
+            "a_observable": "The border surrounding the yellow Recurly card is dark gray.",
+            "b_observable": "The border surrounding the yellow Recurly card is blue.",
+            "fix": "Change the border color of the yellow card from blue to dark gray.",
+            "severity": 2,
+            "prediction": {
+              "metric": "none",
+              "expect": ""
+            }
+          },
+          "why": "color claim carries no prediction"
+        }
+      ]
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "zoom"
+      ],
+      "b_motion": [
+        "translation",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 9.8,
+          "a_observable": "Close-up framing with the yellow Recurly card prominent on the right.",
+          "b_observable": "Distant, zoomed-out framing with small cards and excess empty space.",
+          "fix": "Adjust camera position and focal length to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 9.5,
+          "a_observable": "Distinct cool blue color cast across the white tiles.",
+          "b_observable": "Neutral white and grey tiles lacking any blue tint.",
+          "fix": "Apply a cool color grade to match the reference palette.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 9.2,
+          "a_observable": "Pronounced vignette with darker corners and edges.",
+          "b_observable": "Flat, uniform lighting across the entire frame.",
+          "fix": "Add a vignette to darken the corners.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera focal length and position to correct the framing.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pull-back",
+        "camera rotation"
+      ],
+      "b_motion": [
+        "camera pull-back",
+        "camera rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 9.5,
+          "a_observable": "The corners of the frame are significantly darker than the center, creating a strong vignette.",
+          "b_observable": "The lighting is uniform across the frame with no visible vignette.",
+          "fix": "Add a vignette post-processing effect to darken the corners.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 9.5,
+          "a_observable": "The white tiles exhibit a cool blue color cast.",
+          "b_observable": "The white tiles are neutral grey and white.",
+          "fix": "Adjust the white balance or add a cool color grade.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler",
+            "region": "full"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 9.5,
+          "a_observable": "The shadows between the tiles are deeper and have more contrast.",
+          "b_observable": "The shadows are very bright and flat, resulting in lower contrast.",
+          "fix": "Adjust the luma curve to deepen the shadows and increase contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the lighting and post-processing to introduce a cool color grade, deeper shadows, and a strong vignette.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 9,
+        "a_observable": "The camera is positioned closer to the tiles, resulting in a tighter framing of the Recurly and Hyperswitch cards.",
+        "b_observable": "The camera is positioned further back, resulting in a wider framing where the cards appear smaller.",
+        "fix": "Adjust the camera's Z-position to match the closer framing of the reference video.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "The comparison is accurate. Clip A shows a close-up, tight framing of the Recurly and Hyperswitch cards, while Clip B shows a wider shot where the cards are smaller and more surrounding tiles are visible."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "Direction holds with modest magnitude: B's brand cards are ~12-15% smaller in frame and surrounded by more empty tile area. (Unclaimed but conspicuous at this moment: A shows strong dappled light pools across the wall and B is uniformly flat, and B's whole frame is soft.)"
+        }
+      },
+      {
+        "category": "color",
+        "t": 9.5,
+        "a_observable": "The white tiles exhibit a cool blue color cast.",
+        "b_observable": "The white tiles are neutral grey and white.",
+        "fix": "Adjust the white balance or add a cool color grade.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler",
+          "region": "full"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_cooler",
+          "A": {
+            "r": 187.83,
+            "g": 198.44,
+            "b": 204.9,
+            "rb_delta": -17.08,
+            "saturation": 0.1734
+          },
+          "B": {
+            "r": 207.57,
+            "g": 206.34,
+            "b": 202.46,
+            "rb_delta": 5.11,
+            "saturation": 0.1253
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "The shadows between the tiles are deeper and have more contrast.",
+        "b_observable": "The shadows are very bright and flat, resulting in lower contrast.",
+        "fix": "Adjust the luma curve to deepen the shadows and increase contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 62.41,
+            "p1": 94.19,
+            "p5": 107.96,
+            "p50": 202.15,
+            "p95": 246.35,
+            "p99": 249.79,
+            "p999": 253,
+            "span_p5_p95": 138.39
+          },
+          "B": {
+            "p01": 81.92,
+            "p1": 83.41,
+            "p5": 100.44,
+            "p50": 216.63,
+            "p95": 237.71,
+            "p99": 239.14,
+            "p999": 240.85,
+            "span_p5_p95": 137.27
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "The corners of the frame are significantly darker than the center, creating a strong vignette.",
+        "b_observable": "The lighting is uniform across the frame with no visible vignette.",
+        "fix": "Add a vignette post-processing effect to darken the corners.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 203.26,
+            "center_mean": 200.61,
+            "falloff_pct": -1.32
+          },
+          "B": {
+            "corner_mean": 219.75,
+            "center_mean": 197.79,
+            "falloff_pct": -11.1
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the lighting and post-processing to introduce a cool color grade, deeper shadows, and a strong vignette.",
+    "dropped_unsupported": 0
+  }
+}

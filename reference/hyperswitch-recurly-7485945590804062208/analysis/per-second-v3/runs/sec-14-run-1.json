@@ -1,0 +1,53 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera drift"
+    ],
+    "b_motion": [
+      "slow camera drift"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 14.2,
+        "a_observable": "Background tiles in the upper and lower frame exhibit soft depth-of-field blur.",
+        "b_observable": "Background tiles remain sharp across the entire frame.",
+        "fix": "Enable camera depth of field and adjust aperture.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 14.1,
+        "a_observable": "Cards cast distinct, dark contact shadows onto the tiles.",
+        "b_observable": "Shadows under the cards are faint and diffuse.",
+        "fix": "Adjust light source size to produce more defined contact shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 14.3,
+        "a_observable": "Corners of the frame are noticeably darker than the center due to a vignette.",
+        "b_observable": "Illumination is flat and even across the frame with no vignette.",
+        "fix": "Add a vignette effect in post-processing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Enable depth of field on the camera and adjust the light source parameters to match the reference shadows and vignette."
+  }
+}

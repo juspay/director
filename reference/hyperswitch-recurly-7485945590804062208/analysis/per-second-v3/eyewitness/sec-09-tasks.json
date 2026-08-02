@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 9,
+    "idx": 0,
+    "t": 9,
+    "category": "camera",
+    "a_observable": "The camera is positioned closer to the tiles, resulting in a tighter framing of the Recurly and Hyperswitch cards.",
+    "b_observable": "The camera is positioned further back, resulting in a wider framing where the cards appear smaller.",
+    "frames": {
+      "A": "analysis/per-second-v3/eyewitness/sec-09-c0-A.png",
+      "B": "analysis/per-second-v3/eyewitness/sec-09-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "The comparison is accurate. Clip A shows a close-up, tight framing of the Recurly and Hyperswitch cards, while Clip B shows a wider shot where the cards are smaller and more surrounding tiles are visible."
+    }
+  }
+]

@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "zoom"
+    ],
+    "b_motion": [
+      "translation",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 10.5,
+        "a_observable": "The camera has a dramatic perspective angle, showing significant depth and tilt on the tiles.",
+        "b_observable": "The camera angle is flatter and more top-down, reducing the perspective depth.",
+        "fix": "Adjust the camera focal length and tilt to match the reference perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "Strong vignette with noticeable falloff towards the corners of the frame.",
+        "b_observable": "Flat lighting with almost no vignetting in the corners.",
+        "fix": "Add a vignette pass to darken the corners of the frame.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "Deeper shadows in the crevices between tiles, creating a sense of depth.",
+        "b_observable": "Brighter shadows, making the tiles look flat and disconnected.",
+        "fix": "Increase shadow density and ambient occlusion in crevices.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      },
+      {
+        "category": "color",
+        "t": 10.5,
+        "a_observable": "Warm, creamy tone on the white tiles.",
+        "b_observable": "Cool, neutral white color cast across the tiles.",
+        "fix": "Adjust the white balance to introduce warmer tones.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Match the camera perspective angle and focal length, and add a vignette and contact shadows to restore depth."
+  }
+}

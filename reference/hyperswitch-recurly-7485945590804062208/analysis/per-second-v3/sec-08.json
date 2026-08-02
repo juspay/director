@@ -1,0 +1,228 @@
+{
+  "sec": 8,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "pan",
+        "zoom",
+        "cut"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom",
+        "cut"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 8.5,
+          "a_observable": "The background tiles in the top-right corner are heavily blurred due to a shallow depth of field.",
+          "b_observable": "The background tiles are in sharp focus, indicating a much wider depth of field.",
+          "fix": "Enable depth of field on the camera and adjust focus distance to blur the background.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "material",
+          "t": 8.3,
+          "a_observable": "The yellow Recurly button and blue Hyperswitch button have a distinct metallic bevel around their colored inserts.",
+          "b_observable": "The buttons lack this metallic bevel, appearing as flat colored shapes on the white tiles.",
+          "fix": "Add a metallic beveled frame material around the colored inserts of the buttons.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 8.5,
+          "a_observable": "The white tiles and background have a cooler, blue-cyan color cast.",
+          "b_observable": "The white tiles are neutral grey and white with no color cast.",
+          "fix": "Adjust the white balance or add a cool blue-cyan color grading to the scene.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Enable depth of field on the camera and adjust focus distance to match the reference's shallow depth of field.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "camera zoom",
+        "camera pan",
+        "button slide-in animation"
+      ],
+      "b_motion": [
+        "camera zoom",
+        "camera pan"
+      ],
+      "absent_in_b": [
+        "brushed metal texture on card borders",
+        "button slide-in animation"
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "t": 8.3,
+          "a_observable": "The 'Live Now' button is absent immediately after the cut, animating into view later.",
+          "b_observable": "The 'Live Now' button is already present and static from the moment of the cut.",
+          "fix": "Delay the appearance of the 'Live Now' button and animate its entry to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "motion",
+            "expect": "A_more"
+          }
+        },
+        {
+          "category": "material",
+          "t": 8.05,
+          "a_observable": "The card borders feature a brushed metallic material with realistic anisotropic reflections.",
+          "b_observable": "The card borders are flat grey with no metallic texture or reflections.",
+          "fix": "Apply a brushed metal material with appropriate roughness and reflectivity to the card borders.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 8.5,
+          "a_observable": "The camera is positioned closer to the cards, creating a dynamic perspective with a shallow depth of field.",
+          "b_observable": "The camera is positioned further away, resulting in a flatter perspective and a wider field of view.",
+          "fix": "Adjust the camera position and focal length to match the closer, more dramatic framing of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        }
+      ],
+      "highest_impact_fix": "Animate the 'Live Now' button to slide into place after the cut instead of having it static from the start.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        8.104
+      ],
+      "a_motion": [
+        "camera zoom out",
+        "camera pan"
+      ],
+      "b_motion": [
+        "camera zoom out",
+        "camera pan"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 8.5,
+          "a_observable": "Strong vignette with darker corners compared to the center.",
+          "b_observable": "Flat lighting across the frame with almost no corner falloff.",
+          "fix": "Add a vignette in post-production or adjust the light falloff.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 8.5,
+          "a_observable": "Shallow depth of field blurs the background elements.",
+          "b_observable": "Deep depth of field keeps the entire scene in sharp focus.",
+          "fix": "Enable depth of field on the camera and adjust the aperture.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "top"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 8.5,
+          "a_observable": "The 'Secure Payments' tile is positioned closer to the yellow 'Recurly' tile.",
+          "b_observable": "The 'Secure Payments' tile is spaced further away, leaving more empty space.",
+          "fix": "Adjust the spacing and positions of the tiles to match.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 8.5,
+          "a_observable": "The white surfaces have a warm, cream-colored tint.",
+          "b_observable": "The white surfaces are neutral white/grey.",
+          "fix": "Adjust the white balance or color grading to add a warm tint.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Enable depth of field on the camera and adjust the aperture to match the reference blur.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 8.5,
+        "a_observable": "The background tiles in the top-right corner are heavily blurred due to a shallow depth of field.",
+        "b_observable": "The background tiles are in sharp focus, indicating a much wider depth of field.",
+        "fix": "Enable depth of field on the camera and adjust focus distance to blur the background.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "B_sharper",
+          "A": {
+            "lap_var": 76.26
+          },
+          "B": {
+            "lap_var": 3.2
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Enable depth of field on the camera and adjust focus distance to match the reference's shallow depth of field.",
+    "dropped_unsupported": 8
+  }
+}

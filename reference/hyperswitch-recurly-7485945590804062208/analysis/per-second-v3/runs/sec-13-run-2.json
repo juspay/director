@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zoom out"
+    ],
+    "b_motion": [
+      "camera zoom out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 13.3,
+        "a_observable": "The camera is positioned lower and tilted upwards, creating a dynamic perspective on the 3D blocks.",
+        "b_observable": "The camera is positioned higher with a flatter, more top-down angle.",
+        "fix": "Lower the camera height and tilt it upwards to match the reference perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 13.5,
+        "a_observable": "The yellow Recurly button has a vibrant, saturated yellow color.",
+        "b_observable": "The yellow Recurly button is less saturated and has a slightly greenish tint.",
+        "fix": "Adjust the yellow material color to be more saturated and warm.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 13.1,
+        "a_observable": "The 'Live Now' button is positioned centrally between the yellow and blue buttons.",
+        "b_observable": "The 'Live Now' button is shifted higher up relative to the blue button.",
+        "fix": "Reposition the 'Live Now' button to match the reference layout.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and position to match the dynamic perspective of the reference video."
+  }
+}

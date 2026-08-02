@@ -1,0 +1,58 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 6.2,
+        "a_observable": "The camera is positioned closer to the grid, showing the yellow card with a strong perspective tilt.",
+        "b_observable": "The camera is further away, showing the yellow card with a flatter perspective.",
+        "fix": "Adjust camera position and field of view.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "full"
+        }
+      },
+      {
+        "category": "color",
+        "t": 6.8,
+        "a_observable": "The background tiles have a soft blue-grey tint.",
+        "b_observable": "The background tiles are neutral white and grey.",
+        "fix": "Adjust background material color and lighting color temperature.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler",
+          "region": "full"
+        }
+      },
+      {
+        "category": "material",
+        "t": 6.8,
+        "a_observable": "The frame of the Juspay card has a brushed metallic texture.",
+        "b_observable": "The frame of the Juspay card is flat grey plastic.",
+        "fix": "Apply a brushed metal material to the card frame.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust camera position and field of view to match the dynamic perspective of the reference."
+  }
+}

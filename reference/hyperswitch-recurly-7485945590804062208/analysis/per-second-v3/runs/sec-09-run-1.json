@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "zoom"
+    ],
+    "b_motion": [
+      "translation",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 9.8,
+        "a_observable": "Close-up framing with the yellow Recurly card prominent on the right.",
+        "b_observable": "Distant, zoomed-out framing with small cards and excess empty space.",
+        "fix": "Adjust camera position and focal length to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 9.5,
+        "a_observable": "Distinct cool blue color cast across the white tiles.",
+        "b_observable": "Neutral white and grey tiles lacking any blue tint.",
+        "fix": "Apply a cool color grade to match the reference palette.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.2,
+        "a_observable": "Pronounced vignette with darker corners and edges.",
+        "b_observable": "Flat, uniform lighting across the entire frame.",
+        "fix": "Add a vignette to darken the corners.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera focal length and position to correct the framing."
+  }
+}

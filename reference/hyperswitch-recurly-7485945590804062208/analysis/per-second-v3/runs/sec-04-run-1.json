@@ -1,0 +1,72 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      4.9
+    ],
+    "a_motion": [
+      "pan",
+      "tilt"
+    ],
+    "b_motion": [
+      "pan"
+    ],
+    "absent_in_b": [
+      "vignette",
+      "color_cast"
+    ],
+    "differences": [
+      {
+        "category": "color",
+        "t": 4.1,
+        "a_observable": "The card on the left is bright blue and the card on the bottom is yellow.",
+        "b_observable": "The cards on the left and bottom are grey and white.",
+        "fix": "Apply the correct blue and yellow colors to the surrounding cards.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "full"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 4.5,
+        "a_observable": "The camera has a distinct diagonal tilt relative to the cards.",
+        "b_observable": "The camera is aligned straight with the card grid.",
+        "fix": "Match the camera tilt and rotation of the reference video.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 4.8,
+        "a_observable": "The shadows between the cards are deep and dark.",
+        "b_observable": "The shadows are faint and bright, reducing depth.",
+        "fix": "Increase the shadow depth and contrast to match Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 4.95,
+        "a_observable": "The yellow Recurly card is centered and framed closely.",
+        "b_observable": "The yellow Recurly card is in the bottom-left and framed from further away.",
+        "fix": "Adjust the camera framing after the cut to center on the yellow card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Apply the correct blue and yellow colors to the surrounding cards to match the vibrant color scheme of Video A."
+  }
+}

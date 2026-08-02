@@ -1,0 +1,58 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [
+      "blue card on left",
+      "yellow card below",
+      "vignette"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 0.2,
+        "a_observable": "Camera is at a high angle looking down, showing adjacent blue and yellow cards.",
+        "b_observable": "Camera is at a low oblique angle, hiding the layout of adjacent cards.",
+        "fix": "Adjust camera height and pitch to match the high-angle perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 0.5,
+        "a_observable": "Surrounding cards are colored blue and yellow, casting colored reflections.",
+        "b_observable": "Surrounding cards are grey and white, lacking color and reflections.",
+        "fix": "Apply correct blue and yellow materials to the surrounding cards.",
+        "severity": 4,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.8,
+        "a_observable": "Strong vignette with noticeable light falloff towards the corners.",
+        "b_observable": "Even lighting across the frame with no corner falloff.",
+        "fix": "Add a vignette post-process effect to darken the corners.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Apply correct blue and yellow materials to the surrounding cards and adjust the camera angle to match the reference."
+  }
+}

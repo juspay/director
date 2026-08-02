@@ -1,0 +1,44 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera tilt"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 3.5,
+        "a_observable": "The surrounding tiles display vibrant blue and yellow colors.",
+        "b_observable": "The surrounding tiles are plain white and grey.",
+        "fix": "Assign the correct colored materials to the background tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "full"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 3.2,
+        "a_observable": "Deep shadows are visible in the crevices between tiles, creating high contrast.",
+        "b_observable": "Crevice shadows are faint and the overall lighting is flat.",
+        "fix": "Increase shadow depth and contrast to match the reference lighting.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Apply the correct blue and yellow materials to the background tiles to restore the color palette."
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "material",
+        "t": 11,
+        "a_observable": "The yellow Recurly card features a dark metallic bezel.",
+        "b_observable": "The yellow Recurly card has a flat blue border.",
+        "fix": "Change the card border material to dark metallic.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "Pronounced darkening at the corners of the frame.",
+        "b_observable": "Uniform brightness across the frame with minimal corner falloff.",
+        "fix": "Add a vignette to match the reference lighting.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 11.8,
+        "a_observable": "Strong perspective distortion on the cards due to a wider field of view.",
+        "b_observable": "Flatter perspective with less distortion, indicating a longer focal length.",
+        "fix": "Adjust camera focal length to match the perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera focal length and perspective to match the reference."
+  }
+}

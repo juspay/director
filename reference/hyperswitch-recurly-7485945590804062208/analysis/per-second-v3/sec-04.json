@@ -1,0 +1,143 @@
+{
+  "sec": 4,
+  "meta": {
+    "verified": 2,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [
+    "reported 2 cuts, truth has 1"
+  ],
+  "runs": [
+    {
+      "cuts_in_window": [
+        4.9
+      ],
+      "a_motion": [
+        "camera motion"
+      ],
+      "b_motion": [
+        "camera motion"
+      ],
+      "absent_in_b": [
+        "metallic brushed texture"
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "t": 4.2,
+          "a_observable": "The background to the right of the tiles features a metallic brushed texture, and a yellow tile is visible on the top-left.",
+          "b_observable": "The background to the right of the tiles features a grid of dots, and a grey tile is visible on the top-left.",
+          "fix": "Align the background elements and textures to match the reference staging.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 4.9,
+          "a_observable": "The camera is positioned at a low oblique angle, showing significant perspective and tile depth.",
+          "b_observable": "The camera is positioned at a higher angle, resulting in a more top-down view with less perspective depth.",
+          "fix": "Adjust the camera pitch and height to match the oblique perspective of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 4.5,
+          "a_observable": "The overall image has a cooler, bluer color temperature, especially in the white areas.",
+          "b_observable": "The image has a warmer, neutral-to-yellowish color cast.",
+          "fix": "Adjust the white balance and color grading to introduce a cooler blue tone.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and position to match the oblique perspective of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        4.9
+      ],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan"
+      ],
+      "absent_in_b": [
+        "vignette",
+        "color_cast"
+      ],
+      "differences": [
+        {
+          "category": "color",
+          "t": 4.1,
+          "a_observable": "The card on the left is bright blue and the card on the bottom is yellow.",
+          "b_observable": "The cards on the left and bottom are grey and white.",
+          "fix": "Apply the correct blue and yellow colors to the surrounding cards.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "full"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 4.5,
+          "a_observable": "The camera has a distinct diagonal tilt relative to the cards.",
+          "b_observable": "The camera is aligned straight with the card grid.",
+          "fix": "Match the camera tilt and rotation of the reference video.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 4.8,
+          "a_observable": "The shadows between the cards are deep and dark.",
+          "b_observable": "The shadows are faint and bright, reducing depth.",
+          "fix": "Increase the shadow depth and contrast to match Video A.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "full"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 4.95,
+          "a_observable": "The yellow Recurly card is centered and framed closely.",
+          "b_observable": "The yellow Recurly card is in the bottom-left and framed from further away.",
+          "fix": "Adjust the camera framing after the cut to center on the yellow card.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Apply the correct blue and yellow colors to the surrounding cards to match the vibrant color scheme of Video A.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "",
+    "dropped_unsupported": 7
+  }
+}

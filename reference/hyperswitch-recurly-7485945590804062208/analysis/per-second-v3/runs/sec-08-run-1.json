@@ -1,0 +1,61 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "camera zoom",
+      "camera pan",
+      "button slide-in animation"
+    ],
+    "b_motion": [
+      "camera zoom",
+      "camera pan"
+    ],
+    "absent_in_b": [
+      "brushed metal texture on card borders",
+      "button slide-in animation"
+    ],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 8.3,
+        "a_observable": "The 'Live Now' button is absent immediately after the cut, animating into view later.",
+        "b_observable": "The 'Live Now' button is already present and static from the moment of the cut.",
+        "fix": "Delay the appearance of the 'Live Now' button and animate its entry to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "motion",
+          "expect": "A_more"
+        }
+      },
+      {
+        "category": "material",
+        "t": 8.05,
+        "a_observable": "The card borders feature a brushed metallic material with realistic anisotropic reflections.",
+        "b_observable": "The card borders are flat grey with no metallic texture or reflections.",
+        "fix": "Apply a brushed metal material with appropriate roughness and reflectivity to the card borders.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 8.5,
+        "a_observable": "The camera is positioned closer to the cards, creating a dynamic perspective with a shallow depth of field.",
+        "b_observable": "The camera is positioned further away, resulting in a flatter perspective and a wider field of view.",
+        "fix": "Adjust the camera position and focal length to match the closer, more dramatic framing of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Animate the 'Live Now' button to slide into place after the cut instead of having it static from the start."
+  }
+}

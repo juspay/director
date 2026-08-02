@@ -1,0 +1,71 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.104
+    ],
+    "a_motion": [
+      "camera zoom out",
+      "camera pan"
+    ],
+    "b_motion": [
+      "camera zoom out",
+      "camera pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "Strong vignette with darker corners compared to the center.",
+        "b_observable": "Flat lighting across the frame with almost no corner falloff.",
+        "fix": "Add a vignette in post-production or adjust the light falloff.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 8.5,
+        "a_observable": "Shallow depth of field blurs the background elements.",
+        "b_observable": "Deep depth of field keeps the entire scene in sharp focus.",
+        "fix": "Enable depth of field on the camera and adjust the aperture.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 8.5,
+        "a_observable": "The 'Secure Payments' tile is positioned closer to the yellow 'Recurly' tile.",
+        "b_observable": "The 'Secure Payments' tile is spaced further away, leaving more empty space.",
+        "fix": "Adjust the spacing and positions of the tiles to match.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 8.5,
+        "a_observable": "The white surfaces have a warm, cream-colored tint.",
+        "b_observable": "The white surfaces are neutral white/grey.",
+        "fix": "Adjust the white balance or color grading to add a warm tint.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Enable depth of field on the camera and adjust the aperture to match the reference blur."
+  }
+}

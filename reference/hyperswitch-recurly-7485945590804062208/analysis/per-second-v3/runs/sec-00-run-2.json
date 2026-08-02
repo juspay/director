@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "tilt"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt"
+    ],
+    "absent_in_b": [
+      "blue_tile",
+      "yellow_tile"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 0.25,
+        "a_observable": "Close-up, low-angle camera perspective focusing tightly on the Secure Payments tile.",
+        "b_observable": "High-angle, distant camera perspective showing multiple tiles with less depth.",
+        "fix": "Bring the camera closer and lower the angle to match the reference composition.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 0.25,
+        "a_observable": "White tiles have a distinct cool blue-gray color cast.",
+        "b_observable": "White tiles have a warm, neutral beige color cast.",
+        "fix": "Cool down the white balance and add a blue tint to the shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.25,
+        "a_observable": "Strong vignette with significant light falloff towards the corners.",
+        "b_observable": "Flat lighting with uniform brightness across the frame and no vignette.",
+        "fix": "Add a vignette effect to darken the corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "material",
+        "t": 0.25,
+        "a_observable": "Tiles have a matte, slightly textured finish with soft reflections.",
+        "b_observable": "Tiles have a very smooth, semi-glossy plastic finish.",
+        "fix": "Increase roughness and add a subtle bump map to the tile material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and angle to match the close-up, low-angle perspective of the reference."
+  }
+}

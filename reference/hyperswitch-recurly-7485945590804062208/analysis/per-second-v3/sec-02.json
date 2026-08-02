@@ -1,0 +1,274 @@
+{
+  "sec": 2,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        2.208
+      ],
+      "a_motion": [
+        "camera translation",
+        "camera rotation"
+      ],
+      "b_motion": [
+        "camera translation",
+        "camera rotation"
+      ],
+      "absent_in_b": [
+        "blue and yellow block colors",
+        "correct dot grid placement"
+      ],
+      "differences": [
+        {
+          "category": "color",
+          "t": 2.1,
+          "a_observable": "Vibrant blue and yellow blocks surround the white 'Secure Payments' block.",
+          "b_observable": "The surrounding blocks are flat gray, lacking the blue and yellow colors.",
+          "fix": "Apply the correct blue and yellow materials to the surrounding blocks.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "full"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 2.5,
+          "a_observable": "The grid of dots is located on the left side of the vertical stack of blocks.",
+          "b_observable": "The grid of dots is located on the right side of the vertical stack of blocks.",
+          "fix": "Move the dot grid background element to the left side of the frame.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none",
+            "region": "full"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 2.8,
+          "a_observable": "Crevices between the blocks have deep, dark shadows.",
+          "b_observable": "Crevices between the blocks are brightly lit with very soft shadows.",
+          "fix": "Darken the contact shadows and increase ambient occlusion.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Apply the correct blue and yellow materials to the background blocks and adjust the layout of the dot grid to match the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        2.21
+      ],
+      "a_motion": [
+        "camera zoom out",
+        "cut",
+        "camera pan"
+      ],
+      "b_motion": [
+        "camera zoom out",
+        "cut",
+        "camera pan"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "color",
+          "t": 2.1,
+          "a_observable": "Vibrant blue and yellow tiles are visible in the background.",
+          "b_observable": "The background tiles are monochromatic grey.",
+          "fix": "Assign the correct blue and yellow materials to the background tiles.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 2.5,
+          "a_observable": "Soft, dark drop shadows are visible under the floating tiles.",
+          "b_observable": "Drop shadows are extremely faint, making the tiles look flat.",
+          "fix": "Increase the shadow density and softness under the floating tiles.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Restore the vibrant blue and yellow materials to the background tiles to match the reference color palette.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        2.208
+      ],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [
+        "yellow bar at the top-left",
+        "Billing text at the top-left"
+      ],
+      "differences": [
+        {
+          "category": "color",
+          "t": 2.1,
+          "a_observable": "The tiles surrounding the central 'Secure Payments' tile have distinct colors, including a blue tile on the left and a yellow tile at the bottom.",
+          "b_observable": "The surrounding tiles are uniform light grey and white, lacking the blue and yellow colors.",
+          "fix": "Apply the correct colored materials to the surrounding tiles to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 2.5,
+          "a_observable": "The background dot grid is located on the left side of the tiles, and a yellow bar with 'Billing' text is visible at the top-left.",
+          "b_observable": "The background dot grid is on the right side of the tiles, and the yellow bar and 'Billing' text are missing.",
+          "fix": "Correct the layout of the background elements, moving the dot grid to the left and adding the yellow bar and text.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 2.5,
+          "a_observable": "The scene has strong directional lighting from the top-right, creating soft shadows on the left of the tiles and high contrast.",
+          "b_observable": "The scene has flat, ambient lighting with almost no visible shadows, resulting in lower contrast.",
+          "fix": "Add a directional key light from the top-right and enable soft shadows to match the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        }
+      ],
+      "highest_impact_fix": "Correct the layout of the background elements and apply the proper colored materials to the tiles.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "color",
+        "t": 2.1,
+        "a_observable": "Vibrant blue and yellow blocks surround the white 'Secure Payments' block.",
+        "b_observable": "The surrounding blocks are flat gray, lacking the blue and yellow colors.",
+        "fix": "Apply the correct blue and yellow materials to the surrounding blocks.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "full"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 188.21,
+            "g": 200.46,
+            "b": 204.01,
+            "rb_delta": -15.8,
+            "saturation": 0.2023
+          },
+          "B": {
+            "r": 214.89,
+            "g": 208.92,
+            "b": 200,
+            "rb_delta": 14.88,
+            "saturation": 0.0803
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "layout",
+        "t": 2.5,
+        "a_observable": "The grid of dots is located on the left side of the vertical stack of blocks.",
+        "b_observable": "The grid of dots is located on the right side of the vertical stack of blocks.",
+        "fix": "Move the dot grid background element to the left side of the frame.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none",
+          "region": "full"
+        },
+        "supported_by": 2,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "The claim is fully supported. In Clip A, the grid of dots is indeed located to the left of the vertical stack containing 'Subscriptions', 'Retries', and 'APMs'. In Clip B, the grid of dots is located to the right of this vertical stack."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "Exact: dots grid hugs the left edge in A; the dotted tile sits upper-right in B. Both halves hold as stated."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.5,
+        "a_observable": "Soft, dark drop shadows are visible under the floating tiles.",
+        "b_observable": "Drop shadows are extremely faint, making the tiles look flat.",
+        "fix": "Increase the shadow density and softness under the floating tiles.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 69.86,
+            "p1": 84.41,
+            "p5": 110.45,
+            "p50": 207.96,
+            "p95": 246.13,
+            "p99": 249,
+            "p999": 250.96,
+            "span_p5_p95": 135.68
+          },
+          "B": {
+            "p01": 16.89,
+            "p1": 17.4,
+            "p5": 144.92,
+            "p50": 197.77,
+            "p95": 229.77,
+            "p99": 232.98,
+            "p999": 237.65,
+            "span_p5_p95": 84.85
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Apply the correct blue and yellow materials to the background blocks and adjust the layout of the dot grid to match the reference.",
+    "dropped_unsupported": 0
+  }
+}

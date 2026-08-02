@@ -1,0 +1,243 @@
+{
+  "sec": 12,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "zoom"
+      ],
+      "b_motion": [
+        "translation",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 12.25,
+          "a_observable": "The tiles are framed closely, filling most of the screen.",
+          "b_observable": "The camera is pulled back, making the tiles appear much smaller with excess empty space.",
+          "fix": "Adjust camera distance or zoom to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 12.5,
+          "a_observable": "The white tiles exhibit a cool blue color cast.",
+          "b_observable": "The white tiles are neutral warm grey.",
+          "fix": "Apply a cool blue color grading to the scene.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 12.5,
+          "a_observable": "The shadows between the tiles are deep and dark, providing high contrast.",
+          "b_observable": "The shadows are bright and soft, leading to a flat, low-contrast look.",
+          "fix": "Deepen shadows and increase contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera framing and distance to match the close-up composition of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom_out"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom_out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 12.2,
+          "a_observable": "Camera is closer, tilted, with background elements blurred by depth of field.",
+          "b_observable": "Camera is further back, flatter, with all elements in sharp focus.",
+          "fix": "Bring camera closer, tilt it, and enable depth of field.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 12.5,
+          "a_observable": "Directional lighting with a strong vignette darkening the corners.",
+          "b_observable": "Flat, uniform lighting with minimal corner falloff.",
+          "fix": "Add a vignette and use directional light sources.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust camera distance, tilt, and depth of field to match the reference perspective.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "zoom_out"
+      ],
+      "b_motion": [
+        "translation",
+        "zoom_out"
+      ],
+      "absent_in_b": [
+        "depth_of_field",
+        "vignette",
+        "colored_cards"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 12.2,
+          "a_observable": "The camera is close to the cards at an angle with shallow depth of field, blurring the background.",
+          "b_observable": "The camera is far away at a high angle with deep depth of field, keeping everything sharp.",
+          "fix": "Reposition the camera closer, match the angled perspective, and enable depth of field.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 12.5,
+          "a_observable": "Strong directional lighting creates deep, soft shadows between the raised cards.",
+          "b_observable": "Flat, ambient lighting results in very faint shadows, making the cards appear flat.",
+          "fix": "Add a strong directional light source and adjust shadow settings to deepen shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 12.2,
+          "a_observable": "The yellow Recurly card and blue accents on surrounding cards are highly saturated.",
+          "b_observable": "The colors are muted, with a less saturated yellow card and mostly grayscale surrounding cards.",
+          "fix": "Increase the saturation of the yellow card and add vibrant blue materials to surrounding cards.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 12.8,
+          "a_observable": "The cards are tightly packed and have varying heights, creating a layered 3D grid.",
+          "b_observable": "The cards are sparsely distributed on a single flat plane with no vertical variation.",
+          "fix": "Adjust the layout of the cards to be tightly packed and vary their heights.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Reposition the camera closer to the cards at a dynamic angle, enable depth of field, and adjust the lighting to create deep, soft shadows that emphasize the 3D layout.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 12.2,
+        "a_observable": "The camera is close to the cards at an angle with shallow depth of field, blurring the background.",
+        "b_observable": "The camera is far away at a high angle with deep depth of field, keeping everything sharp.",
+        "fix": "Reposition the camera closer, match the angled perspective, and enable depth of field.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_sharper",
+          "A": {
+            "lap_var": 0.91
+          },
+          "B": {
+            "lap_var": 3.06
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "Strong directional lighting creates deep, soft shadows between the raised cards.",
+        "b_observable": "Flat, ambient lighting results in very faint shadows, making the cards appear flat.",
+        "fix": "Add a strong directional light source and adjust shadow settings to deepen shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 4.04,
+            "p1": 86.3,
+            "p5": 91.09,
+            "p50": 208.88,
+            "p95": 231.19,
+            "p99": 236.33,
+            "p999": 252.45,
+            "span_p5_p95": 140.1
+          },
+          "B": {
+            "p01": 97.09,
+            "p1": 99.8,
+            "p5": 110.41,
+            "p50": 224.28,
+            "p95": 238,
+            "p99": 238.43,
+            "p999": 239.87,
+            "span_p5_p95": 127.59
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Reposition the camera closer to the cards at a dynamic angle, enable depth of field, and adjust the lighting to create deep, soft shadows that emphasize the 3D layout.",
+    "dropped_unsupported": 4
+  }
+}

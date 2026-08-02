@@ -1,0 +1,71 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "zoom_out"
+    ],
+    "b_motion": [
+      "translation",
+      "zoom_out"
+    ],
+    "absent_in_b": [
+      "depth_of_field",
+      "vignette",
+      "colored_cards"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 12.2,
+        "a_observable": "The camera is close to the cards at an angle with shallow depth of field, blurring the background.",
+        "b_observable": "The camera is far away at a high angle with deep depth of field, keeping everything sharp.",
+        "fix": "Reposition the camera closer, match the angled perspective, and enable depth of field.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "Strong directional lighting creates deep, soft shadows between the raised cards.",
+        "b_observable": "Flat, ambient lighting results in very faint shadows, making the cards appear flat.",
+        "fix": "Add a strong directional light source and adjust shadow settings to deepen shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 12.2,
+        "a_observable": "The yellow Recurly card and blue accents on surrounding cards are highly saturated.",
+        "b_observable": "The colors are muted, with a less saturated yellow card and mostly grayscale surrounding cards.",
+        "fix": "Increase the saturation of the yellow card and add vibrant blue materials to surrounding cards.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 12.8,
+        "a_observable": "The cards are tightly packed and have varying heights, creating a layered 3D grid.",
+        "b_observable": "The cards are sparsely distributed on a single flat plane with no vertical variation.",
+        "fix": "Adjust the layout of the cards to be tightly packed and vary their heights.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Reposition the camera closer to the cards at a dynamic angle, enable depth of field, and adjust the lighting to create deep, soft shadows that emphasize the 3D layout."
+  }
+}

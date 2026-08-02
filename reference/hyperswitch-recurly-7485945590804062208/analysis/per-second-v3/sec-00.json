@@ -1,0 +1,174 @@
+{
+  "sec": 0,
+  "meta": {
+    "verified": 2,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [
+    "{\"error\":{\"code\":503,\"message\":\"This model is currently experiencing high demand. Spikes in demand are usually temporary"
+  ],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [
+        "blue card on left",
+        "yellow card below",
+        "vignette"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 0.2,
+          "a_observable": "Camera is at a high angle looking down, showing adjacent blue and yellow cards.",
+          "b_observable": "Camera is at a low oblique angle, hiding the layout of adjacent cards.",
+          "fix": "Adjust camera height and pitch to match the high-angle perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 0.5,
+          "a_observable": "Surrounding cards are colored blue and yellow, casting colored reflections.",
+          "b_observable": "Surrounding cards are grey and white, lacking color and reflections.",
+          "fix": "Apply correct blue and yellow materials to the surrounding cards.",
+          "severity": 4,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.8,
+          "a_observable": "Strong vignette with noticeable light falloff towards the corners.",
+          "b_observable": "Even lighting across the frame with no corner falloff.",
+          "fix": "Add a vignette post-process effect to darken the corners.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Apply correct blue and yellow materials to the surrounding cards and adjust the camera angle to match the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt"
+      ],
+      "absent_in_b": [
+        "blue_tile",
+        "yellow_tile"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 0.25,
+          "a_observable": "Close-up, low-angle camera perspective focusing tightly on the Secure Payments tile.",
+          "b_observable": "High-angle, distant camera perspective showing multiple tiles with less depth.",
+          "fix": "Bring the camera closer and lower the angle to match the reference composition.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 0.25,
+          "a_observable": "White tiles have a distinct cool blue-gray color cast.",
+          "b_observable": "White tiles have a warm, neutral beige color cast.",
+          "fix": "Cool down the white balance and add a blue tint to the shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.25,
+          "a_observable": "Strong vignette with significant light falloff towards the corners.",
+          "b_observable": "Flat lighting with uniform brightness across the frame and no vignette.",
+          "fix": "Add a vignette effect to darken the corners.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "material",
+          "t": 0.25,
+          "a_observable": "Tiles have a matte, slightly textured finish with soft reflections.",
+          "b_observable": "Tiles have a very smooth, semi-glossy plastic finish.",
+          "fix": "Increase roughness and add a subtle bump map to the tile material.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and angle to match the close-up, low-angle perspective of the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 0.8,
+        "a_observable": "Strong vignette with noticeable light falloff towards the corners.",
+        "b_observable": "Even lighting across the frame with no corner falloff.",
+        "fix": "Add a vignette post-process effect to darken the corners.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 204.05,
+            "center_mean": 203.81,
+            "falloff_pct": -0.11
+          },
+          "B": {
+            "corner_mean": 212.8,
+            "center_mean": 212.44,
+            "falloff_pct": -0.17
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [
+      "blue card",
+      "yellow card"
+    ],
+    "highest_impact_fix": "Add a vignette post-process effect to darken the corners.",
+    "dropped_unsupported": 5
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "static"
+    ],
+    "b_motion": [
+      "static"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 14.2,
+        "a_observable": "Strong vignette with darker corners and soft, deep shadows under the cards.",
+        "b_observable": "Flat, uniform lighting across the background with very weak shadows and no noticeable vignette.",
+        "fix": "Add a vignette and increase shadow depth/softness under the cards.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 14.2,
+        "a_observable": "The yellow card has a warm, golden-yellow hue.",
+        "b_observable": "The yellow card has a cooler, more greenish-yellow hue.",
+        "fix": "Adjust the yellow card material color to be warmer and more saturated.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "left"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 14.2,
+        "a_observable": "The camera is closer to the cards, making them appear larger in the frame.",
+        "b_observable": "The camera is further away, resulting in smaller cards and more visible background tiles.",
+        "fix": "Adjust the camera zoom or position to match the reference framing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera zoom and position to match the reference framing, and add a vignette with deeper shadows to improve the lighting depth."
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera rotation"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 3.5,
+        "a_observable": "Strong cool blue color cast across the white tiles and background.",
+        "b_observable": "Neutral grey and white tiles with no blue color cast.",
+        "fix": "Add a cool blue ambient light or adjust color grading to introduce a blue cast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 3.5,
+        "a_observable": "High contrast with bright highlights on the card surfaces and deep shadows in the crevices.",
+        "b_observable": "Flat lighting with low contrast, washed-out shadows, and dull highlights.",
+        "fix": "Adjust the light intensity and shadow bias to increase contrast and deepen shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 3.5,
+        "a_observable": "The camera is positioned closer to the cards, creating a dynamic perspective with visible depth of field blur in the background.",
+        "b_observable": "The camera is further away, resulting in a flatter perspective and uniform sharpness.",
+        "fix": "Move the camera closer and adjust focal length and depth of field settings.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the lighting setup to introduce the cool blue color cast and increase contrast to match the reference."
+  }
+}

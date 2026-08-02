@@ -1,0 +1,59 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.208
+    ],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [
+      "yellow bar at the top-left",
+      "Billing text at the top-left"
+    ],
+    "differences": [
+      {
+        "category": "color",
+        "t": 2.1,
+        "a_observable": "The tiles surrounding the central 'Secure Payments' tile have distinct colors, including a blue tile on the left and a yellow tile at the bottom.",
+        "b_observable": "The surrounding tiles are uniform light grey and white, lacking the blue and yellow colors.",
+        "fix": "Apply the correct colored materials to the surrounding tiles to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 2.5,
+        "a_observable": "The background dot grid is located on the left side of the tiles, and a yellow bar with 'Billing' text is visible at the top-left.",
+        "b_observable": "The background dot grid is on the right side of the tiles, and the yellow bar and 'Billing' text are missing.",
+        "fix": "Correct the layout of the background elements, moving the dot grid to the left and adding the yellow bar and text.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.5,
+        "a_observable": "The scene has strong directional lighting from the top-right, creating soft shadows on the left of the tiles and high contrast.",
+        "b_observable": "The scene has flat, ambient lighting with almost no visible shadows, resulting in lower contrast.",
+        "fix": "Add a directional key light from the top-right and enable soft shadows to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      }
+    ],
+    "highest_impact_fix": "Correct the layout of the background elements and apply the proper colored materials to the tiles."
+  }
+}

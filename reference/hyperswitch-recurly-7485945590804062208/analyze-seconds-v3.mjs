@@ -60,15 +60,22 @@ function looseJson(text) {
   try { return JSON.parse(text); } catch { /* fall through */ }
   const a = text.indexOf('{');
   if (a < 0) throw new Error('no JSON object in response');
-  let depth = 0, inStr = false, esc = false;
+  const stack = [];
+  let inStr = false, esc = false;
   for (let i = a; i < text.length; i++) {
     const c = text[i];
     if (inStr) { if (esc) esc = false; else if (c === '\\') esc = true; else if (c === '"') inStr = false; continue; }
     if (c === '"') inStr = true;
-    else if (c === '{') depth++;
-    else if (c === '}' && --depth === 0) return JSON.parse(text.slice(a, i + 1));
+    else if (c === '{' || c === '[') stack.push(c);
+    else if (c === '}' || c === ']') { stack.pop(); if (stack.length === 0) return JSON.parse(text.slice(a, i + 1)); }
   }
-  throw new Error('unterminated JSON object');
+  // Seen in the wild with finishReason=STOP: the model emits a complete,
+  // valid document minus its final closing brace(s). Close whatever is still
+  // open and parse that; genuinely mangled output still throws below.
+  let tail = text.slice(a).replace(/[\s,]+$/, '');
+  if (inStr) tail += '"';
+  for (let i = stack.length - 1; i >= 0; i--) tail += stack[i] === '{' ? '}' : ']';
+  return JSON.parse(tail);
 }
 
 /** 2x-retimed derivative, cached next to the analysis output. */
@@ -336,8 +343,16 @@ function extractEyewitnessFrames(sec, idx, t) {
 
 /* ----------------------------------------------------------- consolidate -- */
 
-async function consolidate(sec, runs) {
+async function consolidate(sec, allRuns) {
   const ai = getAi();
+  // Only what the vote needs: full run objects (motion inventories, firewall
+  // records) ballooned the prompt until the response truncated mid-object on
+  // dense seconds even at 65536 output tokens.
+  const runs = allRuns.map((r) => ({
+    differences: r.differences,
+    absent_in_b: r.absent_in_b,
+    highest_impact_fix: r.highest_impact_fix,
+  }));
   const prompt = `${runs.length} independent analyses of the same second of the same two videos are below.
 They were produced separately and disagree in places. Individual runs are known
 to hallucinate specifics.
@@ -364,7 +379,13 @@ ${runs.map((r, i) => `--- ANALYSIS ${i + 1} ---\n${JSON.stringify(r, null, 1)}`)
       config: { temperature: 0.1, maxOutputTokens: 65536, responseMimeType: 'application/json' },
     }),
   );
-  return looseJson(resp.text ?? '');
+  try {
+    return looseJson(resp.text ?? '');
+  } catch (e) {
+    const dump = path.join(outDir, 'runs', `consolidate-fail-sec${String(sec).padStart(2, '0')}.txt`);
+    fs.writeFileSync(dump, `finish=${resp.candidates?.[0]?.finishReason}\n\n${resp.text ?? ''}`);
+    throw new Error(`${e.message} (raw dumped to ${dump})`);
+  }
 }
 
 /* ---------------------------------------------------------------- render -- */

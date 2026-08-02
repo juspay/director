@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      4.9
+    ],
+    "a_motion": [
+      "camera motion"
+    ],
+    "b_motion": [
+      "camera motion"
+    ],
+    "absent_in_b": [
+      "metallic brushed texture"
+    ],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 4.2,
+        "a_observable": "The background to the right of the tiles features a metallic brushed texture, and a yellow tile is visible on the top-left.",
+        "b_observable": "The background to the right of the tiles features a grid of dots, and a grey tile is visible on the top-left.",
+        "fix": "Align the background elements and textures to match the reference staging.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 4.9,
+        "a_observable": "The camera is positioned at a low oblique angle, showing significant perspective and tile depth.",
+        "b_observable": "The camera is positioned at a higher angle, resulting in a more top-down view with less perspective depth.",
+        "fix": "Adjust the camera pitch and height to match the oblique perspective of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 4.5,
+        "a_observable": "The overall image has a cooler, bluer color temperature, especially in the white areas.",
+        "b_observable": "The image has a warmer, neutral-to-yellowish color cast.",
+        "fix": "Adjust the white balance and color grading to introduce a cooler blue tone.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and position to match the oblique perspective of the reference video."
+  }
+}

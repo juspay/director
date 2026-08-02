@@ -1,0 +1,43 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom_out"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom_out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 12.2,
+        "a_observable": "Camera is closer, tilted, with background elements blurred by depth of field.",
+        "b_observable": "Camera is further back, flatter, with all elements in sharp focus.",
+        "fix": "Bring camera closer, tilt it, and enable depth of field.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "Directional lighting with a strong vignette darkening the corners.",
+        "b_observable": "Flat, uniform lighting with minimal corner falloff.",
+        "fix": "Add a vignette and use directional light sources.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust camera distance, tilt, and depth of field to match the reference perspective."
+  }
+}

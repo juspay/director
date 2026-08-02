@@ -3,31 +3,19 @@
   "json": {
     "cuts_in_window": [],
     "a_motion": [
-      "slow camera pan and tilt over a grid of tiles"
+      "camera pans and zooms out from the hyperswitch card"
     ],
     "b_motion": [
-      "slow camera pan and tilt over a grid of tiles"
+      "camera pans and zooms out from the hyperswitch card"
     ],
     "absent_in_b": [],
     "differences": [
       {
-        "category": "layout",
-        "t": 7.25,
-        "a_observable": "The 'Revenue Analytics' tile is in the upper right and the 'PSP' tile is at the bottom center.",
-        "b_observable": "The 'Revenue Analytics' tile is in the upper left-center and the 'PSP' tile is at the bottom left.",
-        "fix": "Rearrange the background tiles to match the reference layout.",
-        "severity": 3,
-        "prediction": {
-          "metric": "none",
-          "expect": "none"
-        }
-      },
-      {
-        "category": "material",
-        "t": 7,
-        "a_observable": "The border of the blue Hyperswitch tile has a bright, metallic brushed-metal finish.",
-        "b_observable": "The border of the blue Hyperswitch tile has a dark, matte grey finish.",
-        "fix": "Apply a metallic brushed-metal material to the tile border.",
+        "category": "staging",
+        "t": 7.1,
+        "a_observable": "The 'Revenue Analytics' card is close to the top-right of the 'hyperswitch' card.",
+        "b_observable": "The 'Revenue Analytics' card is placed much further away, leaving a large gap.",
+        "fix": "Adjust the spacing and layout of the surrounding tiles to match the reference.",
         "severity": 3,
         "prediction": {
           "metric": "none",
@@ -36,29 +24,30 @@
       },
       {
         "category": "color",
-        "t": 7.5,
-        "a_observable": "The blue face of the Hyperswitch tile is a highly saturated, vibrant royal blue.",
-        "b_observable": "The blue face of the Hyperswitch tile is a darker, less saturated blue.",
-        "fix": "Increase the saturation of the blue tile face.",
-        "severity": 2,
+        "t": 7.3,
+        "a_observable": "The blue 'hyperswitch' card is highly saturated royal blue.",
+        "b_observable": "The blue card is desaturated and dull.",
+        "fix": "Increase saturation of the blue material.",
+        "severity": 3,
         "prediction": {
           "metric": "color_cast",
           "expect": "A_more_saturated"
         }
       },
       {
-        "category": "lighting",
-        "t": 7.75,
-        "a_observable": "The shadows in the crevices between the tiles are soft and light.",
-        "b_observable": "The shadows in the crevices between the tiles are very dark and deep.",
-        "fix": "Soften the shadows in the crevices by adjusting ambient lighting.",
+        "category": "camera",
+        "t": 7.5,
+        "a_observable": "The background elements are heavily blurred with shallow depth of field.",
+        "b_observable": "The background elements are sharp and in focus.",
+        "fix": "Adjust camera depth of field to blur background elements.",
         "severity": 2,
         "prediction": {
-          "metric": "luma_curve",
-          "expect": "B_deeper_shadows"
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
         }
       }
     ],
-    "highest_impact_fix": "Realign the background tiles to match the reference layout and apply a metallic brushed-metal material to the border of the Hyperswitch tile."
+    "highest_impact_fix": "Re-align the surrounding tiles to match the reference layout and increase the saturation of the blue card."
   }
 }

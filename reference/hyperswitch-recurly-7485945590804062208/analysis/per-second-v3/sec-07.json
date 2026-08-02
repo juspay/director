@@ -10,133 +10,132 @@
     {
       "cuts_in_window": [],
       "a_motion": [
-        "camera pans slowly across the blue Juspay card"
+        "camera pan",
+        "camera zoom",
+        "camera rotation"
       ],
       "b_motion": [
-        "camera pans slowly across the blue Juspay card"
+        "camera pan",
+        "camera zoom",
+        "camera rotation"
       ],
-      "absent_in_b": [],
+      "absent_in_b": [
+        "metallic frame on JUSPAY tile",
+        "depth of field blur"
+      ],
       "differences": [
         {
           "category": "camera",
-          "t": 7,
-          "a_observable": "The camera is closely framed on the blue card, showing the PSP card centered below it.",
-          "b_observable": "The camera is further away, showing the PSP card shifted to the bottom-left.",
-          "fix": "Adjust camera zoom and position to match the reference framing.",
-          "severity": 2,
+          "t": 7.3,
+          "a_observable": "Background tiles are blurry due to shallow depth of field.",
+          "b_observable": "Background tiles are sharp with no depth of field blur.",
+          "fix": "Enable camera depth of field and adjust focus.",
+          "severity": 3,
           "prediction": {
-            "metric": "none",
-            "expect": "none"
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "top"
           }
         },
         {
           "category": "material",
-          "t": 7.2,
-          "a_observable": "The blue card's frame has a brushed metal texture with anisotropic reflections.",
-          "b_observable": "The blue card's frame is a flat matte grey plastic.",
-          "fix": "Use a metallic material with brushed texture for the card frame.",
-          "severity": 2,
+          "t": 7.5,
+          "a_observable": "The JUSPAY tile has a metallic frame and textured blue face.",
+          "b_observable": "The JUSPAY tile is a flat blue card with no frame or texture.",
+          "fix": "Add metallic frame and texture to the tile.",
+          "severity": 3,
           "prediction": {
             "metric": "none",
             "expect": "none"
           }
         },
         {
-          "category": "lighting",
-          "t": 7.5,
-          "a_observable": "Deep shadows in the gaps between keys create high contrast.",
-          "b_observable": "Gaps between keys are brightly lit, reducing contrast.",
-          "fix": "Darken the contact shadows and gaps between keys.",
-          "severity": 2,
+          "category": "layout",
+          "t": 7.2,
+          "a_observable": "The 'Revenue Analytics' tile is to the top-right of the 'JUSPAY' tile.",
+          "b_observable": "The 'Revenue Analytics' tile is to the top-left of the 'JUSPAY' tile.",
+          "fix": "Reposition the surrounding tiles to match reference layout.",
+          "severity": 3,
           "prediction": {
-            "metric": "luma_curve",
-            "expect": "A_deeper_shadows"
+            "metric": "none",
+            "expect": "none"
           }
         },
         {
           "category": "color",
           "t": 7,
-          "a_observable": "White keys have a warm, yellowish color cast.",
-          "b_observable": "White keys are neutral white and grey.",
-          "fix": "Adjust white balance to introduce a warm tint.",
-          "severity": 2,
+          "a_observable": "The scene has high contrast and vibrant colors.",
+          "b_observable": "The scene has low contrast and washed-out colors.",
+          "fix": "Adjust color grading and contrast.",
+          "severity": 3,
           "prediction": {
-            "metric": "color_cast",
-            "expect": "B_cooler"
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
           }
         }
       ],
-      "highest_impact_fix": "Adjust camera framing and layout to match the reference composition.",
+      "highest_impact_fix": "Enable shallow depth of field on the camera to match the reference's focus falloff and add the metallic frame to the JUSPAY tile.",
       "layer1_rejected": []
     },
     {
       "cuts_in_window": [],
       "a_motion": [
-        "translation"
+        "slow camera pan",
+        "subtle tilt"
       ],
       "b_motion": [
-        "translation"
+        "slow camera pan"
       ],
       "absent_in_b": [
-        "vignette"
+        "shallow depth of field blur",
+        "cool color grading"
       ],
       "differences": [
         {
+          "category": "camera",
+          "t": 7.2,
+          "a_observable": "Camera is close to the card with a steep angle and shallow depth of field, blurring background.",
+          "b_observable": "Camera is further away with a flatter angle and deep depth of field, keeping background sharp.",
+          "fix": "Adjust camera distance, tilt, and enable shallow depth of field.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
           "category": "color",
-          "t": 7.25,
-          "a_observable": "The white tiles have a distinct cool blue color cast and the yellow elements are highly saturated.",
-          "b_observable": "The white tiles are neutral gray/off-white, and the overall color palette is desaturated.",
-          "fix": "Adjust the white balance to introduce a cool blue cast and increase color saturation.",
+          "t": 7.5,
+          "a_observable": "Vibrant cool blue color cast with high contrast across the frame.",
+          "b_observable": "Neutral white and grey tones with low contrast and flat lighting.",
+          "fix": "Apply cool color grading and increase contrast.",
           "severity": 3,
           "prediction": {
             "metric": "color_cast",
             "expect": "A_cooler"
           }
-        },
-        {
-          "category": "lighting",
-          "t": 7.5,
-          "a_observable": "There is a strong vignette darkening the corners of the frame, and the shadows between tiles are deep and well-defined.",
-          "b_observable": "The lighting is flat and uniform across the frame with minimal corner falloff and soft, faint shadows.",
-          "fix": "Add a vignette effect and increase the shadow depth to match the reference lighting.",
-          "severity": 3,
-          "prediction": {
-            "metric": "vignette",
-            "expect": "A_stronger"
-          }
         }
       ],
-      "highest_impact_fix": "Adjust the lighting to add a strong vignette and introduce a cool blue color cast to match the reference video's grading.",
+      "highest_impact_fix": "Adjust the camera focal length, tilt, and depth of field to match the dynamic close-up perspective of the reference.",
       "layer1_rejected": []
     },
     {
       "cuts_in_window": [],
       "a_motion": [
-        "slow camera pan and tilt over a grid of tiles"
+        "camera pans and zooms out from the hyperswitch card"
       ],
       "b_motion": [
-        "slow camera pan and tilt over a grid of tiles"
+        "camera pans and zooms out from the hyperswitch card"
       ],
       "absent_in_b": [],
       "differences": [
         {
-          "category": "layout",
-          "t": 7.25,
-          "a_observable": "The 'Revenue Analytics' tile is in the upper right and the 'PSP' tile is at the bottom center.",
-          "b_observable": "The 'Revenue Analytics' tile is in the upper left-center and the 'PSP' tile is at the bottom left.",
-          "fix": "Rearrange the background tiles to match the reference layout.",
-          "severity": 3,
-          "prediction": {
-            "metric": "none",
-            "expect": "none"
-          }
-        },
-        {
-          "category": "material",
-          "t": 7,
-          "a_observable": "The border of the blue Hyperswitch tile has a bright, metallic brushed-metal finish.",
-          "b_observable": "The border of the blue Hyperswitch tile has a dark, matte grey finish.",
-          "fix": "Apply a metallic brushed-metal material to the tile border.",
+          "category": "staging",
+          "t": 7.1,
+          "a_observable": "The 'Revenue Analytics' card is close to the top-right of the 'hyperswitch' card.",
+          "b_observable": "The 'Revenue Analytics' card is placed much further away, leaving a large gap.",
+          "fix": "Adjust the spacing and layout of the surrounding tiles to match the reference.",
           "severity": 3,
           "prediction": {
             "metric": "none",
@@ -145,41 +144,99 @@
         },
         {
           "category": "color",
-          "t": 7.5,
-          "a_observable": "The blue face of the Hyperswitch tile is a highly saturated, vibrant royal blue.",
-          "b_observable": "The blue face of the Hyperswitch tile is a darker, less saturated blue.",
-          "fix": "Increase the saturation of the blue tile face.",
-          "severity": 2,
+          "t": 7.3,
+          "a_observable": "The blue 'hyperswitch' card is highly saturated royal blue.",
+          "b_observable": "The blue card is desaturated and dull.",
+          "fix": "Increase saturation of the blue material.",
+          "severity": 3,
           "prediction": {
             "metric": "color_cast",
             "expect": "A_more_saturated"
           }
         },
         {
-          "category": "lighting",
-          "t": 7.75,
-          "a_observable": "The shadows in the crevices between the tiles are soft and light.",
-          "b_observable": "The shadows in the crevices between the tiles are very dark and deep.",
-          "fix": "Soften the shadows in the crevices by adjusting ambient lighting.",
+          "category": "camera",
+          "t": 7.5,
+          "a_observable": "The background elements are heavily blurred with shallow depth of field.",
+          "b_observable": "The background elements are sharp and in focus.",
+          "fix": "Adjust camera depth of field to blur background elements.",
           "severity": 2,
           "prediction": {
-            "metric": "luma_curve",
-            "expect": "B_deeper_shadows"
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "top"
           }
         }
       ],
-      "highest_impact_fix": "Realign the background tiles to match the reference layout and apply a metallic brushed-metal material to the border of the Hyperswitch tile.",
+      "highest_impact_fix": "Re-align the surrounding tiles to match the reference layout and increase the saturation of the blue card.",
       "layer1_rejected": []
     }
   ],
   "consolidated": {
     "agreed_differences": [
       {
+        "category": "camera",
+        "t": 7.3,
+        "a_observable": "Background tiles are blurry due to shallow depth of field.",
+        "b_observable": "Background tiles are sharp with no depth of field blur.",
+        "fix": "Enable camera depth of field and adjust focus.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "B_sharper",
+          "A": {
+            "lap_var": 73.28
+          },
+          "B": {
+            "lap_var": 11.94
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 7.3,
+        "a_observable": "The blue 'hyperswitch' card is highly saturated royal blue.",
+        "b_observable": "The blue card is desaturated and dull.",
+        "fix": "Increase saturation of the blue material.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 174.9,
+            "g": 184.56,
+            "b": 199.52,
+            "rb_delta": -24.62,
+            "saturation": 0.2429
+          },
+          "B": {
+            "r": 171.1,
+            "g": 168.09,
+            "b": 197.41,
+            "rb_delta": -26.31,
+            "saturation": 0.2234
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
         "category": "layout",
-        "t": 7.25,
-        "a_observable": "The 'Revenue Analytics' tile is in the upper right and the 'PSP' tile is at the bottom center.",
-        "b_observable": "The 'Revenue Analytics' tile is in the upper left-center and the 'PSP' tile is at the bottom left.",
-        "fix": "Rearrange the background tiles to match the reference layout.",
+        "t": 7.2,
+        "a_observable": "The 'Revenue Analytics' tile is to the top-right of the 'JUSPAY' tile.",
+        "b_observable": "The 'Revenue Analytics' tile is to the top-left of the 'JUSPAY' tile.",
+        "fix": "Reposition the surrounding tiles to match reference layout.",
         "severity": 3,
         "prediction": {
           "metric": "none",
@@ -190,77 +247,18 @@
         "channelB": {
           "verdict": "supported",
           "certainty": 1,
-          "note": "The visual layout of the tiles in both clips matches the description perfectly. In Clip A, 'Revenue Analytics' is in the upper right and 'PSP' is at the bottom center. In Clip B, 'Revenue Analytics' is in the upper left-center and 'PSP' is at the bottom left."
+          "note": "In Clip A, the 'Revenue Analytics' tile is located to the top-right of the 'JUSPAY hyperswitch' tile, whereas in Clip B, it is located to the top-left of the 'JUSPAY hyperswitch' tile."
         },
         "channelA": {
           "verdict": "refuted",
-          "note": "Revenue Analytics sits upper-RIGHT in BOTH frames (in B it is smaller, farther and angled, but clearly in the right half — not 'upper left-center'). The real positional difference is the PSP tile: bottom-centre in A vs clipped at the bottom-left edge in B. Half the claim is true, but as stated it is contradicted."
+          "note": "In B the Revenue Analytics tile sits up and to the RIGHT of the JUSPAY card (tile centre ~x560 vs card centre ~x390), same relative side as A — not 'top-left'. Second consecutive false left/right relative-position claim endorsed by channel B."
         }
-      },
-      {
-        "category": "material",
-        "t": 7.2,
-        "a_observable": "The blue card's frame has a brushed metal texture with anisotropic reflections.",
-        "b_observable": "The blue card's frame is a flat matte grey plastic.",
-        "fix": "Use a metallic material with brushed texture for the card frame.",
-        "severity": 2,
-        "prediction": {
-          "metric": "none",
-          "expect": "none"
-        },
-        "supported_by": 2,
-        "status": "accepted_eyewitness",
-        "channelB": {
-          "verdict": "supported",
-          "certainty": 0.95,
-          "note": "In Clip A, the frame around the blue 'JUSPAY hyperswitch' card clearly shows a brushed metal texture with anisotropic reflections that react to the light. In Clip B, the frame is a flat, matte grey material without any brushed texture or metallic reflections."
-        },
-        "channelA": {
-          "verdict": "supported",
-          "note": "A's plinth shows pronounced brushed striations with warm/cool reflection variation along the brushing direction. B's bezel reads as a near-uniform cool grey with only the faintest texture and no directional highlight response. B is not literally textureless, but the claimed difference is plainly visible."
-        }
-      },
-      {
-        "category": "lighting",
-        "t": 7.5,
-        "a_observable": "Deep shadows in the gaps between keys create high contrast.",
-        "b_observable": "Gaps between keys are brightly lit, reducing contrast.",
-        "fix": "Darken the contact shadows and gaps between keys.",
-        "severity": 2,
-        "prediction": {
-          "metric": "luma_curve",
-          "expect": "A_deeper_shadows"
-        },
-        "supported_by": 2,
-        "measurement": {
-          "verdict": "refuted",
-          "expect": "A_deeper_shadows",
-          "A": {
-            "p01": 65.23,
-            "p1": 69.47,
-            "p5": 75.95,
-            "p50": 200.32,
-            "p95": 246.42,
-            "p99": 247.86,
-            "p999": 253.09,
-            "span_p5_p95": 170.47
-          },
-          "B": {
-            "p01": 10.74,
-            "p1": 17.33,
-            "p5": 17.33,
-            "p50": 201.98,
-            "p95": 232.84,
-            "p99": 234.26,
-            "p999": 240,
-            "span_p5_p95": 215.51
-          }
-        },
-        "status": "vetoed_measured"
       }
     ],
-    "agreed_absent_in_b": [],
-    "highest_impact_fix": "Adjust camera framing and layout to match the reference composition.",
-    "dropped_unsupported": 4
+    "agreed_absent_in_b": [
+      "shallow depth of field blur"
+    ],
+    "highest_impact_fix": "Enable shallow depth of field on the camera to blur background elements and adjust the layout of the surrounding tiles to match the reference.",
+    "dropped_unsupported": 1
   }
 }

@@ -1,0 +1,22 @@
+finish=STOP
+
+{
+  "agreed_differences": [
+    {
+      "category": "camera",
+      "t": 8.5,
+      "a_observable": "The background tiles in the top-right corner are heavily blurred due to a shallow depth of field.",
+      "b_observable": "The background tiles are in sharp focus, indicating a much wider depth of field.",
+      "fix": "Enable depth of field on the camera and adjust focus distance to blur the background.",
+      "severity": 3,
+      "prediction": {
+        "metric": "region_sharpness",
+        "expect": "B_sharper",
+        "region": "corners"
+      },
+      "supported_by": 2
+    }
+  ],
+  "agreed_absent_in_b": [],
+  "highest_impact_fix": "Enable depth of field on the camera and adjust focus distance to match the reference's shallow depth of field.",
+  "dropped_unsupported": 8

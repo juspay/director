@@ -1,0 +1,42 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zoom out"
+    ],
+    "b_motion": [
+      "camera zoom out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 14.2,
+        "a_observable": "Distinct dark vignette in the corners of the frame.",
+        "b_observable": "Corners are bright white with no vignette.",
+        "fix": "Add a vignette effect to darken the corners.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 14.2,
+        "a_observable": "Deep, soft contact shadows beneath the cards.",
+        "b_observable": "Faint contact shadows, making cards appear flat.",
+        "fix": "Increase shadow intensity and ambient occlusion.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Add a vignette effect and increase contact shadow depth to match the reference lighting."
+  }
+}

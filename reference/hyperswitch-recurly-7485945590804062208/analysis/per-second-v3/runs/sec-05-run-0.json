@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 5.5,
+        "a_observable": "Strong corner vignette and high contrast lighting focusing on the yellow card.",
+        "b_observable": "Flat, uniform lighting across the frame with minimal corner falloff.",
+        "fix": "Add a vignette and increase contrast to match the reference lighting.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "material",
+        "t": 5.25,
+        "a_observable": "Brushed metallic texture on the inner bezel surrounding the yellow card.",
+        "b_observable": "Flat matte grey material on the inner bezel with no texture.",
+        "fix": "Add a brushed metal texture to the bezel material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 5.5,
+        "a_observable": "Shallow depth of field blurring the background elements.",
+        "b_observable": "Deep depth of field with background elements remaining sharp.",
+        "fix": "Enable depth of field and adjust focus distance on the camera.",
+        "severity": 2,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Match the high-contrast spotlight lighting and vignette of the reference video."
+  }
+}

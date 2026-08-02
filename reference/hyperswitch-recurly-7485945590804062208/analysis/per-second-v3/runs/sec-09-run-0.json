@@ -1,0 +1,66 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "zoom",
+      "translation"
+    ],
+    "b_motion": [
+      "zoom",
+      "translation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 9,
+        "a_observable": "The camera is positioned closer to the tiles, resulting in a tighter framing of the Recurly and Hyperswitch cards.",
+        "b_observable": "The camera is positioned further back, resulting in a wider framing where the cards appear smaller.",
+        "fix": "Adjust the camera's Z-position to match the closer framing of the reference video.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 9,
+        "a_observable": "The white tiles have a cool blue-cyan color cast.",
+        "b_observable": "The white tiles are neutral white to warm cream, lacking the cool blue cast.",
+        "fix": "Apply a cool blue color temperature or color grading to the scene's lighting.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9,
+        "a_observable": "The lighting has high contrast with bright highlights and deep, defined shadows in the tile crevices.",
+        "b_observable": "The lighting is flat and diffused, with soft shadows and lower contrast.",
+        "fix": "Increase the contrast of the key light and reduce ambient fill to deepen shadows and enhance highlights.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "color",
+        "t": 9,
+        "a_observable": "The border surrounding the yellow Recurly card is dark gray.",
+        "b_observable": "The border surrounding the yellow Recurly card is blue.",
+        "fix": "Change the border color of the yellow card from blue to dark gray.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position to match the closer framing of the reference video, and increase the contrast and cool blue color cast of the lighting."
+  }
+}

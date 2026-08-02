@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 10,
+        "a_observable": "Tiles are tightly packed with minimal spacing.",
+        "b_observable": "Tiles are widely spaced with large gaps.",
+        "fix": "Reduce spacing between tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "Shadows under tiles are dark and well-defined.",
+        "b_observable": "Shadows are very light and diffused.",
+        "fix": "Darken and sharpen contact shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 10.2,
+        "a_observable": "White surfaces are neutral with cool undertones.",
+        "b_observable": "White surfaces have a warm cream color cast.",
+        "fix": "Cool down the white balance.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the layout spacing of the tiles to bring them closer together, matching the compact composition of the reference."
+  }
+}

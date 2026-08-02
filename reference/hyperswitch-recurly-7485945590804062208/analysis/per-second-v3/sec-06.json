@@ -1,0 +1,259 @@
+{
+  "sec": 6,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 6.8,
+          "a_observable": "The background card 'Revenue Analytics' is heavily blurred due to a shallow depth of field.",
+          "b_observable": "The background card 'Revenue Analytics' is sharp and in focus.",
+          "fix": "Enable depth of field on the camera and adjust the aperture to blur the background.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "top"
+          }
+        },
+        {
+          "category": "color",
+          "t": 6.2,
+          "a_observable": "The white cards have a cool, blue-tinted color cast.",
+          "b_observable": "The white cards are neutral white/grey with no blue tint.",
+          "fix": "Apply a cool color grade or adjust the light colors to introduce a blue cast.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler",
+            "region": "center"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 6.5,
+          "a_observable": "The corners of the frame are significantly darker than the center due to a vignette.",
+          "b_observable": "The corners of the frame have similar brightness to the center.",
+          "fix": "Add a vignette to darken the corners of the frame.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "full"
+          }
+        },
+        {
+          "category": "material",
+          "t": 6.9,
+          "a_observable": "The blue card has a glossy finish with subtle specular reflections along its rounded edges.",
+          "b_observable": "The blue card has a flat, matte finish with no specular highlights on the edges.",
+          "fix": "Adjust the material roughness and specular settings of the blue card to create glossy edge highlights.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Enable depth of field on the camera and adjust the aperture to match the shallow focus of the reference, particularly in the second shot after the cut.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 6.2,
+          "a_observable": "The camera is positioned closer to the grid, showing the yellow card with a strong perspective tilt.",
+          "b_observable": "The camera is further away, showing the yellow card with a flatter perspective.",
+          "fix": "Adjust camera position and field of view.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "full"
+          }
+        },
+        {
+          "category": "color",
+          "t": 6.8,
+          "a_observable": "The background tiles have a soft blue-grey tint.",
+          "b_observable": "The background tiles are neutral white and grey.",
+          "fix": "Adjust background material color and lighting color temperature.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler",
+            "region": "full"
+          }
+        },
+        {
+          "category": "material",
+          "t": 6.8,
+          "a_observable": "The frame of the Juspay card has a brushed metallic texture.",
+          "b_observable": "The frame of the Juspay card is flat grey plastic.",
+          "fix": "Apply a brushed metal material to the card frame.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust camera position and field of view to match the dynamic perspective of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 6.2,
+          "a_observable": "Strong vignette darkens the corners of the frame.",
+          "b_observable": "Corners are bright with no visible vignette.",
+          "fix": "Add a vignette to darken the corners.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 6.2,
+          "a_observable": "White tiles have a cool blue color cast.",
+          "b_observable": "White tiles are warm gray with no blue cast.",
+          "fix": "Apply a cool blue color temperature.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 6.2,
+          "a_observable": "Shadows are deeper and contrast is higher.",
+          "b_observable": "Shadows are washed out and contrast is lower.",
+          "fix": "Adjust luma curve to deepen shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Add a cool blue color cast and deepen the shadows to match the reference lighting.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "color",
+        "t": 6.2,
+        "a_observable": "The white cards have a cool, blue-tinted color cast.",
+        "b_observable": "The white cards are neutral white/grey with no blue tint.",
+        "fix": "Apply a cool color grade or adjust the light colors to introduce a blue cast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler",
+          "region": "center"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_cooler",
+          "A": {
+            "r": 182.92,
+            "g": 170.5,
+            "b": 76.53,
+            "rb_delta": 106.39,
+            "saturation": 0.5258
+          },
+          "B": {
+            "r": 213.93,
+            "g": 189.31,
+            "b": 79.89,
+            "rb_delta": 134.04,
+            "saturation": 0.6236
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 6.5,
+        "a_observable": "The corners of the frame are significantly darker than the center due to a vignette.",
+        "b_observable": "The corners of the frame have similar brightness to the center.",
+        "fix": "Add a vignette to darken the corners of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "full"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 194.67,
+            "center_mean": 177.16,
+            "falloff_pct": -9.88
+          },
+          "B": {
+            "corner_mean": 205.45,
+            "center_mean": 184.19,
+            "falloff_pct": -11.54
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Apply a cool blue color cast and add a vignette to darken the corners of the frame to match the reference lighting.",
+    "dropped_unsupported": 5
+  }
+}
