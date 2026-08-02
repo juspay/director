@@ -84,11 +84,15 @@ function slow2x(src, name) {
 /* --------------------------------------------------------------- schema -- */
 
 /**
- * Categories split by measurability (VERIFICATION-DESIGN.md): color and motion
- * claims MUST predict a measurement; lighting and camera may when the claim is
- * photometric; the rest are semantic and go to the eyewitness channels.
+ * Categories split by measurability (VERIFICATION-DESIGN.md): color, motion
+ * and lighting claims MUST predict a measurement — lighting was made mandatory
+ * at doc review after the sec-7 smoke test, where the one lighting claim that
+ * volunteered a prediction turned out to have its shadow direction backwards.
+ * A lighting claim that cannot be phrased as one of the five metrics cannot be
+ * made. Camera may predict when photometric; the rest are semantic and go to
+ * the eyewitness channels.
  */
-const MEASURABLE_REQUIRED = new Set(['color', 'motion']);
+const MEASURABLE_REQUIRED = new Set(['color', 'motion', 'lighting']);
 const METRIC_EXPECTS = {
   vignette: ['A_stronger', 'B_stronger'],
   color_cast: ['A_cooler', 'B_cooler', 'A_more_saturated', 'B_more_saturated'],
@@ -172,9 +176,11 @@ RULES OF EVIDENCE — claims that break these are discarded unread:
 2. Every claim carries "t": the ORIGINAL-timeline moment (inside this second)
    where the difference is clearest. Your claims will be checked against pixels
    extracted at exactly that time.
-3. Claims about COLOR or MOTION are settled by measurement, so they MUST carry a
-   prediction naming what the measurement will show. Available metrics and the
-   exact "expect" values:
+3. Claims about COLOR, MOTION or LIGHTING are settled by measurement, so they
+   MUST carry a prediction naming what the measurement will show. A lighting
+   claim you cannot phrase as one of these measurements is a claim you cannot
+   make — rephrase it photometrically or leave it out. Available metrics and
+   the exact "expect" values:
      vignette:          A_stronger | B_stronger  (corner-vs-centre luma falloff)
      color_cast:        A_cooler | B_cooler | A_more_saturated | B_more_saturated
      luma_curve:        A_deeper_blacks | B_deeper_blacks | A_deeper_shadows |
@@ -183,8 +189,8 @@ RULES OF EVIDENCE — claims that break these are discarded unread:
      motion:            A_more | B_more  (mean frame delta over the second)
      region_sharpness:  A_sharper | B_sharper  (requires "region": one of
                         full|center|left|right|top|bottom|corners)
-   LIGHTING and CAMERA claims should also carry a prediction when the claim is
-   photometric (brightness, falloff, focus). If the measurement refutes your
+   CAMERA claims should also carry a prediction when the claim is photometric
+   (brightness, falloff, focus). If the measurement refutes your
    prediction the claim is dropped no matter how confident you are — so only
    assert differences you expect to survive pixels.
 4. Claims about materials, typography, layout or staging use metric "none";

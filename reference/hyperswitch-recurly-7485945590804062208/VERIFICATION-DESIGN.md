@@ -29,6 +29,7 @@ below.
 | Burden of proof | **Split by measurability.** Measurable claims: the measurement decides, the model vote is irrelevant. Unmeasurable claims: default-REJECT unless eyewitness-supported. |
 | Eyewitness channel | **Both channels, tie-break**: a claim needs ≥1 supporter and no refuter across (a) Claude reading cited full-res frames in-session and (b) a Gemini narrow-window high-resolution re-check. |
 | Run budget | **Keep 3 Gemini runs** on top of the new layers. |
+| Lighting claims (doc review, 2026-08-02) | **Predictions mandatory for lighting too**, not optional. The sec-7 smoke test's one lighting claim — corroborated 2/3 — had its shadow direction backwards and died by measurement; that class of claim must always be falsifiable. Consequence, accepted deliberately: a lighting claim that cannot be phrased as one of the five metrics cannot be made. |
 | Cost recovery | Content-hash upload dedup + Gemini context caching across the 3 runs; incremental per-run flush so a crash never re-spends completed work. |
 
 ## The layers
@@ -53,8 +54,9 @@ Schema changes, enforced by `responseJsonSchema` plus a post-parse validator:
   advisory `fix` field and never count as evidence. This is the direct fix for
   findings that read plausible-but-generic: prescriptions are unfalsifiable by
   construction.
-- Claims in measurable categories must carry a `prediction` (below); a
-  measurable-category claim without one is rejected before the vote.
+- Claims in measurable categories — colour, motion, **and lighting** — must
+  carry a `prediction` (below); a measurable-category claim without one is
+  rejected before the vote. Camera claims predict when photometric.
 
 Modelled on watch-skill's `_sanitize_timestamps` and watch-video's
 `validate_report.py`: hallucinated or unfalsifiable citations become
