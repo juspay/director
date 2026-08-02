@@ -1,0 +1,58 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zoom out and pan"
+    ],
+    "b_motion": [
+      "camera zoom out with different framing"
+    ],
+    "absent_in_b": [
+      "vignette",
+      "contact shadows"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 10.5,
+        "a_observable": "Camera is closer to the yellow card, creating a larger, more dynamic composition.",
+        "b_observable": "Camera is further away, resulting in a smaller card and flatter composition.",
+        "fix": "Match camera distance and angle to the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.8,
+        "a_observable": "Pronounced contact shadows under the cards and a clear vignette.",
+        "b_observable": "Flat lighting with minimal shadows and no vignette.",
+        "fix": "Enhance contact shadows and add a vignette.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 10.2,
+        "a_observable": "Warm, saturated yellow on the Recurly card.",
+        "b_observable": "Cooler, less saturated yellow on the card.",
+        "fix": "Increase saturation and warmth of the yellow material.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and focal length to match the reference framing, and enhance the lighting with stronger contact shadows and a vignette."
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "ok": false,
+  "why": "reported 1 cuts, truth has 0",
+  "json": {
+    "cuts_in_window": [
+      13.33
+    ],
+    "a_motion": [
+      "translation",
+      "zoom"
+    ],
+    "b_motion": [
+      "translation",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 13.1,
+        "a_observable": "Camera is closer to the tiles with a stronger perspective tilt.",
+        "b_observable": "Camera is further away with a flatter, more orthographic perspective.",
+        "fix": "Adjust camera position and focal length to match the perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "material",
+        "t": 13.8,
+        "a_observable": "The button frame has a brushed metal texture with horizontal ridges.",
+        "b_observable": "The button frame is flat grey without texture.",
+        "fix": "Apply a brushed metal texture to the button frame.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 14,
+        "a_observable": "High-contrast lighting with deep shadows and warm highlights.",
+        "b_observable": "Flat, low-contrast lighting with cool, washed-out shadows.",
+        "fix": "Increase light contrast and add a warm color cast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust camera perspective and position to match the dynamic framing of the reference."
+  }
+}

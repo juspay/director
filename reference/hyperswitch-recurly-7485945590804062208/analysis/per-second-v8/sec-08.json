@@ -1,0 +1,288 @@
+{
+  "sec": 8,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 1
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "zoom",
+        "pan"
+      ],
+      "b_motion": [
+        "zoom",
+        "pan"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "staging",
+          "t": 8.2,
+          "a_observable": "The card below the yellow Recurly card is blank white.",
+          "b_observable": "The card below the yellow Recurly card displays the blue 'Live Now' text and border.",
+          "fix": "Hide the 'Live Now' graphics until the animation trigger.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 8.5,
+          "a_observable": "The yellow and blue cards feature highly saturated, vibrant tones.",
+          "b_observable": "The yellow and blue cards appear washed out with lower saturation.",
+          "fix": "Boost color saturation and contrast to match the reference grading.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Animate the 'Live Now' card to slide out from under the Recurly card instead of rendering it static.",
+      "layer1_rejected": [
+        {
+          "claim": {
+            "category": "motion",
+            "t": 8.7,
+            "a_observable": "The 'Live Now' card slides out horizontally from under the Recurly card.",
+            "b_observable": "The 'Live Now' card remains static with no slide-out animation.",
+            "fix": "Implement the horizontal slide-out animation for the 'Live Now' card.",
+            "severity": 3,
+            "prediction": {
+              "metric": "none",
+              "expect": ""
+            }
+          },
+          "why": "motion claim carries no prediction"
+        }
+      ]
+    },
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 8.05,
+          "a_observable": "Dynamic perspective with the camera close to the Juspay card, making it appear prominent.",
+          "b_observable": "Flatter perspective with the camera positioned further away, reducing the visual impact of the card.",
+          "fix": "Bring the camera closer and widen the field of view to match the reference perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "material",
+          "t": 8.05,
+          "a_observable": "The silver border of the Juspay card has a brushed metallic texture.",
+          "b_observable": "The border is a flat, matte grey material with no texture.",
+          "fix": "Apply a brushed metal texture map to the card border material.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 8.5,
+          "a_observable": "Strong vignette darkening the corners of the frame.",
+          "b_observable": "Flat, uniform lighting across the frame with no vignette.",
+          "fix": "Add a vignette in post-production to match the reference falloff.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 8.5,
+          "a_observable": "The Recurly card features a warm, highly saturated golden yellow.",
+          "b_observable": "The Recurly card features a cooler, less saturated pale yellow.",
+          "fix": "Adjust the diffuse color of the Recurly card to a warmer, more saturated yellow.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera field of view and distance to match the dynamic perspective, and add a vignette to correct the flat lighting.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 8.5,
+          "a_observable": "The camera is positioned close to the cards, creating a tight composition with a distinct low-angle perspective.",
+          "b_observable": "The camera is positioned further away, resulting in a loose composition with a flatter, more top-down perspective.",
+          "fix": "Adjust camera position and focal length to match the tight, low-angle perspective of Video A.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 8.5,
+          "a_observable": "The scene features high-contrast lighting with deep shadows and a prominent vignette around the frame.",
+          "b_observable": "The scene features flat, uniform lighting with very bright highlights and almost no vignette.",
+          "fix": "Increase contrast of the lighting, deepen shadows, and add a vignette to match Video A.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast",
+            "region": "full"
+          }
+        },
+        {
+          "category": "material",
+          "t": 8.5,
+          "a_observable": "The yellow Recurly card has a satin-like finish with soft specular reflections.",
+          "b_observable": "The yellow Recurly card has a completely flat, matte texture with no specular highlights.",
+          "fix": "Adjust material roughness and specularity of the yellow card to match the satin finish in Video A.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera framing and angle to match the tight, dynamic composition of Video A, and increase the lighting contrast.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 8.5,
+        "a_observable": "The camera is positioned close to the cards, creating a tight composition with a distinct low-angle perspective.",
+        "b_observable": "The camera is positioned further away, resulting in a loose composition with a flatter, more top-down perspective.",
+        "fix": "Adjust camera position and focal length to match the tight, low-angle perspective of Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 174.81,
+            "center_mean": 180.43,
+            "falloff_pct": 3.11
+          },
+          "B": {
+            "corner_mean": 177.19,
+            "center_mean": 187.06,
+            "falloff_pct": 5.27
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "Strong vignette darkening the corners of the frame.",
+        "b_observable": "Flat, uniform lighting across the frame with no vignette.",
+        "fix": "Add a vignette in post-production to match the reference falloff.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 174.81,
+            "center_mean": 180.43,
+            "falloff_pct": 3.11
+          },
+          "B": {
+            "corner_mean": 177.19,
+            "center_mean": 187.06,
+            "falloff_pct": 5.27
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 8.5,
+        "a_observable": "The Recurly card features a warm, highly saturated golden yellow.",
+        "b_observable": "The Recurly card features a cooler, less saturated pale yellow.",
+        "fix": "Adjust the diffuse color of the Recurly card to a warmer, more saturated yellow.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 168.23,
+            "g": 177.79,
+            "b": 186.98,
+            "rb_delta": -18.75,
+            "saturation": 0.2316
+          },
+          "B": {
+            "r": 169.47,
+            "g": 177.06,
+            "b": 192.01,
+            "rb_delta": -22.55,
+            "saturation": 0.2114
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera field of view and distance to match the dynamic perspective, and add a vignette to correct the flat lighting.",
+    "dropped_unsupported": 3
+  }
+}

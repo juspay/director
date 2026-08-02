@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "zoom_out"
+    ],
+    "b_motion": [
+      "translation",
+      "zoom_out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 11,
+        "a_observable": "The camera is positioned closer to the blocks, resulting in a tighter composition where the yellow and blue blocks occupy more screen space.",
+        "b_observable": "The camera is positioned further away, making the blocks appear smaller with more visible background tiles.",
+        "fix": "Bring the camera closer or adjust the focal length to match the framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "Stronger contrast with deeper shadows under the blocks and a clear light falloff towards the edges.",
+        "b_observable": "Flatter, more uniform lighting across the tiles with very weak shadows under the blocks.",
+        "fix": "Adjust the light sources to increase contrast and add a subtle vignette or falloff to match Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "material",
+        "t": 11.8,
+        "a_observable": "The yellow Recurly card has a glossy finish with visible specular highlights and reflections.",
+        "b_observable": "The yellow Recurly card has a flat, matte finish with no specular highlights.",
+        "fix": "Increase the specularity and roughness settings of the yellow card material to match the glossy look of Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing and increase the lighting contrast to match the tighter, more dramatic look of Video A."
+  }
+}

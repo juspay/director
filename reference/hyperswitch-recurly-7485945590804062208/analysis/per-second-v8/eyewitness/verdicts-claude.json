@@ -1,0 +1,9 @@
+{
+  "00:0": {"verdict": "refuted", "note": "B's subject is at comparable proximity and its perspective is steep top-down like A's — not 'further back with flatter perspective'. The true residual at t=0.5 is type rotated ~35deg at the sweep extreme, which is not this claim."},
+  "01:0": {"verdict": "supported", "note": "The observable is real: A's cards and wall show more visible vertical depth/thickness; B reads slightly steeper and its wall steps barely register. Actionable nuance: the fix is step heights and card-side presence more than camera angle — B's elevation is at most a few degrees hot."},
+  "01:3": {"verdict": "refuted", "note": "B's 'Secure Payments' and 'Renewal Success' ARE distinct chunky 3D keys with visible side faces — the claimed flat-vs-3D contrast for the subject keys is contradicted. Honest residual folded into 01:0: the WALL steps read shallower than A's."},
+  "06:2": {"verdict": "refuted", "note": "B's blue card occupies a larger fraction of frame than A's at this beat (~72% vs ~66% width measured in the pass-7 cycle; pass-8 framing unchanged here). Not wider."},
+  "07:0": {"verdict": "refuted", "note": "Same shot-4 family: B's framing is as tight or tighter than A's. The 'pulled back' prior keeps resurfacing after two passes of parity."},
+  "11:0": {"verdict": "refuted", "note": "The claim's A half is false: A's Recurly card is FULLY visible with a clear margin at t=11.5, not cropped at the left edge. B's Recurly is also ~13% larger in frame than A's."},
+  "14:0": {"verdict": "refuted", "note": "Lockup framing at parity or B larger, fourth consecutive pass. The 'wider composition' family is model prior, not pixels."}
+}

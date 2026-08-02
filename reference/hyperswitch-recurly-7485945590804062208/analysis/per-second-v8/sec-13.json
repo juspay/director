@@ -1,0 +1,169 @@
+{
+  "sec": 13,
+  "meta": {
+    "verified": 1,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [
+    "reported 1 cuts, truth has 0",
+    "reported 1 cuts, truth has 0"
+  ],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 13.5,
+          "a_observable": "The blue card casts a soft, realistic contact shadow onto the white surface below it.",
+          "b_observable": "The blue card has almost no contact shadow, appearing flatly lit.",
+          "fix": "Adjust the light sources to cast softer, more realistic contact shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 13.8,
+          "a_observable": "The background cards are heavily blurred due to a shallow depth of field.",
+          "b_observable": "The background cards remain sharp and in focus.",
+          "fix": "Enable depth of field on the camera and adjust the aperture to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "top"
+          }
+        },
+        {
+          "category": "color",
+          "t": 13.5,
+          "a_observable": "The white surfaces have a subtle cool blue-grey color cast.",
+          "b_observable": "The white surfaces are neutral grey/white with no color cast.",
+          "fix": "Adjust the color grading to introduce cool blue-grey tones.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Enable depth of field on the camera and adjust the aperture to match the reference video's blur.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 13.5,
+        "a_observable": "The blue card casts a soft, realistic contact shadow onto the white surface below it.",
+        "b_observable": "The blue card has almost no contact shadow, appearing flatly lit.",
+        "fix": "Adjust the light sources to cast softer, more realistic contact shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 1,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 4.46,
+            "p1": 86.22,
+            "p5": 90.44,
+            "p50": 209.01,
+            "p95": 231.47,
+            "p99": 236.33,
+            "p999": 252.14,
+            "span_p5_p95": 141.03
+          },
+          "B": {
+            "p01": 89.96,
+            "p1": 90.96,
+            "p5": 97.3,
+            "p50": 192.88,
+            "p95": 211.67,
+            "p99": 215.72,
+            "p999": 239.57,
+            "span_p5_p95": 114.37
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "camera",
+        "t": 13.8,
+        "a_observable": "The background cards are heavily blurred due to a shallow depth of field.",
+        "b_observable": "The background cards remain sharp and in focus.",
+        "fix": "Enable depth of field on the camera and adjust the aperture to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        },
+        "supported_by": 1,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_sharper",
+          "A": {
+            "lap_var": 0.98
+          },
+          "B": {
+            "lap_var": 3.61
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "color",
+        "t": 13.5,
+        "a_observable": "The white surfaces have a subtle cool blue-grey color cast.",
+        "b_observable": "The white surfaces are neutral grey/white with no color cast.",
+        "fix": "Adjust the color grading to introduce cool blue-grey tones.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        },
+        "supported_by": 1,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_cooler",
+          "A": {
+            "r": 194.53,
+            "g": 204.41,
+            "b": 200.72,
+            "rb_delta": -6.2,
+            "saturation": 0.1862
+          },
+          "B": {
+            "r": 169.11,
+            "g": 176.03,
+            "b": 190.21,
+            "rb_delta": -21.1,
+            "saturation": 0.1953
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Enable depth of field on the camera and adjust the aperture to match the reference video's blur.",
+    "dropped_unsupported": 0
+  }
+}

@@ -1,0 +1,232 @@
+{
+  "sec": 9,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera zoom out",
+        "card rotation"
+      ],
+      "b_motion": [
+        "camera zoom out",
+        "card rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 9.5,
+          "a_observable": "The camera is positioned closer to the cards, creating a tighter and more dynamic composition.",
+          "b_observable": "The camera is further away, leaving excessive empty space around the smaller cards.",
+          "fix": "Adjust camera distance to match the tighter framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "motion",
+            "expect": "A_more"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 9.5,
+          "a_observable": "A strong vignette is present, with noticeable light falloff at the corners.",
+          "b_observable": "The lighting is uniform across the frame with no apparent vignette.",
+          "fix": "Apply a vignette to darken the corners.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 9.5,
+          "a_observable": "Shadows beneath the cards are deep and dark, providing high contrast.",
+          "b_observable": "Shadows are faint and washed out, resulting in low contrast.",
+          "fix": "Deepen the shadows to increase contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera distance and framing to bring the cards closer to the viewer, matching the dynamic composition of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "zoom"
+      ],
+      "b_motion": [
+        "translation",
+        "zoom"
+      ],
+      "absent_in_b": [
+        "tile_dot_textures"
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 9.2,
+          "a_observable": "The shadows cast by the tiles are soft and light gray.",
+          "b_observable": "The shadows cast by the tiles are very dark and harsh.",
+          "fix": "Soften the shadow rendering and reduce shadow intensity.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_higher_contrast"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 9,
+          "a_observable": "The tile to the left of the yellow Recurly tile has a vertical column of small gray dots.",
+          "b_observable": "The tile to the left of the yellow Recurly tile is completely plain white.",
+          "fix": "Apply the dot pattern texture to the background tiles.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 9.5,
+          "a_observable": "The background tiles in the corners are softly blurred due to a shallow depth of field.",
+          "b_observable": "The background tiles in the corners remain sharp and in focus.",
+          "fix": "Enable depth of field on the camera and adjust the aperture.",
+          "severity": 2,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 9,
+          "a_observable": "The yellow Recurly tile has a warm, golden-yellow hue.",
+          "b_observable": "The yellow Recurly tile has a cooler, slightly greenish-yellow hue.",
+          "fix": "Adjust the material color of the yellow tile to be warmer.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the lighting and shadow settings to soften the harsh dark shadows and reduce the overall contrast.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 9.2,
+          "a_observable": "Strong vignette with darker corners and soft shadows under the buttons.",
+          "b_observable": "Flat lighting with very bright corners and weak shadows.",
+          "fix": "Add a vignette and increase shadow contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 9.6,
+          "a_observable": "Background elements are softly blurred due to shallow depth of field.",
+          "b_observable": "Background elements remain completely sharp.",
+          "fix": "Enable depth of field in camera settings.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Add a vignette and enable camera depth of field to match the reference's cinematic look.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "A strong vignette is present, with noticeable light falloff at the corners.",
+        "b_observable": "The lighting is uniform across the frame with no apparent vignette.",
+        "fix": "Apply a vignette to darken the corners.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 203.26,
+            "center_mean": 200.61,
+            "falloff_pct": -1.32
+          },
+          "B": {
+            "corner_mean": 170.66,
+            "center_mean": 183.29,
+            "falloff_pct": 6.89
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "camera",
+        "t": 9.5,
+        "a_observable": "The background tiles in the corners are softly blurred due to a shallow depth of field.",
+        "b_observable": "The background tiles in the corners remain sharp and in focus.",
+        "fix": "Enable depth of field on the camera and adjust the aperture.",
+        "severity": 2,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "B_sharper",
+          "A": {
+            "lap_var": 4.54
+          },
+          "B": {
+            "lap_var": 3.09
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Add a vignette and enable camera depth of field to match the reference's cinematic look.",
+    "dropped_unsupported": 5
+  }
+}

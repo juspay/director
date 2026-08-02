@@ -1,0 +1,44 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 12.5,
+        "a_observable": "Background and foreground tiles are out of focus due to shallow depth of field.",
+        "b_observable": "All tiles across the frame are uniformly sharp with no depth of field blur.",
+        "fix": "Enable camera depth of field to match the reference blur.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "Strong contact shadows are present under the tiles, creating depth.",
+        "b_observable": "Contact shadows are nearly absent, making the tiles look flat.",
+        "fix": "Add ambient occlusion or strengthen contact shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Enable camera depth of field with a wider aperture to reproduce the soft background blur."
+  }
+}

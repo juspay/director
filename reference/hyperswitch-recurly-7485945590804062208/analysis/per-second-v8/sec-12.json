@@ -1,0 +1,198 @@
+{
+  "sec": 12,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 12.5,
+          "a_observable": "Background and foreground tiles are out of focus due to shallow depth of field.",
+          "b_observable": "All tiles across the frame are uniformly sharp with no depth of field blur.",
+          "fix": "Enable camera depth of field to match the reference blur.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 12.5,
+          "a_observable": "Strong contact shadows are present under the tiles, creating depth.",
+          "b_observable": "Contact shadows are nearly absent, making the tiles look flat.",
+          "fix": "Add ambient occlusion or strengthen contact shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Enable camera depth of field with a wider aperture to reproduce the soft background blur.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pull-back",
+        "subtle camera rotation"
+      ],
+      "b_motion": [
+        "camera pull-back"
+      ],
+      "absent_in_b": [
+        "subtle camera rotation"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 12.2,
+          "a_observable": "Camera has a low oblique angle, creating a strong 3D perspective.",
+          "b_observable": "Camera is closer to a flat top-down view, reducing perspective depth.",
+          "fix": "Adjust camera pitch and focal length to match the reference's oblique perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 12.5,
+          "a_observable": "Strong corner shading and vignette are visible.",
+          "b_observable": "Flat lighting across the frame with minimal vignette.",
+          "fix": "Add a vignette to match the corner falloff of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 12,
+          "a_observable": "Yellow and blue tiles are highly saturated.",
+          "b_observable": "Tiles appear desaturated and washed out.",
+          "fix": "Increase color saturation to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and focal length to restore the oblique 3D perspective.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "zoom"
+      ],
+      "b_motion": [
+        "translation",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 12.5,
+          "a_observable": "Tighter camera framing on the Recurly and Juspay buttons.",
+          "b_observable": "Wider camera framing showing more surrounding tiles.",
+          "fix": "Adjust camera zoom and position.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 12.5,
+          "a_observable": "Darker corners showing a distinct vignette.",
+          "b_observable": "Uniform lighting across the frame.",
+          "fix": "Add a vignette effect.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 12.5,
+          "a_observable": "Warm, creamy white tiles.",
+          "b_observable": "Cooler, neutral white tiles.",
+          "fix": "Warm up the white balance.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust camera zoom and position to match the reference framing.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "Strong corner shading and vignette are visible.",
+        "b_observable": "Flat lighting across the frame with minimal vignette.",
+        "fix": "Add a vignette to match the corner falloff of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 209.43,
+            "center_mean": 194.03,
+            "falloff_pct": -7.93
+          },
+          "B": {
+            "corner_mean": 167.12,
+            "center_mean": 182.98,
+            "falloff_pct": 8.67
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Add a vignette to match the corner falloff of the reference.",
+    "dropped_unsupported": 6
+  }
+}

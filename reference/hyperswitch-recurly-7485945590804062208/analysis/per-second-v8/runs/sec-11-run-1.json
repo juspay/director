@@ -1,0 +1,66 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 11,
+        "a_observable": "Tighter camera framing crops the left edge of the yellow Recurly card.",
+        "b_observable": "Wider camera framing leaves the yellow Recurly card fully visible with a margin.",
+        "fix": "Adjust camera position or focal length to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "Strong vignette with darker corners.",
+        "b_observable": "Flat, uniform lighting across the frame.",
+        "fix": "Add a vignette to match the corner falloff.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 11.2,
+        "a_observable": "Vibrant, highly saturated yellow and blue cards.",
+        "b_observable": "Muted, desaturated card colors.",
+        "fix": "Boost color saturation to match the reference vibrancy.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.8,
+        "a_observable": "Deep, dark shadows between tiles creating high contrast.",
+        "b_observable": "Faint, grey shadows resulting in a flat look.",
+        "fix": "Deepen shadows and adjust contrast curves.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera focal length and position to match the tighter framing of the reference video."
+  }
+}

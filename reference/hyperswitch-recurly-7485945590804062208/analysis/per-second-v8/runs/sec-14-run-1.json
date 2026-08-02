@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera drift"
+    ],
+    "b_motion": [
+      "slow camera drift"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 14.2,
+        "a_observable": "Tighter framing on the Recurly and Hyperswitch blocks.",
+        "b_observable": "Wider camera composition showing more surrounding tiles.",
+        "fix": "Adjust camera distance to match the tighter framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 14.2,
+        "a_observable": "Pronounced shadows in the gaps between tiles.",
+        "b_observable": "Flat lighting with minimal shadow definition.",
+        "fix": "Enhance shadow depth in the crevices.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 14.2,
+        "a_observable": "Warm, creamy tone on the white tiles.",
+        "b_observable": "Cool, neutral grey tone on the white tiles.",
+        "fix": "Adjust white balance to add warmth.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust camera distance and enhance shadow depth to match the tighter, high-contrast composition of the reference."
+  }
+}

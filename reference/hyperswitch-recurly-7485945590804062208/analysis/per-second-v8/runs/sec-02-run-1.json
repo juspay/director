@@ -1,0 +1,59 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.21
+    ],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera zoom",
+      "static"
+    ],
+    "absent_in_b": [
+      "yellow card",
+      "dotted texture pattern"
+    ],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 2,
+        "a_observable": "The card in the bottom-right is yellow, and the card on the left features a grid of dark dots.",
+        "b_observable": "The card in the bottom-right is white with horizontal lines, and the card on the left is plain white.",
+        "fix": "Replace the lined and plain white cards with the yellow and dotted cards to match the reference layout.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "motion",
+        "t": 2.5,
+        "a_observable": "The camera scrolls downwards, moving the cards vertically through the frame.",
+        "b_observable": "The camera is completely static, with the cards remaining stationary.",
+        "fix": "Animate the camera to scroll downwards after the cut.",
+        "severity": 3,
+        "prediction": {
+          "metric": "motion",
+          "expect": "A_more"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.5,
+        "a_observable": "The cards cast distinct, soft drop shadows onto the background, creating depth.",
+        "b_observable": "The drop shadows are barely visible, making the cards appear flat against the background.",
+        "fix": "Enhance the drop shadows and ambient occlusion under the cards.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      }
+    ],
+    "highest_impact_fix": "Animate the camera scroll after the cut and correct the card layout and textures."
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 9.2,
+        "a_observable": "Strong vignette with darker corners and soft shadows under the buttons.",
+        "b_observable": "Flat lighting with very bright corners and weak shadows.",
+        "fix": "Add a vignette and increase shadow contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 9.6,
+        "a_observable": "Background elements are softly blurred due to shallow depth of field.",
+        "b_observable": "Background elements remain completely sharp.",
+        "fix": "Enable depth of field in camera settings.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Add a vignette and enable camera depth of field to match the reference's cinematic look."
+  }
+}

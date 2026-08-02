@@ -1,0 +1,44 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 10.2,
+        "a_observable": "The yellow card is framed closely, occupying most of the frame height.",
+        "b_observable": "The yellow card is framed from a distance, appearing much smaller.",
+        "fix": "Adjust camera distance to match the tight composition.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "center"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "The recessed slots around the card have deep, defined shadows.",
+        "b_observable": "The recessed slots are brightly lit with very flat shadows.",
+        "fix": "Increase shadow depth and ambient occlusion in the recesses.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing to match the tight composition of the reference and deepen the shadows in the recessed slots."
+  }
+}

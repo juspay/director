@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "zoom"
+    ],
+    "b_motion": [
+      "translation",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 14.2,
+        "a_observable": "Cards are tightly packed with a distinct perspective tilt.",
+        "b_observable": "Cards are spaced further apart with a flatter camera angle.",
+        "fix": "Adjust camera focal length and card spacing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 14.2,
+        "a_observable": "The yellow card is highly saturated and warm.",
+        "b_observable": "The yellow card is desaturated and pale.",
+        "fix": "Increase saturation and warmth.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 14.2,
+        "a_observable": "Strong vignette with darker corners and center spotlight.",
+        "b_observable": "Uniform lighting across the frame with no vignette.",
+        "fix": "Add vignette and center spotlight.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera perspective and card layout to match the reference composition."
+  }
+}

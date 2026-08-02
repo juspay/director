@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 6,
+    "idx": 2,
+    "t": 6.8,
+    "category": "camera",
+    "a_observable": "Close-up framing on the blue card.",
+    "b_observable": "Wider framing with the blue card appearing smaller.",
+    "frames": {
+      "A": "analysis/per-second-v8/eyewitness/sec-06-c2-A.png",
+      "B": "analysis/per-second-v8/eyewitness/sec-06-c2-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "Clip A shows a close-up shot of the blue 'JUSPAY hyperswitch' card, which occupies a larger portion of the frame. Clip B shows a wider shot where the blue card is smaller and more of the surrounding elements are visible."
+    }
+  }
+]

@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "zoom",
+      "pan"
+    ],
+    "b_motion": [
+      "zoom",
+      "pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 8.2,
+        "a_observable": "The card below the yellow Recurly card is blank white.",
+        "b_observable": "The card below the yellow Recurly card displays the blue 'Live Now' text and border.",
+        "fix": "Hide the 'Live Now' graphics until the animation trigger.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "motion",
+        "t": 8.7,
+        "a_observable": "The 'Live Now' card slides out horizontally from under the Recurly card.",
+        "b_observable": "The 'Live Now' card remains static with no slide-out animation.",
+        "fix": "Implement the horizontal slide-out animation for the 'Live Now' card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 8.5,
+        "a_observable": "The yellow and blue cards feature highly saturated, vibrant tones.",
+        "b_observable": "The yellow and blue cards appear washed out with lower saturation.",
+        "fix": "Boost color saturation and contrast to match the reference grading.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Animate the 'Live Now' card to slide out from under the Recurly card instead of rendering it static."
+  }
+}

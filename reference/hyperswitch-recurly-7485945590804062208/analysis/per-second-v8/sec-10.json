@@ -1,0 +1,237 @@
+{
+  "sec": 10,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera zoom out and pan"
+      ],
+      "b_motion": [
+        "camera zoom out with different framing"
+      ],
+      "absent_in_b": [
+        "vignette",
+        "contact shadows"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 10.5,
+          "a_observable": "Camera is closer to the yellow card, creating a larger, more dynamic composition.",
+          "b_observable": "Camera is further away, resulting in a smaller card and flatter composition.",
+          "fix": "Match camera distance and angle to the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.8,
+          "a_observable": "Pronounced contact shadows under the cards and a clear vignette.",
+          "b_observable": "Flat lighting with minimal shadows and no vignette.",
+          "fix": "Enhance contact shadows and add a vignette.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 10.2,
+          "a_observable": "Warm, saturated yellow on the Recurly card.",
+          "b_observable": "Cooler, less saturated yellow on the card.",
+          "fix": "Increase saturation and warmth of the yellow material.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "center"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and focal length to match the reference framing, and enhance the lighting with stronger contact shadows and a vignette.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 10.2,
+          "a_observable": "The yellow card is framed closely, occupying most of the frame height.",
+          "b_observable": "The yellow card is framed from a distance, appearing much smaller.",
+          "fix": "Adjust camera distance to match the tight composition.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "center"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.5,
+          "a_observable": "The recessed slots around the card have deep, defined shadows.",
+          "b_observable": "The recessed slots are brightly lit with very flat shadows.",
+          "fix": "Increase shadow depth and ambient occlusion in the recesses.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera framing to match the tight composition of the reference and deepen the shadows in the recessed slots.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation",
+        "zoom"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 10.5,
+          "a_observable": "Crevices between the tiles have deep, dark shadows, providing strong contrast and depth.",
+          "b_observable": "Crevices between the tiles are brightly lit with very shallow shadows, making the layout look flat.",
+          "fix": "Adjust the ambient occlusion or shadow settings to deepen the crevices between tiles.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "full"
+          }
+        },
+        {
+          "category": "material",
+          "t": 10.2,
+          "a_observable": "The yellow Recurly card has a satin-like material finish with soft specular highlights reflecting the light source.",
+          "b_observable": "The yellow Recurly card has a flat matte finish with almost no specular reflection, appearing uniform in color.",
+          "fix": "Increase the specular intensity or adjust the roughness of the yellow card material to match the satin sheen of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "center"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 10.8,
+          "a_observable": "The camera has a wider field of view, showing more surrounding tiles and a greater sense of perspective.",
+          "b_observable": "The camera has a narrower field of view, making the central cards appear larger and showing fewer surrounding tiles.",
+          "fix": "Increase the camera's field of view (FOV) or move the camera further back to match the reference framing.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the lighting and ambient occlusion to deepen the shadows in the tile crevices, which will significantly improve the depth and contrast of the scene.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 10.5,
+        "a_observable": "Camera is closer to the yellow card, creating a larger, more dynamic composition.",
+        "b_observable": "Camera is further away, resulting in a smaller card and flatter composition.",
+        "fix": "Match camera distance and angle to the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_sharper",
+          "A": {
+            "lap_var": 423.16
+          },
+          "B": {
+            "lap_var": 37.1
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "Crevices between the tiles have deep, dark shadows, providing strong contrast and depth.",
+        "b_observable": "Crevices between the tiles are brightly lit with very shallow shadows, making the layout look flat.",
+        "fix": "Adjust the ambient occlusion or shadow settings to deepen the crevices between tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 8.56,
+            "p1": 87.08,
+            "p5": 91.29,
+            "p50": 208.73,
+            "p95": 230.27,
+            "p99": 237.33,
+            "p999": 250.87,
+            "span_p5_p95": 138.98
+          },
+          "B": {
+            "p01": 89.96,
+            "p1": 90.96,
+            "p5": 97.73,
+            "p50": 194.31,
+            "p95": 212.16,
+            "p99": 216.72,
+            "p999": 239.72,
+            "span_p5_p95": 114.43
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera framing to match the tight composition of the reference and deepen the shadows in the recessed slots.",
+    "dropped_unsupported": 3
+  }
+}

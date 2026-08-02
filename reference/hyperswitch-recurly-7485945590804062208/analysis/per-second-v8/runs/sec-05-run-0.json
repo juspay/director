@@ -1,0 +1,53 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera rotates and pans across keyboard grid"
+    ],
+    "b_motion": [
+      "camera rotates and pans across keyboard grid"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 5.3,
+        "a_observable": "Crevices between keys have deep, dark shadows.",
+        "b_observable": "Crevices between keys are brightly lit with minimal shadows.",
+        "fix": "Increase shadow depth and ambient occlusion.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 5.5,
+        "a_observable": "Strong vignette is visible in the corners of the frame.",
+        "b_observable": "No vignette is visible, corners are as bright as the center.",
+        "fix": "Add a vignette effect in post-processing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "material",
+        "t": 5.1,
+        "a_observable": "The yellow tile exhibits a glossy finish with specular highlights.",
+        "b_observable": "The yellow tile has a matte finish with no specular highlights.",
+        "fix": "Lower roughness and increase specularity on the yellow tile material.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the lighting and shadow settings to introduce deeper shadows in the key crevices and add a vignette effect to match the contrast of the reference video."
+  }
+}

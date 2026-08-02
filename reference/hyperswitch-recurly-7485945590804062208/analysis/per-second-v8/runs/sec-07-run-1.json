@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan",
+      "subtle rotation"
+    ],
+    "b_motion": [
+      "slow camera pan",
+      "subtle rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 7.5,
+        "a_observable": "The camera is positioned in a tight close-up on the 'JUSPAY hyperswitch' button.",
+        "b_observable": "The camera is pulled back, showing a wider view of the surrounding tiles.",
+        "fix": "Adjust camera distance to match the close-up framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 7.2,
+        "a_observable": "The 'Revenue Analytics' tile is aligned vertically directly above the Juspay tile.",
+        "b_observable": "The 'Revenue Analytics' tile is offset to the top-right.",
+        "fix": "Align the Revenue Analytics tile vertically with the Juspay tile.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 7.8,
+        "a_observable": "The scene has high contrast with bright highlights on the button edges and deep shadows.",
+        "b_observable": "The lighting is flat with lower contrast.",
+        "fix": "Increase contrast and adjust light sources to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing and tile layout to match the close-up composition of the reference."
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 11.2,
+        "a_observable": "The camera is positioned further back, capturing a wider view of the tiles.",
+        "b_observable": "The camera is zoomed in closer, cropping the composition tightly.",
+        "fix": "Move the camera back to match the wider framing of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "A strong vignette is visible, with significant light falloff at the corners.",
+        "b_observable": "The lighting is uniform across the frame with no corner falloff.",
+        "fix": "Apply a vignette to darken the outer edges of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 11.8,
+        "a_observable": "The image exhibits high contrast with deep blacks and bright whites.",
+        "b_observable": "The image has a flat luma profile with washed-out shadows and greyish highlights.",
+        "fix": "Increase contrast by deepening shadows and boosting highlights.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera distance and focal length to match the wider framing of the reference."
+  }
+}

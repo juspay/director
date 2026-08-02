@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "zoom"
+    ],
+    "b_motion": [
+      "translation",
+      "zoom"
+    ],
+    "absent_in_b": [
+      "tile_dot_textures"
+    ],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 9.2,
+        "a_observable": "The shadows cast by the tiles are soft and light gray.",
+        "b_observable": "The shadows cast by the tiles are very dark and harsh.",
+        "fix": "Soften the shadow rendering and reduce shadow intensity.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_higher_contrast"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 9,
+        "a_observable": "The tile to the left of the yellow Recurly tile has a vertical column of small gray dots.",
+        "b_observable": "The tile to the left of the yellow Recurly tile is completely plain white.",
+        "fix": "Apply the dot pattern texture to the background tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 9.5,
+        "a_observable": "The background tiles in the corners are softly blurred due to a shallow depth of field.",
+        "b_observable": "The background tiles in the corners remain sharp and in focus.",
+        "fix": "Enable depth of field on the camera and adjust the aperture.",
+        "severity": 2,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 9,
+        "a_observable": "The yellow Recurly tile has a warm, golden-yellow hue.",
+        "b_observable": "The yellow Recurly tile has a cooler, slightly greenish-yellow hue.",
+        "fix": "Adjust the material color of the yellow tile to be warmer.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the lighting and shadow settings to soften the harsh dark shadows and reduce the overall contrast."
+  }
+}
