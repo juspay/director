@@ -75,37 +75,45 @@ export const CUTS = [66, 147, 200, 243];
 type Key = { f: number; pos: [number, number, number]; tgt: [number, number, number]; roll: number; fov: number };
 type Shot = { start: number; end: number; keys: Key[] };
 
+/**
+ * MACRO ELEVATION RAISED (pass 8). Eight verified pass-7 camera findings said
+ * "A closer"; the eyewitness frames showed the real variable is ELEVATION —
+ * the reference shoots its macro beats from ~60-70deg down into dense frames,
+ * while these orbits sat at ~38-42deg, which rotated type diagonal and
+ * emptied the surroundings. Keys recomputed holding azimuth and camera-to-
+ * target distance constant, so subject size and the sweep behaviour survive.
+ */
 const SHOTS: Shot[] = [
   {
     start: 0, end: 65,
     keys: [
-      { f: 0, pos: [2.46, 2.83, 1.81], tgt: [0.00, 0.15, 0.15], roll: -0.25, fov: 34 },
-      { f: 32, pos: [0.21, 2.72, 3.21], tgt: [0.00, 0.15, 0.15], roll: -0.18, fov: 34 },
-      { f: 65, pos: [-2.48, 2.61, 2.09], tgt: [0.00, 0.15, 0.15], roll: -0.1, fov: 34 },
+      { f: 0, pos: [1.35, 3.80, 1.06], tgt: [0.00, 0.15, 0.15], roll: -0.25, fov: 34 },
+      { f: 32, pos: [0.11, 3.81, 1.77], tgt: [0.00, 0.15, 0.15], roll: -0.18, fov: 34 },
+      { f: 65, pos: [-1.28, 3.80, 1.15], tgt: [0.00, 0.15, 0.15], roll: -0.1, fov: 34 },
     ],
   },
   {
     start: 66, end: 146,
     keys: [
-      { f: 66, pos: [-1.89, 3.47, 3.15], tgt: [0.00, 0.16, 0.00], roll: -0.07, fov: 33 },
-      { f: 106, pos: [-0.39, 3.41, 3.72], tgt: [0.00, 0.16, 0.00], roll: -0.12, fov: 33 },
-      { f: 146, pos: [1.11, 3.34, 3.63], tgt: [0.00, 0.16, 0.00], roll: -0.17, fov: 33 },
+      { f: 66, pos: [-1.12, 4.60, 1.86], tgt: [0.00, 0.16, 0.00], roll: -0.07, fov: 33 },
+      { f: 106, pos: [-0.23, 4.61, 2.16], tgt: [0.00, 0.16, 0.00], roll: -0.12, fov: 33 },
+      { f: 146, pos: [0.63, 4.61, 2.08], tgt: [0.00, 0.16, 0.00], roll: -0.17, fov: 33 },
     ],
   },
   {
     start: 147, end: 199,
     keys: [
-      { f: 147, pos: [2.28, 2.94, 2.43], tgt: [0.03, 0.18, 0.02], roll: -0.27, fov: 34 },
-      { f: 173, pos: [0.72, 2.89, 3.29], tgt: [0.03, 0.18, 0.02], roll: -0.22, fov: 34 },
-      { f: 199, pos: [-1.02, 2.83, 3.24], tgt: [0.03, 0.18, 0.02], roll: -0.15, fov: 34 },
+      { f: 147, pos: [1.58, 3.83, 1.69], tgt: [0.03, 0.18, 0.02], roll: -0.27, fov: 34 },
+      { f: 173, pos: [0.50, 3.83, 2.25], tgt: [0.03, 0.18, 0.02], roll: -0.22, fov: 34 },
+      { f: 199, pos: [-0.68, 3.83, 2.19], tgt: [0.03, 0.18, 0.02], roll: -0.15, fov: 34 },
     ],
   },
   {
     start: 200, end: 242,
     keys: [
-      { f: 200, pos: [-2.13, 2.89, 2.58], tgt: [0.02, 0.18, 0.02], roll: -0.08, fov: 34 },
-      { f: 221, pos: [-0.44, 2.94, 3.28], tgt: [0.02, 0.18, 0.02], roll: -0.13, fov: 34 },
-      { f: 242, pos: [1.34, 3.00, 2.98], tgt: [0.02, 0.18, 0.02], roll: -0.19, fov: 34 },
+      { f: 200, pos: [-1.45, 3.83, 1.77], tgt: [0.02, 0.18, 0.02], roll: -0.08, fov: 34 },
+      { f: 221, pos: [-0.30, 3.82, 2.27], tgt: [0.02, 0.18, 0.02], roll: -0.13, fov: 34 },
+      { f: 242, pos: [0.95, 3.82, 2.10], tgt: [0.02, 0.18, 0.02], roll: -0.19, fov: 34 },
     ],
   },
   {
@@ -183,7 +191,10 @@ const DOLLY = [1.11, 1.16, 1.12, 1.12, 0.88];
  * motion metric here — that metric has already been shown to reward the wrong
  * thing once in this scene.
  */
-const SWEEP = [1.35, 1.0, 1.3, 1.3, 1.0];
+// Shot 2 compressed to 0.45: even at elevation ~64deg its keyframe azimuths
+// spanned -31..+17deg and set the column labels running ~30deg off-horizontal
+// against the reference's ~10.
+const SWEEP = [1.35, 0.45, 1.3, 1.3, 1.0];
 
 /** Widen a keyframe's bearing about the shot's mean, at constant radius. */
 function sweepPos(
@@ -332,6 +343,7 @@ export const Timeline: React.FC = () => {
         offset={SET_OFFSET[shot]}
         brandRadius={shot === 4 ? 2.6 : 3.5}
         plainOnly={shot === 4}
+        heroAccent={shot === 2 ? 'blue' : shot === 3 ? 'gold' : 'both'}
       />
       <Peripherals whiten={whiten} />
 

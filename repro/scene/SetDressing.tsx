@@ -157,7 +157,14 @@ export const SetDressing: React.FC<{
    * the lockup instead, over 44% of the runtime.
    */
   plainOnly?: boolean;
-}> = ({ whiten = 0, offset = [0, 0, 0], brandRadius = Infinity, plainOnly = false }) => {
+  /**
+   * Accent colour allowed near the hero this shot. The reference CONTRASTS:
+   * the gold Recurly hero sits among blue accents, the blue Hyperswitch hero
+   * among gold — a same-hue accent tile behind the hero merges with it (a
+   * giant blue field behind the blue card at f220 was the failure).
+   */
+  heroAccent?: 'gold' | 'blue' | 'both';
+}> = ({ whiten = 0, offset = [0, 0, 0], brandRadius = Infinity, plainOnly = false, heroAccent = 'both' }) => {
   const tiles = useMemo(buildTiles, []);
   const maps = useMemo(
     () => ({
@@ -203,7 +210,8 @@ export const SetDressing: React.FC<{
       {tiles.map((t, i) => {
         const brand = t.kind === 'blue' || t.kind === 'gold' || t.kind === 'lightblue';
         if (brand && Math.hypot(t.x + offset[0], t.z + offset[2]) > brandRadius) return null;
-        const kind: Kind = plainOnly && t.kind !== 'plain' ? (t.kind === 'metal' ? 'metal' : 'plain') : t.kind;
+        let kind: Kind = plainOnly && t.kind !== 'plain' ? (t.kind === 'metal' ? 'metal' : 'plain') : t.kind;
+        if (heroAccent !== 'both' && (kind === 'gold' || kind === 'blue') && kind !== heroAccent) kind = 'plain';
         const metalish = kind === 'metal';
         const isBrand = kind === 'blue' || kind === 'gold' || kind === 'lightblue';
         return (
@@ -274,9 +282,9 @@ export const Well: React.FC<{
         <meshPhysicalMaterial
           map={metalMap ?? undefined}
           color="#dde2ea"
-          roughness={0.34}
+          roughness={0.4}
           metalness={0.45}
-          clearcoat={0.35}
+          clearcoat={0.15}
           anisotropy={0.45}
           emissive="#ffffff"
           emissiveIntensity={whiten * 0.5}

@@ -35,14 +35,16 @@ export const C = {
   // and overshot to gold (226,200,7) / blue (11,35,220), because neither
   // change's effect could be read on its own.
   // Renders (213,192,77) against the reference's (217,195,72).
-  gold: '#ddc849',
+  // Re-solved under the pass-8 rig (live key light + dapple multiply): the
+  // old values were tuned against the dead-spotlight lighting.
+  gold: '#fbde69',
   // A's analytics bars measure (227,205,86); #ffc700 through the unlit
   // toneMapped=false face path + grade rendered neon orange.
   goldBar: '#e0c96e',
   // Renders (66,101,220) against the reference's (64,101,220). At the previous
   // #1743c9 it rendered (96,112,197) — too much red, too little blue, reading
   // as periwinkle rather than the reference's vivid blue.
-  blue: '#0a50de',
+  blue: '#4d70e8',
   metalTop: '#cfd3db',
   metalMid: '#b6bcc7',
   metalDark: '#9aa0ad',

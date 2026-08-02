@@ -101,14 +101,21 @@ export const Keycap: React.FC<Props> = ({
       {face && (
         <mesh position={[0, t / 2 + 0.004 + lift, 0]} rotation={[-Math.PI / 2, 0, 0]} renderOrder={20}>
           <planeGeometry args={[fw, fl]} />
-          <meshBasicMaterial
+          {/* LIT faces (pass 8). The unlit toneMapped=false basic material
+              could not carry the reference's specular gradients — the
+              eyewitness pass confirmed A's gold face has a bright-to-dark
+              lighting sweep while ours rendered uniform, a root cause of the
+              persistent "flat" verdicts. fog stays off so the lockup
+              wordmarks keep their measured darkness at 16 units out. */}
+          <meshStandardMaterial
             map={face}
             transparent
             alphaTest={0.004}
             opacity={opacity}
             side={THREE.DoubleSide}
             depthWrite={false}
-            toneMapped={false}
+            roughness={0.5}
+            metalness={0}
             fog={false}
           />
         </mesh>
