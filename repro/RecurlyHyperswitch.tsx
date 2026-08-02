@@ -185,7 +185,7 @@ function dappleTexture(): THREE.Texture {
   // (-6..-22) but NEVER goes warm; a neutral base made frame tint a lottery
   // decided by whichever pool drifted over the view (measured +24 one round,
   // -55 another).
-  x.fillStyle = '#e4ecfa';
+  x.fillStyle = '#e8effa';
   x.fillRect(0, 0, 1024, 1024);
   const r = rng(20260802);
   const pool = (fill: [number, number, number], count: number, alpha: number) => {
@@ -201,7 +201,7 @@ function dappleTexture(): THREE.Texture {
     }
   };
   pool([178, 190, 228], 18, 0.7); // cool shade
-  pool([240, 232, 212], 10, 0.45); // warm accents
+  pool([242, 236, 222], 7, 0.3); // warm accents — weak: a warm pool drifting over a macro view must never flip the frame warm
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;
   t.wrapS = t.wrapT = THREE.RepeatWrapping;

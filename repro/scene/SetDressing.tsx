@@ -261,10 +261,11 @@ export const Well: React.FC<{
       >
         <meshPhysicalMaterial
           map={metalMap ?? undefined}
-          color="#e3e7ed"
-          roughness={0.33}
+          color="#dde2ea"
+          roughness={0.34}
           metalness={0.45}
-          clearcoat={0.55}
+          clearcoat={0.35}
+          anisotropy={0.45}
           emissive="#ffffff"
           emissiveIntensity={whiten * 0.5}
         />

@@ -598,11 +598,15 @@ export function metalTexture(): THREE.CanvasTexture {
   const t = tex(512, 512, (ctx) => {
     ctx.fillStyle = '#c4c9d2';
     ctx.fillRect(0, 0, 512, 512);
+    // Striation contrast raised from 0.05-0.14 alpha: at that level the bezel
+    // rendered as flat grey, and "flat, non-reflective grey border" survived
+    // BOTH eyewitness channels in two verification passes. The reference's
+    // frames show bold dark/light banding.
     for (let i = 0; i < 1100; i++) {
       const y = Math.floor((i * 97) % 512);
-      const a = 0.05 + ((i * 31) % 10) / 110;
-      ctx.strokeStyle = i % 2 === 0 ? `rgba(96,102,114,${a})` : `rgba(248,251,255,${a})`;
-      ctx.lineWidth = 1;
+      const a = 0.14 + ((i * 31) % 10) / 36;
+      ctx.strokeStyle = i % 2 === 0 ? `rgba(88,94,108,${a})` : `rgba(250,252,255,${a})`;
+      ctx.lineWidth = i % 37 === 0 ? 2 : 1;
       ctx.beginPath();
       ctx.moveTo(0, y + 0.5);
       ctx.lineTo(512, y + 0.5);
