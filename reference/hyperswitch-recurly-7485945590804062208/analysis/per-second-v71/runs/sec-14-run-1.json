@@ -1,0 +1,79 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "zoom",
+      "pan"
+    ],
+    "b_motion": [
+      "zoom",
+      "pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 14,
+        "a_observable": "The PSP card is white with blue text.",
+        "b_observable": "The PSP card is blue with white text.",
+        "fix": "Invert the colors of the PSP card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 14.1,
+        "a_observable": "Background cards are blurred.",
+        "b_observable": "Background cards are sharp.",
+        "fix": "Enable camera depth of field.",
+        "severity": 2,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 14.2,
+        "a_observable": "Crevices between tiles have deep contact shadows.",
+        "b_observable": "Crevices between tiles have faint shadows.",
+        "fix": "Deepen the contact shadows.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 14.3,
+        "a_observable": "Camera has a low, oblique angle.",
+        "b_observable": "Camera has a high, top-down angle.",
+        "fix": "Lower the camera angle.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "material",
+        "t": 14.4,
+        "a_observable": "The yellow card has a reflective metallic finish.",
+        "b_observable": "The yellow card is flat and non-reflective.",
+        "fix": "Add metallic reflections to the yellow card.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Invert the PSP card colors and adjust the camera perspective to match the reference."
+  }
+}

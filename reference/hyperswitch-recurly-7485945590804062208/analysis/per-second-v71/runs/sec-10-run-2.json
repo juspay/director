@@ -1,0 +1,44 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera rotation",
+      "slow zoom out"
+    ],
+    "b_motion": [
+      "slow camera rotation",
+      "slow zoom out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 10.2,
+        "a_observable": "Close-up framing on the Recurly card, with soft, deep shadows in the key crevices.",
+        "b_observable": "Wider camera framing showing a large yellow diagonal stripe on the left, with flat, light grey crevices.",
+        "fix": "Adjust camera focal length and position to match the close-up framing, and deepen the contact shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      },
+      {
+        "category": "color",
+        "t": 10.5,
+        "a_observable": "The Recurly card has a warm, saturated golden-yellow color.",
+        "b_observable": "The Recurly card has a cooler, less saturated yellow hue with a prominent grey bevel.",
+        "fix": "Adjust the material color of the Recurly card to a warmer yellow and reduce the bevel width.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Match the camera framing and focal length of the reference video to ensure the close-up composition is preserved."
+  }
+}

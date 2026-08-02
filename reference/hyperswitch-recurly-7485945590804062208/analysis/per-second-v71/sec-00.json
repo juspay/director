@@ -1,0 +1,274 @@
+{
+  "sec": 0,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan and tilt"
+      ],
+      "b_motion": [
+        "slow camera pan and tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 0.1,
+          "a_observable": "The camera is positioned close to the 'Secure Payments' tile, creating a tight macro composition.",
+          "b_observable": "The camera is further away, resulting in a wider shot with different tile perspective.",
+          "fix": "Adjust camera distance and field of view to match the reference close-up.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.5,
+          "a_observable": "A distinct vignette is visible with darker corners.",
+          "b_observable": "The corners are bright and the lighting is uniform.",
+          "fix": "Add a vignette to match the corner falloff of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.3,
+          "a_observable": "The shadows under the tiles are dark, creating high contrast.",
+          "b_observable": "The shadows are bright and washed out, reducing contrast.",
+          "fix": "Deepen the shadows to match the reference luma curve.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 0.8,
+          "a_observable": "The colors are more saturated, especially the blue tile on the left.",
+          "b_observable": "The blue tile is less saturated and the overall image is cooler/grayer.",
+          "fix": "Increase color saturation and adjust white balance.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Reposition the camera closer to the tiles to match the tight macro framing and perspective of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan and rotation"
+      ],
+      "b_motion": [
+        "slow camera pan and rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 0.5,
+          "a_observable": "Close-up camera framing centered on the 'Secure Payments' key.",
+          "b_observable": "Distant isometric camera framing with the key smaller and offset.",
+          "fix": "Match camera position and focal length to Video A.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.5,
+          "a_observable": "Bright white highlights on keys with distinct soft shadows.",
+          "b_observable": "Dull greyish highlights and flatter overall contrast.",
+          "fix": "Adjust lighting and luma curve to increase contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "color",
+          "t": 0.5,
+          "a_observable": "The blue shield icon has high color saturation.",
+          "b_observable": "The blue shield icon is less saturated and slightly desaturated.",
+          "fix": "Increase saturation of the blue material.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and focal length to match the close-up framing of Video A.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan"
+      ],
+      "absent_in_b": [
+        "vignette",
+        "high_contrast_lighting"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 0.1,
+          "a_observable": "The camera is close to the keys with a steep tilt, tightly framing the 'Secure Payments' key.",
+          "b_observable": "The camera is further away at a flatter angle, showing more surrounding keys.",
+          "fix": "Adjust camera position and tilt to match the close-up, dynamic perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.5,
+          "a_observable": "The white keys are bright and well-lit with clean highlights.",
+          "b_observable": "The white keys appear grey and underexposed, lacking bright highlights.",
+          "fix": "Increase key light intensity and adjust exposure to brighten the white keys.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_brighter_highlights"
+          }
+        },
+        {
+          "category": "color",
+          "t": 0.2,
+          "a_observable": "The blue shield icon has a highly saturated, deep royal blue color.",
+          "b_observable": "The blue shield icon is a desaturated, lighter blue.",
+          "fix": "Adjust the material color of the blue shield to match the saturated royal blue.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position, angle, and focal length to match the close-up, dynamic framing of the reference video.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 0.1,
+        "a_observable": "The camera is positioned close to the 'Secure Payments' tile, creating a tight macro composition.",
+        "b_observable": "The camera is further away, resulting in a wider shot with different tile perspective.",
+        "fix": "Adjust camera distance and field of view to match the reference close-up.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 3,
+        "status": "pending_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "The comparison is accurate. Clip A shows a tight macro shot of the 'Secure Payments' tile, while Clip B shows a wider shot from a further distance and a different angle."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.5,
+        "a_observable": "Bright white highlights on keys with distinct soft shadows.",
+        "b_observable": "Dull greyish highlights and flatter overall contrast.",
+        "fix": "Adjust lighting and luma curve to increase contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_higher_contrast",
+          "A": {
+            "p01": 54.96,
+            "p1": 75.83,
+            "p5": 98.57,
+            "p50": 207.67,
+            "p95": 236.6,
+            "p99": 249.51,
+            "p999": 252.01,
+            "span_p5_p95": 138.03
+          },
+          "B": {
+            "p01": 69.74,
+            "p1": 94.78,
+            "p5": 125.89,
+            "p50": 201.8,
+            "p95": 218.67,
+            "p99": 220.82,
+            "p999": 223.68,
+            "span_p5_p95": 92.78
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "color",
+        "t": 0.5,
+        "a_observable": "The blue shield icon has high color saturation.",
+        "b_observable": "The blue shield icon is less saturated and slightly desaturated.",
+        "fix": "Increase saturation of the blue material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 189.28,
+            "g": 198.82,
+            "b": 201.38,
+            "rb_delta": -12.1,
+            "saturation": 0.2001
+          },
+          "B": {
+            "r": 188.44,
+            "g": 194.95,
+            "b": 209.61,
+            "rb_delta": -21.18,
+            "saturation": 0.1007
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera position, angle, and focal length to match the close-up, dynamic framing of the reference video.",
+    "dropped_unsupported": 1
+  }
+}

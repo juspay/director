@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      4.9
+    ],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 4.2,
+        "a_observable": "Yellow and blue cards are visible in the background on the left.",
+        "b_observable": "The background on the left consists of plain white and gray tiles.",
+        "fix": "Add the colored background cards to match the reference layout.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 4.5,
+        "a_observable": "Strong, soft shadows are cast by the cards, creating high contrast.",
+        "b_observable": "Shadows are extremely faint, resulting in flat lighting and low contrast.",
+        "fix": "Adjust light source and shadow settings to increase contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "color",
+        "t": 4.95,
+        "a_observable": "The Recurly card has a warm, golden-yellow color.",
+        "b_observable": "The Recurly card has a cooler, greenish-yellow color.",
+        "fix": "Adjust the yellow material color to be warmer.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the lighting and shadow settings to match the high-contrast look of the reference video."
+  }
+}

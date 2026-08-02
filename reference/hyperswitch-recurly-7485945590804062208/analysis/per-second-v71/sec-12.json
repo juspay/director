@@ -1,0 +1,234 @@
+{
+  "sec": 12,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom_out"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom_out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 12.3,
+          "a_observable": "The camera exhibits a shallow depth of field, blurring background and foreground cards.",
+          "b_observable": "The camera has a deep depth of field, keeping the entire grid of cards in sharp focus.",
+          "fix": "Enable depth of field and adjust the aperture to blur the background elements.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 12.7,
+          "a_observable": "The white cards have a cooler, blue-gray color cast.",
+          "b_observable": "The white cards have a warmer, neutral white appearance.",
+          "fix": "Adjust the white balance or color grading to add a cooler tint to the white materials.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Enable depth of field on the camera and adjust the aperture to match the shallow focus of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "zoom"
+      ],
+      "b_motion": [
+        "translation",
+        "zoom"
+      ],
+      "absent_in_b": [
+        "tile_dots_texture"
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 12.5,
+          "a_observable": "Deep, defined shadows beneath the cards provide depth.",
+          "b_observable": "Faint, diffuse shadows make the cards look flat.",
+          "fix": "Increase shadow density and ambient occlusion.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "full"
+          }
+        },
+        {
+          "category": "material",
+          "t": 12.2,
+          "a_observable": "White tiles have a grid of fine grey dots.",
+          "b_observable": "White tiles are completely solid white.",
+          "fix": "Apply the dotted texture map to the white tiles.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 12,
+          "a_observable": "The yellow Recurly card is a warm golden-yellow.",
+          "b_observable": "The yellow Recurly card is a cooler lemon-yellow.",
+          "fix": "Adjust the yellow card color to be warmer.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler",
+            "region": "center"
+          }
+        }
+      ],
+      "highest_impact_fix": "Add the missing dotted texture to the white tiles and deepen the shadows under the cards to restore depth.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera zoom out",
+        "subtle camera rotation"
+      ],
+      "b_motion": [
+        "camera zoom out",
+        "subtle camera rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 12.2,
+          "a_observable": "Background tiles in corners are heavily blurred by shallow depth of field.",
+          "b_observable": "Background tiles in corners are in sharp focus.",
+          "fix": "Enable camera depth of field and adjust aperture.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 12.5,
+          "a_observable": "Frame corners are darker than the center, showing a strong vignette.",
+          "b_observable": "Frame corners are bright, lacking vignette.",
+          "fix": "Add a vignette effect in post-production.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "material",
+          "t": 12,
+          "a_observable": "The recess around the yellow card has deep, dark shadows.",
+          "b_observable": "The recess around the yellow card lacks dark shadows, appearing flat.",
+          "fix": "Increase ambient occlusion or shadow depth in recessed areas.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "center"
+          }
+        }
+      ],
+      "highest_impact_fix": "Enable camera depth of field to match the reference blur in the background.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 12.2,
+        "a_observable": "Background tiles in corners are heavily blurred by shallow depth of field.",
+        "b_observable": "Background tiles in corners are in sharp focus.",
+        "fix": "Enable camera depth of field and adjust aperture.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_sharper",
+          "A": {
+            "lap_var": 0.91
+          },
+          "B": {
+            "lap_var": 3.21
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "Deep, defined shadows beneath the cards provide depth.",
+        "b_observable": "Faint, diffuse shadows make the cards look flat.",
+        "fix": "Increase shadow density and ambient occlusion.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 4.04,
+            "p1": 86.3,
+            "p5": 91.09,
+            "p50": 208.88,
+            "p95": 231.19,
+            "p99": 236.33,
+            "p999": 252.45,
+            "span_p5_p95": 140.1
+          },
+          "B": {
+            "p01": 61.86,
+            "p1": 62.37,
+            "p5": 67.52,
+            "p50": 192.81,
+            "p95": 211.72,
+            "p99": 215.72,
+            "p999": 239.5,
+            "span_p5_p95": 144.2
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Enable camera depth of field to match the reference blur in the background and increase shadow density under the cards.",
+    "dropped_unsupported": 4
+  }
+}

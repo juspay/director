@@ -1,0 +1,67 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera zoom out and pan"
+    ],
+    "b_motion": [
+      "slow camera zoom out and pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 10,
+        "a_observable": "The yellow Recurly card is framed closely, occupying most of the center screen.",
+        "b_observable": "The yellow Recurly card is framed from a distance, appearing much smaller.",
+        "fix": "Adjust camera position and focal length to match the close-up perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "Strong vignette with significant darkening at the corners.",
+        "b_observable": "Flat, uniform lighting across the corners.",
+        "fix": "Add a vignette post-process to darken the edges.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.2,
+        "a_observable": "Deep shadows in the crevices between tiles, creating high contrast.",
+        "b_observable": "Bright, washed-out shadows between tiles, resulting in low contrast.",
+        "fix": "Increase shadow depth and contrast in render settings.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      },
+      {
+        "category": "color",
+        "t": 10.2,
+        "a_observable": "The yellow card has a highly saturated golden hue.",
+        "b_observable": "The yellow card is pale and desaturated.",
+        "fix": "Increase saturation and adjust hue of the yellow material.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Match the camera framing and focal length to the reference close-up perspective."
+  }
+}

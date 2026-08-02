@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "camera zoom out and pan",
+      "button extrusion"
+    ],
+    "b_motion": [
+      "camera zoom out and pan",
+      "button extrusion"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 8.5,
+        "a_observable": "Tighter camera framing on the central cards.",
+        "b_observable": "Wider camera framing showing more of the surrounding grid.",
+        "fix": "Adjust camera position and focal length for a tighter crop.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 8.5,
+        "a_observable": "Shallow depth of field with blurry background tiles and Recurly card.",
+        "b_observable": "Deep depth of field with sharp background tiles and Recurly card.",
+        "fix": "Enable camera depth of field and adjust aperture to blur background.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "Prominent, soft shadows cast by the cards onto the background.",
+        "b_observable": "Faint, washed-out shadows, making the scene look flat.",
+        "fix": "Increase shadow density and adjust light source settings for softer shadows.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 8.5,
+        "a_observable": "Warm, saturated golden-yellow color on the Recurly card.",
+        "b_observable": "Cooler, desaturated yellow color on the Recurly card.",
+        "fix": "Adjust the yellow material color to be warmer and more saturated.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera's position, focal length, and depth of field settings to match the tighter framing and shallow focus of the reference video."
+  }
+}

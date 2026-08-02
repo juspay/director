@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "diagonal slide"
+    ],
+    "b_motion": [
+      "camera pan",
+      "diagonal slide"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 3.5,
+        "a_observable": "Stronger vignette and softer, more diffused lighting creating deeper shadows around the tiles.",
+        "b_observable": "Flat, bright lighting with almost no vignette, making the background tiles look uniformly bright.",
+        "fix": "Add a vignette and adjust the light source to be softer and more directional to create depth.",
+        "severity": 6,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 3.5,
+        "a_observable": "A yellow tile is visible in the top-left corner of the frame.",
+        "b_observable": "The top-left corner contains only white and grey tiles.",
+        "fix": "Reposition the yellow tile to match the layout of the reference video.",
+        "severity": 5,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "material",
+        "t": 3.5,
+        "a_observable": "The tiles have rounded bevelled edges that catch soft specular highlights, giving them a 3D plastic feel.",
+        "b_observable": "The tiles have flat, sharp edges with no specular highlights, making them look flat and 2D.",
+        "fix": "Increase the bevel radius on the tile geometry and adjust the material roughness to catch highlights.",
+        "severity": 5,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "center"
+        }
+      },
+      {
+        "category": "color",
+        "t": 3.5,
+        "a_observable": "The blue icons on the tiles have a highly saturated, deep royal blue color.",
+        "b_observable": "The blue icons are lighter and less saturated.",
+        "fix": "Adjust the color grading and saturation of the blue material to match the reference.",
+        "severity": 5,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the lighting to include a stronger vignette and softer shadows, and add rounded bevels to the tiles to improve their 3D appearance."
+  }
+}

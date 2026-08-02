@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 14.2,
+        "a_observable": "Vignette is present with darker corners.",
+        "b_observable": "Corners are bright and uniform with the center.",
+        "fix": "Add a vignette.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 14.3,
+        "a_observable": "Background tiles are blurred due to depth of field.",
+        "b_observable": "Background tiles are sharp and in focus.",
+        "fix": "Enable depth of field.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 14.1,
+        "a_observable": "Shadows on card edges are deep and defined.",
+        "b_observable": "Shadows are faint and lack depth.",
+        "fix": "Adjust shadow levels.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Enable depth of field to match the reference's blur on background elements."
+  }
+}

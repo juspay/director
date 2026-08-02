@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 0,
+    "idx": 0,
+    "t": 0.1,
+    "category": "camera",
+    "a_observable": "The camera is positioned close to the 'Secure Payments' tile, creating a tight macro composition.",
+    "b_observable": "The camera is further away, resulting in a wider shot with different tile perspective.",
+    "frames": {
+      "A": "analysis/per-second-v71/eyewitness/sec-00-c0-A.png",
+      "B": "analysis/per-second-v71/eyewitness/sec-00-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "The comparison is accurate. Clip A shows a tight macro shot of the 'Secure Payments' tile, while Clip B shows a wider shot from a further distance and a different angle."
+    }
+  }
+]

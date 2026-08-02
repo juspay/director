@@ -1,0 +1,53 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "zoom",
+      "pan"
+    ],
+    "b_motion": [
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 13.25,
+        "a_observable": "Camera is zoomed out further, showing a wider view of the grid.",
+        "b_observable": "Camera is closer, showing a tighter crop on the central buttons.",
+        "fix": "Adjust camera position to match the wider framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 13.25,
+        "a_observable": "White tiles are bright and clean with soft shadows.",
+        "b_observable": "White tiles are grey and underexposed with dark shadows.",
+        "fix": "Increase key light brightness and soften shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_brighter_highlights"
+        }
+      },
+      {
+        "category": "motion",
+        "t": 13.5,
+        "a_observable": "Continuous camera zoom-out and pan.",
+        "b_observable": "Camera is nearly static with minimal movement.",
+        "fix": "Increase camera animation speed and range.",
+        "severity": 2,
+        "prediction": {
+          "metric": "motion",
+          "expect": "A_more"
+        }
+      }
+    ],
+    "highest_impact_fix": "Increase key light intensity to correct the underexposed grey tiles."
+  }
+}

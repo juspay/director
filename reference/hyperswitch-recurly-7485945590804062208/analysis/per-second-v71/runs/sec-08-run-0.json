@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "material",
+        "t": 8.05,
+        "a_observable": "The frame around the blue hyperswitch card has a brushed metal texture.",
+        "b_observable": "The frame is a flat grey plastic with no texture.",
+        "fix": "Apply a brushed metal texture to the card frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 8.5,
+        "a_observable": "The 'Live Now' button is hidden.",
+        "b_observable": "The 'Live Now' button is fully visible and static.",
+        "fix": "Animate the 'Live Now' button to slide out starting at t=8.7s.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "The frame corners are noticeably darker than the center.",
+        "b_observable": "The frame corners have nearly the same brightness as the center.",
+        "fix": "Add a vignette effect to darken the corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Animate the 'Live Now' button to slide out dynamically rather than remaining static from the start of the shot."
+  }
+}

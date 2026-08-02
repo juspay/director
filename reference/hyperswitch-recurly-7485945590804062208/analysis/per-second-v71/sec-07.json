@@ -1,0 +1,207 @@
+{
+  "sec": 7,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "color",
+          "t": 7,
+          "a_observable": "Cool blue color cast on white tiles and shadows.",
+          "b_observable": "Neutral grey tiles and shadows with less blue saturation.",
+          "fix": "Add a cool blue tint to highlights and midtones.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 7.5,
+          "a_observable": "Pronounced vignette darkening the frame corners.",
+          "b_observable": "Brighter corners with a much weaker vignette.",
+          "fix": "Increase vignette strength.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 7.2,
+          "a_observable": "Tighter camera framing closer to the central blue card.",
+          "b_observable": "Wider camera framing showing more surrounding tiles.",
+          "fix": "Adjust camera distance for tighter framing.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the color grading to introduce a cool blue cast and increase the vignette strength to match the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 7.2,
+          "a_observable": "The camera is positioned close to the grid, looking almost directly down at the 'JUSPAY hyperswitch' tile.",
+          "b_observable": "The camera is at a lower, shallower angle and further away, revealing more of the grid.",
+          "fix": "Adjust the camera height, pitch, and field of view to match the reference's top-down perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "top"
+          }
+        },
+        {
+          "category": "color",
+          "t": 7.5,
+          "a_observable": "The blue 'JUSPAY hyperswitch' tile has a deep, saturated blue color with subtle shading.",
+          "b_observable": "The blue tile is a lighter, less saturated blue with flatter shading.",
+          "fix": "Adjust the material color and lighting setup to achieve a deeper, more saturated blue on the tile.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera height, pitch, and field of view to match the reference's top-down perspective.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 7,
+          "a_observable": "Camera is positioned close to the central card, framing it tightly.",
+          "b_observable": "Camera is pulled back, showing a wider view with smaller cards.",
+          "fix": "Move the camera closer to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 7.5,
+          "a_observable": "Stronger light falloff towards the corners of the frame.",
+          "b_observable": "Flat, uniform illumination across the entire grid.",
+          "fix": "Adjust light sources to increase corner falloff.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and focal length to match the tighter framing of the reference video.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 7.2,
+        "a_observable": "The camera is positioned close to the grid, looking almost directly down at the 'JUSPAY hyperswitch' tile.",
+        "b_observable": "The camera is at a lower, shallower angle and further away, revealing more of the grid.",
+        "fix": "Adjust the camera height, pitch, and field of view to match the reference's top-down perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "top"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_sharper",
+          "A": {
+            "lap_var": 75.95
+          },
+          "B": {
+            "lap_var": 7.24
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 7.5,
+        "a_observable": "Pronounced vignette darkening the frame corners.",
+        "b_observable": "Brighter corners with a much weaker vignette.",
+        "fix": "Increase vignette strength.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 206.79,
+            "center_mean": 110.73,
+            "falloff_pct": -86.76
+          },
+          "B": {
+            "corner_mean": 182.02,
+            "center_mean": 86.83,
+            "falloff_pct": -109.63
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera height, pitch, and field of view to match the reference's top-down perspective, and increase the vignette strength to match the corner falloff.",
+    "dropped_unsupported": 2
+  }
+}

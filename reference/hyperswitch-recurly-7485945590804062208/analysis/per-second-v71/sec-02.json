@@ -1,0 +1,327 @@
+{
+  "sec": 2,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        2.208
+      ],
+      "a_motion": [
+        "camera pan",
+        "tile movement"
+      ],
+      "b_motion": [
+        "camera pan",
+        "tile movement"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 2,
+          "a_observable": "The camera is zoomed in closer to the 'Secure Payments' tile, creating a tighter composition.",
+          "b_observable": "The camera is positioned further away, resulting in a wider field of view.",
+          "fix": "Adjust the camera's focal length or distance to match the reference's tight framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 2.1,
+          "a_observable": "The white tiles have bright, high-contrast highlights.",
+          "b_observable": "The white tiles are dull and grey with low contrast.",
+          "fix": "Increase key light intensity and adjust contrast curve.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "color",
+          "t": 2,
+          "a_observable": "The 'Secure Payments' shield has a deep, less saturated blue color.",
+          "b_observable": "The shield has a brighter, more saturated blue color.",
+          "fix": "Adjust the material color of the blue shield to reduce saturation and match the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_more_saturated"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 2.5,
+          "a_observable": "A yellow tile is visible in the top-left corner of the frame.",
+          "b_observable": "The top-left corner contains only white tiles.",
+          "fix": "Add the yellow tile in the top-left corner to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera framing and position to match the tighter, more dynamic composition of the reference video, and increase the key light intensity to eliminate the dull grey appearance of the white tiles.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        2.208
+      ],
+      "a_motion": [
+        "slow camera pan and tilt showing cards on a grid"
+      ],
+      "b_motion": [
+        "similar camera pan and tilt but with different framing and angles"
+      ],
+      "absent_in_b": [
+        "brushed metal texture on the grey strip"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 2.1,
+          "a_observable": "The camera has a moderate tilt, showing the yellow card at the bottom.",
+          "b_observable": "The camera is tilted much more steeply, showing the yellow card at the top-left.",
+          "fix": "Match the camera rotation, position, and focal length to Video A.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 2.1,
+          "a_observable": "The shadows between the cards are deep and well-defined, creating high contrast.",
+          "b_observable": "The shadows are washed out and bright, resulting in lower contrast.",
+          "fix": "Adjust the shadow bias and ambient occlusion settings to deepen the shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "material",
+          "t": 2.3,
+          "a_observable": "The grey strip on the right has a brushed metal texture.",
+          "b_observable": "The grey strip is smooth and lacks texture.",
+          "fix": "Add a brushed metal texture map to the grey strip material.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 2.5,
+          "a_observable": "The cards are closely spaced with small gaps.",
+          "b_observable": "The cards are more widely spaced with larger gaps.",
+          "fix": "Adjust the spacing and layout of the cards to match Video A.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Match the camera rotation, position, and focal length to Video A.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        2.2
+      ],
+      "a_motion": [
+        "camera pan",
+        "camera tilt"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera tilt"
+      ],
+      "absent_in_b": [
+        "yellow card in top-left background",
+        "yellow card in bottom-right background"
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "t": 2.1,
+          "a_observable": "A bright yellow card is visible in the bottom-right corner of the frame.",
+          "b_observable": "The bottom-right corner shows a white card instead of a yellow card.",
+          "fix": "Change the material or color of the bottom-right card to yellow.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 2.5,
+          "a_observable": "A yellow card is visible in the top-left corner of the frame.",
+          "b_observable": "The top-left corner shows a white card instead of a yellow card.",
+          "fix": "Change the material or color of the top-left card to yellow.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 2.5,
+          "a_observable": "The camera angle has a steep tilt, creating a strong perspective on the cards.",
+          "b_observable": "The camera angle is flatter, resulting in less perspective distortion on the cards.",
+          "fix": "Adjust the camera pitch and focal length to match the reference perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 2.1,
+          "a_observable": "The blue shield icon on the 'Secure Payments' card is highly saturated.",
+          "b_observable": "The blue shield icon is noticeably desaturated.",
+          "fix": "Increase the saturation of the blue material on the shield icon.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and staging elements to match the composition and color scheme of the reference video.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 2.1,
+        "a_observable": "The camera has a moderate tilt, showing the yellow card at the bottom.",
+        "b_observable": "The camera is tilted much more steeply, showing the yellow card at the top-left.",
+        "fix": "Match the camera rotation, position, and focal length to Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 3,
+        "status": "pending_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "The claim accurately describes the camera tilt and the position of the yellow card in both clips. In Clip A, the yellow card is at the bottom, while in Clip B, the camera is tilted more steeply, showing the yellow card at the top-left."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.1,
+        "a_observable": "The white tiles have bright, high-contrast highlights.",
+        "b_observable": "The white tiles are dull and grey with low contrast.",
+        "fix": "Increase key light intensity and adjust contrast curve.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_higher_contrast",
+          "A": {
+            "p01": 55.31,
+            "p1": 79.89,
+            "p5": 89.83,
+            "p50": 207.53,
+            "p95": 243.22,
+            "p99": 246.59,
+            "p999": 249.59,
+            "span_p5_p95": 153.39
+          },
+          "B": {
+            "p01": 76.93,
+            "p1": 102.91,
+            "p5": 123.93,
+            "p50": 208.43,
+            "p95": 226.8,
+            "p99": 228.09,
+            "p999": 231.09,
+            "span_p5_p95": 102.87
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "color",
+        "t": 2.1,
+        "a_observable": "The blue shield icon on the 'Secure Payments' card is highly saturated.",
+        "b_observable": "The blue shield icon is noticeably desaturated.",
+        "fix": "Increase the saturation of the blue material on the shield icon.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 188.21,
+            "g": 200.46,
+            "b": 204.01,
+            "rb_delta": -15.8,
+            "saturation": 0.2023
+          },
+          "B": {
+            "r": 200.46,
+            "g": 201.96,
+            "b": 199.85,
+            "rb_delta": 0.61,
+            "saturation": 0.0882
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "staging",
+        "t": 2.5,
+        "a_observable": "A yellow card is visible in the top-left corner of the frame.",
+        "b_observable": "The top-left corner shows a white card instead of a yellow card.",
+        "fix": "Change the material or color of the top-left card to yellow.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 2,
+        "status": "pending_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "In Clip A, at around 00:00.875, a yellow card is clearly visible in the top-left corner of the frame. In Clip B, at the same timestamp, the top-left corner shows a white card instead."
+        }
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera angle and staging elements to match the composition and color scheme of the reference video.",
+    "dropped_unsupported": 3
+  }
+}

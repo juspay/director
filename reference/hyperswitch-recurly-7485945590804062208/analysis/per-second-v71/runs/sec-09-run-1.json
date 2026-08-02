@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 9.5,
+        "a_observable": "The yellow 'Recurly' card is positioned in the center-right of the frame, and the background tiles are white/grey.",
+        "b_observable": "The yellow 'Recurly' card is on the left, and there is a large yellow background stripe/tile on the left side of the frame.",
+        "fix": "Adjust the layout and background tile colors to match the reference video's composition.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "The corners of the frame are noticeably darker than the center, showing a strong vignette.",
+        "b_observable": "The corners of the frame are bright and lack a prominent vignette.",
+        "fix": "Add a vignette to darken the corners of the frame.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "The white tiles have softer highlights and deeper shadows, showing a more balanced contrast.",
+        "b_observable": "The white tiles are extremely bright with blown-out highlights, showing higher contrast.",
+        "fix": "Adjust the luma curve to reduce highlight brightness and match the reference contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_higher_contrast"
+        }
+      }
+    ],
+    "highest_impact_fix": "Re-align the layout of the cards and background tiles to match the reference composition."
+  }
+}

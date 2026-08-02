@@ -1,0 +1,44 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 7,
+        "a_observable": "Camera is positioned close to the central card, framing it tightly.",
+        "b_observable": "Camera is pulled back, showing a wider view with smaller cards.",
+        "fix": "Move the camera closer to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 7.5,
+        "a_observable": "Stronger light falloff towards the corners of the frame.",
+        "b_observable": "Flat, uniform illumination across the entire grid.",
+        "fix": "Adjust light sources to increase corner falloff.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and focal length to match the tighter framing of the reference video."
+  }
+}

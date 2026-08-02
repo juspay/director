@@ -1,0 +1,68 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.208
+    ],
+    "a_motion": [
+      "camera pan",
+      "tile movement"
+    ],
+    "b_motion": [
+      "camera pan",
+      "tile movement"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 2,
+        "a_observable": "The camera is zoomed in closer to the 'Secure Payments' tile, creating a tighter composition.",
+        "b_observable": "The camera is positioned further away, resulting in a wider field of view.",
+        "fix": "Adjust the camera's focal length or distance to match the reference's tight framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.1,
+        "a_observable": "The white tiles have bright, high-contrast highlights.",
+        "b_observable": "The white tiles are dull and grey with low contrast.",
+        "fix": "Increase key light intensity and adjust contrast curve.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "color",
+        "t": 2,
+        "a_observable": "The 'Secure Payments' shield has a deep, less saturated blue color.",
+        "b_observable": "The shield has a brighter, more saturated blue color.",
+        "fix": "Adjust the material color of the blue shield to reduce saturation and match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 2.5,
+        "a_observable": "A yellow tile is visible in the top-left corner of the frame.",
+        "b_observable": "The top-left corner contains only white tiles.",
+        "fix": "Add the yellow tile in the top-left corner to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing and position to match the tighter, more dynamic composition of the reference video, and increase the key light intensity to eliminate the dull grey appearance of the white tiles."
+  }
+}

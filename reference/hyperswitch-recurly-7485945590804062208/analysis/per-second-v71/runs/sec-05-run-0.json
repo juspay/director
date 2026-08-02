@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 5.2,
+        "a_observable": "The Recurly card is surrounded by light gray tiles with a dark recessed border.",
+        "b_observable": "A large yellow block is visible on the left, and the recess border is thick and light gray.",
+        "fix": "Align tile layout and recess border thickness with the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 5.5,
+        "a_observable": "The camera is positioned further back, showing more tiles with a distinct perspective tilt.",
+        "b_observable": "The camera is closer to the card with a flatter perspective and different tilt.",
+        "fix": "Match camera focal length, position, and rotation to the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 5,
+        "a_observable": "The yellow card has a warm, desaturated mustard hue.",
+        "b_observable": "The yellow card is highly saturated with a bright lemon-yellow hue.",
+        "fix": "Adjust the yellow material's hue and saturation to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the tile layout to remove the incorrect yellow block on the left and match the reference camera perspective."
+  }
+}

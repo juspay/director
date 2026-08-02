@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      4.9
+    ],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 4.2,
+        "a_observable": "The camera is positioned close to the cards, creating a tight, oblique composition.",
+        "b_observable": "The camera is further away, making the cards appear smaller with a flatter angle.",
+        "fix": "Adjust camera focal length and position to match the tight, angled framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "staging",
+        "t": 4.2,
+        "a_observable": "A bright yellow tile is visible in the top-left corner of the frame.",
+        "b_observable": "The top-left corner contains only grey and white tiles.",
+        "fix": "Place the yellow tile in the grid layout at the top-left.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 4.5,
+        "a_observable": "The scene features soft shadows cast by the cards and a noticeable corner vignette.",
+        "b_observable": "The lighting is flat and bright, with extremely faint shadows and no vignette.",
+        "fix": "Increase shadow contrast and add a vignette to match the reference's lighting depth.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 4.95,
+        "a_observable": "The area to the left of the yellow card consists of white and grey tiles.",
+        "b_observable": "The area to the left of the yellow card is dominated by a solid yellow vertical band.",
+        "fix": "Re-arrange the background tiles to remove the yellow band on the left side.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Correct the background tile layout to remove the yellow band on the left and adjust the camera framing to match the reference."
+  }
+}

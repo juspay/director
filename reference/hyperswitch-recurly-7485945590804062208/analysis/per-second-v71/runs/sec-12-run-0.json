@@ -1,0 +1,43 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom_out"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom_out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 12.3,
+        "a_observable": "The camera exhibits a shallow depth of field, blurring background and foreground cards.",
+        "b_observable": "The camera has a deep depth of field, keeping the entire grid of cards in sharp focus.",
+        "fix": "Enable depth of field and adjust the aperture to blur the background elements.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 12.7,
+        "a_observable": "The white cards have a cooler, blue-gray color cast.",
+        "b_observable": "The white cards have a warmer, neutral white appearance.",
+        "fix": "Adjust the white balance or color grading to add a cooler tint to the white materials.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Enable depth of field on the camera and adjust the aperture to match the shallow focus of the reference."
+  }
+}

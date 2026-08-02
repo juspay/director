@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "zoom_out"
+    ],
+    "b_motion": [
+      "zoom_out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 9.5,
+        "a_observable": "The yellow card has a warm golden-yellow hue.",
+        "b_observable": "The yellow card has a cooler, greenish-yellow hue.",
+        "fix": "Adjust the yellow material color to be warmer and more golden.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "The grid lighting is bright and even with soft shadows.",
+        "b_observable": "The grid lighting has a strong vignette and darker, sharper shadows.",
+        "fix": "Reduce vignette intensity and soften the shadows.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "B_stronger"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 9.5,
+        "a_observable": "Camera zooms out slowly with a flat perspective.",
+        "b_observable": "Camera zooms out faster with a tilted perspective.",
+        "fix": "Align camera angle and slow down the zoom speed.",
+        "severity": 3,
+        "prediction": {
+          "metric": "motion",
+          "expect": "B_more"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle, height, and zoom speed to match the reference's composition and smooth motion."
+  }
+}

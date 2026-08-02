@@ -1,0 +1,66 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zoom out",
+      "gentle drift"
+    ],
+    "b_motion": [
+      "camera zoom out",
+      "gentle drift"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 14.1,
+        "a_observable": "Tighter camera framing on the central cards.",
+        "b_observable": "Wider camera framing with more visible background tiles.",
+        "fix": "Adjust camera position and focal length to match the tighter framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 14.2,
+        "a_observable": "Warm cream color cast on the white surfaces.",
+        "b_observable": "Cool grey color cast on the white surfaces.",
+        "fix": "Adjust white balance to introduce a warm cream tone.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 14.3,
+        "a_observable": "Deep shadows in the tile crevices creating high contrast.",
+        "b_observable": "Lighter shadows in the crevices with lower overall contrast.",
+        "fix": "Deepen shadows in the crevices to match the reference contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "material",
+        "t": 14.4,
+        "a_observable": "Soft specular reflections of cards on the tile surfaces.",
+        "b_observable": "Matte tile surfaces with no specular reflections.",
+        "fix": "Increase tile material glossiness to enable soft reflections.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the white balance and lighting to correct the cool grey color cast in B to match the warm cream tone of the reference."
+  }
+}

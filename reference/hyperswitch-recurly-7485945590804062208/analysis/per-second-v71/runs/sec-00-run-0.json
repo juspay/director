@@ -1,0 +1,64 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and tilt"
+    ],
+    "b_motion": [
+      "slow camera pan and tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 0.1,
+        "a_observable": "The camera is positioned close to the 'Secure Payments' tile, creating a tight macro composition.",
+        "b_observable": "The camera is further away, resulting in a wider shot with different tile perspective.",
+        "fix": "Adjust camera distance and field of view to match the reference close-up.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.5,
+        "a_observable": "A distinct vignette is visible with darker corners.",
+        "b_observable": "The corners are bright and the lighting is uniform.",
+        "fix": "Add a vignette to match the corner falloff of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.3,
+        "a_observable": "The shadows under the tiles are dark, creating high contrast.",
+        "b_observable": "The shadows are bright and washed out, reducing contrast.",
+        "fix": "Deepen the shadows to match the reference luma curve.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 0.8,
+        "a_observable": "The colors are more saturated, especially the blue tile on the left.",
+        "b_observable": "The blue tile is less saturated and the overall image is cooler/grayer.",
+        "fix": "Increase color saturation and adjust white balance.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Reposition the camera closer to the tiles to match the tight macro framing and perspective of the reference."
+  }
+}

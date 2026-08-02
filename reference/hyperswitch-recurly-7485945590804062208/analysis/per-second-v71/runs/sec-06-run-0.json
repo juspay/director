@@ -1,0 +1,71 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "camera pan",
+      "camera zoom",
+      "camera rotation"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom",
+      "camera rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 6.2,
+        "a_observable": "Close-up camera framing on the yellow button with shallow depth of field.",
+        "b_observable": "Wider camera framing showing more background with flat perspective.",
+        "fix": "Match the close-up camera position and focal length of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 6.2,
+        "a_observable": "The yellow button has a warm, highly saturated golden hue.",
+        "b_observable": "The yellow button is less saturated with a cooler, greenish-yellow tint.",
+        "fix": "Adjust the yellow button's material color to increase warmth and saturation.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 6.8,
+        "a_observable": "The blue button is oriented nearly horizontally.",
+        "b_observable": "The blue button is tilted at a steep diagonal angle.",
+        "fix": "Rotate the blue button to align horizontally with the grid.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.8,
+        "a_observable": "Strong vignette with darker corners focusing light on the center.",
+        "b_observable": "Flat lighting across the frame with minimal corner falloff.",
+        "fix": "Add a vignette and adjust light sources to focus on the center.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing, focal length, and object rotations to match the reference compositions, and enhance the lighting contrast with a vignette."
+  }
+}

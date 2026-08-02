@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 1.5,
+        "a_observable": "The camera is positioned more directly above the buttons, showing them with less perspective distortion.",
+        "b_observable": "The camera is at a shallow oblique angle, causing significant perspective distortion of the buttons.",
+        "fix": "Adjust camera angle and position to match the reference's flatter perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "There is a distinct vignette darkening the corners of the frame.",
+        "b_observable": "The corners of the frame are bright, lacking a vignette.",
+        "fix": "Add a vignette in post-production or adjust the camera's physical lens falloff.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 1.5,
+        "a_observable": "The white buttons have a warm, slightly cream-colored tint.",
+        "b_observable": "The white buttons are neutral grey/white with a cooler blue cast.",
+        "fix": "Adjust the white balance or color grading to introduce a warmer tint to the white materials.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and position to match the reference's flatter perspective, reducing the extreme oblique angle."
+  }
+}

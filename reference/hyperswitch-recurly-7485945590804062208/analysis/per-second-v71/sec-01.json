@@ -1,0 +1,289 @@
+{
+  "sec": 1,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "gentle camera drift",
+        "subtle rotation of the tiles"
+      ],
+      "b_motion": [
+        "camera pan",
+        "subtle rotation"
+      ],
+      "absent_in_b": [
+        "vignette",
+        "high-contrast color grading"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 1.5,
+          "a_observable": "The 'Secure Payments' tile is framed closely, occupying a large portion of the center screen with a dynamic tilted angle.",
+          "b_observable": "The 'Secure Payments' tile is smaller, positioned more to the left, with a flatter camera angle showing more surrounding empty tiles.",
+          "fix": "Adjust camera focal length, position, and rotation to match the close-up, dynamic perspective of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "layout",
+          "t": 1.5,
+          "a_observable": "The surrounding tiles include a yellow metallic tile at the bottom and a blue tile on the left, with 'Renewal Success' directly above 'Secure Payments'.",
+          "b_observable": "The surrounding tiles are mostly grey and white, with 'Renewal Success' shifted to the top-right and a lined tile at the bottom-right.",
+          "fix": "Reorganize the grid layout of the tiles to match the color and placement of the reference composition.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 1.5,
+          "a_observable": "There is a distinct vignette with darker corners, creating depth and focusing attention on the center tile.",
+          "b_observable": "The lighting is flat and uniform across the frame, lacking any noticeable vignette or corner falloff.",
+          "fix": "Add a vignette in post-processing or adjust the light sources to create a stronger corner-to-center falloff.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 1.5,
+          "a_observable": "The shadows are deeper, and the colors (especially the blue shield icon) are richer and more saturated.",
+          "b_observable": "The shadows are washed out, and the blue shield icon is less saturated, appearing pale.",
+          "fix": "Increase contrast and saturation, particularly in the midtones and shadows, to match the reference's color profile.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "center"
+          }
+        }
+      ],
+      "highest_impact_fix": "Realign the camera angle and focal length to match the close-up perspective, and reorganize the tile layout to match the reference composition.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 1.5,
+          "a_observable": "The camera is positioned more directly above the buttons, showing them with less perspective distortion.",
+          "b_observable": "The camera is at a shallow oblique angle, causing significant perspective distortion of the buttons.",
+          "fix": "Adjust camera angle and position to match the reference's flatter perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 1.5,
+          "a_observable": "There is a distinct vignette darkening the corners of the frame.",
+          "b_observable": "The corners of the frame are bright, lacking a vignette.",
+          "fix": "Add a vignette in post-production or adjust the camera's physical lens falloff.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 1.5,
+          "a_observable": "The white buttons have a warm, slightly cream-colored tint.",
+          "b_observable": "The white buttons are neutral grey/white with a cooler blue cast.",
+          "fix": "Adjust the white balance or color grading to introduce a warmer tint to the white materials.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler",
+            "region": "center"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and position to match the reference's flatter perspective, reducing the extreme oblique angle.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "camera tilt"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera tilt"
+      ],
+      "absent_in_b": [
+        "Revenue Analytics"
+      ],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 1,
+          "a_observable": "The card directly below 'Secure Payments' is yellow, and the card to the right is white.",
+          "b_observable": "The cards below and to the right of 'Secure Payments' are gray with horizontal lines.",
+          "fix": "Rearrange the grid layout of the cards to match the reference video, ensuring the yellow card is positioned below 'Secure Payments'.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 1.5,
+          "a_observable": "The background cards, such as 'Renewal Success', are softly blurred due to a shallow depth of field.",
+          "b_observable": "The background cards are completely sharp and in focus.",
+          "fix": "Enable depth of field on the camera and adjust the focus distance to keep only the foreground card sharp.",
+          "severity": 2,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "top"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 1,
+          "a_observable": "There is a distinct vignette with darker corners and a brighter center.",
+          "b_observable": "The lighting is uniform across the entire frame with no corner falloff.",
+          "fix": "Add a vignette effect or adjust the light source to create a natural falloff towards the edges of the frame.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 1.2,
+          "a_observable": "The blue shield icon and other colored elements have high color saturation.",
+          "b_observable": "The colored elements appear more muted and less saturated.",
+          "fix": "Increase the saturation of the materials, especially the blues and yellows, to match the vibrant look of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Rearrange the grid layout of the cards to match the reference video, ensuring the yellow card is positioned below 'Secure Payments' and the correct cards are adjacent.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "layout",
+        "t": 1.5,
+        "a_observable": "The surrounding tiles include a yellow metallic tile at the bottom and a blue tile on the left, with 'Renewal Success' directly above 'Secure Payments'.",
+        "b_observable": "The surrounding tiles are mostly grey and white, with 'Renewal Success' shifted to the top-right and a lined tile at the bottom-right.",
+        "fix": "Reorganize the grid layout of the tiles to match the color and placement of the reference composition.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "pending_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "The visual details described for both Clip A and Clip B are accurate. Clip A shows a yellow metallic tile at the bottom, a blue tile on the left, and 'Renewal Success' directly above 'Secure Payments'. Clip B shows mostly grey and white surrounding tiles, with 'Renewal Success' shifted to the top-right and a lined tile at the bottom-right."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "There is a distinct vignette with darker corners, creating depth and focusing attention on the center tile.",
+        "b_observable": "The lighting is flat and uniform across the frame, lacking any noticeable vignette or corner falloff.",
+        "fix": "Add a vignette in post-processing or adjust the light sources to create a stronger corner-to-center falloff.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 203.84,
+            "center_mean": 204.62,
+            "falloff_pct": 0.39
+          },
+          "B": {
+            "corner_mean": 187.37,
+            "center_mean": 206.81,
+            "falloff_pct": 9.4
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 1.5,
+        "a_observable": "The shadows are deeper, and the colors (especially the blue shield icon) are richer and more saturated.",
+        "b_observable": "The shadows are washed out, and the blue shield icon is less saturated, appearing pale.",
+        "fix": "Increase contrast and saturation, particularly in the midtones and shadows, to match the reference's color profile.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "center"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 193.3,
+            "g": 205.55,
+            "b": 228.77,
+            "rb_delta": -35.46,
+            "saturation": 0.1564
+          },
+          "B": {
+            "r": 200.52,
+            "g": 207.16,
+            "b": 221.87,
+            "rb_delta": -21.35,
+            "saturation": 0.092
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Reorganize the grid layout of the tiles to match the color and placement of the reference composition.",
+    "dropped_unsupported": 4
+  }
+}

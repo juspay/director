@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "zoom"
+    ],
+    "b_motion": [
+      "translation",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 11,
+        "a_observable": "The yellow and blue cards are closely spaced with a gentle diagonal alignment.",
+        "b_observable": "The cards are widely separated with a steep vertical offset.",
+        "fix": "Adjust the card positions to match the reference layout.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.2,
+        "a_observable": "The corners of the frame are noticeably darker due to a strong vignette.",
+        "b_observable": "The corners are bright and lack vignette falloff.",
+        "fix": "Apply a vignette effect to darken the outer edges.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.4,
+        "a_observable": "Pronounced contact shadows are visible beneath the floating cards.",
+        "b_observable": "The contact shadows are very weak, reducing the sense of depth.",
+        "fix": "Enhance the contact shadows and ambient occlusion.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the layout and spacing of the cards to match the reference composition, and add a vignette to the camera."
+  }
+}

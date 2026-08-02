@@ -1,0 +1,36 @@
+[
+  {
+    "sec": 5,
+    "idx": 0,
+    "t": 5.2,
+    "category": "layout",
+    "a_observable": "The Recurly card is surrounded by light gray tiles with a dark recessed border.",
+    "b_observable": "A large yellow block is visible on the left, and the recess border is thick and light gray.",
+    "frames": {
+      "A": "analysis/per-second-v71/eyewitness/sec-05-c0-A.png",
+      "B": "analysis/per-second-v71/eyewitness/sec-05-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.95,
+      "note": "The visual details described in both claims match the clips. In Clip A, the yellow Recurly card is surrounded by light gray tiles with a dark recessed border. In Clip B, there is a large yellow block extending to the left of the Recurly card, and the recess border around the card is thick and light gray."
+    }
+  },
+  {
+    "sec": 5,
+    "idx": 1,
+    "t": 5.4,
+    "category": "camera",
+    "a_observable": "The camera angle is tilted, showing three-dimensional depth.",
+    "b_observable": "The camera angle is flatter and more top-down, reducing depth.",
+    "frames": {
+      "A": "analysis/per-second-v71/eyewitness/sec-05-c1-A.png",
+      "B": "analysis/per-second-v71/eyewitness/sec-05-c1-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.95,
+      "note": "Clip A shows a highly tilted, oblique camera angle that emphasizes the three-dimensional depth and shadows of the elements. In contrast, Clip B uses a much flatter, more top-down camera angle, which significantly reduces the sense of depth."
+    }
+  }
+]

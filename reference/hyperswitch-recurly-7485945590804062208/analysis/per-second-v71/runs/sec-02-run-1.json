@@ -1,0 +1,68 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.208
+    ],
+    "a_motion": [
+      "slow camera pan and tilt showing cards on a grid"
+    ],
+    "b_motion": [
+      "similar camera pan and tilt but with different framing and angles"
+    ],
+    "absent_in_b": [
+      "brushed metal texture on the grey strip"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 2.1,
+        "a_observable": "The camera has a moderate tilt, showing the yellow card at the bottom.",
+        "b_observable": "The camera is tilted much more steeply, showing the yellow card at the top-left.",
+        "fix": "Match the camera rotation, position, and focal length to Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.1,
+        "a_observable": "The shadows between the cards are deep and well-defined, creating high contrast.",
+        "b_observable": "The shadows are washed out and bright, resulting in lower contrast.",
+        "fix": "Adjust the shadow bias and ambient occlusion settings to deepen the shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "material",
+        "t": 2.3,
+        "a_observable": "The grey strip on the right has a brushed metal texture.",
+        "b_observable": "The grey strip is smooth and lacks texture.",
+        "fix": "Add a brushed metal texture map to the grey strip material.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 2.5,
+        "a_observable": "The cards are closely spaced with small gaps.",
+        "b_observable": "The cards are more widely spaced with larger gaps.",
+        "fix": "Adjust the spacing and layout of the cards to match Video A.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Match the camera rotation, position, and focal length to Video A."
+  }
+}

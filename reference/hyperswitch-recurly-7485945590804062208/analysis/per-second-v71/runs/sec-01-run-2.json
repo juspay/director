@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera tilt"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera tilt"
+    ],
+    "absent_in_b": [
+      "Revenue Analytics"
+    ],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 1,
+        "a_observable": "The card directly below 'Secure Payments' is yellow, and the card to the right is white.",
+        "b_observable": "The cards below and to the right of 'Secure Payments' are gray with horizontal lines.",
+        "fix": "Rearrange the grid layout of the cards to match the reference video, ensuring the yellow card is positioned below 'Secure Payments'.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 1.5,
+        "a_observable": "The background cards, such as 'Renewal Success', are softly blurred due to a shallow depth of field.",
+        "b_observable": "The background cards are completely sharp and in focus.",
+        "fix": "Enable depth of field on the camera and adjust the focus distance to keep only the foreground card sharp.",
+        "severity": 2,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1,
+        "a_observable": "There is a distinct vignette with darker corners and a brighter center.",
+        "b_observable": "The lighting is uniform across the entire frame with no corner falloff.",
+        "fix": "Add a vignette effect or adjust the light source to create a natural falloff towards the edges of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 1.2,
+        "a_observable": "The blue shield icon and other colored elements have high color saturation.",
+        "b_observable": "The colored elements appear more muted and less saturated.",
+        "fix": "Increase the saturation of the materials, especially the blues and yellows, to match the vibrant look of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Rearrange the grid layout of the cards to match the reference video, ensuring the yellow card is positioned below 'Secure Payments' and the correct cards are adjacent."
+  }
+}
