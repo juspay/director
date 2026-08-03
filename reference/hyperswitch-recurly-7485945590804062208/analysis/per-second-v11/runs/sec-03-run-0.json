@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan",
+      "subtle zoom out"
+    ],
+    "b_motion": [
+      "slow camera pan",
+      "subtle zoom out"
+    ],
+    "absent_in_b": [
+      "metallic texture on right side",
+      "yellow element at top left"
+    ],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 3.5,
+        "a_observable": "Deep, high-contrast shadows are cast by the cards onto the floor.",
+        "b_observable": "Shadows are extremely soft and faint, showing low contrast.",
+        "fix": "Increase light intensity and shadow hardness.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 3.2,
+        "a_observable": "A textured grey metallic strip is visible on the right side.",
+        "b_observable": "The right side shows only plain white tiles.",
+        "fix": "Add the textured metallic strip on the right.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 3.8,
+        "a_observable": "Corners are significantly darker than the center due to a vignette.",
+        "b_observable": "Brightness is uniform across the entire frame.",
+        "fix": "Apply a vignette effect.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Recreate the directional lighting and high-contrast shadows to match the depth of the reference."
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "The camera slowly drifts back, maintaining a wide view of the grid of tiles."
+    ],
+    "b_motion": [
+      "The camera slowly drifts back, maintaining a slightly tighter view of the grid of tiles."
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 14,
+        "a_observable": "Deep shadows are visible in the crevices between the tiles, defining their edges.",
+        "b_observable": "The crevices between the tiles are brightly lit and lack shadow definition.",
+        "fix": "Add ambient occlusion or contact shadows between the tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 14.2,
+        "a_observable": "The corners of the frame show a distinct dark vignette falloff.",
+        "b_observable": "The corners of the frame are bright and lack vignette falloff.",
+        "fix": "Add a vignette effect in post-processing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 14,
+        "a_observable": "The camera is positioned further back, showing more of the surrounding tiles.",
+        "b_observable": "The camera is positioned closer, resulting in a tighter crop on the central tiles.",
+        "fix": "Pull the camera back to match the reference framing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 14.4,
+        "a_observable": "The yellow Recurly button has a warm, golden-yellow hue.",
+        "b_observable": "The yellow Recurly button has a cooler, slightly greenish-yellow hue.",
+        "fix": "Adjust the yellow material color to be warmer.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Add ambient occlusion and contact shadows between the tiles to restore depth and prevent the grid from looking flat."
+  }
+}

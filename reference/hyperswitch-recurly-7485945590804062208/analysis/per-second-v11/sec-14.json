@@ -1,0 +1,253 @@
+{
+  "sec": 14,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "static"
+      ],
+      "b_motion": [
+        "static"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 14.25,
+          "a_observable": "The frame corners are significantly darker than the center, showing a strong vignette.",
+          "b_observable": "The frame corners are nearly as bright as the center, lacking a vignette.",
+          "fix": "Add a vignette pass in post-processing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 14.25,
+          "a_observable": "The shadows between the blocks are deep black.",
+          "b_observable": "The shadows between the blocks are light grey and lack depth.",
+          "fix": "Deepen the black levels in the color grading.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Add a vignette and deepen the shadow black levels to match the high-contrast lighting of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera zooms out"
+      ],
+      "b_motion": [
+        "camera zooms out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 14.2,
+          "a_observable": "Pronounced vignette with darker corners and soft shadow falloff on the background tiles.",
+          "b_observable": "Flat, uniform illumination across the frame with minimal corner shading.",
+          "fix": "Apply a vignette effect and soften the shadow rendering.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 14.2,
+          "a_observable": "Highly saturated yellow and blue colors on the brand cards.",
+          "b_observable": "Noticeably desaturated and washed-out colors on the cards.",
+          "fix": "Boost color saturation and match the color profile of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 14.2,
+          "a_observable": "Wider field of view showing more surrounding tile layout.",
+          "b_observable": "Narrower field of view resulting in a tighter crop on the central elements.",
+          "fix": "Adjust the camera focal length to match the reference framing.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the lighting setup to introduce a vignette and softer shadow falloff to match the reference depth.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "The camera slowly drifts back, maintaining a wide view of the grid of tiles."
+      ],
+      "b_motion": [
+        "The camera slowly drifts back, maintaining a slightly tighter view of the grid of tiles."
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 14,
+          "a_observable": "Deep shadows are visible in the crevices between the tiles, defining their edges.",
+          "b_observable": "The crevices between the tiles are brightly lit and lack shadow definition.",
+          "fix": "Add ambient occlusion or contact shadows between the tiles.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 14.2,
+          "a_observable": "The corners of the frame show a distinct dark vignette falloff.",
+          "b_observable": "The corners of the frame are bright and lack vignette falloff.",
+          "fix": "Add a vignette effect in post-processing.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 14,
+          "a_observable": "The camera is positioned further back, showing more of the surrounding tiles.",
+          "b_observable": "The camera is positioned closer, resulting in a tighter crop on the central tiles.",
+          "fix": "Pull the camera back to match the reference framing.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 14.4,
+          "a_observable": "The yellow Recurly button has a warm, golden-yellow hue.",
+          "b_observable": "The yellow Recurly button has a cooler, slightly greenish-yellow hue.",
+          "fix": "Adjust the yellow material color to be warmer.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Add ambient occlusion and contact shadows between the tiles to restore depth and prevent the grid from looking flat.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 14.2,
+        "a_observable": "Pronounced vignette with darker corners and soft shadow falloff on the background tiles.",
+        "b_observable": "Flat, uniform illumination across the frame with minimal corner shading.",
+        "fix": "Apply a vignette effect and soften the shadow rendering.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 208.82,
+            "center_mean": 192.76,
+            "falloff_pct": -8.33
+          },
+          "B": {
+            "corner_mean": 150.43,
+            "center_mean": 155.68,
+            "falloff_pct": 3.37
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 14.25,
+        "a_observable": "The shadows between the blocks are deep black.",
+        "b_observable": "The shadows between the blocks are light grey and lack depth.",
+        "fix": "Deepen the black levels in the color grading.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 3.4,
+            "p1": 85.8,
+            "p5": 91.37,
+            "p50": 208.97,
+            "p95": 231.47,
+            "p99": 236.19,
+            "p999": 251.92,
+            "span_p5_p95": 140.1
+          },
+          "B": {
+            "p01": 72.97,
+            "p1": 74.68,
+            "p5": 80.1,
+            "p50": 168.62,
+            "p95": 182.4,
+            "p99": 188.61,
+            "p999": 239.8,
+            "span_p5_p95": 102.3
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "camera",
+        "t": 14.2,
+        "a_observable": "Wider field of view showing more surrounding tile layout.",
+        "b_observable": "Narrower field of view resulting in a tighter crop on the central elements.",
+        "fix": "Adjust the camera focal length to match the reference framing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 2,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "refuted",
+          "certainty": 0.95,
+          "note": "The claim is reversed. Clip B shows the 3D tile layout with surrounding tiles visible, whereas Clip A has a flat, blurry background and does not show the surrounding tile layout."
+        }
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Apply a vignette effect, deepen the shadow black levels between the tiles to restore depth, and adjust the camera focal length to match the wider reference framing.",
+    "dropped_unsupported": 2
+  }
+}

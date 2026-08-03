@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zooms out"
+    ],
+    "b_motion": [
+      "camera zooms out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 14.2,
+        "a_observable": "Pronounced vignette with darker corners and soft shadow falloff on the background tiles.",
+        "b_observable": "Flat, uniform illumination across the frame with minimal corner shading.",
+        "fix": "Apply a vignette effect and soften the shadow rendering.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 14.2,
+        "a_observable": "Highly saturated yellow and blue colors on the brand cards.",
+        "b_observable": "Noticeably desaturated and washed-out colors on the cards.",
+        "fix": "Boost color saturation and match the color profile of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 14.2,
+        "a_observable": "Wider field of view showing more surrounding tile layout.",
+        "b_observable": "Narrower field of view resulting in a tighter crop on the central elements.",
+        "fix": "Adjust the camera focal length to match the reference framing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the lighting setup to introduce a vignette and softer shadow falloff to match the reference depth."
+  }
+}

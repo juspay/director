@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 0,
+    "idx": 0,
+    "t": 0.1,
+    "category": "camera",
+    "a_observable": "Tighter camera framing on the central card.",
+    "b_observable": "Wider camera framing showing more background.",
+    "frames": {
+      "A": "analysis/per-second-v11/eyewitness/sec-00-c0-A.png",
+      "B": "analysis/per-second-v11/eyewitness/sec-00-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "Clip A shows a much tighter framing on the 'Secure Payments' card, while Clip B has a wider camera angle that reveals more of the surrounding cards and background."
+    }
+  }
+]

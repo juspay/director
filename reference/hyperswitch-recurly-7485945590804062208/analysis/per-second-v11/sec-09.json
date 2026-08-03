@@ -1,0 +1,224 @@
+{
+  "sec": 9,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 9,
+          "a_observable": "The camera is positioned at a low angle close to the keys, creating a dramatic perspective with shallow depth of field.",
+          "b_observable": "The camera is positioned high above the keys, looking down at a flat angle with a wide field of view.",
+          "fix": "Lower the camera height and adjust the focal length to match the low-angle perspective.",
+          "severity": 4,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 9.5,
+          "a_observable": "The crevices between the keys are dark with deep shadows, creating strong contrast and depth.",
+          "b_observable": "The crevices are brightly lit with very soft, faint shadows, making the layout look flat.",
+          "fix": "Increase the shadow depth and ambient occlusion in the gaps between the keys.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 9.8,
+          "a_observable": "The yellow key has a warm, saturated golden hue.",
+          "b_observable": "The yellow key has a cooler, less saturated lemon-yellow hue.",
+          "fix": "Adjust the color of the yellow key material to be warmer and more saturated.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Reposition the camera lower to the surface and adjust the focal length to match the dramatic perspective and depth of field of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 9.2,
+          "a_observable": "The camera is positioned closer to the grid, making the cards appear larger with a distinct perspective angle.",
+          "b_observable": "The camera is positioned further away, resulting in smaller cards and a flatter perspective.",
+          "fix": "Move the camera closer and adjust the focal length to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 9.5,
+          "a_observable": "Deep, defined contact shadows are visible beneath the cards, creating depth.",
+          "b_observable": "Shadows are extremely faint and diffuse, making the scene look flat.",
+          "fix": "Increase contact shadow intensity and ambient occlusion.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust camera distance and focal length to match the reference framing, and deepen the contact shadows to restore depth.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 9.5,
+          "a_observable": "The camera is positioned closer to the grid with a wider field of view, creating a dynamic perspective.",
+          "b_observable": "The camera is further away with a narrower field of view, resulting in a flatter perspective.",
+          "fix": "Adjust the camera focal length and distance to match the dynamic perspective of Video A.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 9,
+          "a_observable": "The lighting has a warm color temperature with a strong vignette darkening the corners.",
+          "b_observable": "The lighting is neutral white and uniform across the frame, lacking any vignette.",
+          "fix": "Add a warm color grade and a vignette effect to match the lighting of Video A.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "material",
+          "t": 9.8,
+          "a_observable": "The yellow card has a subtle matte texture that catches the light softly.",
+          "b_observable": "The yellow card is a flat, solid color with no texture or specular response.",
+          "fix": "Apply a subtle noise map to the roughness channel of the yellow card material.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera focal length and position to match the dynamic perspective, and add a warm vignette to the lighting.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 9.2,
+        "a_observable": "The camera is positioned closer to the grid, making the cards appear larger with a distinct perspective angle.",
+        "b_observable": "The camera is positioned further away, resulting in smaller cards and a flatter perspective.",
+        "fix": "Move the camera closer and adjust the focal length to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 3,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "The comparison is accurate. Clip A shows a close-up view of the grid with larger cards and a more pronounced perspective angle, while Clip B shows a wider shot with smaller cards and a flatter perspective."
+        },
+        "channelA": {
+          "verdict": "refuted",
+          "note": "Lockup parity family."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "Deep, defined contact shadows are visible beneath the cards, creating depth.",
+        "b_observable": "Shadows are extremely faint and diffuse, making the scene look flat.",
+        "fix": "Increase contact shadow intensity and ambient occlusion.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 62.41,
+            "p1": 94.19,
+            "p5": 107.96,
+            "p50": 202.15,
+            "p95": 246.35,
+            "p99": 249.79,
+            "p999": 253,
+            "span_p5_p95": 138.39
+          },
+          "B": {
+            "p01": 62.37,
+            "p1": 63.51,
+            "p5": 69.88,
+            "p50": 172.2,
+            "p95": 191.05,
+            "p99": 197.32,
+            "p999": 245.86,
+            "span_p5_p95": 121.17
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust camera distance and focal length to match the reference framing, and deepen the contact shadows to restore depth.",
+    "dropped_unsupported": 3
+  }
+}

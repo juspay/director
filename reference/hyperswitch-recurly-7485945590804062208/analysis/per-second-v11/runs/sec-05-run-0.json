@@ -1,0 +1,53 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zooms out and rotates around the yellow tile"
+    ],
+    "b_motion": [
+      "camera zooms out and pans upward"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 5.2,
+        "a_observable": "The yellow Recurly tile is a raised button with a soft drop shadow on a white surface.",
+        "b_observable": "The yellow Recurly tile is recessed inside a dark grey cutout/well.",
+        "fix": "Model the yellow tile as a raised element with a drop shadow instead of placing it in a recessed well.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 5.5,
+        "a_observable": "The background elements are heavily blurred due to shallow depth of field.",
+        "b_observable": "The background elements remain sharp and in focus.",
+        "fix": "Enable depth of field on the camera with a wide aperture focused on the Recurly tile.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.8,
+        "a_observable": "The corners of the frame are significantly darker than the center, showing a strong vignette.",
+        "b_observable": "The lighting is flat and uniform across the entire frame.",
+        "fix": "Add a vignette effect or adjust the light falloff to darken the corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Recreate the raised tile design with proper drop shadows and enable camera depth of field to match the reference."
+  }
+}

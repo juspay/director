@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 9,
+        "a_observable": "The camera is positioned at a low angle close to the keys, creating a dramatic perspective with shallow depth of field.",
+        "b_observable": "The camera is positioned high above the keys, looking down at a flat angle with a wide field of view.",
+        "fix": "Lower the camera height and adjust the focal length to match the low-angle perspective.",
+        "severity": 4,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "The crevices between the keys are dark with deep shadows, creating strong contrast and depth.",
+        "b_observable": "The crevices are brightly lit with very soft, faint shadows, making the layout look flat.",
+        "fix": "Increase the shadow depth and ambient occlusion in the gaps between the keys.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 9.8,
+        "a_observable": "The yellow key has a warm, saturated golden hue.",
+        "b_observable": "The yellow key has a cooler, less saturated lemon-yellow hue.",
+        "fix": "Adjust the color of the yellow key material to be warmer and more saturated.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Reposition the camera lower to the surface and adjust the focal length to match the dramatic perspective and depth of field of the reference video."
+  }
+}

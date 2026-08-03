@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      4.9
+    ],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 4.5,
+        "a_observable": "The 'Subscriptions' card at the top of the frame is heavily blurred due to shallow depth of field.",
+        "b_observable": "The 'Subscriptions' card at the top of the frame is in sharp focus.",
+        "fix": "Enable camera depth of field and adjust the focus distance to keep only the middle card sharp.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 4.3,
+        "a_observable": "The corners of the frame show a distinct dark vignette.",
+        "b_observable": "The corners of the frame are evenly lit with no vignette.",
+        "fix": "Apply a vignette effect to darken the corners of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 4.95,
+        "a_observable": "The shadow underneath the yellow Recurly card is deep and dark, creating strong contrast.",
+        "b_observable": "The shadow underneath the yellow Recurly card is very light and faint.",
+        "fix": "Increase the shadow intensity or ambient occlusion under the yellow card to improve contrast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 4.95,
+        "a_observable": "The yellow Recurly card has a warm, saturated golden hue.",
+        "b_observable": "The yellow Recurly card has a cooler, less saturated greenish-yellow hue.",
+        "fix": "Adjust the material color of the Recurly card to be warmer and more saturated.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Enable camera depth of field with a wider aperture to match the professional focus falloff on the cards."
+  }
+}

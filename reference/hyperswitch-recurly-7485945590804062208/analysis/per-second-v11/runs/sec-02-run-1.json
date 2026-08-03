@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.208
+    ],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 2.1,
+        "a_observable": "The camera is closer to the 'Secure Payments' card, showing a yellow key at the bottom.",
+        "b_observable": "The camera is further away with a flatter perspective, and the yellow key is not visible.",
+        "fix": "Adjust camera focal length and position to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "staging",
+        "t": 2.4,
+        "a_observable": "The key to the left of the stacked cards has a grey dotted pattern.",
+        "b_observable": "The key to the left is solid white without any pattern.",
+        "fix": "Add the dotted texture to the left key element.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.5,
+        "a_observable": "A distinct vignette is present, with darker corners compared to the center.",
+        "b_observable": "The corners are almost as bright as the center, showing flat lighting.",
+        "fix": "Apply a vignette to darken the corners of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and focal length to correct the framing and perspective across the sequence."
+  }
+}

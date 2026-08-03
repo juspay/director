@@ -1,0 +1,250 @@
+{
+  "sec": 5,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera zooms out and rotates around the yellow tile"
+      ],
+      "b_motion": [
+        "camera zooms out and pans upward"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "staging",
+          "t": 5.2,
+          "a_observable": "The yellow Recurly tile is a raised button with a soft drop shadow on a white surface.",
+          "b_observable": "The yellow Recurly tile is recessed inside a dark grey cutout/well.",
+          "fix": "Model the yellow tile as a raised element with a drop shadow instead of placing it in a recessed well.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 5.5,
+          "a_observable": "The background elements are heavily blurred due to shallow depth of field.",
+          "b_observable": "The background elements remain sharp and in focus.",
+          "fix": "Enable depth of field on the camera with a wide aperture focused on the Recurly tile.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 5.8,
+          "a_observable": "The corners of the frame are significantly darker than the center, showing a strong vignette.",
+          "b_observable": "The lighting is flat and uniform across the entire frame.",
+          "fix": "Add a vignette effect or adjust the light falloff to darken the corners.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Recreate the raised tile design with proper drop shadows and enable camera depth of field to match the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "zoom"
+      ],
+      "b_motion": [
+        "translation",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 5.5,
+          "a_observable": "Corners of the frame are darker than the center, showing a clear vignette.",
+          "b_observable": "Corners of the frame are bright, lacking a distinct vignette.",
+          "fix": "Add a vignette effect to darken the corners.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 5.5,
+          "a_observable": "The drop shadow around the yellow Recurly card is soft and diffuse.",
+          "b_observable": "The drop shadow around the yellow Recurly card is dark and sharp.",
+          "fix": "Soften and lighten the drop shadow of the yellow card.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 5.5,
+          "a_observable": "The camera is positioned closer to the cards, making the yellow Recurly card larger.",
+          "b_observable": "The camera is positioned further away, making the yellow Recurly card smaller.",
+          "fix": "Adjust camera distance to match reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera distance and framing to match the reference composition, and soften the harsh shadows on the yellow card.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 5.2,
+          "a_observable": "The camera is positioned very close to the yellow button at a low angle, creating a dynamic perspective with strong depth of field blurring the background.",
+          "b_observable": "The camera is positioned further away at a higher angle, resulting in a flatter perspective with less background blur.",
+          "fix": "Bring the camera closer to the yellow button, lower its height, and increase the depth of field aperture to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "color",
+          "t": 5.5,
+          "a_observable": "The yellow button has a warm golden-yellow hue with rich, saturated tones.",
+          "b_observable": "The yellow button has a cooler, less saturated lemon-yellow hue.",
+          "fix": "Adjust the diffuse color of the yellow button to a warmer, more saturated golden-yellow.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "material",
+          "t": 5.8,
+          "a_observable": "The yellow button exhibits soft specular highlights along its rounded edges, suggesting a semi-matte plastic material.",
+          "b_observable": "The yellow button appears completely flat with no specular highlights, suggesting a diffuse-only material.",
+          "fix": "Add a glossy specular component to the yellow button's material shader to catch the light on its edges.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_brighter_highlights"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position, angle, and focal length to match the close-up, low-angle perspective of the reference video.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 5.5,
+        "a_observable": "Corners of the frame are darker than the center, showing a clear vignette.",
+        "b_observable": "Corners of the frame are bright, lacking a distinct vignette.",
+        "fix": "Add a vignette effect to darken the corners.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 195.6,
+            "center_mean": 168.41,
+            "falloff_pct": -16.14
+          },
+          "B": {
+            "corner_mean": 190.7,
+            "center_mean": 171.79,
+            "falloff_pct": -11
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "camera",
+        "t": 5.5,
+        "a_observable": "The camera is positioned closer to the cards, making the yellow Recurly card larger.",
+        "b_observable": "The camera is positioned further away, making the yellow Recurly card smaller.",
+        "fix": "Adjust camera distance to match reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "The comparison of the two clips shows that in Clip A, the yellow Recurly card is indeed larger and the camera is closer, whereas in Clip B, the camera is further away and the card is smaller."
+        },
+        "channelA": {
+          "verdict": "refuted",
+          "note": "Size parity again (B's Recurly measures LARGER, ~74% vs ~69% frame width). The perceptual driver the model keeps reading as 'closer' is that A's card BOWS — dramatic dome with a sweeping specular bloom — giving it presence our subtle dome lacks at this angle."
+        }
+      },
+      {
+        "category": "camera",
+        "t": 5.5,
+        "a_observable": "The background elements are heavily blurred due to shallow depth of field.",
+        "b_observable": "The background elements remain sharp and in focus.",
+        "fix": "Enable depth of field on the camera with a wide aperture focused on the Recurly tile.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "B_sharper",
+          "A": {
+            "lap_var": 18.21
+          },
+          "B": {
+            "lap_var": 6.92
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera position and depth of field to match the close-up perspective, and add a vignette effect to darken the corners.",
+    "dropped_unsupported": 4
+  }
+}

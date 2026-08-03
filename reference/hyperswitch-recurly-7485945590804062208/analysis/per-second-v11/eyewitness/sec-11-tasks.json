@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 11,
+    "idx": 1,
+    "t": 11,
+    "category": "camera",
+    "a_observable": "The camera is positioned close to the tiles, creating a tight composition where the yellow and blue buttons dominate the frame.",
+    "b_observable": "The camera is further away, showing a wider view with smaller buttons and more surrounding empty tiles.",
+    "frames": {
+      "A": "analysis/per-second-v11/eyewitness/sec-11-c1-A.png",
+      "B": "analysis/per-second-v11/eyewitness/sec-11-c1-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "The comparison is accurate. Clip A shows a close-up view where the yellow and blue buttons occupy most of the frame, while Clip B shows a wider shot with smaller buttons and more surrounding tiles visible."
+    }
+  }
+]

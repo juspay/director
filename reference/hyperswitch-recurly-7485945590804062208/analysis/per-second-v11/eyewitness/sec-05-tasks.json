@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 5,
+    "idx": 1,
+    "t": 5.5,
+    "category": "camera",
+    "a_observable": "The camera is positioned closer to the cards, making the yellow Recurly card larger.",
+    "b_observable": "The camera is positioned further away, making the yellow Recurly card smaller.",
+    "frames": {
+      "A": "analysis/per-second-v11/eyewitness/sec-05-c1-A.png",
+      "B": "analysis/per-second-v11/eyewitness/sec-05-c1-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "The comparison of the two clips shows that in Clip A, the yellow Recurly card is indeed larger and the camera is closer, whereas in Clip B, the camera is further away and the card is smaller."
+    }
+  }
+]

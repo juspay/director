@@ -1,0 +1,43 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pans and zooms out slowly from the Secure Payments tile"
+    ],
+    "b_motion": [
+      "camera pans and zooms out slowly from the Secure Payments tile"
+    ],
+    "absent_in_b": [
+      "yellow tile below the Secure Payments tile"
+    ],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 1,
+        "a_observable": "A yellow tile is positioned directly below the 'Secure Payments' tile.",
+        "b_observable": "A white tile with horizontal lines is positioned directly below the 'Secure Payments' tile.",
+        "fix": "Reorganize the tile grid layout so that the yellow tile is positioned directly below the Secure Payments tile.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 1,
+        "a_observable": "The white tiles have a warm, cream-colored cast under soft lighting.",
+        "b_observable": "The white tiles are neutral grey/white with a cooler color temperature.",
+        "fix": "Adjust the lighting and white balance to introduce a warmer color temperature to the scene.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Reorganize the tile grid layout so that the yellow tile is positioned directly below the Secure Payments tile, and adjust the camera angle to match the reference perspective."
+  }
+}

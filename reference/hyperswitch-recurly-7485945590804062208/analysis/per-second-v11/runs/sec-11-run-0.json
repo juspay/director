@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 11.2,
+        "a_observable": "Strong corner vignette and soft shadow falloff across the white tiles, creating depth.",
+        "b_observable": "Flat, uniform white lighting across the entire grid with minimal corner shading.",
+        "fix": "Adjust lighting setup and add a vignette to match the reference's depth.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 11.8,
+        "a_observable": "The yellow and blue cards have high color saturation and rich tones.",
+        "b_observable": "The yellow and blue cards appear desaturated and washed out under the bright flat lighting.",
+        "fix": "Increase saturation and adjust color grading to match the vibrant tones of Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 11.5,
+        "a_observable": "The camera is closer to the cards, creating a more dynamic perspective with larger elements.",
+        "b_observable": "The camera is pulled further back, resulting in a flatter perspective and smaller card elements.",
+        "fix": "Adjust camera focal length and position to match the reference framing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the lighting setup to introduce a stronger vignette and deeper shadows, matching the high-contrast look of the reference."
+  }
+}

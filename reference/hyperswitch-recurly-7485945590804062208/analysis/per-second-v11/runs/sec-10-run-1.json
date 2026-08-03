@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 10.5,
+        "a_observable": "Camera is closer to the grid, framing the main cards larger.",
+        "b_observable": "Camera is further back, showing a wider view with smaller cards.",
+        "fix": "Adjust camera distance to match the tighter reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 10.5,
+        "a_observable": "White tiles exhibit a cool blue color cast.",
+        "b_observable": "White tiles are neutral grey.",
+        "fix": "Add a cool blue color grade to the neutral surfaces.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "Higher contrast with deeper shadows in crevices.",
+        "b_observable": "Flatter lighting with lighter shadows.",
+        "fix": "Increase contrast and deepen contact shadows.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera distance to match the tighter framing of the reference."
+  }
+}

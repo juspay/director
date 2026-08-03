@@ -1,0 +1,78 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation"
+    ],
+    "b_motion": [
+      "translation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 1,
+        "a_observable": "The 'Secure Payments' and 'Renewal Success' elements are cards resting on larger square keys.",
+        "b_observable": "The elements are standalone rounded rectangular keys with no base keys underneath.",
+        "fix": "Model the keys as cards resting on square base keys to match the reference staging.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "layout",
+        "t": 1,
+        "a_observable": "The yellow key is positioned at the bottom of the frame, and the blue key is on the left.",
+        "b_observable": "The yellow key is positioned at the top-right of the frame, and the blue key is on the bottom-left.",
+        "fix": "Re-arrange the key layout to match the reference grid positions.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "Strong vignette with darker corners and a soft spotlight effect on the central keys.",
+        "b_observable": "Flat, uniform lighting across the entire frame with no corner falloff.",
+        "fix": "Add a vignette and adjust the light source to create a spotlight effect with softer falloff.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 1.2,
+        "a_observable": "Deep shadows in the gaps between keys, creating high contrast.",
+        "b_observable": "Very bright grey gaps between keys, leading to low contrast and a washed-out appearance.",
+        "fix": "Increase the contrast and deepen the shadows in the gaps between keys.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "full"
+        }
+      },
+      {
+        "category": "material",
+        "t": 1.5,
+        "a_observable": "The keys have a matte, textured plastic finish with soft, diffused reflections.",
+        "b_observable": "The keys have a smooth, glossy finish with sharp reflections.",
+        "fix": "Adjust the roughness and specular settings of the key material to achieve a matte, textured look.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Re-arrange the key layout to match the reference grid positions and model the keys as cards resting on square base keys."
+  }
+}

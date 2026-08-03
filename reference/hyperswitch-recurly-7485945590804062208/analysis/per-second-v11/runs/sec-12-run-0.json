@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 12.1,
+        "a_observable": "Camera is positioned closer to the grid with a steeper top-down angle.",
+        "b_observable": "Camera is further away with a shallower angle, showing more of the surrounding grid.",
+        "fix": "Match camera distance and pitch angle to the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "material",
+        "t": 12.4,
+        "a_observable": "The button wells have a light brushed metal finish with soft specular highlights.",
+        "b_observable": "The button wells are dark grey with a flat matte finish.",
+        "fix": "Apply a light brushed metal material to the button wells.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.7,
+        "a_observable": "Shadows under the buttons are soft and diffused.",
+        "b_observable": "Shadows under the buttons are sharp and dark.",
+        "fix": "Soften the shadow edges by increasing light source size.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and distance to match the reference composition, and use a softer light source to diffuse the shadows."
+  }
+}

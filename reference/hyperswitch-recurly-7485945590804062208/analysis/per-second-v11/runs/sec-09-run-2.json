@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 9.5,
+        "a_observable": "The camera is positioned closer to the grid with a wider field of view, creating a dynamic perspective.",
+        "b_observable": "The camera is further away with a narrower field of view, resulting in a flatter perspective.",
+        "fix": "Adjust the camera focal length and distance to match the dynamic perspective of Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9,
+        "a_observable": "The lighting has a warm color temperature with a strong vignette darkening the corners.",
+        "b_observable": "The lighting is neutral white and uniform across the frame, lacking any vignette.",
+        "fix": "Add a warm color grade and a vignette effect to match the lighting of Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "material",
+        "t": 9.8,
+        "a_observable": "The yellow card has a subtle matte texture that catches the light softly.",
+        "b_observable": "The yellow card is a flat, solid color with no texture or specular response.",
+        "fix": "Apply a subtle noise map to the roughness channel of the yellow card material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera focal length and position to match the dynamic perspective, and add a warm vignette to the lighting."
+  }
+}

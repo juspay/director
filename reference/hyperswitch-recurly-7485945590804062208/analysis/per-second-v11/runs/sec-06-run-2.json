@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "camera pans and rotates continuously"
+    ],
+    "b_motion": [
+      "camera pans and rotates continuously"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 6.1,
+        "a_observable": "The yellow Recurly button is framed closely, appearing larger with a shallow depth of field.",
+        "b_observable": "The yellow Recurly button is framed wider, appearing smaller with sharper background elements.",
+        "fix": "Adjust camera position and focal length to match the close-up framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.3,
+        "a_observable": "Strong directional light creates deep shadows in the tile crevices and a luma gradient.",
+        "b_observable": "Flat, bright lighting results in weak shadows and a uniform look.",
+        "fix": "Adjust key light angle and shadow depth to enhance contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 6.8,
+        "a_observable": "The blue Juspay button is viewed from an oblique angle and rotated.",
+        "b_observable": "The blue Juspay button is viewed from a more top-down perspective with different rotation.",
+        "fix": "Match the camera angle and button rotation to the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust camera framing, focal length, and angle across both shots to match the reference's composition."
+  }
+}

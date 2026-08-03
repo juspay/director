@@ -1,0 +1,282 @@
+{
+  "sec": 13,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 13.5,
+          "a_observable": "The camera perspective is flatter with a more top-down angle, showing less of the card sides.",
+          "b_observable": "The camera perspective is more oblique with a shallower angle, showing more dramatic card side extrusion.",
+          "fix": "Match the camera's pitch angle and field of view to the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 13.5,
+          "a_observable": "The shadows in the crevices between the tiles are soft, light grey, and diffused.",
+          "b_observable": "The shadows between the tiles are extremely dark, sharp, and high-contrast.",
+          "fix": "Increase the ambient occlusion radius and soften the direct light shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 13.5,
+          "a_observable": "The blue 'hyperswitch' tile has a muted, royal blue hue with a soft gradient from the lighting.",
+          "b_observable": "The blue 'hyperswitch' tile has a highly saturated, flat blue color.",
+          "fix": "Desaturate the diffuse color of the blue tile material.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and focal length to match the flatter, more top-down perspective of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 13.1,
+          "a_observable": "Bright, even illumination across the entire frame with no corner falloff.",
+          "b_observable": "Heavy dark vignette with pronounced shadowing in the corners.",
+          "fix": "Reduce vignette strength and balance corner lighting to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "B_stronger"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 13.8,
+          "a_observable": "Blue button is flat and flush with the surrounding white tiles.",
+          "b_observable": "Blue button is a raised, rounded 3D keycap block protruding upwards.",
+          "fix": "Flatten the button geometry and set it flush into the tile grid.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 13.8,
+          "a_observable": "Blue button has a bright, slightly desaturated royal blue color.",
+          "b_observable": "Blue button has a dark, highly saturated cobalt blue color.",
+          "fix": "Desaturate and brighten the blue material shader.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_more_saturated"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 13.8,
+          "a_observable": "Camera looks almost straight down at the button with flat perspective.",
+          "b_observable": "Camera is at a low, oblique angle with strong perspective tilt.",
+          "fix": "Adjust camera pitch and height to achieve a flatter, top-down view.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and height to match the top-down perspective of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "staging",
+          "t": 13.5,
+          "a_observable": "The gaps between the white tiles are subtle, clean, and light gray, with soft shadows.",
+          "b_observable": "The gaps between the white tiles are dark, thick, and highly pronounced, creating harsh dark lines.",
+          "fix": "Adjust the gap spacing and shadow settings of the tiles to make the grid lines more subtle and clean.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 13.5,
+          "a_observable": "The white tiles and background exhibit bright, clean highlights with high contrast.",
+          "b_observable": "The white tiles and background are dimmer and grayer, lacking bright highlights.",
+          "fix": "Increase the intensity of the key light and adjust the contrast curve to match the bright highlights in the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "color",
+          "t": 13.5,
+          "a_observable": "The yellow Recurly card has a warm, vibrant golden-yellow hue.",
+          "b_observable": "The yellow Recurly card has a cooler, slightly desaturated greenish-yellow hue.",
+          "fix": "Adjust the material color of the yellow card to be warmer and more saturated.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Reduce the prominence of the grid line shadows between tiles and increase the overall lighting contrast to match the clean, high-key aesthetic of the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 13.5,
+        "a_observable": "The camera perspective is flatter with a more top-down angle, showing less of the card sides.",
+        "b_observable": "The camera perspective is more oblique with a shallower angle, showing more dramatic card side extrusion.",
+        "fix": "Match the camera's pitch angle and field of view to the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_sharper",
+          "A": {
+            "lap_var": 434.59
+          },
+          "B": {
+            "lap_var": 35.37
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 13.5,
+        "a_observable": "The shadows in the crevices between the tiles are soft, light grey, and diffused.",
+        "b_observable": "The shadows between the tiles are extremely dark, sharp, and high-contrast.",
+        "fix": "Increase the ambient occlusion radius and soften the direct light shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_deeper_shadows",
+          "A": {
+            "p01": 4.46,
+            "p1": 86.22,
+            "p5": 90.44,
+            "p50": 209.01,
+            "p95": 231.47,
+            "p99": 236.33,
+            "p999": 252.14,
+            "span_p5_p95": 141.03
+          },
+          "B": {
+            "p01": 73.68,
+            "p1": 74.83,
+            "p5": 80.1,
+            "p50": 169.05,
+            "p95": 182.69,
+            "p99": 189.32,
+            "p999": 239.74,
+            "span_p5_p95": 102.59
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "color",
+        "t": 13.5,
+        "a_observable": "The blue 'hyperswitch' tile has a muted, royal blue hue with a soft gradient from the lighting.",
+        "b_observable": "The blue 'hyperswitch' tile has a highly saturated, flat blue color.",
+        "fix": "Desaturate the diffuse color of the blue tile material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_more_saturated",
+          "A": {
+            "r": 194.53,
+            "g": 204.41,
+            "b": 200.72,
+            "rb_delta": -6.2,
+            "saturation": 0.1862
+          },
+          "B": {
+            "r": 139.64,
+            "g": 152.87,
+            "b": 189.5,
+            "rb_delta": -49.86,
+            "saturation": 0.3127
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera angle and focal length to match the flatter, more top-down perspective of the reference.",
+    "dropped_unsupported": 4
+  }
+}

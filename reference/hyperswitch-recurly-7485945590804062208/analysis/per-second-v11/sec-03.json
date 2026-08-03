@@ -1,0 +1,285 @@
+{
+  "sec": 3,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan",
+        "subtle zoom out"
+      ],
+      "b_motion": [
+        "slow camera pan",
+        "subtle zoom out"
+      ],
+      "absent_in_b": [
+        "metallic texture on right side",
+        "yellow element at top left"
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 3.5,
+          "a_observable": "Deep, high-contrast shadows are cast by the cards onto the floor.",
+          "b_observable": "Shadows are extremely soft and faint, showing low contrast.",
+          "fix": "Increase light intensity and shadow hardness.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 3.2,
+          "a_observable": "A textured grey metallic strip is visible on the right side.",
+          "b_observable": "The right side shows only plain white tiles.",
+          "fix": "Add the textured metallic strip on the right.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 3.8,
+          "a_observable": "Corners are significantly darker than the center due to a vignette.",
+          "b_observable": "Brightness is uniform across the entire frame.",
+          "fix": "Apply a vignette effect.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Recreate the directional lighting and high-contrast shadows to match the depth of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "diagonal camera pan tracking the three feature cards moving upwards and leftwards"
+      ],
+      "b_motion": [
+        "diagonal camera pan tracking the three feature cards moving upwards and leftwards"
+      ],
+      "absent_in_b": [
+        "brushed metal texture on the right side of the card block",
+        "yellow tile in the top-left background"
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "t": 3.2,
+          "a_observable": "A yellow tile is visible in the top-left corner of the frame.",
+          "b_observable": "Only plain white tiles are visible in the top-left corner.",
+          "fix": "Reposition background tiles to ensure the yellow tile enters the frame.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "material",
+          "t": 3.5,
+          "a_observable": "The vertical strip to the right of the cards has a brushed metal material with anisotropic reflections.",
+          "b_observable": "The vertical strip is a flat, matte grey material with no metallic texture.",
+          "fix": "Apply a brushed metal material with anisotropic reflections to the right side of the card container.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 3.8,
+          "a_observable": "Deep shadows are visible in the crevices between the tiles, creating strong contrast.",
+          "b_observable": "The crevices between the tiles have very faint, shallow shadows, resulting in a flat appearance.",
+          "fix": "Increase the shadow depth and ambient occlusion to enhance contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Apply the brushed metal texture to the right side of the card block and adjust the background tile layout to include the yellow tile.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera drift"
+      ],
+      "b_motion": [
+        "slow camera drift"
+      ],
+      "absent_in_b": [
+        "brushed metal texture"
+      ],
+      "differences": [
+        {
+          "category": "material",
+          "t": 3.5,
+          "a_observable": "A brushed metal texture is visible on the panel to the right of the buttons.",
+          "b_observable": "The panel to the right of the buttons has a flat, matte white finish.",
+          "fix": "Apply a brushed metal material to the right-side panel.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 3.5,
+          "a_observable": "The corners of the frame are significantly darker than the center, showing a strong vignette.",
+          "b_observable": "The corners of the frame are almost as bright as the center, with no visible vignette.",
+          "fix": "Add a vignette effect to darken the corners of the frame.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 3.5,
+          "a_observable": "The white panels have a distinct cool blue color cast.",
+          "b_observable": "The white panels are neutral white with no blue color cast.",
+          "fix": "Apply a cool blue color grade to the scene.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler",
+            "region": "full"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 3.5,
+          "a_observable": "The buttons are rotated at a diagonal angle relative to the frame.",
+          "b_observable": "The buttons are aligned vertically with very little diagonal rotation.",
+          "fix": "Rotate the camera or the button panel to match the diagonal layout of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Apply a brushed metal material to the right-side panel and add a cool blue color cast with a vignette to match the reference look.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "material",
+        "t": 3.5,
+        "a_observable": "The vertical strip to the right of the cards has a brushed metal material with anisotropic reflections.",
+        "b_observable": "The vertical strip is a flat, matte grey material with no metallic texture.",
+        "fix": "Apply a brushed metal material with anisotropic reflections to the right side of the card container.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 3,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "The claim accurately describes the visual differences between the vertical strip to the right of the cards in both clips. In Clip A, it has a distinct brushed metal texture with anisotropic reflections, whereas in Clip B, it is a flat, matte grey material with no metallic texture."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "Brushed strip family, third confirmation."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 3.5,
+        "a_observable": "The corners of the frame are significantly darker than the center, showing a strong vignette.",
+        "b_observable": "The corners of the frame are almost as bright as the center, with no visible vignette.",
+        "fix": "Add a vignette effect to darken the corners of the frame.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 202.31,
+            "center_mean": 199.95,
+            "falloff_pct": -1.18
+          },
+          "B": {
+            "corner_mean": 173.47,
+            "center_mean": 200.58,
+            "falloff_pct": 13.51
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 3.5,
+        "a_observable": "Deep, high-contrast shadows are cast by the cards onto the floor.",
+        "b_observable": "Shadows are extremely soft and faint, showing low contrast.",
+        "fix": "Increase light intensity and shadow hardness.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_higher_contrast",
+          "A": {
+            "p01": 61.56,
+            "p1": 75.51,
+            "p5": 122.88,
+            "p50": 204.54,
+            "p95": 246.64,
+            "p99": 249.22,
+            "p999": 252.08,
+            "span_p5_p95": 123.76
+          },
+          "B": {
+            "p01": 75.81,
+            "p1": 99.68,
+            "p5": 121.41,
+            "p50": 198.74,
+            "p95": 217.68,
+            "p99": 219.39,
+            "p999": 251.29,
+            "span_p5_p95": 96.27
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [
+      "brushed metal texture on the right side",
+      "yellow tile in the top-left background"
+    ],
+    "highest_impact_fix": "Apply a brushed metal material to the right-side panel and adjust lighting to restore high-contrast shadows and a vignette.",
+    "dropped_unsupported": 3
+  }
+}

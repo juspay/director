@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "zoom"
+    ],
+    "b_motion": [
+      "translation",
+      "zoom"
+    ],
+    "absent_in_b": [
+      "organic leaf shadows"
+    ],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "Moving organic leaf shadows are visible across the tiles.",
+        "b_observable": "The tiles have static, uniform lighting with no leaf shadows.",
+        "fix": "Add an animated leaf shadow map to the main light source.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 12.2,
+        "a_observable": "The yellow Recurly tile is a warm golden yellow.",
+        "b_observable": "The yellow Recurly tile is a cooler, less saturated yellow.",
+        "fix": "Adjust the yellow material color to be warmer and more saturated.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 12.8,
+        "a_observable": "The camera perspective is flatter with a stronger vignette in the corners.",
+        "b_observable": "The camera perspective is wider with brighter, less falloff-heavy corners.",
+        "fix": "Increase the camera focal length and add a corner vignette.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Add animated organic leaf shadows to the main light source to replicate the dynamic lighting of the reference."
+  }
+}

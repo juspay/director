@@ -1,0 +1,68 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera drift"
+    ],
+    "b_motion": [
+      "slow camera drift"
+    ],
+    "absent_in_b": [
+      "brushed metal texture"
+    ],
+    "differences": [
+      {
+        "category": "material",
+        "t": 3.5,
+        "a_observable": "A brushed metal texture is visible on the panel to the right of the buttons.",
+        "b_observable": "The panel to the right of the buttons has a flat, matte white finish.",
+        "fix": "Apply a brushed metal material to the right-side panel.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 3.5,
+        "a_observable": "The corners of the frame are significantly darker than the center, showing a strong vignette.",
+        "b_observable": "The corners of the frame are almost as bright as the center, with no visible vignette.",
+        "fix": "Add a vignette effect to darken the corners of the frame.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 3.5,
+        "a_observable": "The white panels have a distinct cool blue color cast.",
+        "b_observable": "The white panels are neutral white with no blue color cast.",
+        "fix": "Apply a cool blue color grade to the scene.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler",
+          "region": "full"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 3.5,
+        "a_observable": "The buttons are rotated at a diagonal angle relative to the frame.",
+        "b_observable": "The buttons are aligned vertically with very little diagonal rotation.",
+        "fix": "Rotate the camera or the button panel to match the diagonal layout of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Apply a brushed metal material to the right-side panel and add a cool blue color cast with a vignette to match the reference look."
+  }
+}

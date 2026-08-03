@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 7,
+    "idx": 0,
+    "t": 7.5,
+    "category": "camera",
+    "a_observable": "The camera is positioned directly above the blue card, showing it aligned horizontally with a flat perspective.",
+    "b_observable": "The camera is at an oblique angle, showing the blue card rotated diagonally with a strong perspective.",
+    "frames": {
+      "A": "analysis/per-second-v11/eyewitness/sec-07-c0-A.png",
+      "B": "analysis/per-second-v11/eyewitness/sec-07-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "The description of both clips is highly accurate. Clip A shows a top-down, flat perspective with the blue card aligned horizontally, while Clip B shows an oblique angle with the blue card rotated diagonally and a strong perspective effect."
+    }
+  }
+]

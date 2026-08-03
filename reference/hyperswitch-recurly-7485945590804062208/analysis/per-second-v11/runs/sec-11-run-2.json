@@ -1,0 +1,67 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 11,
+        "a_observable": "The camera is positioned close to the tiles, creating a tight composition where the yellow and blue buttons dominate the frame.",
+        "b_observable": "The camera is further away, showing a wider view with smaller buttons and more surrounding empty tiles.",
+        "fix": "Move the camera closer to the subject and adjust the field of view to match the tight framing of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.1,
+        "a_observable": "The corners of the image are noticeably darker than the center due to a strong vignette.",
+        "b_observable": "The lighting is flat and even across the frame, with no corner darkening.",
+        "fix": "Add a vignette effect to darken the outer edges of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 11.2,
+        "a_observable": "The overall image has a warm, yellowish color cast, especially visible on the white tiles.",
+        "b_observable": "The image has a neutral to cool blue-grey color cast.",
+        "fix": "Adjust the color temperature of the lights or color grade the output to add a warm tint.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 11.3,
+        "a_observable": "The background tiles in the upper-right corner are heavily blurred by a shallow depth of field.",
+        "b_observable": "The background tiles in the upper-right corner are sharp and clearly defined.",
+        "fix": "Enable depth of field in the camera settings and set a wider aperture to blur the background.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position, focal length, and depth of field to match the close-up, blurred-background composition of the reference video."
+  }
+}

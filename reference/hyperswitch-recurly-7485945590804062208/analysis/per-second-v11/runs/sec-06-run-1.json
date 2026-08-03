@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 6.2,
+        "a_observable": "Close-up perspective of the yellow Recurly tile with shallow depth of field.",
+        "b_observable": "Wider camera angle showing more of the surrounding tiles with deeper focus.",
+        "fix": "Adjust camera position and focal length to match the close-up framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 6.8,
+        "a_observable": "The blue Juspay tile is oriented nearly flat to the camera with minimal rotation.",
+        "b_observable": "The blue tile is highly rotated and viewed at a steep oblique angle.",
+        "fix": "Re-align the tile rotation and camera angle to match the flat staging.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 6.3,
+        "a_observable": "The background tiles exhibit a warm, cream-colored cast.",
+        "b_observable": "The background tiles are neutral white and gray, appearing cooler.",
+        "fix": "Apply a warm color grade to match the reference color temperature.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Align the camera angles and perspective across both scenes to correct the framing and staging of the tiles."
+  }
+}

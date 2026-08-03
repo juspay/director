@@ -1,0 +1,40 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "static"
+    ],
+    "b_motion": [
+      "static"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 14.25,
+        "a_observable": "The frame corners are significantly darker than the center, showing a strong vignette.",
+        "b_observable": "The frame corners are nearly as bright as the center, lacking a vignette.",
+        "fix": "Add a vignette pass in post-processing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 14.25,
+        "a_observable": "The shadows between the blocks are deep black.",
+        "b_observable": "The shadows between the blocks are light grey and lack depth.",
+        "fix": "Deepen the black levels in the color grading.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Add a vignette and deepen the shadow black levels to match the high-contrast lighting of the reference video."
+  }
+}

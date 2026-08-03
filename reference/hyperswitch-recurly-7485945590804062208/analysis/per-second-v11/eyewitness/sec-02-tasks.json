@@ -1,0 +1,36 @@
+[
+  {
+    "sec": 2,
+    "idx": 1,
+    "t": 2.3,
+    "category": "staging",
+    "a_observable": "A solid yellow card is visible at the top-left and a solid blue card at the bottom-left of the frame.",
+    "b_observable": "The background on the left consists of plain white cards, with the yellow and blue cards missing.",
+    "frames": {
+      "A": "analysis/per-second-v11/eyewitness/sec-02-c1-A.png",
+      "B": "analysis/per-second-v11/eyewitness/sec-02-c1-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "The claim accurately describes the differences between Clip A and Clip B. In Clip A, during the second shot (from 01:250 onwards), a solid yellow card is visible at the top-left and a solid blue card is visible at the bottom-left. In Clip B, these are replaced by plain white cards."
+    }
+  },
+  {
+    "sec": 2,
+    "idx": 2,
+    "t": 2.4,
+    "category": "camera",
+    "a_observable": "The camera has a wider field of view with more pronounced perspective distortion on the cards.",
+    "b_observable": "The camera has a narrower field of view, making the perspective look flatter and more orthographic.",
+    "frames": {
+      "A": "analysis/per-second-v11/eyewitness/sec-02-c2-A.png",
+      "B": "analysis/per-second-v11/eyewitness/sec-02-c2-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.95,
+      "note": "Clip A shows a wider field of view with more pronounced perspective distortion (lines of the cards converge more sharply), whereas Clip B uses a longer focal length (narrower field of view) which flattens the perspective, making the cards look more orthographic."
+    }
+  }
+]
