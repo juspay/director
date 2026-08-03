@@ -249,7 +249,7 @@ export const SetDressing: React.FC<{
               metalness={metalish ? 0.35 : 0.0}
               clearcoat={isBrand ? 0.7 : 0.28}
               clearcoatRoughness={0.42}
-              emissive="#ffe6bc"
+              emissive="#ffd090"
               emissiveIntensity={whiten}
             />
           </Slab>
@@ -343,7 +343,7 @@ export const Well: React.FC<{
           metalness={dark ? 0.16 : 0.18}
           clearcoat={0}
           anisotropy={0.45}
-          emissive="#ffe6bc"
+          emissive="#ffd090"
           emissiveIntensity={whiten * 0.5}
         />
       </Slab>
@@ -402,7 +402,7 @@ export const Peripherals: React.FC<{ whiten?: number; offset?: [number, number, 
             metalness={0}
             clearcoat={0.5}
             clearcoatRoughness={0.35}
-            emissive="#ffe6bc"
+            emissive="#ffd090"
             emissiveIntensity={whiten}
           />
         </Slab>

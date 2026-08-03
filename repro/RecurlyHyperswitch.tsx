@@ -313,7 +313,21 @@ const Effects: React.FC = () => {
   //   final lockup repro 138..240 vs target 174..211  -> reduce contrast
   const satBoost = interpolate(frame, [250, 300], [SAT_MACRO, SAT_LOCKUP], ease);
   const contrast = interpolate(frame, [250, 300], [CONTRAST_MACRO, CONTRAST_LOCKUP], ease);
-  const brightness = interpolate(frame, [250, 300], [BRIGHT_MACRO, BRIGHT_LOCKUP], ease);
+  /**
+   * Shot 4 runs a stop hotter than the rest.
+   *
+   * It is the one beat that measures uniformly dark, and it is dark everywhere
+   * rather than only under the hero — at t=7.6 the reference's CORNERS sit at
+   * 207.9 against our 170.0, and its centre at 110.9 against our 87.9. Both
+   * accepted lighting findings in the pass-14 run point here ("corners nearly
+   * as bright as the centre", "uniform illumination with no vignette"), and
+   * both are really describing a frame that is 35 luma low overall, not a
+   * vignette problem. Shots 1-3 measure correctly (f45 p5 101 against 97), so
+   * this is a per-shot correction rather than a global one.
+   */
+  const brightness =
+    interpolate(frame, [250, 300], [BRIGHT_MACRO, BRIGHT_LOCKUP], ease) +
+    (shotIndex(frame) === 3 ? 0.07 : 0);
   return (
     <EffectComposer enableNormalPass={false} multisampling={8}>
       {/* N8AO REMOVED — it was inert, and this chain can only carry ONE
