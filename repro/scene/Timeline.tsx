@@ -366,9 +366,24 @@ const CAP_Y = TILE_TOP + 0.125 / 2 - 0.008;
  */
 const FLOAT_Y = TILE_TOP + 0.125 / 2 + 0.085;
 const BRAND_Y = WELL_FLOOR + 0.145 / 2;
+/**
+ * MACRO heroes stand PROUD of their socket; lockup plates sit flush in theirs.
+ *
+ * Measured off the A/B reel at t=5.5, where the reference's Recurly plate shows
+ * a thick gold side wall (~60px against a 510px card width, so ~0.19 units on a
+ * 1.60-unit plate) and floats a further ~0.22 above the socket floor with a deep
+ * shadow gap under it. Ours sat at BRAND_Y with its top face flush with the
+ * bezel — a thin plate lying in a shallow tray, which is why the macro heroes
+ * have never read as objects sitting IN something.
+ *
+ * The lockup keeps BRAND_Y: at t=11.4 the reference's plates are genuinely
+ * flush inside thin frames, so this is a per-beat property, not a global one.
+ */
+const MACRO_BRAND: [number, number, number] = [1.60, 0.19, 0.98];
+const MACRO_Y = WELL_FLOOR + 0.10 + 0.19 / 2;
 
 /** Hero slot — both brand plates occupy this one well, one per shot. */
-const HERO: [number, number, number] = [0.05, BRAND_Y, 0.05];
+const HERO: [number, number, number] = [0.05, MACRO_Y, 0.05];
 const HERO_WELL: [number, number, number] = [0.05, TILE_TOP, 0.05];
 const LOCK_RECURLY: [number, number, number] = [-0.74, BRAND_Y, -0.98];
 const LOCK_HYPER: [number, number, number] = [0.74, BRAND_Y, 1.12];
@@ -537,7 +552,7 @@ export const Timeline: React.FC = () => {
           <Well position={HERO_WELL} size={MACRO_WELL} metalMap={f.metal} whiten={whiten} tone="dark" />
           <Keycap
             position={[HERO[0], Math.max(HERO[1] + 0.003, HERO[1] + 0.004 + 0.045 * (1 - spring({ frame: frame - 149, fps: FPS, config: { damping: 12, stiffness: 160, mass: 0.85 } }))), HERO[2]]}
-            size={BRAND}
+            size={MACRO_BRAND}
             color={C.gold}
             face={f.recurly}
             faceSize={F_RECURLY}
@@ -558,7 +573,7 @@ export const Timeline: React.FC = () => {
           <Well position={HERO_WELL} size={MACRO_WELL} metalMap={f.metal} whiten={whiten} tone="dark" />
           <Keycap
             position={[HERO[0], Math.max(HERO[1] + 0.005, HERO[1] + 0.035 + 0.125 * (1 - spring({ frame: frame - T.hyPressStart, fps: FPS, config: { damping: 11, stiffness: 170, mass: 0.8 } }))), HERO[2]]}
-            size={BRAND}
+            size={MACRO_BRAND}
             color={C.blue}
             face={f.hyper}
             faceSize={F_HYPER}
