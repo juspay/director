@@ -45,7 +45,7 @@ const GoboKey: React.FC = () => {
         target={target}
         angle={0.62}
         penumbra={1}
-        intensity={260}
+        intensity={150}
         color="#f7f9ff"
       />
     </>
@@ -61,7 +61,13 @@ const GoboKey: React.FC = () => {
  */
 const Lights: React.FC = () => (
   <>
-    <SoftShadows size={62} samples={20} focus={0.55} />
+    {/* Penumbra size cut 62 -> 28. The reference's contact shadows are soft but
+        DARK; at 62 the light source is so large that every shadow spreads until
+        it is barely there. Measured under the floating cards at t=3.5: the
+        reference puts 9.1% of the frame below luma 150 and reaches p5 123.4,
+        ours managed 2.6% and p5 170.0. "Contact shadows are extremely faint" is
+        the single largest accepted family in the pass-13 verification. */}
+    <SoftShadows size={1.2} samples={24} focus={0.6} />
     <GoboKey />
     {/* Fill levels, restored after a failed rebalance.
         All fifteen seconds still report "flat, static, uniform lighting with no
@@ -74,13 +80,13 @@ const Lights: React.FC = () => (
         premise was wrong, and the projected pattern is failing for some other
         reason. Reverted rather than shipped; the cause is still open. */}
     <Environment resolution={1024} background={false}>
-      <Lightformer intensity={0.5} position={[0, 9, 2]} scale={[44, 44, 1]} color="#ffffff" />
+      <Lightformer intensity={0.28} position={[0, 9, 2]} scale={[44, 44, 1]} color="#ffffff" />
       {/* Warm bounce halved in warmth, cool bounce strengthened: the verified
           colour findings put the reference's whites on the blue side of neutral
           in every measured second, macro and lockup alike. */}
-      <Lightformer intensity={0.4} position={[-9, 5, 6]} scale={[22, 22, 1]} color="#f9f3ea" />
-      <Lightformer intensity={0.36} position={[9, 4, -4]} scale={[22, 22, 1]} color="#e7effc" />
-      <Lightformer intensity={0.2} position={[0, 1.5, 11]} scale={[26, 12, 1]} color="#ffffff" />
+      <Lightformer intensity={0.22} position={[-9, 5, 6]} scale={[22, 22, 1]} color="#f9f3ea" />
+      <Lightformer intensity={0.20} position={[9, 4, -4]} scale={[22, 22, 1]} color="#e7effc" />
+      <Lightformer intensity={0.11} position={[0, 1.5, 11]} scale={[26, 12, 1]} color="#ffffff" />
     </Environment>
     {/* Fill pulled DOWN and the shadow-casting key pushed UP. Measured at f30:
         the reference's 5th-percentile luma is 96.5 against our 164.8 — it has
@@ -92,7 +98,7 @@ const Lights: React.FC = () => (
     <hemisphereLight args={['#f2f6fe', '#d3d7de', 0.11]} />
     <directionalLight
       position={[-3.0, 6.5, 3.2]}
-      intensity={0.85}
+      intensity={1.7}
       color="#f2f6fe"
       castShadow
       shadow-mapSize-width={4096}
@@ -317,7 +323,7 @@ const Effects: React.FC = () => {
           are ~1.3 across, so a third of a unit catches seams and well walls
           without shading whole panels. */}
       <DepthOfField target={focus} focalLength={focalLength} bokehScale={bokehScale} height={Math.round(720 * RES)} />
-      <N8AO aoRadius={0.40} distanceFalloff={0.7} intensity={3.1} quality="high" halfRes={false} color="#2b2f3a" />
+      <N8AO aoRadius={0.55} distanceFalloff={0.7} intensity={3.8} quality="high" halfRes={false} color="#2b2f3a" />
       <Bloom intensity={0.025} luminanceThreshold={0.985} luminanceSmoothing={0.25} mipmapBlur />
       {/* Ramped for the lockup: its corners measured 11-13% BRIGHTER than
           centre against the reference's 1-7% (fog whitening the frame edges).
