@@ -66,7 +66,14 @@ export const Keycap: React.FC<Props> = ({
   lift = 0,
   rotation = [0, 0, 0],
   metalMap = null,
-  domeStrength = 1,
+  /**
+   * Default lowered 1 -> 0.4. Once the frame was actually in focus, a full-
+   * strength dome on the small cards showed a hard specular terminator arcing
+   * right across the face — the clearcoat band edge on a 7%-of-width bump. The
+   * reference's capability cards are near-flat; only its brand plates bow, and
+   * those pass their own strength explicitly.
+   */
+  domeStrength = 0.4,
 }) => {
   const [w, t, l] = size;
   const r = radius ?? Math.min(w, l) * 0.22;
@@ -100,7 +107,7 @@ export const Keycap: React.FC<Props> = ({
     () => paraboloid(w, l, w, l, domeH, 28),
     [w, l, domeH],
   );
-  const domeGeo = useMemo(() => paraboloid(fw, fl, w, l, domeH, 24), [fw, fl, w, l, domeH]);
+  const domeGeo = useMemo(() => paraboloid(fw, fl, w, l, domeH, 28), [fw, fl, w, l, domeH]);
   const plateMask = useMemo(() => capMask(w, l, r), [w, l, r]);
   React.useEffect(() => () => { plateGeo.dispose(); plateMask.dispose(); }, [plateGeo, plateMask]);
   React.useEffect(() => () => domeGeo.dispose(), [domeGeo]);
@@ -160,13 +167,16 @@ export const Keycap: React.FC<Props> = ({
         />
       </Slab>
       {/* The bowed surface itself, in the cap's own colour. Sits a hair above
-          the slab top so the bevel highlight ring stays visible around it. */}
+          the slab top so the bevel highlight ring stays visible around it.
+          It does NOT cast: the slab beneath already casts the cap's shadow, and
+          a shallow paraboloid casting into its own shadow map drew a hard
+          diagonal acne seam across every hero face once the frame was sharp
+          enough to show it. */}
       <mesh
         position={[0, t / 2 + 0.0015 + lift, 0]}
         rotation={[-Math.PI / 2, 0, 0]}
         renderOrder={18}
         geometry={plateGeo}
-        castShadow
         receiveShadow
       >
         <meshPhysicalMaterial
@@ -183,22 +193,36 @@ export const Keycap: React.FC<Props> = ({
         />
       </mesh>
       {face && (
-        <mesh position={[0, t / 2 + 0.006 + lift, 0]} rotation={[-Math.PI / 2, 0, 0]} renderOrder={20} geometry={domeGeo}>
+        <mesh position={[0, t / 2 + 0.011 + lift, 0]} rotation={[-Math.PI / 2, 0, 0]} renderOrder={20} geometry={domeGeo}>
           {/* LIT faces (pass 8). The unlit toneMapped=false basic material
               could not carry the reference's specular gradients — the
               eyewitness pass confirmed A's gold face has a bright-to-dark
               lighting sweep while ours rendered uniform, a root cause of the
               persistent "flat" verdicts. fog stays off so the lockup
               wordmarks keep their measured darkness at 16 units out. */}
-          <meshStandardMaterial
+          {/* UNLIT ink layer.
+              MEASURED: the reference's label text reaches luma 49 (darkest 4%
+              RGB 54,61,70) while ours bottomed out at 199 (197,203,219) — type
+              barely separable from the card under it. The artwork is not the
+              problem: #414a5e is luma 72. Pass 8 made this layer a LIT
+              standard material to win the specular gradient the flat gold was
+              missing, and it has been washing every glyph in the film ever
+              since; roughness 0.94 and envMapIntensity 0.18 moved it by three
+              luma, and an opaque ground made it worse (the lit face rendered
+              visibly brighter than the slab it sits on, leaving a white
+              rectangle inset in each card).
+              The gradient no longer has to come from here — the domed plate
+              below carries it — so the ink goes back to being exactly the value
+              it was authored at. This is also why the centre-of-frame Laplacian
+              deficit has survived six passes: Laplacian energy is contrast. */}
+          <meshBasicMaterial
             map={face}
             transparent
             alphaTest={0.004}
             opacity={opacity}
             side={THREE.DoubleSide}
             depthWrite={false}
-            roughness={0.5}
-            metalness={0}
+            toneMapped={false}
             fog={false}
           />
         </mesh>

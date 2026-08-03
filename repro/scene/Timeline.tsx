@@ -187,7 +187,21 @@ function catmull(p0: number, p1: number, p2: number, p3: number, t: number): num
 // its Recurly plate spans ~72% of frame width against our 60%. Closing that
 // also deepens the background blur, which read too sharp against the
 // reference's milk-white edges at the same instant.
-const DOLLY = [1.25, 1.30, 1.12, 1.12, 0.88];
+// The macro dollies are NOT the answer to the centre-sharpness deficit, and
+// this is the sixth pass in which that reading has been wrong. The measurement
+// is real — centre Laplacian variance, reference vs ours, 280.6 vs 32.9 at
+// t=3.2 and 141.7 vs 35.9 at t=8.5 — and the model reads it as "B is farther
+// away". Channel A on the cited frames says the opposite: at t=1.5 OUR card is
+// visibly larger than the reference's. What the reference has and we do not is
+// INK. Its label text reaches luma 49 against our 199 (darkest 4%: RGB 54,61,70
+// vs 197,203,219), and Laplacian energy is contrast, not size. Chasing it with
+// the dolly would have made subjects larger than the reference's while leaving
+// the type just as pale.
+//
+// The lockup push stays: s08 and s12 agree with a direct frame comparison that
+// the reference's wide is tighter, and its corners measured softer than ours
+// (lap_var 0.91 vs 4.21).
+const DOLLY = [1.25, 1.30, 1.12, 1.12, 0.80];
 
 /**
  * Per-shot azimuth sweep, applied about the shot's own mean bearing.
@@ -303,7 +317,7 @@ const MACRO_WELL: [number, number] = [BRAND[0] * 1.06, BRAND[2] * 1.09];
 const F_PILL: [number, number] = [1.20, 1.20 / 1.65];
 const F_COL: [number, number] = [1.20, 1.20 / 1.55];
 const F_RECURLY: [number, number] = [1.32, 1.32 / 4.0];
-const F_HYPER: [number, number] = [1.34, 1.34 / 3.0];
+const F_HYPER: [number, number] = [1.50, 1.50 / 3.0];
 const F_LIVE: [number, number] = [1.36, 1.36 / 2.67];
 const F_SUCCESS: [number, number] = [1.18, 1.18 / 1.5];
 const F_REVENUE: [number, number] = [1.18, 1.18 / 1.8];
@@ -456,11 +470,20 @@ export const Timeline: React.FC = () => {
 
   return (
     <>
+      {/* The lockup does not START clean. At t=8.5 the reference frame is
+          DENSE — Recurly and hyperswitch in their frames plus Subscriptions,
+          Retries, Revenue Analytics and two document panels, tightly packed —
+          and it is only by t=10 that the wall has cleared to the calm field the
+          earlier `plainOnly` was modelled on. Ours was bare from the cut: two
+          brand cards on empty tiles, the emptiest frame in the film against one
+          of the reference's busiest. The wall now keeps its detail through the
+          arrival and is cleared by the whiten fade, which is how the reference
+          clears it too. */}
       <SetDressing
         whiten={whiten}
         offset={SET_OFFSET[shot]}
         brandRadius={shot === 4 ? 2.6 : 3.5}
-        plainOnly={shot === 4}
+        plainOnly={shot === 4 && frame >= 292}
         heroAccent={shot === 2 ? 'blue' : shot === 3 ? 'gold' : 'both'}
         assemble={gridAssemble}
       />
@@ -557,8 +580,26 @@ export const Timeline: React.FC = () => {
       {shot === 4 && (() => {
         const asm = spring({ frame: frame - (T.assemble + 3), fps: FPS, config: { damping: 14, stiffness: 90, mass: 1.1 } });
         const slide = 0.5 * (1 - asm);
+        /**
+         * The capability cards that are still ON SET when the lockup cut lands.
+         * The reference's t=8.5 frame carries Subscriptions, Retries and
+         * Revenue Analytics around the two brand plates; they clear as the
+         * camera rises, leaving the calm wall by t=10. Fading them rather than
+         * cutting them keeps the clearing continuous with the whiten ramp.
+         */
+        const carry = interpolate(frame, [272, 292], [1, 0], {
+          extrapolateLeft: 'clamp',
+          extrapolateRight: 'clamp',
+        });
         return (
         <>
+          {carry > 0.002 && (
+            <>
+              <Keycap position={[-2.05, FLOAT_Y, 1.75]} size={CAP} color={C.card} face={f.subs} faceSize={F_COL} opacity={carry} />
+              <Keycap position={[-2.15, FLOAT_Y, 2.86]} size={CAP} color={C.card} face={retries} faceSize={F_COL} opacity={carry} />
+              <Keycap position={[2.34, FLOAT_Y, 0.35]} size={CAP} color={C.card} face={f.revenue} faceSize={F_REVENUE} opacity={carry} />
+            </>
+          )}
           <Well position={[LOCK_RECURLY[0] - slide, TILE_TOP, LOCK_RECURLY[2] - slide * 0.7]} size={[BRAND[0], BRAND[2]]} metalMap={f.metal} whiten={whiten} />
           <Keycap position={[LOCK_RECURLY[0] - slide, LOCK_RECURLY[1], LOCK_RECURLY[2] - slide * 0.7]} size={BRAND} color={C.gold} face={f.recurly} faceSize={F_RECURLY} domeStrength={0.8} />
           <Well position={[LOCK_HYPER[0] + slide, TILE_TOP, LOCK_HYPER[2] + slide * 0.7]} size={[BRAND[0], BRAND[2]]} metalMap={f.metal} whiten={whiten} />

@@ -123,9 +123,14 @@ const Lights: React.FC = () => (
 // remaining saturation deficit vs the reference (0.05 vs 0.20) is per-pixel
 // warm/cool variation from its dappled light, which a uniform saturation
 // multiplier cannot supply — it only rails the already-saturated brand blues.
+// Highlight roll-off, measured across the whole timeline at 720x900: the macro
+// hero beats reach p95 220-223 against the reference's 245-246, while their
+// medians already match (208-211 vs 202-208) and their shadows sit ABOVE the
+// reference (p5 119 vs 101). That shape is missing contrast, not missing
+// exposure — brightness would move the median that already matches.
 const SAT_MACRO = 0.24;
-const CONTRAST_MACRO = 0.16;
-const BRIGHT_MACRO = -0.06;
+const CONTRAST_MACRO = 0.24;
+const BRIGHT_MACRO = -0.08;
 // The lockup grade was tuned when this shot was blowing out, and it has been
 // suppressing colour ever since: at saturation 0.16 the rendered gold came back
 // (207,194,117) against the target's (217,195,72) and the blue (96,112,197)
@@ -145,9 +150,25 @@ const BRIGHT_LOCKUP = 0.06;
  * drifted off the subject as each shot's camera orbited; the subject has to be
  * what is sharp.
  */
+/**
+ * FOCUS IS ON THE SUBJECT, NOT ON THE TILE PLANE.
+ *
+ * Every entry here used to sit at y=0 — the top of the tiled wall — while the
+ * floating cards of shots 1 and 2 hover at y=0.1475, and shot 1's subject sits
+ * at z=0.30 against a focus point at z=0.15. With focalLength (the focus RANGE)
+ * at 0.09, a 0.15-unit miss is enough to put the hero outside the band, and a
+ * diagnostic render with the label ink forced to pure red showed exactly that:
+ * the glyphs came back as hollow, smeared outlines.
+ *
+ * This is the real source of the centre-of-frame edge-energy deficit the
+ * analysis has measured in six consecutive passes (reference 280.6 vs our 32.9
+ * at t=3.2) — and of a good part of the "shadows are soft and faint" family,
+ * since a defocused frame has no crisp shadow edges either. The scene was
+ * blurring its own subject.
+ */
 const FOCUS: Array<[number, number, number]> = [
-  [0.0, 0.0, 0.15],
-  [-0.05, 0.0, 0.0],
+  [-0.06, 0.1475, 0.30],
+  [-0.05, 0.1475, 0.0],
   [0.05, 0.0, 0.05],
   [0.05, 0.0, 0.05],
   [0.0, 0.0, 0.12],
@@ -255,8 +276,13 @@ const Effects: React.FC = () => {
   // of field" than the reference (eyewitness, sec 1), and the lockup measured
   // SHARPER than the reference's soft wide (region_sharpness, sec 12:
   // A lap_var 0.91 vs B 3.06).
-  const focalLength = interpolate(frame, [255, 300], [0.09, 0.17], ease);
-  const bokehScale = interpolate(frame, [255, 300], [2.8, 2.2], ease) * RES;
+  // Range widened 0.09 -> 0.13 alongside the focus-target fix: 0.09 leaves no
+  // tolerance for a subject that MOVES within its shot (the caps press, the
+  // pill rises, the grid assembles), so any beat that travels off the point
+  // goes soft. The lockup end is raised to keep its corners falling away —
+  // measured softer in the reference there (lap_var 0.91 vs our 4.21).
+  const focalLength = interpolate(frame, [255, 300], [0.08, 0.15], ease);
+  const bokehScale = interpolate(frame, [255, 300], [2.8, 3.0], ease) * RES;
   const focus = FOCUS[shotIndex(frame)];
   // Grade stage. NOTE: `gl.toneMappingExposure` on <ThreeCanvas> is a NO-OP once
   // EffectComposer owns the render — 0.92, 0.72 and 0.30 all produced
@@ -280,14 +306,21 @@ const Effects: React.FC = () => {
           was in contact with anything. aoRadius is in world units and the caps
           are ~1.3 across, so a third of a unit catches seams and well walls
           without shading whole panels. */}
-      <N8AO aoRadius={0.40} distanceFalloff={0.7} intensity={3.1} quality="high" halfRes={false} color="#2b2f3a" />
       <DepthOfField target={focus} focalLength={focalLength} bokehScale={bokehScale} height={Math.round(720 * RES)} />
+      <N8AO aoRadius={0.40} distanceFalloff={0.7} intensity={3.1} quality="high" halfRes={false} color="#2b2f3a" />
       <Bloom intensity={0.025} luminanceThreshold={0.985} luminanceSmoothing={0.25} mipmapBlur />
       {/* Ramped for the lockup: its corners measured 11-13% BRIGHTER than
           centre against the reference's 1-7% (fog whitening the frame edges).
           The reference's falloff there is dappled light pooling; until the gobo
           reads, a measured vignette carries that signature. */}
-      <Vignette eskil={false} offset={0.28} darkness={interpolate(frame, [255, 300], [0.16, 0.30], ease)} />
+      {/* Macro darkness cut 0.16 -> 0.05. Measured corner-to-centre falloff
+          against the reference: t=0.5 ours 12.57% vs 1.66%, t=2.5 ours 10.72%
+          vs 5.61% — the opening shots carried a vignette the reference simply
+          does not have. (The model claimed the opposite in second 0, "reference
+          has darker corners"; the measurement vetoed it and revealed the error
+          ran the other way.) The lockup value is left alone: it measures within
+          2pp there. */}
+      <Vignette eskil={false} offset={0.28} darkness={interpolate(frame, [255, 300], [0.05, 0.24], ease)} />
       <HueSaturation saturation={satBoost} />
       <BrightnessContrast brightness={brightness} contrast={contrast} />
     </EffectComposer>

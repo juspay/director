@@ -222,7 +222,7 @@ export function pillFaceH(
     ctx.fillStyle = '#414a5e';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
-    fitFont(ctx, line1.length > line2.length ? line1 : line2, 116, 540, '400', 2);
+    fitFont(ctx, line1.length > line2.length ? line1 : line2, 124, 545, '600', 0);
     ctx.fillText(line1, 452, cy - 60);
     ctx.fillText(line2, 452, cy + 66);
     // indigo hairline along the lower edge of the card
@@ -273,7 +273,7 @@ export function capabilityFaceV(
     ctx.fillStyle = C.indigo;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    fitFont(ctx, label, 132, 860, '500', 3);
+    fitFont(ctx, label, 136, 880, '600', 1);
     ctx.fillText(label, 512, 512);
     const hg = ctx.createLinearGradient(60, 0, 964, 0);
     hg.addColorStop(0, 'rgba(70,92,230,0.05)');
@@ -328,10 +328,15 @@ export function recurlyFace(): THREE.CanvasTexture {
 
 // Juspay Hyperswitch: white roundel + stacked JUSPAY / hyperswitch, all white.
 export function hyperswitchFace(): THREE.CanvasTexture {
+  // Ink SCALED UP. Measured against the reference at t=7.5: its lockup spans
+  // ~83% of the plate's width and nearly its full height, while ours drew ink
+  // across ~70% of the width and only half the texture's height — the roundel
+  // and wordmark rendered about two-thirds the size they should, which is most
+  // of why this hero read as a small logo on a big blank card.
   return tex(1536, 512, (ctx) => {
-    const cx = 190;
+    const cx = 205;
     const cy = 256;
-    const r = 118;
+    const r = 158;
     // Solid white disc.
     ctx.fillStyle = '#fff';
     ctx.beginPath();
@@ -376,10 +381,10 @@ export function hyperswitchFace(): THREE.CanvasTexture {
     ctx.fillStyle = '#fff';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'alphabetic';
-    ctx.font = `700 74px ${FONT}`;
-    ctx.fillText('JUSPAY', 356, 214);
-    ctx.font = `400 152px ${FONT}`;
-    ctx.fillText('hyperswitch', 352, 360);
+    ctx.font = `700 96px ${FONT}`;
+    ctx.fillText('JUSPAY', 404, 186);
+    ctx.font = `400 200px ${FONT}`;
+    ctx.fillText('hyperswitch', 400, 386);
   });
 }
 
@@ -409,7 +414,7 @@ export function liveNowFace(): THREE.CanvasTexture {
 // Success rate metric card.
 export function successRateFace(): THREE.CanvasTexture {
   return tex(900, 600, (ctx) => {
-    ctx.fillStyle = '#8d94a3';
+    ctx.fillStyle = '#646c7d';
     ctx.font = `400 58px ${FONT}`;
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
@@ -442,7 +447,7 @@ export function revenueFace(): THREE.CanvasTexture {
       roundRect(ctx, bx + i * (bw + gap), 320 - h, bw, h, 12);
       ctx.fill();
     });
-    ctx.fillStyle = '#8d94a3';
+    ctx.fillStyle = '#646c7d';
     ctx.font = `400 74px ${FONT}`;
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
@@ -582,7 +587,7 @@ export function panelChart(): THREE.CanvasTexture {
   return tex(512, 512, (ctx) => {
     ctx.fillStyle = '#efeeea';
     ctx.fillRect(0, 0, 512, 512);
-    ctx.fillStyle = '#8d94a3';
+    ctx.fillStyle = '#646c7d';
     ctx.font = `400 22px ${FONT}`;
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';

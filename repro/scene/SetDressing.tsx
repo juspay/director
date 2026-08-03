@@ -225,7 +225,11 @@ export const SetDressing: React.FC<{
       {tiles.map((t, i) => {
         const brand = t.kind === 'blue' || t.kind === 'gold' || t.kind === 'lightblue';
         if (brand && Math.hypot(t.x + offset[0], t.z + offset[2]) > brandRadius) return null;
-        let kind: Kind = plainOnly && t.kind !== 'plain' ? (t.kind === 'metal' ? 'metal' : 'plain') : t.kind;
+        // Metal tiles used to be exempted from plainOnly. They render as dark
+        // navy patches (metalness with nothing to reflect), and one of them sat
+        // in the lockup's top-right corner for the whole final shot against a
+        // reference whose wall has no dark tile anywhere.
+        let kind: Kind = plainOnly && t.kind !== 'plain' ? 'plain' : t.kind;
         if (heroAccent !== 'both' && (kind === 'gold' || kind === 'blue') && kind !== heroAccent) kind = 'plain';
         const metalish = kind === 'metal';
         const isBrand = kind === 'blue' || kind === 'gold' || kind === 'lightblue';
@@ -323,13 +327,18 @@ export const Well: React.FC<{
             tops caught a grazing specular that ran as a hot white bar under
             both brand cards through the entire lockup. The reference's frames
             do carry a bright top edge, but as a highlight on metal, not as a
-            light strip. */}
+            light strip. Dropping metalness alone did not shift it; a diagnostic
+            render with the bezel tinted red proved the bar belongs to the
+            bezel's own +z side wall, where a neighbouring tile at step 0 leaves
+            it a full 0.065 proud and its CLEARCOAT lobe mirrors the key
+            straight into the lens. The lockup frames therefore run clearcoat 0
+            and rougher. */}
         <meshPhysicalMaterial
           map={metalMap ?? undefined}
           color={dark ? '#c9bda4' : '#d6dbe4'}
-          roughness={0.46}
-          metalness={dark ? 0.16 : 0.22}
-          clearcoat={0.15}
+          roughness={dark ? 0.46 : 0.66}
+          metalness={dark ? 0.16 : 0.18}
+          clearcoat={dark ? 0.15 : 0}
           anisotropy={0.45}
           emissive="#ffe6bc"
           emissiveIntensity={whiten * 0.5}
