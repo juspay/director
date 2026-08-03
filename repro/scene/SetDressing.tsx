@@ -331,14 +331,17 @@ export const Well: React.FC<{
             render with the bezel tinted red proved the bar belongs to the
             bezel's own +z side wall, where a neighbouring tile at step 0 leaves
             it a full 0.065 proud and its CLEARCOAT lobe mirrors the key
-            straight into the lens. The lockup frames therefore run clearcoat 0
-            and rougher. */}
+            straight into the lens. Clearcoat is now 0 for BOTH tones: the macro
+            bezel kept 0.15 and produced the same defect one scale down — a
+            bright white triangular glint at the three-way corner where the
+            socket meets a stepped tile, plain enough at t=7.5 to read as a hole
+            punched in the set. */}
         <meshPhysicalMaterial
           map={metalMap ?? undefined}
           color={dark ? '#c9bda4' : '#d6dbe4'}
           roughness={dark ? 0.46 : 0.66}
           metalness={dark ? 0.16 : 0.18}
-          clearcoat={dark ? 0.15 : 0}
+          clearcoat={0}
           anisotropy={0.45}
           emissive="#ffe6bc"
           emissiveIntensity={whiten * 0.5}

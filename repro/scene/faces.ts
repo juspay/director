@@ -273,7 +273,7 @@ export function capabilityFaceV(
     ctx.fillStyle = C.indigo;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    fitFont(ctx, label, 136, 880, '600', 1);
+    fitFont(ctx, label, 138, 880, '700', 1);
     ctx.fillText(label, 512, 512);
     const hg = ctx.createLinearGradient(60, 0, 964, 0);
     hg.addColorStop(0, 'rgba(70,92,230,0.05)');
@@ -542,11 +542,15 @@ export function panelMetal(): THREE.CanvasTexture {
   const t = tex(512, 512, (ctx) => {
     ctx.fillStyle = '#dcdad5';
     ctx.fillRect(0, 0, 512, 512);
-    for (let i = 0; i < 512; i += 7) {
-      ctx.fillStyle = 'rgba(255,255,255,0.35)';
-      ctx.fillRect(i, 0, 3, 512);
-      ctx.fillStyle = 'rgba(150,157,170,0.30)';
-      ctx.fillRect(i + 3, 0, 2, 512);
+    // Finer and much fainter. At a 7px pitch with 0.30-0.35 alpha these read as
+    // corduroy once the frame was actually in focus — a ribbed panel filling a
+    // third of the t=7.5 frame, where the reference's brushed tiles carry a
+    // near-invisible grain.
+    for (let i = 0; i < 512; i += 3) {
+      ctx.fillStyle = 'rgba(255,255,255,0.13)';
+      ctx.fillRect(i, 0, 2, 512);
+      ctx.fillStyle = 'rgba(150,157,170,0.10)';
+      ctx.fillRect(i + 2, 0, 1, 512);
     }
     const g = ctx.createLinearGradient(0, 0, 512, 512);
     g.addColorStop(0, 'rgba(255,255,255,0.34)');

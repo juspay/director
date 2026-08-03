@@ -201,7 +201,12 @@ function catmull(p0: number, p1: number, p2: number, p3: number, t: number): num
 // The lockup push stays: s08 and s12 agree with a direct frame comparison that
 // the reference's wide is tighter, and its corners measured softer than ours
 // (lap_var 0.91 vs 4.21).
-const DOLLY = [1.25, 1.30, 1.12, 1.12, 0.80];
+// Shot 2 only, 1.30 -> 1.15. The "camera is further away" family is SHOT-
+// DEPENDENT, which is why answering it globally kept failing: measured off the
+// A/B reel, at t=1.5 our card is larger than the reference's, while at t=3.5
+// the reference's Retries card spans 345px of 720 against our 300 — 13%
+// smaller. Shot 1 stays where it is.
+const DOLLY = [1.25, 1.15, 1.12, 1.12, 0.80];
 
 /**
  * Per-shot azimuth sweep, applied about the shot's own mean bearing.
