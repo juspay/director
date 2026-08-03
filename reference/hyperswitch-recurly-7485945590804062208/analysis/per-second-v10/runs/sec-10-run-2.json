@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "The camera pans slowly across the keyboard grid while dappled leaf shadows drift across the keys."
+    ],
+    "b_motion": [
+      "The camera pans slowly across the keyboard grid under static, uniform lighting."
+    ],
+    "absent_in_b": [
+      "dappled leaf shadows"
+    ],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "Dappled shadows of leaves are visible drifting across the keyboard keys.",
+        "b_observable": "The lighting is completely static and uniform, with no leaf shadows.",
+        "fix": "Add an animated shadow map or light cookie of moving leaves to simulate dappled sunlight.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 10.5,
+        "a_observable": "The camera is positioned closer to the keys, creating a tighter framing where the Recurly button is larger.",
+        "b_observable": "The camera is further away, resulting in a wider shot where the buttons appear smaller.",
+        "fix": "Move the camera closer or increase the focal length to match the reference framing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "color",
+        "t": 10.5,
+        "a_observable": "The scene has a warm, yellowish color cast from the simulated sunlight.",
+        "b_observable": "The scene has a cool, neutral white color cast with bluish undertones.",
+        "fix": "Adjust the white balance and light colors to introduce warmer, yellow tones.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Add animated leaf shadows to replicate the dappled sunlight effect, and adjust the camera position to match the tighter framing of the reference."
+  }
+}

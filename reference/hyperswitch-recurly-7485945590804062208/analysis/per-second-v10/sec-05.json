@@ -1,0 +1,365 @@
+{
+  "sec": 5,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 5.2,
+          "a_observable": "The camera is positioned at a low, oblique angle relative to the keyboard grid, creating a strong perspective effect.",
+          "b_observable": "The camera is positioned at a higher, more top-down angle, resulting in a flatter perspective.",
+          "fix": "Adjust the camera pitch and height to match the oblique perspective of the reference.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 5.5,
+          "a_observable": "The corners of the frame are significantly darker than the center, showing a distinct vignette effect.",
+          "b_observable": "The lighting is more uniform across the frame with less corner falloff.",
+          "fix": "Add a vignette effect to darken the corners of the frame.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 5.8,
+          "a_observable": "The white keys have a soft, cool blue-green color cast, especially in the shadowed areas.",
+          "b_observable": "The white keys are neutral white/grey with no cool color cast.",
+          "fix": "Adjust the white balance or add a cool color grade to match the reference's blue-green cast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 5,
+          "a_observable": "The recess/well around the yellow 'Recurly' card has a soft, light-grey inner shadow.",
+          "b_observable": "The recess/well around the yellow 'Recurly' card has a very dark, harsh black border.",
+          "fix": "Soften and lighten the inner shadow of the button recesses.",
+          "severity": 4,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        },
+        {
+          "category": "material",
+          "t": 5.4,
+          "a_observable": "The yellow 'Recurly' button has a glossy surface with visible specular highlights reflecting the light source.",
+          "b_observable": "The yellow 'Recurly' button has a matte finish with diffuse reflection and no distinct specular highlights.",
+          "fix": "Increase the specular glossiness and reduce roughness of the yellow button material.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_brighter_highlights"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and perspective to match the oblique view of the reference, and soften the dark, harsh shadows in the button recesses.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan and zoom out"
+      ],
+      "b_motion": [
+        "slow camera pan and zoom out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 5.2,
+          "a_observable": "The camera is closer to the yellow Recurly card with a shallower angle.",
+          "b_observable": "The camera is further back and at a steeper angle.",
+          "fix": "Adjust camera position and angle to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 5.5,
+          "a_observable": "The recess around the yellow card has soft, light grey shadows.",
+          "b_observable": "The recess has extremely dark, high-contrast black shadows.",
+          "fix": "Reduce shadow intensity or ambient occlusion around the card recess.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_blacks"
+          }
+        },
+        {
+          "category": "color",
+          "t": 5.8,
+          "a_observable": "The white keys exhibit a warm, cream-colored tone.",
+          "b_observable": "The white keys exhibit a cool, neutral grey-blue tone.",
+          "fix": "Adjust white balance to introduce a warmer color temperature.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and angle to match the reference framing, and correct the dark shadows in the card recesses.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pans down-right"
+      ],
+      "b_motion": [
+        "camera pans down-right"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 5.5,
+          "a_observable": "Strong vignette with distinct light falloff in the corners.",
+          "b_observable": "Flat lighting with minimal corner falloff.",
+          "fix": "Add a vignette effect in post-production.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 5.2,
+          "a_observable": "Deep shadows in the crevices between keys.",
+          "b_observable": "Lighter, washed-out shadows in the crevices.",
+          "fix": "Increase shadow density or ambient occlusion.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 5.8,
+          "a_observable": "White keys exhibit a cool blue color cast.",
+          "b_observable": "White keys are neutral white.",
+          "fix": "Adjust the white balance to introduce a cooler tint.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "material",
+          "t": 5.5,
+          "a_observable": "The yellow button has a subtle specular highlight.",
+          "b_observable": "The yellow button is completely matte.",
+          "fix": "Increase specular reflectivity on the yellow material.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the lighting to introduce a stronger vignette and deeper shadows in the crevices to match the contrast of the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 5.2,
+        "a_observable": "The camera is positioned at a low, oblique angle relative to the keyboard grid, creating a strong perspective effect.",
+        "b_observable": "The camera is positioned at a higher, more top-down angle, resulting in a flatter perspective.",
+        "fix": "Adjust the camera pitch and height to match the oblique perspective of the reference.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 0.75,
+          "note": "Clip A shows a highly oblique, low-angle perspective of the keyboard grid, whereas Clip B is filmed from a higher, more top-down angle, resulting in a flatter perspective."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "A shoots the Recurly beat low and oblique (~45-50deg) with heavy perspective; B is near-top-down. The pass-8 elevation raise overshot for shot 3 — third corroboration of elevation-runs-hot."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.5,
+        "a_observable": "The corners of the frame are significantly darker than the center, showing a distinct vignette effect.",
+        "b_observable": "The lighting is more uniform across the frame with less corner falloff.",
+        "fix": "Add a vignette effect to darken the corners of the frame.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 195.6,
+            "center_mean": 168.41,
+            "falloff_pct": -16.14
+          },
+          "B": {
+            "corner_mean": 193.32,
+            "center_mean": 172.26,
+            "falloff_pct": -12.23
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 5.8,
+        "a_observable": "The white keys have a soft, cool blue-green color cast, especially in the shadowed areas.",
+        "b_observable": "The white keys are neutral white/grey with no cool color cast.",
+        "fix": "Adjust the white balance or add a cool color grade to match the reference's blue-green cast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_cooler",
+          "A": {
+            "r": 194.76,
+            "g": 199.14,
+            "b": 179.84,
+            "rb_delta": 14.92,
+            "saturation": 0.2054
+          },
+          "B": {
+            "r": 176.79,
+            "g": 179.71,
+            "b": 169.01,
+            "rb_delta": 7.77,
+            "saturation": 0.3086
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "staging",
+        "t": 5,
+        "a_observable": "The recess/well around the yellow 'Recurly' card has a soft, light-grey inner shadow.",
+        "b_observable": "The recess/well around the yellow 'Recurly' card has a very dark, harsh black border.",
+        "fix": "Soften and lighten the inner shadow of the button recesses.",
+        "severity": 4,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_deeper_shadows",
+          "A": {
+            "p01": 40.34,
+            "p1": 84.72,
+            "p5": 132.16,
+            "p50": 205.37,
+            "p95": 246.42,
+            "p99": 247.72,
+            "p999": 249.72,
+            "span_p5_p95": 114.26
+          },
+          "B": {
+            "p01": 30.4,
+            "p1": 49.68,
+            "p5": 55.96,
+            "p50": 195.89,
+            "p95": 210.83,
+            "p99": 216.26,
+            "p999": 217.9,
+            "span_p5_p95": 154.87
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "material",
+        "t": 5.4,
+        "a_observable": "The yellow 'Recurly' button has a glossy surface with visible specular highlights reflecting the light source.",
+        "b_observable": "The yellow 'Recurly' button has a matte finish with diffuse reflection and no distinct specular highlights.",
+        "fix": "Increase the specular glossiness and reduce roughness of the yellow button material.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_brighter_highlights"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_brighter_highlights",
+          "A": {
+            "p01": 47.77,
+            "p1": 73.79,
+            "p5": 101.46,
+            "p50": 203.11,
+            "p95": 246.13,
+            "p99": 247,
+            "p999": 248.29,
+            "span_p5_p95": 144.67
+          },
+          "B": {
+            "p01": 24.35,
+            "p1": 50.61,
+            "p5": 56.11,
+            "p50": 194.31,
+            "p95": 211.26,
+            "p99": 215.4,
+            "p999": 217.26,
+            "span_p5_p95": 155.15
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera angle and perspective to match the oblique view of the reference, and soften the dark, harsh shadows in the button recesses.",
+    "dropped_unsupported": 1
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.2
+    ],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 2.1,
+        "a_observable": "The 'Secure Payments' card is surrounded by a yellow card at the bottom and a blue card on the left, with the 'Renewal Success' card visible at the top.",
+        "b_observable": "The surrounding cards are positioned differently; the yellow card is not visible at the bottom, and the layout of the background grid is altered.",
+        "fix": "Adjust the camera framing and the layout of the background tiles to match the reference composition.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "material",
+        "t": 2.5,
+        "a_observable": "A brushed metal texture strip is visible to the right of the Subscriptions, Retries, and APMs cards.",
+        "b_observable": "The surface to the right of the cards is a flat, solid grey color with no brushed texture.",
+        "fix": "Apply a brushed metal material to the background strip on the right side.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.5,
+        "a_observable": "The cards cast soft but distinct dark shadows onto the background, creating depth.",
+        "b_observable": "The shadows under the cards are extremely faint and flat, reducing the sense of three-dimensional depth.",
+        "fix": "Increase the shadow density and adjust the light source to cast more pronounced contact shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Align the background layout and add the missing brushed metal texture to match the reference scene's materials and composition."
+  }
+}

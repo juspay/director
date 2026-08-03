@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "static"
+    ],
+    "b_motion": [
+      "static"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 14.1,
+        "a_observable": "Deep, soft contact shadows are visible beneath the raised button elements, creating a strong sense of depth.",
+        "b_observable": "The contact shadows are extremely faint, making the buttons appear flat and un-raised.",
+        "fix": "Enhance the ambient occlusion and contact shadow intensity under the buttons.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 14.3,
+        "a_observable": "The yellow Recurly button is highly saturated, and the overall scene has a warm color temperature.",
+        "b_observable": "The yellow button is desaturated, and the scene has a cool, neutral white cast.",
+        "fix": "Increase color saturation and adjust the color temperature to be warmer.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "material",
+        "t": 14.2,
+        "a_observable": "The yellow button exhibits a subtle semi-glossy finish with soft light reflections.",
+        "b_observable": "The yellow button has a completely flat, matte material with no specular highlights.",
+        "fix": "Adjust the material roughness and specular settings of the yellow button to add subtle glossiness.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Enhance the contact shadows and ambient occlusion under the buttons to restore the 3D depth and separation from the background."
+  }
+}

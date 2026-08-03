@@ -1,0 +1,67 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 7.5,
+        "a_observable": "The camera perspective is lower and closer to the blue card, showing less of the surrounding grid.",
+        "b_observable": "The camera is higher and further back, showing more of the grid at a steeper angle.",
+        "fix": "Adjust camera height, distance, and pitch to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 7.5,
+        "a_observable": "The shadows cast by the blue card onto the white surface are soft and highly diffused.",
+        "b_observable": "The shadows are sharp and dark with high contrast edges.",
+        "fix": "Increase the light source size or adjust shadow diffusion settings.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_higher_contrast"
+        }
+      },
+      {
+        "category": "color",
+        "t": 7.5,
+        "a_observable": "The blue card has a matte, slightly desaturated royal blue color.",
+        "b_observable": "The blue card is highly saturated and vibrant.",
+        "fix": "Reduce the saturation and brightness of the blue card material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 7.5,
+        "a_observable": "The top and bottom areas of the frame are softly blurred due to shallow depth of field.",
+        "b_observable": "The entire frame is uniformly sharp, lacking depth of field blur.",
+        "fix": "Enable camera depth of field with a wider aperture focused on the center card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and rotation to match the reference perspective, and enable depth of field with soft shadow rendering."
+  }
+}

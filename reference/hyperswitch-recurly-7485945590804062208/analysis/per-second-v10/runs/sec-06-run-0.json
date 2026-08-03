@@ -1,0 +1,44 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "camera pan",
+      "camera tilt"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 6.25,
+        "a_observable": "The crevices between the white keys are softly lit with visible details.",
+        "b_observable": "The crevices between the white keys are cast in deep, near-black shadows.",
+        "fix": "Increase ambient light or reduce shadow density to soften the dark crevices.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 6.8,
+        "a_observable": "The blue card has moderately rounded corners, consistent with standard keys.",
+        "b_observable": "The blue card has extremely rounded corners, giving it a pill-like shape.",
+        "fix": "Decrease the corner radius of the blue card to match the reference key shape.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the lighting to soften the deep black shadows in the key crevices and reduce the corner radius of the blue card to match the reference."
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 5.2,
+        "a_observable": "The camera is positioned at a low, oblique angle relative to the keyboard grid, creating a strong perspective effect.",
+        "b_observable": "The camera is positioned at a higher, more top-down angle, resulting in a flatter perspective.",
+        "fix": "Adjust the camera pitch and height to match the oblique perspective of the reference.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.5,
+        "a_observable": "The corners of the frame are significantly darker than the center, showing a distinct vignette effect.",
+        "b_observable": "The lighting is more uniform across the frame with less corner falloff.",
+        "fix": "Add a vignette effect to darken the corners of the frame.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 5.8,
+        "a_observable": "The white keys have a soft, cool blue-green color cast, especially in the shadowed areas.",
+        "b_observable": "The white keys are neutral white/grey with no cool color cast.",
+        "fix": "Adjust the white balance or add a cool color grade to match the reference's blue-green cast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 5,
+        "a_observable": "The recess/well around the yellow 'Recurly' card has a soft, light-grey inner shadow.",
+        "b_observable": "The recess/well around the yellow 'Recurly' card has a very dark, harsh black border.",
+        "fix": "Soften and lighten the inner shadow of the button recesses.",
+        "severity": 4,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      },
+      {
+        "category": "material",
+        "t": 5.4,
+        "a_observable": "The yellow 'Recurly' button has a glossy surface with visible specular highlights reflecting the light source.",
+        "b_observable": "The yellow 'Recurly' button has a matte finish with diffuse reflection and no distinct specular highlights.",
+        "fix": "Increase the specular glossiness and reduce roughness of the yellow button material.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_brighter_highlights"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and perspective to match the oblique view of the reference, and soften the dark, harsh shadows in the button recesses."
+  }
+}

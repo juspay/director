@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 9,
+        "a_observable": "The camera is positioned closer to the buttons, creating a tighter composition.",
+        "b_observable": "The camera is positioned further back, showing more of the surrounding tiles.",
+        "fix": "Move the camera closer to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.2,
+        "a_observable": "Deep shadows are visible in the crevices between the tiles, creating high contrast.",
+        "b_observable": "Crevice shadows are very faint and bright, making the scene look flat.",
+        "fix": "Darken the ambient occlusion and contact shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "color",
+        "t": 9.5,
+        "a_observable": "The yellow and blue buttons have highly saturated, vibrant colors.",
+        "b_observable": "The yellow and blue buttons appear washed out and desaturated.",
+        "fix": "Increase color saturation on the button materials.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera distance and focal length to match the closer framing of the reference, and deepen the contact shadows between tiles to eliminate the flat appearance."
+  }
+}

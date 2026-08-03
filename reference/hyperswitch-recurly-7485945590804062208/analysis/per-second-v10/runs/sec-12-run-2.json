@@ -1,0 +1,45 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zooms out and pans upward-right to reveal more of the grid layout"
+    ],
+    "b_motion": [
+      "camera zooms out and pans upward-right to reveal more of the grid layout"
+    ],
+    "absent_in_b": [
+      "realistic contact shadows under the buttons",
+      "vignette effect on the camera lens"
+    ],
+    "differences": [
+      {
+        "category": "material",
+        "t": 12,
+        "a_observable": "The yellow Recurly button displays a soft gradient and subtle specular highlights.",
+        "b_observable": "The yellow Recurly button has a flat, solid color with no specular reflections.",
+        "fix": "Add a glossy shader with roughness to the yellow button material.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "left"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "The frame corners show a distinct dark vignette falloff.",
+        "b_observable": "The frame corners are as bright as the center, lacking a vignette.",
+        "fix": "Apply a vignette effect in post-production.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Enhance the material properties of the buttons to include specular reflections and apply a vignette to the camera to match the depth and realism of Video A."
+  }
+}

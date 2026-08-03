@@ -1,0 +1,85 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      4.9
+    ],
+    "a_motion": [
+      "camera pans down-right over cards",
+      "cut to yellow card",
+      "camera pans left"
+    ],
+    "b_motion": [
+      "camera pans down-right over cards",
+      "cut to yellow card",
+      "camera pans left"
+    ],
+    "absent_in_b": [
+      "yellow card below Secure Payments",
+      "grid of dots on the left card"
+    ],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 4.1,
+        "a_observable": "A yellow card is visible directly below the Secure Payments card.",
+        "b_observable": "A white card with horizontal lines is visible below the Secure Payments card.",
+        "fix": "Change the color and texture of the card below Secure Payments to match the yellow reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "staging",
+        "t": 4.5,
+        "a_observable": "The card on the left side of the screen has a pattern of small grey dots.",
+        "b_observable": "The card on the left side of the screen has horizontal lines instead of dots.",
+        "fix": "Replace the horizontal lines with a grid of dots on the left background card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 4.6,
+        "a_observable": "The shadows between the cards are soft and diffuse.",
+        "b_observable": "The shadows between the cards are dark and sharp, creating high contrast.",
+        "fix": "Soften the shadow rendering and reduce shadow density.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 4.95,
+        "a_observable": "The camera is zoomed in closer to the yellow Recurly card, showing less of the surrounding grid.",
+        "b_observable": "The camera is zoomed further out, showing more of the surrounding white cards.",
+        "fix": "Adjust the camera zoom and position to match the tighter framing of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 4.95,
+        "a_observable": "The yellow Recurly card has a warm, golden-yellow hue.",
+        "b_observable": "The yellow Recurly card has a cooler, more greenish-yellow hue.",
+        "fix": "Adjust the color temperature of the yellow card to be warmer.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Correct the camera framing and zoom after the cut at 4.9s to match the close-up composition of the reference."
+  }
+}

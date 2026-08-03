@@ -1,0 +1,36 @@
+[
+  {
+    "sec": 2,
+    "idx": 0,
+    "t": 2.1,
+    "category": "camera",
+    "a_observable": "Camera is positioned close to the 'Secure Payments' card, framing it centrally with a yellow card visible at the bottom.",
+    "b_observable": "Camera is further away and at a shallower angle, with no yellow card visible at the bottom.",
+    "frames": {
+      "A": "analysis/per-second-v10/eyewitness/sec-02-c0-A.png",
+      "B": "analysis/per-second-v10/eyewitness/sec-02-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "The claim accurately describes the differences in camera framing and the visibility of the yellow card at the bottom between Clip A and Clip B."
+    }
+  },
+  {
+    "sec": 2,
+    "idx": 3,
+    "t": 2.5,
+    "category": "material",
+    "a_observable": "A brushed metal texture strip is visible to the right of the Subscriptions, Retries, and APMs cards.",
+    "b_observable": "The surface to the right of the cards is a flat, solid grey color with no brushed texture.",
+    "frames": {
+      "A": "analysis/per-second-v10/eyewitness/sec-02-c3-A.png",
+      "B": "analysis/per-second-v10/eyewitness/sec-02-c3-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "The comparison is accurate. In Clip A, a brushed metal texture strip is clearly visible to the right of the Subscriptions, Retries, and APMs cards, whereas in Clip B, the surface to the right of these cards is a flat, solid grey color with no texture."
+    }
+  }
+]

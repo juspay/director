@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 8,
+    "idx": 0,
+    "t": 8.25,
+    "category": "camera",
+    "a_observable": "The camera is at a lower, more oblique angle, showing stronger perspective.",
+    "b_observable": "The camera is at a higher, flatter angle with less perspective.",
+    "frames": {
+      "A": "analysis/per-second-v10/eyewitness/sec-08-c0-A.png",
+      "B": "analysis/per-second-v10/eyewitness/sec-08-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.9,
+      "note": "The camera in Clip A is indeed at a lower, more oblique angle, which creates a stronger perspective effect. In Clip B, the camera is positioned higher, looking more directly down at the surface, resulting in a flatter angle with less perspective distortion."
+    }
+  }
+]

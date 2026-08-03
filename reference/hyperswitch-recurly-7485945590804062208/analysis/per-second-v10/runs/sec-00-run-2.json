@@ -1,0 +1,70 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "zoom"
+    ],
+    "b_motion": [
+      "translation",
+      "zoom"
+    ],
+    "absent_in_b": [
+      "square base tiles",
+      "vibrant blue tile on left"
+    ],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 0.1,
+        "a_observable": "The 'Secure Payments' icon and text are on a raised white rounded card sitting on a square tile.",
+        "b_observable": "The 'Secure Payments' icon and text are directly on a single rounded rectangular tile.",
+        "fix": "Model the keys with a square base and a separate raised rounded card.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 0.2,
+        "a_observable": "The camera is closer to the tiles, showing a tight crop of the 'Secure Payments' card and a prominent blue tile on the left.",
+        "b_observable": "The camera is further away and angled differently, showing more surrounding grey tiles and less of the blue tile.",
+        "fix": "Match the camera position, rotation, and focal length to the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.5,
+        "a_observable": "Darker corners indicate a strong vignette effect.",
+        "b_observable": "The corners are bright, showing no significant vignette.",
+        "fix": "Add a vignette to darken the corners of the frame.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 0.3,
+        "a_observable": "The overall color palette is cooler with a blue-grey cast on the white tiles.",
+        "b_observable": "The color palette is warmer with a cream cast on the white tiles.",
+        "fix": "Cool down the white balance and adjust color grading.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Re-model the keyboard keys to feature the square base tiles with separate rounded cards on top, and adjust the camera framing and angle to match the reference."
+  }
+}

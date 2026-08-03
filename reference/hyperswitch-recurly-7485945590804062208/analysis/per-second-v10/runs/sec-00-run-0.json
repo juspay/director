@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera slide/pan across the keyboard keys"
+    ],
+    "b_motion": [
+      "slow camera slide/pan across the keyboard keys"
+    ],
+    "absent_in_b": [
+      "yellow key at the bottom right",
+      "blue key on the left"
+    ],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 0.1,
+        "a_observable": "A yellow key is visible at the bottom right, and a blue key is visible on the left side of the frame.",
+        "b_observable": "No yellow or blue keys are visible in these positions; the surrounding keys are plain grey with thin horizontal lines.",
+        "fix": "Re-arrange the keyboard layout to match the reference, placing the yellow key at the bottom right and the blue key on the left.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 0.2,
+        "a_observable": "The camera is positioned closer to the keys with a steeper angle, showing the 'Secure Payments' key occupying a larger portion of the frame.",
+        "b_observable": "The camera is further away and at a shallower angle, making the keys appear smaller and more skewed.",
+        "fix": "Adjust the camera focal length, distance, and angle to match the reference composition.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.5,
+        "a_observable": "The white keys have bright, clean highlights.",
+        "b_observable": "The white keys are dimmer and greyish, lacking bright highlights.",
+        "fix": "Adjust the exposure or highlight levels in the render to match the brightness of Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_brighter_highlights"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position, angle, and focal length to match the reference composition, and re-arrange the surrounding keyboard layout."
+  }
+}

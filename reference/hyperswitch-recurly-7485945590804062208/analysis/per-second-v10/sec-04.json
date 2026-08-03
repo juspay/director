@@ -1,0 +1,249 @@
+{
+  "sec": 4,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        4.9
+      ],
+      "a_motion": [
+        "camera pans down-right over cards",
+        "cut to yellow card",
+        "camera pans left"
+      ],
+      "b_motion": [
+        "camera pans down-right over cards",
+        "cut to yellow card",
+        "camera pans left"
+      ],
+      "absent_in_b": [
+        "yellow card below Secure Payments",
+        "grid of dots on the left card"
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "t": 4.1,
+          "a_observable": "A yellow card is visible directly below the Secure Payments card.",
+          "b_observable": "A white card with horizontal lines is visible below the Secure Payments card.",
+          "fix": "Change the color and texture of the card below Secure Payments to match the yellow reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "staging",
+          "t": 4.5,
+          "a_observable": "The card on the left side of the screen has a pattern of small grey dots.",
+          "b_observable": "The card on the left side of the screen has horizontal lines instead of dots.",
+          "fix": "Replace the horizontal lines with a grid of dots on the left background card.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 4.6,
+          "a_observable": "The shadows between the cards are soft and diffuse.",
+          "b_observable": "The shadows between the cards are dark and sharp, creating high contrast.",
+          "fix": "Soften the shadow rendering and reduce shadow density.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 4.95,
+          "a_observable": "The camera is zoomed in closer to the yellow Recurly card, showing less of the surrounding grid.",
+          "b_observable": "The camera is zoomed further out, showing more of the surrounding white cards.",
+          "fix": "Adjust the camera zoom and position to match the tighter framing of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 4.95,
+          "a_observable": "The yellow Recurly card has a warm, golden-yellow hue.",
+          "b_observable": "The yellow Recurly card has a cooler, more greenish-yellow hue.",
+          "fix": "Adjust the color temperature of the yellow card to be warmer.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Correct the camera framing and zoom after the cut at 4.9s to match the close-up composition of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        4.9
+      ],
+      "a_motion": [
+        "camera pan",
+        "card slide"
+      ],
+      "b_motion": [
+        "camera pan",
+        "card slide"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 4.2,
+          "a_observable": "Shallow camera angle with strong perspective and deep soft shadows under the cards.",
+          "b_observable": "More top-down camera angle with flatter perspective and very faint shadows.",
+          "fix": "Adjust camera angle and focal length to match reference perspective, and deepen shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 4.95,
+          "a_observable": "Strong vignette with darker corners and higher contrast on the yellow card.",
+          "b_observable": "Flat, even lighting across the frame with minimal vignette.",
+          "fix": "Apply a vignette effect and adjust light falloff to match the reference contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and focal length to match the reference perspective, and add a vignette to correct the flat lighting.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        4.896
+      ],
+      "a_motion": [
+        "Slow, smooth camera pan and tilt over the cards, followed by a hard cut at 4.9 seconds to a wider layout."
+      ],
+      "b_motion": [
+        "Slow camera pan and tilt matching the reference trajectory, followed by a hard cut at 4.9 seconds."
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 4.917,
+          "a_observable": "Strong vignette with darker corners and a bright spotlight effect on the central yellow Recurly card.",
+          "b_observable": "Flat lighting across the entire frame with minimal corner falloff.",
+          "fix": "Increase the vignette strength and add a subtle spotlight to the center.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 4.208,
+          "a_observable": "The blue icons and text on the cards have a deeper, more muted navy-blue tone.",
+          "b_observable": "The blue icons and text are highly saturated, bright royal blue.",
+          "fix": "Adjust the color grading of the blue elements to reduce saturation and shift the hue slightly towards a deeper navy.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_more_saturated",
+            "region": "center"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 4.208,
+          "a_observable": "Pronounced soft drop shadows under the Subscriptions, Retries, and APMs cards, creating a clear sense of depth.",
+          "b_observable": "Very faint or absent drop shadows, making the cards appear flat against the key surface.",
+          "fix": "Add a soft drop shadow effect to the floating card elements to match the reference depth.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the lighting to introduce a stronger vignette and more pronounced drop shadows on the card elements to match the depth and mood of the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "staging",
+        "t": 4.208,
+        "a_observable": "Pronounced soft drop shadows under the Subscriptions, Retries, and APMs cards, creating a clear sense of depth.",
+        "b_observable": "Very faint or absent drop shadows, making the cards appear flat against the key surface.",
+        "fix": "Add a soft drop shadow effect to the floating card elements to match the reference depth.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 2,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 0.95,
+          "note": "Clip A shows very distinct, dark drop shadows under the three cards, which gives them a strong 3D floating effect. In contrast, Clip B has very faint, almost imperceptible shadows, making the cards look flat against the surface."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "Decisive frames: A's three column cards FLOAT with pronounced soft drop shadows beneath them — they hover off the wall. B's sit seated (CAP_Y sinks them in) with minimal shadow. Actionable: raise the column cards and let the directional shadow render below."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 4.917,
+        "a_observable": "Strong vignette with darker corners and a bright spotlight effect on the central yellow Recurly card.",
+        "b_observable": "Flat lighting across the entire frame with minimal corner falloff.",
+        "fix": "Increase the vignette strength and add a subtle spotlight to the center.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 199.36,
+            "center_mean": 190.67,
+            "falloff_pct": -4.56
+          },
+          "B": {
+            "corner_mean": 195.49,
+            "center_mean": 171.97,
+            "falloff_pct": -13.68
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the lighting to introduce a stronger vignette and more pronounced drop shadows on the card elements to match the depth and mood of the reference.",
+    "dropped_unsupported": 6
+  }
+}

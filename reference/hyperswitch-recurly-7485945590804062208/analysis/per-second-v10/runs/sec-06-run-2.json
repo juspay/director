@@ -1,0 +1,42 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "The camera pans and rotates around the yellow button, then cuts to a slow zoom-out on the blue button."
+    ],
+    "b_motion": [
+      "The camera pans around the yellow button, then cuts to a slow zoom-out on the blue button."
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 6.125,
+        "a_observable": "The camera is positioned closer to the yellow button with a lower angle, creating a strong perspective and prominent corner vignette.",
+        "b_observable": "The camera is further away and more top-down, resulting in a flatter perspective and much weaker corner vignette.",
+        "fix": "Adjust the camera position closer to the yellow button and lower the angle to match the perspective and vignette of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 6.875,
+        "a_observable": "The blue Juspay button has a soft, desaturated blue color with a subtle lighting gradient.",
+        "b_observable": "The blue button has a highly saturated, flat royal blue color with no gradient.",
+        "fix": "Reduce the saturation of the blue material and add a soft gradient light to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and focal length to match the dynamic perspective of the reference, and apply soft lighting to the materials to reduce flatness."
+  }
+}

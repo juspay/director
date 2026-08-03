@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pans and zooms out smoothly while a 'Live Now' card rises from between the keys"
+    ],
+    "b_motion": [
+      "camera pans and zooms out while a 'Live Now' card rises from between the keys"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 11,
+        "a_observable": "The shadows between the keyboard keys are soft, light grey, and gradual.",
+        "b_observable": "The shadows between the keyboard keys are extremely dark, sharp, and deep black.",
+        "fix": "Reduce shadow intensity and soften the contact shadows between the keys.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows",
+          "region": "full"
+        }
+      },
+      {
+        "category": "color",
+        "t": 11,
+        "a_observable": "The overall color temperature is warm with a natural daylight tone, and the yellow Recurly key is a warm golden yellow.",
+        "b_observable": "The overall color temperature is cool with a distinct blue-grey cast, making the yellow Recurly key appear greenish-yellow.",
+        "fix": "Adjust the white balance to be warmer and shift the yellow key's hue away from green.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "full"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 11.5,
+        "a_observable": "The camera maintains a dynamic, slightly tilted perspective with visible parallax as it pans.",
+        "b_observable": "The camera angle is flatter, with less perspective distortion and different framing of the keys.",
+        "fix": "Adjust the camera's focal length and rotation to match the dynamic perspective of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the global lighting and shadow settings in B to soften the harsh, deep black shadows between the keyboard keys, matching the bright, high-key look of the reference."
+  }
+}

@@ -1,0 +1,248 @@
+{
+  "sec": 11,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow organic camera drift",
+        "subtle camera translation"
+      ],
+      "b_motion": [
+        "stiffer camera translation",
+        "linear camera drift"
+      ],
+      "absent_in_b": [
+        "warm studio lighting color cast",
+        "soft ambient occlusion shadows between keys"
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 11.5,
+          "a_observable": "The corners of the frame are significantly darker than the center, showing a strong vignette effect.",
+          "b_observable": "The corners of the frame are nearly as bright as the center, with minimal vignette.",
+          "fix": "Increase the vignette strength in post-processing to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 11.2,
+          "a_observable": "The overall image has a warm, cream-colored tone, especially visible on the white key surfaces.",
+          "b_observable": "The image has a cooler, neutral white tone on the key surfaces.",
+          "fix": "Apply a warm color cast or adjust the white balance to match the cream tones of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.8,
+          "a_observable": "Deep shadows are visible in the crevices between the keyboard keys, creating strong contact shadows.",
+          "b_observable": "The crevices between the keys are brightly lit, lacking deep contact shadows.",
+          "fix": "Enable or increase the strength of ambient occlusion and contact shadows between the geometry.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Enhance the lighting by adding a strong vignette, warming up the color temperature, and deepening the contact shadows between the keys to match the rich, high-contrast look of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "zoom"
+      ],
+      "b_motion": [
+        "translation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "staging",
+          "t": 11,
+          "a_observable": "The key between the Recurly and Juspay buttons is blank white.",
+          "b_observable": "The key between the Recurly and Juspay buttons contains a blue-bordered 'Live Now' pill.",
+          "fix": "Remove the 'Live Now' pill from this key to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 11.5,
+          "a_observable": "The camera zooms out and pans continuously, causing the buttons to shrink and move towards the corners.",
+          "b_observable": "The camera is nearly static, keeping the buttons at a constant size and position.",
+          "fix": "Match the camera zoom-out and pan speed of the reference video.",
+          "severity": 3,
+          "prediction": {
+            "metric": "motion",
+            "expect": "A_more"
+          }
+        },
+        {
+          "category": "material",
+          "t": 11.1,
+          "a_observable": "The white keys have a smooth, solid matte texture with no lines.",
+          "b_observable": "The white keys have thin grey horizontal lines textured onto them.",
+          "fix": "Remove the horizontal line textures from the white keys.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 11,
+          "a_observable": "The Recurly button is a warm golden yellow color.",
+          "b_observable": "The Recurly button is a cooler, greenish-yellow color.",
+          "fix": "Adjust the hue of the yellow button to be warmer and more golden.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Increase camera zoom-out and pan speed to match the dynamic framing of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pans and zooms out smoothly while a 'Live Now' card rises from between the keys"
+      ],
+      "b_motion": [
+        "camera pans and zooms out while a 'Live Now' card rises from between the keys"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 11,
+          "a_observable": "The shadows between the keyboard keys are soft, light grey, and gradual.",
+          "b_observable": "The shadows between the keyboard keys are extremely dark, sharp, and deep black.",
+          "fix": "Reduce shadow intensity and soften the contact shadows between the keys.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows",
+            "region": "full"
+          }
+        },
+        {
+          "category": "color",
+          "t": 11,
+          "a_observable": "The overall color temperature is warm with a natural daylight tone, and the yellow Recurly key is a warm golden yellow.",
+          "b_observable": "The overall color temperature is cool with a distinct blue-grey cast, making the yellow Recurly key appear greenish-yellow.",
+          "fix": "Adjust the white balance to be warmer and shift the yellow key's hue away from green.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler",
+            "region": "full"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 11.5,
+          "a_observable": "The camera maintains a dynamic, slightly tilted perspective with visible parallax as it pans.",
+          "b_observable": "The camera angle is flatter, with less perspective distortion and different framing of the keys.",
+          "fix": "Adjust the camera's focal length and rotation to match the dynamic perspective of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the global lighting and shadow settings in B to soften the harsh, deep black shadows between the keyboard keys, matching the bright, high-key look of the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "color",
+        "t": 11,
+        "a_observable": "The overall color temperature is warm with a natural daylight tone, and the yellow Recurly key is a warm golden yellow.",
+        "b_observable": "The overall color temperature is cool with a distinct blue-grey cast, making the yellow Recurly key appear greenish-yellow.",
+        "fix": "Adjust the white balance to be warmer and shift the yellow key's hue away from green.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "full"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_cooler",
+          "A": {
+            "r": 192.84,
+            "g": 204.41,
+            "b": 200.72,
+            "rb_delta": -7.89,
+            "saturation": 0.1913
+          },
+          "B": {
+            "r": 139.8,
+            "g": 152.95,
+            "b": 189.28,
+            "rb_delta": -49.48,
+            "saturation": 0.3125
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "camera",
+        "t": 11.5,
+        "a_observable": "The camera zooms out and pans continuously, causing the buttons to shrink and move towards the corners.",
+        "b_observable": "The camera is nearly static, keeping the buttons at a constant size and position.",
+        "fix": "Match the camera zoom-out and pan speed of the reference video.",
+        "severity": 3,
+        "prediction": {
+          "metric": "motion",
+          "expect": "A_more"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_more",
+          "A": {
+            "mean_abs_delta": 0.4707,
+            "frames": 30
+          },
+          "B": {
+            "mean_abs_delta": 0.2747,
+            "frames": 30
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera motion to match the dynamic zoom and pan of the reference, and correct the color temperature to be warmer, removing the cool blue-grey cast in B.",
+    "dropped_unsupported": 5
+  }
+}

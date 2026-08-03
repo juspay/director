@@ -1,0 +1,268 @@
+{
+  "sec": 14,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera zooms out smoothly, settling into a wide shot of the grid"
+      ],
+      "b_motion": [
+        "camera zooms out with a different easing curve, ending with tighter framing"
+      ],
+      "absent_in_b": [
+        "soft, realistic shadow diffusion on the key edges"
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 14.2,
+          "a_observable": "A soft vignette is visible, darkening the corners of the frame.",
+          "b_observable": "The lighting is flat and uniform, lacking corner falloff.",
+          "fix": "Add a vignette to darken the corners and enhance depth.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 14.2,
+          "a_observable": "The white keys exhibit a cool, blue-tinted color cast.",
+          "b_observable": "The white keys are neutral white and grey.",
+          "fix": "Adjust the white balance to introduce a cool color cast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 14,
+          "a_observable": "The shadows cast by the keys are soft and highly diffused.",
+          "b_observable": "The shadows are sharp and dark, creating harsh contact lines.",
+          "fix": "Increase shadow blur or light source size to soften the contact shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Soften the harsh shadows under the keys and apply a cool color cast with a vignette to match the reference lighting depth.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "static"
+      ],
+      "b_motion": [
+        "static"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 14.1,
+          "a_observable": "Deep, soft contact shadows are visible beneath the raised button elements, creating a strong sense of depth.",
+          "b_observable": "The contact shadows are extremely faint, making the buttons appear flat and un-raised.",
+          "fix": "Enhance the ambient occlusion and contact shadow intensity under the buttons.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 14.3,
+          "a_observable": "The yellow Recurly button is highly saturated, and the overall scene has a warm color temperature.",
+          "b_observable": "The yellow button is desaturated, and the scene has a cool, neutral white cast.",
+          "fix": "Increase color saturation and adjust the color temperature to be warmer.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "material",
+          "t": 14.2,
+          "a_observable": "The yellow button exhibits a subtle semi-glossy finish with soft light reflections.",
+          "b_observable": "The yellow button has a completely flat, matte material with no specular highlights.",
+          "fix": "Adjust the material roughness and specular settings of the yellow button to add subtle glossiness.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Enhance the contact shadows and ambient occlusion under the buttons to restore the 3D depth and separation from the background.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "static"
+      ],
+      "b_motion": [
+        "static"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "color",
+          "t": 14.1,
+          "a_observable": "Warm, yellowish color cast on white surfaces.",
+          "b_observable": "Neutral grey and white surfaces with no color cast.",
+          "fix": "Apply a warm color grade to match the reference.",
+          "severity": 4,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 14.2,
+          "a_observable": "Strong vignette with darker corners.",
+          "b_observable": "Weak vignette with bright corners.",
+          "fix": "Add a vignette effect to darken the corners.",
+          "severity": 4,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 14.4,
+          "a_observable": "Deeper shadows under the tiles, creating higher contrast.",
+          "b_observable": "Lighter, softer shadows with lower contrast.",
+          "fix": "Adjust the shadow levels to increase contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        }
+      ],
+      "highest_impact_fix": "Match the warm color grading and strong vignette of the reference to improve the overall atmosphere.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 14.2,
+        "a_observable": "Strong vignette with darker corners.",
+        "b_observable": "Weak vignette with bright corners.",
+        "fix": "Add a vignette effect to darken the corners.",
+        "severity": 4,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 208.82,
+            "center_mean": 192.76,
+            "falloff_pct": -8.33
+          },
+          "B": {
+            "corner_mean": 150.43,
+            "center_mean": 155.68,
+            "falloff_pct": 3.37
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 14.1,
+        "a_observable": "Warm, yellowish color cast on white surfaces.",
+        "b_observable": "Neutral grey and white surfaces with no color cast.",
+        "fix": "Apply a warm color grade to match the reference.",
+        "severity": 4,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_cooler",
+          "A": {
+            "r": 194.63,
+            "g": 204.43,
+            "b": 200.75,
+            "rb_delta": -6.12,
+            "saturation": 0.184
+          },
+          "B": {
+            "r": 139.51,
+            "g": 152.82,
+            "b": 189.41,
+            "rb_delta": -49.9,
+            "saturation": 0.3127
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 14.1,
+        "a_observable": "Deep, soft contact shadows are visible beneath the raised button elements, creating a strong sense of depth.",
+        "b_observable": "The contact shadows are extremely faint, making the buttons appear flat and un-raised.",
+        "fix": "Enhance the ambient occlusion and contact shadow intensity under the buttons.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 4.25,
+            "p1": 85.88,
+            "p5": 91.13,
+            "p50": 208.87,
+            "p95": 231.47,
+            "p99": 236.19,
+            "p999": 251.81,
+            "span_p5_p95": 140.34
+          },
+          "B": {
+            "p01": 73.12,
+            "p1": 74.68,
+            "p5": 79.82,
+            "p50": 168.69,
+            "p95": 182.41,
+            "p99": 188.77,
+            "p999": 239.72,
+            "span_p5_p95": 102.59
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Apply a warm color grade and add a vignette effect to match the reference, while enhancing the contact shadows under the buttons to restore depth.",
+    "dropped_unsupported": 3
+  }
+}

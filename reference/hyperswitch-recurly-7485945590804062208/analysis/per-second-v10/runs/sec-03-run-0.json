@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 3.5,
+        "a_observable": "Deep, soft contact shadows are visible beneath the raised cards, creating a strong sense of depth.",
+        "b_observable": "The contact shadows beneath the cards are extremely faint, making the cards appear flat against the background.",
+        "fix": "Increase the strength and radius of the ambient occlusion and contact shadows under the cards.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 3.5,
+        "a_observable": "The camera is angled obliquely, showing a yellow element in the top-left corner and a strong perspective tilt on the cards.",
+        "b_observable": "The camera angle is more top-down, with less perspective tilt, and the yellow element is not visible in the top-left.",
+        "fix": "Adjust the camera position and rotation to match the oblique perspective and framing of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 3.5,
+        "a_observable": "The white key surfaces have a warm, cream-colored tint.",
+        "b_observable": "The white key surfaces are a neutral, cool grey.",
+        "fix": "Adjust the white balance or color grading to add a warm cream tint to the highlights and midtones.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle to match the oblique perspective of the reference and significantly darken the contact shadows under the cards."
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "diagonal camera pan",
+      "slow zoom out"
+    ],
+    "b_motion": [
+      "diagonal camera pan",
+      "slow zoom out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 10.2,
+        "a_observable": "The gaps between the keyboard keys are tight, thin grey lines.",
+        "b_observable": "The gaps between the keyboard keys are wider and more pronounced, creating thicker dark lines.",
+        "fix": "Decrease the gap width between the keys to match the tighter layout of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "The white keys exhibit a soft blue-grey color cast in the shadows and a noticeable vignette towards the corners.",
+        "b_observable": "The white keys are flatly lit with neutral grey shadows and lack a vignette.",
+        "fix": "Add a subtle blue color cast to the ambient light and introduce a vignette to darken the corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "material",
+        "t": 10.8,
+        "a_observable": "The yellow Recurly card shows a subtle specular highlight and glossy reflection as the camera pans.",
+        "b_observable": "The yellow Recurly card has a completely flat, matte texture with no specular reflections.",
+        "fix": "Increase the glossiness and specular intensity of the yellow card material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Decrease the gap width between the keyboard keys to match the tighter layout of the reference, and add a subtle blue color cast to the ambient shadows along with a vignette."
+  }
+}

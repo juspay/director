@@ -1,0 +1,308 @@
+{
+  "sec": 1,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 1.5,
+          "a_observable": "The corners of the frame exhibit a pronounced dark falloff, creating a strong vignette.",
+          "b_observable": "The corners of the frame are bright and evenly lit, with no visible vignette.",
+          "fix": "Add a post-processing vignette or adjust the camera lens settings to simulate natural corner light falloff.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 1.5,
+          "a_observable": "The white plastic keys have a cool, blueish color cast, particularly visible in the shadows.",
+          "b_observable": "The white plastic keys are neutral grey/white with no blue color cast.",
+          "fix": "Adjust the white balance or apply a cool color grade to the midtones and shadows to match the reference's blue tint.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 1.2,
+          "a_observable": "The upper-right key ('Renewal Success') is heavily blurred due to a shallow depth of field.",
+          "b_observable": "The upper-right key is sharp and in focus.",
+          "fix": "Enable depth of field on the camera and set a wider aperture to blur the background and foreground elements.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Enable depth of field on the camera with a wider aperture to match the realistic focus falloff seen in the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan and tilt, rotating around the central keys"
+      ],
+      "b_motion": [
+        "slow camera pan and tilt, rotating around the central keys"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 1.5,
+          "a_observable": "The yellow key is positioned at the bottom of the frame, and the blue key is on the left.",
+          "b_observable": "The yellow key is positioned at the top right of the frame, and the blue key is at the bottom left.",
+          "fix": "Rearrange the keys on the keyboard grid to match the reference layout, placing the yellow key at the bottom and the blue key on the left.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 1.5,
+          "a_observable": "The camera is positioned close to the 'Secure Payments' card with a shallow depth of field blurring the background.",
+          "b_observable": "The camera is positioned further away, showing more of the keyboard, with all keys in sharp focus.",
+          "fix": "Adjust the camera position, focal length, and enable depth of field with a wider aperture to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 1.5,
+          "a_observable": "Vibrant lighting with a strong blue color cast on the left keys and warm highlights on the center keys.",
+          "b_observable": "Dull, flat grey lighting across all keys with no color cast or warm highlights.",
+          "fix": "Add a blue fill light from the left and a warm key light from the right to match the reference color contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Rearrange the keyboard grid layout to place the yellow key at the bottom and the blue key on the left, and adjust the camera framing and depth of field to match the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan",
+        "slow zoom out"
+      ],
+      "b_motion": [
+        "slow camera pan",
+        "slow zoom out"
+      ],
+      "absent_in_b": [
+        "perforated dot pattern on the left key"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 1.5,
+          "a_observable": "The camera is angled more steeply, showing more perspective distortion on the keys.",
+          "b_observable": "The camera angle is flatter with less perspective distortion, making the keys appear more orthographic.",
+          "fix": "Match the camera focal length and angle of Video A.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 1.5,
+          "a_observable": "The overall color temperature is cool, with crisp white keys and clean blue tones.",
+          "b_observable": "The image has a distinct warm, yellowish-grey color cast.",
+          "fix": "Adjust white balance to remove the warm cast and match the cool tones of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 1.5,
+          "a_observable": "There is a noticeable vignette with darker corners, creating a focused central spotlight effect.",
+          "b_observable": "The lighting is flat and uniform across the frame, lacking corner falloff.",
+          "fix": "Add a vignette to match the corner shading of Video A.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 1.5,
+          "a_observable": "The 'Secure Payments' card is centered and occupies a larger portion of the frame with tighter gaps between surrounding keys.",
+          "b_observable": "The 'Secure Payments' card is shifted to the left, with wider gaps between the keys.",
+          "fix": "Adjust the layout and spacing of the keys to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "material",
+          "t": 1.5,
+          "a_observable": "The key on the far left features a grid of perforated grey dots.",
+          "b_observable": "The key on the far left is completely solid and blank.",
+          "fix": "Add the perforated dot pattern texture to the left key.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera focal length, angle, and position to match the perspective and framing of Video A.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "The corners of the frame exhibit a pronounced dark falloff, creating a strong vignette.",
+        "b_observable": "The corners of the frame are bright and evenly lit, with no visible vignette.",
+        "fix": "Add a post-processing vignette or adjust the camera lens settings to simulate natural corner light falloff.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 203.84,
+            "center_mean": 204.62,
+            "falloff_pct": 0.39
+          },
+          "B": {
+            "corner_mean": 200.92,
+            "center_mean": 209.89,
+            "falloff_pct": 4.27
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 1.5,
+        "a_observable": "The white plastic keys have a cool, blueish color cast, particularly visible in the shadows.",
+        "b_observable": "The white plastic keys are neutral grey/white with no blue color cast.",
+        "fix": "Adjust the white balance or apply a cool color grade to the midtones and shadows to match the reference's blue tint.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_cooler",
+          "A": {
+            "r": 190.28,
+            "g": 199.88,
+            "b": 202.67,
+            "rb_delta": -12.39,
+            "saturation": 0.201
+          },
+          "B": {
+            "r": 195.27,
+            "g": 201.25,
+            "b": 215.04,
+            "rb_delta": -19.77,
+            "saturation": 0.0945
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "camera",
+        "t": 1.5,
+        "a_observable": "The camera is positioned close to the 'Secure Payments' card with a shallow depth of field blurring the background.",
+        "b_observable": "The camera is positioned further away, showing more of the keyboard, with all keys in sharp focus.",
+        "fix": "Adjust the camera position, focal length, and enable depth of field with a wider aperture to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "B_sharper",
+          "A": {
+            "lap_var": 21.84
+          },
+          "B": {
+            "lap_var": 2.95
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "layout",
+        "t": 1.5,
+        "a_observable": "The 'Secure Payments' card is centered and occupies a larger portion of the frame with tighter gaps between surrounding keys.",
+        "b_observable": "The 'Secure Payments' card is shifted to the left, with wider gaps between the keys.",
+        "fix": "Adjust the layout and spacing of the keys to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "The comparison is accurate. In Clip A, the 'Secure Payments' card is centered, larger, and the gaps between the surrounding blocks are very tight. In Clip B, the card is shifted to the left, and the gaps between the blocks are visibly wider."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "Same spacing family upheld last pass: A packs tighter with the subject more central."
+        }
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Rearrange the keyboard grid layout to place the yellow key at the bottom and the blue key on the left, and adjust the camera framing and depth of field to match the reference.",
+    "dropped_unsupported": 2
+  }
+}

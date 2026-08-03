@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera zoom out"
+    ],
+    "b_motion": [
+      "slow camera zoom out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 12,
+        "a_observable": "Crevices between keys show deep, dark shadows.",
+        "b_observable": "Crevices between keys are light grey with minimal shadow definition.",
+        "fix": "Darken contact shadows and ambient occlusion in crevices.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "Corners of the frame are noticeably darker than the center due to a vignette.",
+        "b_observable": "Frame brightness is uniform across the center and corners.",
+        "fix": "Apply a vignette effect to darken the corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 12.2,
+        "a_observable": "The yellow card displays a warm, golden-yellow hue.",
+        "b_observable": "The yellow card has a cooler, slightly greenish-yellow hue.",
+        "fix": "Adjust the yellow card's color temperature to match the warm reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Enhance the ambient occlusion and contact shadows in the crevices between the keys to restore depth and contrast."
+  }
+}

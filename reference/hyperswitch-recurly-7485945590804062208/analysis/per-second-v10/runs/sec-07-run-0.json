@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 7.25,
+        "a_observable": "The recess around the blue card has soft, light-grey shadows.",
+        "b_observable": "The recess around the blue card has very dark, high-contrast black shadows.",
+        "fix": "Soften the shadow density in the card recesses.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 7.1,
+        "a_observable": "The white background tiles have a warm, cream-colored tint.",
+        "b_observable": "The white background tiles are neutral grey with a cool blue undertone.",
+        "fix": "Adjust white balance to add warmth to the background tiles.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 7.5,
+        "a_observable": "The camera angle is more top-down, reducing perspective distortion.",
+        "b_observable": "The camera is at a lower angle, increasing perspective distortion.",
+        "fix": "Adjust camera tilt to match the flatter perspective.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Soften the shadow density in the card recesses to match the bright, clean aesthetic of the reference."
+  }
+}

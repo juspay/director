@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      4.896
+    ],
+    "a_motion": [
+      "Slow, smooth camera pan and tilt over the cards, followed by a hard cut at 4.9 seconds to a wider layout."
+    ],
+    "b_motion": [
+      "Slow camera pan and tilt matching the reference trajectory, followed by a hard cut at 4.9 seconds."
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 4.917,
+        "a_observable": "Strong vignette with darker corners and a bright spotlight effect on the central yellow Recurly card.",
+        "b_observable": "Flat lighting across the entire frame with minimal corner falloff.",
+        "fix": "Increase the vignette strength and add a subtle spotlight to the center.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 4.208,
+        "a_observable": "The blue icons and text on the cards have a deeper, more muted navy-blue tone.",
+        "b_observable": "The blue icons and text are highly saturated, bright royal blue.",
+        "fix": "Adjust the color grading of the blue elements to reduce saturation and shift the hue slightly towards a deeper navy.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated",
+          "region": "center"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 4.208,
+        "a_observable": "Pronounced soft drop shadows under the Subscriptions, Retries, and APMs cards, creating a clear sense of depth.",
+        "b_observable": "Very faint or absent drop shadows, making the cards appear flat against the key surface.",
+        "fix": "Add a soft drop shadow effect to the floating card elements to match the reference depth.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the lighting to introduce a stronger vignette and more pronounced drop shadows on the card elements to match the depth and mood of the reference."
+  }
+}

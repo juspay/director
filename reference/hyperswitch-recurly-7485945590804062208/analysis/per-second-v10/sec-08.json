@@ -1,0 +1,342 @@
+{
+  "sec": 8,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "camera pan",
+        "card slide up"
+      ],
+      "b_motion": [
+        "camera pan",
+        "card slide up"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 8.25,
+          "a_observable": "The camera is at a lower, more oblique angle, showing stronger perspective.",
+          "b_observable": "The camera is at a higher, flatter angle with less perspective.",
+          "fix": "Lower the camera and tilt up to match the oblique angle.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "motion",
+          "t": 8.45,
+          "a_observable": "The white 'Live Now' card is already sliding upwards.",
+          "b_observable": "The white card is static and flat, delaying its animation.",
+          "fix": "Shift the card's slide-up keyframes earlier.",
+          "severity": 4,
+          "prediction": {
+            "metric": "motion",
+            "expect": "A_more"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 8.5,
+          "a_observable": "Pronounced vignette darkening the corners.",
+          "b_observable": "Even illumination across the frame with weak vignette.",
+          "fix": "Add a stronger vignette in post-production.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 8.3,
+          "a_observable": "The yellow card has a warm, highly saturated golden hue.",
+          "b_observable": "The yellow card is pale and less saturated.",
+          "fix": "Increase saturation and warmth of the yellow material.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the timing of the sliding 'Live Now' card animation and match the oblique camera angle.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "camera pan",
+        "camera zoom",
+        "button rise"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom",
+        "button rise"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 8.06,
+          "a_observable": "The camera is positioned closer to the Juspay Hyperswitch button, framing it tightly with a distinct perspective angle.",
+          "b_observable": "The camera is further back, showing more of the surrounding tiles, with a flatter perspective.",
+          "fix": "Adjust the camera focal length and position to match the tighter framing and perspective of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 8.5,
+          "a_observable": "The corners of the frame are significantly darker than the center, showing a strong vignette.",
+          "b_observable": "The corners of the frame are nearly as bright as the center, with a very weak vignette.",
+          "fix": "Increase the vignette strength in the camera or post-processing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 8.5,
+          "a_observable": "The shadows under the buttons and in the recesses are deep and dark, creating high contrast.",
+          "b_observable": "The shadows are much lighter and softer, resulting in a flatter look.",
+          "fix": "Adjust the shadow density and contrast to match the deeper shadows of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 8.5,
+          "a_observable": "The Recurly button has a warm golden-yellow color.",
+          "b_observable": "The Recurly button has a cooler, lemon-yellow color.",
+          "fix": "Adjust the material color of the yellow button to have a warmer hue.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 8.7,
+          "a_observable": "The 'Live Now' button is just beginning to rise from its slot.",
+          "b_observable": "The 'Live Now' button has already fully risen and is stationary.",
+          "fix": "Delay the animation of the 'Live Now' button to match the reference timing.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Align the camera framing and perspective, and match the warm color grading and vignette of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "camera zoom out",
+        "card translation"
+      ],
+      "b_motion": [
+        "camera zoom out",
+        "card translation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 8.5,
+          "a_observable": "Wider camera field of view with stronger perspective distortion on the keys.",
+          "b_observable": "Flatter camera perspective with less foreshortening on the keys.",
+          "fix": "Decrease focal length and adjust position to match perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 8.5,
+          "a_observable": "The yellow Recurly card has a warm golden hue.",
+          "b_observable": "The yellow Recurly card has a cooler, greenish-yellow hue.",
+          "fix": "Warm up the yellow diffuse material color.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 8.5,
+          "a_observable": "Distinct vignette darkening the corners of the frame.",
+          "b_observable": "Corners are bright, lacking vignette falloff.",
+          "fix": "Add a post-process vignette to match the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "motion",
+          "t": 8.7,
+          "a_observable": "The 'Live Now' pill is actively sliding upward.",
+          "b_observable": "The 'Live Now' pill has completed its motion and is stationary.",
+          "fix": "Delay the keyframes of the pill animation.",
+          "severity": 3,
+          "prediction": {
+            "metric": "motion",
+            "expect": "A_more"
+          }
+        }
+      ],
+      "highest_impact_fix": "Match the camera focal length to correct the perspective distortion and key layout, and delay the 'Live Now' pill animation timing.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 8.25,
+        "a_observable": "The camera is at a lower, more oblique angle, showing stronger perspective.",
+        "b_observable": "The camera is at a higher, flatter angle with less perspective.",
+        "fix": "Lower the camera and tilt up to match the oblique angle.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 3,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 0.9,
+          "note": "The camera in Clip A is indeed at a lower, more oblique angle, which creates a stronger perspective effect. In Clip B, the camera is positioned higher, looking more directly down at the surface, resulting in a flatter angle with less perspective distortion."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "Same finding upheld last pass at this second: B more directly overhead than A."
+        }
+      },
+      {
+        "category": "motion",
+        "t": 8.7,
+        "a_observable": "The 'Live Now' pill is actively sliding upward.",
+        "b_observable": "The 'Live Now' pill has completed its motion and is stationary.",
+        "fix": "Delay the keyframes of the pill animation.",
+        "severity": 3,
+        "prediction": {
+          "metric": "motion",
+          "expect": "A_more"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_more",
+          "A": {
+            "mean_abs_delta": 2.9309,
+            "frames": 30
+          },
+          "B": {
+            "mean_abs_delta": 1.0925,
+            "frames": 30
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "The corners of the frame are significantly darker than the center, showing a strong vignette.",
+        "b_observable": "The corners of the frame are nearly as bright as the center, with a very weak vignette.",
+        "fix": "Increase the vignette strength in the camera or post-processing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 174.81,
+            "center_mean": 180.43,
+            "falloff_pct": 3.11
+          },
+          "B": {
+            "corner_mean": 150.48,
+            "center_mean": 146.42,
+            "falloff_pct": -2.77
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "color",
+        "t": 8.5,
+        "a_observable": "The yellow Recurly card has a warm golden hue.",
+        "b_observable": "The yellow Recurly card has a cooler, greenish-yellow hue.",
+        "fix": "Warm up the yellow diffuse material color.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_cooler",
+          "A": {
+            "r": 168.23,
+            "g": 177.79,
+            "b": 186.98,
+            "rb_delta": -18.75,
+            "saturation": 0.2316
+          },
+          "B": {
+            "r": 128.04,
+            "g": 143.79,
+            "b": 186.87,
+            "rb_delta": -58.83,
+            "saturation": 0.3689
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Match the camera focal length to correct the perspective distortion and key layout, and delay the 'Live Now' pill animation timing.",
+    "dropped_unsupported": 1
+  }
+}

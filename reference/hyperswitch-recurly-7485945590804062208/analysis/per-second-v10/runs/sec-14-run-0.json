@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zooms out smoothly, settling into a wide shot of the grid"
+    ],
+    "b_motion": [
+      "camera zooms out with a different easing curve, ending with tighter framing"
+    ],
+    "absent_in_b": [
+      "soft, realistic shadow diffusion on the key edges"
+    ],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 14.2,
+        "a_observable": "A soft vignette is visible, darkening the corners of the frame.",
+        "b_observable": "The lighting is flat and uniform, lacking corner falloff.",
+        "fix": "Add a vignette to darken the corners and enhance depth.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 14.2,
+        "a_observable": "The white keys exhibit a cool, blue-tinted color cast.",
+        "b_observable": "The white keys are neutral white and grey.",
+        "fix": "Adjust the white balance to introduce a cool color cast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 14,
+        "a_observable": "The shadows cast by the keys are soft and highly diffused.",
+        "b_observable": "The shadows are sharp and dark, creating harsh contact lines.",
+        "fix": "Increase shadow blur or light source size to soften the contact shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Soften the harsh shadows under the keys and apply a cool color cast with a vignette to match the reference lighting depth."
+  }
+}

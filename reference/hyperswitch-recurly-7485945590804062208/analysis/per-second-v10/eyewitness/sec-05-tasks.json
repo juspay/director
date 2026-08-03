@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 5,
+    "idx": 0,
+    "t": 5.2,
+    "category": "camera",
+    "a_observable": "The camera is positioned at a low, oblique angle relative to the keyboard grid, creating a strong perspective effect.",
+    "b_observable": "The camera is positioned at a higher, more top-down angle, resulting in a flatter perspective.",
+    "frames": {
+      "A": "analysis/per-second-v10/eyewitness/sec-05-c0-A.png",
+      "B": "analysis/per-second-v10/eyewitness/sec-05-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.75,
+      "note": "Clip A shows a highly oblique, low-angle perspective of the keyboard grid, whereas Clip B is filmed from a higher, more top-down angle, resulting in a flatter perspective."
+    }
+  }
+]

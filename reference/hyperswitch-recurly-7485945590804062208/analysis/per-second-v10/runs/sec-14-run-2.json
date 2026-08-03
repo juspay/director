@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "static"
+    ],
+    "b_motion": [
+      "static"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 14.1,
+        "a_observable": "Warm, yellowish color cast on white surfaces.",
+        "b_observable": "Neutral grey and white surfaces with no color cast.",
+        "fix": "Apply a warm color grade to match the reference.",
+        "severity": 4,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 14.2,
+        "a_observable": "Strong vignette with darker corners.",
+        "b_observable": "Weak vignette with bright corners.",
+        "fix": "Add a vignette effect to darken the corners.",
+        "severity": 4,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 14.4,
+        "a_observable": "Deeper shadows under the tiles, creating higher contrast.",
+        "b_observable": "Lighter, softer shadows with lower contrast.",
+        "fix": "Adjust the shadow levels to increase contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      }
+    ],
+    "highest_impact_fix": "Match the warm color grading and strong vignette of the reference to improve the overall atmosphere."
+  }
+}
