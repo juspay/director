@@ -118,12 +118,18 @@ function buildTiles(): Tile[] {
     // Mid-size tiles only, sparse — the per-shot brandRadius gate below trims
     // them to the acting area in WORLD space (this test runs pre-offset, which
     // is how round one parked a giant gold tile mid-frame in shot 2).
-    const accent = area > 3 && area < 8 && idx % 4 === 0;
+    // Sized down from area 3-8 after measuring the reference at f30: its brand
+    // accents are TILE-scale objects a third the width of a hero plate, where
+    // ours were filling a quarter of the frame each and reading as walls of
+    // paint. The same ceiling now gates the probabilistic accents, which were
+    // free to land on the largest tiles in the set.
+    const accent = area > 1.3 && area < 3.6 && idx % 4 === 0;
+    const canBrand = area < 4.2;
     if (accent) kind = cx < 0 ? 'blue' : 'gold';
     else if (area > 14) kind = 'plain';
-    else if (u > 0.94) kind = 'gold';
-    else if (u > 0.89) kind = 'blue';
-    else if (u > 0.84) kind = 'lightblue';
+    else if (u > 0.94) kind = canBrand ? 'gold' : 'plain';
+    else if (u > 0.89) kind = canBrand ? 'blue' : 'plain';
+    else if (u > 0.84) kind = canBrand ? 'lightblue' : 'plain';
     else if (u > 0.76) kind = 'metal';
     else if (u > 0.68) kind = 'dots';
     else if (u > 0.63) kind = 'doc';
@@ -239,7 +245,7 @@ export const SetDressing: React.FC<{
               metalness={metalish ? 0.35 : 0.0}
               clearcoat={isBrand ? 0.7 : 0.28}
               clearcoatRoughness={0.42}
-              emissive="#ffffff"
+              emissive="#ffe6bc"
               emissiveIntensity={whiten}
             />
           </Slab>
@@ -285,8 +291,11 @@ export const Well: React.FC<{
   tone?: 'light' | 'dark';
 }> = ({ position, size, metalMap = null, whiten = 0, tone = 'light' }) => {
   const [w, l] = size;
-  const bezel = 0.155;
   const dark = tone === 'dark';
+  // Measured off the reference at f165: the socket border is ~11% of the plate
+  // width on each side. 0.24 made it 23% and the hero looked like a small card
+  // on a large mat.
+  const bezel = dark ? 0.14 : 0.155;
   return (
     <group position={position}>
       <Slab
@@ -296,14 +305,33 @@ export const Well: React.FC<{
         receiveShadow
         castShadow
       >
+        {/* Metalness without an environment to reflect renders NEAR-BLACK — at
+            0.45 the "dark graphite" bezel came out a flat navy slab, where the
+            reference's is clearly brushed mid-grey metal catching the key. The
+            brushed character has to come from the map and roughness instead.
+
+            The dark tone's albedo is WARM KHAKI, not neutral. Measured: the
+            reference's macro bezel is (117,123,128) — near-neutral and darker
+            than the plate; a neutral material under this scene's cool key and
+            cool dapple rendered (147,162,197), a full 70 points of blue over
+            target. That blue also put the bezel in colour opposition to the
+            gold plate, and the out-of-focus edge between them blurred into a
+            magenta halo the saturation grade then amplified.
+
+            The light tone's metalness came down from 0.45 for a separate
+            reason: the sliver of bezel side wall standing proud of the tile
+            tops caught a grazing specular that ran as a hot white bar under
+            both brand cards through the entire lockup. The reference's frames
+            do carry a bright top edge, but as a highlight on metal, not as a
+            light strip. */}
         <meshPhysicalMaterial
           map={metalMap ?? undefined}
-          color={dark ? '#82878f' : '#dde2ea'}
-          roughness={dark ? 0.52 : 0.4}
-          metalness={0.45}
+          color={dark ? '#c9bda4' : '#d6dbe4'}
+          roughness={0.46}
+          metalness={dark ? 0.16 : 0.22}
           clearcoat={0.15}
           anisotropy={0.45}
-          emissive="#ffffff"
+          emissive="#ffe6bc"
           emissiveIntensity={whiten * 0.5}
         />
       </Slab>
@@ -315,7 +343,7 @@ export const Well: React.FC<{
         position={[0, WELL_FLOOR - TILE_THICK / 2, 0]}
         receiveShadow
       >
-        <meshStandardMaterial color={dark ? '#5f646d' : '#8f96a3'} roughness={0.88} metalness={0.15} />
+        <meshStandardMaterial color={dark ? '#6f6a60' : '#8f96a3'} roughness={0.88} metalness={0.15} />
       </Slab>
     </group>
   );
@@ -362,7 +390,7 @@ export const Peripherals: React.FC<{ whiten?: number; offset?: [number, number, 
             metalness={0}
             clearcoat={0.5}
             clearcoatRoughness={0.35}
-            emissive="#ffffff"
+            emissive="#ffe6bc"
             emissiveIntensity={whiten}
           />
         </Slab>

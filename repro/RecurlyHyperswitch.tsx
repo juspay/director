@@ -82,11 +82,17 @@ const Lights: React.FC = () => (
       <Lightformer intensity={0.36} position={[9, 4, -4]} scale={[22, 22, 1]} color="#e7effc" />
       <Lightformer intensity={0.2} position={[0, 1.5, 11]} scale={[26, 12, 1]} color="#ffffff" />
     </Environment>
-    <ambientLight intensity={0.10} />
-    <hemisphereLight args={['#f2f6fe', '#d3d7de', 0.16]} />
+    {/* Fill pulled DOWN and the shadow-casting key pushed UP. Measured at f30:
+        the reference's 5th-percentile luma is 96.5 against our 164.8 — it has
+        genuinely dark contact shadows under its cards and we had none, the
+        frame floating on an even fill. There is real headroom here: the earlier
+        crushed-blacks finding was about p1 falling to 17, and the reference's
+        own floor at this instant is 96. */}
+    <ambientLight intensity={0.07} />
+    <hemisphereLight args={['#f2f6fe', '#d3d7de', 0.11]} />
     <directionalLight
       position={[-3.0, 6.5, 3.2]}
-      intensity={0.55}
+      intensity={0.85}
       color="#f2f6fe"
       castShadow
       shadow-mapSize-width={4096}
@@ -126,9 +132,13 @@ const BRIGHT_MACRO = -0.06;
 // against (64,101,220) — both washed toward grey. The set rebuild removed the
 // clipping this was compensating for (blown pixels measure 0.00000 against the
 // reference's 0.00035), so the compression can come back off.
+// Re-measured against the reference at f300: its lockup runs luma p50 208.6 /
+// p95 240.0, ours 187.2 / 202.8 — the shot had no bright whites at all against
+// a reference whose wall is a near-white field. The compression this grade
+// still carried was the last of the blow-out correction.
 const SAT_LOCKUP = 0.20;
-const CONTRAST_LOCKUP = -0.10;
-const BRIGHT_LOCKUP = -0.02;
+const CONTRAST_LOCKUP = 0.0;
+const BRIGHT_LOCKUP = 0.06;
 
 /**
  * Per-shot focus target. Locking focus to a fixed world point meant the plane
@@ -185,7 +195,7 @@ function dappleTexture(): THREE.Texture {
   // (-6..-22) but NEVER goes warm; a neutral base made frame tint a lottery
   // decided by whichever pool drifted over the view (measured +24 one round,
   // -55 another).
-  x.fillStyle = '#eef3fa';
+  x.fillStyle = '#f0f3f9';
   x.fillRect(0, 0, 1024, 1024);
   const r = rng(20260802);
   const pool = (fill: [number, number, number], count: number, alpha: number) => {
@@ -200,7 +210,12 @@ function dappleTexture(): THREE.Texture {
       x.fillRect(px - rad, py - rad, rad * 2, rad * 2);
     }
   };
-  pool([178, 190, 228], 18, 0.7); // cool shade
+  // Cool pools softened from (178,190,228). MultiplyBlending scales channels,
+  // so the wall's HUE is set here and nothing downstream can correct it — no
+  // amount of exposure or emissive lift changes the ratio. Measured at f300 the
+  // lockup ran rb -51.6 against the reference's -13.5; that entire error lives
+  // in this constant.
+  pool([188, 196, 222], 18, 0.7); // cool shade
   pool([242, 236, 222], 7, 0.3); // warm accents — weak: a warm pool drifting over a macro view must never flip the frame warm
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;
@@ -299,7 +314,7 @@ const FogRig: React.FC = () => {
   // whitens the edges less.
   const near = interpolate(frame, [250, 300], [9.5, 17.5], ease);
   const far = interpolate(frame, [250, 300], [30, 58], ease);
-  return <fog attach="fog" args={['#edf0f5', near, far]} />;
+  return <fog attach="fog" args={['#f1f2f3', near, far]} />;
 };
 
 /**

@@ -3,6 +3,7 @@ import { useThree } from '@react-three/fiber';
 import { interpolate, spring, useCurrentFrame } from 'remotion';
 import * as THREE from 'three';
 import { Keycap } from './Keycap';
+import { Slab } from './Slab';
 import { SetDressing, Peripherals, Well, TILE_TOP, WELL_FLOOR } from './SetDressing';
 import { C, FPS, T } from './theme';
 import {
@@ -92,43 +93,49 @@ const SHOTS: Shot[] = [
   {
     start: 0, end: 65,
     keys: [
-      { f: 0, pos: [1.90, 3.42, 1.43], tgt: [0.00, 0.15, 0.15], roll: -0.25, fov: 34 },
-      { f: 32, pos: [0.16, 3.43, 2.44], tgt: [0.00, 0.15, 0.15], roll: -0.18, fov: 34 },
-      { f: 65, pos: [-1.81, 3.42, 1.56], tgt: [0.00, 0.15, 0.15], roll: -0.1, fov: 34 },
+      { f: 0, pos: [1.90, 3.42, 1.43], tgt: [0.00, 0.15, 0.15], roll: -0.25, fov: 38 },
+      { f: 32, pos: [0.16, 3.43, 2.44], tgt: [0.00, 0.15, 0.15], roll: -0.18, fov: 38 },
+      { f: 65, pos: [-1.81, 3.42, 1.56], tgt: [0.00, 0.15, 0.15], roll: -0.1, fov: 38 },
     ],
   },
   {
     start: 66, end: 146,
     keys: [
-      { f: 66, pos: [-1.50, 4.16, 2.49], tgt: [0.00, 0.16, 0.00], roll: -0.07, fov: 33 },
-      { f: 106, pos: [-0.31, 4.17, 2.89], tgt: [0.00, 0.16, 0.00], roll: -0.12, fov: 33 },
-      { f: 146, pos: [0.84, 4.17, 2.79], tgt: [0.00, 0.16, 0.00], roll: -0.17, fov: 33 },
+      { f: 66, pos: [-1.50, 4.16, 2.49], tgt: [0.00, 0.16, 0.00], roll: -0.07, fov: 37 },
+      { f: 106, pos: [-0.31, 4.17, 2.89], tgt: [0.00, 0.16, 0.00], roll: -0.12, fov: 37 },
+      { f: 146, pos: [0.84, 4.17, 2.79], tgt: [0.00, 0.16, 0.00], roll: -0.17, fov: 37 },
     ],
   },
   {
     start: 147, end: 199,
     keys: [
-      { f: 147, pos: [1.99, 3.38, 2.13], tgt: [0.03, 0.18, 0.02], roll: -0.27, fov: 34 },
-      { f: 173, pos: [0.62, 3.38, 2.84], tgt: [0.03, 0.18, 0.02], roll: -0.22, fov: 34 },
-      { f: 199, pos: [-0.87, 3.38, 2.76], tgt: [0.03, 0.18, 0.02], roll: -0.15, fov: 34 },
+      { f: 147, pos: [1.99, 3.38, 2.13], tgt: [0.03, 0.18, 0.02], roll: -0.27, fov: 38 },
+      { f: 173, pos: [0.62, 3.38, 2.84], tgt: [0.03, 0.18, 0.02], roll: -0.22, fov: 38 },
+      { f: 199, pos: [-0.87, 3.38, 2.76], tgt: [0.03, 0.18, 0.02], roll: -0.15, fov: 38 },
     ],
   },
   {
     start: 200, end: 242,
     keys: [
-      { f: 200, pos: [-1.83, 3.38, 2.23], tgt: [0.02, 0.18, 0.02], roll: -0.08, fov: 34 },
-      { f: 221, pos: [-0.38, 3.37, 2.86], tgt: [0.02, 0.18, 0.02], roll: -0.13, fov: 34 },
-      { f: 242, pos: [1.19, 3.37, 2.64], tgt: [0.02, 0.18, 0.02], roll: -0.19, fov: 34 },
+      { f: 200, pos: [-1.83, 3.38, 2.23], tgt: [0.02, 0.18, 0.02], roll: -0.08, fov: 38 },
+      { f: 221, pos: [-0.38, 3.37, 2.86], tgt: [0.02, 0.18, 0.02], roll: -0.13, fov: 38 },
+      { f: 242, pos: [1.19, 3.37, 2.64], tgt: [0.02, 0.18, 0.02], roll: -0.19, fov: 38 },
     ],
   },
   {
     start: 243, end: 434,
     keys: [
-      { f: 243, pos: [-0.20, 14.26, 3.91], tgt: [0.0, 0.05, 0.10], roll: -0.10, fov: 24 },
-      { f: 275, pos: [-0.09, 15.55, 3.56], tgt: [0.0, 0.02, 0.10], roll: -0.07, fov: 21 },
-      { f: 300, pos: [-0.03, 16.44, 3.29], tgt: [0.0, 0.0, 0.10], roll: -0.05, fov: 20 },
-      { f: 360, pos: [0.15, 16.59, 3.33], tgt: [0.02, 0.0, 0.10], roll: -0.045, fov: 20 },
-      { f: 434, pos: [-0.18, 16.76, 3.39], tgt: [-0.02, 0.0, 0.10], roll: -0.038, fov: 20 },
+      // LOCKUP FLATTENED. Measured off the reference at f300: its tile edges
+      // and both brand frames are parallel to the frame borders with no
+      // measurable convergence — a long lens shooting the wall almost dead-on.
+      // These keys sat ~12 degrees off the wall normal, which raked the tiles
+      // into a receding floor and skewed both cards. Elevation and dolly are
+      // unchanged; only the standoff along z comes in.
+      { f: 243, pos: [-0.20, 14.26, 1.25], tgt: [0.0, 0.05, 0.10], roll: -0.10, fov: 24 },
+      { f: 275, pos: [-0.09, 15.55, 1.10], tgt: [0.0, 0.02, 0.10], roll: -0.07, fov: 21 },
+      { f: 300, pos: [-0.03, 16.44, 1.02], tgt: [0.0, 0.0, 0.10], roll: -0.05, fov: 20 },
+      { f: 360, pos: [0.15, 16.59, 1.05], tgt: [0.02, 0.0, 0.10], roll: -0.045, fov: 20 },
+      { f: 434, pos: [-0.18, 16.76, 1.08], tgt: [-0.02, 0.0, 0.10], roll: -0.038, fov: 20 },
     ],
   },
 ];
@@ -173,7 +180,14 @@ function catmull(p0: number, p1: number, p2: number, p3: number, t: number): num
 // 1.06 re-clipped "Renewal Success" mid-word at the right edge (checked by
 // still at f30) — 1.11 is the closest the verified "reference is closer"
 // finding can get without reintroducing that regression.
-const DOLLY = [1.11, 1.16, 1.12, 1.12, 0.88];
+// Lens widened 34->38 (verified: the reference reads wider with more
+// perspective distortion up close); dolly grows to hold subject size, so the
+// net change is pure distortion character.
+// Macro heroes pushed in (1.26 -> 1.12): measured off the reference at f165,
+// its Recurly plate spans ~72% of frame width against our 60%. Closing that
+// also deepens the background blur, which read too sharp against the
+// reference's milk-white edges at the same instant.
+const DOLLY = [1.25, 1.30, 1.12, 1.12, 0.88];
 
 /**
  * Per-shot azimuth sweep, applied about the shot's own mean bearing.
@@ -276,6 +290,15 @@ export const CameraRig: React.FC = () => {
 
 const CAP: [number, number, number] = [1.34, 0.125, 0.88];
 const BRAND: [number, number, number] = [1.60, 0.145, 0.98];
+/**
+ * Macro socket opening, deliberately LARGER than the plate it holds.
+ *
+ * With the opening cut to the plate's exact footprint the plate covered the
+ * whole recess and the well read as a flat mat under a card. The reference
+ * shows a clear gap on every side — you see the socket floor and the shadow the
+ * plate drops into it, which is most of what makes the hero look seated.
+ */
+const MACRO_WELL: [number, number] = [BRAND[0] * 1.06, BRAND[2] * 1.09];
 
 const F_PILL: [number, number] = [1.20, 1.20 / 1.65];
 const F_COL: [number, number] = [1.20, 1.20 / 1.55];
@@ -331,6 +354,59 @@ const HERO_WELL: [number, number, number] = [0.05, TILE_TOP, 0.05];
 const LOCK_RECURLY: [number, number, number] = [-0.74, BRAND_Y, -0.98];
 const LOCK_HYPER: [number, number, number] = [0.74, BRAND_Y, 1.12];
 
+/**
+ * Behind-camera accent light, per shot. The reference's domes carry a broad
+ * specular bloom the camera SEES — which requires a light roughly behind the
+ * camera, not just the overhead key. Positions approximate 1.4x each shot's
+ * mid keyframe. Shadowless; physical intensity.
+ */
+const BLOOM_POS: Array<[number, number, number]> = [
+  [0.2, 4.8, 3.4],
+  [-0.4, 5.8, 4.0],
+  [0.9, 4.7, 4.0],
+  [-0.5, 4.7, 4.0],
+  [0.0, 22.0, 5.0],
+];
+// Near-neutral: at #fff6e8 the rim specular on the gold plate came back orange
+// and Bloom smeared it into a salmon halo. The reference's rim highlights on
+// the gold are white.
+const BloomLight: React.FC<{ shot: number }> = ({ shot }) => (
+  <pointLight position={BLOOM_POS[shot]} intensity={15} color="#fffdf7" />
+);
+
+/**
+ * Deterministic accents at the frame-verified spots (yellow below Secure, blue
+ * left) — the probabilistic wall lottery kept missing them.
+ *
+ * These are PLATES IN FRAMES, not flat colour fields. At 1:1 the reference's
+ * blue and yellow accents have the same anatomy as its heroes: a rounded
+ * coloured plate standing proud inside a pale surround, with its own contact
+ * shadow. Pass 12's first cut drew full-bleed sharp-edged planes, which read as
+ * paint on the wall rather than objects in the set.
+ */
+const Accent: React.FC<{ position: [number, number]; color: string; size?: [number, number] }> = ({ position, color, size = [1.7, 1.15] }) => (
+  <group position={[position[0], 0, position[1]]}>
+    <Slab
+      size={[size[0] + 0.34, 0.17, size[1] + 0.34]}
+      radius={0.1}
+      position={[0, TILE_TOP + 0.035 - 0.085, 0]}
+      receiveShadow
+      castShadow
+    >
+      <meshPhysicalMaterial color="#e0e5ee" roughness={0.5} metalness={0.12} clearcoat={0.3} />
+    </Slab>
+    <Slab
+      size={[size[0], 0.12, size[1]]}
+      radius={Math.min(size[0], size[1]) * 0.2}
+      position={[0, TILE_TOP + 0.105 - 0.06, 0]}
+      receiveShadow
+      castShadow
+    >
+      <meshPhysicalMaterial color={color} roughness={0.42} metalness={0} clearcoat={0.6} clearcoatRoughness={0.4} />
+    </Slab>
+  </group>
+);
+
 export const Timeline: React.FC = () => {
   const frame = useCurrentFrame();
   const shot = shotIndex(frame);
@@ -369,7 +445,11 @@ export const Timeline: React.FC = () => {
 
   // Timed to the spec's bgFade event (f266-277) and strengthened: the
   // reference's background fade is a visible motion event, not a whisper.
-  const whiten = interpolate(frame, [266, 277], [0, 0.22], {
+  // Raised 0.22 -> 0.40 after measuring f300: the reference's lockup wall is a
+  // near-white field (~235) carrying soft cloud dapple, ours a lavender-grey
+  // ~205. The fade is the only lever that lifts the wall without lifting the
+  // brand plates with it.
+  const whiten = interpolate(frame, [266, 277], [0, 0.40], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
@@ -385,6 +465,23 @@ export const Timeline: React.FC = () => {
         assemble={gridAssemble}
       />
       <Peripherals whiten={whiten} />
+      <BloomLight shot={shot} />
+      {shot === 0 && (
+        <>
+          {/* Rebalanced by measurement: at f30 the reference frame runs
+              rb -12.2 and ours ran +28.4 — a 40-point warm error driven by a
+              yellow plate covering a fifth of the frame against a blue sliver.
+              The reference's ratio at this instant is the other way round. */}
+          <Accent position={[-0.15, 1.85]} color="#f2ce43" size={[1.35, 0.95]} />
+          <Accent position={[-1.75, -0.3]} color="#6d8fdd" size={[1.5, 2.4]} />
+        </>
+      )}
+      {shot === 1 && (
+        <>
+          <Accent position={[-1.9, -2.1]} color="#f2ce43" size={[1.4, 1.0]} />
+          <Accent position={[-2.3, 1.4]} color="#6d8fdd" size={[1.1, 1.5]} />
+        </>
+      )}
 
       {/* Shot 1 — Secure Payments / Renewal Success */}
       {shot === 0 && (
@@ -409,13 +506,14 @@ export const Timeline: React.FC = () => {
       {/* Shot 3 — Recurly hero */}
       {shot === 2 && (
         <>
-          <Well position={HERO_WELL} size={[BRAND[0], BRAND[2]]} metalMap={f.metal} whiten={whiten} tone="dark" />
+          <Well position={HERO_WELL} size={MACRO_WELL} metalMap={f.metal} whiten={whiten} tone="dark" />
           <Keycap
             position={[HERO[0], Math.max(HERO[1] + 0.003, HERO[1] + 0.004 + 0.045 * (1 - spring({ frame: frame - 149, fps: FPS, config: { damping: 12, stiffness: 160, mass: 0.85 } }))), HERO[2]]}
             size={BRAND}
             color={C.gold}
             face={f.recurly}
             faceSize={F_RECURLY}
+            domeStrength={2}
           />
           <Keycap position={[-1.32, FLOAT_Y, -1.30]} size={[1.15, 0.115, 0.72]} color={C.card} face={f.secure} faceSize={[1.02, 1.02 / 1.65]} />
           <Keycap position={[1.44, FLOAT_Y, -1.45]} size={CAP} color={C.card} face={f.success} faceSize={F_SUCCESS} />
@@ -429,13 +527,14 @@ export const Timeline: React.FC = () => {
           in fully staged. */}
       {shot === 3 && (
         <>
-          <Well position={HERO_WELL} size={[BRAND[0], BRAND[2]]} metalMap={f.metal} whiten={whiten} tone="dark" />
+          <Well position={HERO_WELL} size={MACRO_WELL} metalMap={f.metal} whiten={whiten} tone="dark" />
           <Keycap
             position={[HERO[0], Math.max(HERO[1] + 0.005, HERO[1] + 0.035 + 0.125 * (1 - spring({ frame: frame - T.hyPressStart, fps: FPS, config: { damping: 11, stiffness: 170, mass: 0.8 } }))), HERO[2]]}
             size={BRAND}
             color={C.blue}
             face={f.hyper}
             faceSize={F_HYPER}
+            domeStrength={2}
           />
           <Keycap position={[1.48, FLOAT_Y, -1.40]} size={CAP} color={C.card} face={f.revenue} faceSize={F_REVENUE} />
           {/* PSP per the verified staging finding: a WHITE keycap carrying a
@@ -461,9 +560,9 @@ export const Timeline: React.FC = () => {
         return (
         <>
           <Well position={[LOCK_RECURLY[0] - slide, TILE_TOP, LOCK_RECURLY[2] - slide * 0.7]} size={[BRAND[0], BRAND[2]]} metalMap={f.metal} whiten={whiten} />
-          <Keycap position={[LOCK_RECURLY[0] - slide, LOCK_RECURLY[1], LOCK_RECURLY[2] - slide * 0.7]} size={BRAND} color={C.gold} face={f.recurly} faceSize={F_RECURLY} />
+          <Keycap position={[LOCK_RECURLY[0] - slide, LOCK_RECURLY[1], LOCK_RECURLY[2] - slide * 0.7]} size={BRAND} color={C.gold} face={f.recurly} faceSize={F_RECURLY} domeStrength={0.8} />
           <Well position={[LOCK_HYPER[0] + slide, TILE_TOP, LOCK_HYPER[2] + slide * 0.7]} size={[BRAND[0], BRAND[2]]} metalMap={f.metal} whiten={whiten} />
-          <Keycap position={[LOCK_HYPER[0] + slide, LOCK_HYPER[1], LOCK_HYPER[2] + slide * 0.7]} size={BRAND} color={C.blue} face={f.hyper} faceSize={F_HYPER} />
+          <Keycap position={[LOCK_HYPER[0] + slide, LOCK_HYPER[1], LOCK_HYPER[2] + slide * 0.7]} size={BRAND} color={C.blue} face={f.hyper} faceSize={F_HYPER} domeStrength={0.8} />
           {/* The pill RISES at T.liveRiseStart with a spring overshoot —
               the reference's one true entrance, timed by the spec. Before
               that it is simply absent, exactly as in the reference. */}

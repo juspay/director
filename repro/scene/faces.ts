@@ -61,6 +61,23 @@ function roundRect(ctx: Ctx, x: number, y: number, w: number, h: number, r: numb
   ctx.closePath();
 }
 
+/**
+ * Silhouette mask for a domed cap face.
+ *
+ * The dome is carried by a subdivided plane (the extruded slab's top cap has no
+ * interior vertices to displace), so its square outline has to be cut back to
+ * the slab's squircle or the cap sprouts corners it does not have.
+ */
+export function capMask(w: number, l: number, r: number): THREE.CanvasTexture {
+  const px = 512;
+  const h = Math.max(64, Math.round((px * l) / w));
+  return tex(px, h, (ctx) => {
+    ctx.fillStyle = '#fff';
+    roundRect(ctx, 0, 0, px, h, (r / w) * px);
+    ctx.fill();
+  });
+}
+
 // Deterministic PRNG so every render of every frame produces the identical set.
 export function rng(seed: number): () => number {
   let s = seed >>> 0;
@@ -149,9 +166,12 @@ export function pillFaceH(
   return tex(1024, 620, (ctx) => {
     const cy = 300;
     if (icon === 'shield') {
-      // solid indigo shield with a white check
-      const s = 210;
-      const x = 120;
+      // Solid indigo shield with a white check. Sized off the reference at
+      // f30, where the shield stands ~50% of the card's height and reads as the
+      // card's dominant element; at 210 it was 34% and the card read as text
+      // with a bullet.
+      const s = 300;
+      const x = 104;
       const y = cy - s / 2;
       ctx.fillStyle = C.indigo;
       ctx.beginPath();
@@ -174,8 +194,8 @@ export function pillFaceH(
       ctx.stroke();
     } else {
       // gradient indigo ring (progress donut) with a dark check inside
-      const r = 96;
-      const x = 222;
+      const r = 132;
+      const x = 244;
       const g = ctx.createLinearGradient(x - r, cy - r, x + r, cy + r);
       g.addColorStop(0, '#8fa6ff');
       g.addColorStop(1, C.indigo);
@@ -186,24 +206,25 @@ export function pillFaceH(
       ctx.arc(x, cy, r - 15, -Math.PI * 0.5, -Math.PI * 0.5 + Math.PI * 1.65 * ringT);
       ctx.stroke();
       ctx.strokeStyle = C.indigo;
-      ctx.lineWidth = 22;
+      ctx.lineWidth = 30;
       ctx.lineJoin = 'round';
       ctx.beginPath();
-      ctx.moveTo(x - 36, cy + 2);
-      ctx.lineTo(x - 8, cy + 30);
-      ctx.lineTo(x + 42, cy - 28);
+      ctx.moveTo(x - 50, cy + 3);
+      ctx.lineTo(x - 11, cy + 41);
+      ctx.lineTo(x + 58, cy - 39);
       ctx.stroke();
     }
-    // Label ink lightened from #3b4250: through the macro grade that rendered
-    // at luma ~17, planting a near-black spike in every macro frame that the
-    // verified analysis flagged (reference's darkest macro pixels are 48-84 —
-    // its label text never goes truly black).
-    ctx.fillStyle = '#5a647a';
+    // Label ink. It had been lightened to #5a647a because #3b4250 rendered at
+    // luma ~17 through the macro grade — a near-black spike the reference never
+    // shows (its darkest macro pixels are 48-84). But #5a647a overshot the other
+    // way: at f30 the reference's label is plainly dark charcoal against our
+    // pale grey. #414a5e lands at luma ~72, inside the reference's own floor.
+    ctx.fillStyle = '#414a5e';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
-    fitFont(ctx, line1.length > line2.length ? line1 : line2, 116, 590, '400', 2);
-    ctx.fillText(line1, 386, cy - 60);
-    ctx.fillText(line2, 386, cy + 66);
+    fitFont(ctx, line1.length > line2.length ? line1 : line2, 116, 540, '400', 2);
+    ctx.fillText(line1, 452, cy - 60);
+    ctx.fillText(line2, 452, cy + 66);
     // indigo hairline along the lower edge of the card
     const hg = ctx.createLinearGradient(60, 0, 964, 0);
     hg.addColorStop(0, 'rgba(70,92,230,0.05)');
@@ -365,15 +386,20 @@ export function hyperswitchFace(): THREE.CanvasTexture {
 // Live Now: outlined pill, indigo gradient border + indigo text.
 export function liveNowFace(): THREE.CanvasTexture {
   return tex(1024, 384, (ctx) => {
+    // Border and ink both strengthened: at f300 the reference's pill carries a
+    // vivid, even blue outline and bold blue type, while ours rendered as a
+    // pale grey-blue whisper on a pale card — the least legible element in the
+    // longest shot. The gradient is kept but its light end raised so the
+    // outline never drops below the ink.
     const g = ctx.createLinearGradient(60, 0, 964, 0);
-    g.addColorStop(0, '#7d97ff');
+    g.addColorStop(0, '#4a6ee6');
     g.addColorStop(1, C.blue);
     ctx.strokeStyle = g;
-    ctx.lineWidth = 13;
+    ctx.lineWidth = 19;
     roundRect(ctx, 60, 74, 904, 236, 118);
     ctx.stroke();
-    ctx.fillStyle = C.blue;
-    ctx.font = `600 136px ${FONT}`;
+    ctx.fillStyle = '#2f56dd';
+    ctx.font = `700 142px ${FONT}`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText('Live Now', 512, 196);
@@ -585,31 +611,47 @@ export function panelChart(): THREE.CanvasTexture {
   });
 }
 
-/** Flat brand-colour panel with a soft sheen (the blue / yellow slabs). */
+/**
+ * Brand-colour panel: a rounded PLATE INSET IN A PALE TILE, not a full-bleed
+ * field.
+ *
+ * Measured off the reference at f30, where both the blue and the yellow accents
+ * have the same anatomy as its heroes — a rounded coloured plate sitting inside
+ * a paler surround, with a hairline of the tile visible all round. Painting the
+ * whole tile solid (the previous version) is what made the accents read as
+ * blocks of paint on the wall, and put a hard sharp-cornered colour field
+ * against the frame edge in every wide.
+ */
 export function panelSolid(hex: string): THREE.CanvasTexture {
   return tex(256, 256, (ctx) => {
-    ctx.fillStyle = hex;
+    ctx.fillStyle = '#e8ecf3';
     ctx.fillRect(0, 0, 256, 256);
-    const g = ctx.createLinearGradient(0, 0, 200, 256);
+    const m = 24;
+    ctx.fillStyle = hex;
+    roundRect(ctx, m, m, 256 - m * 2, 256 - m * 2, 34);
+    ctx.fill();
+    const g = ctx.createLinearGradient(m, m, 200, 256 - m);
     g.addColorStop(0, 'rgba(255,255,255,0.30)');
     g.addColorStop(1, 'rgba(0,0,0,0.06)');
     ctx.fillStyle = g;
-    ctx.fillRect(0, 0, 256, 256);
+    roundRect(ctx, m, m, 256 - m * 2, 256 - m * 2, 34);
+    ctx.fill();
   });
 }
 
 // Brushed-metal texture for the hero-key trays.
 export function metalTexture(): THREE.CanvasTexture {
   const t = tex(512, 512, (ctx) => {
-    ctx.fillStyle = '#c4c9d2';
+    ctx.fillStyle = '#d2d7e0';
     ctx.fillRect(0, 0, 512, 512);
-    // Striation contrast raised from 0.05-0.14 alpha: at that level the bezel
-    // rendered as flat grey, and "flat, non-reflective grey border" survived
-    // BOTH eyewitness channels in two verification passes. The reference's
-    // frames show bold dark/light banding.
-    for (let i = 0; i < 1100; i++) {
+    // Striation contrast was raised from 0.05-0.14 alpha because "flat,
+    // non-reflective grey border" survived BOTH eyewitness channels twice. It
+    // then overshot: at the closer macro dolly the bezel read as corduroy,
+    // where the reference's brushing is fine and dense. Twice the lines at
+    // roughly half the amplitude keeps the value contrast without the ribs.
+    for (let i = 0; i < 2400; i++) {
       const y = Math.floor((i * 97) % 512);
-      const a = 0.14 + ((i * 31) % 10) / 36;
+      const a = 0.07 + ((i * 31) % 10) / 70;
       ctx.strokeStyle = i % 2 === 0 ? `rgba(88,94,108,${a})` : `rgba(250,252,255,${a})`;
       ctx.lineWidth = i % 37 === 0 ? 2 : 1;
       ctx.beginPath();
