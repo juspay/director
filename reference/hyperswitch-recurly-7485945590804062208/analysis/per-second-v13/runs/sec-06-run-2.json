@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 6.1,
+        "a_observable": "The scene is brightly lit with clean, high-key white surfaces.",
+        "b_observable": "The scene is dimmer with greyish whites and less vibrant highlights.",
+        "fix": "Increase key light intensity and adjust exposure for a brighter look.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_brighter_highlights"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 6.8,
+        "a_observable": "The Juspay Hyperswitch logo icon has a stylized crescent shape inside.",
+        "b_observable": "The Juspay Hyperswitch logo icon has a leaf-like shape inside.",
+        "fix": "Replace the logo asset with the correct vector graphic.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 6.8,
+        "a_observable": "The background elements at the top are softly blurred.",
+        "b_observable": "The background elements are sharp and in focus.",
+        "fix": "Enable depth of field and adjust camera aperture to blur the background.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        }
+      }
+    ],
+    "highest_impact_fix": "Replace the incorrect Juspay Hyperswitch logo icon with the correct graphic asset."
+  }
+}

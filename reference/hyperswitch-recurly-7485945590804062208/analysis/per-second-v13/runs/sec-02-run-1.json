@@ -1,0 +1,59 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.2
+    ],
+    "a_motion": [
+      "camera translation",
+      "camera rotation"
+    ],
+    "b_motion": [
+      "camera translation",
+      "camera rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 2.1,
+        "a_observable": "Close-up framing on the 'Secure Payments' card.",
+        "b_observable": "Wide shot showing multiple surrounding cards.",
+        "fix": "Adjust camera position and focal length to match the close-up framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 2.6,
+        "a_observable": "Steep perspective angle on the vertical card stack.",
+        "b_observable": "Flatter, more top-down camera angle on the cards.",
+        "fix": "Match the camera rotation and height to align the perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      },
+      {
+        "category": "color",
+        "t": 2.1,
+        "a_observable": "Cool blue color cast across white surfaces.",
+        "b_observable": "Neutral white and grey surfaces.",
+        "fix": "Apply a cool color grade to match the blue tint.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and focal length to resolve the framing and perspective mismatches across both shots."
+  }
+}

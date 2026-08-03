@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zoom",
+      "camera rotation"
+    ],
+    "b_motion": [
+      "camera zoom",
+      "camera rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 5.5,
+        "a_observable": "The camera is closer to the yellow card, creating a tighter framing.",
+        "b_observable": "The camera is further away, showing more of the surrounding tiles.",
+        "fix": "Move the camera closer to the yellow card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.5,
+        "a_observable": "Stronger vignette with darker corners.",
+        "b_observable": "Weaker vignette with brighter corners.",
+        "fix": "Increase vignette strength in post-processing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 5.5,
+        "a_observable": "Warmer color temperature on the white tiles.",
+        "b_observable": "Cooler, more neutral white tiles.",
+        "fix": "Adjust white balance to warm up the scene.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera distance to match the tighter framing of the reference."
+  }
+}

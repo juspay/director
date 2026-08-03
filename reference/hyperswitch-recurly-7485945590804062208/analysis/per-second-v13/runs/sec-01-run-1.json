@@ -1,0 +1,66 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 1,
+        "a_observable": "The 'Renewal Success' card is positioned directly above the 'Secure Payments' card, with the yellow card at the bottom and the blue card on the left.",
+        "b_observable": "The 'Renewal Success' card is positioned to the right of the 'Secure Payments' card, with the yellow card on the left and the blue card at the top-left.",
+        "fix": "Reorganize the grid layout of the cards to match the reference video's staging.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 1,
+        "a_observable": "The camera has a narrow field of view (long lens), resulting in a flat perspective with minimal skew on the 'Secure Payments' card.",
+        "b_observable": "The camera has a wide field of view (short lens), resulting in strong perspective distortion and significant skew on the card.",
+        "fix": "Increase the camera's focal length and adjust its position to achieve a flatter, more orthographic perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1,
+        "a_observable": "The white cards are brightly lit with clean white highlights, creating a high-contrast look.",
+        "b_observable": "The white cards are underexposed and appear greyish-blue, with much lower highlight brightness.",
+        "fix": "Increase the key light intensity and adjust the color temperature to remove the cool blue cast from the white surfaces.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_brighter_highlights"
+        }
+      },
+      {
+        "category": "material",
+        "t": 1,
+        "a_observable": "The yellow card at the bottom of the frame features a distinct brushed metal texture with horizontal grain.",
+        "b_observable": "The yellow card on the left is a flat, matte plastic with no texture or metallic properties.",
+        "fix": "Add a brushed metal texture map and increase the metallic/anisotropic reflections on the yellow card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Rearrange the grid layout of the cards to match the staging of the reference video, and adjust the camera's focal length to eliminate the excessive perspective distortion."
+  }
+}

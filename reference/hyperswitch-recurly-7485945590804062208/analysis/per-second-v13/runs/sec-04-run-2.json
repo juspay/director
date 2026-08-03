@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      4.9
+    ],
+    "a_motion": [
+      "camera motion"
+    ],
+    "b_motion": [
+      "camera motion"
+    ],
+    "absent_in_b": [
+      "grid of dots on the left panel"
+    ],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 4.2,
+        "a_observable": "A grid of grey dots is visible on the panel to the left of the Subscriptions card.",
+        "b_observable": "The panel to the left of the Subscriptions card is completely blank.",
+        "fix": "Add the grid of dots to the left panel.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 4.95,
+        "a_observable": "The camera angle is higher, showing the Recurly card alongside the Secure Payments card and the Success rate chart.",
+        "b_observable": "The camera angle is lower and more skewed, focusing tightly on the Recurly card and cutting off surrounding elements.",
+        "fix": "Adjust the camera angle and position to match the wider, high-angle composition.",
+        "severity": 4,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 4.95,
+        "a_observable": "The Recurly card has a warm, golden-yellow color.",
+        "b_observable": "The Recurly card has a brighter, cooler lemon-yellow color.",
+        "fix": "Adjust the material color of the Recurly card to be warmer.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 4.5,
+        "a_observable": "The shadows cast by the cards are soft and highly diffused.",
+        "b_observable": "The shadows cast by the cards are sharp with distinct edges.",
+        "fix": "Soften the shadow edges by increasing the light source size.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_higher_contrast"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and position in the Recurly shot to match the wider, high-angle composition of the reference."
+  }
+}

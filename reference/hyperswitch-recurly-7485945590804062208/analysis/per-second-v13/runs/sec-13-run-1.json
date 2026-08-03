@@ -1,0 +1,69 @@
+{
+  "ok": false,
+  "why": "reported 1 cuts, truth has 0",
+  "json": {
+    "cuts_in_window": [
+      13.333
+    ],
+    "a_motion": [
+      "translation",
+      "zoom"
+    ],
+    "b_motion": [
+      "translation",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 13.1,
+        "a_observable": "Recurly card is warm golden-yellow.",
+        "b_observable": "Recurly card is cool lemon-yellow.",
+        "fix": "Warm up the yellow color of the Recurly card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 13.5,
+        "a_observable": "Juspay card is tilted at a shallow 15-degree angle.",
+        "b_observable": "Juspay card is tilted at a steeper 30-degree angle.",
+        "fix": "Adjust camera rotation to match the shallower tilt of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 13.75,
+        "a_observable": "PSP card is aligned vertically below the Juspay card.",
+        "b_observable": "PSP card is offset to the bottom-left.",
+        "fix": "Reposition the PSP card to align vertically below the Juspay card.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 13.75,
+        "a_observable": "Soft, dark grey shadow under the Juspay card.",
+        "b_observable": "Harsh, near-black shadow under the Juspay card.",
+        "fix": "Soften the shadow density under the cards.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Align the PSP card vertically below the Juspay card and adjust the camera rotation to match the reference framing."
+  }
+}

@@ -1,0 +1,244 @@
+{
+  "sec": 7,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera motion"
+      ],
+      "b_motion": [
+        "camera motion"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 7.5,
+          "a_observable": "The blue 'Juspay hyperswitch' block is oriented horizontally with a slight tilt.",
+          "b_observable": "The blue 'Juspay hyperswitch' block is rotated diagonally at approximately 45 degrees.",
+          "fix": "Align the rotation of the blue block to match the horizontal orientation in the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 7.5,
+          "a_observable": "The camera is positioned close to the blue block, making it occupy a large portion of the frame.",
+          "b_observable": "The camera is positioned further away, making the blue block appear smaller and showing more of the surrounding grid.",
+          "fix": "Adjust the camera zoom/distance to match the close-up framing of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 7.5,
+          "a_observable": "The background tiles are brightly and evenly illuminated with soft, subtle shadows.",
+          "b_observable": "The background tiles have high-contrast lighting with much darker shadows.",
+          "fix": "Soften the light source and reduce shadow density to match the bright, low-contrast look of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows",
+            "region": "full"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 7.5,
+          "a_observable": "The logo icon on the blue block is a crescent shape inside a white circle.",
+          "b_observable": "The logo icon on the blue block is a leaf-like shape inside a white circle.",
+          "fix": "Replace the logo icon on the blue block with the correct crescent design.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle, rotation, and distance to correctly frame the Juspay Hyperswitch block horizontally and closely, matching the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "staging",
+          "t": 7.2,
+          "a_observable": "The logo icon on the blue card consists of a white circle with a crescent cutout.",
+          "b_observable": "The logo icon on the blue card is a white circle containing a blue flame shape.",
+          "fix": "Replace the logo graphic on the blue card to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 7.2,
+          "a_observable": "The PSP card at the bottom is metallic grey with a small blue inset.",
+          "b_observable": "The PSP card is white with a blue icon and text.",
+          "fix": "Recreate the PSP card using the metallic grey material and layout from the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 7.5,
+          "a_observable": "Deep ambient occlusion shadows are present in the crevices between the tiles.",
+          "b_observable": "Crevice shadows are extremely faint, resulting in a flatter look.",
+          "fix": "Enhance ambient occlusion and shadow depth.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Recreate the metallic PSP card and correct the logo icon on the blue card to match the reference design.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pans and zooms out slowly",
+        "Juspay card floats gently"
+      ],
+      "b_motion": [
+        "camera tilts and pans with a different trajectory",
+        "Juspay card rotates more dynamically"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 7,
+          "a_observable": "The camera angle is flatter, keeping the Juspay card centered.",
+          "b_observable": "The camera is tilted steeply, skewing the Juspay card.",
+          "fix": "Adjust camera tilt to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "material",
+          "t": 7.25,
+          "a_observable": "The Juspay card border has a reflective metallic silver finish.",
+          "b_observable": "The Juspay card border is a flat, dark grey matte material.",
+          "fix": "Apply a metallic silver material to the border.",
+          "severity": 4,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_brighter_highlights"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 7.5,
+          "a_observable": "The background tiles are brightly lit with soft shadows.",
+          "b_observable": "The background tiles are darker with a gray cast.",
+          "fix": "Increase ambient light intensity.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_brighter_highlights"
+          }
+        }
+      ],
+      "highest_impact_fix": "Apply reflective metallic materials to the card borders and adjust the camera tilt to match the reference framing.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "staging",
+        "t": 7.2,
+        "a_observable": "The logo icon on the blue card consists of a white circle with a crescent cutout.",
+        "b_observable": "The logo icon on the blue card is a white circle containing a blue flame shape.",
+        "fix": "Replace the logo graphic on the blue card to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 2,
+        "status": "pending_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 0.9,
+          "note": "In Clip A, the logo icon on the blue card is indeed a white circle with a crescent cutout (the Hyperswitch logo). In Clip B, the logo icon is a white circle containing a blue flame/droplet shape."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 7.5,
+        "a_observable": "The background tiles are brightly and evenly illuminated with soft, subtle shadows.",
+        "b_observable": "The background tiles have high-contrast lighting with much darker shadows.",
+        "fix": "Soften the light source and reduce shadow density to match the bright, low-contrast look of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows",
+          "region": "full"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_deeper_shadows",
+          "A": {
+            "p01": 65.23,
+            "p1": 69.47,
+            "p5": 75.95,
+            "p50": 200.32,
+            "p95": 246.42,
+            "p99": 247.86,
+            "p999": 253.09,
+            "span_p5_p95": 170.47
+          },
+          "B": {
+            "p01": 11.55,
+            "p1": 25.68,
+            "p5": 43.5,
+            "p50": 176.53,
+            "p95": 227.82,
+            "p99": 245.59,
+            "p999": 255,
+            "span_p5_p95": 184.32
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Correct the logo icon on the blue block to be a crescent shape and adjust the background lighting to be brighter with softer shadows.",
+    "dropped_unsupported": 6
+  }
+}

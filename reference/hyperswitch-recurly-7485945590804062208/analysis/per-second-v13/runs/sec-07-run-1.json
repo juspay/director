@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 7.2,
+        "a_observable": "The logo icon on the blue card consists of a white circle with a crescent cutout.",
+        "b_observable": "The logo icon on the blue card is a white circle containing a blue flame shape.",
+        "fix": "Replace the logo graphic on the blue card to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 7.2,
+        "a_observable": "The PSP card at the bottom is metallic grey with a small blue inset.",
+        "b_observable": "The PSP card is white with a blue icon and text.",
+        "fix": "Recreate the PSP card using the metallic grey material and layout from the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 7.5,
+        "a_observable": "Deep ambient occlusion shadows are present in the crevices between the tiles.",
+        "b_observable": "Crevice shadows are extremely faint, resulting in a flatter look.",
+        "fix": "Enhance ambient occlusion and shadow depth.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Recreate the metallic PSP card and correct the logo icon on the blue card to match the reference design."
+  }
+}

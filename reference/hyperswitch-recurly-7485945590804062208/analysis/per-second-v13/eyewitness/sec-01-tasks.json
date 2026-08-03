@@ -1,0 +1,36 @@
+[
+  {
+    "sec": 1,
+    "idx": 0,
+    "t": 1.5,
+    "category": "camera",
+    "a_observable": "The camera is oriented with a mild rotation, keeping the 'Secure Payments' card nearly aligned with the frame's vertical axis.",
+    "b_observable": "The camera has a pronounced Dutch tilt, rotating the 'Secure Payments' card significantly to the left.",
+    "frames": {
+      "A": "/Users/sachinsharma/Developer/temp/director/reference/hyperswitch-recurly-7485945590804062208/analysis/per-second-v13/eyewitness/sec-01-c0-A.png",
+      "B": "/Users/sachinsharma/Developer/temp/director/reference/hyperswitch-recurly-7485945590804062208/analysis/per-second-v13/eyewitness/sec-01-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.95,
+      "note": "In Clip A, the 'Secure Payments' card is oriented nearly vertically, aligned with the frame's vertical axis. In Clip B, the camera has a pronounced Dutch tilt, causing the card to be rotated significantly to the left (counter-clockwise)."
+    }
+  },
+  {
+    "sec": 1,
+    "idx": 2,
+    "t": 1.5,
+    "category": "material",
+    "a_observable": "The frame surrounding the yellow tile at the bottom has a metallic silver finish with a brushed texture.",
+    "b_observable": "The frame surrounding the yellow tile is a flat, matte grey plastic with no metallic reflections or texture.",
+    "frames": {
+      "A": "/Users/sachinsharma/Developer/temp/director/reference/hyperswitch-recurly-7485945590804062208/analysis/per-second-v13/eyewitness/sec-01-c2-A.png",
+      "B": "/Users/sachinsharma/Developer/temp/director/reference/hyperswitch-recurly-7485945590804062208/analysis/per-second-v13/eyewitness/sec-01-c2-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "In Clip A, the frame surrounding the yellow tile at the bottom clearly shows a brushed metallic silver texture. In Clip B, the same frame is a flat, matte grey plastic with no texture or metallic reflections."
+    }
+  }
+]

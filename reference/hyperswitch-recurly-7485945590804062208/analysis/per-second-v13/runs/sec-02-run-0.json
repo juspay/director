@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.2
+    ],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 2.1,
+        "a_observable": "The 'Secure Payments' tile is framed closely, occupying most of the center-left of the screen.",
+        "b_observable": "The camera is positioned further back, showing a wider view with a large blue tile visible in the top-left corner.",
+        "fix": "Adjust the camera position and focal length to match the tighter framing of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 2.5,
+        "a_observable": "The stacked tiles are rotated at a steep angle, showing strong perspective depth.",
+        "b_observable": "The stacked tiles are nearly parallel to the camera view, showing very little perspective tilt.",
+        "fix": "Rotate the tiles or adjust the camera angle to match the perspective depth of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.5,
+        "a_observable": "Distinct, soft contact shadows are visible beneath the 'Subscriptions', 'Retries', and 'APMs' cards, creating depth.",
+        "b_observable": "The contact shadows beneath the cards are extremely faint, making the cards appear flat against the background.",
+        "fix": "Increase the shadow density or adjust the light source to cast more pronounced contact shadows under the cards.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position, rotation, and focal length to match the tighter framing and perspective angles of the reference video."
+  }
+}

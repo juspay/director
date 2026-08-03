@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "gentle camera pan and zoom out"
+    ],
+    "b_motion": [
+      "gentle camera pan and zoom out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "Corners are darker than the center, creating a soft vignette.",
+        "b_observable": "Lighting is uniform across the frame with no vignette.",
+        "fix": "Add a vignette to darken the corners.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 9.5,
+        "a_observable": "Camera has a pronounced isometric tilt and closer framing.",
+        "b_observable": "Camera has a flatter perspective and wider framing.",
+        "fix": "Adjust camera position and angle to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "full"
+        }
+      },
+      {
+        "category": "color",
+        "t": 9.2,
+        "a_observable": "Yellow card is a warm golden hue.",
+        "b_observable": "Yellow card is a cooler, desaturated yellow.",
+        "fix": "Adjust yellow card color to be warmer.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and angle to match the reference's dynamic isometric perspective."
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "zoom"
+    ],
+    "b_motion": [
+      "translation",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 11.5,
+        "a_observable": "The yellow Recurly button is centered in the frame with a close-up perspective.",
+        "b_observable": "The yellow Recurly button is positioned on the left side of the frame with a wider perspective.",
+        "fix": "Re-align the camera path and adjust the focal length to match the reference composition.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.25,
+        "a_observable": "Deep shadows under the Recurly button, creating high contrast.",
+        "b_observable": "Soft, faint shadows under the Recurly button, resulting in lower contrast.",
+        "fix": "Adjust the light source intensity and shadow bias to deepen the shadows.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Align the camera path and framing in Video B to match the centered composition of Video A."
+  }
+}

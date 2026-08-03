@@ -1,0 +1,71 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.2
+    ],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [
+      "dot grid pattern on tiles"
+    ],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 2.1,
+        "a_observable": "The 'Renewal Success' tile is positioned directly above the 'Secure Payments' tile.",
+        "b_observable": "The 'Renewal Success' tile is positioned to the right of the 'Secure Payments' tile.",
+        "fix": "Reposition the 'Renewal Success' tile to be directly above the 'Secure Payments' tile.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "material",
+        "t": 2.1,
+        "a_observable": "The yellow tile at the bottom of the frame exhibits a brushed metallic texture with anisotropic reflections.",
+        "b_observable": "The yellow tile is a flat, matte yellow plastic material with no texture or metallic reflections.",
+        "fix": "Apply a brushed metal material with anisotropic roughness to the yellow tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 2.1,
+        "a_observable": "The 'Renewal Success' tile at the top of the frame is out of focus due to depth-of-field blur.",
+        "b_observable": "The 'Renewal Success' tile is in sharp focus, indicating a lack of depth-of-field blur.",
+        "fix": "Enable depth of field on the camera and set the focus distance to the 'Secure Payments' tile.",
+        "severity": 2,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.5,
+        "a_observable": "Soft, dark contact shadows are visible beneath the 'Subscriptions', 'Retries', and 'APMs' tiles.",
+        "b_observable": "The contact shadows beneath the tiles are extremely faint and barely visible.",
+        "fix": "Adjust the light source or shadow settings to produce stronger, softer contact shadows under the tiles.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Rearrange the tiles to match the reference layout and apply the brushed metallic material to the yellow tiles."
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slight camera pan",
+      "subtle tile rotation"
+    ],
+    "b_motion": [
+      "camera pan",
+      "tile rotation"
+    ],
+    "absent_in_b": [
+      "correct text orientation",
+      "close-up camera framing"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 0.2,
+        "a_observable": "Close-up camera framing centered tightly on the 'Secure Payments' tile.",
+        "b_observable": "Wide camera framing showing several surrounding tiles.",
+        "fix": "Move the camera closer and adjust the field of view to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "layout",
+        "t": 0.5,
+        "a_observable": "Text 'Secure Payments' is oriented horizontally next to the shield.",
+        "b_observable": "Text 'Secure Payments' is rotated 90 degrees clockwise.",
+        "fix": "Rotate the text to match the horizontal orientation of the reference.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.8,
+        "a_observable": "Pronounced vignette with darker corners.",
+        "b_observable": "Flat, uniform lighting across the frame.",
+        "fix": "Apply a vignette to darken the corners and enhance depth.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Correct the text rotation on the 'Secure Payments' tile and adjust the camera framing to be much closer."
+  }
+}

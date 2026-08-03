@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 2,
+    "idx": 1,
+    "t": 2.5,
+    "category": "staging",
+    "a_observable": "The stacked tiles are rotated at a steep angle, showing strong perspective depth.",
+    "b_observable": "The stacked tiles are nearly parallel to the camera view, showing very little perspective tilt.",
+    "frames": {
+      "A": "/Users/sachinsharma/Developer/temp/director/reference/hyperswitch-recurly-7485945590804062208/analysis/per-second-v13/eyewitness/sec-02-c1-A.png",
+      "B": "/Users/sachinsharma/Developer/temp/director/reference/hyperswitch-recurly-7485945590804062208/analysis/per-second-v13/eyewitness/sec-02-c1-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.95,
+      "note": "In Clip A, the camera is positioned at a sharp, oblique angle relative to the plane of the tiles, creating a strong perspective depth effect. In Clip B, the camera is positioned almost directly above the tiles, making them nearly parallel to the camera view with very little perspective tilt."
+    }
+  }
+]

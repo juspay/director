@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 9,
+        "a_observable": "The camera framing shows the yellow Recurly button tilted dynamically in the lower-center-right, with the Secure Payments card clearly visible in the top-left.",
+        "b_observable": "The yellow button is larger, centered, and tilted at a flatter angle, with the Secure Payments card mostly cut off at the top edge.",
+        "fix": "Adjust the camera position, rotation, and focal length to match the reference framing and perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 9,
+        "a_observable": "The Recurly button has a warm, golden-yellow color.",
+        "b_observable": "The Recurly button has a cooler, brighter yellow color with a slight greenish tint.",
+        "fix": "Adjust the material color of the yellow button to match the warm golden-yellow hue of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "The shadow cast by the yellow button onto the white surface is soft and highly diffused.",
+        "b_observable": "The shadow is sharp with hard, distinct edges.",
+        "fix": "Increase the light source size or enable soft shadows in the renderer to match the diffused look.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing, rotation, and focal length to match the reference perspective and composition."
+  }
+}

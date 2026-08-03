@@ -1,0 +1,72 @@
+{
+  "ok": false,
+  "why": "reported 2 cuts, truth has 1",
+  "json": {
+    "cuts_in_window": [
+      4.46,
+      4.92
+    ],
+    "a_motion": [
+      "pan",
+      "tilt"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 4,
+        "a_observable": "The camera is positioned closer to the 'Secure Payments' card, which occupies a larger portion of the frame.",
+        "b_observable": "The camera is positioned further away, making the 'Secure Payments' card appear smaller with a different perspective angle.",
+        "fix": "Adjust camera position and focal length to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 4.2,
+        "a_observable": "The shadows around the cards are deeper and the highlights are softer, creating more contrast.",
+        "b_observable": "The scene is evenly lit with flatter shadows and brighter highlights.",
+        "fix": "Adjust light source intensity and shadow softness to match reference contrast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 4.95,
+        "a_observable": "The camera is closer to the yellow 'Recurly' card, making it larger in the frame, with 'Secure Payments' visible on the left.",
+        "b_observable": "The camera is further away, showing more of the white grid tiles around the 'Recurly' card, with 'Secure Payments' positioned near the top-left.",
+        "fix": "Adjust camera zoom and position to match the reference framing of the yellow card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "color",
+        "t": 4.95,
+        "a_observable": "The yellow 'Recurly' card has a warm, golden-yellow hue.",
+        "b_observable": "The yellow 'Recurly' card has a cooler, more lemon-yellow hue.",
+        "fix": "Adjust the diffuse color of the yellow material to match the warm golden tone of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera positions and focal lengths across all shots in this second to match the reference framing and perspective."
+  }
+}

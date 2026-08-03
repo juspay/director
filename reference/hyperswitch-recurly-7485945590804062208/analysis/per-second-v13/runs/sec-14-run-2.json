@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "static"
+    ],
+    "b_motion": [
+      "static"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 14.1,
+        "a_observable": "Pronounced perspective distortion on the Recurly tile edges.",
+        "b_observable": "Flatter perspective with nearly parallel vertical edges.",
+        "fix": "Match the camera focal length and distance to the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 14.3,
+        "a_observable": "Distinct, soft contact shadows under the floating tiles.",
+        "b_observable": "Faint contact shadows, reducing the sense of depth.",
+        "fix": "Enable or strengthen ambient occlusion and contact shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "center"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 14.5,
+        "a_observable": "Visible vignette darkening the corners of the frame.",
+        "b_observable": "Uniform brightness across the frame with no vignette.",
+        "fix": "Add a subtle vignette in post-processing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust camera focal length and strengthen contact shadows to restore depth."
+  }
+}

@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 6,
+    "idx": 0,
+    "t": 6.8,
+    "category": "staging",
+    "a_observable": "The Juspay Hyperswitch logo icon has a stylized crescent shape inside.",
+    "b_observable": "The Juspay Hyperswitch logo icon has a leaf-like shape inside.",
+    "frames": {
+      "A": "/Users/sachinsharma/Developer/temp/director/reference/hyperswitch-recurly-7485945590804062208/analysis/per-second-v13/eyewitness/sec-06-c0-A.png",
+      "B": "/Users/sachinsharma/Developer/temp/director/reference/hyperswitch-recurly-7485945590804062208/analysis/per-second-v13/eyewitness/sec-06-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.95,
+      "note": "The Juspay Hyperswitch logo icon in Clip A indeed features a stylized crescent shape inside the white circle, whereas in Clip B, the shape inside the white circle is a leaf-like shape."
+    }
+  }
+]

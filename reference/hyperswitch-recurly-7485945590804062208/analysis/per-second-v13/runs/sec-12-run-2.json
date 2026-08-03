@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "zoom_out",
+      "pan"
+    ],
+    "b_motion": [
+      "zoom_out",
+      "pan"
+    ],
+    "absent_in_b": [
+      "dot_grid_texture"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 12,
+        "a_observable": "The camera is zoomed in, hiding the 'Live Now' button.",
+        "b_observable": "The camera is zoomed out, showing the 'Live Now' button.",
+        "fix": "Match the camera's zoom level at the start of the second.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 12.5,
+        "a_observable": "The camera angle is flatter and less rotated relative to the grid.",
+        "b_observable": "The camera angle is lower and more rotated, skewing the perspective.",
+        "fix": "Adjust camera rotation and pitch to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.2,
+        "a_observable": "A distinct vignette darkens the corners of the frame.",
+        "b_observable": "The lighting is uniform with no corner darkening.",
+        "fix": "Add a vignette effect to match the reference lighting.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing and angle to match the closer, less rotated perspective of the reference video."
+  }
+}

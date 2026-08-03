@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 9.2,
+        "a_observable": "Camera is closer to the grid, framing the 'Live Now' button and cards tightly.",
+        "b_observable": "Camera is pulled back, showing a much wider view of the grid with smaller elements.",
+        "fix": "Adjust camera position and focal length to match the tighter framing of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "Soft, deep contact shadows are visible under the raised cards, creating depth.",
+        "b_observable": "Contact shadows are extremely faint, making the cards look flat and ungrounded.",
+        "fix": "Enable ambient occlusion and adjust shadow settings to deepen contact shadows.",
+        "severity": 4,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      },
+      {
+        "category": "color",
+        "t": 9.8,
+        "a_observable": "The yellow and blue cards display rich, vibrant, and highly saturated colors.",
+        "b_observable": "The colors on the cards appear washed out and desaturated.",
+        "fix": "Increase saturation and adjust material colors to match the reference's vibrant look.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing and position to match the tighter composition of the reference, and deepen the contact shadows to restore depth."
+  }
+}

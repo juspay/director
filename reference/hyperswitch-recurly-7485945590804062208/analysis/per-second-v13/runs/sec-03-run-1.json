@@ -1,0 +1,53 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera slides diagonally across the grid of cards"
+    ],
+    "b_motion": [
+      "camera slides diagonally across the grid of cards"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 3.5,
+        "a_observable": "The cards are framed closely, with the 'Subscriptions' card nearly touching the top edge of the frame.",
+        "b_observable": "The cards are framed from a greater distance, leaving significant empty space above the 'Subscriptions' card.",
+        "fix": "Adjust camera position or focal length to match the closer framing of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "material",
+        "t": 3.5,
+        "a_observable": "The grey surface to the right of the cards has a distinct brushed metal texture.",
+        "b_observable": "The grey surface to the right of the cards is smooth and matte, lacking any texture.",
+        "fix": "Apply a brushed metal texture map to the grey surface material.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 3.5,
+        "a_observable": "The crevices between the cards are deeply shadowed, creating high contrast.",
+        "b_observable": "The crevices between the cards are brightly lit, resulting in a flatter look with less contrast.",
+        "fix": "Adjust ambient lighting and shadow settings to deepen the shadows in the crevices.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing and add the brushed metal texture to the background surface to match the reference's composition and material detail."
+  }
+}

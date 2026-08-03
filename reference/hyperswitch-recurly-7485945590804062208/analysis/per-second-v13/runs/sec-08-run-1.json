@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "pan",
+      "tilt"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 8.5,
+        "a_observable": "Camera is closer to the grid, cropping tightly on Recurly and Juspay blocks.",
+        "b_observable": "Camera is further away, showing a wider view of the grid.",
+        "fix": "Adjust camera distance to match reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "Shadows under the blocks are soft and light grey.",
+        "b_observable": "Shadows are dark and sharp with high contrast.",
+        "fix": "Soften light source to reduce shadow intensity.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 8.5,
+        "a_observable": "Blue and yellow blocks have lower color saturation.",
+        "b_observable": "Blue and yellow blocks are highly saturated.",
+        "fix": "Reduce material saturation to match reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust camera distance and focal length to achieve the correct tight framing on the blocks."
+  }
+}

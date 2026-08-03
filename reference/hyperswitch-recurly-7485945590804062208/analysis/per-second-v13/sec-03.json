@@ -1,0 +1,234 @@
+{
+  "sec": 3,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "camera tilt"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera tilt"
+      ],
+      "absent_in_b": [
+        "left_panel_dot_pattern"
+      ],
+      "differences": [
+        {
+          "category": "material",
+          "t": 3.5,
+          "a_observable": "A grid of small grey dots is visible on the left background panel.",
+          "b_observable": "The left background panel is completely plain white with no dots.",
+          "fix": "Apply the dot pattern texture to the left panel material.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 3.5,
+          "a_observable": "Soft, dark shadows are cast under the white tiles, creating a clear sense of depth.",
+          "b_observable": "The shadows under the tiles are extremely faint and washed out, making the scene look flat.",
+          "fix": "Enhance the contact shadows and ambient occlusion to match the depth of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 3.5,
+          "a_observable": "The overall color temperature is warm and natural.",
+          "b_observable": "The scene has a cooler, slightly blueish color cast, especially on the white surfaces.",
+          "fix": "Warm up the white balance and adjust the color grading to match the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Add the dot pattern texture to the left background panel and adjust the lighting to create softer, deeper shadows under the tiles.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera slides diagonally across the grid of cards"
+      ],
+      "b_motion": [
+        "camera slides diagonally across the grid of cards"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 3.5,
+          "a_observable": "The cards are framed closely, with the 'Subscriptions' card nearly touching the top edge of the frame.",
+          "b_observable": "The cards are framed from a greater distance, leaving significant empty space above the 'Subscriptions' card.",
+          "fix": "Adjust camera position or focal length to match the closer framing of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "material",
+          "t": 3.5,
+          "a_observable": "The grey surface to the right of the cards has a distinct brushed metal texture.",
+          "b_observable": "The grey surface to the right of the cards is smooth and matte, lacking any texture.",
+          "fix": "Apply a brushed metal texture map to the grey surface material.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 3.5,
+          "a_observable": "The crevices between the cards are deeply shadowed, creating high contrast.",
+          "b_observable": "The crevices between the cards are brightly lit, resulting in a flatter look with less contrast.",
+          "fix": "Adjust ambient lighting and shadow settings to deepen the shadows in the crevices.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera framing and add the brushed metal texture to the background surface to match the reference's composition and material detail.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan and tilt over the vertical column of blocks"
+      ],
+      "b_motion": [
+        "slow camera pan over the vertical column of blocks with different orientation"
+      ],
+      "absent_in_b": [
+        "grid of dots pattern on the left block"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 3.5,
+          "a_observable": "The camera is rotated such that the column of blocks runs diagonally at a 45-degree angle.",
+          "b_observable": "The camera rotation is much flatter, with the column of blocks aligned nearly vertically.",
+          "fix": "Rotate the camera to match the diagonal 45-degree composition of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 3.5,
+          "a_observable": "The shadows cast by the rounded blocks are deep and well-defined, creating high contrast.",
+          "b_observable": "The shadows are very faint and washed out, resulting in a much flatter appearance.",
+          "fix": "Adjust the key and ambient light intensity to deepen the shadows and match the reference contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 3.2,
+          "a_observable": "A white block with a grid of grey dots is visible on the left side of the frame.",
+          "b_observable": "The white block with the grid of dots is missing; instead, there are faint horizontal lines on the background.",
+          "fix": "Add the grid of dots pattern to the left block and remove the horizontal lines from the background.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Align the camera rotation to the diagonal 45-degree angle of the reference to correct the overall composition.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "material",
+        "t": 3.5,
+        "a_observable": "A grid of small grey dots is visible on the left background panel.",
+        "b_observable": "The left background panel is completely plain white with no dots.",
+        "fix": "Apply the dot pattern texture to the left panel material.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 2,
+        "status": "pending_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "In Clip A, a grid of small grey dots is clearly visible on the left background panel next to the cards. In Clip B, the corresponding panel on the left is plain white and does not contain any dots."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 3.5,
+        "a_observable": "The shadows cast by the rounded blocks are deep and well-defined, creating high contrast.",
+        "b_observable": "The shadows are very faint and washed out, resulting in a much flatter appearance.",
+        "fix": "Adjust the key and ambient light intensity to deepen the shadows and match the reference contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 61.56,
+            "p1": 75.51,
+            "p5": 122.88,
+            "p50": 204.54,
+            "p95": 246.64,
+            "p99": 249.22,
+            "p999": 252.08,
+            "span_p5_p95": 123.76
+          },
+          "B": {
+            "p01": 63.4,
+            "p1": 96.55,
+            "p5": 169.94,
+            "p50": 214.45,
+            "p95": 239.17,
+            "p99": 241.03,
+            "p999": 253.86,
+            "span_p5_p95": 69.23
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [
+      "left_panel_dot_pattern"
+    ],
+    "highest_impact_fix": "Apply the dot pattern texture to the left panel material and adjust the lighting to create deeper shadows.",
+    "dropped_unsupported": 4
+  }
+}
