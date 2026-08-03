@@ -1,0 +1,66 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "zoom"
+    ],
+    "b_motion": [
+      "translation",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "material",
+        "t": 13,
+        "a_observable": "White background tiles have a grid of grey dots.",
+        "b_observable": "White background tiles are plain white.",
+        "fix": "Add dot grid texture to the white tile material.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 13.2,
+        "a_observable": "Shadows are deeper with higher overall contrast.",
+        "b_observable": "Shadows are lighter, making the image look flatter.",
+        "fix": "Increase shadow density and ambient occlusion.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "color",
+        "t": 13.5,
+        "a_observable": "The yellow card has a warm golden hue.",
+        "b_observable": "The yellow card has a cooler lemon-yellow hue.",
+        "fix": "Adjust the yellow material color to be warmer.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 13.8,
+        "a_observable": "Camera is positioned higher relative to the cards.",
+        "b_observable": "Camera is positioned lower, leaving more space at the top.",
+        "fix": "Adjust camera Y-axis position.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Add the dot grid texture to the white background tiles and adjust the shadow density and contrast to match the reference."
+  }
+}

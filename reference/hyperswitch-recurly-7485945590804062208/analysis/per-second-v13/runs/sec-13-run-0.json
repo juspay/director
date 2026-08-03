@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 13.5,
+        "a_observable": "The camera is positioned closer to the grid, framing the Recurly and Juspay cards more prominently.",
+        "b_observable": "The camera is positioned further back, resulting in a wider field of view with smaller cards.",
+        "fix": "Adjust camera distance and focal length to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 13.5,
+        "a_observable": "Soft contact shadows are visible under the cards and within the grid seams.",
+        "b_observable": "The contact shadows are extremely faint or missing, making the elements appear to float.",
+        "fix": "Increase ambient occlusion intensity and shadow map resolution.",
+        "severity": 4,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      },
+      {
+        "category": "color",
+        "t": 13.5,
+        "a_observable": "The overall scene has a warm, cream-colored cast on the white surfaces.",
+        "b_observable": "The scene has a neutral to cool white cast with higher brightness.",
+        "fix": "Adjust the white balance of the light sources to introduce warmer tones.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "full"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 13.7,
+        "a_observable": "The background elements show a subtle depth-of-field blur.",
+        "b_observable": "The entire frame is in sharp focus from foreground to background.",
+        "fix": "Enable camera depth of field and set the focus distance to the main cards.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and focal length to match the closer framing of the reference, and enable soft ambient occlusion shadows to ground the elements."
+  }
+}

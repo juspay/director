@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and tilt over the vertical column of blocks"
+    ],
+    "b_motion": [
+      "slow camera pan over the vertical column of blocks with different orientation"
+    ],
+    "absent_in_b": [
+      "grid of dots pattern on the left block"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 3.5,
+        "a_observable": "The camera is rotated such that the column of blocks runs diagonally at a 45-degree angle.",
+        "b_observable": "The camera rotation is much flatter, with the column of blocks aligned nearly vertically.",
+        "fix": "Rotate the camera to match the diagonal 45-degree composition of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 3.5,
+        "a_observable": "The shadows cast by the rounded blocks are deep and well-defined, creating high contrast.",
+        "b_observable": "The shadows are very faint and washed out, resulting in a much flatter appearance.",
+        "fix": "Adjust the key and ambient light intensity to deepen the shadows and match the reference contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 3.2,
+        "a_observable": "A white block with a grid of grey dots is visible on the left side of the frame.",
+        "b_observable": "The white block with the grid of dots is missing; instead, there are faint horizontal lines on the background.",
+        "fix": "Add the grid of dots pattern to the left block and remove the horizontal lines from the background.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Align the camera rotation to the diagonal 45-degree angle of the reference to correct the overall composition."
+  }
+}

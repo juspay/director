@@ -1,0 +1,244 @@
+{
+  "sec": 9,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 1
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 9.2,
+          "a_observable": "Camera is closer to the grid, framing the 'Live Now' button and cards tightly.",
+          "b_observable": "Camera is pulled back, showing a much wider view of the grid with smaller elements.",
+          "fix": "Adjust camera position and focal length to match the tighter framing of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 9.5,
+          "a_observable": "Soft, deep contact shadows are visible under the raised cards, creating depth.",
+          "b_observable": "Contact shadows are extremely faint, making the cards look flat and ungrounded.",
+          "fix": "Enable ambient occlusion and adjust shadow settings to deepen contact shadows.",
+          "severity": 4,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "full"
+          }
+        },
+        {
+          "category": "color",
+          "t": 9.8,
+          "a_observable": "The yellow and blue cards display rich, vibrant, and highly saturated colors.",
+          "b_observable": "The colors on the cards appear washed out and desaturated.",
+          "fix": "Increase saturation and adjust material colors to match the reference's vibrant look.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "center"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera framing and position to match the tighter composition of the reference, and deepen the contact shadows to restore depth.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "gentle camera pan and zoom out"
+      ],
+      "b_motion": [
+        "gentle camera pan and zoom out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 9.5,
+          "a_observable": "Corners are darker than the center, creating a soft vignette.",
+          "b_observable": "Lighting is uniform across the frame with no vignette.",
+          "fix": "Add a vignette to darken the corners.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 9.5,
+          "a_observable": "Camera has a pronounced isometric tilt and closer framing.",
+          "b_observable": "Camera has a flatter perspective and wider framing.",
+          "fix": "Adjust camera position and angle to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast",
+            "region": "full"
+          }
+        },
+        {
+          "category": "color",
+          "t": 9.2,
+          "a_observable": "Yellow card is a warm golden hue.",
+          "b_observable": "Yellow card is a cooler, desaturated yellow.",
+          "fix": "Adjust yellow card color to be warmer.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler",
+            "region": "center"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and angle to match the reference's dynamic isometric perspective.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 9,
+          "a_observable": "The camera framing shows the yellow Recurly button tilted dynamically in the lower-center-right, with the Secure Payments card clearly visible in the top-left.",
+          "b_observable": "The yellow button is larger, centered, and tilted at a flatter angle, with the Secure Payments card mostly cut off at the top edge.",
+          "fix": "Adjust the camera position, rotation, and focal length to match the reference framing and perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 9,
+          "a_observable": "The Recurly button has a warm, golden-yellow color.",
+          "b_observable": "The Recurly button has a cooler, brighter yellow color with a slight greenish tint.",
+          "fix": "Adjust the material color of the yellow button to match the warm golden-yellow hue of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera framing, rotation, and focal length to match the reference perspective and composition.",
+      "layer1_rejected": [
+        {
+          "claim": {
+            "category": "lighting",
+            "t": 9.5,
+            "a_observable": "The shadow cast by the yellow button onto the white surface is soft and highly diffused.",
+            "b_observable": "The shadow is sharp with hard, distinct edges.",
+            "fix": "Increase the light source size or enable soft shadows in the renderer to match the diffused look.",
+            "severity": 3,
+            "prediction": {
+              "metric": "none",
+              "expect": "none"
+            }
+          },
+          "why": "lighting claim carries no prediction"
+        }
+      ]
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 9.2,
+        "a_observable": "Camera is closer to the grid, framing the 'Live Now' button and cards tightly.",
+        "b_observable": "Camera is pulled back, showing a much wider view of the grid with smaller elements.",
+        "fix": "Adjust camera position and focal length to match the tighter framing of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 202.63,
+            "center_mean": 200.05,
+            "falloff_pct": -1.29
+          },
+          "B": {
+            "corner_mean": 199.7,
+            "center_mean": 183.12,
+            "falloff_pct": -9.06
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "color",
+        "t": 9.2,
+        "a_observable": "Yellow card is a warm golden hue.",
+        "b_observable": "Yellow card is a cooler, desaturated yellow.",
+        "fix": "Adjust yellow card color to be warmer.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "center"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_cooler",
+          "A": {
+            "r": 194.14,
+            "g": 200.7,
+            "b": 210.99,
+            "rb_delta": -16.85,
+            "saturation": 0.2
+          },
+          "B": {
+            "r": 172.15,
+            "g": 182.94,
+            "b": 217.13,
+            "rb_delta": -44.97,
+            "saturation": 0.2999
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera position, rotation, and focal length to match the reference framing and perspective.",
+    "dropped_unsupported": 2
+  }
+}

@@ -1,0 +1,236 @@
+{
+  "sec": 5,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom out"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 5.5,
+          "a_observable": "The yellow Recurly key has a soft, realistic drop shadow blending smoothly into the recess.",
+          "b_observable": "The yellow Recurly key has a very dark, harsh ambient occlusion shadow outline in the recess.",
+          "fix": "Soften the ambient occlusion or contact shadow settings around the keys.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows",
+            "region": "center"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 5.2,
+          "a_observable": "The camera perspective is wider, showing more of the surrounding keys with a dynamic angle.",
+          "b_observable": "The camera perspective is flatter with less perspective distortion, showing less of the surrounding layout.",
+          "fix": "Adjust the camera focal length to match the wider perspective of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "material",
+          "t": 5.8,
+          "a_observable": "The white keys exhibit soft, realistic matte reflections and subtle shading gradients.",
+          "b_observable": "The white keys appear flat and lack shading gradients, looking like solid white blocks.",
+          "fix": "Adjust the material roughness and specular properties of the white keys to catch soft reflections.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Soften the ambient occlusion and contact shadows around the keys to eliminate the harsh dark outlines.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera zoom",
+        "camera rotation"
+      ],
+      "b_motion": [
+        "camera zoom",
+        "camera rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 5.5,
+          "a_observable": "The camera is closer to the yellow card, creating a tighter framing.",
+          "b_observable": "The camera is further away, showing more of the surrounding tiles.",
+          "fix": "Move the camera closer to the yellow card.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 5.5,
+          "a_observable": "Stronger vignette with darker corners.",
+          "b_observable": "Weaker vignette with brighter corners.",
+          "fix": "Increase vignette strength in post-processing.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 5.5,
+          "a_observable": "Warmer color temperature on the white tiles.",
+          "b_observable": "Cooler, more neutral white tiles.",
+          "fix": "Adjust white balance to warm up the scene.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera distance to match the tighter framing of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 5.5,
+          "a_observable": "Low, dynamic camera angle with strong perspective distortion showing the Recurly card tilted.",
+          "b_observable": "Flatter camera angle with less perspective distortion, making the card appear parallel to the screen.",
+          "fix": "Adjust camera focal length and tilt to match the dynamic perspective of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 5.5,
+          "a_observable": "Strong vignette and soft lighting gradients create depth with darker corners.",
+          "b_observable": "Flat, uniform lighting across the frame with minimal corner falloff.",
+          "fix": "Add a vignette and adjust light sources to create dramatic light falloff.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 5.5,
+          "a_observable": "The yellow Recurly card has a warm, highly saturated golden-yellow hue.",
+          "b_observable": "The yellow card is cooler and less saturated, appearing pale yellow.",
+          "fix": "Increase saturation and shift the hue of the yellow material towards a warmer tone.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "material",
+          "t": 5.5,
+          "a_observable": "The yellow card exhibits a satin-like material finish with soft specular reflections.",
+          "b_observable": "The yellow card has a flat, matte finish with no visible specular reflections.",
+          "fix": "Adjust the material roughness and specular settings to introduce a soft satin sheen.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera focal length and angle to match the dynamic perspective of the reference, and introduce a vignette to fix the flat lighting.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 5.5,
+        "a_observable": "Low, dynamic camera angle with strong perspective distortion showing the Recurly card tilted.",
+        "b_observable": "Flatter camera angle with less perspective distortion, making the card appear parallel to the screen.",
+        "fix": "Adjust camera focal length and tilt to match the dynamic perspective of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 2,
+        "status": "pending_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 0.95,
+          "note": "The comparison is accurate. Clip A shows a low, dynamic camera angle with strong perspective distortion where the Recurly card is tilted, while Clip B shows a flatter, more top-down camera angle with less perspective distortion, making the card appear parallel to the screen."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.5,
+        "a_observable": "Strong vignette and soft lighting gradients create depth with darker corners.",
+        "b_observable": "Flat, uniform lighting across the frame with minimal corner falloff.",
+        "fix": "Add a vignette and adjust light sources to create dramatic light falloff.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 195.6,
+            "center_mean": 168.41,
+            "falloff_pct": -16.14
+          },
+          "B": {
+            "corner_mean": 208.45,
+            "center_mean": 188.45,
+            "falloff_pct": -10.61
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera focal length and angle to match the dynamic perspective of the reference, and introduce a vignette to fix the flat lighting.",
+    "dropped_unsupported": 6
+  }
+}

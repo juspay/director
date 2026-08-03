@@ -1,0 +1,217 @@
+{
+  "sec": 12,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 12.5,
+          "a_observable": "Camera is positioned closer with a more dramatic tilt, emphasizing perspective depth.",
+          "b_observable": "Camera is further away and flatter, showing a more orthographic-like grid view.",
+          "fix": "Adjust camera position and focal length to match the dynamic perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 12.5,
+          "a_observable": "Pronounced lighting falloff with soft shadows and high contrast.",
+          "b_observable": "Flat, uniform illumination across the grid with minimal shadow definition.",
+          "fix": "Incorporate directional light sources and vignette to match the reference contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Re-align the camera position and angle to capture the dynamic perspective, and adjust the lighting to introduce soft shadows and a vignette.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 12,
+          "a_observable": "The camera is positioned closer to the yellow Recurly block, creating a tighter composition.",
+          "b_observable": "The camera is positioned further away, showing a wider view that includes the blue Juspay hyperswitch block.",
+          "fix": "Match the camera distance and framing of the reference video.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 12.4,
+          "a_observable": "The scene has a distinct vignette with darker corners and deeper shadows.",
+          "b_observable": "The scene has bright, flat lighting with minimal corner falloff.",
+          "fix": "Apply a stronger vignette and deepen the shadows to match the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 12.8,
+          "a_observable": "The white background and surfaces exhibit a cool blue-green color cast.",
+          "b_observable": "The white background and surfaces are neutral white and grey.",
+          "fix": "Color grade the reproduction to add a cool blue-green cast to the highlights and midtones.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Match the camera focal length and distance to achieve the tighter framing of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "zoom_out",
+        "pan"
+      ],
+      "b_motion": [
+        "zoom_out",
+        "pan"
+      ],
+      "absent_in_b": [
+        "dot_grid_texture"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 12,
+          "a_observable": "The camera is zoomed in, hiding the 'Live Now' button.",
+          "b_observable": "The camera is zoomed out, showing the 'Live Now' button.",
+          "fix": "Match the camera's zoom level at the start of the second.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 12.5,
+          "a_observable": "The camera angle is flatter and less rotated relative to the grid.",
+          "b_observable": "The camera angle is lower and more rotated, skewing the perspective.",
+          "fix": "Adjust camera rotation and pitch to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 12.2,
+          "a_observable": "A distinct vignette darkens the corners of the frame.",
+          "b_observable": "The lighting is uniform with no corner darkening.",
+          "fix": "Add a vignette effect to match the reference lighting.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera framing and angle to match the closer, less rotated perspective of the reference video.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 12,
+        "a_observable": "The camera is positioned closer to the yellow Recurly block, creating a tighter composition.",
+        "b_observable": "The camera is positioned further away, showing a wider view that includes the blue Juspay hyperswitch block.",
+        "fix": "Match the camera distance and framing of the reference video.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 3,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "refuted",
+          "certainty": 1,
+          "note": "The claim states that Clip A has a tighter composition closer to the yellow Recurly block, while Clip B shows a wider view that includes the blue Juspay hyperswitch block. However, both Clip A and Clip B clearly show both the yellow Recurly block and the blue Juspay hyperswitch block in their entirety, refuting the claim."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.4,
+        "a_observable": "The scene has a distinct vignette with darker corners and deeper shadows.",
+        "b_observable": "The scene has bright, flat lighting with minimal corner falloff.",
+        "fix": "Apply a stronger vignette and deepen the shadows to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 209.37,
+            "center_mean": 194.05,
+            "falloff_pct": -7.9
+          },
+          "B": {
+            "corner_mean": 208.26,
+            "center_mean": 190.75,
+            "falloff_pct": -9.18
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Re-align the camera position and angle to capture the dynamic perspective, and adjust the lighting to introduce soft shadows and a vignette.",
+    "dropped_unsupported": 3
+  }
+}

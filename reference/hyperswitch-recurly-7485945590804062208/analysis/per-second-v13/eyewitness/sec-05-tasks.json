@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 5,
+    "idx": 0,
+    "t": 5.5,
+    "category": "camera",
+    "a_observable": "Low, dynamic camera angle with strong perspective distortion showing the Recurly card tilted.",
+    "b_observable": "Flatter camera angle with less perspective distortion, making the card appear parallel to the screen.",
+    "frames": {
+      "A": "/Users/sachinsharma/Developer/temp/director/reference/hyperswitch-recurly-7485945590804062208/analysis/per-second-v13/eyewitness/sec-05-c0-A.png",
+      "B": "/Users/sachinsharma/Developer/temp/director/reference/hyperswitch-recurly-7485945590804062208/analysis/per-second-v13/eyewitness/sec-05-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.95,
+      "note": "The comparison is accurate. Clip A shows a low, dynamic camera angle with strong perspective distortion where the Recurly card is tilted, while Clip B shows a flatter, more top-down camera angle with less perspective distortion, making the card appear parallel to the screen."
+    }
+  }
+]

@@ -1,0 +1,287 @@
+{
+  "sec": 2,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        2.2
+      ],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 2.1,
+          "a_observable": "The 'Secure Payments' tile is framed closely, occupying most of the center-left of the screen.",
+          "b_observable": "The camera is positioned further back, showing a wider view with a large blue tile visible in the top-left corner.",
+          "fix": "Adjust the camera position and focal length to match the tighter framing of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 2.5,
+          "a_observable": "The stacked tiles are rotated at a steep angle, showing strong perspective depth.",
+          "b_observable": "The stacked tiles are nearly parallel to the camera view, showing very little perspective tilt.",
+          "fix": "Rotate the tiles or adjust the camera angle to match the perspective depth of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 2.5,
+          "a_observable": "Distinct, soft contact shadows are visible beneath the 'Subscriptions', 'Retries', and 'APMs' cards, creating depth.",
+          "b_observable": "The contact shadows beneath the cards are extremely faint, making the cards appear flat against the background.",
+          "fix": "Increase the shadow density or adjust the light source to cast more pronounced contact shadows under the cards.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position, rotation, and focal length to match the tighter framing and perspective angles of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        2.2
+      ],
+      "a_motion": [
+        "camera translation",
+        "camera rotation"
+      ],
+      "b_motion": [
+        "camera translation",
+        "camera rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 2.1,
+          "a_observable": "Close-up framing on the 'Secure Payments' card.",
+          "b_observable": "Wide shot showing multiple surrounding cards.",
+          "fix": "Adjust camera position and focal length to match the close-up framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 2.6,
+          "a_observable": "Steep perspective angle on the vertical card stack.",
+          "b_observable": "Flatter, more top-down camera angle on the cards.",
+          "fix": "Match the camera rotation and height to align the perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "full"
+          }
+        },
+        {
+          "category": "color",
+          "t": 2.1,
+          "a_observable": "Cool blue color cast across white surfaces.",
+          "b_observable": "Neutral white and grey surfaces.",
+          "fix": "Apply a cool color grade to match the blue tint.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and focal length to resolve the framing and perspective mismatches across both shots.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        2.2
+      ],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [
+        "dot grid pattern on tiles"
+      ],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 2.1,
+          "a_observable": "The 'Renewal Success' tile is positioned directly above the 'Secure Payments' tile.",
+          "b_observable": "The 'Renewal Success' tile is positioned to the right of the 'Secure Payments' tile.",
+          "fix": "Reposition the 'Renewal Success' tile to be directly above the 'Secure Payments' tile.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "material",
+          "t": 2.1,
+          "a_observable": "The yellow tile at the bottom of the frame exhibits a brushed metallic texture with anisotropic reflections.",
+          "b_observable": "The yellow tile is a flat, matte yellow plastic material with no texture or metallic reflections.",
+          "fix": "Apply a brushed metal material with anisotropic roughness to the yellow tiles.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 2.1,
+          "a_observable": "The 'Renewal Success' tile at the top of the frame is out of focus due to depth-of-field blur.",
+          "b_observable": "The 'Renewal Success' tile is in sharp focus, indicating a lack of depth-of-field blur.",
+          "fix": "Enable depth of field on the camera and set the focus distance to the 'Secure Payments' tile.",
+          "severity": 2,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "top"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 2.5,
+          "a_observable": "Soft, dark contact shadows are visible beneath the 'Subscriptions', 'Retries', and 'APMs' tiles.",
+          "b_observable": "The contact shadows beneath the tiles are extremely faint and barely visible.",
+          "fix": "Adjust the light source or shadow settings to produce stronger, softer contact shadows under the tiles.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Rearrange the tiles to match the reference layout and apply the brushed metallic material to the yellow tiles.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 2.1,
+        "a_observable": "The 'Secure Payments' tile is framed closely, occupying most of the center-left of the screen.",
+        "b_observable": "The camera is positioned further back, showing a wider view with a large blue tile visible in the top-left corner.",
+        "fix": "Adjust the camera position and focal length to match the tighter framing of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_cooler",
+          "A": {
+            "r": 188.21,
+            "g": 200.46,
+            "b": 204.01,
+            "rb_delta": -15.8,
+            "saturation": 0.2023
+          },
+          "B": {
+            "r": 198.53,
+            "g": 209.6,
+            "b": 229.8,
+            "rb_delta": -31.28,
+            "saturation": 0.1832
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "staging",
+        "t": 2.5,
+        "a_observable": "The stacked tiles are rotated at a steep angle, showing strong perspective depth.",
+        "b_observable": "The stacked tiles are nearly parallel to the camera view, showing very little perspective tilt.",
+        "fix": "Rotate the tiles or adjust the camera angle to match the perspective depth of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 2,
+        "status": "pending_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 0.95,
+          "note": "In Clip A, the camera is positioned at a sharp, oblique angle relative to the plane of the tiles, creating a strong perspective depth effect. In Clip B, the camera is positioned almost directly above the tiles, making them nearly parallel to the camera view with very little perspective tilt."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.5,
+        "a_observable": "Distinct, soft contact shadows are visible beneath the 'Subscriptions', 'Retries', and 'APMs' cards, creating depth.",
+        "b_observable": "The contact shadows beneath the cards are extremely faint, making the cards appear flat against the background.",
+        "fix": "Increase the shadow density or adjust the light source to cast more pronounced contact shadows under the cards.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 69.86,
+            "p1": 84.41,
+            "p5": 110.45,
+            "p50": 207.96,
+            "p95": 246.13,
+            "p99": 249,
+            "p999": 250.96,
+            "span_p5_p95": 135.68
+          },
+          "B": {
+            "p01": 63.32,
+            "p1": 96.55,
+            "p5": 169.94,
+            "p50": 217.3,
+            "p95": 242.17,
+            "p99": 244.95,
+            "p999": 254.07,
+            "span_p5_p95": 72.23
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera position, rotation, and focal length to match the tighter framing and perspective angles of the reference video.",
+    "dropped_unsupported": 4
+  }
+}

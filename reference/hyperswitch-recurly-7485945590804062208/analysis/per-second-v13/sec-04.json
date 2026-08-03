@@ -1,0 +1,204 @@
+{
+  "sec": 4,
+  "meta": {
+    "verified": 2,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [
+    "reported 2 cuts, truth has 1"
+  ],
+  "runs": [
+    {
+      "cuts_in_window": [
+        4.9
+      ],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 4.2,
+          "a_observable": "The shadows cast by the blocks are soft and highly diffused.",
+          "b_observable": "The shadows are sharp and have high contrast.",
+          "fix": "Increase the light source size to soften the shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_higher_contrast"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 4.95,
+          "a_observable": "The camera is positioned further back, showing more surrounding blocks with a moderate tilt.",
+          "b_observable": "The camera is closer and more tilted, making the yellow block dominate the frame.",
+          "fix": "Adjust the camera focal length and angle to match the reference framing.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "material",
+          "t": 4.1,
+          "a_observable": "The white blocks have rounded bevels that catch soft highlights.",
+          "b_observable": "The white blocks have flat faces and sharp edges with no highlight definition.",
+          "fix": "Add a bevel to the block geometry and adjust material roughness.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera framing and tilt on the second shot to match the reference composition.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        4.9
+      ],
+      "a_motion": [
+        "camera motion"
+      ],
+      "b_motion": [
+        "camera motion"
+      ],
+      "absent_in_b": [
+        "grid of dots on the left panel"
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "t": 4.2,
+          "a_observable": "A grid of grey dots is visible on the panel to the left of the Subscriptions card.",
+          "b_observable": "The panel to the left of the Subscriptions card is completely blank.",
+          "fix": "Add the grid of dots to the left panel.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 4.95,
+          "a_observable": "The camera angle is higher, showing the Recurly card alongside the Secure Payments card and the Success rate chart.",
+          "b_observable": "The camera angle is lower and more skewed, focusing tightly on the Recurly card and cutting off surrounding elements.",
+          "fix": "Adjust the camera angle and position to match the wider, high-angle composition.",
+          "severity": 4,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 4.95,
+          "a_observable": "The Recurly card has a warm, golden-yellow color.",
+          "b_observable": "The Recurly card has a brighter, cooler lemon-yellow color.",
+          "fix": "Adjust the material color of the Recurly card to be warmer.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_more_saturated"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 4.5,
+          "a_observable": "The shadows cast by the cards are soft and highly diffused.",
+          "b_observable": "The shadows cast by the cards are sharp with distinct edges.",
+          "fix": "Soften the shadow edges by increasing the light source size.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_higher_contrast"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and position in the Recurly shot to match the wider, high-angle composition of the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 4.2,
+        "a_observable": "The shadows cast by the blocks are soft and highly diffused.",
+        "b_observable": "The shadows are sharp and have high contrast.",
+        "fix": "Increase the light source size to soften the shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_higher_contrast"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "B_higher_contrast",
+          "A": {
+            "p01": 61.48,
+            "p1": 75.73,
+            "p5": 123.54,
+            "p50": 207.73,
+            "p95": 246.31,
+            "p99": 249.29,
+            "p999": 251.15,
+            "span_p5_p95": 122.77
+          },
+          "B": {
+            "p01": 62.75,
+            "p1": 96.55,
+            "p5": 171.16,
+            "p50": 213.16,
+            "p95": 237.82,
+            "p99": 239.67,
+            "p999": 253.85,
+            "span_p5_p95": 66.66
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "camera",
+        "t": 4.95,
+        "a_observable": "The camera angle is higher, showing the Recurly card alongside the Secure Payments card and the Success rate chart.",
+        "b_observable": "The camera angle is lower and more skewed, focusing tightly on the Recurly card and cutting off surrounding elements.",
+        "fix": "Adjust the camera angle and position to match the wider, high-angle composition.",
+        "severity": 4,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_sharper",
+          "A": {
+            "lap_var": 29.51
+          },
+          "B": {
+            "lap_var": 5.36
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera angle and position in the Recurly shot to match the wider, high-angle composition of the reference.",
+    "dropped_unsupported": 3
+  }
+}

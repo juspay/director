@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 8,
+    "idx": 0,
+    "t": 8,
+    "category": "camera",
+    "a_observable": "The camera is close to the JUSPAY card with a top-down angle, making it fill most of the frame.",
+    "b_observable": "The camera is further away and tilted at a steep oblique angle, showing more of the surrounding tiles.",
+    "frames": {
+      "A": "/Users/sachinsharma/Developer/temp/director/reference/hyperswitch-recurly-7485945590804062208/analysis/per-second-v13/eyewitness/sec-08-c0-A.png",
+      "B": "/Users/sachinsharma/Developer/temp/director/reference/hyperswitch-recurly-7485945590804062208/analysis/per-second-v13/eyewitness/sec-08-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.95,
+      "note": "The claim accurately describes the camera framing and angles in both clips. Clip A shows a close-up, nearly top-down view of the JUSPAY card, while Clip B shows a wider, highly oblique angle that reveals more of the surrounding tiles."
+    }
+  }
+]

@@ -1,0 +1,44 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 12.5,
+        "a_observable": "Camera is positioned closer with a more dramatic tilt, emphasizing perspective depth.",
+        "b_observable": "Camera is further away and flatter, showing a more orthographic-like grid view.",
+        "fix": "Adjust camera position and focal length to match the dynamic perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "Pronounced lighting falloff with soft shadows and high contrast.",
+        "b_observable": "Flat, uniform illumination across the grid with minimal shadow definition.",
+        "fix": "Incorporate directional light sources and vignette to match the reference contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Re-align the camera position and angle to capture the dynamic perspective, and adjust the lighting to introduce soft shadows and a vignette."
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom out"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 5.5,
+        "a_observable": "The yellow Recurly key has a soft, realistic drop shadow blending smoothly into the recess.",
+        "b_observable": "The yellow Recurly key has a very dark, harsh ambient occlusion shadow outline in the recess.",
+        "fix": "Soften the ambient occlusion or contact shadow settings around the keys.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows",
+          "region": "center"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 5.2,
+        "a_observable": "The camera perspective is wider, showing more of the surrounding keys with a dynamic angle.",
+        "b_observable": "The camera perspective is flatter with less perspective distortion, showing less of the surrounding layout.",
+        "fix": "Adjust the camera focal length to match the wider perspective of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "material",
+        "t": 5.8,
+        "a_observable": "The white keys exhibit soft, realistic matte reflections and subtle shading gradients.",
+        "b_observable": "The white keys appear flat and lack shading gradients, looking like solid white blocks.",
+        "fix": "Adjust the material roughness and specular properties of the white keys to catch soft reflections.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Soften the ambient occlusion and contact shadows around the keys to eliminate the harsh dark outlines."
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera motion"
+    ],
+    "b_motion": [
+      "camera motion"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 7.5,
+        "a_observable": "The blue 'Juspay hyperswitch' block is oriented horizontally with a slight tilt.",
+        "b_observable": "The blue 'Juspay hyperswitch' block is rotated diagonally at approximately 45 degrees.",
+        "fix": "Align the rotation of the blue block to match the horizontal orientation in the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 7.5,
+        "a_observable": "The camera is positioned close to the blue block, making it occupy a large portion of the frame.",
+        "b_observable": "The camera is positioned further away, making the blue block appear smaller and showing more of the surrounding grid.",
+        "fix": "Adjust the camera zoom/distance to match the close-up framing of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 7.5,
+        "a_observable": "The background tiles are brightly and evenly illuminated with soft, subtle shadows.",
+        "b_observable": "The background tiles have high-contrast lighting with much darker shadows.",
+        "fix": "Soften the light source and reduce shadow density to match the bright, low-contrast look of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows",
+          "region": "full"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 7.5,
+        "a_observable": "The logo icon on the blue block is a crescent shape inside a white circle.",
+        "b_observable": "The logo icon on the blue block is a leaf-like shape inside a white circle.",
+        "fix": "Replace the logo icon on the blue block with the correct crescent design.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle, rotation, and distance to correctly frame the Juspay Hyperswitch block horizontally and closely, matching the reference."
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "subtle camera drift"
+    ],
+    "b_motion": [
+      "subtle camera drift"
+    ],
+    "absent_in_b": [
+      "volumetric fog"
+    ],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 14.2,
+        "a_observable": "The scene is covered in a bright volumetric glow that softens shadows and washes out background details.",
+        "b_observable": "The scene lacks this volumetric glow, showing sharp shadows and high-contrast background tiles.",
+        "fix": "Add a volumetric fog or glow overlay to match the high-key lighting of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Add a volumetric glow or fog effect to match the high-key, washed-out lighting style of the reference."
+  }
+}

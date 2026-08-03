@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pans and zooms out slowly",
+      "Juspay card floats gently"
+    ],
+    "b_motion": [
+      "camera tilts and pans with a different trajectory",
+      "Juspay card rotates more dynamically"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 7,
+        "a_observable": "The camera angle is flatter, keeping the Juspay card centered.",
+        "b_observable": "The camera is tilted steeply, skewing the Juspay card.",
+        "fix": "Adjust camera tilt to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "material",
+        "t": 7.25,
+        "a_observable": "The Juspay card border has a reflective metallic silver finish.",
+        "b_observable": "The Juspay card border is a flat, dark grey matte material.",
+        "fix": "Apply a metallic silver material to the border.",
+        "severity": 4,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_brighter_highlights"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 7.5,
+        "a_observable": "The background tiles are brightly lit with soft shadows.",
+        "b_observable": "The background tiles are darker with a gray cast.",
+        "fix": "Increase ambient light intensity.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_brighter_highlights"
+        }
+      }
+    ],
+    "highest_impact_fix": "Apply reflective metallic materials to the card borders and adjust the camera tilt to match the reference framing."
+  }
+}

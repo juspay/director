@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and tilt"
+    ],
+    "b_motion": [
+      "slow camera pan and tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 1.5,
+        "a_observable": "The camera is oriented with a mild rotation, keeping the 'Secure Payments' card nearly aligned with the frame's vertical axis.",
+        "b_observable": "The camera has a pronounced Dutch tilt, rotating the 'Secure Payments' card significantly to the left.",
+        "fix": "Align the camera's roll and pitch angles to match the reference composition.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "Soft contact shadows are visible in the crevices between the white keys, defining their edges.",
+        "b_observable": "The crevices between the white keys lack distinct contact shadows, resulting in a flat appearance.",
+        "fix": "Increase ambient occlusion or add a subtle directional light to define the gaps between the keys.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 1.5,
+        "a_observable": "The blue key on the left side of the frame is a desaturated, sky-blue shade.",
+        "b_observable": "The blue key on the left side of the frame is a highly saturated, vivid royal blue.",
+        "fix": "Reduce the saturation and adjust the hue of the blue material to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera's rotation and position to eliminate the excessive Dutch tilt and match the framing of Video A."
+  }
+}

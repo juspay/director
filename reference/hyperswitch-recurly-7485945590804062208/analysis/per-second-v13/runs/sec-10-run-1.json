@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 10.5,
+        "a_observable": "The camera uses a wider lens, creating a dynamic perspective with visible tilt.",
+        "b_observable": "The camera uses a longer lens, resulting in a flatter perspective with less tilt.",
+        "fix": "Adjust camera focal length and position to match the perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 10.5,
+        "a_observable": "White tiles appear clean and neutral with cool blue-toned shadows.",
+        "b_observable": "White tiles exhibit a warm, yellowish color cast.",
+        "fix": "Adjust white balance to eliminate the warm cast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "Shadows under the yellow tile are soft and diffuse.",
+        "b_observable": "Shadows under the yellow tile are sharp and dark.",
+        "fix": "Increase light source size to soften shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Match the camera's focal length and perspective to restore the dynamic three-quarter view of the reference."
+  }
+}

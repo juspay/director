@@ -1,0 +1,260 @@
+{
+  "sec": 1,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan and tilt"
+      ],
+      "b_motion": [
+        "slow camera pan and tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 1.5,
+          "a_observable": "The camera is oriented with a mild rotation, keeping the 'Secure Payments' card nearly aligned with the frame's vertical axis.",
+          "b_observable": "The camera has a pronounced Dutch tilt, rotating the 'Secure Payments' card significantly to the left.",
+          "fix": "Align the camera's roll and pitch angles to match the reference composition.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 1.5,
+          "a_observable": "Soft contact shadows are visible in the crevices between the white keys, defining their edges.",
+          "b_observable": "The crevices between the white keys lack distinct contact shadows, resulting in a flat appearance.",
+          "fix": "Increase ambient occlusion or add a subtle directional light to define the gaps between the keys.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 1.5,
+          "a_observable": "The blue key on the left side of the frame is a desaturated, sky-blue shade.",
+          "b_observable": "The blue key on the left side of the frame is a highly saturated, vivid royal blue.",
+          "fix": "Reduce the saturation and adjust the hue of the blue material to match the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera's rotation and position to eliminate the excessive Dutch tilt and match the framing of Video A.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "staging",
+          "t": 1,
+          "a_observable": "The 'Renewal Success' card is positioned directly above the 'Secure Payments' card, with the yellow card at the bottom and the blue card on the left.",
+          "b_observable": "The 'Renewal Success' card is positioned to the right of the 'Secure Payments' card, with the yellow card on the left and the blue card at the top-left.",
+          "fix": "Reorganize the grid layout of the cards to match the reference video's staging.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 1,
+          "a_observable": "The camera has a narrow field of view (long lens), resulting in a flat perspective with minimal skew on the 'Secure Payments' card.",
+          "b_observable": "The camera has a wide field of view (short lens), resulting in strong perspective distortion and significant skew on the card.",
+          "fix": "Increase the camera's focal length and adjust its position to achieve a flatter, more orthographic perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 1,
+          "a_observable": "The white cards are brightly lit with clean white highlights, creating a high-contrast look.",
+          "b_observable": "The white cards are underexposed and appear greyish-blue, with much lower highlight brightness.",
+          "fix": "Increase the key light intensity and adjust the color temperature to remove the cool blue cast from the white surfaces.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_brighter_highlights"
+          }
+        },
+        {
+          "category": "material",
+          "t": 1,
+          "a_observable": "The yellow card at the bottom of the frame features a distinct brushed metal texture with horizontal grain.",
+          "b_observable": "The yellow card on the left is a flat, matte plastic with no texture or metallic properties.",
+          "fix": "Add a brushed metal texture map and increase the metallic/anisotropic reflections on the yellow card.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Rearrange the grid layout of the cards to match the staging of the reference video, and adjust the camera's focal length to eliminate the excessive perspective distortion.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 1.5,
+          "a_observable": "The 'Secure Payments' tile is viewed from a low angle, appearing large and occupying the center of the frame.",
+          "b_observable": "The 'Secure Payments' tile is viewed from a higher, more tilted angle, appearing smaller and shifted towards the left.",
+          "fix": "Match the camera position, rotation, and field of view to the reference video.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 1.5,
+          "a_observable": "Soft, dark contact shadows are cast beneath the white tiles onto the grey background, creating depth.",
+          "b_observable": "The contact shadows are extremely faint, resulting in a flat appearance with little separation between the tiles and the background.",
+          "fix": "Enable or increase the strength of ambient occlusion and contact shadows under the tiles.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "material",
+          "t": 1.5,
+          "a_observable": "The frame surrounding the yellow tile at the bottom has a metallic silver finish with a brushed texture.",
+          "b_observable": "The frame surrounding the yellow tile is a flat, matte grey plastic with no metallic reflections or texture.",
+          "fix": "Add a metallic material with a brushed texture map to the tile borders.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and distance to match the reference perspective, and add realistic contact shadows beneath the tiles to restore the 3D depth.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 1.5,
+        "a_observable": "The camera is oriented with a mild rotation, keeping the 'Secure Payments' card nearly aligned with the frame's vertical axis.",
+        "b_observable": "The camera has a pronounced Dutch tilt, rotating the 'Secure Payments' card significantly to the left.",
+        "fix": "Align the camera's roll and pitch angles to match the reference composition.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 3,
+        "status": "pending_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 0.95,
+          "note": "In Clip A, the 'Secure Payments' card is oriented nearly vertically, aligned with the frame's vertical axis. In Clip B, the camera has a pronounced Dutch tilt, causing the card to be rotated significantly to the left (counter-clockwise)."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "Soft, dark contact shadows are cast beneath the white tiles onto the grey background, creating depth.",
+        "b_observable": "The contact shadows are extremely faint, resulting in a flat appearance with little separation between the tiles and the background.",
+        "fix": "Enable or increase the strength of ambient occlusion and contact shadows under the tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 57.25,
+            "p1": 83.76,
+            "p5": 96.27,
+            "p50": 203.89,
+            "p95": 245.37,
+            "p99": 249.44,
+            "p999": 251.78,
+            "span_p5_p95": 149.1
+          },
+          "B": {
+            "p01": 27.46,
+            "p1": 103.11,
+            "p5": 108.78,
+            "p50": 223.93,
+            "p95": 248.8,
+            "p99": 252.08,
+            "p999": 254.5,
+            "span_p5_p95": 140.02
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "material",
+        "t": 1.5,
+        "a_observable": "The frame surrounding the yellow tile at the bottom has a metallic silver finish with a brushed texture.",
+        "b_observable": "The frame surrounding the yellow tile is a flat, matte grey plastic with no metallic reflections or texture.",
+        "fix": "Add a metallic material with a brushed texture map to the tile borders.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "pending_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "In Clip A, the frame surrounding the yellow tile at the bottom clearly shows a brushed metallic silver texture. In Clip B, the same frame is a flat, matte grey plastic with no texture or metallic reflections."
+        }
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera angle and distance to match the reference perspective, and add realistic contact shadows beneath the tiles to restore the 3D depth.",
+    "dropped_unsupported": 3
+  }
+}

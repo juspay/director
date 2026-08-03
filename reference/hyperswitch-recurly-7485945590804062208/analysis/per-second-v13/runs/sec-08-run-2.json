@@ -1,0 +1,71 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "slow camera pan",
+      "pop-up animation of the Live Now button"
+    ],
+    "b_motion": [
+      "slow camera pan",
+      "pop-up animation of the Live Now button"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 8,
+        "a_observable": "The camera is close to the JUSPAY card with a top-down angle, making it fill most of the frame.",
+        "b_observable": "The camera is further away and tilted at a steep oblique angle, showing more of the surrounding tiles.",
+        "fix": "Adjust the camera position and tilt to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "The cards cast deep, soft contact shadows onto the white background tiles, creating depth.",
+        "b_observable": "The contact shadows are extremely faint and washed out, making the cards look flat.",
+        "fix": "Increase shadow density and adjust the light source to cast stronger contact shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.8,
+        "a_observable": "A distinct vignette is visible, darkening the corners of the frame.",
+        "b_observable": "The corners of the frame are bright white with no visible vignette.",
+        "fix": "Add a vignette effect to darken the corners of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 8.7,
+        "a_observable": "The Recurly card has a warm, highly saturated golden-yellow color.",
+        "b_observable": "The Recurly card has a cooler, less saturated lemon-yellow color.",
+        "fix": "Adjust the color of the Recurly card to be warmer and more saturated.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing and angle to match the reference, and significantly deepen the contact shadows to restore the 3D depth of the scene."
+  }
+}

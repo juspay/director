@@ -1,0 +1,42 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "tilt"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 10.5,
+        "a_observable": "The camera is positioned closer to the grid, creating a dynamic perspective with tight framing on the yellow card.",
+        "b_observable": "The camera is further away with a flatter angle, showing more of the surrounding grid.",
+        "fix": "Bring the camera closer and adjust the focal length to match the reference perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.2,
+        "a_observable": "The contact shadows under the cards are soft and deep, creating clear separation from the floor.",
+        "b_observable": "The contact shadows are extremely faint, making the cards look flat against the floor.",
+        "fix": "Adjust the light sources and shadow settings to produce deeper, softer contact shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and focal length to match the tighter, more dynamic perspective of the reference."
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "camera motion"
+    ],
+    "b_motion": [
+      "translation",
+      "camera motion"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 0.2,
+        "a_observable": "Tight close-up framing on the 'Secure Payments' tile.",
+        "b_observable": "Wider camera framing with the tile rotated and smaller.",
+        "fix": "Match reference camera distance and angle.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 0.5,
+        "a_observable": "Warm cream tone on the white tiles.",
+        "b_observable": "Cool neutral white tone on the white tiles.",
+        "fix": "Warm up the color temperature.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.8,
+        "a_observable": "Strong vignette with darker corners.",
+        "b_observable": "Flat, uniform illumination across the frame.",
+        "fix": "Add corner vignette.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing and angle to match the tight close-up of the reference."
+  }
+}

@@ -1,0 +1,257 @@
+{
+  "sec": 11,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 11,
+          "a_observable": "The camera is positioned closer to the yellow Recurly tile, creating a tight framing.",
+          "b_observable": "The camera is positioned further back, resulting in a wider framing with more surrounding tiles visible.",
+          "fix": "Adjust camera position and focal length to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 11,
+          "a_observable": "The background tiles are out of focus due to a shallow depth of field.",
+          "b_observable": "The background tiles remain sharp and in focus.",
+          "fix": "Enable depth of field on the camera and adjust focus distance and aperture.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.2,
+          "a_observable": "The frame edges show a distinct vignette with darker corners.",
+          "b_observable": "The frame edges are evenly lit with no vignette.",
+          "fix": "Add a vignette in post-processing or adjust camera lens shading.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 11,
+          "a_observable": "The yellow tile has a warm, highly saturated golden color.",
+          "b_observable": "The yellow tile is cooler and less saturated.",
+          "fix": "Adjust the material color of the yellow tile to increase saturation and warmth.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and focal length to match the reference framing and enable depth of field to replicate the shallow focus look.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "zoom"
+      ],
+      "b_motion": [
+        "translation",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 11.5,
+          "a_observable": "The yellow Recurly button is centered in the frame with a close-up perspective.",
+          "b_observable": "The yellow Recurly button is positioned on the left side of the frame with a wider perspective.",
+          "fix": "Re-align the camera path and adjust the focal length to match the reference composition.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.25,
+          "a_observable": "Deep shadows under the Recurly button, creating high contrast.",
+          "b_observable": "Soft, faint shadows under the Recurly button, resulting in lower contrast.",
+          "fix": "Adjust the light source intensity and shadow bias to deepen the shadows.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "center"
+          }
+        }
+      ],
+      "highest_impact_fix": "Align the camera path and framing in Video B to match the centered composition of Video A.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 11,
+          "a_observable": "The camera is closer to the cards, creating a tight crop on the yellow Recurly and blue Hyperswitch elements.",
+          "b_observable": "The camera is further away, resulting in a wider field of view with smaller elements and more visible background tiles.",
+          "fix": "Adjust the camera distance and focal length to match the tighter framing of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.5,
+          "a_observable": "A soft vignette is present, darkening the corners of the frame.",
+          "b_observable": "The corners are as bright as the center, showing no vignette effect.",
+          "fix": "Apply a vignette to darken the corners of the frame.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 11.8,
+          "a_observable": "The white tiles have a warm, neutral tone, and the yellow card is saturated and warm.",
+          "b_observable": "The white tiles have a cool, bluish cast, and the yellow card is desaturated.",
+          "fix": "Adjust the color balance to introduce warmer tones and increase saturation.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and focal length to match the tighter framing and perspective of the reference video.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 11,
+        "a_observable": "The camera is positioned closer to the yellow Recurly tile, creating a tight framing.",
+        "b_observable": "The camera is positioned further back, resulting in a wider framing with more surrounding tiles visible.",
+        "fix": "Adjust camera position and focal length to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 3,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "refuted",
+          "certainty": 0.9,
+          "note": "The claim is the opposite of what is shown. In Clip A, the camera is positioned further back, making the tiles appear smaller with more of the background grid visible. In Clip B, the camera is closer, making the tiles appear larger, to the point where the top-left grey border of the yellow Recurly tile is cut off by the edge of the frame."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.2,
+        "a_observable": "The frame edges show a distinct vignette with darker corners.",
+        "b_observable": "The frame edges are evenly lit with no vignette.",
+        "fix": "Add a vignette in post-processing or adjust camera lens shading.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 209.77,
+            "center_mean": 197.73,
+            "falloff_pct": -6.09
+          },
+          "B": {
+            "corner_mean": 212.98,
+            "center_mean": 190.07,
+            "falloff_pct": -12.05
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "color",
+        "t": 11,
+        "a_observable": "The yellow tile has a warm, highly saturated golden color.",
+        "b_observable": "The yellow tile is cooler and less saturated.",
+        "fix": "Adjust the material color of the yellow tile to increase saturation and warmth.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 192.84,
+            "g": 204.41,
+            "b": 200.72,
+            "rb_delta": -7.89,
+            "saturation": 0.1913
+          },
+          "B": {
+            "r": 197.68,
+            "g": 202.16,
+            "b": 223.2,
+            "rb_delta": -25.52,
+            "saturation": 0.1902
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera position and focal length to match the tighter framing and perspective of the reference video.",
+    "dropped_unsupported": 2
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera tilt"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 0,
+        "a_observable": "The camera is positioned close to the 'Secure Payments' tile, with the 'Renewal Success' tile partially visible at the top.",
+        "b_observable": "The camera is pulled back significantly, showing a wider view of the surrounding tiles, with a large blue tile visible at the top-left.",
+        "fix": "Adjust the camera focal length and position to match the close-up framing of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 0.2,
+        "a_observable": "The text 'Secure Payments' is oriented horizontally, aligned with the shield icon.",
+        "b_observable": "The text 'Secure Payments' is rotated 90 degrees relative to the shield icon, running vertically.",
+        "fix": "Rotate the text element to align horizontally with the shield icon.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.5,
+        "a_observable": "The shadows between the tiles are soft but distinct, providing depth and separation.",
+        "b_observable": "The shadows are extremely faint and washed out, making the tiles appear flat against the background.",
+        "fix": "Increase the shadow intensity and adjust the key light to create more defined contact shadows.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Align the camera framing and correct the 90-degree text rotation on the 'Secure Payments' tile."
+  }
+}

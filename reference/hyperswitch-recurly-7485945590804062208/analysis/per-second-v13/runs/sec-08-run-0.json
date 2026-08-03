@@ -1,0 +1,71 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "pan",
+      "tilt"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 8,
+        "a_observable": "The camera is positioned lower and tilted more upwards, creating a stronger perspective angle on the cards.",
+        "b_observable": "The camera is positioned higher and flatter, resulting in less perspective tilt on the cards.",
+        "fix": "Lower the camera height and increase the upward tilt to match the reference perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "The image has a prominent vignette with darker corners.",
+        "b_observable": "The image has a very weak vignette with bright corners.",
+        "fix": "Increase the vignette strength to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 8.5,
+        "a_observable": "The white surfaces have a cooler, bluish tint.",
+        "b_observable": "The white surfaces are neutral white.",
+        "fix": "Add a cool color cast to the whites to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler",
+          "region": "full"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "The shadows and blacks are deeper, giving the image higher contrast.",
+        "b_observable": "The shadows are washed out and brighter, resulting in lower contrast.",
+        "fix": "Adjust the luma curve to deepen the shadows and increase contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and tilt at the start of the shot to match the reference's low-angle perspective."
+  }
+}

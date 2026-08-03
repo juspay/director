@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 7,
+    "idx": 0,
+    "t": 7.2,
+    "category": "staging",
+    "a_observable": "The logo icon on the blue card consists of a white circle with a crescent cutout.",
+    "b_observable": "The logo icon on the blue card is a white circle containing a blue flame shape.",
+    "frames": {
+      "A": "/Users/sachinsharma/Developer/temp/director/reference/hyperswitch-recurly-7485945590804062208/analysis/per-second-v13/eyewitness/sec-07-c0-A.png",
+      "B": "/Users/sachinsharma/Developer/temp/director/reference/hyperswitch-recurly-7485945590804062208/analysis/per-second-v13/eyewitness/sec-07-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.9,
+      "note": "In Clip A, the logo icon on the blue card is indeed a white circle with a crescent cutout (the Hyperswitch logo). In Clip B, the logo icon is a white circle containing a blue flame/droplet shape."
+    }
+  }
+]

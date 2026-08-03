@@ -1,0 +1,223 @@
+{
+  "sec": 13,
+  "meta": {
+    "verified": 2,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [
+    "reported 1 cuts, truth has 0"
+  ],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 13.5,
+          "a_observable": "The camera is positioned closer to the grid, framing the Recurly and Juspay cards more prominently.",
+          "b_observable": "The camera is positioned further back, resulting in a wider field of view with smaller cards.",
+          "fix": "Adjust camera distance and focal length to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 13.5,
+          "a_observable": "Soft contact shadows are visible under the cards and within the grid seams.",
+          "b_observable": "The contact shadows are extremely faint or missing, making the elements appear to float.",
+          "fix": "Increase ambient occlusion intensity and shadow map resolution.",
+          "severity": 4,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "full"
+          }
+        },
+        {
+          "category": "color",
+          "t": 13.5,
+          "a_observable": "The overall scene has a warm, cream-colored cast on the white surfaces.",
+          "b_observable": "The scene has a neutral to cool white cast with higher brightness.",
+          "fix": "Adjust the white balance of the light sources to introduce warmer tones.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler",
+            "region": "full"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 13.7,
+          "a_observable": "The background elements show a subtle depth-of-field blur.",
+          "b_observable": "The entire frame is in sharp focus from foreground to background.",
+          "fix": "Enable camera depth of field and set the focus distance to the main cards.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "top"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and focal length to match the closer framing of the reference, and enable soft ambient occlusion shadows to ground the elements.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "zoom"
+      ],
+      "b_motion": [
+        "translation",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "material",
+          "t": 13,
+          "a_observable": "White background tiles have a grid of grey dots.",
+          "b_observable": "White background tiles are plain white.",
+          "fix": "Add dot grid texture to the white tile material.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 13.2,
+          "a_observable": "Shadows are deeper with higher overall contrast.",
+          "b_observable": "Shadows are lighter, making the image look flatter.",
+          "fix": "Increase shadow density and ambient occlusion.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "color",
+          "t": 13.5,
+          "a_observable": "The yellow card has a warm golden hue.",
+          "b_observable": "The yellow card has a cooler lemon-yellow hue.",
+          "fix": "Adjust the yellow material color to be warmer.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 13.8,
+          "a_observable": "Camera is positioned higher relative to the cards.",
+          "b_observable": "Camera is positioned lower, leaving more space at the top.",
+          "fix": "Adjust camera Y-axis position.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Add the dot grid texture to the white background tiles and adjust the shadow density and contrast to match the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 13.5,
+        "a_observable": "Soft contact shadows are visible under the cards and within the grid seams.",
+        "b_observable": "The contact shadows are extremely faint or missing, making the elements appear to float.",
+        "fix": "Increase ambient occlusion intensity and shadow map resolution.",
+        "severity": 4,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 4.46,
+            "p1": 86.22,
+            "p5": 90.44,
+            "p50": 209.01,
+            "p95": 231.47,
+            "p99": 236.33,
+            "p999": 252.14,
+            "span_p5_p95": 141.03
+          },
+          "B": {
+            "p01": 39.43,
+            "p1": 93.47,
+            "p5": 103.75,
+            "p50": 219.73,
+            "p95": 235.09,
+            "p99": 237.66,
+            "p999": 255,
+            "span_p5_p95": 131.34
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "color",
+        "t": 13.5,
+        "a_observable": "The overall scene has a warm, cream-colored cast on the white surfaces.",
+        "b_observable": "The scene has a neutral to cool white cast with higher brightness.",
+        "fix": "Adjust the white balance of the light sources to introduce warmer tones.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "full"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_cooler",
+          "A": {
+            "r": 194.53,
+            "g": 204.41,
+            "b": 200.72,
+            "rb_delta": -6.2,
+            "saturation": 0.1862
+          },
+          "B": {
+            "r": 195.07,
+            "g": 199.98,
+            "b": 221.75,
+            "rb_delta": -26.68,
+            "saturation": 0.1955
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Increase ambient occlusion intensity and shadow map resolution to resolve the floating appearance of elements, and adjust the white balance of the light sources to correct the cool color cast.",
+    "dropped_unsupported": 4
+  }
+}

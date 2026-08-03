@@ -1,0 +1,45 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 6.25,
+        "a_observable": "The yellow button is framed closely on the right with a strong focus falloff blurring the background.",
+        "b_observable": "The yellow button is framed further away, centered, with background elements in sharper focus.",
+        "fix": "Adjust camera position, focal length, and depth of field to match the reference framing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 6.83,
+        "a_observable": "The Hyperswitch logo icon on the blue button features a circular arc design.",
+        "b_observable": "The Hyperswitch logo icon on the blue button features a leaf-like droplet design.",
+        "fix": "Replace the logo graphic on the blue button with the correct circular arc asset.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Align the camera framing and depth of field in the first shot, and update the Hyperswitch logo asset in the second shot."
+  }
+}

@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 0,
+    "idx": 0,
+    "t": 0.2,
+    "category": "camera",
+    "a_observable": "Tight close-up framing on the 'Secure Payments' tile.",
+    "b_observable": "Wider camera framing with the tile rotated and smaller.",
+    "frames": {
+      "A": "/Users/sachinsharma/Developer/temp/director/reference/hyperswitch-recurly-7485945590804062208/analysis/per-second-v13/eyewitness/sec-00-c0-A.png",
+      "B": "/Users/sachinsharma/Developer/temp/director/reference/hyperswitch-recurly-7485945590804062208/analysis/per-second-v13/eyewitness/sec-00-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "Clip A shows a tight close-up on the 'Secure Payments' tile, which is oriented almost vertically. Clip B shows a wider shot where the tile is smaller in the frame and rotated diagonally."
+    }
+  }
+]

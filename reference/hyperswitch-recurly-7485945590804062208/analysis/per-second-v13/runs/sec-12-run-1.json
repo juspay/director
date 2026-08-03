@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 12,
+        "a_observable": "The camera is positioned closer to the yellow Recurly block, creating a tighter composition.",
+        "b_observable": "The camera is positioned further away, showing a wider view that includes the blue Juspay hyperswitch block.",
+        "fix": "Match the camera distance and framing of the reference video.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.4,
+        "a_observable": "The scene has a distinct vignette with darker corners and deeper shadows.",
+        "b_observable": "The scene has bright, flat lighting with minimal corner falloff.",
+        "fix": "Apply a stronger vignette and deepen the shadows to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 12.8,
+        "a_observable": "The white background and surfaces exhibit a cool blue-green color cast.",
+        "b_observable": "The white background and surfaces are neutral white and grey.",
+        "fix": "Color grade the reproduction to add a cool blue-green cast to the highlights and midtones.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Match the camera focal length and distance to achieve the tighter framing of the reference video."
+  }
+}

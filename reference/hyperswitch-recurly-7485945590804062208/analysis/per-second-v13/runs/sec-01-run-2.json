@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 1.5,
+        "a_observable": "The 'Secure Payments' tile is viewed from a low angle, appearing large and occupying the center of the frame.",
+        "b_observable": "The 'Secure Payments' tile is viewed from a higher, more tilted angle, appearing smaller and shifted towards the left.",
+        "fix": "Match the camera position, rotation, and field of view to the reference video.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "Soft, dark contact shadows are cast beneath the white tiles onto the grey background, creating depth.",
+        "b_observable": "The contact shadows are extremely faint, resulting in a flat appearance with little separation between the tiles and the background.",
+        "fix": "Enable or increase the strength of ambient occlusion and contact shadows under the tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "material",
+        "t": 1.5,
+        "a_observable": "The frame surrounding the yellow tile at the bottom has a metallic silver finish with a brushed texture.",
+        "b_observable": "The frame surrounding the yellow tile is a flat, matte grey plastic with no metallic reflections or texture.",
+        "fix": "Add a metallic material with a brushed texture map to the tile borders.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and distance to match the reference perspective, and add realistic contact shadows beneath the tiles to restore the 3D depth."
+  }
+}

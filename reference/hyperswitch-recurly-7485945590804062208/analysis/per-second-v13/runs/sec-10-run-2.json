@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 10.2,
+        "a_observable": "Oblique camera angle shows significant side extrusion of the yellow button.",
+        "b_observable": "Flatter, more top-down camera angle reduces visible side depth.",
+        "fix": "Match the oblique camera perspective and tilt of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "Strong vignette with darker corners.",
+        "b_observable": "Flat lighting with minimal corner falloff.",
+        "fix": "Add a stronger vignette effect.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 10.8,
+        "a_observable": "Higher contrast with deeper shadows and richer colors.",
+        "b_observable": "Washed-out appearance with low contrast.",
+        "fix": "Increase contrast and saturation in post-production.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and perspective to match the oblique view of the reference, and increase contrast and vignette."
+  }
+}

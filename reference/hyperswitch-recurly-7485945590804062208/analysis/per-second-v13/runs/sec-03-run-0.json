@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera tilt"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera tilt"
+    ],
+    "absent_in_b": [
+      "left_panel_dot_pattern"
+    ],
+    "differences": [
+      {
+        "category": "material",
+        "t": 3.5,
+        "a_observable": "A grid of small grey dots is visible on the left background panel.",
+        "b_observable": "The left background panel is completely plain white with no dots.",
+        "fix": "Apply the dot pattern texture to the left panel material.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 3.5,
+        "a_observable": "Soft, dark shadows are cast under the white tiles, creating a clear sense of depth.",
+        "b_observable": "The shadows under the tiles are extremely faint and washed out, making the scene look flat.",
+        "fix": "Enhance the contact shadows and ambient occlusion to match the depth of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 3.5,
+        "a_observable": "The overall color temperature is warm and natural.",
+        "b_observable": "The scene has a cooler, slightly blueish color cast, especially on the white surfaces.",
+        "fix": "Warm up the white balance and adjust the color grading to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Add the dot pattern texture to the left background panel and adjust the lighting to create softer, deeper shadows under the tiles."
+  }
+}

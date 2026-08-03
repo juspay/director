@@ -1,0 +1,183 @@
+{
+  "sec": 10,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 10.5,
+          "a_observable": "The camera is positioned closer to the grid, creating a dynamic perspective with tight framing on the yellow card.",
+          "b_observable": "The camera is further away with a flatter angle, showing more of the surrounding grid.",
+          "fix": "Bring the camera closer and adjust the focal length to match the reference perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.2,
+          "a_observable": "The contact shadows under the cards are soft and deep, creating clear separation from the floor.",
+          "b_observable": "The contact shadows are extremely faint, making the cards look flat against the floor.",
+          "fix": "Adjust the light sources and shadow settings to produce deeper, softer contact shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and focal length to match the tighter, more dynamic perspective of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 10.5,
+          "a_observable": "The camera uses a wider lens, creating a dynamic perspective with visible tilt.",
+          "b_observable": "The camera uses a longer lens, resulting in a flatter perspective with less tilt.",
+          "fix": "Adjust camera focal length and position to match the perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 10.5,
+          "a_observable": "White tiles appear clean and neutral with cool blue-toned shadows.",
+          "b_observable": "White tiles exhibit a warm, yellowish color cast.",
+          "fix": "Adjust white balance to eliminate the warm cast.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.5,
+          "a_observable": "Shadows under the yellow tile are soft and diffuse.",
+          "b_observable": "Shadows under the yellow tile are sharp and dark.",
+          "fix": "Increase light source size to soften shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Match the camera's focal length and perspective to restore the dynamic three-quarter view of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 10.2,
+          "a_observable": "Oblique camera angle shows significant side extrusion of the yellow button.",
+          "b_observable": "Flatter, more top-down camera angle reduces visible side depth.",
+          "fix": "Match the oblique camera perspective and tilt of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.5,
+          "a_observable": "Strong vignette with darker corners.",
+          "b_observable": "Flat lighting with minimal corner falloff.",
+          "fix": "Add a stronger vignette effect.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 10.8,
+          "a_observable": "Higher contrast with deeper shadows and richer colors.",
+          "b_observable": "Washed-out appearance with low contrast.",
+          "fix": "Increase contrast and saturation in post-production.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and perspective to match the oblique view of the reference, and increase contrast and vignette.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 10.5,
+        "a_observable": "The camera is positioned closer to the grid, creating a dynamic perspective with tight framing on the yellow card.",
+        "b_observable": "The camera is further away with a flatter angle, showing more of the surrounding grid.",
+        "fix": "Bring the camera closer and adjust the focal length to match the reference perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 3,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "refuted",
+          "certainty": 1,
+          "note": "The descriptions of Clip A and Clip B are reversed. Clip A shows a flatter, straight-on angle with more of the surrounding grid visible, while Clip B features a tilted, dynamic perspective with tighter framing on the cards."
+        }
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera position and focal length to match the tighter, more dynamic perspective of the reference.",
+    "dropped_unsupported": 5
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "tilt"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 11,
+        "a_observable": "The camera is positioned closer to the yellow Recurly tile, creating a tight framing.",
+        "b_observable": "The camera is positioned further back, resulting in a wider framing with more surrounding tiles visible.",
+        "fix": "Adjust camera position and focal length to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 11,
+        "a_observable": "The background tiles are out of focus due to a shallow depth of field.",
+        "b_observable": "The background tiles remain sharp and in focus.",
+        "fix": "Enable depth of field on the camera and adjust focus distance and aperture.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.2,
+        "a_observable": "The frame edges show a distinct vignette with darker corners.",
+        "b_observable": "The frame edges are evenly lit with no vignette.",
+        "fix": "Add a vignette in post-processing or adjust camera lens shading.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 11,
+        "a_observable": "The yellow tile has a warm, highly saturated golden color.",
+        "b_observable": "The yellow tile is cooler and less saturated.",
+        "fix": "Adjust the material color of the yellow tile to increase saturation and warmth.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and focal length to match the reference framing and enable depth of field to replicate the shallow focus look."
+  }
+}

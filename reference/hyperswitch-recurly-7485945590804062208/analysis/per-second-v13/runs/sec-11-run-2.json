@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "tilt"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 11,
+        "a_observable": "The camera is closer to the cards, creating a tight crop on the yellow Recurly and blue Hyperswitch elements.",
+        "b_observable": "The camera is further away, resulting in a wider field of view with smaller elements and more visible background tiles.",
+        "fix": "Adjust the camera distance and focal length to match the tighter framing of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "A soft vignette is present, darkening the corners of the frame.",
+        "b_observable": "The corners are as bright as the center, showing no vignette effect.",
+        "fix": "Apply a vignette to darken the corners of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 11.8,
+        "a_observable": "The white tiles have a warm, neutral tone, and the yellow card is saturated and warm.",
+        "b_observable": "The white tiles have a cool, bluish cast, and the yellow card is desaturated.",
+        "fix": "Adjust the color balance to introduce warmer tones and increase saturation.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and focal length to match the tighter framing and perspective of the reference video."
+  }
+}

@@ -1,0 +1,179 @@
+{
+  "sec": 6,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "color",
+          "t": 6.2,
+          "a_observable": "The white panels have a warm, cream-colored tint.",
+          "b_observable": "The white panels are neutral white and grey.",
+          "fix": "Add a warm color cast to the lighting to match the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler",
+            "region": "full"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 6.8,
+          "a_observable": "The camera is at a high angle, looking flatter down at the blue card.",
+          "b_observable": "The camera is at a lower, oblique angle, skewing the blue card.",
+          "fix": "Adjust camera pitch and position after the cut to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and position after the cut at 6.67s to match the reference's top-down perspective.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 6.25,
+          "a_observable": "The yellow button is framed closely on the right with a strong focus falloff blurring the background.",
+          "b_observable": "The yellow button is framed further away, centered, with background elements in sharper focus.",
+          "fix": "Adjust camera position, focal length, and depth of field to match the reference framing.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 6.83,
+          "a_observable": "The Hyperswitch logo icon on the blue button features a circular arc design.",
+          "b_observable": "The Hyperswitch logo icon on the blue button features a leaf-like droplet design.",
+          "fix": "Replace the logo graphic on the blue button with the correct circular arc asset.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Align the camera framing and depth of field in the first shot, and update the Hyperswitch logo asset in the second shot.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 6.1,
+          "a_observable": "The scene is brightly lit with clean, high-key white surfaces.",
+          "b_observable": "The scene is dimmer with greyish whites and less vibrant highlights.",
+          "fix": "Increase key light intensity and adjust exposure for a brighter look.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_brighter_highlights"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 6.8,
+          "a_observable": "The Juspay Hyperswitch logo icon has a stylized crescent shape inside.",
+          "b_observable": "The Juspay Hyperswitch logo icon has a leaf-like shape inside.",
+          "fix": "Replace the logo asset with the correct vector graphic.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 6.8,
+          "a_observable": "The background elements at the top are softly blurred.",
+          "b_observable": "The background elements are sharp and in focus.",
+          "fix": "Enable depth of field and adjust camera aperture to blur the background.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "top"
+          }
+        }
+      ],
+      "highest_impact_fix": "Replace the incorrect Juspay Hyperswitch logo icon with the correct graphic asset.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "staging",
+        "t": 6.8,
+        "a_observable": "The Juspay Hyperswitch logo icon has a stylized crescent shape inside.",
+        "b_observable": "The Juspay Hyperswitch logo icon has a leaf-like shape inside.",
+        "fix": "Replace the logo asset with the correct vector graphic.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "pending_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 0.95,
+          "note": "The Juspay Hyperswitch logo icon in Clip A indeed features a stylized crescent shape inside the white circle, whereas in Clip B, the shape inside the white circle is a leaf-like shape."
+        }
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Replace the incorrect Juspay Hyperswitch logo icon with the correct graphic asset.",
+    "dropped_unsupported": 5
+  }
+}
