@@ -1,0 +1,59 @@
+{
+  "ok": false,
+  "why": "reported 1 cuts, truth has 0",
+  "json": {
+    "cuts_in_window": [
+      13.333
+    ],
+    "a_motion": [
+      "camera pans and zooms out over the grid, then cuts to a close-up tracking shot of the blue card"
+    ],
+    "b_motion": [
+      "camera pans and zooms out over the grid, then cuts to a close-up tracking shot of the blue card"
+    ],
+    "absent_in_b": [
+      "metallic frame inset around the blue hyperswitch card"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 13.1,
+        "a_observable": "The camera is tilted dynamically, showing a close-up perspective of the grid.",
+        "b_observable": "The camera is zoomed out with a flatter, less tilted perspective.",
+        "fix": "Match the camera focal length and rotation to the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "full"
+        }
+      },
+      {
+        "category": "material",
+        "t": 13.8,
+        "a_observable": "The PSP button below the blue card has a metallic, reflective grey finish.",
+        "b_observable": "The PSP button has a flat white plastic finish with a blue border.",
+        "fix": "Apply a metallic material to the PSP button.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 13.8,
+        "a_observable": "The blue card has a highly saturated royal blue color.",
+        "b_observable": "The blue card has a lighter, less saturated blue color.",
+        "fix": "Adjust the color of the blue card to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Align the camera focal length, tilt, and positioning during the grid sequence to match the reference."
+  }
+}

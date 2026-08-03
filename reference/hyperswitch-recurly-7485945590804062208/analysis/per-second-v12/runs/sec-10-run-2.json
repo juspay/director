@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 10,
+        "a_observable": "The camera has a steeper perspective tilt, showing the yellow card at a dynamic angle.",
+        "b_observable": "The camera angle is flatter, reducing the depth of the layout.",
+        "fix": "Lower the camera height and increase the pitch tilt.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "The corners of the frame are darker due to a soft vignette.",
+        "b_observable": "The frame lighting is uniform with no corner falloff.",
+        "fix": "Add a vignette effect to darken the corners.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 10.2,
+        "a_observable": "The yellow card has a warm, highly saturated golden hue.",
+        "b_observable": "The yellow card has a cooler, less saturated yellow hue.",
+        "fix": "Adjust the yellow card material color to be warmer.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and perspective tilt to match the dynamic composition of Video A."
+  }
+}

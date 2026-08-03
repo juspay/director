@@ -1,0 +1,67 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "zoom_out"
+    ],
+    "b_motion": [
+      "zoom_out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 9,
+        "a_observable": "The yellow Recurly button is staged in the upper-left quadrant.",
+        "b_observable": "The yellow Recurly button is staged in the lower-left quadrant.",
+        "fix": "Reposition the yellow button to the upper-left quadrant.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "The corners of the frame show a distinct vignette darkening.",
+        "b_observable": "The corners of the frame are bright and lack a vignette.",
+        "fix": "Apply a vignette effect to darken the corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 9,
+        "a_observable": "The white tiles have a warm, cream-colored tone.",
+        "b_observable": "The white tiles are neutral white with a cooler, bluish-gray cast.",
+        "fix": "Adjust the color temperature to be warmer.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "full"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.2,
+        "a_observable": "The shadow cast by the yellow button is soft and diffused.",
+        "b_observable": "The shadow cast by the yellow button is dark and sharp.",
+        "fix": "Soften the shadows cast by the buttons.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows",
+          "region": "left"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the grid layout to correct the staging of the yellow Recurly button, and soften the button shadows to match the reference."
+  }
+}

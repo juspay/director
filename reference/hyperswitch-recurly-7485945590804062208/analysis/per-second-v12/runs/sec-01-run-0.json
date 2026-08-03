@@ -1,0 +1,43 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 1.5,
+        "a_observable": "The camera is positioned more directly overhead, resulting in a flatter perspective of the cards with less perspective distortion.",
+        "b_observable": "The camera is positioned at a lower, more oblique angle, creating a stronger perspective tilt and distortion on the cards.",
+        "fix": "Adjust the camera's pitch and height to match the flatter, more top-down perspective of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "The shadows cast by the cards are soft, light grey, and highly diffused.",
+        "b_observable": "The shadows cast by the cards are much darker and sharper, creating high-contrast dark areas beneath the cards.",
+        "fix": "Increase the size of the light source or adjust shadow diffusion to soften the shadows and reduce contrast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera's pitch and height to match the flatter, more top-down perspective of the reference."
+  }
+}

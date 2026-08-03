@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [
+      "metallic material on PSP card"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 7.2,
+        "a_observable": "Background elements like the 'Revenue Analytics' card are heavily defocused and blurry.",
+        "b_observable": "Background elements are much sharper and in clearer focus.",
+        "fix": "Increase camera aperture blur to defocus background elements.",
+        "severity": 2,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 7.3,
+        "a_observable": "The blue card is flat and recessed into its slot.",
+        "b_observable": "The blue card is a thick, extruded 3D block protruding outwards.",
+        "fix": "Reduce the extrusion depth of the blue card to make it flat.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "material",
+        "t": 7.4,
+        "a_observable": "The small 'PSP' card has a metallic grey finish.",
+        "b_observable": "The 'PSP' card has a plain white matte finish.",
+        "fix": "Apply a metallic grey material to the PSP card.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 7.5,
+        "a_observable": "Shadows in recessed areas are deeper with higher overall contrast.",
+        "b_observable": "Shadows are washed out with lower contrast.",
+        "fix": "Deepen shadows and increase contrast to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Reduce the extrusion depth of the blue card to make it flat and recessed, matching the reference staging."
+  }
+}

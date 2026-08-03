@@ -1,0 +1,225 @@
+{
+  "sec": 11,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan",
+        "subtle zoom out"
+      ],
+      "b_motion": [
+        "slow camera pan",
+        "subtle zoom out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "staging",
+          "t": 11,
+          "a_observable": "No 'Live Now' capsule button is present between the yellow Recurly tile and the blue Hyperswitch tile.",
+          "b_observable": "A white 'Live Now' capsule button is visible in the gap between the yellow Recurly tile and the blue Hyperswitch tile.",
+          "fix": "Remove the 'Live Now' button from this shot to match the reference staging.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 11,
+          "a_observable": "The camera is positioned closer to the yellow Recurly tile, creating a tighter framing with a more pronounced perspective angle.",
+          "b_observable": "The camera is positioned further away and at a flatter, more top-down angle, showing a wider view of the surrounding white tiles.",
+          "fix": "Adjust the camera position and focal length to match the closer, more dynamic perspective of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.2,
+          "a_observable": "The yellow Recurly tile casts a distinct, soft drop shadow onto the recessed surface below it.",
+          "b_observable": "The drop shadow under the yellow Recurly tile is almost non-existent, making it look flat against the background.",
+          "fix": "Increase the shadow intensity and softness for the elevated tiles to match the depth of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and focal length to match the closer, more dynamic perspective of the reference, and remove the misplaced 'Live Now' button.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan and zoom out"
+      ],
+      "b_motion": [
+        "slow camera pan and zoom out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 11.2,
+          "a_observable": "The yellow Recurly button is positioned near the left edge, with the blue Secure Payments button visible on its left.",
+          "b_observable": "The yellow Recurly button is more centered, and the blue Secure Payments button is smaller and shifted top-left.",
+          "fix": "Adjust camera framing and button layout to match the reference composition.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 11.5,
+          "a_observable": "The white background tiles have a cool, bluish-grey color cast.",
+          "b_observable": "The white background tiles are neutral grey with no blue tint.",
+          "fix": "Apply a cool blue color temperature adjustment to the environment lighting.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.8,
+          "a_observable": "The contact shadows beneath the buttons are soft and diffused.",
+          "b_observable": "The contact shadows beneath the buttons are dark and sharp.",
+          "fix": "Increase the light source size to soften the contact shadows.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Re-align the camera path and button layout to match the reference composition.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 11.2,
+          "a_observable": "Deep, soft ambient occlusion shadows are visible in the crevices between the white tiles.",
+          "b_observable": "The tile crevices are brightly lit with almost no ambient occlusion shadows.",
+          "fix": "Increase ambient occlusion intensity and radius to match the reference shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "full"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.6,
+          "a_observable": "A distinct vignette is visible, darkening the corners of the frame.",
+          "b_observable": "The corners of the frame are bright and lack any vignette effect.",
+          "fix": "Apply a vignette effect in post-processing to match the corner falloff.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "material",
+          "t": 11.4,
+          "a_observable": "The yellow Recurly card exhibits a subtle satin specular reflection.",
+          "b_observable": "The yellow card has a flat, diffuse texture with no specular highlights.",
+          "fix": "Decrease the roughness of the yellow card material to allow for soft specular reflections.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 11.5,
+          "a_observable": "The white tiles have a warm, cream-colored tint.",
+          "b_observable": "The white tiles are neutral white with a cooler color cast.",
+          "fix": "Adjust the color grading to add a warm tint to the scene.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Enhance the ambient occlusion shadows in the tile crevices and apply a vignette to match the depth and framing of the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 11.2,
+        "a_observable": "The yellow Recurly tile casts a distinct, soft drop shadow onto the recessed surface below it.",
+        "b_observable": "The drop shadow under the yellow Recurly tile is almost non-existent, making it look flat against the background.",
+        "fix": "Increase the shadow intensity and softness for the elevated tiles to match the depth of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 12.35,
+            "p1": 85.8,
+            "p5": 89.44,
+            "p50": 209.01,
+            "p95": 232.69,
+            "p99": 238.97,
+            "p999": 251.63,
+            "span_p5_p95": 143.25
+          },
+          "B": {
+            "p01": 93.76,
+            "p1": 95.97,
+            "p5": 117.83,
+            "p50": 219.09,
+            "p95": 235.94,
+            "p99": 243.52,
+            "p999": 255,
+            "span_p5_p95": 118.11
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Increase the shadow intensity and softness for the elevated tiles to match the depth of the reference.",
+    "dropped_unsupported": 8
+  }
+}

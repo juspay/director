@@ -1,0 +1,248 @@
+{
+  "sec": 10,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 10.25,
+          "a_observable": "The shadow beneath the yellow Recurly tile is soft and diffused.",
+          "b_observable": "The shadow is harsh, dark, and has a sharp black outline.",
+          "fix": "Soften the contact shadows under the yellow tile.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_blacks",
+            "region": "center"
+          }
+        },
+        {
+          "category": "color",
+          "t": 10.5,
+          "a_observable": "The scene has a warm, cream-colored lighting cast.",
+          "b_observable": "The scene has a cooler, neutral gray lighting cast.",
+          "fix": "Warm up the lighting to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler",
+            "region": "full"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 10.5,
+          "a_observable": "The background elements in the top-right corner are blurred.",
+          "b_observable": "The background elements are sharp and in focus.",
+          "fix": "Apply shallow depth of field to blur background elements.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera's depth of field and soften the harsh shadows under the tiles to match the realistic, warm look of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera motion"
+      ],
+      "b_motion": [
+        "camera motion"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 10.5,
+          "a_observable": "The yellow Recurly tile is framed closely, filling a large portion of the screen.",
+          "b_observable": "The camera is positioned further away, showing a much wider view with excess empty space.",
+          "fix": "Move the camera closer to match the tight composition of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.5,
+          "a_observable": "The shadow under the yellow tile is soft and diffused.",
+          "b_observable": "The shadow is sharp and extremely dark, creating harsh contrast.",
+          "fix": "Increase the light source size to soften the shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 10.5,
+          "a_observable": "The white tiles have a warm, cream-colored tone.",
+          "b_observable": "The white tiles have a cooler, neutral grey appearance.",
+          "fix": "Adjust the white balance or grading to introduce a warmer tint.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and focal length to achieve the closer, more dynamic framing of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 10,
+          "a_observable": "The camera has a steeper perspective tilt, showing the yellow card at a dynamic angle.",
+          "b_observable": "The camera angle is flatter, reducing the depth of the layout.",
+          "fix": "Lower the camera height and increase the pitch tilt.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.5,
+          "a_observable": "The corners of the frame are darker due to a soft vignette.",
+          "b_observable": "The frame lighting is uniform with no corner falloff.",
+          "fix": "Add a vignette effect to darken the corners.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 10.2,
+          "a_observable": "The yellow card has a warm, highly saturated golden hue.",
+          "b_observable": "The yellow card has a cooler, less saturated yellow hue.",
+          "fix": "Adjust the yellow card material color to be warmer.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "center"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and perspective tilt to match the dynamic composition of Video A.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "color",
+        "t": 10.5,
+        "a_observable": "The scene has a warm, cream-colored lighting cast.",
+        "b_observable": "The scene has a cooler, neutral gray lighting cast.",
+        "fix": "Warm up the lighting to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "full"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_cooler",
+          "A": {
+            "r": 193.29,
+            "g": 203.73,
+            "b": 201.96,
+            "rb_delta": -8.67,
+            "saturation": 0.191
+          },
+          "B": {
+            "r": 199.79,
+            "g": 203.53,
+            "b": 223.51,
+            "rb_delta": -23.72,
+            "saturation": 0.1719
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "The shadow under the yellow tile is soft and diffused.",
+        "b_observable": "The shadow is sharp and extremely dark, creating harsh contrast.",
+        "fix": "Increase the light source size to soften the shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "B_deeper_shadows",
+          "A": {
+            "p01": 8.56,
+            "p1": 87.08,
+            "p5": 91.29,
+            "p50": 208.73,
+            "p95": 230.27,
+            "p99": 237.33,
+            "p999": 250.87,
+            "span_p5_p95": 138.98
+          },
+          "B": {
+            "p01": 93.76,
+            "p1": 95.97,
+            "p5": 117.37,
+            "p50": 219.09,
+            "p95": 235.94,
+            "p99": 243.94,
+            "p999": 255,
+            "span_p5_p95": 118.57
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Warm up the lighting to match the reference and soften the shadows under the yellow tile.",
+    "dropped_unsupported": 4
+  }
+}

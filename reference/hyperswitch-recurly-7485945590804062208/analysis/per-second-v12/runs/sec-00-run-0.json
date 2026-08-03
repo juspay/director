@@ -1,0 +1,68 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan down-right"
+    ],
+    "b_motion": [
+      "slow camera pan down-right"
+    ],
+    "absent_in_b": [
+      "brushed metal border on the yellow tile"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 0,
+        "a_observable": "Camera is positioned nearly top-down over the tiles.",
+        "b_observable": "Camera is at a low, oblique angle looking from the side.",
+        "fix": "Match the top-down camera angle of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "material",
+        "t": 0.5,
+        "a_observable": "Yellow tile has a brushed metallic silver border.",
+        "b_observable": "Yellow tile has a plain white plastic border.",
+        "fix": "Apply a brushed metal material to the yellow tile border.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.5,
+        "a_observable": "Stronger vignette with darker corners.",
+        "b_observable": "Weaker vignette with brighter corners.",
+        "fix": "Add a vignette to darken the corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 0.5,
+        "a_observable": "White tiles have a cool blue color cast.",
+        "b_observable": "White tiles are neutral white.",
+        "fix": "Add a cool blue tint to the white materials.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle to match the top-down perspective of the reference video."
+  }
+}

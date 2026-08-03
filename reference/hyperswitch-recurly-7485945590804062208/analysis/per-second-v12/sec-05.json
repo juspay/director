@@ -1,0 +1,311 @@
+{
+  "sec": 5,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera panning",
+        "camera zooming out"
+      ],
+      "b_motion": [
+        "camera panning",
+        "camera zooming out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 5.5,
+          "a_observable": "The corners of the frame are noticeably darker than the center, creating a strong vignette.",
+          "b_observable": "The corners are nearly as bright as the center, lacking a vignette.",
+          "fix": "Add a vignette to darken the corners of the frame.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 5.2,
+          "a_observable": "The shadow cast by the yellow Recurly tile is deep and well-defined.",
+          "b_observable": "The shadow under the yellow Recurly tile is extremely faint and washed out.",
+          "fix": "Adjust light sources to cast deeper shadows under the tiles.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 5,
+          "a_observable": "The yellow Recurly tile has a warm, saturated golden-yellow hue.",
+          "b_observable": "The yellow Recurly tile has a cooler, less saturated lemon-yellow hue.",
+          "fix": "Adjust the color grading of the yellow tile to be warmer and more saturated.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Enhance the lighting setup to produce stronger vignettes and deeper shadows, matching the high-contrast look of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "subtle card hover"
+      ],
+      "b_motion": [
+        "camera pan",
+        "subtle card hover"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 5.2,
+          "a_observable": "The background elements, such as the 'Secure Payments' card on the left, exhibit a strong depth-of-field blur.",
+          "b_observable": "The background elements remain sharp and in focus, indicating a lack of depth-of-field simulation.",
+          "fix": "Enable depth of field in the camera settings and focus on the central yellow card.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 5.5,
+          "a_observable": "Deep ambient occlusion shadows are visible in the crevices surrounding the yellow card.",
+          "b_observable": "The crevices around the yellow card have very bright, flat lighting with minimal shadow definition.",
+          "fix": "Increase ambient occlusion intensity or add a contact shadow light source to define the crevices.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 5.8,
+          "a_observable": "The yellow card has a highly saturated, warm golden-yellow color.",
+          "b_observable": "The yellow card has a desaturated, pale lemon-yellow color.",
+          "fix": "Adjust the material color of the yellow card to increase saturation and warmth.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera's depth of field to match the reference's shallow focus, and enhance the ambient occlusion shadows around the card slots.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 5.1,
+          "a_observable": "Low-angle perspective on the yellow Recurly button.",
+          "b_observable": "High-angle, flatter perspective on the yellow button.",
+          "fix": "Lower camera height and increase pitch angle.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 5.3,
+          "a_observable": "Shallow depth of field with blurred background elements.",
+          "b_observable": "Deep depth of field with sharp background elements.",
+          "fix": "Adjust camera aperture to blur background.",
+          "severity": 2,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 5.5,
+          "a_observable": "Strong vignette darkening the corners of the frame.",
+          "b_observable": "Weak or absent vignette with bright corners.",
+          "fix": "Apply a stronger vignette in post-processing.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 5.2,
+          "a_observable": "Warm, golden-yellow color on the Recurly button.",
+          "b_observable": "Cooler, greenish-yellow color on the Recurly button.",
+          "fix": "Shift the yellow material color toward orange.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and height to match the dynamic low-angle perspective of the reference video.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 5.5,
+        "a_observable": "The corners of the frame are noticeably darker than the center, creating a strong vignette.",
+        "b_observable": "The corners are nearly as bright as the center, lacking a vignette.",
+        "fix": "Add a vignette to darken the corners of the frame.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 195.6,
+            "center_mean": 168.41,
+            "falloff_pct": -16.14
+          },
+          "B": {
+            "corner_mean": 204.82,
+            "center_mean": 188.87,
+            "falloff_pct": -8.45
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 5.2,
+        "a_observable": "The shadow cast by the yellow Recurly tile is deep and well-defined.",
+        "b_observable": "The shadow under the yellow Recurly tile is extremely faint and washed out.",
+        "fix": "Adjust light sources to cast deeper shadows under the tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 46.07,
+            "p1": 70.93,
+            "p5": 106.1,
+            "p50": 203.67,
+            "p95": 246.28,
+            "p99": 247.21,
+            "p999": 248.71,
+            "span_p5_p95": 140.18
+          },
+          "B": {
+            "p01": 55.38,
+            "p1": 114.85,
+            "p5": 119.63,
+            "p50": 210.31,
+            "p95": 221.31,
+            "p99": 233.39,
+            "p999": 236.89,
+            "span_p5_p95": 101.68
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "color",
+        "t": 5.2,
+        "a_observable": "Warm, golden-yellow color on the Recurly button.",
+        "b_observable": "Cooler, greenish-yellow color on the Recurly button.",
+        "fix": "Shift the yellow material color toward orange.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 193.33,
+            "g": 198.58,
+            "b": 183.51,
+            "rb_delta": 9.82,
+            "saturation": 0.2015
+          },
+          "B": {
+            "r": 201.09,
+            "g": 200.75,
+            "b": 189.05,
+            "rb_delta": 12.04,
+            "saturation": 0.2047
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "camera",
+        "t": 5.3,
+        "a_observable": "Shallow depth of field with blurred background elements.",
+        "b_observable": "Deep depth of field with sharp background elements.",
+        "fix": "Adjust camera aperture to blur background.",
+        "severity": 2,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "B_sharper",
+          "A": {
+            "lap_var": 16.15
+          },
+          "B": {
+            "lap_var": 3.6
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera's depth of field to match the reference's shallow focus, and enhance the ambient occlusion shadows around the card slots.",
+    "dropped_unsupported": 1
+  }
+}

@@ -1,0 +1,206 @@
+{
+  "sec": 9,
+  "meta": {
+    "verified": 1,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [
+    "reported 1 cuts, truth has 0",
+    "reported 1 cuts, truth has 0"
+  ],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "zoom_out"
+      ],
+      "b_motion": [
+        "zoom_out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "staging",
+          "t": 9,
+          "a_observable": "The yellow Recurly button is staged in the upper-left quadrant.",
+          "b_observable": "The yellow Recurly button is staged in the lower-left quadrant.",
+          "fix": "Reposition the yellow button to the upper-left quadrant.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 9.5,
+          "a_observable": "The corners of the frame show a distinct vignette darkening.",
+          "b_observable": "The corners of the frame are bright and lack a vignette.",
+          "fix": "Apply a vignette effect to darken the corners.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 9,
+          "a_observable": "The white tiles have a warm, cream-colored tone.",
+          "b_observable": "The white tiles are neutral white with a cooler, bluish-gray cast.",
+          "fix": "Adjust the color temperature to be warmer.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler",
+            "region": "full"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 9.2,
+          "a_observable": "The shadow cast by the yellow button is soft and diffused.",
+          "b_observable": "The shadow cast by the yellow button is dark and sharp.",
+          "fix": "Soften the shadows cast by the buttons.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows",
+            "region": "left"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the grid layout to correct the staging of the yellow Recurly button, and soften the button shadows to match the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "staging",
+        "t": 9,
+        "a_observable": "The yellow Recurly button is staged in the upper-left quadrant.",
+        "b_observable": "The yellow Recurly button is staged in the lower-left quadrant.",
+        "fix": "Reposition the yellow button to the upper-left quadrant.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 1,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "refuted",
+          "certainty": 0.95,
+          "note": "In both Clip A and Clip B, the yellow Recurly button is located in the upper-left quadrant of the frame. It is not in the lower-left quadrant in Clip B."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "The corners of the frame show a distinct vignette darkening.",
+        "b_observable": "The corners of the frame are bright and lack a vignette.",
+        "fix": "Apply a vignette effect to darken the corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 1,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 203.26,
+            "center_mean": 200.61,
+            "falloff_pct": -1.32
+          },
+          "B": {
+            "corner_mean": 195.97,
+            "center_mean": 189.8,
+            "falloff_pct": -3.25
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 9,
+        "a_observable": "The white tiles have a warm, cream-colored tone.",
+        "b_observable": "The white tiles are neutral white with a cooler, bluish-gray cast.",
+        "fix": "Adjust the color temperature to be warmer.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "full"
+        },
+        "supported_by": 1,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_cooler",
+          "A": {
+            "r": 184.19,
+            "g": 194.27,
+            "b": 202.17,
+            "rb_delta": -17.97,
+            "saturation": 0.1887
+          },
+          "B": {
+            "r": 170.71,
+            "g": 178.91,
+            "b": 206.76,
+            "rb_delta": -36.05,
+            "saturation": 0.2514
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 9.2,
+        "a_observable": "The shadow cast by the yellow button is soft and diffused.",
+        "b_observable": "The shadow cast by the yellow button is dark and sharp.",
+        "fix": "Soften the shadows cast by the buttons.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows",
+          "region": "left"
+        },
+        "supported_by": 1,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "B_deeper_shadows",
+          "A": {
+            "p01": 77.8,
+            "p1": 117.05,
+            "p5": 150.14,
+            "p50": 201.47,
+            "p95": 244.78,
+            "p99": 246.78,
+            "p999": 247,
+            "span_p5_p95": 94.64
+          },
+          "B": {
+            "p01": 87.3,
+            "p1": 146.82,
+            "p5": 152.03,
+            "p50": 212.81,
+            "p95": 236.73,
+            "p99": 252.08,
+            "p999": 254.79,
+            "span_p5_p95": 84.7
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the grid layout to correct the staging of the yellow Recurly button, and soften the button shadows to match the reference.",
+    "dropped_unsupported": 0
+  }
+}

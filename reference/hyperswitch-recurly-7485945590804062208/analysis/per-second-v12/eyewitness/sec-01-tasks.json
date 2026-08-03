@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 1,
+    "idx": 0,
+    "t": 1.5,
+    "category": "camera",
+    "a_observable": "The camera is positioned more directly overhead, resulting in a flatter perspective of the cards with less perspective distortion.",
+    "b_observable": "The camera is positioned at a lower, more oblique angle, creating a stronger perspective tilt and distortion on the cards.",
+    "frames": {
+      "A": "/Users/sachinsharma/Developer/temp/director/reference/hyperswitch-recurly-7485945590804062208/analysis/per-second-v12/eyewitness/sec-01-c0-A.png",
+      "B": "/Users/sachinsharma/Developer/temp/director/reference/hyperswitch-recurly-7485945590804062208/analysis/per-second-v12/eyewitness/sec-01-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "Clip A shows a camera angle that is much closer to a direct overhead view, resulting in a flatter perspective of the cards. Clip B shows a lower, more oblique camera angle, which introduces a clear perspective tilt and distortion on the cards."
+    }
+  }
+]

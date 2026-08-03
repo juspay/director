@@ -1,0 +1,71 @@
+{
+  "ok": false,
+  "why": "reported 1 cuts, truth has 0",
+  "json": {
+    "cuts_in_window": [
+      9.9
+    ],
+    "a_motion": [
+      "translation",
+      "zoom"
+    ],
+    "b_motion": [
+      "rotation",
+      "translation"
+    ],
+    "absent_in_b": [
+      "live_now_button"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 9,
+        "a_observable": "A shows a wide grid layout containing both yellow and blue cards.",
+        "b_observable": "B shows a close-up of the blue card.",
+        "fix": "Match the camera framing of the grid view.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 9.9,
+        "a_observable": "The 'Live Now' button is visible in the center of the grid.",
+        "b_observable": "The 'Live Now' button is missing from the grid.",
+        "fix": "Add the 'Live Now' button to the grid layout.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.95,
+        "a_observable": "Shadows cast by the cards are soft and light grey.",
+        "b_observable": "Shadows are very dark and high-contrast.",
+        "fix": "Soften the shadow rendering.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 9.95,
+        "a_observable": "The yellow card has a warm, muted golden hue.",
+        "b_observable": "The yellow card is highly saturated lemon yellow.",
+        "fix": "Adjust the yellow material color.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Align the camera framing and staging of the grid view to match the reference composition."
+  }
+}

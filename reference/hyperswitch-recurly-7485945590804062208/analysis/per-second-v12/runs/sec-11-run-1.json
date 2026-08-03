@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and zoom out"
+    ],
+    "b_motion": [
+      "slow camera pan and zoom out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 11.2,
+        "a_observable": "The yellow Recurly button is positioned near the left edge, with the blue Secure Payments button visible on its left.",
+        "b_observable": "The yellow Recurly button is more centered, and the blue Secure Payments button is smaller and shifted top-left.",
+        "fix": "Adjust camera framing and button layout to match the reference composition.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 11.5,
+        "a_observable": "The white background tiles have a cool, bluish-grey color cast.",
+        "b_observable": "The white background tiles are neutral grey with no blue tint.",
+        "fix": "Apply a cool blue color temperature adjustment to the environment lighting.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.8,
+        "a_observable": "The contact shadows beneath the buttons are soft and diffused.",
+        "b_observable": "The contact shadows beneath the buttons are dark and sharp.",
+        "fix": "Increase the light source size to soften the contact shadows.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Re-align the camera path and button layout to match the reference composition."
+  }
+}

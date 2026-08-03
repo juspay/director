@@ -1,0 +1,68 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "The camera slowly pans and rotates, showcasing the 'Secure Payments' and 'Renewal Success' cards with a shallow depth of field."
+    ],
+    "b_motion": [
+      "The camera pans and rotates at a different angle, showing the cards with less depth of field blur."
+    ],
+    "absent_in_b": [
+      "The shallow depth of field blur on the background cards.",
+      "The clean, unlined texture of the white background plates."
+    ],
+    "differences": [
+      {
+        "category": "material",
+        "t": 1,
+        "a_observable": "The white background plates are clean and solid white without any grid lines.",
+        "b_observable": "The white background plates have prominent grey horizontal lines running across them.",
+        "fix": "Remove the horizontal line texture from the background material to match the clean white look of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 1.5,
+        "a_observable": "The yellow card at the bottom of the frame is heavily blurred due to a shallow depth of field.",
+        "b_observable": "The yellow card at the bottom-left of the frame is sharp and in focus, indicating a lack of depth of field blur.",
+        "fix": "Enable depth of field in the camera settings and adjust the focus distance and aperture to blur the foreground and background elements.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "bottom"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "There is a noticeable vignette with darker corners compared to the center of the frame.",
+        "b_observable": "The corners are nearly as bright as the center, lacking a strong vignette effect.",
+        "fix": "Add a vignette effect or adjust the light falloff to darken the corners of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 1,
+        "a_observable": "The 'Renewal Success' card is positioned directly above the 'Secure Payments' card.",
+        "b_observable": "The 'Renewal Success' card is positioned to the right of the 'Secure Payments' card.",
+        "fix": "Reposition the cards to match the layout of the reference video.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera's depth of field settings to match the shallow focus of the reference, and remove the horizontal lines from the background material."
+  }
+}

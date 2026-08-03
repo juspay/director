@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "panning",
+      "zooming"
+    ],
+    "b_motion": [
+      "panning",
+      "zooming"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 8.3,
+        "a_observable": "The yellow Recurly card is in the top-left and the blue Hyperswitch card is in the bottom-right.",
+        "b_observable": "The yellow Recurly card is on the left and the blue Hyperswitch card is on the right.",
+        "fix": "Re-align the keyboard keys and camera perspective to match the reference layout.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 8.05,
+        "a_observable": "The white keys and background elements show a cool, bluish color cast.",
+        "b_observable": "The white keys are neutral white and grey, lacking the cool tint.",
+        "fix": "Apply a cool color grade to match the reference white balance.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "The corners of the frame are noticeably darker than the center.",
+        "b_observable": "The lighting is uniform across the frame with minimal corner falloff.",
+        "fix": "Add a vignette effect to match the corner shading of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Re-align the keyboard keys and camera perspective to match the reference layout."
+  }
+}

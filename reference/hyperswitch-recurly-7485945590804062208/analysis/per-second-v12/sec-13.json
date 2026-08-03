@@ -1,0 +1,140 @@
+{
+  "sec": 13,
+  "meta": {
+    "verified": 2,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [
+    "reported 1 cuts, truth has 0"
+  ],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "camera zoom",
+        "camera tilt"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom",
+        "camera tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 13.1,
+          "a_observable": "The camera is close to the Recurly key, creating a tight framing.",
+          "b_observable": "The camera is further back, showing a wider view of the keys.",
+          "fix": "Adjust camera distance and focal length.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 13.5,
+          "a_observable": "The white keys have a cool blue color cast in the shaded areas.",
+          "b_observable": "The white keys have a neutral white color cast.",
+          "fix": "Adjust the ambient light color to introduce a cool blue cast.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 13.8,
+          "a_observable": "The JUSPAY hyperswitch key has a grey metallic base frame surrounding the blue inner button.",
+          "b_observable": "The JUSPAY hyperswitch key is a single solid blue block without any surrounding base frame.",
+          "fix": "Model the key with a separate grey base frame to match the reference design.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 13.6,
+          "a_observable": "The shadows between the keys are deeper and darker.",
+          "b_observable": "The shadows are brighter and flatter.",
+          "fix": "Increase shadow depth and contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera focal length and position to match the tight framing of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan",
+        "subtle rotation",
+        "moving dappled shadows"
+      ],
+      "b_motion": [
+        "slow camera pan",
+        "subtle rotation"
+      ],
+      "absent_in_b": [
+        "moving dappled leaf shadows"
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 13,
+          "a_observable": "Moving dappled leaf shadows are visible across the tiles.",
+          "b_observable": "The tiles have static, uniform lighting with no leaf shadows.",
+          "fix": "Add animated dappled light shadows to the scene.",
+          "severity": 3,
+          "prediction": {
+            "metric": "motion",
+            "expect": "A_more"
+          }
+        },
+        {
+          "category": "color",
+          "t": 13,
+          "a_observable": "The yellow card has a warm golden-yellow color.",
+          "b_observable": "The yellow card has a cooler, brighter lemon-yellow color.",
+          "fix": "Adjust the yellow material to a warmer golden hue.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 13,
+          "a_observable": "The camera angle is higher, resulting in a flatter perspective.",
+          "b_observable": "The camera angle is lower, resulting in more oblique perspective distortion.",
+          "fix": "Raise the camera angle and adjust focal length to match the reference perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Add the animated dappled leaf shadows to match the organic lighting of the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "",
+    "dropped_unsupported": 7
+  }
+}

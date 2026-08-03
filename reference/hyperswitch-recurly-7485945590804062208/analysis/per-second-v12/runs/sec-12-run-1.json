@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "panning",
+      "rotation"
+    ],
+    "b_motion": [
+      "panning",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 12.2,
+        "a_observable": "The background elements in the upper right corner are out of focus.",
+        "b_observable": "The background elements in the upper right corner are sharp and in focus.",
+        "fix": "Enable camera depth of field and adjust the aperture to blur background elements.",
+        "severity": 4,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "The shadow cast by the yellow Recurly button is soft and diffused.",
+        "b_observable": "The shadow cast by the yellow Recurly button is sharp and dark.",
+        "fix": "Increase the light source size or shadow samples to soften contact shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_blacks"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.8,
+        "a_observable": "A strong vignette is visible, darkening the corners of the frame.",
+        "b_observable": "The vignette is absent, leaving the corners bright.",
+        "fix": "Add a vignette effect in post-production to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Enable camera depth of field to match the soft focus on background elements, and soften the contact shadows under the buttons."
+  }
+}

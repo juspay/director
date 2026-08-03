@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan",
+      "subtle rotation",
+      "moving dappled shadows"
+    ],
+    "b_motion": [
+      "slow camera pan",
+      "subtle rotation"
+    ],
+    "absent_in_b": [
+      "moving dappled leaf shadows"
+    ],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 13,
+        "a_observable": "Moving dappled leaf shadows are visible across the tiles.",
+        "b_observable": "The tiles have static, uniform lighting with no leaf shadows.",
+        "fix": "Add animated dappled light shadows to the scene.",
+        "severity": 3,
+        "prediction": {
+          "metric": "motion",
+          "expect": "A_more"
+        }
+      },
+      {
+        "category": "color",
+        "t": 13,
+        "a_observable": "The yellow card has a warm golden-yellow color.",
+        "b_observable": "The yellow card has a cooler, brighter lemon-yellow color.",
+        "fix": "Adjust the yellow material to a warmer golden hue.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 13,
+        "a_observable": "The camera angle is higher, resulting in a flatter perspective.",
+        "b_observable": "The camera angle is lower, resulting in more oblique perspective distortion.",
+        "fix": "Raise the camera angle and adjust focal length to match the reference perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Add the animated dappled leaf shadows to match the organic lighting of the reference."
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "pan",
+      "tilt"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 6.2,
+        "a_observable": "Camera is close to the yellow card with a shallow depth of field.",
+        "b_observable": "Camera is far from the yellow card with deep focus.",
+        "fix": "Adjust camera distance and enable depth of field.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.3,
+        "a_observable": "Strong vignette with high contrast and deep shadows.",
+        "b_observable": "Flat, uniform lighting with low contrast and no vignette.",
+        "fix": "Add vignette and increase contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 6.8,
+        "a_observable": "Camera is close to the blue card at a dynamic angle.",
+        "b_observable": "Camera is far from the blue card at a flat angle.",
+        "fix": "Match camera angle and distance.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera distance, angle, and depth of field to match the reference framing."
+  }
+}

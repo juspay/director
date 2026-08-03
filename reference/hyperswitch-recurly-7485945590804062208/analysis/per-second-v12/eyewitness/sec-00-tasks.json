@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 0,
+    "idx": 0,
+    "t": 0,
+    "category": "camera",
+    "a_observable": "Camera is positioned nearly top-down over the tiles.",
+    "b_observable": "Camera is at a low, oblique angle looking from the side.",
+    "frames": {
+      "A": "/Users/sachinsharma/Developer/temp/director/reference/hyperswitch-recurly-7485945590804062208/analysis/per-second-v12/eyewitness/sec-00-c0-A.png",
+      "B": "/Users/sachinsharma/Developer/temp/director/reference/hyperswitch-recurly-7485945590804062208/analysis/per-second-v12/eyewitness/sec-00-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 7,
+      "note": "Clip A shows a nearly top-down camera angle over the tiles, while Clip B shows a low, oblique angle looking from the side."
+    }
+  }
+]

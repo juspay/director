@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "static"
+    ],
+    "b_motion": [
+      "static"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 14.2,
+        "a_observable": "Darker corners create a soft vignette effect.",
+        "b_observable": "Corners are bright, lacking a distinct vignette.",
+        "fix": "Add a vignette in post-production.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 14.2,
+        "a_observable": "Crevices between tiles show deep, high-contrast shadows.",
+        "b_observable": "Crevices have faint shadows, making the layout look flat.",
+        "fix": "Adjust ambient occlusion and shadow settings to deepen crevices.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "material",
+        "t": 14.1,
+        "a_observable": "The yellow block has a matte finish with soft light diffusion.",
+        "b_observable": "The yellow block has a glossy surface with specular reflections.",
+        "fix": "Increase roughness on the yellow tile material.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Increase shadow depth in crevices and add a vignette to match the contrast and depth of the reference video."
+  }
+}

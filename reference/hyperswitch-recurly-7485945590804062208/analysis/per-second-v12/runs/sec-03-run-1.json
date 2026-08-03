@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "The camera pans and rotates slowly down and to the right, keeping the stacked cards in view with a dynamic perspective."
+    ],
+    "b_motion": [
+      "The camera pans down and to the right over the stacked cards with a flatter, more orthographic perspective."
+    ],
+    "absent_in_b": [
+      "Brushed metal texture on the right background strip."
+    ],
+    "differences": [
+      {
+        "category": "material",
+        "t": 3.5,
+        "a_observable": "A brushed metal texture with horizontal grain is visible on the background strip to the right of the cards.",
+        "b_observable": "The background strip to the right of the cards is a flat, smooth gray surface without any texture.",
+        "fix": "Add a brushed metal texture with horizontal grain to the right background strip.",
+        "severity": 4,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "right"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 3.2,
+        "a_observable": "The camera is positioned at a low, tilted angle, creating a strong perspective effect with noticeable depth of field blur at the top of the frame.",
+        "b_observable": "The camera angle is flatter and more top-down, with less perspective distortion and a deeper depth of field that keeps the top of the frame sharp.",
+        "fix": "Adjust the camera angle, focal length, and depth of field to match the dynamic, tilted perspective of A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 3.7,
+        "a_observable": "The lighting creates a bright specular highlight on the right side of the frame and defined soft shadows cast by the cards to their left.",
+        "b_observable": "The lighting is diffuse and uniform, resulting in very faint shadows and no distinct specular highlights.",
+        "fix": "Add a directional light source to create stronger highlights and more defined shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position, angle, and focal length to reproduce the dynamic, tilted perspective of the reference video, and apply the brushed metal texture to the right background strip."
+  }
+}

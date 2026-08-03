@@ -1,0 +1,67 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 3.5,
+        "a_observable": "The camera is positioned closer to the central cards, resulting in a tighter composition.",
+        "b_observable": "The camera is positioned further back, showing more of the surrounding grid.",
+        "fix": "Adjust camera distance to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 3.7,
+        "a_observable": "Strong corner shading is visible, creating a distinct vignette effect.",
+        "b_observable": "The corners are bright and evenly lit, lacking a vignette.",
+        "fix": "Add a vignette post-processing effect.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 3.3,
+        "a_observable": "Deep, dark contact shadows are present beneath the raised cards.",
+        "b_observable": "The contact shadows are faint and diffuse, making the cards look flat.",
+        "fix": "Increase ambient occlusion and shadow intensity.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "material",
+        "t": 3.1,
+        "a_observable": "The metallic border of the yellow card shows a brushed texture with anisotropic highlights.",
+        "b_observable": "The border is a flat grey color with no texture or highlight variation.",
+        "fix": "Apply a brushed metal shader with anisotropic reflections to the card borders.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing and add a vignette to match the composition and lighting depth of the reference."
+  }
+}

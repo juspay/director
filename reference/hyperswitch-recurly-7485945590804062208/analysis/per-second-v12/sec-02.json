@@ -1,0 +1,257 @@
+{
+  "sec": 2,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        2.2
+      ],
+      "a_motion": [
+        "Slow camera tilt and pan over cards, with a hard cut at 2.2 seconds."
+      ],
+      "b_motion": [
+        "Slow camera tilt and pan over cards, with a hard cut at 2.2 seconds."
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 2.1,
+          "a_observable": "The background card 'Renewal Success' is heavily blurred due to shallow depth of field.",
+          "b_observable": "The background card 'Renewal Success' is sharp and clearly legible.",
+          "fix": "Reduce the camera f-stop to narrow the depth of field and blur the background.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "top"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 2.5,
+          "a_observable": "Shadows cast by the stacked cards are soft and diffuse.",
+          "b_observable": "Shadows cast by the stacked cards are sharp and dark.",
+          "fix": "Increase the light source size to soften shadow edges.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 2.5,
+          "a_observable": "The stacked cards are framed closely, filling most of the vertical space.",
+          "b_observable": "The stacked cards are framed from a distance, leaving empty space at the top and bottom.",
+          "fix": "Move the camera closer or increase focal length to match the tight framing.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and aperture to match the close-up framing and shallow depth of field of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        2.208
+      ],
+      "a_motion": [
+        "slow camera pan and zoom out before the cut",
+        "slow camera pan down-right after the cut"
+      ],
+      "b_motion": [
+        "slow camera pan before the cut",
+        "slow camera pan after the cut"
+      ],
+      "absent_in_b": [
+        "dotted pattern tile next to Subscriptions"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 2.1,
+          "a_observable": "The camera is positioned extremely close to the 'Secure Payments' tile, blurring the background.",
+          "b_observable": "The camera is positioned further back, showing multiple surrounding tiles in focus.",
+          "fix": "Move the camera closer to the main tile and adjust focus.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 2.5,
+          "a_observable": "A grey dotted tile is visible on the left side of the 'Subscriptions' tile.",
+          "b_observable": "The area to the left of the 'Subscriptions' tile is plain white with no dotted pattern.",
+          "fix": "Add the dotted pattern tile to the left of the subscriptions tile.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 2.7,
+          "a_observable": "The crevices between the tiles have deep, dark shadows.",
+          "b_observable": "The crevices between the tiles have very faint, light grey shadows.",
+          "fix": "Increase ambient occlusion or shadow depth in the crevices.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 2.8,
+          "a_observable": "The white tiles have a warm, clean white tone.",
+          "b_observable": "The white tiles have a distinct cool, blue-grey color cast.",
+          "fix": "Adjust the white balance to remove the blue-grey cast from the white materials.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Reposition the camera closer to the main tiles to match the tight framing and shallow depth of field of Video A.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        2.2
+      ],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "material",
+          "t": 2.1,
+          "a_observable": "The yellow key at the bottom right shows a brushed metallic texture with anisotropic reflections.",
+          "b_observable": "The yellow key has a flat, matte plastic material with no metallic sheen.",
+          "fix": "Apply a brushed metal texture with anisotropic roughness to the yellow key.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "layout",
+          "t": 2.5,
+          "a_observable": "The 'Subscriptions', 'Retries', and 'APMs' cards are arranged at a distinct diagonal angle across the frame.",
+          "b_observable": "The cards are aligned nearly vertically in the center of the screen.",
+          "fix": "Rotate the cards or adjust the camera roll to replicate the diagonal composition.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 2.6,
+          "a_observable": "The shadows cast by the cards are deep and well-defined, creating high contrast.",
+          "b_observable": "The shadows are very soft and faint, resulting in a flat appearance.",
+          "fix": "Increase the key light intensity and reduce ambient fill to deepen the shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and layout rotation in the second shot to match the diagonal composition of the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 2.1,
+        "a_observable": "The background card 'Renewal Success' is heavily blurred due to shallow depth of field.",
+        "b_observable": "The background card 'Renewal Success' is sharp and clearly legible.",
+        "fix": "Reduce the camera f-stop to narrow the depth of field and blur the background.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "B_sharper",
+          "A": {
+            "lap_var": 92.84
+          },
+          "B": {
+            "lap_var": 13.92
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 2.6,
+        "a_observable": "The shadows cast by the cards are deep and well-defined, creating high contrast.",
+        "b_observable": "The shadows are very soft and faint, resulting in a flat appearance.",
+        "fix": "Increase the key light intensity and reduce ambient fill to deepen the shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 66.56,
+            "p1": 78.72,
+            "p5": 109.33,
+            "p50": 205.94,
+            "p95": 246.21,
+            "p99": 249,
+            "p999": 251.66,
+            "span_p5_p95": 136.88
+          },
+          "B": {
+            "p01": 83.94,
+            "p1": 112.54,
+            "p5": 166.73,
+            "p50": 210.08,
+            "p95": 238.24,
+            "p99": 242.17,
+            "p999": 254.07,
+            "span_p5_p95": 71.51
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Reposition the camera closer to the main tiles to match the tight framing and shallow depth of field of Video A.",
+    "dropped_unsupported": 6
+  }
+}

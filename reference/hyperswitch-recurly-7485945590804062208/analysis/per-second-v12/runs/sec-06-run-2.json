@@ -1,0 +1,45 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "translation",
+      "zoom"
+    ],
+    "b_motion": [
+      "translation",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 6.2,
+        "a_observable": "The yellow button is framed in a tight close-up, occupying most of the screen.",
+        "b_observable": "The yellow button is framed from a wider angle and positioned lower.",
+        "fix": "Adjust camera zoom and position to match the close-up framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 6.8,
+        "a_observable": "The blue button is recessed inside a metallic silver frame.",
+        "b_observable": "The blue button is a raised block with no metallic frame.",
+        "fix": "Model the metallic frame around the blue button.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Model the metallic frame around the blue button and adjust the camera zoom to match the reference."
+  }
+}

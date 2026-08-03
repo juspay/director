@@ -1,0 +1,229 @@
+{
+  "sec": 12,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 12.2,
+          "a_observable": "The camera is closer to the cards, creating a dynamic perspective with depth of field.",
+          "b_observable": "The camera is further away with a flatter perspective and less depth of field.",
+          "fix": "Match camera focal length, position, and depth of field.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 12.5,
+          "a_observable": "Stronger vignette with darker corners and softer shadow falloff.",
+          "b_observable": "Flat, uniform lighting across the frame with minimal corner falloff.",
+          "fix": "Increase vignette strength and soften shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "material",
+          "t": 12.4,
+          "a_observable": "The yellow card has a glossy finish with subtle specular reflections.",
+          "b_observable": "The yellow card has a flat, matte finish without specular highlights.",
+          "fix": "Adjust the material roughness and specular settings of the yellow card.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera focal length and position to match the reference's dynamic perspective and depth of field.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "panning",
+        "rotation"
+      ],
+      "b_motion": [
+        "panning",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 12.2,
+          "a_observable": "The background elements in the upper right corner are out of focus.",
+          "b_observable": "The background elements in the upper right corner are sharp and in focus.",
+          "fix": "Enable camera depth of field and adjust the aperture to blur background elements.",
+          "severity": 4,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 12.5,
+          "a_observable": "The shadow cast by the yellow Recurly button is soft and diffused.",
+          "b_observable": "The shadow cast by the yellow Recurly button is sharp and dark.",
+          "fix": "Increase the light source size or shadow samples to soften contact shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_blacks"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 12.8,
+          "a_observable": "A strong vignette is visible, darkening the corners of the frame.",
+          "b_observable": "The vignette is absent, leaving the corners bright.",
+          "fix": "Add a vignette effect in post-production to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Enable camera depth of field to match the soft focus on background elements, and soften the contact shadows under the buttons.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "zoom"
+      ],
+      "b_motion": [
+        "translation",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 12.5,
+          "a_observable": "Stronger vignette with darker corners.",
+          "b_observable": "Brighter corners with minimal vignette.",
+          "fix": "Apply a stronger vignette effect in post-processing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 12.8,
+          "a_observable": "Slower zoom-out, keeping the central cards larger in frame.",
+          "b_observable": "Faster zoom-out, making the cards smaller and revealing more background grid.",
+          "fix": "Adjust camera zoom keyframes to slow down the zoom-out.",
+          "severity": 3,
+          "prediction": {
+            "metric": "motion",
+            "expect": "B_more"
+          }
+        },
+        {
+          "category": "color",
+          "t": 12.2,
+          "a_observable": "Yellow card has a warmer, more saturated golden hue.",
+          "b_observable": "Yellow card has a cooler, less saturated yellow hue.",
+          "fix": "Adjust color saturation and hue of the yellow card.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera zoom keyframes to match the slower zoom-out speed of the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 12.2,
+        "a_observable": "The background elements in the upper right corner are out of focus.",
+        "b_observable": "The background elements in the upper right corner are sharp and in focus.",
+        "fix": "Enable camera depth of field and adjust the aperture to blur background elements.",
+        "severity": 4,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_sharper",
+          "A": {
+            "lap_var": 0.91
+          },
+          "B": {
+            "lap_var": 4.21
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "Stronger vignette with darker corners.",
+        "b_observable": "Brighter corners with minimal vignette.",
+        "fix": "Apply a stronger vignette effect in post-processing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 209.43,
+            "center_mean": 194.03,
+            "falloff_pct": -7.93
+          },
+          "B": {
+            "corner_mean": 204.09,
+            "center_mean": 193.02,
+            "falloff_pct": -5.73
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Enable camera depth of field and adjust the aperture to blur background elements.",
+    "dropped_unsupported": 4
+  }
+}

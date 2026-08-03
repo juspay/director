@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.2
+    ],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "material",
+        "t": 2.1,
+        "a_observable": "The yellow key at the bottom right shows a brushed metallic texture with anisotropic reflections.",
+        "b_observable": "The yellow key has a flat, matte plastic material with no metallic sheen.",
+        "fix": "Apply a brushed metal texture with anisotropic roughness to the yellow key.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "layout",
+        "t": 2.5,
+        "a_observable": "The 'Subscriptions', 'Retries', and 'APMs' cards are arranged at a distinct diagonal angle across the frame.",
+        "b_observable": "The cards are aligned nearly vertically in the center of the screen.",
+        "fix": "Rotate the cards or adjust the camera roll to replicate the diagonal composition.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.6,
+        "a_observable": "The shadows cast by the cards are deep and well-defined, creating high contrast.",
+        "b_observable": "The shadows are very soft and faint, resulting in a flat appearance.",
+        "fix": "Increase the key light intensity and reduce ambient fill to deepen the shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and layout rotation in the second shot to match the diagonal composition of the reference."
+  }
+}

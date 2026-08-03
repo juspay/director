@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 3.2,
+        "a_observable": "The 'Secure Payments' card is framed closely, dominating the center of the screen.",
+        "b_observable": "The camera is positioned further away, showing a wider view of the surrounding card grid.",
+        "fix": "Adjust the camera distance and focal length to match the tighter framing of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 3.5,
+        "a_observable": "The shadows cast beneath the cards are deep and sharp, creating high contrast.",
+        "b_observable": "The shadows are faint and soft, resulting in a flatter overall image.",
+        "fix": "Increase key light intensity and adjust shadow density to deepen the contact shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "material",
+        "t": 3.8,
+        "a_observable": "The white cards exhibit a subtle matte texture with soft edge highlights.",
+        "b_observable": "The cards appear perfectly smooth and glossy, showing sharper specular reflections.",
+        "fix": "Increase the roughness value of the card material to achieve a matte finish.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and focal length to match the tighter framing and perspective of the reference video."
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera zoom out"
+    ],
+    "b_motion": [
+      "slow camera zoom out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 14.1,
+        "a_observable": "Warm, yellow-tinted lighting on the white tiles.",
+        "b_observable": "Cool, bluish-white lighting on the white tiles.",
+        "fix": "Warm up the light temperature.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "full"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 14.2,
+        "a_observable": "Soft, light-gray contact shadows under the cards.",
+        "b_observable": "Deep, dark contact shadows under the cards.",
+        "fix": "Reduce ambient occlusion intensity.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows",
+          "region": "full"
+        }
+      },
+      {
+        "category": "material",
+        "t": 14,
+        "a_observable": "Blue card has satin sheen with soft specular highlights.",
+        "b_observable": "Blue card is matte with no specular reflection.",
+        "fix": "Add specular roughness and gloss to the blue material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Warm up the overall lighting to match the warm color temperature of Video A."
+  }
+}
