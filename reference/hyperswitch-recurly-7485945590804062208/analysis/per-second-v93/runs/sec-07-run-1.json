@@ -1,0 +1,66 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 7.5,
+        "a_observable": "The blue keycap has a lighter, less saturated blue color with soft white reflections.",
+        "b_observable": "The blue keycap has a highly saturated, dark royal blue color with high contrast.",
+        "fix": "Adjust the material color and roughness of the blue keycap to match the lighter, softer blue of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 7,
+        "a_observable": "The PSP key at the bottom is a white keycap containing a recessed metallic square with a blue center.",
+        "b_observable": "The PSP key at the bottom is a solid blue keycap with white text.",
+        "fix": "Recreate the PSP key as a white keycap with a recessed metallic square and blue center.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 7.5,
+        "a_observable": "The camera is positioned closer to the main key, showing less of the surrounding keyboard grid.",
+        "b_observable": "The camera is positioned further away, showing more of the surrounding keys and grid.",
+        "fix": "Move the camera closer to the main key to match the reference framing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "material",
+        "t": 7.2,
+        "a_observable": "The frame around the Juspay hyperswitch key has a wide, highly reflective brushed metal texture.",
+        "b_observable": "The frame around the Juspay hyperswitch key is thin and has a flat grey plastic appearance.",
+        "fix": "Increase the width and adjust the metallic/roughness settings of the frame material to match the brushed metal look.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Align the camera framing, match the blue keycap color saturation, and recreate the correct PSP key design and brushed metal frame material."
+  }
+}

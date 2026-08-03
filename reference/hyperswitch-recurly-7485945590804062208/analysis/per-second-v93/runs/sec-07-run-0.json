@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera_pan",
+      "camera_zoom"
+    ],
+    "b_motion": [
+      "camera_pan",
+      "camera_zoom"
+    ],
+    "absent_in_b": [
+      "brushed_metal_frame"
+    ],
+    "differences": [
+      {
+        "category": "material",
+        "t": 7,
+        "a_observable": "The blue Juspay card is encased in a metallic frame with a brushed texture.",
+        "b_observable": "The blue card lacks the metallic frame, sitting directly in the white plastic slot.",
+        "fix": "Add the brushed metal frame around the Juspay card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 7.2,
+        "a_observable": "The blue card has a desaturated, lighter blue color.",
+        "b_observable": "The blue card has a highly saturated, deep royal blue color.",
+        "fix": "Reduce the saturation and lighten the blue material of the card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 7.5,
+        "a_observable": "The overall scene has softer shadows with a gentle vignette effect.",
+        "b_observable": "The scene has higher contrast with sharper shadows and lacks a strong vignette.",
+        "fix": "Soften the shadows and add a subtle vignette to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Add the brushed metal frame around the Juspay card to match the reference staging."
+  }
+}

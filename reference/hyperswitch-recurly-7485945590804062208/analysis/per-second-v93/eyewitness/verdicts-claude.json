@@ -1,0 +1,14 @@
+{
+  "00:0": {"verdict": "refuted", "note": "Stale distance-family claim: framing at parity since pass 8; B's elevation is if anything steeper, not 'flatter'."},
+  "01:0": {"verdict": "supported", "note": "A's keys sit tightly packed with minimal gaps; B's grid opens wider gaps and Renewal sits further offset. Real spacing difference."},
+  "02:0": {"verdict": "supported", "note": "A's background metal tiles carry heavy visible brushing; B's read faint. Same finding as 03:1."},
+  "03:1": {"verdict": "supported", "note": "A's brushed surfaces show strong directional texture with anisotropic highlights; B's metal tiles are far subtler."},
+  "04:2": {"verdict": "supported", "note": "True, and it is the known trade: shot-2 azimuth was compressed to 0.45 sweep for type legibility, which flattened the column shot's perspective relative to A's more dynamic angle."},
+  "05:1": {"verdict": "supported", "note": "A's Recurly cap is DOMED — its top face curves, carrying a broad specular sweep across the gold; B's is a flat slab with only edge bevels. This is the deepest remaining material difference and explains several sibling claims."},
+  "06:0": {"verdict": "supported", "note": "A's well is dark graphite with heavy brush texture; B's bezel is light blue-grey. Large, obvious tone gap."},
+  "07:0": {"verdict": "supported", "note": "A's plinth is wide, bright-brushed, with a deep drop shadow; B's bezel is narrower and flatter."},
+  "07:3": {"verdict": "supported", "note": "Exact and actionable: A's PSP is a WHITE keycap with a small recessed indigo square carrying the text; B renders a solid blue mini-cap."},
+  "07:4": {"verdict": "refuted", "note": "B's hyperswitch card is LARGER in frame than A's; B shows more surroundings because of elevation, not distance. As stated (camera further), contradicted."},
+  "08:0": {"verdict": "supported", "note": "B is more directly overhead than A here — consistent with the elevation running a few degrees hot since pass 8."},
+  "13:3": {"verdict": "supported", "note": "A's lockup key surfaces read soft matte with fine grain; B's carry a glossier clearcoat sheen."}
+}

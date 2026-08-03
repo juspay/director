@@ -1,0 +1,67 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 9.5,
+        "a_observable": "The corners of the frame are blurred due to a shallow depth of field.",
+        "b_observable": "The entire frame is uniformly sharp with no depth of field blur.",
+        "fix": "Enable depth of field in the camera settings.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "The corners of the image are significantly darker than the center, showing a strong vignette.",
+        "b_observable": "The corners are almost as bright as the center, lacking a vignette.",
+        "fix": "Add a vignette effect in post-processing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "The crevices between the keys have deep, dark shadows, creating high contrast.",
+        "b_observable": "The crevices have light grey shadows, resulting in a flatter image.",
+        "fix": "Deepen the shadows and increase overall contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 9.5,
+        "a_observable": "The white surfaces and shadows have a cool blue-green tint.",
+        "b_observable": "The white surfaces are neutral white and grey.",
+        "fix": "Apply a cool color grade to the shadows and midtones.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera depth of field and add a vignette to match the cinematic look of Video A."
+  }
+}

@@ -1,0 +1,53 @@
+[
+  {
+    "sec": 7,
+    "idx": 0,
+    "t": 7.2,
+    "category": "material",
+    "a_observable": "The frame around the Juspay hyperswitch key has a wide, highly reflective brushed metal texture.",
+    "b_observable": "The frame around the Juspay hyperswitch key is thin and has a flat grey plastic appearance.",
+    "frames": {
+      "A": "analysis/per-second-v93/eyewitness/sec-07-c0-A.png",
+      "B": "analysis/per-second-v93/eyewitness/sec-07-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "The frame around the Juspay hyperswitch key in Clip A is indeed a wide, highly reflective brushed metal texture, whereas in Clip B it is thin and has a flat grey plastic appearance."
+    }
+  },
+  {
+    "sec": 7,
+    "idx": 3,
+    "t": 7,
+    "category": "staging",
+    "a_observable": "The PSP key at the bottom is a white keycap containing a recessed metallic square with a blue center.",
+    "b_observable": "The PSP key at the bottom is a solid blue keycap with white text.",
+    "frames": {
+      "A": "analysis/per-second-v93/eyewitness/sec-07-c3-A.png",
+      "B": "analysis/per-second-v93/eyewitness/sec-07-c3-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "The clips clearly show the difference in the PSP keycap design. In Clip A, it is a white keycap with a recessed metallic square and a blue center containing the text 'PSP'. In Clip B, it is a solid blue keycap with white 'PSP' text."
+    }
+  },
+  {
+    "sec": 7,
+    "idx": 4,
+    "t": 7.5,
+    "category": "camera",
+    "a_observable": "The camera is positioned closer to the main key, showing less of the surrounding keyboard grid.",
+    "b_observable": "The camera is positioned further away, showing more of the surrounding keys and grid.",
+    "frames": {
+      "A": "analysis/per-second-v93/eyewitness/sec-07-c4-A.png",
+      "B": "analysis/per-second-v93/eyewitness/sec-07-c4-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.95,
+      "note": "The comparison is accurate. Clip A shows a closer view of the 'JUSPAY hyperswitch' key, with less of the surrounding grid visible, while Clip B is zoomed out, showing more of the surrounding keys and the dotted grid pattern on the left."
+    }
+  }
+]

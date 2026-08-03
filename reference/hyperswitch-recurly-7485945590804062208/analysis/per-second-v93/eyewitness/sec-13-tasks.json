@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 13,
+    "idx": 3,
+    "t": 13.4,
+    "category": "material",
+    "a_observable": "Matte, textured finish on the key surfaces.",
+    "b_observable": "Smooth, glossy finish on the key surfaces.",
+    "frames": {
+      "A": "analysis/per-second-v93/eyewitness/sec-13-c3-A.png",
+      "B": "analysis/per-second-v93/eyewitness/sec-13-c3-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.9,
+      "note": "Clip A shows a flat, matte, and textured paper-like finish on the surfaces, whereas Clip B shows 3D tiles with a smooth, glossy finish that reflects light on the edges and surfaces."
+    }
+  }
+]

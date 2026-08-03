@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 0,
+    "idx": 0,
+    "t": 0.2,
+    "category": "camera",
+    "a_observable": "Camera is closer to the center tile with a steep perspective angle.",
+    "b_observable": "Camera is further back with a flatter, more top-down angle.",
+    "frames": {
+      "A": "analysis/per-second-v93/eyewitness/sec-00-c0-A.png",
+      "B": "analysis/per-second-v93/eyewitness/sec-00-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.9,
+      "note": "The comparison is accurate. Clip A shows a close-up shot of the 'Secure Payments' tile with a steep, dynamic perspective angle, while Clip B is shot from further back with a flatter, more top-down perspective."
+    }
+  }
+]

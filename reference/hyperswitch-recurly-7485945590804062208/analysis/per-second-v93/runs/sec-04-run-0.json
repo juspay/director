@@ -1,0 +1,60 @@
+{
+  "ok": false,
+  "why": "missed cut at 4.900s",
+  "json": {
+    "cuts_in_window": [
+      4.417
+    ],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [
+      "yellow card"
+    ],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 4.2,
+        "a_observable": "A yellow card is visible at the bottom of the frame below the 'Secure Payments' card.",
+        "b_observable": "The card below 'Secure Payments' is white with horizontal lines, and no yellow card is visible in that position.",
+        "fix": "Adjust the layout and color of the surrounding cards to match the reference composition.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 4.2,
+        "a_observable": "The blue card on the left and the yellow card at the bottom are highly saturated.",
+        "b_observable": "The colors are desaturated and the yellow card is missing, resulting in a mostly grey palette.",
+        "fix": "Increase the saturation of the colored cards and ensure all colored elements are present in the scene.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 4.6,
+        "a_observable": "The scene has high contrast with bright highlights on the card surfaces and a noticeable vignette darkening the corners.",
+        "b_observable": "The lighting is flat and uniform across the frame, lacking highlights and vignette.",
+        "fix": "Increase the contrast of the key light and add a vignette in post-production to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Recreate the layout and color of the surrounding cards in the first shot, and increase the contrast and saturation to match the reference."
+  }
+}

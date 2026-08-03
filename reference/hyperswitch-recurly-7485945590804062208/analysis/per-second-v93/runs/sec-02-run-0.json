@@ -1,0 +1,67 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.2
+    ],
+    "a_motion": [
+      "slow camera pan and tilt"
+    ],
+    "b_motion": [
+      "slow camera pan and tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "material",
+        "t": 2.5,
+        "a_observable": "A brushed metal texture is visible on the background block to the right of the tiles.",
+        "b_observable": "The background block to the right of the tiles is flat grey with no brushed texture.",
+        "fix": "Apply a brushed metal texture map to the background plate on the right.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.5,
+        "a_observable": "Deep, distinct soft shadows are visible beneath the 'Subscriptions', 'Retries', and 'APMs' tiles.",
+        "b_observable": "The shadows beneath the tiles are extremely faint and diffuse, lacking depth.",
+        "fix": "Increase the intensity of the key light and adjust shadow bias/diffusion to create deeper soft shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 2.5,
+        "a_observable": "The blue icons and text on the tiles have a deeper, less saturated royal blue color.",
+        "b_observable": "The blue icons and text are brighter and more saturated.",
+        "fix": "Adjust the diffuse color of the blue material to reduce saturation and match the royal blue hue of Video A.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 2.1,
+        "a_observable": "The camera is positioned closer to the 'Secure Payments' tile with a more dynamic, tilted angle.",
+        "b_observable": "The camera is further away with a flatter, less tilted perspective.",
+        "fix": "Adjust the camera's position and rotation to match the closer, more dynamic angle of Video A.",
+        "severity": 2,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Apply the missing brushed metal texture to the background block and deepen the soft shadows beneath the tiles to match the contrast and material depth of Video A."
+  }
+}

@@ -1,0 +1,212 @@
+{
+  "sec": 1,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera zoom out",
+        "camera rotation"
+      ],
+      "b_motion": [
+        "camera zoom out",
+        "camera rotation"
+      ],
+      "absent_in_b": [
+        "yellow button at the bottom of the grid"
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "t": 1.5,
+          "a_observable": "The yellow button is located below the 'Secure Payments' button at the bottom of the frame.",
+          "b_observable": "The yellow button is located to the top-right of the 'Secure Payments' button.",
+          "fix": "Rearrange the layout of the grid buttons to match the reference, placing the yellow button below the secure payments button.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 1.2,
+          "a_observable": "The white button surfaces have a warm, neutral cream tone.",
+          "b_observable": "The white button surfaces have a distinct cool blue-gray color cast.",
+          "fix": "Adjust the white balance and lighting colors to remove the cool blue cast from the white materials.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 1,
+          "a_observable": "The 'Secure Payments' card is square-ish with a large blue shield icon.",
+          "b_observable": "The 'Secure Payments' card is more elongated with a smaller blue shield icon.",
+          "fix": "Adjust the proportions of the card and the scale of the shield icon to match the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Reorganize the grid layout of the buttons to place the yellow button below the secure payments button, and adjust the camera framing and tilt to match the reference perspective.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 1,
+          "a_observable": "The keys are tightly spaced with minimal gaps, and the 'Renewal Success' key is positioned directly above the 'Secure Payments' key.",
+          "b_observable": "The keys have wider gaps, and the 'Renewal Success' key is offset to the top-right of the 'Secure Payments' key.",
+          "fix": "Reposition the keyboard keys to match the tight grid layout and relative positioning of the reference video.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 1.5,
+          "a_observable": "The 'Renewal Success' key in the background is heavily blurred due to a shallow depth of field.",
+          "b_observable": "The 'Renewal Success' key remains sharp and in focus.",
+          "fix": "Decrease the camera's f-stop to create a shallower depth of field and blur the background keys.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "top"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 1.5,
+          "a_observable": "The corners of the frame are significantly darker than the center, showing a strong vignette.",
+          "b_observable": "The illumination is uniform across the frame with no noticeable vignette.",
+          "fix": "Apply a vignette effect to darken the corners of the frame.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 1,
+          "a_observable": "The white keys have a distinct cool blue color cast.",
+          "b_observable": "The white keys are neutral white and grey.",
+          "fix": "Apply a cool blue color grade or adjust the white balance to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Reposition the keyboard keys to match the tight grid layout and relative positioning of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 1,
+          "a_observable": "The tiles are tightly packed with minimal gaps, forming a cohesive, keyboard-like grid structure.",
+          "b_observable": "The tiles are widely spaced with large flat gaps between them, making the grid look sparse.",
+          "fix": "Reduce the spacing between the tiles to match the tight grid layout of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 1.5,
+          "a_observable": "Deep, soft contact shadows are visible in the grooves between the tiles, creating high contrast and depth.",
+          "b_observable": "The grooves are brightly lit with very weak, flat shadows, resulting in a low-contrast appearance.",
+          "fix": "Adjust the lighting and ambient occlusion to produce deeper contact shadows in the crevices between tiles.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "typography",
+          "t": 1,
+          "a_observable": "The text 'Secure Payments' uses a geometric sans-serif font with distinct letter shapes and generous line height.",
+          "b_observable": "The text 'Secure Payments' uses a generic sans-serif font with tighter line spacing and different letterforms.",
+          "fix": "Replace the font with the geometric sans-serif typeface used in the reference video.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Reduce the spacing between the tiles to create a tightly packed grid, matching the keyboard-like layout of the reference video.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "layout",
+        "t": 1,
+        "a_observable": "The keys are tightly spaced with minimal gaps, and the 'Renewal Success' key is positioned directly above the 'Secure Payments' key.",
+        "b_observable": "The keys have wider gaps, and the 'Renewal Success' key is offset to the top-right of the 'Secure Payments' key.",
+        "fix": "Reposition the keyboard keys to match the tight grid layout and relative positioning of the reference video.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 3,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "The visual comparison confirms that in Clip A, the 'Renewal Success' key is positioned directly above the 'Secure Payments' key with very tight spacing. In Clip B, the keys have wider gaps, and the 'Renewal Success' key is offset to the top-right of the 'Secure Payments' key."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "A's keys sit tightly packed with minimal gaps; B's grid opens wider gaps and Renewal sits further offset. Real spacing difference."
+        }
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Reposition the keyboard keys to match the tight grid layout and relative positioning of the reference video.",
+    "dropped_unsupported": 8
+  }
+}

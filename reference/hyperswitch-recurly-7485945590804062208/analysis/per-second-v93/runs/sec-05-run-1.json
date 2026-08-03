@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 5.5,
+        "a_observable": "The camera is positioned at a lower, more oblique angle, creating stronger perspective distortion on the yellow button.",
+        "b_observable": "The camera is positioned at a higher, more top-down angle, showing more surrounding tiles with less perspective.",
+        "fix": "Lower the camera height and increase pitch to match the oblique perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "material",
+        "t": 5.2,
+        "a_observable": "The yellow button has a glossy finish with a distinct highlight on its top edge, and sits in a textured brushed-metal recess.",
+        "b_observable": "The yellow button has a flat matte finish, and the recess is a plain grey color without texture.",
+        "fix": "Apply a glossy material to the yellow button and a brushed-metal texture to the recess.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_brighter_highlights"
+        }
+      },
+      {
+        "category": "color",
+        "t": 5.8,
+        "a_observable": "The white background tiles are warm-toned with high contrast against the dark recesses.",
+        "b_observable": "The white background tiles have a cooler, blue-grey cast with lower overall contrast.",
+        "fix": "Adjust the color grading to warm up the whites and increase contrast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle to match the oblique perspective of the reference and add specular reflections to the yellow button."
+  }
+}

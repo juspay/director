@@ -1,0 +1,204 @@
+{
+  "sec": 13,
+  "meta": {
+    "verified": 1,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [
+    "reported 1 cuts, truth has 0",
+    "reported 1 cuts, truth has 0"
+  ],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "smooth camera zoom out and pan"
+      ],
+      "b_motion": [
+        "smooth camera zoom out and pan"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 13.2,
+          "a_observable": "Pronounced vignette with darker corners.",
+          "b_observable": "Flat, uniform lighting across the frame.",
+          "fix": "Add a vignette to darken the corners.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 13.5,
+          "a_observable": "Warm golden hue on the yellow button.",
+          "b_observable": "Cooler, greenish-yellow hue on the yellow button.",
+          "fix": "Adjust the yellow material color to be warmer.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 13.8,
+          "a_observable": "Deep shadows in the gaps between keys.",
+          "b_observable": "Light, washed-out shadows in the gaps.",
+          "fix": "Increase shadow depth and contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "material",
+          "t": 13.4,
+          "a_observable": "Matte, textured finish on the key surfaces.",
+          "b_observable": "Smooth, glossy finish on the key surfaces.",
+          "fix": "Add a subtle bump map to the key material.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Add a vignette and deepen the shadows to match the high-contrast, moody lighting of the reference video.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 13.2,
+        "a_observable": "Pronounced vignette with darker corners.",
+        "b_observable": "Flat, uniform lighting across the frame.",
+        "fix": "Add a vignette to darken the corners.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 1,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 209.26,
+            "center_mean": 193.58,
+            "falloff_pct": -8.1
+          },
+          "B": {
+            "corner_mean": 150.13,
+            "center_mean": 156.92,
+            "falloff_pct": 4.32
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 13.5,
+        "a_observable": "Warm golden hue on the yellow button.",
+        "b_observable": "Cooler, greenish-yellow hue on the yellow button.",
+        "fix": "Adjust the yellow material color to be warmer.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        },
+        "supported_by": 1,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_cooler",
+          "A": {
+            "r": 194.53,
+            "g": 204.41,
+            "b": 200.72,
+            "rb_delta": -6.2,
+            "saturation": 0.1862
+          },
+          "B": {
+            "r": 140.31,
+            "g": 153.51,
+            "b": 190.13,
+            "rb_delta": -49.82,
+            "saturation": 0.3117
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 13.8,
+        "a_observable": "Deep shadows in the gaps between keys.",
+        "b_observable": "Light, washed-out shadows in the gaps.",
+        "fix": "Increase shadow depth and contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 1,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 4.46,
+            "p1": 86.3,
+            "p5": 91.72,
+            "p50": 209.01,
+            "p95": 231.47,
+            "p99": 236.33,
+            "p999": 252.02,
+            "span_p5_p95": 139.75
+          },
+          "B": {
+            "p01": 73.18,
+            "p1": 74.68,
+            "p5": 80.1,
+            "p50": 169.27,
+            "p95": 182.55,
+            "p99": 187.17,
+            "p999": 239.38,
+            "span_p5_p95": 102.45
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "material",
+        "t": 13.4,
+        "a_observable": "Matte, textured finish on the key surfaces.",
+        "b_observable": "Smooth, glossy finish on the key surfaces.",
+        "fix": "Add a subtle bump map to the key material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 1,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 0.9,
+          "note": "Clip A shows a flat, matte, and textured paper-like finish on the surfaces, whereas Clip B shows 3D tiles with a smooth, glossy finish that reflects light on the edges and surfaces."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "A's lockup key surfaces read soft matte with fine grain; B's carry a glossier clearcoat sheen."
+        }
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Add a vignette and deepen the shadows to match the high-contrast, moody lighting of the reference video.",
+    "dropped_unsupported": 0
+  }
+}

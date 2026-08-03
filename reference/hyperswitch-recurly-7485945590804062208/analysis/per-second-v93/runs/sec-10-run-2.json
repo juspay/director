@@ -1,0 +1,66 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 10.5,
+        "a_observable": "Camera is highly tilted, creating a strong diagonal grid alignment.",
+        "b_observable": "Camera is flatter, resulting in more horizontal grid lines.",
+        "fix": "Match camera tilt and rotation.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "Strong vignette with dark corners.",
+        "b_observable": "Flat lighting with bright corners.",
+        "fix": "Add corner vignette.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "Deep shadows in the button recesses.",
+        "b_observable": "Bright, shallow shadows in recesses.",
+        "fix": "Deepen ambient occlusion shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 10.5,
+        "a_observable": "Warm, creamy color cast on keys and yellow button.",
+        "b_observable": "Cool, neutral white cast with greenish-yellow button.",
+        "fix": "Warm up the white balance.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust camera angle and tilt to match the dynamic diagonal composition of the reference, and deepen the shadow contrast in the recesses."
+  }
+}

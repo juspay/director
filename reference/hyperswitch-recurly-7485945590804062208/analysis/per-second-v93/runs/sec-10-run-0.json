@@ -1,0 +1,66 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zooming out",
+      "subtle camera pan"
+    ],
+    "b_motion": [
+      "camera zooming out",
+      "subtle camera pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 10.25,
+        "a_observable": "The corners of the frame are significantly darker than the center, showing a strong vignette.",
+        "b_observable": "The frame is evenly lit from center to corners with no visible vignette.",
+        "fix": "Introduce a vignette effect to darken the corners of the frame.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "The shadows in the crevices between the tiles are deep and dark, creating high contrast.",
+        "b_observable": "The crevices are brightly lit with very shallow shadows, making the scene look flat.",
+        "fix": "Increase ambient occlusion or darken the shadow tones in the crevices between tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 10.5,
+        "a_observable": "The yellow Recurly tile has a warm, highly saturated golden hue.",
+        "b_observable": "The yellow tile has a cooler, less saturated pale yellow hue.",
+        "fix": "Adjust the color temperature and saturation of the yellow material to match the warm golden tone.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 10.75,
+        "a_observable": "The camera is positioned at a low angle, causing the tiles to tilt away with strong perspective.",
+        "b_observable": "The camera is positioned at a higher, more top-down angle, resulting in less perspective tilt.",
+        "fix": "Lower the camera height and tilt it up to match the reference's perspective.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and focal length to match the lower, more dynamic perspective of the reference video, and deepen the shadows between the keyboard keys to improve contrast."
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [
+      "metallic key well borders",
+      "warm ambient lighting"
+    ],
+    "differences": [
+      {
+        "category": "material",
+        "t": 8.05,
+        "a_observable": "The blue button well has a distinct brushed-metal bevel with realistic anisotropic reflections.",
+        "b_observable": "The blue button well has a flat grey border with no metallic texture or reflections.",
+        "fix": "Apply a metallic material with brushed anisotropic reflections to the key well borders.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 8.05,
+        "a_observable": "The blue button has a desaturated, slightly cyan-tinted blue color.",
+        "b_observable": "The blue button has a highly saturated royal blue color.",
+        "fix": "Adjust the diffuse color of the blue button to match the reference's desaturated cyan-blue hue.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 8.5,
+        "a_observable": "The keys are arranged with a single white key separating the yellow Recurly key and the blue Hyperswitch key.",
+        "b_observable": "The keys have a larger gap and different key layout between the yellow and blue keys.",
+        "fix": "Re-align the keyboard grid layout to match the reference spacing and key placement.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "The scene has warm, soft ambient lighting with subtle contact shadows.",
+        "b_observable": "The scene has flat, cool lighting with harsh, dark shadows in the key crevices.",
+        "fix": "Soften the shadow bias and adjust the light color temperature to be warmer.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Recreate the metallic material for the key well borders with realistic anisotropic reflections and adjust the global lighting to be warmer and softer."
+  }
+}

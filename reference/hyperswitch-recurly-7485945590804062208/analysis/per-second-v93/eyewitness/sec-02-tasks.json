@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 2,
+    "idx": 0,
+    "t": 2.5,
+    "category": "material",
+    "a_observable": "A brushed metal texture is visible on the background block to the right of the tiles.",
+    "b_observable": "The background block to the right of the tiles is flat grey with no brushed texture.",
+    "frames": {
+      "A": "analysis/per-second-v93/eyewitness/sec-02-c0-A.png",
+      "B": "analysis/per-second-v93/eyewitness/sec-02-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "In Clip A, a brushed metal texture is clearly visible on the background block to the right of the 'Subscriptions' and 'Retries' tiles. In Clip B, this same background block is a flat, smooth grey with no texture."
+    }
+  }
+]

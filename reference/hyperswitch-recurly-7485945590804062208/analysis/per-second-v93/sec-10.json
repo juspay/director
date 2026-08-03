@@ -1,0 +1,325 @@
+{
+  "sec": 10,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera zooming out",
+        "subtle camera pan"
+      ],
+      "b_motion": [
+        "camera zooming out",
+        "subtle camera pan"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 10.25,
+          "a_observable": "The corners of the frame are significantly darker than the center, showing a strong vignette.",
+          "b_observable": "The frame is evenly lit from center to corners with no visible vignette.",
+          "fix": "Introduce a vignette effect to darken the corners of the frame.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.5,
+          "a_observable": "The shadows in the crevices between the tiles are deep and dark, creating high contrast.",
+          "b_observable": "The crevices are brightly lit with very shallow shadows, making the scene look flat.",
+          "fix": "Increase ambient occlusion or darken the shadow tones in the crevices between tiles.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 10.5,
+          "a_observable": "The yellow Recurly tile has a warm, highly saturated golden hue.",
+          "b_observable": "The yellow tile has a cooler, less saturated pale yellow hue.",
+          "fix": "Adjust the color temperature and saturation of the yellow material to match the warm golden tone.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 10.75,
+          "a_observable": "The camera is positioned at a low angle, causing the tiles to tilt away with strong perspective.",
+          "b_observable": "The camera is positioned at a higher, more top-down angle, resulting in less perspective tilt.",
+          "fix": "Lower the camera height and tilt it up to match the reference's perspective.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and focal length to match the lower, more dynamic perspective of the reference video, and deepen the shadows between the keyboard keys to improve contrast.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera zoom-out and pan"
+      ],
+      "b_motion": [
+        "slow camera zoom-out and pan"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 10.5,
+          "a_observable": "Camera is closer to the yellow button with a steeper tilt angle.",
+          "b_observable": "Camera is further zoomed out with a flatter perspective.",
+          "fix": "Match camera distance and perspective angle to reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.5,
+          "a_observable": "Pronounced vignette with darker corners.",
+          "b_observable": "Even illumination across the frame with minimal corner falloff.",
+          "fix": "Apply a vignette to match the corner shading.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 10.5,
+          "a_observable": "Yellow button has a warmer, more saturated golden hue.",
+          "b_observable": "Yellow button is cooler and less saturated.",
+          "fix": "Adjust yellow button color to be warmer and more saturated.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 10.5,
+          "a_observable": "Background elements are tightly cropped and partially cut off at the frame edges.",
+          "b_observable": "Background elements are fully visible with more negative space around them.",
+          "fix": "Adjust spacing and scale of background elements.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position, focal length, and tilt angle to match the perspective and framing of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 10.5,
+          "a_observable": "Camera is highly tilted, creating a strong diagonal grid alignment.",
+          "b_observable": "Camera is flatter, resulting in more horizontal grid lines.",
+          "fix": "Match camera tilt and rotation.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.5,
+          "a_observable": "Strong vignette with dark corners.",
+          "b_observable": "Flat lighting with bright corners.",
+          "fix": "Add corner vignette.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.5,
+          "a_observable": "Deep shadows in the button recesses.",
+          "b_observable": "Bright, shallow shadows in recesses.",
+          "fix": "Deepen ambient occlusion shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 10.5,
+          "a_observable": "Warm, creamy color cast on keys and yellow button.",
+          "b_observable": "Cool, neutral white cast with greenish-yellow button.",
+          "fix": "Warm up the white balance.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust camera angle and tilt to match the dynamic diagonal composition of the reference, and deepen the shadow contrast in the recesses.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "Pronounced vignette with darker corners.",
+        "b_observable": "Even illumination across the frame with minimal corner falloff.",
+        "fix": "Apply a vignette to match the corner shading.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 210.78,
+            "center_mean": 196.59,
+            "falloff_pct": -7.22
+          },
+          "B": {
+            "corner_mean": 149.66,
+            "center_mean": 156.64,
+            "falloff_pct": 4.46
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "The shadows in the crevices between the tiles are deep and dark, creating high contrast.",
+        "b_observable": "The crevices are brightly lit with very shallow shadows, making the scene look flat.",
+        "fix": "Increase ambient occlusion or darken the shadow tones in the crevices between tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 8.56,
+            "p1": 87.08,
+            "p5": 91.29,
+            "p50": 208.73,
+            "p95": 230.27,
+            "p99": 237.33,
+            "p999": 250.87,
+            "span_p5_p95": 138.98
+          },
+          "B": {
+            "p01": 73.68,
+            "p1": 75.18,
+            "p5": 80.1,
+            "p50": 170.12,
+            "p95": 183.98,
+            "p99": 189.63,
+            "p999": 239.5,
+            "span_p5_p95": 103.88
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 10.5,
+        "a_observable": "Yellow button has a warmer, more saturated golden hue.",
+        "b_observable": "Yellow button is cooler and less saturated.",
+        "fix": "Adjust yellow button color to be warmer and more saturated.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 193.29,
+            "g": 203.73,
+            "b": 201.96,
+            "rb_delta": -8.67,
+            "saturation": 0.191
+          },
+          "B": {
+            "r": 140.43,
+            "g": 153.59,
+            "b": 189.96,
+            "rb_delta": -49.53,
+            "saturation": 0.312
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "camera",
+        "t": 10.5,
+        "a_observable": "Camera is closer to the yellow button with a steeper tilt angle.",
+        "b_observable": "Camera is further zoomed out with a flatter perspective.",
+        "fix": "Match camera distance and perspective angle to reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 3,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "refuted",
+          "certainty": 0.9,
+          "note": "Clip A shows a completely flat, orthogonal (top-down) perspective where the buttons appear as flat 2D shapes. Clip B, on the other hand, shows a tilted 3D perspective where the depth and side edges of the buttons are clearly visible. Therefore, Clip B does not have a flatter perspective than Clip A."
+        }
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust camera angle and tilt to match the dynamic diagonal composition of the reference, and deepen the shadow contrast in the recesses.",
+    "dropped_unsupported": 1
+  }
+}

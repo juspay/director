@@ -1,0 +1,53 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera drift"
+    ],
+    "b_motion": [
+      "slow camera drift"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 14.2,
+        "a_observable": "Strong vignette with darker corners and edges.",
+        "b_observable": "Flat lighting across the frame with minimal corner shading.",
+        "fix": "Add a vignette to darken the corners and match the reference lighting.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 14.2,
+        "a_observable": "The yellow and blue keys display highly saturated, rich colors.",
+        "b_observable": "The yellow and blue keys are desaturated and look washed out.",
+        "fix": "Increase color saturation on the key materials to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 14.2,
+        "a_observable": "The background keys are heavily blurred due to a shallow depth of field.",
+        "b_observable": "The background keys remain relatively sharp, indicating a deeper depth of field.",
+        "fix": "Adjust camera aperture settings to increase depth of field blur in the background.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera depth of field and vignette to match the soft, focused look of the reference video."
+  }
+}

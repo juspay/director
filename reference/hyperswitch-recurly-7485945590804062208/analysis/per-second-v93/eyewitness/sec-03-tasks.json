@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 3,
+    "idx": 1,
+    "t": 3.2,
+    "category": "material",
+    "a_observable": "A brushed metal texture with horizontal anisotropic specular highlights is visible on the right side of the frame.",
+    "b_observable": "The surface is flat matte grey with no metallic texture or anisotropic reflections.",
+    "frames": {
+      "A": "analysis/per-second-v93/eyewitness/sec-03-c1-A.png",
+      "B": "analysis/per-second-v93/eyewitness/sec-03-c1-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "Clip A clearly shows a brushed metal texture with horizontal anisotropic specular highlights on the right side of the frame, whereas in Clip B, the corresponding surface is a flat matte grey with no metallic texture or reflections."
+    }
+  }
+]

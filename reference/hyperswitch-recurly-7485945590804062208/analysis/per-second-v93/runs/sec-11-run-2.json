@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan",
+      "subtle keyboard key movement"
+    ],
+    "b_motion": [
+      "slow camera pan",
+      "subtle keyboard key movement"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "Strong vignette with darker corners.",
+        "b_observable": "Flat, uniform lighting across the frame.",
+        "fix": "Add a vignette to darken the corners.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 11.5,
+        "a_observable": "Cool blue-green color cast on white surfaces.",
+        "b_observable": "Neutral white and gray surfaces.",
+        "fix": "Apply a cool blue-green color grade.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler",
+          "region": "full"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.2,
+        "a_observable": "Deeper shadows and higher contrast.",
+        "b_observable": "Washed-out shadows and lower contrast.",
+        "fix": "Increase contrast and deepen shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Apply a vignette and adjust the color grading to match the cool blue-green tint of the reference."
+  }
+}

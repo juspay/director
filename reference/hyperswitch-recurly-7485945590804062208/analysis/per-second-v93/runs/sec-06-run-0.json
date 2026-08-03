@@ -1,0 +1,58 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "camera pan",
+      "camera zoom",
+      "camera tilt"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom",
+      "camera tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 6.2,
+        "a_observable": "The yellow Recurly tile is surrounded by a dark grey well, and the Secure Payments tile is visible on the left.",
+        "b_observable": "The yellow Recurly tile is surrounded by a light grey well, and the Secure Payments tile is visible on the top-left.",
+        "fix": "Realign the camera angle and adjust the tile layout to match the reference staging.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 6.2,
+        "a_observable": "The white tiles have a distinct cool blue color cast.",
+        "b_observable": "The white tiles are neutral white with a slight warm grey tint.",
+        "fix": "Adjust the white balance or color grading to introduce a cool blue cast to the scene.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.8,
+        "a_observable": "The shadows in the crevices around the blue JUSPAY tile are dark and pronounced.",
+        "b_observable": "The shadows in the crevices around the blue JUSPAY tile are faint and washed out.",
+        "fix": "Adjust the ambient occlusion and shadow settings to deepen the crevices.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing and tile layout to match the reference staging, and deepen the shadows to improve contrast."
+  }
+}

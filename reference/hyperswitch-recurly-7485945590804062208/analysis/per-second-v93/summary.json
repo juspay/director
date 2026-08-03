@@ -1,0 +1,167 @@
+[
+  {
+    "sec": 0,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 4,
+    "measured_ok": 2,
+    "vetoed": 1,
+    "pending": 1,
+    "refuted": 0,
+    "layer1Rejected": 0
+  },
+  {
+    "sec": 1,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 1,
+    "measured_ok": 0,
+    "vetoed": 0,
+    "pending": 1,
+    "refuted": 0,
+    "layer1Rejected": 0
+  },
+  {
+    "sec": 2,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 4,
+    "measured_ok": 2,
+    "vetoed": 1,
+    "pending": 1,
+    "refuted": 0,
+    "layer1Rejected": 0
+  },
+  {
+    "sec": 3,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 2,
+    "measured_ok": 1,
+    "vetoed": 0,
+    "pending": 1,
+    "refuted": 0,
+    "layer1Rejected": 0
+  },
+  {
+    "sec": 4,
+    "verified": 1,
+    "attempted": 3,
+    "corroborated": 4,
+    "measured_ok": 1,
+    "vetoed": 2,
+    "pending": 1,
+    "refuted": 0,
+    "layer1Rejected": 0
+  },
+  {
+    "sec": 5,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 2,
+    "measured_ok": 0,
+    "vetoed": 1,
+    "pending": 1,
+    "refuted": 0,
+    "layer1Rejected": 0
+  },
+  {
+    "sec": 6,
+    "verified": 2,
+    "attempted": 3,
+    "corroborated": 2,
+    "measured_ok": 0,
+    "vetoed": 1,
+    "pending": 1,
+    "refuted": 0,
+    "layer1Rejected": 0
+  },
+  {
+    "sec": 7,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 5,
+    "measured_ok": 2,
+    "vetoed": 0,
+    "pending": 3,
+    "refuted": 0,
+    "layer1Rejected": 0
+  },
+  {
+    "sec": 8,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 2,
+    "measured_ok": 1,
+    "vetoed": 0,
+    "pending": 1,
+    "refuted": 0,
+    "layer1Rejected": 0
+  },
+  {
+    "sec": 9,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 2,
+    "measured_ok": 0,
+    "vetoed": 2,
+    "pending": 0,
+    "refuted": 0,
+    "layer1Rejected": 0
+  },
+  {
+    "sec": 10,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 4,
+    "measured_ok": 0,
+    "vetoed": 3,
+    "pending": 0,
+    "refuted": 1,
+    "layer1Rejected": 0
+  },
+  {
+    "sec": 11,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 3,
+    "measured_ok": 1,
+    "vetoed": 2,
+    "pending": 0,
+    "refuted": 0,
+    "layer1Rejected": 0
+  },
+  {
+    "sec": 12,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 3,
+    "measured_ok": 1,
+    "vetoed": 2,
+    "pending": 0,
+    "refuted": 0,
+    "layer1Rejected": 0
+  },
+  {
+    "sec": 13,
+    "verified": 1,
+    "attempted": 3,
+    "corroborated": 4,
+    "measured_ok": 1,
+    "vetoed": 2,
+    "pending": 1,
+    "refuted": 0,
+    "layer1Rejected": 0
+  },
+  {
+    "sec": 14,
+    "verified": 3,
+    "attempted": 3,
+    "corroborated": 3,
+    "measured_ok": 1,
+    "vetoed": 2,
+    "pending": 0,
+    "refuted": 0,
+    "layer1Rejected": 0
+  }
+]

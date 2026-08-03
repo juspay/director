@@ -1,0 +1,322 @@
+{
+  "sec": 2,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        2.2
+      ],
+      "a_motion": [
+        "slow camera pan and tilt"
+      ],
+      "b_motion": [
+        "slow camera pan and tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "material",
+          "t": 2.5,
+          "a_observable": "A brushed metal texture is visible on the background block to the right of the tiles.",
+          "b_observable": "The background block to the right of the tiles is flat grey with no brushed texture.",
+          "fix": "Apply a brushed metal texture map to the background plate on the right.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 2.5,
+          "a_observable": "Deep, distinct soft shadows are visible beneath the 'Subscriptions', 'Retries', and 'APMs' tiles.",
+          "b_observable": "The shadows beneath the tiles are extremely faint and diffuse, lacking depth.",
+          "fix": "Increase the intensity of the key light and adjust shadow bias/diffusion to create deeper soft shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 2.5,
+          "a_observable": "The blue icons and text on the tiles have a deeper, less saturated royal blue color.",
+          "b_observable": "The blue icons and text are brighter and more saturated.",
+          "fix": "Adjust the diffuse color of the blue material to reduce saturation and match the royal blue hue of Video A.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_more_saturated"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 2.1,
+          "a_observable": "The camera is positioned closer to the 'Secure Payments' tile with a more dynamic, tilted angle.",
+          "b_observable": "The camera is further away with a flatter, less tilted perspective.",
+          "fix": "Adjust the camera's position and rotation to match the closer, more dynamic angle of Video A.",
+          "severity": 2,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        }
+      ],
+      "highest_impact_fix": "Apply the missing brushed metal texture to the background block and deepen the soft shadows beneath the tiles to match the contrast and material depth of Video A.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        2.21
+      ],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 2.1,
+          "a_observable": "Tight camera framing on the central card with shallow depth of field blurring the background.",
+          "b_observable": "Wider camera framing with deep depth of field keeping background elements sharp.",
+          "fix": "Adjust camera position and enable depth of field.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 2.1,
+          "a_observable": "Strong vignette with distinct corner light falloff.",
+          "b_observable": "Flat, uniform lighting across the frame with no vignette.",
+          "fix": "Add a vignette in post-production.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "material",
+          "t": 2.5,
+          "a_observable": "Brushed metal texture on the right-side background panel.",
+          "b_observable": "Flat, untextured grey material on the background panel.",
+          "fix": "Apply a brushed metal texture map.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 2.5,
+          "a_observable": "High contrast with deep shadows and soft contact shadows under the cards.",
+          "b_observable": "Low contrast with flat lighting and barely visible shadows.",
+          "fix": "Adjust lighting to increase contrast and shadow depth.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        }
+      ],
+      "highest_impact_fix": "Match the camera framing, depth of field, and high-contrast lighting of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        2.21
+      ],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt"
+      ],
+      "absent_in_b": [
+        "yellow_card_top_left",
+        "brushed_metal_texture"
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 2.1,
+          "a_observable": "Strong vignette with darker corners and cool blue color cast.",
+          "b_observable": "Flat, uniform white lighting with no vignette.",
+          "fix": "Add vignette and cool color grading.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 2.5,
+          "a_observable": "Yellow card at top-left and brushed metal texture on the right.",
+          "b_observable": "Plain white background with no yellow card or textured surface.",
+          "fix": "Add background elements and textures.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 2.1,
+          "a_observable": "Camera is closer to the card with a more pronounced perspective angle.",
+          "b_observable": "Camera is further away, showing a flatter perspective.",
+          "fix": "Adjust camera focal length and position to match A.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Add background elements and textures to match the staging of Video A.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "material",
+        "t": 2.5,
+        "a_observable": "A brushed metal texture is visible on the background block to the right of the tiles.",
+        "b_observable": "The background block to the right of the tiles is flat grey with no brushed texture.",
+        "fix": "Apply a brushed metal texture map to the background plate on the right.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 3,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "In Clip A, a brushed metal texture is clearly visible on the background block to the right of the 'Subscriptions' and 'Retries' tiles. In Clip B, this same background block is a flat, smooth grey with no texture."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "A's background metal tiles carry heavy visible brushing; B's read faint. Same finding as 03:1."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.5,
+        "a_observable": "Deep, distinct soft shadows are visible beneath the 'Subscriptions', 'Retries', and 'APMs' tiles.",
+        "b_observable": "The shadows beneath the tiles are extremely faint and diffuse, lacking depth.",
+        "fix": "Increase the intensity of the key light and adjust shadow bias/diffusion to create deeper soft shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 69.86,
+            "p1": 84.41,
+            "p5": 110.45,
+            "p50": 207.96,
+            "p95": 246.13,
+            "p99": 249,
+            "p999": 250.96,
+            "span_p5_p95": 135.68
+          },
+          "B": {
+            "p01": 80.3,
+            "p1": 101.45,
+            "p5": 124.4,
+            "p50": 205.37,
+            "p95": 221.39,
+            "p99": 223.39,
+            "p999": 253.58,
+            "span_p5_p95": 96.99
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "camera",
+        "t": 2.1,
+        "a_observable": "The camera is positioned closer to the 'Secure Payments' tile with a more dynamic, tilted angle.",
+        "b_observable": "The camera is further away with a flatter, less tilted perspective.",
+        "fix": "Adjust the camera's position and rotation to match the closer, more dynamic angle of Video A.",
+        "severity": 2,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_sharper",
+          "A": {
+            "lap_var": 506.04
+          },
+          "B": {
+            "lap_var": 18.74
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 2.1,
+        "a_observable": "Strong vignette with distinct corner light falloff.",
+        "b_observable": "Flat, uniform lighting across the frame with no vignette.",
+        "fix": "Add a vignette in post-production.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 189.19,
+            "center_mean": 209.68,
+            "falloff_pct": 9.77
+          },
+          "B": {
+            "corner_mean": 191.3,
+            "center_mean": 211.5,
+            "falloff_pct": 9.55
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera position and rotation to match the closer perspective, apply the brushed metal texture map to the right background panel, and increase lighting contrast by adding a vignette and deepening the soft shadows beneath the tiles.",
+    "dropped_unsupported": 3
+  }
+}

@@ -1,0 +1,226 @@
+{
+  "sec": 5,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan",
+        "subtle rotation",
+        "gentle zoom out"
+      ],
+      "b_motion": [
+        "slow camera pan",
+        "rotation",
+        "zoom out"
+      ],
+      "absent_in_b": [
+        "depth of field blur",
+        "glossy reflections on the yellow card"
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 5.5,
+          "a_observable": "Strong vignette with darker corners and pronounced soft shadows under the yellow Recurly card.",
+          "b_observable": "Flat, uniform lighting across the frame with minimal corner falloff and very weak shadows under the card.",
+          "fix": "Add a vignette effect and enable ambient occlusion to create deeper shadows under the cards.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 5.2,
+          "a_observable": "The camera has a distinct perspective tilt with visible depth of field, making the background elements softer.",
+          "b_observable": "The camera perspective is flatter with orthographic-like rendering, and background elements are uniformly sharp.",
+          "fix": "Adjust the camera's field of view and enable depth of field to match the reference's focus falloff.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "top"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera's focal length and depth of field to match the reference's perspective, and add a stronger vignette and soft ambient occlusion shadows to restore depth.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 5.5,
+          "a_observable": "The camera is positioned at a lower, more oblique angle, creating stronger perspective distortion on the yellow button.",
+          "b_observable": "The camera is positioned at a higher, more top-down angle, showing more surrounding tiles with less perspective.",
+          "fix": "Lower the camera height and increase pitch to match the oblique perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "material",
+          "t": 5.2,
+          "a_observable": "The yellow button has a glossy finish with a distinct highlight on its top edge, and sits in a textured brushed-metal recess.",
+          "b_observable": "The yellow button has a flat matte finish, and the recess is a plain grey color without texture.",
+          "fix": "Apply a glossy material to the yellow button and a brushed-metal texture to the recess.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_brighter_highlights"
+          }
+        },
+        {
+          "category": "color",
+          "t": 5.8,
+          "a_observable": "The white background tiles are warm-toned with high contrast against the dark recesses.",
+          "b_observable": "The white background tiles have a cooler, blue-grey cast with lower overall contrast.",
+          "fix": "Adjust the color grading to warm up the whites and increase contrast.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle to match the oblique perspective of the reference and add specular reflections to the yellow button.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "subtle camera drift",
+        "card hover animation"
+      ],
+      "b_motion": [
+        "subtle camera drift",
+        "card hover animation"
+      ],
+      "absent_in_b": [
+        "specular reflections on the yellow card"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 5,
+          "a_observable": "The camera is positioned closer to the yellow Recurly button, creating a tighter crop.",
+          "b_observable": "The camera is positioned further back, showing a wider view of the surrounding tiles.",
+          "fix": "Adjust camera focal length and distance to match reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "material",
+          "t": 5.5,
+          "a_observable": "The yellow Recurly button exhibits a glossy finish with a distinct specular highlight.",
+          "b_observable": "The yellow Recurly button has a flat, matte appearance with no specular highlights.",
+          "fix": "Increase glossiness and adjust roughness of the yellow button material.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 5.8,
+          "a_observable": "The corners of the frame are significantly darker than the center.",
+          "b_observable": "The corners of the frame are almost as bright as the center.",
+          "fix": "Add a vignette effect to darken the corners of the frame.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera framing to match the reference crop and add specular reflections to the yellow card material.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 5.5,
+        "a_observable": "Strong vignette with darker corners and pronounced soft shadows under the yellow Recurly card.",
+        "b_observable": "Flat, uniform lighting across the frame with minimal corner falloff and very weak shadows under the card.",
+        "fix": "Add a vignette effect and enable ambient occlusion to create deeper shadows under the cards.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 195.6,
+            "center_mean": 168.41,
+            "falloff_pct": -16.14
+          },
+          "B": {
+            "corner_mean": 193.25,
+            "center_mean": 181.31,
+            "falloff_pct": -6.59
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "material",
+        "t": 5.5,
+        "a_observable": "The yellow Recurly button exhibits a glossy finish with a distinct specular highlight.",
+        "b_observable": "The yellow Recurly button has a flat, matte appearance with no specular highlights.",
+        "fix": "Increase glossiness and adjust roughness of the yellow button material.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "In Clip A, the yellow Recurly button has a clear glossy finish with a moving specular highlight reflection. In Clip B, the button is rendered with a flat, matte yellow material that does not show any specular highlights."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "A's Recurly cap is DOMED — its top face curves, carrying a broad specular sweep across the gold; B's is a flat slab with only edge bevels. This is the deepest remaining material difference and explains several sibling claims."
+        }
+      }
+    ],
+    "agreed_absent_in_b": [
+      "glossy reflections on the yellow card"
+    ],
+    "highest_impact_fix": "Add a vignette effect to darken the corners of the frame and increase the glossiness of the yellow button to restore specular highlights.",
+    "dropped_unsupported": 4
+  }
+}

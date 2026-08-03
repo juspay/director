@@ -1,0 +1,76 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pans backwards and rotates to reveal more of the keyboard layout"
+    ],
+    "b_motion": [
+      "camera pans backwards with minimal rotation, maintaining a flatter perspective"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 11,
+        "a_observable": "The camera features a high-angle perspective with a strong tilt, showing the Recurly button diagonally.",
+        "b_observable": "The camera angle is flatter with less tilt, presenting the Recurly button more horizontally.",
+        "fix": "Adjust camera pitch and rotation to match the reference perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 11.2,
+        "a_observable": "The yellow Recurly button has a highly saturated golden-yellow color.",
+        "b_observable": "The yellow Recurly button is paler and less saturated.",
+        "fix": "Increase saturation and adjust hue of the yellow button material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "The shadows between the keys are deep and well-defined, creating high contrast.",
+        "b_observable": "The shadows between the keys are faint and washed out, resulting in lower contrast.",
+        "fix": "Adjust light source intensity and shadow settings to deepen shadows.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "material",
+        "t": 11.8,
+        "a_observable": "The blue Juspay button has a glossy finish with specular highlights.",
+        "b_observable": "The blue Juspay button has a flat matte finish with no specular highlights.",
+        "fix": "Add glossiness and specular highlights to the blue button material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "layout",
+        "t": 11,
+        "a_observable": "The keyboard keys are tightly packed with very narrow gaps.",
+        "b_observable": "The keyboard keys have wider, more noticeable gaps.",
+        "fix": "Decrease spacing between keys to match the reference layout.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Align the camera angle and rotation to match the reference perspective, as the current flat angle significantly alters the composition."
+  }
+}

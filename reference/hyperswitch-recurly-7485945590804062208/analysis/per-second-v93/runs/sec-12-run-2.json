@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera zoom out and drift"
+    ],
+    "b_motion": [
+      "slow camera zoom out and drift"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 12.2,
+        "a_observable": "The cards are larger in frame with more perspective distortion.",
+        "b_observable": "The cards are smaller in frame with a flatter perspective.",
+        "fix": "Adjust the camera's focal length and position to match the reference perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 12.5,
+        "a_observable": "The yellow card has a warm, golden-yellow hue.",
+        "b_observable": "The yellow card has a cooler, greenish-yellow hue.",
+        "fix": "Adjust the material color of the yellow card to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.8,
+        "a_observable": "The crevices between tiles have distinct, soft contact shadows.",
+        "b_observable": "The crevices between tiles have very faint shadows, looking flat.",
+        "fix": "Increase ambient occlusion or add soft directional light to define crevices.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust camera focal length and position to match the perspective, and enhance contact shadows to reduce flatness."
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [
+      "metallic border around the Juspay card"
+    ],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 6.2,
+        "a_observable": "The yellow Recurly card is in the top-left with the blue Juspay card in the bottom-right.",
+        "b_observable": "The yellow Recurly card is centered and the blue Juspay card is absent.",
+        "fix": "Re-align camera and cards to match the reference layout.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "material",
+        "t": 6.8,
+        "a_observable": "The blue Juspay card is flat and recessed inside a metallic-bordered slot.",
+        "b_observable": "The blue Juspay card is a raised solid blue keycap without a metallic border.",
+        "fix": "Model the keycap slot with a metallic border and recess the card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.8,
+        "a_observable": "Crevices between keycaps have deep, defined shadows.",
+        "b_observable": "Crevices between keycaps are brightly lit with very soft shadows.",
+        "fix": "Enhance shadow depth and ambient occlusion between keycaps.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Model the keycap slots with metallic borders and recess the cards as seen in the reference video."
+  }
+}

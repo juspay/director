@@ -1,0 +1,67 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera zoom-out revealing the keyboard grid"
+    ],
+    "b_motion": [
+      "slow camera zoom-out with slightly different framing"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 12,
+        "a_observable": "The corners of the frame are noticeably darker due to a strong vignette effect.",
+        "b_observable": "The corners are almost as bright as the center, indicating a very weak or absent vignette.",
+        "fix": "Add a stronger vignette to match the corner falloff of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 12.3,
+        "a_observable": "The blue 'Juspay hyperswitch' keycap has a muted, royal blue color.",
+        "b_observable": "The blue keycap has a highly saturated, vibrant blue color.",
+        "fix": "Adjust the saturation and hue of the blue material to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated",
+          "region": "full"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 12.5,
+        "a_observable": "The keycaps have a distinct rounded 3D profile with soft, sloped edges.",
+        "b_observable": "The keycaps appear flatter with sharper, more square edges.",
+        "fix": "Increase the bevel radius on the keycap models to match the rounded reference profile.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.8,
+        "a_observable": "Deep ambient occlusion shadows are visible in the crevices between the keycaps.",
+        "b_observable": "The crevices are brightly lit with very weak contact shadows.",
+        "fix": "Increase ambient occlusion intensity and add contact shadows between the keys.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Enhance the ambient occlusion shadows in the crevices and apply a stronger vignette to recreate the soft, high-depth 3D aesthetic of the reference."
+  }
+}

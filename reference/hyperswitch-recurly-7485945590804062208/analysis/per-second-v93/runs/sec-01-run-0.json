@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zoom out",
+      "camera rotation"
+    ],
+    "b_motion": [
+      "camera zoom out",
+      "camera rotation"
+    ],
+    "absent_in_b": [
+      "yellow button at the bottom of the grid"
+    ],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 1.5,
+        "a_observable": "The yellow button is located below the 'Secure Payments' button at the bottom of the frame.",
+        "b_observable": "The yellow button is located to the top-right of the 'Secure Payments' button.",
+        "fix": "Rearrange the layout of the grid buttons to match the reference, placing the yellow button below the secure payments button.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 1.2,
+        "a_observable": "The white button surfaces have a warm, neutral cream tone.",
+        "b_observable": "The white button surfaces have a distinct cool blue-gray color cast.",
+        "fix": "Adjust the white balance and lighting colors to remove the cool blue cast from the white materials.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 1,
+        "a_observable": "The 'Secure Payments' card is square-ish with a large blue shield icon.",
+        "b_observable": "The 'Secure Payments' card is more elongated with a smaller blue shield icon.",
+        "fix": "Adjust the proportions of the card and the scale of the shield icon to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Reorganize the grid layout of the buttons to place the yellow button below the secure payments button, and adjust the camera framing and tilt to match the reference perspective."
+  }
+}
