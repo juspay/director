@@ -1,0 +1,53 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "The camera rotates and zooms out slowly from the yellow card."
+    ],
+    "b_motion": [
+      "The camera zooms out with a slightly different rotation rate."
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 5.25,
+        "a_observable": "The shadow cast by the yellow Recurly card is soft and diffused.",
+        "b_observable": "The shadow cast by the yellow Recurly card is sharp and dark.",
+        "fix": "Increase light source size to soften shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows",
+          "region": "center"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 5.5,
+        "a_observable": "The camera framing is tighter on the yellow card.",
+        "b_observable": "The camera framing is wider, showing more background elements.",
+        "fix": "Adjust camera position or focal length for tighter framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 5.75,
+        "a_observable": "The yellow card has a warm golden hue.",
+        "b_observable": "The yellow card has a cooler lemon-yellow hue.",
+        "fix": "Shift the yellow material color toward red.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera path and focal length to match the reference framing and rotation."
+  }
+}

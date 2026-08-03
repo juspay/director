@@ -1,0 +1,36 @@
+[
+  {
+    "sec": 2,
+    "idx": 0,
+    "t": 2.5,
+    "category": "material",
+    "a_observable": "A brushed metal texture is visible on the background surface to the right of the cards.",
+    "b_observable": "The background surface is a flat, solid grey with no metallic texture.",
+    "frames": {
+      "A": "analysis/per-second-v14/eyewitness/sec-02-c0-A.png",
+      "B": "analysis/per-second-v14/eyewitness/sec-02-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "In Clip A, a clear brushed metal texture is visible on the background surface to the right of the 'Subscriptions', 'Retries', and 'APMs' cards. In Clip B, this same background surface is a flat, solid light grey with no texture."
+    }
+  },
+  {
+    "sec": 2,
+    "idx": 1,
+    "t": 2.5,
+    "category": "camera",
+    "a_observable": "The camera is positioned at a low, dynamic angle, looking across the cards with a strong perspective tilt.",
+    "b_observable": "The camera is positioned more directly overhead, resulting in a flatter perspective.",
+    "frames": {
+      "A": "analysis/per-second-v14/eyewitness/sec-02-c1-A.png",
+      "B": "analysis/per-second-v14/eyewitness/sec-02-c1-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.95,
+      "note": "The comparison between Clip A and Clip B confirms that Clip A features a lower, more dynamic camera angle looking across the cards with a strong perspective tilt, whereas Clip B is shot from a more overhead angle, resulting in a flatter perspective of the cards."
+    }
+  }
+]

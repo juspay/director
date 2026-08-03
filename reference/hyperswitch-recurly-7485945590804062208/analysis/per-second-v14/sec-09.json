@@ -1,0 +1,125 @@
+{
+  "sec": 9,
+  "meta": {
+    "verified": 2,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [
+    "reported 1 cuts, truth has 0"
+  ],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "camera zoom",
+        "button rising"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom",
+        "button rising"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 9,
+          "a_observable": "The camera is positioned closer to the cards, making the Recurly logo card fill the upper-left area of the frame.",
+          "b_observable": "The camera is further away, leaving large empty white spaces around the cards.",
+          "fix": "Adjust the camera zoom or distance to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 9.5,
+          "a_observable": "Stronger vignetting is visible, with the corners of the frame being significantly darker than the center.",
+          "b_observable": "The lighting is uniform across the frame, lacking the corner falloff.",
+          "fix": "Add a vignette post-process or adjust the physical camera light falloff.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 9.2,
+          "a_observable": "The Live Now button casts a soft, diffused shadow on the surface below as it rises.",
+          "b_observable": "The shadow under the Live Now button is extremely faint and lacks realistic diffusion.",
+          "fix": "Increase the shadow softness and contact shadow intensity for the rising button.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera distance and focal length to match the closer, more dynamic framing of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "zoom out"
+      ],
+      "b_motion": [
+        "camera pan",
+        "zoom out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 9.5,
+          "a_observable": "Soft, diffused contact shadows under the cards.",
+          "b_observable": "Harsh, dark, sharp-edged shadows under the cards.",
+          "fix": "Increase shadow softness and add ambient occlusion.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 9.5,
+          "a_observable": "Tilted camera perspective with diagonal grid lines.",
+          "b_observable": "Flatter camera perspective with more orthogonal grid lines.",
+          "fix": "Adjust camera rotation and perspective to match the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 9.5,
+          "a_observable": "Warm golden-yellow hue on the Recurly card.",
+          "b_observable": "Cooler, slightly desaturated yellow hue on the Recurly card.",
+          "fix": "Adjust yellow material color to be warmer and more saturated.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Soften the shadows under the cards and adjust the camera angle to match the dynamic perspective of the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "",
+    "dropped_unsupported": 6
+  }
+}

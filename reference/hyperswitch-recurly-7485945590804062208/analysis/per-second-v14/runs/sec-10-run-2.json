@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zoom out and pan"
+    ],
+    "b_motion": [
+      "camera zoom out and pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 10.1,
+        "a_observable": "Camera is tilted dynamically, framing the yellow card in the lower-right.",
+        "b_observable": "Camera is flatter and less tilted, with different card framing.",
+        "fix": "Align camera tilt and position to match the reference perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.3,
+        "a_observable": "Card shadows are soft, diffuse, and blend smoothly.",
+        "b_observable": "Card shadows are sharp, dark, and hard-edged.",
+        "fix": "Increase light source size or shadow softness.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.7,
+        "a_observable": "A strong vignette darkens the corners of the frame.",
+        "b_observable": "The corners are bright with minimal falloff.",
+        "fix": "Add a vignette effect to darken the corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing and tilt to match the reference, and soften the hard shadows cast by the cards."
+  }
+}

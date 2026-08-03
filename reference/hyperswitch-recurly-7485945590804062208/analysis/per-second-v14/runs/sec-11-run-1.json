@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera zoom out"
+    ],
+    "b_motion": [
+      "slow camera zoom out"
+    ],
+    "absent_in_b": [
+      "depth of field blur",
+      "environmental fog"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 11,
+        "a_observable": "The background elements, such as the line graph tile in the top right, are heavily blurred due to a shallow depth of field.",
+        "b_observable": "The background elements remain perfectly sharp, indicating no depth of field blur is applied.",
+        "fix": "Enable depth of field in the camera settings with a wide aperture to match the reference's blur.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 11.5,
+        "a_observable": "A soft white environmental fog or mist is visible, especially towards the edges, which softens the background tiles.",
+        "b_observable": "No environmental fog is present; the background tiles are completely clear and distinct.",
+        "fix": "Add a white environment fog or volume scatter effect to soften the background.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.2,
+        "a_observable": "The shadows cast by the buttons are extremely soft and diffused.",
+        "b_observable": "The shadows are sharp-edged and dark, indicating a small or hard light source.",
+        "fix": "Increase the light source size or radius to soften the shadow edges.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Add depth of field blur to the camera and introduce a soft environmental fog to match the background atmosphere of the reference."
+  }
+}

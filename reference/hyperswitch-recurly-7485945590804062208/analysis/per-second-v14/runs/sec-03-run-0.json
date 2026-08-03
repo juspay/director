@@ -1,0 +1,53 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and tilt over the 3D tiles"
+    ],
+    "b_motion": [
+      "slow camera pan over the 3D tiles with flatter perspective"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "material",
+        "t": 3.5,
+        "a_observable": "The background plate to the right of the tiles has a brushed metallic texture with horizontal grain.",
+        "b_observable": "The background plate is a flat, smooth grey surface with no visible texture.",
+        "fix": "Apply a brushed metal texture map to the background plate.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 3.5,
+        "a_observable": "The camera is tilted at a dynamic angle, showing the tiles with strong perspective distortion.",
+        "b_observable": "The camera is positioned flatter and higher, resulting in a nearly orthographic top-down view.",
+        "fix": "Adjust the camera tilt and focal length to match the perspective of the reference.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 3.2,
+        "a_observable": "The corners of the frame are significantly darker than the center, showing a strong vignette.",
+        "b_observable": "The lighting is uniform across the frame with minimal corner falloff.",
+        "fix": "Add a vignette effect to darken the corners of the frame.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and focal length to restore the dynamic perspective, and apply the brushed metal texture to the background plate."
+  }
+}

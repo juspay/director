@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 6,
+    "idx": 2,
+    "t": 6.25,
+    "category": "camera",
+    "a_observable": "Camera is at a low oblique angle with strong perspective distortion on the yellow button.",
+    "b_observable": "Camera is at a higher, flatter angle with less perspective distortion.",
+    "frames": {
+      "A": "analysis/per-second-v14/eyewitness/sec-06-c2-A.png",
+      "B": "analysis/per-second-v14/eyewitness/sec-06-c2-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.95,
+      "note": "Clip A shows the yellow button from a lower, more dramatic oblique angle, resulting in stronger perspective distortion. Clip B shows the button from a higher, more top-down angle, which reduces the perspective distortion and makes the button appear flatter."
+    }
+  }
+]

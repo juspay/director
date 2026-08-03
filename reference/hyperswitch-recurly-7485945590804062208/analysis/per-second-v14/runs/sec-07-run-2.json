@@ -1,0 +1,67 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan",
+      "subtle card hover"
+    ],
+    "b_motion": [
+      "slow camera pan",
+      "subtle card hover"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 7.5,
+        "a_observable": "The background cards are out of focus due to a shallow depth of field.",
+        "b_observable": "The entire scene, including background cards, is in sharp focus.",
+        "fix": "Enable depth of field on the camera and adjust the aperture.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 7.2,
+        "a_observable": "The shadow beneath the blue card is soft and highly diffused.",
+        "b_observable": "The shadow beneath the blue card is sharp and dark.",
+        "fix": "Increase the size of the light source to soften the contact shadows.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 7.8,
+        "a_observable": "The corners of the frame are darkened by a vignette.",
+        "b_observable": "The corners of the frame are bright and evenly lit.",
+        "fix": "Add a vignette pass in post-production.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 7.4,
+        "a_observable": "The blue card has a slightly desaturated, matte appearance.",
+        "b_observable": "The blue card is highly saturated and bright.",
+        "fix": "Adjust the material color and saturation of the blue card.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera's focal length and position to match the reference perspective, and enable depth of field to replicate the background blur."
+  }
+}

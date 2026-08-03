@@ -1,0 +1,68 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 6.1,
+        "a_observable": "Soft, highly diffused shadows under the yellow button.",
+        "b_observable": "Sharp, dark, hard-edged shadows under the yellow button.",
+        "fix": "Soften the shadows by increasing light source size.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.1,
+        "a_observable": "Distinct vignette with darker corners.",
+        "b_observable": "Uniform lighting across the frame with bright corners.",
+        "fix": "Add a vignette effect in post-production.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 6.8,
+        "a_observable": "Muted, desaturated blue on the Juspay button.",
+        "b_observable": "Highly saturated, darker blue on the Juspay button.",
+        "fix": "Reduce saturation of the blue material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 6.8,
+        "a_observable": "Lower camera angle with more perspective tilt on the Juspay button.",
+        "b_observable": "Flatter, more top-down camera angle on the Juspay button.",
+        "fix": "Adjust camera tilt to match the reference perspective.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Soften the hard-edged shadows in B by increasing the light source size and adding diffusion."
+  }
+}

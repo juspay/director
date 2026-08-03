@@ -1,0 +1,36 @@
+[
+  {
+    "sec": 8,
+    "idx": 1,
+    "t": 8.3,
+    "category": "camera",
+    "a_observable": "Tighter camera framing on the Recurly and hyperswitch cards.",
+    "b_observable": "Wider camera framing showing more of the surrounding grid.",
+    "frames": {
+      "A": "analysis/per-second-v14/eyewitness/sec-08-c1-A.png",
+      "B": "analysis/per-second-v14/eyewitness/sec-08-c1-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "Clip A shows a much tighter zoom on the Recurly and hyperswitch cards, while Clip B has a wider camera angle showing more of the surrounding grid tiles."
+    }
+  },
+  {
+    "sec": 8,
+    "idx": 2,
+    "t": 8.7,
+    "category": "staging",
+    "a_observable": "The 'Live Now' button is actively sliding up and only partially visible.",
+    "b_observable": "The 'Live Now' button has already fully emerged and is stationary.",
+    "frames": {
+      "A": "analysis/per-second-v14/eyewitness/sec-08-c2-A.png",
+      "B": "analysis/per-second-v14/eyewitness/sec-08-c2-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.9,
+      "note": "In Clip A, the pill-shaped button (which represents the 'Live Now' button) is actively sliding up and is only partially visible by the end of the clip. In Clip B, the button with the text 'Live Now' has fully emerged and is stationary at the end of the clip."
+    }
+  }
+]

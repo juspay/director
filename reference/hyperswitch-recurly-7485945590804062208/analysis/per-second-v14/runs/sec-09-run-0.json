@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera zoom",
+      "button rising"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom",
+      "button rising"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 9,
+        "a_observable": "The camera is positioned closer to the cards, making the Recurly logo card fill the upper-left area of the frame.",
+        "b_observable": "The camera is further away, leaving large empty white spaces around the cards.",
+        "fix": "Adjust the camera zoom or distance to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "Stronger vignetting is visible, with the corners of the frame being significantly darker than the center.",
+        "b_observable": "The lighting is uniform across the frame, lacking the corner falloff.",
+        "fix": "Add a vignette post-process or adjust the physical camera light falloff.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.2,
+        "a_observable": "The Live Now button casts a soft, diffused shadow on the surface below as it rises.",
+        "b_observable": "The shadow under the Live Now button is extremely faint and lacks realistic diffusion.",
+        "fix": "Increase the shadow softness and contact shadow intensity for the rising button.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera distance and focal length to match the closer, more dynamic framing of the reference video."
+  }
+}

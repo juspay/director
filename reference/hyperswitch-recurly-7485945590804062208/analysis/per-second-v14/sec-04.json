@@ -1,0 +1,362 @@
+{
+  "sec": 4,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        4.9
+      ],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 4.2,
+          "a_observable": "The camera is positioned further back, showing more of the surrounding layout and background elements.",
+          "b_observable": "The camera is zoomed in closer to the cards, cropping out much of the background.",
+          "fix": "Adjust camera distance or focal length to match the wider framing of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 4.5,
+          "a_observable": "The scene has a cool blue color cast with a strong vignette darkening the corners.",
+          "b_observable": "The scene has a neutral white color temperature with minimal vignette falloff.",
+          "fix": "Add a cool color grade and increase vignette intensity.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "material",
+          "t": 4.1,
+          "a_observable": "The background plate on the right exhibits a brushed metal texture with horizontal grain.",
+          "b_observable": "The background plate on the right is a smooth matte grey surface.",
+          "fix": "Apply a brushed metal material to the right background plate.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 4.95,
+          "a_observable": "The yellow Recurly card casts a soft, diffused shadow onto the surface below.",
+          "b_observable": "The yellow Recurly card casts a sharp, dark shadow with hard edges.",
+          "fix": "Increase the light source size to soften the shadows.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera framing to match the wider composition of the reference, and apply a cool blue color grade with a strong vignette to match the lighting mood.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        4.9
+      ],
+      "a_motion": [
+        "Smooth camera pan and tilt over cards, followed by a hard cut to a high-angle view of the yellow button."
+      ],
+      "b_motion": [
+        "Smooth camera pan and tilt over cards, followed by a hard cut to a low-angle view of the yellow button."
+      ],
+      "absent_in_b": [
+        "dot grid pattern on the floor",
+        "metallic brushed strip on the right",
+        "shallow depth of field blur"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 4.5,
+          "a_observable": "Shallow depth of field with blurred top and bottom cards.",
+          "b_observable": "Entire frame is in sharp focus.",
+          "fix": "Enable depth of field and adjust aperture.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "top"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 4.2,
+          "a_observable": "Soft, diffuse shadows under the cards.",
+          "b_observable": "Hard-edged, dark shadows under the cards.",
+          "fix": "Increase light source size to soften shadows.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        },
+        {
+          "category": "material",
+          "t": 4.95,
+          "a_observable": "Grid of grey dots on the floor to the left.",
+          "b_observable": "Floor is plain white.",
+          "fix": "Add dot grid texture to floor.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 4.6,
+          "a_observable": "Grey metallic brushed strip on the right.",
+          "b_observable": "Right side is plain white.",
+          "fix": "Add metallic strip to layout.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 4.3,
+          "a_observable": "Cool blue color cast on white surfaces.",
+          "b_observable": "Neutral white surfaces.",
+          "fix": "Add cool blue tint to whites.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Enable shallow depth of field on the camera and match the camera angle after the cut to the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        4.9
+      ],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 4.2,
+          "a_observable": "The corners of the frame are darker than the center, creating a vignette.",
+          "b_observable": "The frame is uniformly lit with no corner falloff.",
+          "fix": "Apply a vignette to match the reference lighting.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 4.5,
+          "a_observable": "The background elements are blurred due to shallow depth of field.",
+          "b_observable": "The entire frame is in sharp focus.",
+          "fix": "Enable depth of field on the camera.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 4.95,
+          "a_observable": "The recessed area around the yellow button has deep shadows.",
+          "b_observable": "The recessed area has very bright, flat shadows.",
+          "fix": "Increase shadow depth and contrast.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Add camera depth of field and a vignette to replicate the cinematic look of the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "color",
+        "t": 4.3,
+        "a_observable": "Cool blue color cast on white surfaces.",
+        "b_observable": "Neutral white surfaces.",
+        "fix": "Add cool blue tint to whites.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_cooler",
+          "A": {
+            "r": 191.52,
+            "g": 203.34,
+            "b": 213.03,
+            "rb_delta": -21.51,
+            "saturation": 0.123
+          },
+          "B": {
+            "r": 195.75,
+            "g": 201.71,
+            "b": 216.32,
+            "rb_delta": -20.57,
+            "saturation": 0.1784
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 4.2,
+        "a_observable": "The corners of the frame are darker than the center, creating a vignette.",
+        "b_observable": "The frame is uniformly lit with no corner falloff.",
+        "fix": "Apply a vignette to match the reference lighting.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 202.05,
+            "center_mean": 199.03,
+            "falloff_pct": -1.52
+          },
+          "B": {
+            "corner_mean": 196.49,
+            "center_mean": 206.82,
+            "falloff_pct": 4.99
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "camera",
+        "t": 4.5,
+        "a_observable": "Shallow depth of field with blurred top and bottom cards.",
+        "b_observable": "Entire frame is in sharp focus.",
+        "fix": "Enable depth of field and adjust aperture.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "B_sharper",
+          "A": {
+            "lap_var": 67.31
+          },
+          "B": {
+            "lap_var": 3.43
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 4.2,
+        "a_observable": "Soft, diffuse shadows under the cards.",
+        "b_observable": "Hard-edged, dark shadows under the cards.",
+        "fix": "Increase light source size to soften shadows.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "B_deeper_shadows",
+          "A": {
+            "p01": 61.48,
+            "p1": 75.73,
+            "p5": 123.54,
+            "p50": 207.73,
+            "p95": 246.31,
+            "p99": 249.29,
+            "p999": 251.15,
+            "span_p5_p95": 122.77
+          },
+          "B": {
+            "p01": 61.54,
+            "p1": 95.9,
+            "p5": 162.38,
+            "p50": 203.48,
+            "p95": 225.68,
+            "p99": 229.89,
+            "p999": 254.28,
+            "span_p5_p95": 63.3
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "material",
+        "t": 4.1,
+        "a_observable": "The background plate on the right exhibits a brushed metal texture with horizontal grain.",
+        "b_observable": "The background plate on the right is a smooth matte grey surface.",
+        "fix": "Apply a brushed metal material to the right background plate.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 2,
+        "status": "pending_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "In Clip A, the background plate on the right clearly shows a brushed metal texture with horizontal grain, whereas in Clip B, the corresponding background plate is a smooth, matte grey surface."
+        }
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Add camera depth of field and a vignette to replicate the cinematic look of the reference.",
+    "dropped_unsupported": 3
+  }
+}

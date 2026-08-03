@@ -1,0 +1,67 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 10.5,
+        "a_observable": "The camera is positioned at a low, oblique angle relative to the buttons, showing significant perspective distortion and the extruded sides of the Recurly button.",
+        "b_observable": "The camera is positioned more directly overhead, showing less perspective tilt and very little of the button's side extrusion.",
+        "fix": "Adjust the camera tilt and angle to match the oblique perspective of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 10.5,
+        "a_observable": "The background elements, such as the Secure Payments button in the upper left, are heavily blurred due to a shallow depth of field.",
+        "b_observable": "The background elements remain relatively sharp and in focus, indicating a much wider depth of field.",
+        "fix": "Adjust the camera's aperture size to achieve a shallower depth of field with more background blur.",
+        "severity": 2,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "The corners of the frame show a distinct darkening, creating a soft falloff from the center.",
+        "b_observable": "The lighting is uniform across the frame with no visible vignette, leaving the corners as bright as the center.",
+        "fix": "Add a vignette effect or adjust light falloff to darken the corners of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 10.5,
+        "a_observable": "The yellow button has a warm, golden-yellow hue.",
+        "b_observable": "The yellow button has a cooler, brighter lemon-yellow hue.",
+        "fix": "Adjust the color temperature of the yellow material to match the warmer tone of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera tilt and angle to match the oblique perspective of the reference."
+  }
+}

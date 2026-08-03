@@ -1,0 +1,232 @@
+{
+  "sec": 12,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera"
+      ],
+      "b_motion": [
+        "camera"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 12.1,
+          "a_observable": "The camera is positioned closer to the buttons, resulting in a tighter framing.",
+          "b_observable": "The camera is further away, creating a wider framing with more surrounding tiles.",
+          "fix": "Adjust camera distance to match reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 12.5,
+          "a_observable": "The corners of the frame are noticeably darker than the center, showing a strong vignette.",
+          "b_observable": "The corners have almost the same brightness as the center, lacking a vignette.",
+          "fix": "Apply a stronger vignette in post-processing.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 12.3,
+          "a_observable": "The white tiles exhibit a cool bluish tint.",
+          "b_observable": "The white tiles are neutral white without the blue tint.",
+          "fix": "Adjust color grading to introduce a cool blue cast.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and focal length to match the tighter framing of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "camera zoom out"
+      ],
+      "b_motion": [
+        "camera zoom out"
+      ],
+      "absent_in_b": [
+        "dynamic camera tilt"
+      ],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 12.2,
+          "a_observable": "The tiles are tightly clustered with minimal white space between them.",
+          "b_observable": "The tiles are widely separated, leaving large empty white gaps.",
+          "fix": "Reduce the spacing between tiles to match the reference composition.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 12.5,
+          "a_observable": "The corners of the frame are significantly darker than the center due to a strong vignette.",
+          "b_observable": "The corners are almost as bright as the center, with very flat illumination.",
+          "fix": "Apply a vignette to darken the corners of the frame.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 12.8,
+          "a_observable": "The yellow Recurly tile has a warm golden-yellow color.",
+          "b_observable": "The yellow Recurly tile has a cooler, more greenish-yellow color.",
+          "fix": "Adjust the yellow material color to be warmer and more golden.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera composition and tile layout to eliminate the excessive white space and match the tight framing of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "The camera pans and zooms out smoothly.",
+        "The 'Live Now' button rises vertically from its slot."
+      ],
+      "b_motion": [
+        "The camera pans and zooms out.",
+        "No button rises from the central area."
+      ],
+      "absent_in_b": [
+        "The 'Live Now' button rising animation."
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "t": 12.5,
+          "a_observable": "The 'Live Now' button is rising from its slot and is partially visible.",
+          "b_observable": "The 'Live Now' button is completely absent from the scene.",
+          "fix": "Animate the 'Live Now' button to rise during this second.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 12,
+          "a_observable": "The camera is zoomed in closer, framing the yellow and blue buttons tightly.",
+          "b_observable": "The camera is zoomed further out, showing a wider view of the surrounding white tiles.",
+          "fix": "Adjust the camera zoom and position to match the tighter framing.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 12,
+          "a_observable": "The corners of the image show significant darkening due to a vignette.",
+          "b_observable": "The lighting is uniform across the frame with no corner falloff.",
+          "fix": "Apply a vignette effect to match the corner falloff of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Animate the 'Live Now' button to rise at the correct timestamp and adjust the camera framing to be closer.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 12.1,
+        "a_observable": "The camera is positioned closer to the buttons, resulting in a tighter framing.",
+        "b_observable": "The camera is further away, creating a wider framing with more surrounding tiles.",
+        "fix": "Adjust camera distance to match reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_sharper",
+          "A": {
+            "lap_var": 440.46
+          },
+          "B": {
+            "lap_var": 442.48
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "The corners of the frame are significantly darker than the center due to a strong vignette.",
+        "b_observable": "The corners are almost as bright as the center, with very flat illumination.",
+        "fix": "Apply a vignette to darken the corners of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 209.43,
+            "center_mean": 194.03,
+            "falloff_pct": -7.93
+          },
+          "B": {
+            "corner_mean": 198.13,
+            "center_mean": 180.31,
+            "falloff_pct": -9.89
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera position and focal length to match the tighter framing of the reference video.",
+    "dropped_unsupported": 4
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 6.25,
+        "a_observable": "Camera is at a low oblique angle with strong perspective distortion on the yellow button.",
+        "b_observable": "Camera is at a higher, flatter angle with less perspective distortion.",
+        "fix": "Match camera pitch and focal length to Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.8,
+        "a_observable": "Corners of the frame are darker than the center, showing a strong vignette.",
+        "b_observable": "Lighting is uniform across the frame with no vignette.",
+        "fix": "Add a vignette in post-processing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "material",
+        "t": 6.9,
+        "a_observable": "The well around the blue button has a brushed metallic silver texture.",
+        "b_observable": "The well is a flat, dark grey matte material.",
+        "fix": "Apply a metallic material to the button well.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.3,
+        "a_observable": "Deep ambient occlusion shadows are visible in the crevices between elements.",
+        "b_observable": "Crevices are brightly lit with minimal shadows.",
+        "fix": "Enable ambient occlusion or increase shadow depth.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Match camera angles and focal lengths to restore perspective, and add ambient occlusion and vignette."
+  }
+}

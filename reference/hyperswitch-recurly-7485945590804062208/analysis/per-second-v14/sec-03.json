@@ -1,0 +1,240 @@
+{
+  "sec": 3,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan and tilt over the 3D tiles"
+      ],
+      "b_motion": [
+        "slow camera pan over the 3D tiles with flatter perspective"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "material",
+          "t": 3.5,
+          "a_observable": "The background plate to the right of the tiles has a brushed metallic texture with horizontal grain.",
+          "b_observable": "The background plate is a flat, smooth grey surface with no visible texture.",
+          "fix": "Apply a brushed metal texture map to the background plate.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 3.5,
+          "a_observable": "The camera is tilted at a dynamic angle, showing the tiles with strong perspective distortion.",
+          "b_observable": "The camera is positioned flatter and higher, resulting in a nearly orthographic top-down view.",
+          "fix": "Adjust the camera tilt and focal length to match the perspective of the reference.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 3.2,
+          "a_observable": "The corners of the frame are significantly darker than the center, showing a strong vignette.",
+          "b_observable": "The lighting is uniform across the frame with minimal corner falloff.",
+          "fix": "Add a vignette effect to darken the corners of the frame.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and focal length to restore the dynamic perspective, and apply the brushed metal texture to the background plate.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan",
+        "subtle tilt"
+      ],
+      "b_motion": [
+        "slow camera pan",
+        "subtle tilt"
+      ],
+      "absent_in_b": [
+        "dotted grid texture on background panel"
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "t": 3.3,
+          "a_observable": "A grid of grey dots is visible on the panel to the left of the cards.",
+          "b_observable": "The panel to the left of the cards is plain white without any dots.",
+          "fix": "Add the dotted pattern texture to the left background panel.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 3.5,
+          "a_observable": "The white cards and background have a warm, yellowish tint.",
+          "b_observable": "The white cards and background are cool white with a slight blue tint.",
+          "fix": "Warm up the color temperature and match the color grading of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 3.1,
+          "a_observable": "The camera is angled such that the cards are tilted diagonally across the frame with more perspective distortion.",
+          "b_observable": "The camera angle is flatter, showing the cards more vertically aligned with less perspective.",
+          "fix": "Adjust the camera angle and focal length to match the perspective of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Add the dotted grid texture to the left background panel and adjust the camera angle to match the perspective.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 3.5,
+          "a_observable": "Strong perspective distortion with dynamic camera tilt.",
+          "b_observable": "Flatter perspective with more orthographic camera alignment.",
+          "fix": "Increase camera field of view and adjust tilt.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 3.5,
+          "a_observable": "Yellow card is visible on the top-left edge of the frame.",
+          "b_observable": "Yellow card is visible on the right edge of the frame.",
+          "fix": "Realign background elements to match reference layout.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 3.5,
+          "a_observable": "Cool blue color cast across the white surfaces.",
+          "b_observable": "Neutral white surfaces with warmer lighting.",
+          "fix": "Apply a cool blue color grade to match reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler",
+            "region": "full"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 3.5,
+          "a_observable": "Soft shadows with high contrast and deeper blacks in the crevices.",
+          "b_observable": "Flatter lighting with lighter shadows and less contrast.",
+          "fix": "Adjust shadow density and contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera perspective and focal length to match the dynamic angle of the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 3.5,
+        "a_observable": "The camera is tilted at a dynamic angle, showing the tiles with strong perspective distortion.",
+        "b_observable": "The camera is positioned flatter and higher, resulting in a nearly orthographic top-down view.",
+        "fix": "Adjust the camera tilt and focal length to match the perspective of the reference.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 3,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "refuted",
+          "certainty": 0.9,
+          "note": "Clip B is also shot from a highly oblique, tilted angle and does not show a nearly orthographic top-down view."
+        }
+      },
+      {
+        "category": "color",
+        "t": 3.5,
+        "a_observable": "The white cards and background have a warm, yellowish tint.",
+        "b_observable": "The white cards and background are cool white with a slight blue tint.",
+        "fix": "Warm up the color temperature and match the color grading of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "B_cooler",
+          "A": {
+            "r": 189.85,
+            "g": 201.25,
+            "b": 211.47,
+            "rb_delta": -21.62,
+            "saturation": 0.121
+          },
+          "B": {
+            "r": 197.29,
+            "g": 203.27,
+            "b": 218.56,
+            "rb_delta": -21.27,
+            "saturation": 0.1519
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera perspective and focal length to match the dynamic angle of the reference.",
+    "dropped_unsupported": 5
+  }
+}

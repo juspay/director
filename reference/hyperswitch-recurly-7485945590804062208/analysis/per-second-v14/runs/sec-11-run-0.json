@@ -1,0 +1,66 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 11.25,
+        "a_observable": "The camera is positioned at a low oblique angle relative to the grid plane, creating a dynamic perspective.",
+        "b_observable": "The camera angle is much steeper, closer to a top-down orthogonal view, reducing the perspective depth.",
+        "fix": "Match the camera's pitch and yaw angles to the reference video to capture the same oblique perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "The shadows cast by the cards are soft and highly diffused, blending smoothly into the background tiles.",
+        "b_observable": "The shadows are sharp-edged and dark, indicating a hard, direct light source.",
+        "fix": "Increase the light source size or shadow softness (radius) to achieve a more diffused shadow look.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 11.75,
+        "a_observable": "The background tiles have a warm, creamy off-white color cast.",
+        "b_observable": "The background tiles are a neutral, cool white/light grey.",
+        "fix": "Adjust the white balance or color grading to introduce a warm, cream-colored tint to the white materials.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "material",
+        "t": 11.1,
+        "a_observable": "The yellow card has a subtle glossy reflection that catches the light as the camera moves.",
+        "b_observable": "The yellow card has a flat, matte finish with no visible specular reflections.",
+        "fix": "Increase the specular intensity or reduce the roughness of the yellow card material to match the glossy finish.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Align the camera's pitch and yaw angles to match the low oblique perspective of the reference video, and soften the shadow rendering to eliminate the harsh, sharp-edged shadows."
+  }
+}

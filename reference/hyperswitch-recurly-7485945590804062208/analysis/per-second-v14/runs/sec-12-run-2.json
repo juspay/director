@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "The camera pans and zooms out smoothly.",
+      "The 'Live Now' button rises vertically from its slot."
+    ],
+    "b_motion": [
+      "The camera pans and zooms out.",
+      "No button rises from the central area."
+    ],
+    "absent_in_b": [
+      "The 'Live Now' button rising animation."
+    ],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 12.5,
+        "a_observable": "The 'Live Now' button is rising from its slot and is partially visible.",
+        "b_observable": "The 'Live Now' button is completely absent from the scene.",
+        "fix": "Animate the 'Live Now' button to rise during this second.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 12,
+        "a_observable": "The camera is zoomed in closer, framing the yellow and blue buttons tightly.",
+        "b_observable": "The camera is zoomed further out, showing a wider view of the surrounding white tiles.",
+        "fix": "Adjust the camera zoom and position to match the tighter framing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12,
+        "a_observable": "The corners of the image show significant darkening due to a vignette.",
+        "b_observable": "The lighting is uniform across the frame with no corner falloff.",
+        "fix": "Apply a vignette effect to match the corner falloff of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Animate the 'Live Now' button to rise at the correct timestamp and adjust the camera framing to be closer."
+  }
+}

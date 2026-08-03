@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.104
+    ],
+    "a_motion": [
+      "camera pans and zooms out from the JUSPAY card",
+      "cut to a wider view panning and zooming out over the grid of cards"
+    ],
+    "b_motion": [
+      "camera pans and zooms out from the JUSPAY card",
+      "cut to a wider view panning and zooming out over the grid of cards"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 8.5,
+        "a_observable": "The white cards and background have a warm, cream-colored tint.",
+        "b_observable": "The white cards and background have a cool, neutral grey tint.",
+        "fix": "Adjust the white balance to add warmth to the scene.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "A strong vignette is visible, darkening the corners of the frame.",
+        "b_observable": "The frame has uniform brightness with no vignette in the corners.",
+        "fix": "Apply a vignette effect in post-processing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 8.7,
+        "a_observable": "The 'Live Now' button starts sliding up at t=8.70s.",
+        "b_observable": "The 'Live Now' button starts sliding up earlier, at t=8.60s.",
+        "fix": "Delay the keyframes of the button's entrance animation.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the overall color grading and white balance to match the warm, golden tone of the reference video, and add a vignette effect."
+  }
+}

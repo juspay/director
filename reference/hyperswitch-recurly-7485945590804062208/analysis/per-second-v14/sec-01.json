@@ -1,0 +1,234 @@
+{
+  "sec": 1,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 1.5,
+          "a_observable": "The camera roll is aligned such that the grid lines are tilted at a shallow angle of approximately 15 degrees.",
+          "b_observable": "The camera roll is tilted much further, with the grid lines running at a steep diagonal angle of around 35 degrees.",
+          "fix": "Adjust the camera's roll rotation to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 1.5,
+          "a_observable": "The shadows cast by the 'Secure Payments' card are soft and highly diffused with a gentle falloff.",
+          "b_observable": "The shadows are sharp and dark, creating a high-contrast edge beneath the card.",
+          "fix": "Increase the size of the key light or increase shadow diffusion to soften the card shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_higher_contrast",
+            "region": "center"
+          }
+        },
+        {
+          "category": "color",
+          "t": 1.5,
+          "a_observable": "The white tiles have a warm, slightly cream-colored cast.",
+          "b_observable": "The white tiles are a neutral, cool grey.",
+          "fix": "Adjust the white balance or ambient light color to introduce a warmer cream tone to the white materials.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera's roll rotation to match the reference framing, and increase the light source size to soften the sharp shadows under the cards.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan"
+      ],
+      "b_motion": [
+        "slow camera pan"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "color",
+          "t": 1,
+          "a_observable": "The blue card on the left is a soft, muted pastel blue.",
+          "b_observable": "The blue card on the left is a highly saturated, vibrant royal blue.",
+          "fix": "Reduce the saturation and adjust the hue of the blue material to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_more_saturated",
+            "region": "left"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 1.5,
+          "a_observable": "The shadows cast by the 'Secure Payments' card are soft, diffused, and realistic.",
+          "b_observable": "The shadows cast by the 'Secure Payments' card are harsh, dark, and sharp.",
+          "fix": "Use a larger light source or increase shadow blur/ambient occlusion to soften the shadows.",
+          "severity": 4,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows",
+            "region": "center"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 1.2,
+          "a_observable": "The camera framing shows the 'Secure Payments' card tilted at a shallow angle, with a substantial portion of the yellow card visible at the bottom.",
+          "b_observable": "The camera framing is tilted more steeply, showing less of the yellow card and a different perspective of the grid.",
+          "fix": "Adjust the camera angle and rotation to match the reference perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the lighting to use softer, more diffused shadows and reduce the saturation of the blue card to match the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "material",
+          "t": 1.5,
+          "a_observable": "The yellow tile at the bottom of the frame displays a brushed metallic texture with horizontal grain.",
+          "b_observable": "The yellow tile at the bottom of the frame is a flat, solid yellow with a smooth matte surface.",
+          "fix": "Apply a brushed metal texture map and adjust the material roughness to match the reference.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 1.5,
+          "a_observable": "The drop shadow cast by the 'Secure Payments' card onto the tile is soft, diffused, and subtle.",
+          "b_observable": "The drop shadow cast by the 'Secure Payments' card is sharp, dark, and has a distinct hard edge.",
+          "fix": "Increase the light source radius or shadow softness in the render settings to match the soft shadows of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 1.5,
+          "a_observable": "The camera is positioned closer to the tiles, resulting in a tighter framing of the 'Secure Payments' card.",
+          "b_observable": "The camera is positioned further away, showing more of the surrounding tiles and a wider field of view.",
+          "fix": "Adjust the camera's focal length or move it closer to match the framing of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Apply a brushed metal texture map to the yellow tile and adjust the camera framing and rotation to match the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 1.5,
+        "a_observable": "The camera roll is aligned such that the grid lines are tilted at a shallow angle of approximately 15 degrees.",
+        "b_observable": "The camera roll is tilted much further, with the grid lines running at a steep diagonal angle of around 35 degrees.",
+        "fix": "Adjust the camera's roll rotation to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 2,
+        "status": "pending_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 0.95,
+          "note": "The camera roll in Clip A is indeed tilted at a shallow angle of approximately 15 degrees, whereas in Clip B, the camera is rotated significantly more, resulting in the grid lines running at a steep diagonal angle of around 35 degrees."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "The shadows cast by the 'Secure Payments' card are soft, diffused, and realistic.",
+        "b_observable": "The shadows cast by the 'Secure Payments' card are harsh, dark, and sharp.",
+        "fix": "Use a larger light source or increase shadow blur/ambient occlusion to soften the shadows.",
+        "severity": 4,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows",
+          "region": "center"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "B_deeper_shadows",
+          "A": {
+            "p01": 44.37,
+            "p1": 85.15,
+            "p5": 89.65,
+            "p50": 221.17,
+            "p95": 249.72,
+            "p99": 251.43,
+            "p999": 253.72,
+            "span_p5_p95": 160.07
+          },
+          "B": {
+            "p01": 17.96,
+            "p1": 48.6,
+            "p5": 97.4,
+            "p50": 229.81,
+            "p95": 239.59,
+            "p99": 244.45,
+            "p999": 254.41,
+            "span_p5_p95": 142.19
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the lighting to use softer, more diffused shadows and correct the camera's roll rotation to match the reference framing.",
+    "dropped_unsupported": 4
+  }
+}

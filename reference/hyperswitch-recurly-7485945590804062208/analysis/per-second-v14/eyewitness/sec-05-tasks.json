@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 5,
+    "idx": 0,
+    "t": 5.5,
+    "category": "camera",
+    "a_observable": "The camera framing is tighter on the yellow card.",
+    "b_observable": "The camera framing is wider, showing more background elements.",
+    "frames": {
+      "A": "analysis/per-second-v14/eyewitness/sec-05-c0-A.png",
+      "B": "analysis/per-second-v14/eyewitness/sec-05-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "Clip A shows a tighter framing on the yellow 'Recurly' card, with surrounding elements like 'Secure Payments' partially cut off. Clip B shows a wider framing, revealing more of the surrounding white tiles and background elements."
+    }
+  }
+]

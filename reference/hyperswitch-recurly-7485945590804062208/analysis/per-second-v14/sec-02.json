@@ -1,0 +1,256 @@
+{
+  "sec": 2,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        2.21
+      ],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt"
+      ],
+      "absent_in_b": [
+        "brushed metal texture"
+      ],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 2.1,
+          "a_observable": "The 'Secure Payments' text is aligned horizontally next to the shield icon.",
+          "b_observable": "The 'Secure Payments' text is rotated vertically below the shield icon.",
+          "fix": "Align the text horizontally next to the icon.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "material",
+          "t": 2.4,
+          "a_observable": "The right-side background surface has a brushed metallic texture.",
+          "b_observable": "The right-side background surface is a flat, matte grey material.",
+          "fix": "Apply a brushed metal material to the right-side surface.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 2.5,
+          "a_observable": "The scene has a cool blue color cast on the white elements.",
+          "b_observable": "The scene has a neutral grey and white color profile.",
+          "fix": "Add a blue color cast to match the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 2.6,
+          "a_observable": "The camera views the cards from a low angle with perspective distortion.",
+          "b_observable": "The camera views the cards from a flatter, more top-down angle.",
+          "fix": "Adjust the camera angle and perspective.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Correct the layout of the 'Secure Payments' text and add the brushed metallic texture to the background.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        2.2
+      ],
+      "a_motion": [
+        "camera"
+      ],
+      "b_motion": [
+        "camera"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 2.1,
+          "a_observable": "The camera is zoomed in close to the 'Secure Payments' card, with 'Renewal Success' visible directly above it.",
+          "b_observable": "The camera is pulled back significantly, showing a wide view with a large blue card at the top and a yellow card at the bottom-left.",
+          "fix": "Adjust camera focal length and position to match the close-up framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 2.1,
+          "a_observable": "There is a noticeable vignette with darker corners and softer falloff.",
+          "b_observable": "The lighting is uniform and flat across the entire frame, lacking corner falloff.",
+          "fix": "Add a soft vignette or adjust the light source falloff.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "material",
+          "t": 2.5,
+          "a_observable": "A brushed metal texture is visible on the background surface to the right of the cards.",
+          "b_observable": "The background surface is a flat, solid grey with no metallic texture.",
+          "fix": "Apply a brushed metal material to the background plate on the right.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 2.5,
+          "a_observable": "The camera is positioned at a low, dynamic angle, looking across the cards with a strong perspective tilt.",
+          "b_observable": "The camera is positioned more directly overhead, resulting in a flatter perspective.",
+          "fix": "Adjust camera rotation and angle to capture the cards from a lower perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Align the camera framing, focal length, and perspective angles to match the dynamic close-ups and tilted compositions of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        2.21
+      ],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "staging",
+          "t": 2.1,
+          "a_observable": "The 'Secure Payments' card is surrounded by 'Renewal Success' above, a blue card to the left, and a yellow card below.",
+          "b_observable": "The 'Secure Payments' card is surrounded by a blue card at the top, a yellow card to the bottom-left, and 'Renewal Success' to the right.",
+          "fix": "Re-align the cards in the 3D scene to match the reference layout.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 2.1,
+          "a_observable": "The camera uses a longer focal length with flatter perspective on the cards.",
+          "b_observable": "The camera uses a wider focal length, resulting in stronger perspective distortion.",
+          "fix": "Increase the camera's focal length and move it further back to flatten the perspective.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 2.3,
+          "a_observable": "The shadows cast by the stacked cards are soft and highly diffused.",
+          "b_observable": "The shadows cast by the stacked cards are sharp and dark.",
+          "fix": "Increase the light source size to soften the shadow edges.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows",
+            "region": "full"
+          }
+        },
+        {
+          "category": "color",
+          "t": 2.3,
+          "a_observable": "The white cards have a warm, cream-colored tint.",
+          "b_observable": "The white cards are neutral white and grey.",
+          "fix": "Adjust the white balance or material color to add a warm cream tint.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Align the 3D layout and camera focal length of the scene to match the reference's flat perspective and card arrangement.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "material",
+        "t": 2.5,
+        "a_observable": "A brushed metal texture is visible on the background surface to the right of the cards.",
+        "b_observable": "The background surface is a flat, solid grey with no metallic texture.",
+        "fix": "Apply a brushed metal material to the background plate on the right.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "pending_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "In Clip A, a clear brushed metal texture is visible on the background surface to the right of the 'Subscriptions', 'Retries', and 'APMs' cards. In Clip B, this same background surface is a flat, solid light grey with no texture."
+        }
+      },
+      {
+        "category": "camera",
+        "t": 2.5,
+        "a_observable": "The camera is positioned at a low, dynamic angle, looking across the cards with a strong perspective tilt.",
+        "b_observable": "The camera is positioned more directly overhead, resulting in a flatter perspective.",
+        "fix": "Adjust camera rotation and angle to capture the cards from a lower perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "pending_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 0.95,
+          "note": "The comparison between Clip A and Clip B confirms that Clip A features a lower, more dynamic camera angle looking across the cards with a strong perspective tilt, whereas Clip B is shot from a more overhead angle, resulting in a flatter perspective of the cards."
+        }
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Apply a brushed metal material to the background plate on the right and adjust the camera angle to capture the cards from a lower perspective.",
+    "dropped_unsupported": 8
+  }
+}

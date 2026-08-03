@@ -1,0 +1,265 @@
+{
+  "sec": 7,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan"
+      ],
+      "b_motion": [
+        "slow camera pan"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 7.5,
+          "a_observable": "The 'PSP' tile is aligned directly below the 'JUSPAY hyperswitch' tile.",
+          "b_observable": "The 'PSP' tile is offset to the bottom-left of the 'JUSPAY hyperswitch' tile.",
+          "fix": "Realign the grid layout so the 'PSP' tile sits directly underneath the blue tile.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "material",
+          "t": 7.5,
+          "a_observable": "The blue tile has a matte surface with soft, diffuse lighting and no specular highlights.",
+          "b_observable": "The blue tile has a glossy surface with a sharp white specular highlight on its top-left.",
+          "fix": "Increase the roughness of the blue tile material to eliminate the glossy reflection.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 7.5,
+          "a_observable": "The camera angle is higher, looking down at the grid with less perspective distortion.",
+          "b_observable": "The camera angle is lower and more oblique, causing strong perspective foreshortening.",
+          "fix": "Adjust the camera height and pitch to match the flatter perspective of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 7.5,
+          "a_observable": "The white tiles have a cool, blue-tinted color cast.",
+          "b_observable": "The white tiles are neutral white with no blue tint.",
+          "fix": "Apply a cool color grade to match the blue tint of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera height and pitch angle to match the higher, less oblique perspective of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 7.1,
+          "a_observable": "The 'PSP' tile is positioned directly below the 'JUSPAY hyperswitch' tile.",
+          "b_observable": "The 'PSP' tile is shifted to the left, out of alignment with the 'JUSPAY hyperswitch' tile.",
+          "fix": "Adjust the grid layout of the tiles to align the 'PSP' tile directly underneath the 'JUSPAY hyperswitch' tile.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 7.3,
+          "a_observable": "The camera is positioned at a steeper angle relative to the grid, showing less perspective distortion.",
+          "b_observable": "The camera is at a shallower angle, creating a stronger perspective effect on the tiles.",
+          "fix": "Adjust the camera tilt and position to match the steeper angle of the reference video.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 7.6,
+          "a_observable": "The corners of the frame are darker than the center, showing a distinct vignette.",
+          "b_observable": "The corners are nearly as bright as the center, with very uniform illumination.",
+          "fix": "Add a vignette effect to darken the corners of the frame.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Align the camera angle and tile layout to match the reference composition.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan",
+        "subtle card hover"
+      ],
+      "b_motion": [
+        "slow camera pan",
+        "subtle card hover"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 7.5,
+          "a_observable": "The background cards are out of focus due to a shallow depth of field.",
+          "b_observable": "The entire scene, including background cards, is in sharp focus.",
+          "fix": "Enable depth of field on the camera and adjust the aperture.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 7.2,
+          "a_observable": "The shadow beneath the blue card is soft and highly diffused.",
+          "b_observable": "The shadow beneath the blue card is sharp and dark.",
+          "fix": "Increase the size of the light source to soften the contact shadows.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 7.8,
+          "a_observable": "The corners of the frame are darkened by a vignette.",
+          "b_observable": "The corners of the frame are bright and evenly lit.",
+          "fix": "Add a vignette pass in post-production.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 7.4,
+          "a_observable": "The blue card has a slightly desaturated, matte appearance.",
+          "b_observable": "The blue card is highly saturated and bright.",
+          "fix": "Adjust the material color and saturation of the blue card.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera's focal length and position to match the reference perspective, and enable depth of field to replicate the background blur.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "layout",
+        "t": 7.1,
+        "a_observable": "The 'PSP' tile is positioned directly below the 'JUSPAY hyperswitch' tile.",
+        "b_observable": "The 'PSP' tile is shifted to the left, out of alignment with the 'JUSPAY hyperswitch' tile.",
+        "fix": "Adjust the grid layout of the tiles to align the 'PSP' tile directly underneath the 'JUSPAY hyperswitch' tile.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 2,
+        "status": "pending_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "The comparison is accurate. In Clip A, the 'PSP' tile is centered directly below the 'JUSPAY hyperswitch' tile, whereas in Clip B, it is shifted to the left and out of alignment."
+        }
+      },
+      {
+        "category": "camera",
+        "t": 7.3,
+        "a_observable": "The camera is positioned at a steeper angle relative to the grid, showing less perspective distortion.",
+        "b_observable": "The camera is at a shallower angle, creating a stronger perspective effect on the tiles.",
+        "fix": "Adjust the camera tilt and position to match the steeper angle of the reference video.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 2,
+        "status": "pending_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 0.95,
+          "note": "Clip A shows a camera angle that is closer to a top-down view (steeper angle), resulting in less perspective distortion of the grid tiles. Clip B shows a more oblique, shallower camera angle, which creates a much stronger perspective effect where the tiles visibly recede and converge towards a vanishing point."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 7.6,
+        "a_observable": "The corners of the frame are darker than the center, showing a distinct vignette.",
+        "b_observable": "The corners are nearly as bright as the center, with very uniform illumination.",
+        "fix": "Add a vignette effect to darken the corners of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 207.85,
+            "center_mean": 110.92,
+            "falloff_pct": -87.39
+          },
+          "B": {
+            "corner_mean": 169.99,
+            "center_mean": 87.93,
+            "falloff_pct": -93.32
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Align the camera angle and tile layout to match the reference composition.",
+    "dropped_unsupported": 5
+  }
+}

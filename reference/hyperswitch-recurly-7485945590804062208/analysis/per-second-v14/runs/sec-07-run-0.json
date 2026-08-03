@@ -1,0 +1,64 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan"
+    ],
+    "b_motion": [
+      "slow camera pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 7.5,
+        "a_observable": "The 'PSP' tile is aligned directly below the 'JUSPAY hyperswitch' tile.",
+        "b_observable": "The 'PSP' tile is offset to the bottom-left of the 'JUSPAY hyperswitch' tile.",
+        "fix": "Realign the grid layout so the 'PSP' tile sits directly underneath the blue tile.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "material",
+        "t": 7.5,
+        "a_observable": "The blue tile has a matte surface with soft, diffuse lighting and no specular highlights.",
+        "b_observable": "The blue tile has a glossy surface with a sharp white specular highlight on its top-left.",
+        "fix": "Increase the roughness of the blue tile material to eliminate the glossy reflection.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 7.5,
+        "a_observable": "The camera angle is higher, looking down at the grid with less perspective distortion.",
+        "b_observable": "The camera angle is lower and more oblique, causing strong perspective foreshortening.",
+        "fix": "Adjust the camera height and pitch to match the flatter perspective of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 7.5,
+        "a_observable": "The white tiles have a cool, blue-tinted color cast.",
+        "b_observable": "The white tiles are neutral white with no blue tint.",
+        "fix": "Apply a cool color grade to match the blue tint of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera height and pitch angle to match the higher, less oblique perspective of the reference video."
+  }
+}

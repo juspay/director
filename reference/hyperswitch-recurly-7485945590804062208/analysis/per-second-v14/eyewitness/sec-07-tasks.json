@@ -1,0 +1,36 @@
+[
+  {
+    "sec": 7,
+    "idx": 0,
+    "t": 7.1,
+    "category": "layout",
+    "a_observable": "The 'PSP' tile is positioned directly below the 'JUSPAY hyperswitch' tile.",
+    "b_observable": "The 'PSP' tile is shifted to the left, out of alignment with the 'JUSPAY hyperswitch' tile.",
+    "frames": {
+      "A": "analysis/per-second-v14/eyewitness/sec-07-c0-A.png",
+      "B": "analysis/per-second-v14/eyewitness/sec-07-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "The comparison is accurate. In Clip A, the 'PSP' tile is centered directly below the 'JUSPAY hyperswitch' tile, whereas in Clip B, it is shifted to the left and out of alignment."
+    }
+  },
+  {
+    "sec": 7,
+    "idx": 1,
+    "t": 7.3,
+    "category": "camera",
+    "a_observable": "The camera is positioned at a steeper angle relative to the grid, showing less perspective distortion.",
+    "b_observable": "The camera is at a shallower angle, creating a stronger perspective effect on the tiles.",
+    "frames": {
+      "A": "analysis/per-second-v14/eyewitness/sec-07-c1-A.png",
+      "B": "analysis/per-second-v14/eyewitness/sec-07-c1-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.95,
+      "note": "Clip A shows a camera angle that is closer to a top-down view (steeper angle), resulting in less perspective distortion of the grid tiles. Clip B shows a more oblique, shallower camera angle, which creates a much stronger perspective effect where the tiles visibly recede and converge towards a vanishing point."
+    }
+  }
+]

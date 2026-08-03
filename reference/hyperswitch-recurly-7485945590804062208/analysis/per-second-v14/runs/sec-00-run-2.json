@@ -1,0 +1,41 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera drift"
+    ],
+    "b_motion": [
+      "slow camera drift"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 0.5,
+        "a_observable": "Shallow depth of field blurs background and foreground cards.",
+        "b_observable": "Deep depth of field keeps all cards in sharp focus.",
+        "fix": "Enable depth of field and adjust aperture to blur non-focused areas.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 0.5,
+        "a_observable": "The 'Secure Payments' card is framed closely and rotated dynamically.",
+        "b_observable": "The card is smaller, rotated less, and positioned differently.",
+        "fix": "Adjust camera distance and rotation to match reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera distance, focal length, and enable shallow depth of field to match the reference framing and blur."
+  }
+}
