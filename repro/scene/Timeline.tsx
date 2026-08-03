@@ -206,7 +206,14 @@ function catmull(p0: number, p1: number, p2: number, p3: number, t: number): num
 // A/B reel, at t=1.5 our card is larger than the reference's, while at t=3.5
 // the reference's Retries card spans 345px of 720 against our 300 — 13%
 // smaller. Shot 1 stays where it is.
-const DOLLY = [1.25, 1.15, 1.12, 1.12, 0.80];
+// Lockup pushed BACK, 0.80 -> 1.01, reversing the pass-13 push. Three
+// independent eyewitness rejections (s10, s11, s12) found the model had swapped
+// A and B — "in Clip A the camera is positioned further back" — and a direct
+// measurement agrees: at t=11.4 the reference's Recurly plate spans 37% of the
+// frame width against our 45%. The pass-13 push came from reading the t=8.5
+// pair, where the reference frame IS tighter-looking, but that is content
+// density, not framing.
+const DOLLY = [1.25, 1.15, 1.12, 1.12, 1.01];
 
 /**
  * Per-shot azimuth sweep, applied about the shot's own mean bearing.
