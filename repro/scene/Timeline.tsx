@@ -334,6 +334,9 @@ export const Timeline: React.FC = () => {
   const retries = useMemo(() => capabilityFaceV('Retries', 'refresh', false, frame * 0.05), [frame]);
   React.useEffect(() => () => { renewal.dispose(); }, [renewal]);
   React.useEffect(() => () => { retries.dispose(); }, [retries]);
+  const gridAssemble = shot === 4
+    ? spring({ frame: frame - T.assemble, fps: FPS, config: { damping: 15, stiffness: 70, mass: 1.15 } })
+    : 1;
   const f = useMemo(
     () => ({
       secure: pillFaceH('Secure', 'Payments', 'shield'),
@@ -365,6 +368,7 @@ export const Timeline: React.FC = () => {
         brandRadius={shot === 4 ? 2.6 : 3.5}
         plainOnly={shot === 4}
         heroAccent={shot === 2 ? 'blue' : shot === 3 ? 'gold' : 'both'}
+        assemble={gridAssemble}
       />
       <Peripherals whiten={whiten} />
 

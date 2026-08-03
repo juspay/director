@@ -164,7 +164,16 @@ export const SetDressing: React.FC<{
    * giant blue field behind the blue card at f220 was the failure).
    */
   heroAccent?: 'gold' | 'blue' | 'both';
-}> = ({ whiten = 0, offset = [0, 0, 0], brandRadius = Infinity, plainOnly = false, heroAccent = 'both' }) => {
+  /**
+   * T.assemble progress, 0..1. The reference's lockup cut lands while the
+   * WHOLE grid is still converging into the flat arrangement (spec f240,
+   * "wide flat view forms") — measured as most of its t=8.0-8.5 motion
+   * (A 7.6 vs B 2.0 mean delta with only the two cards travelling). At 1 the
+   * wall is at rest; below 1 every tile sits radially expanded and rides the
+   * same spring home.
+   */
+  assemble?: number;
+}> = ({ whiten = 0, offset = [0, 0, 0], brandRadius = Infinity, plainOnly = false, heroAccent = 'both', assemble = 1 }) => {
   const tiles = useMemo(buildTiles, []);
   const maps = useMemo(
     () => ({
@@ -214,12 +223,13 @@ export const SetDressing: React.FC<{
         if (heroAccent !== 'both' && (kind === 'gold' || kind === 'blue') && kind !== heroAccent) kind = 'plain';
         const metalish = kind === 'metal';
         const isBrand = kind === 'blue' || kind === 'gold' || kind === 'lightblue';
+        const spread = 1 + 0.26 * (1 - assemble) * (1 + (i % 3) * 0.3);
         return (
           <Slab
             key={i}
             size={[t.w, TILE_THICK, t.l]}
             radius={Math.min(t.w, t.l) * 0.045}
-            position={[t.x, TILE_TOP + t.step - TILE_THICK / 2, t.z]}
+            position={[t.x * spread, TILE_TOP + t.step - TILE_THICK / 2, t.z * spread]}
             receiveShadow
             castShadow
           >
