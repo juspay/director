@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 1,
+        "a_observable": "The tiles are tightly packed with minimal gaps, forming a cohesive, keyboard-like grid structure.",
+        "b_observable": "The tiles are widely spaced with large flat gaps between them, making the grid look sparse.",
+        "fix": "Reduce the spacing between the tiles to match the tight grid layout of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "Deep, soft contact shadows are visible in the grooves between the tiles, creating high contrast and depth.",
+        "b_observable": "The grooves are brightly lit with very weak, flat shadows, resulting in a low-contrast appearance.",
+        "fix": "Adjust the lighting and ambient occlusion to produce deeper contact shadows in the crevices between tiles.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "typography",
+        "t": 1,
+        "a_observable": "The text 'Secure Payments' uses a geometric sans-serif font with distinct letter shapes and generous line height.",
+        "b_observable": "The text 'Secure Payments' uses a generic sans-serif font with tighter line spacing and different letterforms.",
+        "fix": "Replace the font with the geometric sans-serif typeface used in the reference video.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Reduce the spacing between the tiles to create a tightly packed grid, matching the keyboard-like layout of the reference video."
+  }
+}

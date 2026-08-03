@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "panning",
+      "zooming out"
+    ],
+    "b_motion": [
+      "panning",
+      "zooming out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 8.5,
+        "a_observable": "The camera is tilted dynamically, causing the keyboard grid lines to run diagonally across the frame.",
+        "b_observable": "The camera is positioned more directly overhead, making the keyboard grid lines align almost horizontally and vertically.",
+        "fix": "Adjust the camera tilt and rotation to achieve the diagonal perspective of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "There is a pronounced vignette that darkens the corners of the frame.",
+        "b_observable": "The lighting is flat and uniform, with no noticeable corner darkening.",
+        "fix": "Apply a vignette to darken the outer edges of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "material",
+        "t": 8,
+        "a_observable": "The blue hyperswitch key features a glossy finish with bright specular reflections on its beveled edges.",
+        "b_observable": "The blue key has a flat, diffuse appearance without specular edge highlights.",
+        "fix": "Adjust the material roughness and specularity to create glossy reflections on the key's edges.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and tilt after the cut at 8.1s to restore the dynamic diagonal perspective of the keyboard grid."
+  }
+}

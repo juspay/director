@@ -1,0 +1,193 @@
+{
+  "sec": 6,
+  "meta": {
+    "verified": 2,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [
+    "{\"error\":{\"message\":\"<!DOCTYPE html>\\n<html lang=en>\\n  <meta charset=utf-8>\\n  <meta name=viewport content=\\\"initial-sc"
+  ],
+  "runs": [
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "camera pan",
+        "camera zoom",
+        "camera tilt"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom",
+        "camera tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "staging",
+          "t": 6.2,
+          "a_observable": "The yellow Recurly tile is surrounded by a dark grey well, and the Secure Payments tile is visible on the left.",
+          "b_observable": "The yellow Recurly tile is surrounded by a light grey well, and the Secure Payments tile is visible on the top-left.",
+          "fix": "Realign the camera angle and adjust the tile layout to match the reference staging.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 6.2,
+          "a_observable": "The white tiles have a distinct cool blue color cast.",
+          "b_observable": "The white tiles are neutral white with a slight warm grey tint.",
+          "fix": "Adjust the white balance or color grading to introduce a cool blue cast to the scene.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 6.8,
+          "a_observable": "The shadows in the crevices around the blue JUSPAY tile are dark and pronounced.",
+          "b_observable": "The shadows in the crevices around the blue JUSPAY tile are faint and washed out.",
+          "fix": "Adjust the ambient occlusion and shadow settings to deepen the crevices.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera framing and tile layout to match the reference staging, and deepen the shadows to improve contrast.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [
+        "metallic border around the Juspay card"
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "t": 6.2,
+          "a_observable": "The yellow Recurly card is in the top-left with the blue Juspay card in the bottom-right.",
+          "b_observable": "The yellow Recurly card is centered and the blue Juspay card is absent.",
+          "fix": "Re-align camera and cards to match the reference layout.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "material",
+          "t": 6.8,
+          "a_observable": "The blue Juspay card is flat and recessed inside a metallic-bordered slot.",
+          "b_observable": "The blue Juspay card is a raised solid blue keycap without a metallic border.",
+          "fix": "Model the keycap slot with a metallic border and recess the card.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 6.8,
+          "a_observable": "Crevices between keycaps have deep, defined shadows.",
+          "b_observable": "Crevices between keycaps are brightly lit with very soft shadows.",
+          "fix": "Enhance shadow depth and ambient occlusion between keycaps.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Model the keycap slots with metallic borders and recess the cards as seen in the reference video.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "staging",
+        "t": 6.2,
+        "a_observable": "The yellow Recurly tile is surrounded by a dark grey well, and the Secure Payments tile is visible on the left.",
+        "b_observable": "The yellow Recurly tile is surrounded by a light grey well, and the Secure Payments tile is visible on the top-left.",
+        "fix": "Realign the camera angle and adjust the tile layout to match the reference staging.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 0.9,
+          "note": "The visual details in both clips match the description. In Clip A, the Recurly tile sits in a dark grey well, and the Secure Payments tile is on the left. In Clip B, the well is a lighter grey with horizontal lines, and the Secure Payments tile is positioned at the top-left."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "A's well is dark graphite with heavy brush texture; B's bezel is light blue-grey. Large, obvious tone gap."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.8,
+        "a_observable": "The shadows in the crevices around the blue JUSPAY tile are dark and pronounced.",
+        "b_observable": "The shadows in the crevices around the blue JUSPAY tile are faint and washed out.",
+        "fix": "Adjust the ambient occlusion and shadow settings to deepen the crevices.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 54.34,
+            "p1": 67.8,
+            "p5": 74.53,
+            "p50": 203.97,
+            "p95": 246.13,
+            "p99": 247.85,
+            "p999": 253.23,
+            "span_p5_p95": 171.6
+          },
+          "B": {
+            "p01": 12.02,
+            "p1": 48.67,
+            "p5": 53.51,
+            "p50": 170.26,
+            "p95": 212.31,
+            "p99": 214.31,
+            "p999": 254.5,
+            "span_p5_p95": 158.8
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Realign the camera angle and tile layout, and adjust ambient occlusion to deepen shadows in the crevices.",
+    "dropped_unsupported": 2
+  }
+}

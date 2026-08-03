@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 6,
+    "idx": 0,
+    "t": 6.2,
+    "category": "staging",
+    "a_observable": "The yellow Recurly tile is surrounded by a dark grey well, and the Secure Payments tile is visible on the left.",
+    "b_observable": "The yellow Recurly tile is surrounded by a light grey well, and the Secure Payments tile is visible on the top-left.",
+    "frames": {
+      "A": "analysis/per-second-v93/eyewitness/sec-06-c0-A.png",
+      "B": "analysis/per-second-v93/eyewitness/sec-06-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.9,
+      "note": "The visual details in both clips match the description. In Clip A, the Recurly tile sits in a dark grey well, and the Secure Payments tile is on the left. In Clip B, the well is a lighter grey with horizontal lines, and the Secure Payments tile is positioned at the top-left."
+    }
+  }
+]

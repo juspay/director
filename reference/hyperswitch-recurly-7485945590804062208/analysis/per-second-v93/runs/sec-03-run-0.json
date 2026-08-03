@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan",
+      "subtle camera zoom"
+    ],
+    "b_motion": [
+      "slow camera pan",
+      "subtle camera zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 3.5,
+        "a_observable": "The cards are presented at a dynamic isometric angle with significant perspective distortion.",
+        "b_observable": "The cards are presented almost flatly to the camera with minimal perspective angle.",
+        "fix": "Adjust the camera angle and focal length to match the isometric perspective of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "",
+          "region": "full"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 3.5,
+        "a_observable": "Strong directional lighting creates soft, realistic drop shadows behind the cards.",
+        "b_observable": "Flat, ambient lighting results in extremely faint shadows, making the cards look pasted on.",
+        "fix": "Add a directional light source to cast soft drop shadows behind the cards.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "full"
+        }
+      },
+      {
+        "category": "color",
+        "t": 3.5,
+        "a_observable": "The background elements exhibit a distinct warm yellow and cool blue color gradient.",
+        "b_observable": "The background is monochromatic white and light grey.",
+        "fix": "Introduce colored lights or adjust background materials to match the warm and cool color cast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera's 3D angle and perspective to match the isometric layout of the reference video."
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zoom out",
+      "camera pan"
+    ],
+    "b_motion": [
+      "camera zoom out",
+      "camera pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 9,
+        "a_observable": "The corners are darker than the center, showing a strong vignette.",
+        "b_observable": "The corners are bright, lacking any vignette.",
+        "fix": "Add a vignette to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 9.2,
+        "a_observable": "The scene has a warm, cream-colored cast.",
+        "b_observable": "The scene has a cool, bluish-gray color cast.",
+        "fix": "Adjust white balance to introduce warmer tones.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "Buttons cast deep, soft contact shadows onto the background.",
+        "b_observable": "Contact shadows under the buttons are extremely faint.",
+        "fix": "Increase shadow density and ambient occlusion.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the lighting and shadow settings in B to introduce deeper contact shadows and a warmer color cast, matching the depth and tone of the reference."
+  }
+}

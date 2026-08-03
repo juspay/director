@@ -1,0 +1,245 @@
+{
+  "sec": 3,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan",
+        "subtle camera zoom"
+      ],
+      "b_motion": [
+        "slow camera pan",
+        "subtle camera zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 3.5,
+          "a_observable": "The cards are presented at a dynamic isometric angle with significant perspective distortion.",
+          "b_observable": "The cards are presented almost flatly to the camera with minimal perspective angle.",
+          "fix": "Adjust the camera angle and focal length to match the isometric perspective of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "",
+            "region": "full"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 3.5,
+          "a_observable": "Strong directional lighting creates soft, realistic drop shadows behind the cards.",
+          "b_observable": "Flat, ambient lighting results in extremely faint shadows, making the cards look pasted on.",
+          "fix": "Add a directional light source to cast soft drop shadows behind the cards.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast",
+            "region": "full"
+          }
+        },
+        {
+          "category": "color",
+          "t": 3.5,
+          "a_observable": "The background elements exhibit a distinct warm yellow and cool blue color gradient.",
+          "b_observable": "The background is monochromatic white and light grey.",
+          "fix": "Introduce colored lights or adjust background materials to match the warm and cool color cast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera's 3D angle and perspective to match the isometric layout of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "material",
+          "t": 3.2,
+          "a_observable": "A brushed metal texture with horizontal anisotropic specular highlights is visible on the right side of the frame.",
+          "b_observable": "The surface is flat matte grey with no metallic texture or anisotropic reflections.",
+          "fix": "Apply a brushed metal material with anisotropic filtering to the background plate.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 3.5,
+          "a_observable": "The shadows between the card blocks are deep and well-defined, providing clear separation and depth.",
+          "b_observable": "The shadows are extremely soft and faint, resulting in a flat appearance with little depth separation.",
+          "fix": "Increase shadow depth and contrast to match the reference's defined contact shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 3.8,
+          "a_observable": "The top and bottom edges of the frame are softly out of focus due to a shallow depth of field.",
+          "b_observable": "The entire frame, including the top and bottom edges, is in sharp focus.",
+          "fix": "Enable depth of field on the camera with a wider aperture to blur the foreground and background elements.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "top"
+          }
+        }
+      ],
+      "highest_impact_fix": "Add a brushed metal material to the background plate to match the metallic texture and anisotropic reflections of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan",
+        "subtle zoom"
+      ],
+      "b_motion": [
+        "slow camera pan",
+        "subtle zoom"
+      ],
+      "absent_in_b": [
+        "yellow key in top-left",
+        "brushed metal texture on the right"
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 3.5,
+          "a_observable": "High-contrast lighting with bright highlights and deep shadows.",
+          "b_observable": "Flat, uniform lighting with low contrast and soft shadows.",
+          "fix": "Increase light intensity and contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 3.5,
+          "a_observable": "Yellow key visible at top-left; brushed metal texture on the right.",
+          "b_observable": "Top-left key is grey; right side lacks brushed metal texture.",
+          "fix": "Add yellow material and brushed metal texture.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 3.5,
+          "a_observable": "Tighter framing on the cards.",
+          "b_observable": "Wider framing with more empty space at top and bottom.",
+          "fix": "Adjust camera position or focal length.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Add the missing yellow key material and brushed metal texture to the background elements to match the reference staging.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 3.5,
+        "a_observable": "Strong directional lighting creates soft, realistic drop shadows behind the cards.",
+        "b_observable": "Flat, ambient lighting results in extremely faint shadows, making the cards look pasted on.",
+        "fix": "Add a directional light source to cast soft drop shadows behind the cards.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "full"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_higher_contrast",
+          "A": {
+            "p01": 61.56,
+            "p1": 75.51,
+            "p5": 122.88,
+            "p50": 204.54,
+            "p95": 246.64,
+            "p99": 249.22,
+            "p999": 252.08,
+            "span_p5_p95": 123.76
+          },
+          "B": {
+            "p01": 79.8,
+            "p1": 101.26,
+            "p5": 122.41,
+            "p50": 202.74,
+            "p95": 219.18,
+            "p99": 221.61,
+            "p999": 253.58,
+            "span_p5_p95": 96.77
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "material",
+        "t": 3.2,
+        "a_observable": "A brushed metal texture with horizontal anisotropic specular highlights is visible on the right side of the frame.",
+        "b_observable": "The surface is flat matte grey with no metallic texture or anisotropic reflections.",
+        "fix": "Apply a brushed metal material with anisotropic filtering to the background plate.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "Clip A clearly shows a brushed metal texture with horizontal anisotropic specular highlights on the right side of the frame, whereas in Clip B, the corresponding surface is a flat matte grey with no metallic texture or reflections."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "A's brushed surfaces show strong directional texture with anisotropic highlights; B's metal tiles are far subtler."
+        }
+      }
+    ],
+    "agreed_absent_in_b": [
+      "brushed metal texture on the right"
+    ],
+    "highest_impact_fix": "Add a brushed metal material to the background plate to match the metallic texture and anisotropic reflections of the reference.",
+    "dropped_unsupported": 5
+  }
+}

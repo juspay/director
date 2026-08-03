@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 11.1,
+        "a_observable": "The yellow Recurly button is framed closely, with its left edge nearly touching the left border of the frame.",
+        "b_observable": "The yellow Recurly button is framed much further away, with a wide gap of white keys visible to its left.",
+        "fix": "Adjust the camera zoom and position to match the close-up framing of the reference video.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "The white keyboard keys in the corners of the frame are shaded darker, creating a clear vignette effect.",
+        "b_observable": "The white keyboard keys in the corners are bright white, showing almost no corner shading or vignette.",
+        "fix": "Apply a vignette effect to darken the outer edges of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 11.8,
+        "a_observable": "The yellow Recurly button has a warm, rich golden-yellow color.",
+        "b_observable": "The yellow Recurly button has a cooler, pale yellow color.",
+        "fix": "Adjust the color saturation and hue of the yellow button to match the warm golden tone of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust camera zoom and positioning to match the close-up framing of the reference video."
+  }
+}

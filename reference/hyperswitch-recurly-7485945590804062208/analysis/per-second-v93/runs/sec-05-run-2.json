@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "subtle camera drift",
+      "card hover animation"
+    ],
+    "b_motion": [
+      "subtle camera drift",
+      "card hover animation"
+    ],
+    "absent_in_b": [
+      "specular reflections on the yellow card"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 5,
+        "a_observable": "The camera is positioned closer to the yellow Recurly button, creating a tighter crop.",
+        "b_observable": "The camera is positioned further back, showing a wider view of the surrounding tiles.",
+        "fix": "Adjust camera focal length and distance to match reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "material",
+        "t": 5.5,
+        "a_observable": "The yellow Recurly button exhibits a glossy finish with a distinct specular highlight.",
+        "b_observable": "The yellow Recurly button has a flat, matte appearance with no specular highlights.",
+        "fix": "Increase glossiness and adjust roughness of the yellow button material.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.8,
+        "a_observable": "The corners of the frame are significantly darker than the center.",
+        "b_observable": "The corners of the frame are almost as bright as the center.",
+        "fix": "Add a vignette effect to darken the corners of the frame.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing to match the reference crop and add specular reflections to the yellow card material."
+  }
+}

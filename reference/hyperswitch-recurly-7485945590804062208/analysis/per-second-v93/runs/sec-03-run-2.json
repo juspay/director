@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan",
+      "subtle zoom"
+    ],
+    "b_motion": [
+      "slow camera pan",
+      "subtle zoom"
+    ],
+    "absent_in_b": [
+      "yellow key in top-left",
+      "brushed metal texture on the right"
+    ],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 3.5,
+        "a_observable": "High-contrast lighting with bright highlights and deep shadows.",
+        "b_observable": "Flat, uniform lighting with low contrast and soft shadows.",
+        "fix": "Increase light intensity and contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 3.5,
+        "a_observable": "Yellow key visible at top-left; brushed metal texture on the right.",
+        "b_observable": "Top-left key is grey; right side lacks brushed metal texture.",
+        "fix": "Add yellow material and brushed metal texture.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 3.5,
+        "a_observable": "Tighter framing on the cards.",
+        "b_observable": "Wider framing with more empty space at top and bottom.",
+        "fix": "Adjust camera position or focal length.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Add the missing yellow key material and brushed metal texture to the background elements to match the reference staging."
+  }
+}

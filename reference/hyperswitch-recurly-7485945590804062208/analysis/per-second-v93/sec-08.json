@@ -1,0 +1,250 @@
+{
+  "sec": 8,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "panning",
+        "zooming out"
+      ],
+      "b_motion": [
+        "panning",
+        "zooming out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 8.5,
+          "a_observable": "The camera is tilted dynamically, causing the keyboard grid lines to run diagonally across the frame.",
+          "b_observable": "The camera is positioned more directly overhead, making the keyboard grid lines align almost horizontally and vertically.",
+          "fix": "Adjust the camera tilt and rotation to achieve the diagonal perspective of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 8.5,
+          "a_observable": "There is a pronounced vignette that darkens the corners of the frame.",
+          "b_observable": "The lighting is flat and uniform, with no noticeable corner darkening.",
+          "fix": "Apply a vignette to darken the outer edges of the frame.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "material",
+          "t": 8,
+          "a_observable": "The blue hyperswitch key features a glossy finish with bright specular reflections on its beveled edges.",
+          "b_observable": "The blue key has a flat, diffuse appearance without specular edge highlights.",
+          "fix": "Adjust the material roughness and specularity to create glossy reflections on the key's edges.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and tilt after the cut at 8.1s to restore the dynamic diagonal perspective of the keyboard grid.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [
+        "metallic key well borders",
+        "warm ambient lighting"
+      ],
+      "differences": [
+        {
+          "category": "material",
+          "t": 8.05,
+          "a_observable": "The blue button well has a distinct brushed-metal bevel with realistic anisotropic reflections.",
+          "b_observable": "The blue button well has a flat grey border with no metallic texture or reflections.",
+          "fix": "Apply a metallic material with brushed anisotropic reflections to the key well borders.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 8.05,
+          "a_observable": "The blue button has a desaturated, slightly cyan-tinted blue color.",
+          "b_observable": "The blue button has a highly saturated royal blue color.",
+          "fix": "Adjust the diffuse color of the blue button to match the reference's desaturated cyan-blue hue.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_more_saturated"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 8.5,
+          "a_observable": "The keys are arranged with a single white key separating the yellow Recurly key and the blue Hyperswitch key.",
+          "b_observable": "The keys have a larger gap and different key layout between the yellow and blue keys.",
+          "fix": "Re-align the keyboard grid layout to match the reference spacing and key placement.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 8.5,
+          "a_observable": "The scene has warm, soft ambient lighting with subtle contact shadows.",
+          "b_observable": "The scene has flat, cool lighting with harsh, dark shadows in the key crevices.",
+          "fix": "Soften the shadow bias and adjust the light color temperature to be warmer.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Recreate the metallic material for the key well borders with realistic anisotropic reflections and adjust the global lighting to be warmer and softer.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "diagonal pan up-right",
+        "pan down-right and zoom out"
+      ],
+      "b_motion": [
+        "diagonal pan up-right",
+        "pan down-right and zoom out"
+      ],
+      "absent_in_b": [
+        "yellow card on top-left before cut",
+        "metallic texture on right before cut",
+        "Billing card on bottom-left after cut"
+      ],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 8.04,
+          "a_observable": "A yellow card is visible in the top-left corner, and a metallic brushed texture is on the right.",
+          "b_observable": "The top-left corner is plain white, and the right side is a flat grey keyboard surface.",
+          "fix": "Add the yellow card and brushed metal texture to match the reference staging.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 8.5,
+          "a_observable": "The camera perspective shows the yellow Recurly card in the upper-left quadrant of the frame.",
+          "b_observable": "The camera perspective shows the yellow Recurly card in the lower-center of the frame.",
+          "fix": "Adjust camera position and card layout to match the reference composition.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 8.8,
+          "a_observable": "Strong vignette with darker corners and deep shadows around the keycaps.",
+          "b_observable": "The lighting is flat and bright, lacking a vignette and deep contact shadows.",
+          "fix": "Add a vignette and increase shadow depth around the keys.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Realign the camera and card layout after the cut to match the reference composition.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 8.5,
+        "a_observable": "The camera is tilted dynamically, causing the keyboard grid lines to run diagonally across the frame.",
+        "b_observable": "The camera is positioned more directly overhead, making the keyboard grid lines align almost horizontally and vertically.",
+        "fix": "Adjust the camera tilt and rotation to achieve the diagonal perspective of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "In Clip A, the keyboard grid lines run diagonally across the frame due to a tilted camera angle. In Clip B, the camera is positioned directly overhead, aligning the grid lines horizontally and vertically with the frame."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "B is more directly overhead than A here — consistent with the elevation running a few degrees hot since pass 8."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "There is a pronounced vignette that darkens the corners of the frame.",
+        "b_observable": "The lighting is flat and uniform, with no noticeable corner darkening.",
+        "fix": "Apply a vignette to darken the outer edges of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 174.81,
+            "center_mean": 180.43,
+            "falloff_pct": 3.11
+          },
+          "B": {
+            "corner_mean": 150.49,
+            "center_mean": 148.54,
+            "falloff_pct": -1.32
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera tilt and rotation to achieve the diagonal perspective of the reference.",
+    "dropped_unsupported": 6
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [
+      "vignette",
+      "depth_of_field"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 9.5,
+        "a_observable": "The camera is tilted at a dynamic perspective angle, creating strong depth between the foreground and background keys.",
+        "b_observable": "The camera angle is much flatter and closer to top-down, reducing the perspective depth.",
+        "fix": "Match the camera rotation and focal length to Video A to restore the dynamic perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "Strong vignette is visible with significantly darker corners compared to the center of the frame.",
+        "b_observable": "The lighting is uniform across the frame with no visible vignette in the corners.",
+        "fix": "Add a vignette pass in post-processing to match the corner falloff of Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 9.5,
+        "a_observable": "The yellow Recurly key and blue Juspay key are highly saturated with rich contrast.",
+        "b_observable": "The colors of the keys are washed out and have lower saturation.",
+        "fix": "Adjust the color saturation and contrast to match the vibrant look of Video A.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 9.5,
+        "a_observable": "The yellow Recurly key is positioned in the center-right of the frame, tilted diagonally.",
+        "b_observable": "The yellow Recurly key is positioned in the center-left of the frame with a different tilt.",
+        "fix": "Re-align the layout of the keys to match the composition of Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and focal length to match the dynamic perspective of Video A."
+  }
+}

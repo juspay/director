@@ -1,0 +1,67 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 1,
+        "a_observable": "The keys are tightly spaced with minimal gaps, and the 'Renewal Success' key is positioned directly above the 'Secure Payments' key.",
+        "b_observable": "The keys have wider gaps, and the 'Renewal Success' key is offset to the top-right of the 'Secure Payments' key.",
+        "fix": "Reposition the keyboard keys to match the tight grid layout and relative positioning of the reference video.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 1.5,
+        "a_observable": "The 'Renewal Success' key in the background is heavily blurred due to a shallow depth of field.",
+        "b_observable": "The 'Renewal Success' key remains sharp and in focus.",
+        "fix": "Decrease the camera's f-stop to create a shallower depth of field and blur the background keys.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "The corners of the frame are significantly darker than the center, showing a strong vignette.",
+        "b_observable": "The illumination is uniform across the frame with no noticeable vignette.",
+        "fix": "Apply a vignette effect to darken the corners of the frame.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 1,
+        "a_observable": "The white keys have a distinct cool blue color cast.",
+        "b_observable": "The white keys are neutral white and grey.",
+        "fix": "Apply a cool blue color grade or adjust the white balance to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Reposition the keyboard keys to match the tight grid layout and relative positioning of the reference video."
+  }
+}

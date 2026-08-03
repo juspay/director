@@ -1,0 +1,64 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "smooth camera zoom out and pan"
+    ],
+    "b_motion": [
+      "smooth camera zoom out and pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 13.2,
+        "a_observable": "Pronounced vignette with darker corners.",
+        "b_observable": "Flat, uniform lighting across the frame.",
+        "fix": "Add a vignette to darken the corners.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 13.5,
+        "a_observable": "Warm golden hue on the yellow button.",
+        "b_observable": "Cooler, greenish-yellow hue on the yellow button.",
+        "fix": "Adjust the yellow material color to be warmer.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 13.8,
+        "a_observable": "Deep shadows in the gaps between keys.",
+        "b_observable": "Light, washed-out shadows in the gaps.",
+        "fix": "Increase shadow depth and contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "material",
+        "t": 13.4,
+        "a_observable": "Matte, textured finish on the key surfaces.",
+        "b_observable": "Smooth, glossy finish on the key surfaces.",
+        "fix": "Add a subtle bump map to the key material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Add a vignette and deepen the shadows to match the high-contrast, moody lighting of the reference video."
+  }
+}

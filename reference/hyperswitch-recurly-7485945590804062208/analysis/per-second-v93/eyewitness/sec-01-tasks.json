@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 1,
+    "idx": 0,
+    "t": 1,
+    "category": "layout",
+    "a_observable": "The keys are tightly spaced with minimal gaps, and the 'Renewal Success' key is positioned directly above the 'Secure Payments' key.",
+    "b_observable": "The keys have wider gaps, and the 'Renewal Success' key is offset to the top-right of the 'Secure Payments' key.",
+    "frames": {
+      "A": "analysis/per-second-v93/eyewitness/sec-01-c0-A.png",
+      "B": "analysis/per-second-v93/eyewitness/sec-01-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "The visual comparison confirms that in Clip A, the 'Renewal Success' key is positioned directly above the 'Secure Payments' key with very tight spacing. In Clip B, the keys have wider gaps, and the 'Renewal Success' key is offset to the top-right of the 'Secure Payments' key."
+    }
+  }
+]

@@ -1,0 +1,72 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom_out",
+      "rotation"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom_out",
+      "rotation"
+    ],
+    "absent_in_b": [
+      "vignette",
+      "high_contrast_shadows"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 0,
+        "a_observable": "The camera is positioned close to the 'Secure Payments' key with a slight tilt, showing 'Renewal Success' clearly at the top.",
+        "b_observable": "The camera is rotated and tilted at a much steeper angle, skewing the perspective of the keys.",
+        "fix": "Adjust the camera rotation and tilt to match the reference angle.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "color",
+        "t": 0.5,
+        "a_observable": "The white keys have a subtle cool blue tint, and the blue shield icon is a vibrant, saturated blue.",
+        "b_observable": "The white keys are flat grey/white, and the blue shield icon is desaturated.",
+        "fix": "Adjust the color grading to increase saturation and add a cool blue cast to the highlights.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.8,
+        "a_observable": "There is a strong, soft shadow cast around the edges of the keys, creating depth, and a noticeable vignette darkening the corners.",
+        "b_observable": "The shadows are very faint and diffuse, making the keys look flat, with almost no vignette.",
+        "fix": "Increase shadow intensity and add a vignette to match the reference lighting.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "typography",
+        "t": 0.2,
+        "a_observable": "The text 'Secure Payments' uses a medium-weight sans-serif font with tight line spacing.",
+        "b_observable": "The text 'Secure Payments' uses a thinner font with wider line spacing and smaller size.",
+        "fix": "Change the font weight, size, and line spacing of the key labels to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle, rotation, and lighting contrast to match the reference."
+  }
+}

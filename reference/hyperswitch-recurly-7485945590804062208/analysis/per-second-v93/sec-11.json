@@ -1,0 +1,298 @@
+{
+  "sec": 11,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 11.1,
+          "a_observable": "The yellow Recurly button is framed closely, with its left edge nearly touching the left border of the frame.",
+          "b_observable": "The yellow Recurly button is framed much further away, with a wide gap of white keys visible to its left.",
+          "fix": "Adjust the camera zoom and position to match the close-up framing of the reference video.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.5,
+          "a_observable": "The white keyboard keys in the corners of the frame are shaded darker, creating a clear vignette effect.",
+          "b_observable": "The white keyboard keys in the corners are bright white, showing almost no corner shading or vignette.",
+          "fix": "Apply a vignette effect to darken the outer edges of the frame.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 11.8,
+          "a_observable": "The yellow Recurly button has a warm, rich golden-yellow color.",
+          "b_observable": "The yellow Recurly button has a cooler, pale yellow color.",
+          "fix": "Adjust the color saturation and hue of the yellow button to match the warm golden tone of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust camera zoom and positioning to match the close-up framing of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pans backwards and rotates to reveal more of the keyboard layout"
+      ],
+      "b_motion": [
+        "camera pans backwards with minimal rotation, maintaining a flatter perspective"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 11,
+          "a_observable": "The camera features a high-angle perspective with a strong tilt, showing the Recurly button diagonally.",
+          "b_observable": "The camera angle is flatter with less tilt, presenting the Recurly button more horizontally.",
+          "fix": "Adjust camera pitch and rotation to match the reference perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 11.2,
+          "a_observable": "The yellow Recurly button has a highly saturated golden-yellow color.",
+          "b_observable": "The yellow Recurly button is paler and less saturated.",
+          "fix": "Increase saturation and adjust hue of the yellow button material.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.5,
+          "a_observable": "The shadows between the keys are deep and well-defined, creating high contrast.",
+          "b_observable": "The shadows between the keys are faint and washed out, resulting in lower contrast.",
+          "fix": "Adjust light source intensity and shadow settings to deepen shadows.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "material",
+          "t": 11.8,
+          "a_observable": "The blue Juspay button has a glossy finish with specular highlights.",
+          "b_observable": "The blue Juspay button has a flat matte finish with no specular highlights.",
+          "fix": "Add glossiness and specular highlights to the blue button material.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "layout",
+          "t": 11,
+          "a_observable": "The keyboard keys are tightly packed with very narrow gaps.",
+          "b_observable": "The keyboard keys have wider, more noticeable gaps.",
+          "fix": "Decrease spacing between keys to match the reference layout.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Align the camera angle and rotation to match the reference perspective, as the current flat angle significantly alters the composition.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan",
+        "subtle keyboard key movement"
+      ],
+      "b_motion": [
+        "slow camera pan",
+        "subtle keyboard key movement"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 11.5,
+          "a_observable": "Strong vignette with darker corners.",
+          "b_observable": "Flat, uniform lighting across the frame.",
+          "fix": "Add a vignette to darken the corners.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 11.5,
+          "a_observable": "Cool blue-green color cast on white surfaces.",
+          "b_observable": "Neutral white and gray surfaces.",
+          "fix": "Apply a cool blue-green color grade.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler",
+            "region": "full"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.2,
+          "a_observable": "Deeper shadows and higher contrast.",
+          "b_observable": "Washed-out shadows and lower contrast.",
+          "fix": "Increase contrast and deepen shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Apply a vignette and adjust the color grading to match the cool blue-green tint of the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "The white keyboard keys in the corners of the frame are shaded darker, creating a clear vignette effect.",
+        "b_observable": "The white keyboard keys in the corners are bright white, showing almost no corner shading or vignette.",
+        "fix": "Apply a vignette effect to darken the outer edges of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 209.75,
+            "center_mean": 196.45,
+            "falloff_pct": -6.77
+          },
+          "B": {
+            "corner_mean": 148.97,
+            "center_mean": 156.03,
+            "falloff_pct": 4.52
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 11.2,
+        "a_observable": "The yellow Recurly button has a highly saturated golden-yellow color.",
+        "b_observable": "The yellow Recurly button is paler and less saturated.",
+        "fix": "Increase saturation and adjust hue of the yellow button material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 192.94,
+            "g": 204.4,
+            "b": 200.57,
+            "rb_delta": -7.63,
+            "saturation": 0.1915
+          },
+          "B": {
+            "r": 140.33,
+            "g": 153.51,
+            "b": 189.77,
+            "rb_delta": -49.44,
+            "saturation": 0.3118
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "The shadows between the keys are deep and well-defined, creating high contrast.",
+        "b_observable": "The shadows between the keys are faint and washed out, resulting in lower contrast.",
+        "fix": "Adjust light source intensity and shadow settings to deepen shadows.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_higher_contrast",
+          "A": {
+            "p01": 5.74,
+            "p1": 85.8,
+            "p5": 90.3,
+            "p50": 209.07,
+            "p95": 230.56,
+            "p99": 236.33,
+            "p999": 251.64,
+            "span_p5_p95": 140.26
+          },
+          "B": {
+            "p01": 73.68,
+            "p1": 75.18,
+            "p5": 80.24,
+            "p50": 170.12,
+            "p95": 183.69,
+            "p99": 190.16,
+            "p999": 239.5,
+            "span_p5_p95": 103.45
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust light source intensity and shadow settings to deepen shadows and apply a vignette effect to match the reference.",
+    "dropped_unsupported": 5
+  }
+}

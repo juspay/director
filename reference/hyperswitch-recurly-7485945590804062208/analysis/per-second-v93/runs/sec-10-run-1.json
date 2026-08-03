@@ -1,0 +1,64 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera zoom-out and pan"
+    ],
+    "b_motion": [
+      "slow camera zoom-out and pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 10.5,
+        "a_observable": "Camera is closer to the yellow button with a steeper tilt angle.",
+        "b_observable": "Camera is further zoomed out with a flatter perspective.",
+        "fix": "Match camera distance and perspective angle to reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "Pronounced vignette with darker corners.",
+        "b_observable": "Even illumination across the frame with minimal corner falloff.",
+        "fix": "Apply a vignette to match the corner shading.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 10.5,
+        "a_observable": "Yellow button has a warmer, more saturated golden hue.",
+        "b_observable": "Yellow button is cooler and less saturated.",
+        "fix": "Adjust yellow button color to be warmer and more saturated.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 10.5,
+        "a_observable": "Background elements are tightly cropped and partially cut off at the frame edges.",
+        "b_observable": "Background elements are fully visible with more negative space around them.",
+        "fix": "Adjust spacing and scale of background elements.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position, focal length, and tilt angle to match the perspective and framing of the reference video."
+  }
+}

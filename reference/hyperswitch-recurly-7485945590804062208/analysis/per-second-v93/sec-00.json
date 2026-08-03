@@ -1,0 +1,323 @@
+{
+  "sec": 0,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom_out",
+        "rotation"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom_out",
+        "rotation"
+      ],
+      "absent_in_b": [
+        "vignette",
+        "high_contrast_shadows"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 0,
+          "a_observable": "The camera is positioned close to the 'Secure Payments' key with a slight tilt, showing 'Renewal Success' clearly at the top.",
+          "b_observable": "The camera is rotated and tilted at a much steeper angle, skewing the perspective of the keys.",
+          "fix": "Adjust the camera rotation and tilt to match the reference angle.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "color",
+          "t": 0.5,
+          "a_observable": "The white keys have a subtle cool blue tint, and the blue shield icon is a vibrant, saturated blue.",
+          "b_observable": "The white keys are flat grey/white, and the blue shield icon is desaturated.",
+          "fix": "Adjust the color grading to increase saturation and add a cool blue cast to the highlights.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.8,
+          "a_observable": "There is a strong, soft shadow cast around the edges of the keys, creating depth, and a noticeable vignette darkening the corners.",
+          "b_observable": "The shadows are very faint and diffuse, making the keys look flat, with almost no vignette.",
+          "fix": "Increase shadow intensity and add a vignette to match the reference lighting.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "typography",
+          "t": 0.2,
+          "a_observable": "The text 'Secure Payments' uses a medium-weight sans-serif font with tight line spacing.",
+          "b_observable": "The text 'Secure Payments' uses a thinner font with wider line spacing and smaller size.",
+          "fix": "Change the font weight, size, and line spacing of the key labels to match the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle, rotation, and lighting contrast to match the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "Slow camera zoom out and pan over keyboard keys"
+      ],
+      "b_motion": [
+        "Slow camera zoom out and pan over keyboard keys"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "color",
+          "t": 0.5,
+          "a_observable": "Vibrant blue and yellow keys are visible with high saturation.",
+          "b_observable": "The keys are highly desaturated, appearing mostly light grey and white.",
+          "fix": "Increase color saturation and match the vibrant blue and yellow materials of the keys.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 0.2,
+          "a_observable": "The 'Secure Payments' key has a square shape with the blue shield on the left and text on the right.",
+          "b_observable": "The 'Secure Payments' key is an elongated rounded rectangle with different icon and text placement.",
+          "fix": "Adjust the geometry and aspect ratio of the key to be square, and align the shield icon and text horizontally.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 0.8,
+          "a_observable": "The camera is positioned closer to the keys, creating a dynamic close-up perspective with a strong isometric tilt.",
+          "b_observable": "The camera is further away, showing more of the surrounding flat keys with less perspective tilt.",
+          "fix": "Adjust camera focal length, position, and rotation to match the close-up isometric perspective of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position, rotation, and focal length to match the close-up isometric perspective of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 0.2,
+          "a_observable": "Camera is closer to the center tile with a steep perspective angle.",
+          "b_observable": "Camera is further back with a flatter, more top-down angle.",
+          "fix": "Match camera position and angle.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.5,
+          "a_observable": "Strong vignette darkening the corners.",
+          "b_observable": "Flat, uniform lighting across the corners.",
+          "fix": "Add corner vignette.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.8,
+          "a_observable": "Deep contact shadows under the tiles.",
+          "b_observable": "Faint, washed-out shadows under the tiles.",
+          "fix": "Deepen contact shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 0.6,
+          "a_observable": "Cool blue color cast on the white surfaces.",
+          "b_observable": "Neutral grey color cast on the white surfaces.",
+          "fix": "Adjust white balance to introduce a cool tint.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and angle to match the reference perspective.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 0.2,
+        "a_observable": "Camera is closer to the center tile with a steep perspective angle.",
+        "b_observable": "Camera is further back with a flatter, more top-down angle.",
+        "fix": "Match camera position and angle.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 3,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 0.9,
+          "note": "The comparison is accurate. Clip A shows a close-up shot of the 'Secure Payments' tile with a steep, dynamic perspective angle, while Clip B is shot from further back with a flatter, more top-down perspective."
+        },
+        "channelA": {
+          "verdict": "refuted",
+          "note": "Stale distance-family claim: framing at parity since pass 8; B's elevation is if anything steeper, not 'flatter'."
+        }
+      },
+      {
+        "category": "color",
+        "t": 0.5,
+        "a_observable": "The white keys have a subtle cool blue tint, and the blue shield icon is a vibrant, saturated blue.",
+        "b_observable": "The white keys are flat grey/white, and the blue shield icon is desaturated.",
+        "fix": "Adjust the color grading to increase saturation and add a cool blue cast to the highlights.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 189.28,
+            "g": 198.82,
+            "b": 201.38,
+            "rb_delta": -12.1,
+            "saturation": 0.2001
+          },
+          "B": {
+            "r": 196.99,
+            "g": 202.61,
+            "b": 215.59,
+            "rb_delta": -18.6,
+            "saturation": 0.085
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 0.5,
+        "a_observable": "Strong vignette darkening the corners.",
+        "b_observable": "Flat, uniform lighting across the corners.",
+        "fix": "Add corner vignette.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 202.03,
+            "center_mean": 205.44,
+            "falloff_pct": 1.66
+          },
+          "B": {
+            "corner_mean": 186.37,
+            "center_mean": 213.03,
+            "falloff_pct": 12.52
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 0.8,
+        "a_observable": "Deep contact shadows under the tiles.",
+        "b_observable": "Faint, washed-out shadows under the tiles.",
+        "fix": "Deepen contact shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 56.27,
+            "p1": 82.9,
+            "p5": 94.84,
+            "p50": 207.25,
+            "p95": 237.3,
+            "p99": 249.37,
+            "p999": 251.01,
+            "span_p5_p95": 142.46
+          },
+          "B": {
+            "p01": 93.94,
+            "p1": 110.56,
+            "p5": 118.06,
+            "p50": 206.52,
+            "p95": 222.81,
+            "p99": 224.81,
+            "p999": 253.44,
+            "span_p5_p95": 104.75
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera position and angle to match the reference perspective.",
+    "dropped_unsupported": 2
+  }
+}

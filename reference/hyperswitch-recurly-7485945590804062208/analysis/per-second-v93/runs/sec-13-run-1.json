@@ -1,0 +1,56 @@
+{
+  "ok": false,
+  "why": "reported 1 cuts, truth has 0",
+  "json": {
+    "cuts_in_window": [
+      13.33
+    ],
+    "a_motion": [
+      "camera"
+    ],
+    "b_motion": [
+      "camera"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 13,
+        "a_observable": "The camera is framed closely on the blue JUSPAY card, centering it.",
+        "b_observable": "The camera is framed wider, placing the yellow Recurly card in the center-left.",
+        "fix": "Adjust camera framing and position to focus on the blue card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "material",
+        "t": 13.5,
+        "a_observable": "The gray frame around the blue card has a brushed metal texture.",
+        "b_observable": "The gray frame is smooth and flat gray.",
+        "fix": "Apply a brushed metal texture to the gray frame material.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "color",
+        "t": 13.1,
+        "a_observable": "The scene has a cool, blue-toned color cast.",
+        "b_observable": "The scene has a warmer, neutral color cast.",
+        "fix": "Adjust color grading to add a cool blue cast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Correct the camera framing to focus on the blue JUSPAY card and add the brushed metal texture to the gray frame."
+  }
+}

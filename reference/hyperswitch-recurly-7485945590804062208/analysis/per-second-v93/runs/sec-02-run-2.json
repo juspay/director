@@ -1,0 +1,60 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.21
+    ],
+    "a_motion": [
+      "pan",
+      "tilt"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt"
+    ],
+    "absent_in_b": [
+      "yellow_card_top_left",
+      "brushed_metal_texture"
+    ],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 2.1,
+        "a_observable": "Strong vignette with darker corners and cool blue color cast.",
+        "b_observable": "Flat, uniform white lighting with no vignette.",
+        "fix": "Add vignette and cool color grading.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 2.5,
+        "a_observable": "Yellow card at top-left and brushed metal texture on the right.",
+        "b_observable": "Plain white background with no yellow card or textured surface.",
+        "fix": "Add background elements and textures.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 2.1,
+        "a_observable": "Camera is closer to the card with a more pronounced perspective angle.",
+        "b_observable": "Camera is further away, showing a flatter perspective.",
+        "fix": "Adjust camera focal length and position to match A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Add background elements and textures to match the staging of Video A."
+  }
+}

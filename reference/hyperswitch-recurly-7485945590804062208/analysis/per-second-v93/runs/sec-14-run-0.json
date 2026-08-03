@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera motion"
+    ],
+    "b_motion": [
+      "camera motion"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 14,
+        "a_observable": "The blue hyperswitch button has a highly saturated, deep royal blue color.",
+        "b_observable": "The blue hyperswitch button is a lighter, less saturated blue.",
+        "fix": "Adjust the color grading and material properties of the blue button to match the deep royal blue of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 14.2,
+        "a_observable": "The corners of the frame are significantly darker than the center, creating a strong vignette.",
+        "b_observable": "The corners of the frame are almost as bright as the center, with very little vignette.",
+        "fix": "Add a post-processing vignette effect to darken the corners of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 14.4,
+        "a_observable": "The shadows on the background grid are deep and have high contrast, giving a strong sense of depth.",
+        "b_observable": "The shadows on the background grid are faint and washed out, resulting in a flatter look.",
+        "fix": "Adjust the shadow intensity and contrast curve to deepen the shadows on the background.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Match the deep royal blue color of the hyperswitch button and increase the overall contrast and vignette to match the reference."
+  }
+}

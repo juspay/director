@@ -1,0 +1,268 @@
+{
+  "sec": 9,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 9.5,
+          "a_observable": "The corners of the frame are blurred due to a shallow depth of field.",
+          "b_observable": "The entire frame is uniformly sharp with no depth of field blur.",
+          "fix": "Enable depth of field in the camera settings.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 9.5,
+          "a_observable": "The corners of the image are significantly darker than the center, showing a strong vignette.",
+          "b_observable": "The corners are almost as bright as the center, lacking a vignette.",
+          "fix": "Add a vignette effect in post-processing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 9.5,
+          "a_observable": "The crevices between the keys have deep, dark shadows, creating high contrast.",
+          "b_observable": "The crevices have light grey shadows, resulting in a flatter image.",
+          "fix": "Deepen the shadows and increase overall contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 9.5,
+          "a_observable": "The white surfaces and shadows have a cool blue-green tint.",
+          "b_observable": "The white surfaces are neutral white and grey.",
+          "fix": "Apply a cool color grade to the shadows and midtones.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera depth of field and add a vignette to match the cinematic look of Video A.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera zoom out",
+        "camera pan"
+      ],
+      "b_motion": [
+        "camera zoom out",
+        "camera pan"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 9,
+          "a_observable": "The corners are darker than the center, showing a strong vignette.",
+          "b_observable": "The corners are bright, lacking any vignette.",
+          "fix": "Add a vignette to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 9.2,
+          "a_observable": "The scene has a warm, cream-colored cast.",
+          "b_observable": "The scene has a cool, bluish-gray color cast.",
+          "fix": "Adjust white balance to introduce warmer tones.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 9.5,
+          "a_observable": "Buttons cast deep, soft contact shadows onto the background.",
+          "b_observable": "Contact shadows under the buttons are extremely faint.",
+          "fix": "Increase shadow density and ambient occlusion.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the lighting and shadow settings in B to introduce deeper contact shadows and a warmer color cast, matching the depth and tone of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [
+        "vignette",
+        "depth_of_field"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 9.5,
+          "a_observable": "The camera is tilted at a dynamic perspective angle, creating strong depth between the foreground and background keys.",
+          "b_observable": "The camera angle is much flatter and closer to top-down, reducing the perspective depth.",
+          "fix": "Match the camera rotation and focal length to Video A to restore the dynamic perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 9.5,
+          "a_observable": "Strong vignette is visible with significantly darker corners compared to the center of the frame.",
+          "b_observable": "The lighting is uniform across the frame with no visible vignette in the corners.",
+          "fix": "Add a vignette pass in post-processing to match the corner falloff of Video A.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 9.5,
+          "a_observable": "The yellow Recurly key and blue Juspay key are highly saturated with rich contrast.",
+          "b_observable": "The colors of the keys are washed out and have lower saturation.",
+          "fix": "Adjust the color saturation and contrast to match the vibrant look of Video A.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 9.5,
+          "a_observable": "The yellow Recurly key is positioned in the center-right of the frame, tilted diagonally.",
+          "b_observable": "The yellow Recurly key is positioned in the center-left of the frame with a different tilt.",
+          "fix": "Re-align the layout of the keys to match the composition of Video A.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and focal length to match the dynamic perspective of Video A.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "The corners of the image are significantly darker than the center, showing a strong vignette.",
+        "b_observable": "The corners are almost as bright as the center, lacking a vignette.",
+        "fix": "Add a vignette effect in post-processing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 203.26,
+            "center_mean": 200.61,
+            "falloff_pct": -1.32
+          },
+          "B": {
+            "corner_mean": 154.78,
+            "center_mean": 157.31,
+            "falloff_pct": 1.61
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "The crevices between the keys have deep, dark shadows, creating high contrast.",
+        "b_observable": "The crevices have light grey shadows, resulting in a flatter image.",
+        "fix": "Deepen the shadows and increase overall contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 62.41,
+            "p1": 94.19,
+            "p5": 107.96,
+            "p50": 202.15,
+            "p95": 246.35,
+            "p99": 249.79,
+            "p999": 253,
+            "span_p5_p95": 138.39
+          },
+          "B": {
+            "p01": 62.37,
+            "p1": 63.51,
+            "p5": 69.7,
+            "p50": 172.69,
+            "p95": 190.69,
+            "p99": 194.77,
+            "p999": 245.8,
+            "span_p5_p95": 120.99
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Add a vignette and deepen the shadows in B to match the contrast and framing of Video A.",
+    "dropped_unsupported": 6
+  }
+}

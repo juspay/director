@@ -1,0 +1,66 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 0.2,
+        "a_observable": "Camera is closer to the center tile with a steep perspective angle.",
+        "b_observable": "Camera is further back with a flatter, more top-down angle.",
+        "fix": "Match camera position and angle.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.5,
+        "a_observable": "Strong vignette darkening the corners.",
+        "b_observable": "Flat, uniform lighting across the corners.",
+        "fix": "Add corner vignette.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.8,
+        "a_observable": "Deep contact shadows under the tiles.",
+        "b_observable": "Faint, washed-out shadows under the tiles.",
+        "fix": "Deepen contact shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 0.6,
+        "a_observable": "Cool blue color cast on the white surfaces.",
+        "b_observable": "Neutral grey color cast on the white surfaces.",
+        "fix": "Adjust white balance to introduce a cool tint.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and angle to match the reference perspective."
+  }
+}

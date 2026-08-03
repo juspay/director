@@ -1,0 +1,49 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan",
+      "subtle rotation",
+      "gentle zoom out"
+    ],
+    "b_motion": [
+      "slow camera pan",
+      "rotation",
+      "zoom out"
+    ],
+    "absent_in_b": [
+      "depth of field blur",
+      "glossy reflections on the yellow card"
+    ],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 5.5,
+        "a_observable": "Strong vignette with darker corners and pronounced soft shadows under the yellow Recurly card.",
+        "b_observable": "Flat, uniform lighting across the frame with minimal corner falloff and very weak shadows under the card.",
+        "fix": "Add a vignette effect and enable ambient occlusion to create deeper shadows under the cards.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 5.2,
+        "a_observable": "The camera has a distinct perspective tilt with visible depth of field, making the background elements softer.",
+        "b_observable": "The camera perspective is flatter with orthographic-like rendering, and background elements are uniformly sharp.",
+        "fix": "Adjust the camera's field of view and enable depth of field to match the reference's focus falloff.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera's focal length and depth of field to match the reference's perspective, and add a stronger vignette and soft ambient occlusion shadows to restore depth."
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "Slow camera zoom out and pan over keyboard keys"
+    ],
+    "b_motion": [
+      "Slow camera zoom out and pan over keyboard keys"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 0.5,
+        "a_observable": "Vibrant blue and yellow keys are visible with high saturation.",
+        "b_observable": "The keys are highly desaturated, appearing mostly light grey and white.",
+        "fix": "Increase color saturation and match the vibrant blue and yellow materials of the keys.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 0.2,
+        "a_observable": "The 'Secure Payments' key has a square shape with the blue shield on the left and text on the right.",
+        "b_observable": "The 'Secure Payments' key is an elongated rounded rectangle with different icon and text placement.",
+        "fix": "Adjust the geometry and aspect ratio of the key to be square, and align the shield icon and text horizontally.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 0.8,
+        "a_observable": "The camera is positioned closer to the keys, creating a dynamic close-up perspective with a strong isometric tilt.",
+        "b_observable": "The camera is further away, showing more of the surrounding flat keys with less perspective tilt.",
+        "fix": "Adjust camera focal length, position, and rotation to match the close-up isometric perspective of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position, rotation, and focal length to match the close-up isometric perspective of the reference video."
+  }
+}

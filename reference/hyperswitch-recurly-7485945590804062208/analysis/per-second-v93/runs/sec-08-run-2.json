@@ -1,0 +1,60 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "diagonal pan up-right",
+      "pan down-right and zoom out"
+    ],
+    "b_motion": [
+      "diagonal pan up-right",
+      "pan down-right and zoom out"
+    ],
+    "absent_in_b": [
+      "yellow card on top-left before cut",
+      "metallic texture on right before cut",
+      "Billing card on bottom-left after cut"
+    ],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 8.04,
+        "a_observable": "A yellow card is visible in the top-left corner, and a metallic brushed texture is on the right.",
+        "b_observable": "The top-left corner is plain white, and the right side is a flat grey keyboard surface.",
+        "fix": "Add the yellow card and brushed metal texture to match the reference staging.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 8.5,
+        "a_observable": "The camera perspective shows the yellow Recurly card in the upper-left quadrant of the frame.",
+        "b_observable": "The camera perspective shows the yellow Recurly card in the lower-center of the frame.",
+        "fix": "Adjust camera position and card layout to match the reference composition.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.8,
+        "a_observable": "Strong vignette with darker corners and deep shadows around the keycaps.",
+        "b_observable": "The lighting is flat and bright, lacking a vignette and deep contact shadows.",
+        "fix": "Add a vignette and increase shadow depth around the keys.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Realign the camera and card layout after the cut to match the reference composition."
+  }
+}

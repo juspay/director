@@ -1,0 +1,255 @@
+{
+  "sec": 14,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera motion"
+      ],
+      "b_motion": [
+        "camera motion"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "color",
+          "t": 14,
+          "a_observable": "The blue hyperswitch button has a highly saturated, deep royal blue color.",
+          "b_observable": "The blue hyperswitch button is a lighter, less saturated blue.",
+          "fix": "Adjust the color grading and material properties of the blue button to match the deep royal blue of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 14.2,
+          "a_observable": "The corners of the frame are significantly darker than the center, creating a strong vignette.",
+          "b_observable": "The corners of the frame are almost as bright as the center, with very little vignette.",
+          "fix": "Add a post-processing vignette effect to darken the corners of the frame.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 14.4,
+          "a_observable": "The shadows on the background grid are deep and have high contrast, giving a strong sense of depth.",
+          "b_observable": "The shadows on the background grid are faint and washed out, resulting in a flatter look.",
+          "fix": "Adjust the shadow intensity and contrast curve to deepen the shadows on the background.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Match the deep royal blue color of the hyperswitch button and increase the overall contrast and vignette to match the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow zoom out"
+      ],
+      "b_motion": [
+        "slow zoom out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "color",
+          "t": 14.2,
+          "a_observable": "The blue button on the right is a lighter, less saturated blue.",
+          "b_observable": "The blue button on the right is a highly saturated royal blue.",
+          "fix": "Desaturate and lighten the blue button material.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_more_saturated"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 14.1,
+          "a_observable": "The background keys have softer shadows and brighter highlights.",
+          "b_observable": "The background keys show darker shadows in crevices and higher contrast.",
+          "fix": "Increase ambient light and soften shadows on the keyboard grid.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_higher_contrast"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 14.3,
+          "a_observable": "The corners of the frame show significant out-of-focus blur.",
+          "b_observable": "The corners of the frame are sharp and in focus.",
+          "fix": "Enable a shallower depth of field to blur the corners.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust camera aperture to replicate the shallow depth of field and corner blur of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera drift"
+      ],
+      "b_motion": [
+        "slow camera drift"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 14.2,
+          "a_observable": "Strong vignette with darker corners and edges.",
+          "b_observable": "Flat lighting across the frame with minimal corner shading.",
+          "fix": "Add a vignette to darken the corners and match the reference lighting.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 14.2,
+          "a_observable": "The yellow and blue keys display highly saturated, rich colors.",
+          "b_observable": "The yellow and blue keys are desaturated and look washed out.",
+          "fix": "Increase color saturation on the key materials to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 14.2,
+          "a_observable": "The background keys are heavily blurred due to a shallow depth of field.",
+          "b_observable": "The background keys remain relatively sharp, indicating a deeper depth of field.",
+          "fix": "Adjust camera aperture settings to increase depth of field blur in the background.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera depth of field and vignette to match the soft, focused look of the reference video.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 14.2,
+        "a_observable": "Strong vignette with darker corners and edges.",
+        "b_observable": "Flat lighting across the frame with minimal corner shading.",
+        "fix": "Add a vignette to darken the corners and match the reference lighting.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 208.82,
+            "center_mean": 192.76,
+            "falloff_pct": -8.33
+          },
+          "B": {
+            "corner_mean": 150.42,
+            "center_mean": 157.25,
+            "falloff_pct": 4.34
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 14.2,
+        "a_observable": "The yellow and blue keys display highly saturated, rich colors.",
+        "b_observable": "The yellow and blue keys are desaturated and look washed out.",
+        "fix": "Increase color saturation on the key materials to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 194.72,
+            "g": 204.52,
+            "b": 200.82,
+            "rb_delta": -6.1,
+            "saturation": 0.1835
+          },
+          "B": {
+            "r": 140.11,
+            "g": 153.42,
+            "b": 190,
+            "rb_delta": -49.89,
+            "saturation": 0.3118
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "camera",
+        "t": 14.2,
+        "a_observable": "The background keys are heavily blurred due to a shallow depth of field.",
+        "b_observable": "The background keys remain relatively sharp, indicating a deeper depth of field.",
+        "fix": "Adjust camera aperture settings to increase depth of field blur in the background.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_sharper",
+          "A": {
+            "lap_var": 0.83
+          },
+          "B": {
+            "lap_var": 2.54
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera depth of field and vignette to match the soft, focused look of the reference video.",
+    "dropped_unsupported": 3
+  }
+}

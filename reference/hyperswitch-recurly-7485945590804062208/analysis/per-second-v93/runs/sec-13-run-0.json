@@ -1,0 +1,57 @@
+{
+  "ok": false,
+  "why": "reported 1 cuts, truth has 0",
+  "json": {
+    "cuts_in_window": [
+      13.33
+    ],
+    "a_motion": [
+      "camera zoom out",
+      "camera pan"
+    ],
+    "b_motion": [
+      "camera zoom out",
+      "camera pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 13.1,
+        "a_observable": "The camera is positioned higher and further back, showing a wider view of the keyboard layout.",
+        "b_observable": "The camera is closer and angled differently, centering the yellow Recurly key.",
+        "fix": "Match the camera position and focal length to the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 13.5,
+        "a_observable": "The white keys and background elements have a warm yellow-green cast.",
+        "b_observable": "The white keys and background elements have a cool blue cast.",
+        "fix": "Adjust the light color temperature to be warmer.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "material",
+        "t": 13.7,
+        "a_observable": "The blue Juspay key has a matte finish with soft highlights and a thin metallic border.",
+        "b_observable": "The blue key has a highly saturated flat material with a thicker, darker border.",
+        "fix": "Reduce saturation and refine the border thickness of the blue key.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing and perspective to match the reference composition before and after the cut."
+  }
+}
