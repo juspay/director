@@ -76,6 +76,11 @@ type Key = { f: number; pos: [number, number, number]; tgt: [number, number, num
 type Shot = { start: number; end: number; keys: Key[] };
 
 /**
+ * MACRO ELEVATION, second calibration (pass 11): the pass-8 raise to 58-66deg
+ * overshot — 'B more directly overhead' was frame-confirmed three times over
+ * two verification passes. Walked back ~10deg (55/54/48/48), same
+ * azimuth-and-distance-preserving recompute.
+ *
  * MACRO ELEVATION RAISED (pass 8). Eight verified pass-7 camera findings said
  * "A closer"; the eyewitness frames showed the real variable is ELEVATION —
  * the reference shoots its macro beats from ~60-70deg down into dense frames,
@@ -87,33 +92,33 @@ const SHOTS: Shot[] = [
   {
     start: 0, end: 65,
     keys: [
-      { f: 0, pos: [1.35, 3.80, 1.06], tgt: [0.00, 0.15, 0.15], roll: -0.25, fov: 34 },
-      { f: 32, pos: [0.11, 3.81, 1.77], tgt: [0.00, 0.15, 0.15], roll: -0.18, fov: 34 },
-      { f: 65, pos: [-1.28, 3.80, 1.15], tgt: [0.00, 0.15, 0.15], roll: -0.1, fov: 34 },
+      { f: 0, pos: [1.90, 3.42, 1.43], tgt: [0.00, 0.15, 0.15], roll: -0.25, fov: 34 },
+      { f: 32, pos: [0.16, 3.43, 2.44], tgt: [0.00, 0.15, 0.15], roll: -0.18, fov: 34 },
+      { f: 65, pos: [-1.81, 3.42, 1.56], tgt: [0.00, 0.15, 0.15], roll: -0.1, fov: 34 },
     ],
   },
   {
     start: 66, end: 146,
     keys: [
-      { f: 66, pos: [-1.12, 4.60, 1.86], tgt: [0.00, 0.16, 0.00], roll: -0.07, fov: 33 },
-      { f: 106, pos: [-0.23, 4.61, 2.16], tgt: [0.00, 0.16, 0.00], roll: -0.12, fov: 33 },
-      { f: 146, pos: [0.63, 4.61, 2.08], tgt: [0.00, 0.16, 0.00], roll: -0.17, fov: 33 },
+      { f: 66, pos: [-1.50, 4.16, 2.49], tgt: [0.00, 0.16, 0.00], roll: -0.07, fov: 33 },
+      { f: 106, pos: [-0.31, 4.17, 2.89], tgt: [0.00, 0.16, 0.00], roll: -0.12, fov: 33 },
+      { f: 146, pos: [0.84, 4.17, 2.79], tgt: [0.00, 0.16, 0.00], roll: -0.17, fov: 33 },
     ],
   },
   {
     start: 147, end: 199,
     keys: [
-      { f: 147, pos: [1.58, 3.83, 1.69], tgt: [0.03, 0.18, 0.02], roll: -0.27, fov: 34 },
-      { f: 173, pos: [0.50, 3.83, 2.25], tgt: [0.03, 0.18, 0.02], roll: -0.22, fov: 34 },
-      { f: 199, pos: [-0.68, 3.83, 2.19], tgt: [0.03, 0.18, 0.02], roll: -0.15, fov: 34 },
+      { f: 147, pos: [1.99, 3.38, 2.13], tgt: [0.03, 0.18, 0.02], roll: -0.27, fov: 34 },
+      { f: 173, pos: [0.62, 3.38, 2.84], tgt: [0.03, 0.18, 0.02], roll: -0.22, fov: 34 },
+      { f: 199, pos: [-0.87, 3.38, 2.76], tgt: [0.03, 0.18, 0.02], roll: -0.15, fov: 34 },
     ],
   },
   {
     start: 200, end: 242,
     keys: [
-      { f: 200, pos: [-1.45, 3.83, 1.77], tgt: [0.02, 0.18, 0.02], roll: -0.08, fov: 34 },
-      { f: 221, pos: [-0.30, 3.82, 2.27], tgt: [0.02, 0.18, 0.02], roll: -0.13, fov: 34 },
-      { f: 242, pos: [0.95, 3.82, 2.10], tgt: [0.02, 0.18, 0.02], roll: -0.19, fov: 34 },
+      { f: 200, pos: [-1.83, 3.38, 2.23], tgt: [0.02, 0.18, 0.02], roll: -0.08, fov: 34 },
+      { f: 221, pos: [-0.38, 3.37, 2.86], tgt: [0.02, 0.18, 0.02], roll: -0.13, fov: 34 },
+      { f: 242, pos: [1.19, 3.37, 2.64], tgt: [0.02, 0.18, 0.02], roll: -0.19, fov: 34 },
     ],
   },
   {
@@ -309,6 +314,15 @@ const SET_OFFSET: Array<[number, number, number]> = [
  * plates sit in their metal frames.
  */
 const CAP_Y = TILE_TOP + 0.125 / 2 - 0.008;
+/**
+ * Plain cards FLOAT (pass 11, frame-confirmed): the reference's pill and
+ * capability cards hover off the wall with pronounced soft drop shadows
+ * beneath — 'very faint or absent drop shadows, cards flat against the
+ * keyboard' survived eyewitness while ours sat seated. Heroes stay in their
+ * wells; everything else lifts onto its shadow, which the directional light
+ * (the working shadow-caster) draws onto the wall below.
+ */
+const FLOAT_Y = TILE_TOP + 0.125 / 2 + 0.085;
 const BRAND_Y = WELL_FLOOR + 0.145 / 2;
 
 /** Hero slot — both brand plates occupy this one well, one per shot. */
@@ -375,8 +389,8 @@ export const Timeline: React.FC = () => {
       {/* Shot 1 — Secure Payments / Renewal Success */}
       {shot === 0 && (
         <>
-          <Keycap position={[-0.06, CAP_Y, 0.30]} size={CAP} color={C.card} face={f.secure} faceSize={F_PILL} />
-          <Keycap position={[0.86, CAP_Y, -0.92]} size={CAP} color={C.card} face={renewal} faceSize={F_PILL} />
+          <Keycap position={[-0.06, FLOAT_Y, 0.30]} size={CAP} color={C.card} face={f.secure} faceSize={F_PILL} />
+          <Keycap position={[0.86, FLOAT_Y, -0.92]} size={CAP} color={C.card} face={renewal} faceSize={F_PILL} />
         </>
       )}
 
@@ -386,9 +400,9 @@ export const Timeline: React.FC = () => {
           three were ever visible. */}
       {shot === 1 && (
         <>
-          <Keycap position={[-0.05, CAP_Y, -0.94]} size={CAP} color={C.card} face={f.subs} faceSize={F_COL} />
-          <Keycap position={[-0.05, CAP_Y, 0.00]} size={CAP} color={C.card} face={retries} faceSize={F_COL} />
-          <Keycap position={[-0.05, CAP_Y, 0.94]} size={CAP} color={C.card} face={f.apms} faceSize={F_COL} />
+          <Keycap position={[-0.05, FLOAT_Y, -0.94]} size={CAP} color={C.card} face={f.subs} faceSize={F_COL} />
+          <Keycap position={[-0.05, FLOAT_Y, 0.00]} size={CAP} color={C.card} face={retries} faceSize={F_COL} />
+          <Keycap position={[-0.05, FLOAT_Y, 0.94]} size={CAP} color={C.card} face={f.apms} faceSize={F_COL} />
         </>
       )}
 
@@ -403,8 +417,8 @@ export const Timeline: React.FC = () => {
             face={f.recurly}
             faceSize={F_RECURLY}
           />
-          <Keycap position={[-1.32, CAP_Y, -1.30]} size={[1.15, 0.115, 0.72]} color={C.card} face={f.secure} faceSize={[1.02, 1.02 / 1.65]} />
-          <Keycap position={[1.44, CAP_Y, -1.45]} size={CAP} color={C.card} face={f.success} faceSize={F_SUCCESS} />
+          <Keycap position={[-1.32, FLOAT_Y, -1.30]} size={[1.15, 0.115, 0.72]} color={C.card} face={f.secure} faceSize={[1.02, 1.02 / 1.65]} />
+          <Keycap position={[1.44, FLOAT_Y, -1.45]} size={CAP} color={C.card} face={f.success} faceSize={F_SUCCESS} />
         </>
       )}
 
@@ -423,7 +437,7 @@ export const Timeline: React.FC = () => {
             face={f.hyper}
             faceSize={F_HYPER}
           />
-          <Keycap position={[1.48, CAP_Y, -1.40]} size={CAP} color={C.card} face={f.revenue} faceSize={F_REVENUE} />
+          <Keycap position={[1.48, FLOAT_Y, -1.40]} size={CAP} color={C.card} face={f.revenue} faceSize={F_REVENUE} />
           {/* PSP per the verified staging finding: a WHITE keycap carrying a
               small recessed indigo square, not a solid blue mini-cap. */}
           <Keycap
