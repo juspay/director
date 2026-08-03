@@ -147,7 +147,11 @@ const BRIGHT_MACRO = -0.08;
 // p95 240.0, ours 187.2 / 202.8 — the shot had no bright whites at all against
 // a reference whose wall is a near-white field. The compression this grade
 // still carried was the last of the blow-out correction.
-const SAT_LOCKUP = 0.20;
+// Raised 0.20 -> 0.30. Verified twice over: s09 reports our lockup yellow as
+// "a cooler, desaturated yellow", and an independent measurement of the plate
+// puts its blue channel at 104 against the reference's 73 with red 11 low —
+// washed toward grey, exactly what this constant controls.
+const SAT_LOCKUP = 0.30;
 const CONTRAST_LOCKUP = 0.0;
 const BRIGHT_LOCKUP = 0.06;
 
@@ -336,7 +340,13 @@ const Effects: React.FC = () => {
           has darker corners"; the measurement vetoed it and revealed the error
           ran the other way.) The lockup value is left alone: it measures within
           2pp there. */}
-      <Vignette eskil={false} offset={0.28} darkness={interpolate(frame, [255, 300], [0.05, 0.24], ease)} />
+      {/* Macro 0.05 stands — measured falloff at t=0.5 was ours 12.57% against
+          the reference's 1.66%, and the cut fixed it. The LOCKUP end overshot:
+          pass 13 came back with "a very weak vignette with bright corners"
+          (s08) and "frame edges evenly lit with no vignette" (s11), where pass
+          12's complaint had been the opposite. 0.24 -> 0.34 puts it back
+          without touching the macro. */}
+      <Vignette eskil={false} offset={0.28} darkness={interpolate(frame, [255, 300], [0.05, 0.34], ease)} />
       <HueSaturation saturation={satBoost} />
       <BrightnessContrast brightness={brightness} contrast={contrast} />
     </EffectComposer>

@@ -342,42 +342,43 @@ export function hyperswitchFace(): THREE.CanvasTexture {
     ctx.beginPath();
     ctx.arc(cx, cy, r, 0, Math.PI * 2);
     ctx.fill();
-    // The mark inside is a BLUE two-fold-symmetric lens with opposing barbs —
-    // two arrowheads chasing each other, i.e. a "switch" glyph. The previous
-    // version drew a blue disc with a WHITE droplet on top, which inverted the
-    // figure/ground AND replaced the arrows with a teardrop. Reference: the
-    // target's own lockup frame.
+    /**
+     * The mark is a CIRCLE, not a lens.
+     *
+     * Two staging findings in the pass-13 verification named this independently
+     * — "a leaf-like shape inside", "a white circle containing a blue flame" —
+     * and magnifying the reference's own roundel settles it: the blue form is a
+     * near-complete disc split into two chasing arrows, each a half-disc offset
+     * across the split with a triangular head at its leading tip. The previous
+     * lens-with-barbs construction starts from two points, so it reads as a
+     * leaf or a flame no matter how the barbs are tuned. Starting from a circle
+     * and cutting it is what makes it read as a cycle.
+     */
     const rr = r * 0.62;
-    const tilt = -0.20; // radians; the mark leans slightly anticlockwise
-    const px = Math.sin(tilt);
-    const py = -Math.cos(tilt);
-    const tipA = [cx + rr * px, cy + rr * py];
-    const tipB = [cx - rr * px, cy - rr * py];
-    const bulge = rr * 0.60;
-    // Perpendicular to the tip axis, for the two opposing bellies.
-    const qx = -py;
-    const qy = px;
+    const tilt = -0.20; // the split axis leans slightly anticlockwise
+    const gap = rr * 0.09;
     ctx.fillStyle = C.blue;
-    ctx.beginPath();
-    ctx.moveTo(tipA[0], tipA[1]);
-    ctx.quadraticCurveTo(cx + qx * bulge, cy + qy * bulge, tipB[0], tipB[1]);
-    ctx.quadraticCurveTo(cx - qx * bulge, cy - qy * bulge, tipA[0], tipA[1]);
-    ctx.closePath();
-    ctx.fill();
-    // Barbs: a short flick off each tip, perpendicular to the axis and on
-    // opposite sides, which is what makes the lens read as two arrowheads
-    // rather than an eye.
-    const barb = rr * 0.42;
-    ctx.beginPath();
-    ctx.moveTo(tipA[0], tipA[1]);
-    ctx.lineTo(tipA[0] - qx * barb, tipA[1] - qy * barb);
-    ctx.lineTo(tipA[0] - px * barb * 0.85, tipA[1] - py * barb * 0.85);
-    ctx.closePath();
-    ctx.moveTo(tipB[0], tipB[1]);
-    ctx.lineTo(tipB[0] + qx * barb, tipB[1] + qy * barb);
-    ctx.lineTo(tipB[0] + px * barb * 0.85, tipB[1] + py * barb * 0.85);
-    ctx.closePath();
-    ctx.fill();
+    for (const s of [1, -1]) {
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(tilt);
+      // Half-disc, pushed off the split line so a white gap opens between the
+      // two arrows.
+      ctx.beginPath();
+      ctx.arc(0, (s * gap) / 2, rr, s > 0 ? 0 : Math.PI, s > 0 ? Math.PI : 0);
+      ctx.closePath();
+      ctx.fill();
+      // Arrowhead at the leading END of the split, apex overhanging the disc
+      // edge so the pair reads as rotation. Kept shallow: a deep head bites
+      // into the split and the mark reads as a circle with a slash through it.
+      ctx.beginPath();
+      ctx.moveTo(-s * rr * 1.24, (s * gap) / 2 + s * rr * 0.06);
+      ctx.lineTo(-s * rr * 0.66, (s * gap) / 2 - s * rr * 0.02);
+      ctx.lineTo(-s * rr * 0.74, (s * gap) / 2 + s * rr * 0.40);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
     ctx.fillStyle = '#fff';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'alphabetic';
