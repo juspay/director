@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "The camera slowly pans and zooms out from the blue JUSPAY card, revealing surrounding tiles."
+    ],
+    "b_motion": [
+      "The camera pans diagonally and rotates slightly around the blue card."
+    ],
+    "absent_in_b": [
+      "grid of dots on the left tile"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 7.5,
+        "a_observable": "The camera is positioned directly above the blue card, showing it aligned horizontally with a flat perspective.",
+        "b_observable": "The camera is at an oblique angle, showing the blue card rotated diagonally with a strong perspective.",
+        "fix": "Adjust the camera angle and rotation to match the top-down perspective of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 7.5,
+        "a_observable": "The scene is brightly lit with soft, subtle shadows and high-exposure white surfaces.",
+        "b_observable": "The scene is dimly lit with high contrast, showing deep black shadows under the raised cards.",
+        "fix": "Increase the ambient light intensity and soften the shadows to match the bright, high-key lighting of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      },
+      {
+        "category": "material",
+        "t": 7.5,
+        "a_observable": "The small 'PSP' card at the bottom has a reflective metallic silver frame.",
+        "b_observable": "The small 'PSP' card is a matte white card with no metallic frame.",
+        "fix": "Add a metallic material with reflective properties to the frame of the PSP card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and perspective to match the top-down view of the reference, and soften the high-contrast shadows."
+  }
+}

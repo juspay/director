@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "diagonal camera pan tracking the three feature cards moving upwards and leftwards"
+    ],
+    "b_motion": [
+      "diagonal camera pan tracking the three feature cards moving upwards and leftwards"
+    ],
+    "absent_in_b": [
+      "brushed metal texture on the right side of the card block",
+      "yellow tile in the top-left background"
+    ],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 3.2,
+        "a_observable": "A yellow tile is visible in the top-left corner of the frame.",
+        "b_observable": "Only plain white tiles are visible in the top-left corner.",
+        "fix": "Reposition background tiles to ensure the yellow tile enters the frame.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "material",
+        "t": 3.5,
+        "a_observable": "The vertical strip to the right of the cards has a brushed metal material with anisotropic reflections.",
+        "b_observable": "The vertical strip is a flat, matte grey material with no metallic texture.",
+        "fix": "Apply a brushed metal material with anisotropic reflections to the right side of the card container.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 3.8,
+        "a_observable": "Deep shadows are visible in the crevices between the tiles, creating strong contrast.",
+        "b_observable": "The crevices between the tiles have very faint, shallow shadows, resulting in a flat appearance.",
+        "fix": "Increase the shadow depth and ambient occlusion to enhance contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Apply the brushed metal texture to the right side of the card block and adjust the background tile layout to include the yellow tile."
+  }
+}

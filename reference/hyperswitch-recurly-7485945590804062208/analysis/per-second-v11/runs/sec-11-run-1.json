@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow zoom out",
+      "slow pan up-right"
+    ],
+    "b_motion": [
+      "slow zoom out",
+      "slow pan up-right"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 11.2,
+        "a_observable": "Strong depth of field blur on outer edges and corners.",
+        "b_observable": "Corners and edges are sharp with very weak blur.",
+        "fix": "Increase aperture size to shallow the depth of field.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "Soft, gradual shadows in recessed wells.",
+        "b_observable": "Harsh, dark black shadows in recessed wells.",
+        "fix": "Soften ambient occlusion and shadow settings.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_blacks"
+        }
+      },
+      {
+        "category": "color",
+        "t": 11.1,
+        "a_observable": "Warm, natural tones on white tiles.",
+        "b_observable": "Cool, blue-grey color cast on white tiles.",
+        "fix": "Adjust white balance to reduce cool cast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Match the shallow depth of field and soften the harsh black shadows in the recessed wells."
+  }
+}

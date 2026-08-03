@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera tilt",
+      "subtle translation"
+    ],
+    "b_motion": [
+      "slow camera tilt",
+      "subtle translation"
+    ],
+    "absent_in_b": [
+      "yellow tile at the bottom",
+      "blue tile on the left"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 0,
+        "a_observable": "Camera is close to the central card.",
+        "b_observable": "Camera is further back with a wider perspective.",
+        "fix": "Adjust camera position to match reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 0.5,
+        "a_observable": "Blue shield icon is highly saturated.",
+        "b_observable": "Blue shield icon is desaturated.",
+        "fix": "Increase the saturation of the blue materials.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "material",
+        "t": 0.5,
+        "a_observable": "Bottom tile is solid yellow.",
+        "b_observable": "Bottom tile is white with horizontal lines.",
+        "fix": "Apply the correct yellow material to the bottom tile.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.5,
+        "a_observable": "Strong vignetting is visible at the corners.",
+        "b_observable": "Corners are bright, showing flat lighting.",
+        "fix": "Apply a vignette post-process effect to darken the corners.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Re-align the camera position and match the tile materials to restore the composition and color scheme of the reference."
+  }
+}

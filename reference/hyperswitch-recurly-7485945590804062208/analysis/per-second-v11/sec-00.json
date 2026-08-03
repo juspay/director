@@ -1,0 +1,273 @@
+{
+  "sec": 0,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera tilt",
+        "subtle translation"
+      ],
+      "b_motion": [
+        "slow camera tilt",
+        "subtle translation"
+      ],
+      "absent_in_b": [
+        "yellow tile at the bottom",
+        "blue tile on the left"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 0,
+          "a_observable": "Camera is close to the central card.",
+          "b_observable": "Camera is further back with a wider perspective.",
+          "fix": "Adjust camera position to match reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 0.5,
+          "a_observable": "Blue shield icon is highly saturated.",
+          "b_observable": "Blue shield icon is desaturated.",
+          "fix": "Increase the saturation of the blue materials.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "material",
+          "t": 0.5,
+          "a_observable": "Bottom tile is solid yellow.",
+          "b_observable": "Bottom tile is white with horizontal lines.",
+          "fix": "Apply the correct yellow material to the bottom tile.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.5,
+          "a_observable": "Strong vignetting is visible at the corners.",
+          "b_observable": "Corners are bright, showing flat lighting.",
+          "fix": "Apply a vignette post-process effect to darken the corners.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Re-align the camera position and match the tile materials to restore the composition and color scheme of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera drift"
+      ],
+      "b_motion": [
+        "slow camera drift"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 0.5,
+          "a_observable": "Strong vignette with pronounced corner shading.",
+          "b_observable": "Weak vignette with bright corners.",
+          "fix": "Increase camera vignette intensity.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.5,
+          "a_observable": "High contrast with deep shadows under the buttons.",
+          "b_observable": "Low contrast with flat, bright shadows.",
+          "fix": "Boost contrast and deepen shadows in post-processing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 0.1,
+          "a_observable": "Tighter camera framing on the central card.",
+          "b_observable": "Wider camera framing showing more background.",
+          "fix": "Adjust camera zoom or position closer to the subject.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Increase the vignette strength and adjust the camera framing to be tighter on the central card.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 0.2,
+          "a_observable": "The camera is positioned close to the central tile with a steep top-down perspective.",
+          "b_observable": "The camera is further back and tilted at a shallower angle.",
+          "fix": "Re-align camera position and tilt angle.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast",
+            "region": "full"
+          }
+        },
+        {
+          "category": "color",
+          "t": 0.5,
+          "a_observable": "The blue shield icon is highly saturated and the white tiles have a cool tone.",
+          "b_observable": "The colors are desaturated and washed out with a warmer cast.",
+          "fix": "Increase saturation and adjust white balance.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "center"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.8,
+          "a_observable": "Strong corner vignette and deep soft shadows are present around the tile edges.",
+          "b_observable": "The lighting is flat with minimal vignette and faint shadows.",
+          "fix": "Add a vignette and deepen the contact shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera framing and tilt to match the reference perspective.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 0.1,
+        "a_observable": "Tighter camera framing on the central card.",
+        "b_observable": "Wider camera framing showing more background.",
+        "fix": "Adjust camera zoom or position closer to the subject.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 3,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "Clip A shows a much tighter framing on the 'Secure Payments' card, while Clip B has a wider camera angle that reveals more of the surrounding cards and background."
+        },
+        "channelA": {
+          "verdict": "refuted",
+          "note": "Distance family, fifth consecutive parity refutation."
+        }
+      },
+      {
+        "category": "color",
+        "t": 0.5,
+        "a_observable": "Blue shield icon is highly saturated.",
+        "b_observable": "Blue shield icon is desaturated.",
+        "fix": "Increase the saturation of the blue materials.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 189.28,
+            "g": 198.82,
+            "b": 201.38,
+            "rb_delta": -12.1,
+            "saturation": 0.2001
+          },
+          "B": {
+            "r": 190.71,
+            "g": 196.81,
+            "b": 210.82,
+            "rb_delta": -20.11,
+            "saturation": 0.0944
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 0.5,
+        "a_observable": "Strong vignette with pronounced corner shading.",
+        "b_observable": "Weak vignette with bright corners.",
+        "fix": "Increase camera vignette intensity.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 202.03,
+            "center_mean": 205.44,
+            "falloff_pct": 1.66
+          },
+          "B": {
+            "corner_mean": 179.89,
+            "center_mean": 210.75,
+            "falloff_pct": 14.64
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Increase the vignette strength and adjust the camera framing to be tighter on the central card.",
+    "dropped_unsupported": 2
+  }
+}

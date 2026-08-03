@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 5.2,
+        "a_observable": "The camera is positioned very close to the yellow button at a low angle, creating a dynamic perspective with strong depth of field blurring the background.",
+        "b_observable": "The camera is positioned further away at a higher angle, resulting in a flatter perspective with less background blur.",
+        "fix": "Bring the camera closer to the yellow button, lower its height, and increase the depth of field aperture to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "color",
+        "t": 5.5,
+        "a_observable": "The yellow button has a warm golden-yellow hue with rich, saturated tones.",
+        "b_observable": "The yellow button has a cooler, less saturated lemon-yellow hue.",
+        "fix": "Adjust the diffuse color of the yellow button to a warmer, more saturated golden-yellow.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "material",
+        "t": 5.8,
+        "a_observable": "The yellow button exhibits soft specular highlights along its rounded edges, suggesting a semi-matte plastic material.",
+        "b_observable": "The yellow button appears completely flat with no specular highlights, suggesting a diffuse-only material.",
+        "fix": "Add a glossy specular component to the yellow button's material shader to catch the light on its edges.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_brighter_highlights"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position, angle, and focal length to match the close-up, low-angle perspective of the reference video."
+  }
+}

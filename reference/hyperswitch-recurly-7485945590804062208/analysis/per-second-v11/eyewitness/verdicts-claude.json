@@ -1,0 +1,11 @@
+{
+  "00:0": {"verdict": "refuted", "note": "Distance family, fifth consecutive parity refutation."},
+  "01:0": {"verdict": "supported", "note": "Accent placement: A has a solid yellow tile directly below Secure Payments; B's lottery put a ruled tile there."},
+  "02:1": {"verdict": "supported", "note": "Same placement family: A's yellow/blue accents sit top-left where B shows plain white."},
+  "02:2": {"verdict": "supported", "note": "Real and actionable: A's lens reads wider with more perspective distortion up close; B at fov 33-34 is flatter. Pairs with the dome finding below."},
+  "03:0": {"verdict": "supported", "note": "Brushed strip family, third confirmation."},
+  "05:1": {"verdict": "refuted", "note": "Size parity again (B's Recurly measures LARGER, ~74% vs ~69% frame width). The perceptual driver the model keeps reading as 'closer' is that A's card BOWS — dramatic dome with a sweeping specular bloom — giving it presence our subtle dome lacks at this angle."},
+  "07:0": {"verdict": "refuted", "note": "The claim's A half is false: A is oblique too and its card sits diagonally in frame. Real difference in this pair: A's pronounced dome and wide plinth vs B's flat read."},
+  "09:0": {"verdict": "refuted", "note": "Lockup parity family."},
+  "11:1": {"verdict": "refuted", "note": "Lockup parity family."}
+}

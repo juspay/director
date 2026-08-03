@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "camera pans and rotates",
+      "pill slides out"
+    ],
+    "b_motion": [
+      "camera pans and rotates",
+      "pill slides out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 8,
+        "a_observable": "The camera is close to the blue card, which is rotated slightly counter-clockwise.",
+        "b_observable": "The camera is further away and tilted at a much steeper angle.",
+        "fix": "Adjust camera distance and rotation to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "Strong ambient occlusion shadows are visible in the crevices between the keys.",
+        "b_observable": "Crevices are brightly lit with minimal contact shadows.",
+        "fix": "Increase contact shadow intensity and ambient occlusion.",
+        "severity": 4,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 8.7,
+        "a_observable": "The 'Live Now' pill begins to slide out at t=8.7s.",
+        "b_observable": "The 'Live Now' pill begins to slide out earlier at t=8.6s.",
+        "fix": "Delay the pill's slide-out animation to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing and increase the contact shadows to match the depth and composition of the reference."
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 9.2,
+        "a_observable": "The camera is positioned closer to the grid, making the cards appear larger with a distinct perspective angle.",
+        "b_observable": "The camera is positioned further away, resulting in smaller cards and a flatter perspective.",
+        "fix": "Move the camera closer and adjust the focal length to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "Deep, defined contact shadows are visible beneath the cards, creating depth.",
+        "b_observable": "Shadows are extremely faint and diffuse, making the scene look flat.",
+        "fix": "Increase contact shadow intensity and ambient occlusion.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust camera distance and focal length to match the reference framing, and deepen the contact shadows to restore depth."
+  }
+}

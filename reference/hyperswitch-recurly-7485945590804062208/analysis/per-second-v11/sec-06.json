@@ -1,0 +1,255 @@
+{
+  "sec": 6,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "camera pans and zooms out from the yellow Recurly button",
+        "hard cut at t=6.67s",
+        "camera pans and zooms out from the blue Juspay button"
+      ],
+      "b_motion": [
+        "camera pans and zooms out from the yellow Recurly button",
+        "hard cut at t=6.67s",
+        "camera pans and zooms out from the blue Juspay button"
+      ],
+      "absent_in_b": [
+        "metallic border around the Juspay button slot",
+        "vignette effect in the corners"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 6.3,
+          "a_observable": "The camera angle is oblique, showing the sides of the keys with a strong perspective effect.",
+          "b_observable": "The camera angle is much more top-down, making the keys appear flatter with less perspective.",
+          "fix": "Match the camera's focal length and angle of incidence to Video A to restore the oblique perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast",
+            "region": "full"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 6.2,
+          "a_observable": "The 'Secure Payments' key is positioned closely above and to the left of the yellow button, taking up a significant portion of the upper-left frame.",
+          "b_observable": "The 'Secure Payments' key is much smaller and positioned further away towards the top-left corner.",
+          "fix": "Adjust the layout and spacing of the keyboard grid to match the proportions in Video A.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 6.8,
+          "a_observable": "The blue button has a soft, realistic shadow cast into its recessed slot, and the overall scene has a subtle vignette.",
+          "b_observable": "The blue button has a very sharp, dark outline shadow, and the corners of the frame lack any vignette.",
+          "fix": "Soften the contact shadows and add a vignette in post-production to match Video A.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "material",
+          "t": 6.9,
+          "a_observable": "The blue button is recessed into a slot with a metallic silver inner border.",
+          "b_observable": "The blue button is raised and sits on a dark grey flat base with no metallic border.",
+          "fix": "Model the recessed slot and metallic border for the button to match Video A's design.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 6.8,
+          "a_observable": "The blue button has a highly saturated, deep royal blue color.",
+          "b_observable": "The blue button has a lighter, less saturated blue color.",
+          "fix": "Adjust the material color of the blue button to match the deep royal blue of Video A.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "center"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and perspective to match the oblique, dynamic view of Video A, and model the recessed key slots with metallic borders.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 6.2,
+          "a_observable": "Close-up perspective of the yellow Recurly tile with shallow depth of field.",
+          "b_observable": "Wider camera angle showing more of the surrounding tiles with deeper focus.",
+          "fix": "Adjust camera position and focal length to match the close-up framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 6.8,
+          "a_observable": "The blue Juspay tile is oriented nearly flat to the camera with minimal rotation.",
+          "b_observable": "The blue tile is highly rotated and viewed at a steep oblique angle.",
+          "fix": "Re-align the tile rotation and camera angle to match the flat staging.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 6.3,
+          "a_observable": "The background tiles exhibit a warm, cream-colored cast.",
+          "b_observable": "The background tiles are neutral white and gray, appearing cooler.",
+          "fix": "Apply a warm color grade to match the reference color temperature.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Align the camera angles and perspective across both scenes to correct the framing and staging of the tiles.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "camera pans and rotates continuously"
+      ],
+      "b_motion": [
+        "camera pans and rotates continuously"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 6.1,
+          "a_observable": "The yellow Recurly button is framed closely, appearing larger with a shallow depth of field.",
+          "b_observable": "The yellow Recurly button is framed wider, appearing smaller with sharper background elements.",
+          "fix": "Adjust camera position and focal length to match the close-up framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 6.3,
+          "a_observable": "Strong directional light creates deep shadows in the tile crevices and a luma gradient.",
+          "b_observable": "Flat, bright lighting results in weak shadows and a uniform look.",
+          "fix": "Adjust key light angle and shadow depth to enhance contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 6.8,
+          "a_observable": "The blue Juspay button is viewed from an oblique angle and rotated.",
+          "b_observable": "The blue Juspay button is viewed from a more top-down perspective with different rotation.",
+          "fix": "Match the camera angle and button rotation to the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust camera framing, focal length, and angle across both shots to match the reference's composition.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 6.1,
+        "a_observable": "The yellow Recurly button is framed closely, appearing larger with a shallow depth of field.",
+        "b_observable": "The yellow Recurly button is framed wider, appearing smaller with sharper background elements.",
+        "fix": "Adjust camera position and focal length to match the close-up framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "B_sharper",
+          "A": {
+            "lap_var": 52.66
+          },
+          "B": {
+            "lap_var": 4.6
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "staging",
+        "t": 6.8,
+        "a_observable": "The blue Juspay button is viewed from an oblique angle and rotated.",
+        "b_observable": "The blue Juspay button is viewed from a more top-down perspective with different rotation.",
+        "fix": "Match the camera angle and button rotation to the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 2,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "refuted",
+          "certainty": 1,
+          "note": "The claim swaps the perspectives of the two clips. In Clip A, the blue Juspay button is viewed from a top-down perspective, whereas in Clip B, it is viewed from an oblique angle."
+        }
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Align the camera angles and perspective across both scenes to correct the framing and staging of the tiles.",
+    "dropped_unsupported": 7
+  }
+}

@@ -1,0 +1,296 @@
+{
+  "sec": 11,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 11.2,
+          "a_observable": "Strong corner vignette and soft shadow falloff across the white tiles, creating depth.",
+          "b_observable": "Flat, uniform white lighting across the entire grid with minimal corner shading.",
+          "fix": "Adjust lighting setup and add a vignette to match the reference's depth.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 11.8,
+          "a_observable": "The yellow and blue cards have high color saturation and rich tones.",
+          "b_observable": "The yellow and blue cards appear desaturated and washed out under the bright flat lighting.",
+          "fix": "Increase saturation and adjust color grading to match the vibrant tones of Video A.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 11.5,
+          "a_observable": "The camera is closer to the cards, creating a more dynamic perspective with larger elements.",
+          "b_observable": "The camera is pulled further back, resulting in a flatter perspective and smaller card elements.",
+          "fix": "Adjust camera focal length and position to match the reference framing.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the lighting setup to introduce a stronger vignette and deeper shadows, matching the high-contrast look of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow zoom out",
+        "slow pan up-right"
+      ],
+      "b_motion": [
+        "slow zoom out",
+        "slow pan up-right"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 11.2,
+          "a_observable": "Strong depth of field blur on outer edges and corners.",
+          "b_observable": "Corners and edges are sharp with very weak blur.",
+          "fix": "Increase aperture size to shallow the depth of field.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.5,
+          "a_observable": "Soft, gradual shadows in recessed wells.",
+          "b_observable": "Harsh, dark black shadows in recessed wells.",
+          "fix": "Soften ambient occlusion and shadow settings.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_blacks"
+          }
+        },
+        {
+          "category": "color",
+          "t": 11.1,
+          "a_observable": "Warm, natural tones on white tiles.",
+          "b_observable": "Cool, blue-grey color cast on white tiles.",
+          "fix": "Adjust white balance to reduce cool cast.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Match the shallow depth of field and soften the harsh black shadows in the recessed wells.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 11,
+          "a_observable": "The camera is positioned close to the tiles, creating a tight composition where the yellow and blue buttons dominate the frame.",
+          "b_observable": "The camera is further away, showing a wider view with smaller buttons and more surrounding empty tiles.",
+          "fix": "Move the camera closer to the subject and adjust the field of view to match the tight framing of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.1,
+          "a_observable": "The corners of the image are noticeably darker than the center due to a strong vignette.",
+          "b_observable": "The lighting is flat and even across the frame, with no corner darkening.",
+          "fix": "Add a vignette effect to darken the outer edges of the frame.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 11.2,
+          "a_observable": "The overall image has a warm, yellowish color cast, especially visible on the white tiles.",
+          "b_observable": "The image has a neutral to cool blue-grey color cast.",
+          "fix": "Adjust the color temperature of the lights or color grade the output to add a warm tint.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 11.3,
+          "a_observable": "The background tiles in the upper-right corner are heavily blurred by a shallow depth of field.",
+          "b_observable": "The background tiles in the upper-right corner are sharp and clearly defined.",
+          "fix": "Enable depth of field in the camera settings and set a wider aperture to blur the background.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position, focal length, and depth of field to match the close-up, blurred-background composition of the reference video.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 11.2,
+        "a_observable": "Strong corner vignette and soft shadow falloff across the white tiles, creating depth.",
+        "b_observable": "Flat, uniform white lighting across the entire grid with minimal corner shading.",
+        "fix": "Adjust lighting setup and add a vignette to match the reference's depth.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 209.77,
+            "center_mean": 197.73,
+            "falloff_pct": -6.09
+          },
+          "B": {
+            "corner_mean": 149.25,
+            "center_mean": 154.51,
+            "falloff_pct": 3.4
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "camera",
+        "t": 11,
+        "a_observable": "The camera is positioned close to the tiles, creating a tight composition where the yellow and blue buttons dominate the frame.",
+        "b_observable": "The camera is further away, showing a wider view with smaller buttons and more surrounding empty tiles.",
+        "fix": "Move the camera closer to the subject and adjust the field of view to match the tight framing of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 2,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "The comparison is accurate. Clip A shows a close-up view where the yellow and blue buttons occupy most of the frame, while Clip B shows a wider shot with smaller buttons and more surrounding tiles visible."
+        },
+        "channelA": {
+          "verdict": "refuted",
+          "note": "Lockup parity family."
+        }
+      },
+      {
+        "category": "camera",
+        "t": 11.3,
+        "a_observable": "The background tiles in the upper-right corner are heavily blurred by a shallow depth of field.",
+        "b_observable": "The background tiles in the upper-right corner are sharp and clearly defined.",
+        "fix": "Enable depth of field in the camera settings and set a wider aperture to blur the background.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_sharper",
+          "A": {
+            "lap_var": 0.9
+          },
+          "B": {
+            "lap_var": 3.94
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "color",
+        "t": 11.2,
+        "a_observable": "The overall image has a warm, yellowish color cast, especially visible on the white tiles.",
+        "b_observable": "The image has a neutral to cool blue-grey color cast.",
+        "fix": "Adjust the color temperature of the lights or color grade the output to add a warm tint.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_cooler",
+          "A": {
+            "r": 192.94,
+            "g": 204.4,
+            "b": 200.57,
+            "rb_delta": -7.63,
+            "saturation": 0.1915
+          },
+          "B": {
+            "r": 139.71,
+            "g": 152.87,
+            "b": 189.19,
+            "rb_delta": -49.48,
+            "saturation": 0.3126
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera position, focal length, and depth of field to match the close-up, blurred-background composition of the reference video.",
+    "dropped_unsupported": 2
+  }
+}

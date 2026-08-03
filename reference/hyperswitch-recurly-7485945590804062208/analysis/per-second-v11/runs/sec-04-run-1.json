@@ -1,0 +1,69 @@
+{
+  "ok": false,
+  "why": "missed cut at 4.900s",
+  "json": {
+    "cuts_in_window": [
+      4.417
+    ],
+    "a_motion": [
+      "pan",
+      "tilt"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 4,
+        "a_observable": "The 'Secure Payments' card is framed in a tight close-up with a steep perspective angle.",
+        "b_observable": "The 'Secure Payments' card is framed from a wider angle, showing more of the surrounding grid.",
+        "fix": "Adjust the camera position and focal length to match the tight close-up framing of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 4.2,
+        "a_observable": "There is a strong vignette darkening the corners of the frame.",
+        "b_observable": "The frame has uniform brightness with no visible vignette.",
+        "fix": "Add a vignette post-processing effect to darken the corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "material",
+        "t": 4.6,
+        "a_observable": "The grey block on the right has a brushed metal texture with horizontal grain.",
+        "b_observable": "The grey block has a smooth, matte grey finish without any texture.",
+        "fix": "Apply a brushed metal texture map to the grey block material.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 4.8,
+        "a_observable": "The white cards and background elements have a cool blue color cast.",
+        "b_observable": "The white cards and background elements are neutral white.",
+        "fix": "Adjust the color grading to introduce a cool blue cast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Match the camera framing and perspective of the reference, and apply the missing brushed metal texture to the grey block."
+  }
+}

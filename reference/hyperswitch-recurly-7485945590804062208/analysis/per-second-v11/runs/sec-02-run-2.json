@@ -1,0 +1,71 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.208
+    ],
+    "a_motion": [
+      "camera pan",
+      "camera tilt"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera tilt"
+    ],
+    "absent_in_b": [
+      "yellow background card",
+      "blue background card"
+    ],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 2.1,
+        "a_observable": "Deep shadows and soft ambient occlusion are visible around the edges of the 'Secure Payments' card, creating depth.",
+        "b_observable": "The lighting is flat and bright, with almost no ambient occlusion or contact shadows around the card.",
+        "fix": "Adjust the lighting setup to include stronger ambient occlusion and contact shadows to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 2.3,
+        "a_observable": "A solid yellow card is visible at the top-left and a solid blue card at the bottom-left of the frame.",
+        "b_observable": "The background on the left consists of plain white cards, with the yellow and blue cards missing.",
+        "fix": "Add the colored background cards on the left side to match the reference composition.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 2.5,
+        "a_observable": "The white cards have a distinct cool blue color cast, especially in the shaded areas.",
+        "b_observable": "The white cards are neutral grey/white with no blue tint.",
+        "fix": "Adjust the white balance or add a cool blue color cast to the lighting/materials.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 2.4,
+        "a_observable": "The camera has a wider field of view with more pronounced perspective distortion on the cards.",
+        "b_observable": "The camera has a narrower field of view, making the perspective look flatter and more orthographic.",
+        "fix": "Increase the camera's field of view (decrease focal length) to match the perspective of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Add the missing yellow and blue background cards on the left side and adjust the lighting to introduce deeper shadows and ambient occlusion."
+  }
+}

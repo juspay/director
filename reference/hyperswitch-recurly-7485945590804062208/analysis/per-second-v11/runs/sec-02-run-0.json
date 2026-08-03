@@ -1,0 +1,70 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.2
+    ],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 2.1,
+        "a_observable": "Yellow card is at the bottom; blue card is on the left.",
+        "b_observable": "Yellow card is at the top-left; blue card is at the bottom-left.",
+        "fix": "Realign the grid layout to match reference positions.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.1,
+        "a_observable": "Deep contact shadows are visible under the cards.",
+        "b_observable": "Contact shadows are faint, reducing depth.",
+        "fix": "Increase shadow density and ambient occlusion.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "center"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 2.3,
+        "a_observable": "Yellow card is visible at the top-left corner.",
+        "b_observable": "No yellow card is visible at the top-left.",
+        "fix": "Position the background yellow card to be visible.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 2.5,
+        "a_observable": "Icons and text are deep royal blue.",
+        "b_observable": "Icons and text are a lighter, less saturated blue.",
+        "fix": "Adjust the blue color values to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Realign the card grid layout and adjust the camera framing to match the reference staging."
+  }
+}

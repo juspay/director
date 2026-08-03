@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zoom out",
+      "camera translation"
+    ],
+    "b_motion": [
+      "camera zoom out",
+      "camera translation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "Strong directional highlights are visible on the top-left bevels of the tiles and buttons, with deep shadows on the bottom-right.",
+        "b_observable": "The lighting is highly diffuse with almost no directional highlights or shadows on the bevels, resulting in a flatter appearance.",
+        "fix": "Adjust the key light direction and intensity to create stronger directional highlights and shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "full"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.8,
+        "a_observable": "The corners of the frame are significantly darker than the center, showing a strong vignette.",
+        "b_observable": "The corners of the frame are nearly as bright as the center, with very little vignette.",
+        "fix": "Add a vignette post-processing effect to darken the corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 10.2,
+        "a_observable": "The yellow 'Recurly' button has a warm, golden-yellow hue, and the blue button is a highly saturated royal blue.",
+        "b_observable": "The yellow button has a cooler, more desaturated lemon-yellow hue, and the blue button is less saturated.",
+        "fix": "Adjust the color grading to increase saturation and shift the yellow hue towards a warmer golden tone.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Enhance the directional lighting to create stronger highlights and shadows on the beveled edges of the tiles and buttons, and add a vignette to match the depth of the reference."
+  }
+}

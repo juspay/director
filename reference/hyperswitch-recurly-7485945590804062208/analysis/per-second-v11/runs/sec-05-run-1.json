@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "zoom"
+    ],
+    "b_motion": [
+      "translation",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 5.5,
+        "a_observable": "Corners of the frame are darker than the center, showing a clear vignette.",
+        "b_observable": "Corners of the frame are bright, lacking a distinct vignette.",
+        "fix": "Add a vignette effect to darken the corners.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.5,
+        "a_observable": "The drop shadow around the yellow Recurly card is soft and diffuse.",
+        "b_observable": "The drop shadow around the yellow Recurly card is dark and sharp.",
+        "fix": "Soften and lighten the drop shadow of the yellow card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 5.5,
+        "a_observable": "The camera is positioned closer to the cards, making the yellow Recurly card larger.",
+        "b_observable": "The camera is positioned further away, making the yellow Recurly card smaller.",
+        "fix": "Adjust camera distance to match reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera distance and framing to match the reference composition, and soften the harsh shadows on the yellow card."
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pull-back",
+      "camera rotation"
+    ],
+    "b_motion": [
+      "camera pull-back",
+      "camera rotation"
+    ],
+    "absent_in_b": [
+      "dappled leaf shadows"
+    ],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 10.2,
+        "a_observable": "Dappled leaf shadows move across the tiles.",
+        "b_observable": "The lighting is static and uniform across the tiles.",
+        "fix": "Add an animated gobo to the main light source to simulate moving tree shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 10.5,
+        "a_observable": "The corners of the frame are blurred due to shallow depth of field.",
+        "b_observable": "The corners of the frame are sharp and in focus.",
+        "fix": "Enable depth of field on the camera and adjust focus to blur the corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 10,
+        "a_observable": "The yellow Recurly tile is highly saturated with a warm golden hue.",
+        "b_observable": "The yellow Recurly tile is less saturated with a cooler greenish-yellow hue.",
+        "fix": "Adjust the yellow material color to increase warmth and saturation.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Add animated gobo shadows to the light source to replicate the dappled leaf shadows visible in the reference."
+  }
+}

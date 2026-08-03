@@ -1,0 +1,224 @@
+{
+  "sec": 8,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "camera pans and rotates",
+        "pill slides out"
+      ],
+      "b_motion": [
+        "camera pans and rotates",
+        "pill slides out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 8,
+          "a_observable": "The camera is close to the blue card, which is rotated slightly counter-clockwise.",
+          "b_observable": "The camera is further away and tilted at a much steeper angle.",
+          "fix": "Adjust camera distance and rotation to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 8.5,
+          "a_observable": "Strong ambient occlusion shadows are visible in the crevices between the keys.",
+          "b_observable": "Crevices are brightly lit with minimal contact shadows.",
+          "fix": "Increase contact shadow intensity and ambient occlusion.",
+          "severity": 4,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 8.7,
+          "a_observable": "The 'Live Now' pill begins to slide out at t=8.7s.",
+          "b_observable": "The 'Live Now' pill begins to slide out earlier at t=8.6s.",
+          "fix": "Delay the pill's slide-out animation to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera framing and increase the contact shadows to match the depth and composition of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "pan",
+        "tilt",
+        "dolly"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt",
+        "dolly"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 8.2,
+          "a_observable": "The yellow Recurly card is large and positioned adjacent to the blue Secure Payments card on the left.",
+          "b_observable": "The yellow Recurly card is smaller, and the Secure Payments card is separated by several white keys.",
+          "fix": "Re-arrange the layout of the keys to match the reference composition.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 8.5,
+          "a_observable": "The shadows in the crevices between the keys are very dark, creating a high-contrast look.",
+          "b_observable": "The crevices are brightly lit with soft grey shadows, making the image look flat.",
+          "fix": "Adjust the lighting setup to increase shadow depth and overall contrast.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 8.3,
+          "a_observable": "The background elements on the right side of the frame are softly blurred.",
+          "b_observable": "The background elements on the right side are sharp and in focus.",
+          "fix": "Increase the camera's aperture size to create a shallower depth of field.",
+          "severity": 2,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "right"
+          }
+        }
+      ],
+      "highest_impact_fix": "Re-align the keyboard layout and adjust the camera framing to match the reference composition.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "camera pan",
+        "camera zoom",
+        "camera rotation"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom",
+        "camera rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 8.5,
+          "a_observable": "The crevices between the keys have very deep, high-contrast shadows.",
+          "b_observable": "The crevices between the keys are softly lit with much brighter shadows, reducing overall contrast.",
+          "fix": "Increase shadow density and reduce ambient lighting to deepen the crevices.",
+          "severity": 4,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "full"
+          }
+        },
+        {
+          "category": "material",
+          "t": 8.3,
+          "a_observable": "The white keys have a completely smooth, solid plastic surface.",
+          "b_observable": "Several white keys display a horizontal lined pattern on their surfaces.",
+          "fix": "Remove the horizontal lined texture from the white keys.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 8.5,
+          "a_observable": "The yellow Recurly card has a warm, golden-yellow hue.",
+          "b_observable": "The yellow Recurly card has a cooler, more greenish-lemon yellow hue.",
+          "fix": "Adjust the color of the Recurly card to match the warm golden yellow of Video A.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Increase the shadow depth and contrast in the crevices between the keys to match the high-contrast lighting of Video A, and remove the horizontal lined texture from the white keys.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "Strong ambient occlusion shadows are visible in the crevices between the keys.",
+        "b_observable": "Crevices are brightly lit with minimal contact shadows.",
+        "fix": "Increase contact shadow intensity and ambient occlusion.",
+        "severity": 4,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 42.84,
+            "p1": 86.54,
+            "p5": 101.16,
+            "p50": 180.58,
+            "p95": 242.72,
+            "p99": 246.19,
+            "p999": 250.36,
+            "span_p5_p95": 141.56
+          },
+          "B": {
+            "p01": 54.5,
+            "p1": 55.5,
+            "p5": 60.4,
+            "p50": 154.42,
+            "p95": 189.55,
+            "p99": 215.31,
+            "p999": 254.79,
+            "span_p5_p95": 129.15
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Increase contact shadow intensity and ambient occlusion to deepen the crevices between the keys.",
+    "dropped_unsupported": 6
+  }
+}

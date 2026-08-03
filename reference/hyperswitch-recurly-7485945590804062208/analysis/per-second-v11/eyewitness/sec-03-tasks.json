@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 3,
+    "idx": 0,
+    "t": 3.5,
+    "category": "material",
+    "a_observable": "The vertical strip to the right of the cards has a brushed metal material with anisotropic reflections.",
+    "b_observable": "The vertical strip is a flat, matte grey material with no metallic texture.",
+    "frames": {
+      "A": "analysis/per-second-v11/eyewitness/sec-03-c0-A.png",
+      "B": "analysis/per-second-v11/eyewitness/sec-03-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "The claim accurately describes the visual differences between the vertical strip to the right of the cards in both clips. In Clip A, it has a distinct brushed metal texture with anisotropic reflections, whereas in Clip B, it is a flat, matte grey material with no metallic texture."
+    }
+  }
+]

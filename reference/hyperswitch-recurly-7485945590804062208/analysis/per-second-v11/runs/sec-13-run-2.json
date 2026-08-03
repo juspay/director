@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 13.5,
+        "a_observable": "The gaps between the white tiles are subtle, clean, and light gray, with soft shadows.",
+        "b_observable": "The gaps between the white tiles are dark, thick, and highly pronounced, creating harsh dark lines.",
+        "fix": "Adjust the gap spacing and shadow settings of the tiles to make the grid lines more subtle and clean.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 13.5,
+        "a_observable": "The white tiles and background exhibit bright, clean highlights with high contrast.",
+        "b_observable": "The white tiles and background are dimmer and grayer, lacking bright highlights.",
+        "fix": "Increase the intensity of the key light and adjust the contrast curve to match the bright highlights in the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "color",
+        "t": 13.5,
+        "a_observable": "The yellow Recurly card has a warm, vibrant golden-yellow hue.",
+        "b_observable": "The yellow Recurly card has a cooler, slightly desaturated greenish-yellow hue.",
+        "fix": "Adjust the material color of the yellow card to be warmer and more saturated.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Reduce the prominence of the grid line shadows between tiles and increase the overall lighting contrast to match the clean, high-key aesthetic of the reference."
+  }
+}

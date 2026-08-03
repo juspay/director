@@ -1,0 +1,59 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "camera pan",
+      "camera zoom",
+      "camera rotation"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom",
+      "camera rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "The crevices between the keys have very deep, high-contrast shadows.",
+        "b_observable": "The crevices between the keys are softly lit with much brighter shadows, reducing overall contrast.",
+        "fix": "Increase shadow density and reduce ambient lighting to deepen the crevices.",
+        "severity": 4,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      },
+      {
+        "category": "material",
+        "t": 8.3,
+        "a_observable": "The white keys have a completely smooth, solid plastic surface.",
+        "b_observable": "Several white keys display a horizontal lined pattern on their surfaces.",
+        "fix": "Remove the horizontal lined texture from the white keys.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 8.5,
+        "a_observable": "The yellow Recurly card has a warm, golden-yellow hue.",
+        "b_observable": "The yellow Recurly card has a cooler, more greenish-lemon yellow hue.",
+        "fix": "Adjust the color of the Recurly card to match the warm golden yellow of Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Increase the shadow depth and contrast in the crevices between the keys to match the high-contrast lighting of Video A, and remove the horizontal lined texture from the white keys."
+  }
+}

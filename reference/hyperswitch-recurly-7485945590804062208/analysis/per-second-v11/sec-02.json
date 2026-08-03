@@ -1,0 +1,293 @@
+{
+  "sec": 2,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        2.2
+      ],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 2.1,
+          "a_observable": "Yellow card is at the bottom; blue card is on the left.",
+          "b_observable": "Yellow card is at the top-left; blue card is at the bottom-left.",
+          "fix": "Realign the grid layout to match reference positions.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 2.1,
+          "a_observable": "Deep contact shadows are visible under the cards.",
+          "b_observable": "Contact shadows are faint, reducing depth.",
+          "fix": "Increase shadow density and ambient occlusion.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "center"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 2.3,
+          "a_observable": "Yellow card is visible at the top-left corner.",
+          "b_observable": "No yellow card is visible at the top-left.",
+          "fix": "Position the background yellow card to be visible.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 2.5,
+          "a_observable": "Icons and text are deep royal blue.",
+          "b_observable": "Icons and text are a lighter, less saturated blue.",
+          "fix": "Adjust the blue color values to match the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "center"
+          }
+        }
+      ],
+      "highest_impact_fix": "Realign the card grid layout and adjust the camera framing to match the reference staging.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        2.208
+      ],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 2.1,
+          "a_observable": "The camera is closer to the 'Secure Payments' card, showing a yellow key at the bottom.",
+          "b_observable": "The camera is further away with a flatter perspective, and the yellow key is not visible.",
+          "fix": "Adjust camera focal length and position to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "staging",
+          "t": 2.4,
+          "a_observable": "The key to the left of the stacked cards has a grey dotted pattern.",
+          "b_observable": "The key to the left is solid white without any pattern.",
+          "fix": "Add the dotted texture to the left key element.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 2.5,
+          "a_observable": "A distinct vignette is present, with darker corners compared to the center.",
+          "b_observable": "The corners are almost as bright as the center, showing flat lighting.",
+          "fix": "Apply a vignette to darken the corners of the frame.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and focal length to correct the framing and perspective across the sequence.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        2.208
+      ],
+      "a_motion": [
+        "camera pan",
+        "camera tilt"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera tilt"
+      ],
+      "absent_in_b": [
+        "yellow background card",
+        "blue background card"
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 2.1,
+          "a_observable": "Deep shadows and soft ambient occlusion are visible around the edges of the 'Secure Payments' card, creating depth.",
+          "b_observable": "The lighting is flat and bright, with almost no ambient occlusion or contact shadows around the card.",
+          "fix": "Adjust the lighting setup to include stronger ambient occlusion and contact shadows to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 2.3,
+          "a_observable": "A solid yellow card is visible at the top-left and a solid blue card at the bottom-left of the frame.",
+          "b_observable": "The background on the left consists of plain white cards, with the yellow and blue cards missing.",
+          "fix": "Add the colored background cards on the left side to match the reference composition.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 2.5,
+          "a_observable": "The white cards have a distinct cool blue color cast, especially in the shaded areas.",
+          "b_observable": "The white cards are neutral grey/white with no blue tint.",
+          "fix": "Adjust the white balance or add a cool blue color cast to the lighting/materials.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 2.4,
+          "a_observable": "The camera has a wider field of view with more pronounced perspective distortion on the cards.",
+          "b_observable": "The camera has a narrower field of view, making the perspective look flatter and more orthographic.",
+          "fix": "Increase the camera's field of view (decrease focal length) to match the perspective of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Add the missing yellow and blue background cards on the left side and adjust the lighting to introduce deeper shadows and ambient occlusion.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 2.1,
+        "a_observable": "Deep shadows and soft ambient occlusion are visible around the edges of the 'Secure Payments' card, creating depth.",
+        "b_observable": "The lighting is flat and bright, with almost no ambient occlusion or contact shadows around the card.",
+        "fix": "Adjust the lighting setup to include stronger ambient occlusion and contact shadows to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 55.31,
+            "p1": 79.89,
+            "p5": 89.83,
+            "p50": 207.53,
+            "p95": 243.22,
+            "p99": 246.59,
+            "p999": 249.59,
+            "span_p5_p95": 153.39
+          },
+          "B": {
+            "p01": 91.08,
+            "p1": 104.63,
+            "p5": 120.27,
+            "p50": 207.09,
+            "p95": 225.24,
+            "p99": 227.24,
+            "p999": 245.23,
+            "span_p5_p95": 104.97
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "staging",
+        "t": 2.3,
+        "a_observable": "A solid yellow card is visible at the top-left and a solid blue card at the bottom-left of the frame.",
+        "b_observable": "The background on the left consists of plain white cards, with the yellow and blue cards missing.",
+        "fix": "Add the colored background cards on the left side to match the reference composition.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "The claim accurately describes the differences between Clip A and Clip B. In Clip A, during the second shot (from 01:250 onwards), a solid yellow card is visible at the top-left and a solid blue card is visible at the bottom-left. In Clip B, these are replaced by plain white cards."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "Same placement family: A's yellow/blue accents sit top-left where B shows plain white."
+        }
+      },
+      {
+        "category": "camera",
+        "t": 2.4,
+        "a_observable": "The camera has a wider field of view with more pronounced perspective distortion on the cards.",
+        "b_observable": "The camera has a narrower field of view, making the perspective look flatter and more orthographic.",
+        "fix": "Increase the camera's field of view (decrease focal length) to match the perspective of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 0.95,
+          "note": "Clip A shows a wider field of view with more pronounced perspective distortion (lines of the cards converge more sharply), whereas Clip B uses a longer focal length (narrower field of view) which flattens the perspective, making the cards look more orthographic."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "Real and actionable: A's lens reads wider with more perspective distortion up close; B at fov 33-34 is flatter. Pairs with the dome finding below."
+        }
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Add the missing yellow and blue background cards on the left side, adjust the camera perspective, and increase shadow density/ambient occlusion.",
+    "dropped_unsupported": 5
+  }
+}

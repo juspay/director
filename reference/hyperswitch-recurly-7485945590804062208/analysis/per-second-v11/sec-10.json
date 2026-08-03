@@ -1,0 +1,252 @@
+{
+  "sec": 10,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera zoom out",
+        "camera translation"
+      ],
+      "b_motion": [
+        "camera zoom out",
+        "camera translation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 10.5,
+          "a_observable": "Strong directional highlights are visible on the top-left bevels of the tiles and buttons, with deep shadows on the bottom-right.",
+          "b_observable": "The lighting is highly diffuse with almost no directional highlights or shadows on the bevels, resulting in a flatter appearance.",
+          "fix": "Adjust the key light direction and intensity to create stronger directional highlights and shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast",
+            "region": "full"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.8,
+          "a_observable": "The corners of the frame are significantly darker than the center, showing a strong vignette.",
+          "b_observable": "The corners of the frame are nearly as bright as the center, with very little vignette.",
+          "fix": "Add a vignette post-processing effect to darken the corners.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 10.2,
+          "a_observable": "The yellow 'Recurly' button has a warm, golden-yellow hue, and the blue button is a highly saturated royal blue.",
+          "b_observable": "The yellow button has a cooler, more desaturated lemon-yellow hue, and the blue button is less saturated.",
+          "fix": "Adjust the color grading to increase saturation and shift the yellow hue towards a warmer golden tone.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "center"
+          }
+        }
+      ],
+      "highest_impact_fix": "Enhance the directional lighting to create stronger highlights and shadows on the beveled edges of the tiles and buttons, and add a vignette to match the depth of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 10.5,
+          "a_observable": "Camera is closer to the grid, framing the main cards larger.",
+          "b_observable": "Camera is further back, showing a wider view with smaller cards.",
+          "fix": "Adjust camera distance to match the tighter reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 10.5,
+          "a_observable": "White tiles exhibit a cool blue color cast.",
+          "b_observable": "White tiles are neutral grey.",
+          "fix": "Add a cool blue color grade to the neutral surfaces.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.5,
+          "a_observable": "Higher contrast with deeper shadows in crevices.",
+          "b_observable": "Flatter lighting with lighter shadows.",
+          "fix": "Increase contrast and deepen contact shadows.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera distance to match the tighter framing of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pull-back",
+        "camera rotation"
+      ],
+      "b_motion": [
+        "camera pull-back",
+        "camera rotation"
+      ],
+      "absent_in_b": [
+        "dappled leaf shadows"
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 10.2,
+          "a_observable": "Dappled leaf shadows move across the tiles.",
+          "b_observable": "The lighting is static and uniform across the tiles.",
+          "fix": "Add an animated gobo to the main light source to simulate moving tree shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 10.5,
+          "a_observable": "The corners of the frame are blurred due to shallow depth of field.",
+          "b_observable": "The corners of the frame are sharp and in focus.",
+          "fix": "Enable depth of field on the camera and adjust focus to blur the corners.",
+          "severity": 2,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 10,
+          "a_observable": "The yellow Recurly tile is highly saturated with a warm golden hue.",
+          "b_observable": "The yellow Recurly tile is less saturated with a cooler greenish-yellow hue.",
+          "fix": "Adjust the yellow material color to increase warmth and saturation.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Add animated gobo shadows to the light source to replicate the dappled leaf shadows visible in the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "Strong directional highlights are visible on the top-left bevels of the tiles and buttons, with deep shadows on the bottom-right.",
+        "b_observable": "The lighting is highly diffuse with almost no directional highlights or shadows on the bevels, resulting in a flatter appearance.",
+        "fix": "Adjust the key light direction and intensity to create stronger directional highlights and shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "full"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_higher_contrast",
+          "A": {
+            "p01": 8.56,
+            "p1": 87.08,
+            "p5": 91.29,
+            "p50": 208.73,
+            "p95": 230.27,
+            "p99": 237.33,
+            "p999": 250.87,
+            "span_p5_p95": 138.98
+          },
+          "B": {
+            "p01": 73.68,
+            "p1": 75.18,
+            "p5": 80.1,
+            "p50": 169.12,
+            "p95": 183.98,
+            "p99": 191.47,
+            "p999": 239.78,
+            "span_p5_p95": 103.88
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "color",
+        "t": 10.2,
+        "a_observable": "The yellow 'Recurly' button has a warm, golden-yellow hue, and the blue button is a highly saturated royal blue.",
+        "b_observable": "The yellow button has a cooler, more desaturated lemon-yellow hue, and the blue button is less saturated.",
+        "fix": "Adjust the color grading to increase saturation and shift the yellow hue towards a warmer golden tone.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "center"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 193.13,
+            "g": 202.59,
+            "b": 205.46,
+            "rb_delta": -12.33,
+            "saturation": 0.2203
+          },
+          "B": {
+            "r": 141.75,
+            "g": 155.34,
+            "b": 192.96,
+            "rb_delta": -51.2,
+            "saturation": 0.3454
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the key light direction and intensity to create stronger directional highlights and shadows.",
+    "dropped_unsupported": 5
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pull-back with subtle rotation"
+    ],
+    "b_motion": [
+      "faster camera pull-back with more pronounced rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 7.3,
+        "a_observable": "The logo on the blue card is the official Hyperswitch brand mark.",
+        "b_observable": "The logo on the blue card is a generic clock icon.",
+        "fix": "Replace the clock icon with the correct Hyperswitch logo asset.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "material",
+        "t": 7.2,
+        "a_observable": "The frame around the blue card has a brushed silver metallic finish with soft reflections.",
+        "b_observable": "The frame around the blue card is a dark matte grey plastic with no metallic reflection.",
+        "fix": "Change the material of the frame to a brushed silver metal with anisotropic reflections.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 7.5,
+        "a_observable": "The camera angle is high and flat, showing the cards with minimal perspective distortion.",
+        "b_observable": "The camera angle is low and oblique, causing significant perspective distortion on the cards.",
+        "fix": "Adjust the camera height and tilt to match the flatter perspective of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 7.8,
+        "a_observable": "The scene is brightly lit with soft, diffused shadows.",
+        "b_observable": "The scene has higher contrast with darker, sharper shadows.",
+        "fix": "Soften the shadows and increase ambient lighting to match the reference's bright, low-contrast look.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      },
+      {
+        "category": "motion",
+        "t": 7.5,
+        "a_observable": "The camera pulls back slowly with very little rotation.",
+        "b_observable": "The camera pulls back and rotates more rapidly.",
+        "fix": "Slow down the camera movement and reduce the rotation amount.",
+        "severity": 3,
+        "prediction": {
+          "metric": "motion",
+          "expect": "B_more"
+        }
+      }
+    ],
+    "highest_impact_fix": "Correct the camera angle, pitch, and perspective distortion to match the reference's flatter, cleaner composition."
+  }
+}

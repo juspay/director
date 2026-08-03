@@ -1,0 +1,66 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 13.1,
+        "a_observable": "Bright, even illumination across the entire frame with no corner falloff.",
+        "b_observable": "Heavy dark vignette with pronounced shadowing in the corners.",
+        "fix": "Reduce vignette strength and balance corner lighting to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "B_stronger"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 13.8,
+        "a_observable": "Blue button is flat and flush with the surrounding white tiles.",
+        "b_observable": "Blue button is a raised, rounded 3D keycap block protruding upwards.",
+        "fix": "Flatten the button geometry and set it flush into the tile grid.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 13.8,
+        "a_observable": "Blue button has a bright, slightly desaturated royal blue color.",
+        "b_observable": "Blue button has a dark, highly saturated cobalt blue color.",
+        "fix": "Desaturate and brighten the blue material shader.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 13.8,
+        "a_observable": "Camera looks almost straight down at the button with flat perspective.",
+        "b_observable": "Camera is at a low, oblique angle with strong perspective tilt.",
+        "fix": "Adjust camera pitch and height to achieve a flatter, top-down view.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and height to match the top-down perspective of the reference video."
+  }
+}

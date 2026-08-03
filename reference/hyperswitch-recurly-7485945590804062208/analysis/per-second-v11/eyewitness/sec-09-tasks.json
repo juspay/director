@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 9,
+    "idx": 0,
+    "t": 9.2,
+    "category": "camera",
+    "a_observable": "The camera is positioned closer to the grid, making the cards appear larger with a distinct perspective angle.",
+    "b_observable": "The camera is positioned further away, resulting in smaller cards and a flatter perspective.",
+    "frames": {
+      "A": "analysis/per-second-v11/eyewitness/sec-09-c0-A.png",
+      "B": "analysis/per-second-v11/eyewitness/sec-09-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "The comparison is accurate. Clip A shows a close-up view of the grid with larger cards and a more pronounced perspective angle, while Clip B shows a wider shot with smaller cards and a flatter perspective."
+    }
+  }
+]

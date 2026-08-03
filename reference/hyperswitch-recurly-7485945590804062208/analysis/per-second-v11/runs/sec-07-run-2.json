@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera"
+    ],
+    "b_motion": [
+      "camera"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 7.5,
+        "a_observable": "The camera is closer to the tiles, showing a flatter perspective of the central tile.",
+        "b_observable": "The camera is further away with a wider field of view, creating a more skewed perspective.",
+        "fix": "Match the camera focal length and position to the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 7.5,
+        "a_observable": "The lighting is soft with gentle shadow gradients on the tiles.",
+        "b_observable": "The lighting has high contrast with dark, sharp shadows.",
+        "fix": "Soften the light source and increase shadow diffusion.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_higher_contrast",
+          "region": "full"
+        }
+      },
+      {
+        "category": "color",
+        "t": 7.5,
+        "a_observable": "The white tiles have a warm, neutral tone.",
+        "b_observable": "The white tiles have a cool blue-gray color cast.",
+        "fix": "Adjust the light color to remove the cool blue cast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and focal length to match the reference perspective."
+  }
+}

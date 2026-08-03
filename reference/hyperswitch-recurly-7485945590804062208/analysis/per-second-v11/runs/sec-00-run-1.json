@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera drift"
+    ],
+    "b_motion": [
+      "slow camera drift"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 0.5,
+        "a_observable": "Strong vignette with pronounced corner shading.",
+        "b_observable": "Weak vignette with bright corners.",
+        "fix": "Increase camera vignette intensity.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.5,
+        "a_observable": "High contrast with deep shadows under the buttons.",
+        "b_observable": "Low contrast with flat, bright shadows.",
+        "fix": "Boost contrast and deepen shadows in post-processing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 0.1,
+        "a_observable": "Tighter camera framing on the central card.",
+        "b_observable": "Wider camera framing showing more background.",
+        "fix": "Adjust camera zoom or position closer to the subject.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Increase the vignette strength and adjust the camera framing to be tighter on the central card."
+  }
+}

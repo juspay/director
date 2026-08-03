@@ -1,0 +1,282 @@
+{
+  "sec": 12,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 12.1,
+          "a_observable": "Camera is positioned closer to the grid with a steeper top-down angle.",
+          "b_observable": "Camera is further away with a shallower angle, showing more of the surrounding grid.",
+          "fix": "Match camera distance and pitch angle to the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "material",
+          "t": 12.4,
+          "a_observable": "The button wells have a light brushed metal finish with soft specular highlights.",
+          "b_observable": "The button wells are dark grey with a flat matte finish.",
+          "fix": "Apply a light brushed metal material to the button wells.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 12.7,
+          "a_observable": "Shadows under the buttons are soft and diffused.",
+          "b_observable": "Shadows under the buttons are sharp and dark.",
+          "fix": "Soften the shadow edges by increasing light source size.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and distance to match the reference composition, and use a softer light source to diffuse the shadows.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "zoom"
+      ],
+      "b_motion": [
+        "translation",
+        "zoom"
+      ],
+      "absent_in_b": [
+        "organic leaf shadows"
+      ],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 12.5,
+          "a_observable": "Moving organic leaf shadows are visible across the tiles.",
+          "b_observable": "The tiles have static, uniform lighting with no leaf shadows.",
+          "fix": "Add an animated leaf shadow map to the main light source.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 12.2,
+          "a_observable": "The yellow Recurly tile is a warm golden yellow.",
+          "b_observable": "The yellow Recurly tile is a cooler, less saturated yellow.",
+          "fix": "Adjust the yellow material color to be warmer and more saturated.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 12.8,
+          "a_observable": "The camera perspective is flatter with a stronger vignette in the corners.",
+          "b_observable": "The camera perspective is wider with brighter, less falloff-heavy corners.",
+          "fix": "Increase the camera focal length and add a corner vignette.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Add animated organic leaf shadows to the main light source to replicate the dynamic lighting of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "zoom",
+        "pan"
+      ],
+      "b_motion": [
+        "zoom",
+        "pan"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 12.2,
+          "a_observable": "Yellow and blue buttons are positioned closer together, tightly framing the 'Live Now' capsule.",
+          "b_observable": "Yellow and blue buttons are spaced further apart, leaving excessive empty tiling around the capsule.",
+          "fix": "Adjust the spacing of the buttons to match the reference layout.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "material",
+          "t": 12.3,
+          "a_observable": "Buttons have a semi-glossy finish with soft environmental reflections.",
+          "b_observable": "Buttons have a flat, matte finish with no specular reflections.",
+          "fix": "Lower the roughness of the button materials to introduce subtle gloss.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 12.5,
+          "a_observable": "Crevices between the white tiles have soft, light gray shadows.",
+          "b_observable": "Crevices between the white tiles have harsh, dark black shadows.",
+          "fix": "Reduce the shadow density or ambient occlusion in the tile crevices.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows",
+            "region": "full"
+          }
+        },
+        {
+          "category": "color",
+          "t": 12.8,
+          "a_observable": "The yellow button has a warm, saturated golden-yellow color.",
+          "b_observable": "The yellow button has a cooler, less saturated lemon-yellow color.",
+          "fix": "Adjust the diffuse color of the yellow button to be warmer and more saturated.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the layout and spacing of the grid tiles and buttons to match the reference composition.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "material",
+        "t": 12.3,
+        "a_observable": "Buttons have a semi-glossy finish with soft environmental reflections.",
+        "b_observable": "Buttons have a flat, matte finish with no specular reflections.",
+        "fix": "Lower the roughness of the button materials to introduce subtle gloss.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "refuted",
+          "certainty": 1,
+          "note": "The claim swaps the descriptions of the two clips. Clip A shows flat, matte buttons with no specular reflections, while Clip B shows 3D buttons with metallic, reflective borders and specular highlights."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "Crevices between the white tiles have soft, light gray shadows.",
+        "b_observable": "Crevices between the white tiles have harsh, dark black shadows.",
+        "fix": "Reduce the shadow density or ambient occlusion in the tile crevices.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows",
+          "region": "full"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_deeper_shadows",
+          "A": {
+            "p01": 4.04,
+            "p1": 86.3,
+            "p5": 91.09,
+            "p50": 208.88,
+            "p95": 231.19,
+            "p99": 236.33,
+            "p999": 252.45,
+            "span_p5_p95": 140.1
+          },
+          "B": {
+            "p01": 73.68,
+            "p1": 75.18,
+            "p5": 80.24,
+            "p50": 169.07,
+            "p95": 183.05,
+            "p99": 190.88,
+            "p999": 239.64,
+            "span_p5_p95": 102.81
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "color",
+        "t": 12.8,
+        "a_observable": "The yellow button has a warm, saturated golden-yellow color.",
+        "b_observable": "The yellow button has a cooler, less saturated lemon-yellow color.",
+        "fix": "Adjust the diffuse color of the yellow button to be warmer and more saturated.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "full"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 193.83,
+            "g": 203.95,
+            "b": 200.08,
+            "rb_delta": -6.25,
+            "saturation": 0.1893
+          },
+          "B": {
+            "r": 139.6,
+            "g": 152.79,
+            "b": 189.32,
+            "rb_delta": -49.72,
+            "saturation": 0.3128
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the yellow button color to be warmer and more saturated, reduce the shadow density in the crevices, and lower the roughness of the button materials to introduce subtle gloss.",
+    "dropped_unsupported": 4
+  }
+}

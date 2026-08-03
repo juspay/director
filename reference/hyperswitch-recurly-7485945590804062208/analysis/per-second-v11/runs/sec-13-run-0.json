@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 13.5,
+        "a_observable": "The camera perspective is flatter with a more top-down angle, showing less of the card sides.",
+        "b_observable": "The camera perspective is more oblique with a shallower angle, showing more dramatic card side extrusion.",
+        "fix": "Match the camera's pitch angle and field of view to the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 13.5,
+        "a_observable": "The shadows in the crevices between the tiles are soft, light grey, and diffused.",
+        "b_observable": "The shadows between the tiles are extremely dark, sharp, and high-contrast.",
+        "fix": "Increase the ambient occlusion radius and soften the direct light shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 13.5,
+        "a_observable": "The blue 'hyperswitch' tile has a muted, royal blue hue with a soft gradient from the lighting.",
+        "b_observable": "The blue 'hyperswitch' tile has a highly saturated, flat blue color.",
+        "fix": "Desaturate the diffuse color of the blue tile material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and focal length to match the flatter, more top-down perspective of the reference."
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "pan",
+      "tilt",
+      "dolly"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt",
+      "dolly"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 8.2,
+        "a_observable": "The yellow Recurly card is large and positioned adjacent to the blue Secure Payments card on the left.",
+        "b_observable": "The yellow Recurly card is smaller, and the Secure Payments card is separated by several white keys.",
+        "fix": "Re-arrange the layout of the keys to match the reference composition.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "The shadows in the crevices between the keys are very dark, creating a high-contrast look.",
+        "b_observable": "The crevices are brightly lit with soft grey shadows, making the image look flat.",
+        "fix": "Adjust the lighting setup to increase shadow depth and overall contrast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 8.3,
+        "a_observable": "The background elements on the right side of the frame are softly blurred.",
+        "b_observable": "The background elements on the right side are sharp and in focus.",
+        "fix": "Increase the camera's aperture size to create a shallower depth of field.",
+        "severity": 2,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "right"
+        }
+      }
+    ],
+    "highest_impact_fix": "Re-align the keyboard layout and adjust the camera framing to match the reference composition."
+  }
+}

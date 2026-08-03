@@ -1,0 +1,207 @@
+{
+  "sec": 4,
+  "meta": {
+    "verified": 2,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [
+    "missed cut at 4.900s"
+  ],
+  "runs": [
+    {
+      "cuts_in_window": [
+        4.9
+      ],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 4.2,
+          "a_observable": "Strong vignette with pronounced corner shading and warm light falloff.",
+          "b_observable": "Flat, uniform lighting across the frame with minimal corner falloff.",
+          "fix": "Add a vignette and adjust light falloff to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 4.5,
+          "a_observable": "Warm color cast with soft yellow-orange tones on the white card surfaces.",
+          "b_observable": "Cool, neutral white surfaces with a clean greyish-blue cast.",
+          "fix": "Adjust white balance and add a warm color cast to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 4.95,
+          "a_observable": "Deep shadows and high contrast around the yellow Recurly card, with soft out-of-focus background elements.",
+          "b_observable": "Flat shadows and lower contrast around the yellow card, with background elements remaining relatively sharp.",
+          "fix": "Increase shadow depth and contrast, and enable depth of field on the camera.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the lighting setup to introduce a warm color cast and a stronger vignette, matching the reference's depth and contrast.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        4.9
+      ],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 4.5,
+          "a_observable": "The 'Subscriptions' card at the top of the frame is heavily blurred due to shallow depth of field.",
+          "b_observable": "The 'Subscriptions' card at the top of the frame is in sharp focus.",
+          "fix": "Enable camera depth of field and adjust the focus distance to keep only the middle card sharp.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "top"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 4.3,
+          "a_observable": "The corners of the frame show a distinct dark vignette.",
+          "b_observable": "The corners of the frame are evenly lit with no vignette.",
+          "fix": "Apply a vignette effect to darken the corners of the frame.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 4.95,
+          "a_observable": "The shadow underneath the yellow Recurly card is deep and dark, creating strong contrast.",
+          "b_observable": "The shadow underneath the yellow Recurly card is very light and faint.",
+          "fix": "Increase the shadow intensity or ambient occlusion under the yellow card to improve contrast.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 4.95,
+          "a_observable": "The yellow Recurly card has a warm, saturated golden hue.",
+          "b_observable": "The yellow Recurly card has a cooler, less saturated greenish-yellow hue.",
+          "fix": "Adjust the material color of the Recurly card to be warmer and more saturated.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Enable camera depth of field with a wider aperture to match the professional focus falloff on the cards.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 4.2,
+        "a_observable": "Strong vignette with pronounced corner shading and warm light falloff.",
+        "b_observable": "Flat, uniform lighting across the frame with minimal corner falloff.",
+        "fix": "Add a vignette and adjust light falloff to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 202.05,
+            "center_mean": 199.03,
+            "falloff_pct": -1.52
+          },
+          "B": {
+            "corner_mean": 173.53,
+            "center_mean": 200.92,
+            "falloff_pct": 13.63
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 4.95,
+        "a_observable": "The shadow underneath the yellow Recurly card is deep and dark, creating strong contrast.",
+        "b_observable": "The shadow underneath the yellow Recurly card is very light and faint.",
+        "fix": "Increase the shadow intensity or ambient occlusion under the yellow card to improve contrast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 36.12,
+            "p1": 81.87,
+            "p5": 136.22,
+            "p50": 205.67,
+            "p95": 246.28,
+            "p99": 247.13,
+            "p999": 249.72,
+            "span_p5_p95": 110.06
+          },
+          "B": {
+            "p01": 36.82,
+            "p1": 47.93,
+            "p5": 54.22,
+            "p50": 193.53,
+            "p95": 207.81,
+            "p99": 216.26,
+            "p999": 218.68,
+            "span_p5_p95": 153.59
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the lighting setup to introduce a stronger vignette and deeper shadows under the cards to match the reference's depth and contrast.",
+    "dropped_unsupported": 3
+  }
+}

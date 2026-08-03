@@ -1,0 +1,88 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "camera pans and zooms out from the yellow Recurly button",
+      "hard cut at t=6.67s",
+      "camera pans and zooms out from the blue Juspay button"
+    ],
+    "b_motion": [
+      "camera pans and zooms out from the yellow Recurly button",
+      "hard cut at t=6.67s",
+      "camera pans and zooms out from the blue Juspay button"
+    ],
+    "absent_in_b": [
+      "metallic border around the Juspay button slot",
+      "vignette effect in the corners"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 6.3,
+        "a_observable": "The camera angle is oblique, showing the sides of the keys with a strong perspective effect.",
+        "b_observable": "The camera angle is much more top-down, making the keys appear flatter with less perspective.",
+        "fix": "Match the camera's focal length and angle of incidence to Video A to restore the oblique perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "full"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 6.2,
+        "a_observable": "The 'Secure Payments' key is positioned closely above and to the left of the yellow button, taking up a significant portion of the upper-left frame.",
+        "b_observable": "The 'Secure Payments' key is much smaller and positioned further away towards the top-left corner.",
+        "fix": "Adjust the layout and spacing of the keyboard grid to match the proportions in Video A.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.8,
+        "a_observable": "The blue button has a soft, realistic shadow cast into its recessed slot, and the overall scene has a subtle vignette.",
+        "b_observable": "The blue button has a very sharp, dark outline shadow, and the corners of the frame lack any vignette.",
+        "fix": "Soften the contact shadows and add a vignette in post-production to match Video A.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "material",
+        "t": 6.9,
+        "a_observable": "The blue button is recessed into a slot with a metallic silver inner border.",
+        "b_observable": "The blue button is raised and sits on a dark grey flat base with no metallic border.",
+        "fix": "Model the recessed slot and metallic border for the button to match Video A's design.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 6.8,
+        "a_observable": "The blue button has a highly saturated, deep royal blue color.",
+        "b_observable": "The blue button has a lighter, less saturated blue color.",
+        "fix": "Adjust the material color of the blue button to match the deep royal blue of Video A.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and perspective to match the oblique, dynamic view of Video A, and model the recessed key slots with metallic borders."
+  }
+}

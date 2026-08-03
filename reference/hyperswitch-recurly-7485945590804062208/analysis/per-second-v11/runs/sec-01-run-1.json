@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and tilt"
+    ],
+    "b_motion": [
+      "slow camera pan and tilt"
+    ],
+    "absent_in_b": [
+      "yellow card"
+    ],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 1,
+        "a_observable": "A bright yellow card is visible at the bottom of the frame, and the 'Renewal Success' card is positioned directly above the 'Secure Payments' card.",
+        "b_observable": "A white card with horizontal lines is visible at the bottom of the frame, and the 'Renewal Success' card is positioned to the upper right of the 'Secure Payments' card.",
+        "fix": "Re-align the cards and adjust the camera framing to match the layout of the reference video.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none",
+          "region": "full"
+        }
+      },
+      {
+        "category": "color",
+        "t": 1.5,
+        "a_observable": "The blue shield icon is a vibrant, saturated blue.",
+        "b_observable": "The blue shield icon is desaturated and has a muted, grayish-blue appearance.",
+        "fix": "Increase the saturation of the blue materials to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "full"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.2,
+        "a_observable": "Deep shadows are visible under the edges of the cards, creating high contrast.",
+        "b_observable": "Shadows under the cards are extremely faint, resulting in a flat, low-contrast appearance.",
+        "fix": "Adjust the light source intensity and shadow settings to deepen the shadows and increase contrast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the layout and camera framing to match the reference, ensuring the correct cards (including the yellow card) are visible in the frame."
+  }
+}

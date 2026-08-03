@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 1,
+    "idx": 0,
+    "t": 1,
+    "category": "layout",
+    "a_observable": "A yellow tile is positioned directly below the 'Secure Payments' tile.",
+    "b_observable": "A white tile with horizontal lines is positioned directly below the 'Secure Payments' tile.",
+    "frames": {
+      "A": "analysis/per-second-v11/eyewitness/sec-01-c0-A.png",
+      "B": "analysis/per-second-v11/eyewitness/sec-01-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "The claim is fully supported. In Clip A, a yellow tile is clearly visible directly below the 'Secure Payments' tile. In Clip B, a white tile with horizontal lines is positioned directly below the 'Secure Payments' tile."
+    }
+  }
+]

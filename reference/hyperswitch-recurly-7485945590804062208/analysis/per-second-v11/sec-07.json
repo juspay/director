@@ -1,0 +1,257 @@
+{
+  "sec": 7,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "The camera slowly pans and zooms out from the blue JUSPAY card, revealing surrounding tiles."
+      ],
+      "b_motion": [
+        "The camera pans diagonally and rotates slightly around the blue card."
+      ],
+      "absent_in_b": [
+        "grid of dots on the left tile"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 7.5,
+          "a_observable": "The camera is positioned directly above the blue card, showing it aligned horizontally with a flat perspective.",
+          "b_observable": "The camera is at an oblique angle, showing the blue card rotated diagonally with a strong perspective.",
+          "fix": "Adjust the camera angle and rotation to match the top-down perspective of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 7.5,
+          "a_observable": "The scene is brightly lit with soft, subtle shadows and high-exposure white surfaces.",
+          "b_observable": "The scene is dimly lit with high contrast, showing deep black shadows under the raised cards.",
+          "fix": "Increase the ambient light intensity and soften the shadows to match the bright, high-key lighting of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        },
+        {
+          "category": "material",
+          "t": 7.5,
+          "a_observable": "The small 'PSP' card at the bottom has a reflective metallic silver frame.",
+          "b_observable": "The small 'PSP' card is a matte white card with no metallic frame.",
+          "fix": "Add a metallic material with reflective properties to the frame of the PSP card.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and perspective to match the top-down view of the reference, and soften the high-contrast shadows.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pull-back with subtle rotation"
+      ],
+      "b_motion": [
+        "faster camera pull-back with more pronounced rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "staging",
+          "t": 7.3,
+          "a_observable": "The logo on the blue card is the official Hyperswitch brand mark.",
+          "b_observable": "The logo on the blue card is a generic clock icon.",
+          "fix": "Replace the clock icon with the correct Hyperswitch logo asset.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "material",
+          "t": 7.2,
+          "a_observable": "The frame around the blue card has a brushed silver metallic finish with soft reflections.",
+          "b_observable": "The frame around the blue card is a dark matte grey plastic with no metallic reflection.",
+          "fix": "Change the material of the frame to a brushed silver metal with anisotropic reflections.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 7.5,
+          "a_observable": "The camera angle is high and flat, showing the cards with minimal perspective distortion.",
+          "b_observable": "The camera angle is low and oblique, causing significant perspective distortion on the cards.",
+          "fix": "Adjust the camera height and tilt to match the flatter perspective of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 7.8,
+          "a_observable": "The scene is brightly lit with soft, diffused shadows.",
+          "b_observable": "The scene has higher contrast with darker, sharper shadows.",
+          "fix": "Soften the shadows and increase ambient lighting to match the reference's bright, low-contrast look.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        },
+        {
+          "category": "motion",
+          "t": 7.5,
+          "a_observable": "The camera pulls back slowly with very little rotation.",
+          "b_observable": "The camera pulls back and rotates more rapidly.",
+          "fix": "Slow down the camera movement and reduce the rotation amount.",
+          "severity": 3,
+          "prediction": {
+            "metric": "motion",
+            "expect": "B_more"
+          }
+        }
+      ],
+      "highest_impact_fix": "Correct the camera angle, pitch, and perspective distortion to match the reference's flatter, cleaner composition.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera"
+      ],
+      "b_motion": [
+        "camera"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 7.5,
+          "a_observable": "The camera is closer to the tiles, showing a flatter perspective of the central tile.",
+          "b_observable": "The camera is further away with a wider field of view, creating a more skewed perspective.",
+          "fix": "Match the camera focal length and position to the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 7.5,
+          "a_observable": "The lighting is soft with gentle shadow gradients on the tiles.",
+          "b_observable": "The lighting has high contrast with dark, sharp shadows.",
+          "fix": "Soften the light source and increase shadow diffusion.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_higher_contrast",
+            "region": "full"
+          }
+        },
+        {
+          "category": "color",
+          "t": 7.5,
+          "a_observable": "The white tiles have a warm, neutral tone.",
+          "b_observable": "The white tiles have a cool blue-gray color cast.",
+          "fix": "Adjust the light color to remove the cool blue cast.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and focal length to match the reference perspective.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 7.5,
+        "a_observable": "The camera is positioned directly above the blue card, showing it aligned horizontally with a flat perspective.",
+        "b_observable": "The camera is at an oblique angle, showing the blue card rotated diagonally with a strong perspective.",
+        "fix": "Adjust the camera angle and rotation to match the top-down perspective of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 3,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "The description of both clips is highly accurate. Clip A shows a top-down, flat perspective with the blue card aligned horizontally, while Clip B shows an oblique angle with the blue card rotated diagonally and a strong perspective effect."
+        },
+        "channelA": {
+          "verdict": "refuted",
+          "note": "The claim's A half is false: A is oblique too and its card sits diagonally in frame. Real difference in this pair: A's pronounced dome and wide plinth vs B's flat read."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 7.5,
+        "a_observable": "The scene is brightly lit with soft, subtle shadows and high-exposure white surfaces.",
+        "b_observable": "The scene is dimly lit with high contrast, showing deep black shadows under the raised cards.",
+        "fix": "Increase the ambient light intensity and soften the shadows to match the bright, high-key lighting of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_deeper_shadows",
+          "A": {
+            "p01": 65.23,
+            "p1": 69.47,
+            "p5": 75.95,
+            "p50": 200.32,
+            "p95": 246.42,
+            "p99": 247.86,
+            "p999": 253.09,
+            "span_p5_p95": 170.47
+          },
+          "B": {
+            "p01": 7.08,
+            "p1": 8.88,
+            "p5": 32.83,
+            "p50": 156.12,
+            "p95": 196.4,
+            "p99": 206.77,
+            "p999": 254.5,
+            "span_p5_p95": 163.57
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera angle and perspective to match the top-down view of the reference, and soften the high-contrast shadows.",
+    "dropped_unsupported": 6
+  }
+}
