@@ -277,9 +277,16 @@ export const Well: React.FC<{
   size: [number, number];
   metalMap?: THREE.Texture | null;
   whiten?: number;
-}> = ({ position, size, metalMap = null, whiten = 0 }) => {
+  /**
+   * The reference's macro hero wells are DARK brushed graphite (verified,
+   * sec 6: "dark grey well" vs our light blue-grey); its lockup frames are
+   * light silver. Default stays light for the lockup.
+   */
+  tone?: 'light' | 'dark';
+}> = ({ position, size, metalMap = null, whiten = 0, tone = 'light' }) => {
   const [w, l] = size;
-  const bezel = 0.115;
+  const bezel = 0.155;
+  const dark = tone === 'dark';
   return (
     <group position={position}>
       <Slab
@@ -291,8 +298,8 @@ export const Well: React.FC<{
       >
         <meshPhysicalMaterial
           map={metalMap ?? undefined}
-          color="#dde2ea"
-          roughness={0.4}
+          color={dark ? '#82878f' : '#dde2ea'}
+          roughness={dark ? 0.52 : 0.4}
           metalness={0.45}
           clearcoat={0.15}
           anisotropy={0.45}
@@ -308,7 +315,7 @@ export const Well: React.FC<{
         position={[0, WELL_FLOOR - TILE_THICK / 2, 0]}
         receiveShadow
       >
-        <meshStandardMaterial color="#8f96a3" roughness={0.88} metalness={0.15} />
+        <meshStandardMaterial color={dark ? '#5f646d' : '#8f96a3'} roughness={0.88} metalness={0.15} />
       </Slab>
     </group>
   );

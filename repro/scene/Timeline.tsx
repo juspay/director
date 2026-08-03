@@ -395,7 +395,7 @@ export const Timeline: React.FC = () => {
       {/* Shot 3 — Recurly hero */}
       {shot === 2 && (
         <>
-          <Well position={HERO_WELL} size={[BRAND[0], BRAND[2]]} metalMap={f.metal} whiten={whiten} />
+          <Well position={HERO_WELL} size={[BRAND[0], BRAND[2]]} metalMap={f.metal} whiten={whiten} tone="dark" />
           <Keycap
             position={[HERO[0], Math.max(HERO[1] + 0.003, HERO[1] + 0.004 + 0.045 * (1 - spring({ frame: frame - 149, fps: FPS, config: { damping: 12, stiffness: 160, mass: 0.85 } }))), HERO[2]]}
             size={BRAND}
@@ -415,7 +415,7 @@ export const Timeline: React.FC = () => {
           in fully staged. */}
       {shot === 3 && (
         <>
-          <Well position={HERO_WELL} size={[BRAND[0], BRAND[2]]} metalMap={f.metal} whiten={whiten} />
+          <Well position={HERO_WELL} size={[BRAND[0], BRAND[2]]} metalMap={f.metal} whiten={whiten} tone="dark" />
           <Keycap
             position={[HERO[0], Math.max(HERO[1] + 0.005, HERO[1] + 0.035 + 0.125 * (1 - spring({ frame: frame - T.hyPressStart, fps: FPS, config: { damping: 11, stiffness: 170, mass: 0.8 } }))), HERO[2]]}
             size={BRAND}
@@ -424,13 +424,15 @@ export const Timeline: React.FC = () => {
             faceSize={F_HYPER}
           />
           <Keycap position={[1.48, CAP_Y, -1.40]} size={CAP} color={C.card} face={f.revenue} faceSize={F_REVENUE} />
+          {/* PSP per the verified staging finding: a WHITE keycap carrying a
+              small recessed indigo square, not a solid blue mini-cap. */}
           <Keycap
             position={[-1.28, TILE_TOP + 0.05 - 0.008 + 0.04 * (1 - spring({ frame: frame - (T.hyPressStart + 8), fps: FPS, config: { damping: 10, stiffness: 150 } })), 0.62]}
-            size={[0.34, 0.10, 0.34]}
-            radius={0.07}
-            color={C.blue}
+            size={[0.5, 0.10, 0.5]}
+            radius={0.09}
+            color={C.card}
             face={f.psp}
-            faceSize={[0.27, 0.27]}
+            faceSize={[0.4, 0.4]}
           />
         </>
       )}

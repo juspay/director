@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import * as THREE from 'three';
 import { Slab } from './Slab';
 
@@ -43,6 +43,27 @@ export const Keycap: React.FC<Props> = ({
   const [fw, fl] = faceSize ?? [w * faceScale, l * faceScale];
   const trayT = t * 0.30;
   const wellT = t * 0.55;
+  /**
+   * DOMED face (pass 10). The reference's caps are pillowy — their top faces
+   * curve, and that curvature is what carries the broad specular sweep across
+   * the gold and the soft falloff on the whites (verified: 'flat slab with
+   * edge bevels' survived eyewitness in five seconds). A gentle paraboloid on
+   * the lit face supplies it; texture distortion at the edges is slight and
+   * matches the reference's curved logos.
+   */
+  const domeGeo = useMemo(() => {
+    const g = new THREE.PlaneGeometry(fw, fl, 24, 24);
+    const posAttr = g.attributes.position;
+    const domeH = Math.min(fw, fl) * 0.055;
+    for (let i = 0; i < posAttr.count; i++) {
+      const nx = posAttr.getX(i) / (fw / 2);
+      const ny = posAttr.getY(i) / (fl / 2);
+      posAttr.setZ(i, domeH * (1 - nx * nx) * (1 - ny * ny));
+    }
+    g.computeVertexNormals();
+    return g;
+  }, [fw, fl]);
+  React.useEffect(() => () => domeGeo.dispose(), [domeGeo]);
   if (opacity <= 0.002) return null;
   return (
     <group position={position} rotation={rotation}>
@@ -99,8 +120,7 @@ export const Keycap: React.FC<Props> = ({
         />
       </Slab>
       {face && (
-        <mesh position={[0, t / 2 + 0.004 + lift, 0]} rotation={[-Math.PI / 2, 0, 0]} renderOrder={20}>
-          <planeGeometry args={[fw, fl]} />
+        <mesh position={[0, t / 2 + 0.004 + lift, 0]} rotation={[-Math.PI / 2, 0, 0]} renderOrder={20} geometry={domeGeo}>
           {/* LIT faces (pass 8). The unlit toneMapped=false basic material
               could not carry the reference's specular gradients — the
               eyewitness pass confirmed A's gold face has a bright-to-dark

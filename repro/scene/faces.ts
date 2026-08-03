@@ -427,11 +427,21 @@ export function revenueFace(): THREE.CanvasTexture {
 
 export function pspFace(): THREE.CanvasTexture {
   return tex(512, 512, (ctx) => {
+    // Small recessed indigo square on the white cap (verified staging
+    // finding) — the square occupies ~55% of the face, text stays white.
+    const sq = 280;
+    const o = (512 - sq) / 2;
+    ctx.fillStyle = 'rgba(40,46,66,0.18)';
+    roundRect(ctx, o - 10, o - 6, sq + 20, sq + 20, 58);
+    ctx.fill();
+    ctx.fillStyle = C.indigo;
+    roundRect(ctx, o, o, sq, sq, 52);
+    ctx.fill();
     ctx.fillStyle = '#fff';
-    ctx.font = `600 150px ${FONT}`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('PSP', 256, 260);
+    fitFont(ctx, 'PSP', 96, 230, '600', 2);
+    ctx.fillText('PSP', 256, 262);
   });
 }
 
@@ -439,7 +449,6 @@ export function pspFace(): THREE.CanvasTexture {
 // Set-dressing panel content — the mosaic the whole world is built from
 // ---------------------------------------------------------------------------
 
-/** Blank panel with a soft vertical sheen. */
 /**
  * Fine matte grain, drawn via an offscreen canvas.
  *
@@ -467,16 +476,6 @@ function grain(ctx: CanvasRenderingContext2D, w: number, h: number, seed: number
   ctx.restore();
 }
 
-/**
- * Plain wall panel.
- *
- * This texture covers most of the set, and it used to be a flat fill plus a
- * single linear gradient — no high-frequency content at all. Measuring
- * Laplacian energy in the IN-FOCUS centre of frame showed 43% of the
- * reference's, which ruled out depth of field as the cause and pointed here:
- * the reference's surfaces carry a fine matte grain that catches the key light,
- * and a dead-flat panel cannot.
- */
 export function panelPlain(seed = 1): THREE.CanvasTexture {
   const r = rng(seed);
   const base = 222 + Math.floor(r() * 16);
