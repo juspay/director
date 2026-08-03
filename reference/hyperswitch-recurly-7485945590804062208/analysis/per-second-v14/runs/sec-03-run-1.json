@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan",
+      "subtle tilt"
+    ],
+    "b_motion": [
+      "slow camera pan",
+      "subtle tilt"
+    ],
+    "absent_in_b": [
+      "dotted grid texture on background panel"
+    ],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 3.3,
+        "a_observable": "A grid of grey dots is visible on the panel to the left of the cards.",
+        "b_observable": "The panel to the left of the cards is plain white without any dots.",
+        "fix": "Add the dotted pattern texture to the left background panel.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 3.5,
+        "a_observable": "The white cards and background have a warm, yellowish tint.",
+        "b_observable": "The white cards and background are cool white with a slight blue tint.",
+        "fix": "Warm up the color temperature and match the color grading of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 3.1,
+        "a_observable": "The camera is angled such that the cards are tilted diagonally across the frame with more perspective distortion.",
+        "b_observable": "The camera angle is flatter, showing the cards more vertically aligned with less perspective.",
+        "fix": "Adjust the camera angle and focal length to match the perspective of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Add the dotted grid texture to the left background panel and adjust the camera angle to match the perspective."
+  }
+}

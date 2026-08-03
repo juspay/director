@@ -1,0 +1,60 @@
+{
+  "ok": false,
+  "why": "reported 1 cuts, truth has 0",
+  "json": {
+    "cuts_in_window": [
+      13.33
+    ],
+    "a_motion": [
+      "camera pan",
+      "camera zoom out"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 13.5,
+        "a_observable": "The corners of the frame are darker than the center, showing a clear vignette.",
+        "b_observable": "The corners are almost as bright as the center, lacking a vignette.",
+        "fix": "Add a vignette effect to darken the corners of the frame.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 13.5,
+        "a_observable": "The colors are richer and more saturated, with deeper blue and yellow tones.",
+        "b_observable": "The colors appear washed out and less saturated, with a brighter, flatter look.",
+        "fix": "Increase color saturation and contrast to match the reference video.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "full"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 13.5,
+        "a_observable": "The camera has a wider field of view, creating a dynamic 3D perspective with tilted cards.",
+        "b_observable": "The camera has a narrower field of view, making the perspective flatter and less dynamic.",
+        "fix": "Adjust the camera focal length and angle to match the reference perspective.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": "none",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera perspective and focal length to match the dynamic 3D depth of the reference video, and add a vignette to improve contrast."
+  }
+}

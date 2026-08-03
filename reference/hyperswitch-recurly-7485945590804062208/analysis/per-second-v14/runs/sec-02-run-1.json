@@ -1,0 +1,66 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.2
+    ],
+    "a_motion": [
+      "camera"
+    ],
+    "b_motion": [
+      "camera"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 2.1,
+        "a_observable": "The camera is zoomed in close to the 'Secure Payments' card, with 'Renewal Success' visible directly above it.",
+        "b_observable": "The camera is pulled back significantly, showing a wide view with a large blue card at the top and a yellow card at the bottom-left.",
+        "fix": "Adjust camera focal length and position to match the close-up framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.1,
+        "a_observable": "There is a noticeable vignette with darker corners and softer falloff.",
+        "b_observable": "The lighting is uniform and flat across the entire frame, lacking corner falloff.",
+        "fix": "Add a soft vignette or adjust the light source falloff.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "material",
+        "t": 2.5,
+        "a_observable": "A brushed metal texture is visible on the background surface to the right of the cards.",
+        "b_observable": "The background surface is a flat, solid grey with no metallic texture.",
+        "fix": "Apply a brushed metal material to the background plate on the right.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 2.5,
+        "a_observable": "The camera is positioned at a low, dynamic angle, looking across the cards with a strong perspective tilt.",
+        "b_observable": "The camera is positioned more directly overhead, resulting in a flatter perspective.",
+        "fix": "Adjust camera rotation and angle to capture the cards from a lower perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Align the camera framing, focal length, and perspective angles to match the dynamic close-ups and tilted compositions of the reference video."
+  }
+}

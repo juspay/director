@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 1.5,
+        "a_observable": "The camera roll is aligned such that the grid lines are tilted at a shallow angle of approximately 15 degrees.",
+        "b_observable": "The camera roll is tilted much further, with the grid lines running at a steep diagonal angle of around 35 degrees.",
+        "fix": "Adjust the camera's roll rotation to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "The shadows cast by the 'Secure Payments' card are soft and highly diffused with a gentle falloff.",
+        "b_observable": "The shadows are sharp and dark, creating a high-contrast edge beneath the card.",
+        "fix": "Increase the size of the key light or increase shadow diffusion to soften the card shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_higher_contrast",
+          "region": "center"
+        }
+      },
+      {
+        "category": "color",
+        "t": 1.5,
+        "a_observable": "The white tiles have a warm, slightly cream-colored cast.",
+        "b_observable": "The white tiles are a neutral, cool grey.",
+        "fix": "Adjust the white balance or ambient light color to introduce a warmer cream tone to the white materials.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera's roll rotation to match the reference framing, and increase the light source size to soften the sharp shadows under the cards."
+  }
+}

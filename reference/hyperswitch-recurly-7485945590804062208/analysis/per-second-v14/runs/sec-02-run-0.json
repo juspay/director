@@ -1,0 +1,70 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.21
+    ],
+    "a_motion": [
+      "pan",
+      "tilt"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt"
+    ],
+    "absent_in_b": [
+      "brushed metal texture"
+    ],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 2.1,
+        "a_observable": "The 'Secure Payments' text is aligned horizontally next to the shield icon.",
+        "b_observable": "The 'Secure Payments' text is rotated vertically below the shield icon.",
+        "fix": "Align the text horizontally next to the icon.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "material",
+        "t": 2.4,
+        "a_observable": "The right-side background surface has a brushed metallic texture.",
+        "b_observable": "The right-side background surface is a flat, matte grey material.",
+        "fix": "Apply a brushed metal material to the right-side surface.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 2.5,
+        "a_observable": "The scene has a cool blue color cast on the white elements.",
+        "b_observable": "The scene has a neutral grey and white color profile.",
+        "fix": "Add a blue color cast to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 2.6,
+        "a_observable": "The camera views the cards from a low angle with perspective distortion.",
+        "b_observable": "The camera views the cards from a flatter, more top-down angle.",
+        "fix": "Adjust the camera angle and perspective.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Correct the layout of the 'Secure Payments' text and add the brushed metallic texture to the background."
+  }
+}

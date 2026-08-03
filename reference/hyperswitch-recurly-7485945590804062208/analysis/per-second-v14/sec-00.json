@@ -1,0 +1,232 @@
+{
+  "sec": 0,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "drift",
+        "zoom"
+      ],
+      "b_motion": [
+        "drift",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 0.5,
+          "a_observable": "Close-up framing on the 'Secure Payments' tile, with surrounding tiles mostly cropped out.",
+          "b_observable": "Wide framing showing multiple surrounding tiles, with the main tile appearing much smaller.",
+          "fix": "Adjust camera position and focal length to match the close-up framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 0.2,
+          "a_observable": "White tiles exhibit a distinct cool blue color cast.",
+          "b_observable": "White tiles are neutral grey-white with no color cast.",
+          "fix": "Apply a cool blue color grade to the scene.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.8,
+          "a_observable": "Strong vignette darkens the corners of the frame.",
+          "b_observable": "Uniform lighting across the frame with bright corners.",
+          "fix": "Add a vignette effect to darken the outer edges.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust camera position and focal length to match the close-up framing.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan and tilt"
+      ],
+      "b_motion": [
+        "slow camera pan and tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 0.1,
+          "a_observable": "Landscape-oriented 'Secure Payments' card with shield on the left and horizontal text.",
+          "b_observable": "Portrait-oriented card with shield on top and vertically rotated text.",
+          "fix": "Change card orientation to landscape and align icon and text horizontally.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 0,
+          "a_observable": "Close-up camera framing focused tightly on the 'Secure Payments' card.",
+          "b_observable": "Wider camera framing showing more surrounding keyboard keys.",
+          "fix": "Adjust camera position and focal length for a tighter close-up.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.5,
+          "a_observable": "Pronounced vignette darkening the corners of the frame.",
+          "b_observable": "Even, flat illumination across the entire frame with no vignette.",
+          "fix": "Add a vignette effect to darken the corners.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 0.5,
+          "a_observable": "High contrast with deep shadows in the key crevices.",
+          "b_observable": "Low contrast with washed-out, bright shadows in the crevices.",
+          "fix": "Adjust luma curve to deepen shadows and increase contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "material",
+          "t": 0.3,
+          "a_observable": "Yellow card has a metallic brushed texture with anisotropic reflections.",
+          "b_observable": "Yellow card has a flat, matte plastic material with no texture.",
+          "fix": "Apply a brushed metal texture and adjust reflectivity on the yellow card.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Correct the orientation and layout of the 'Secure Payments' card to match the landscape design in the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera drift"
+      ],
+      "b_motion": [
+        "slow camera drift"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 0.5,
+          "a_observable": "Shallow depth of field blurs background and foreground cards.",
+          "b_observable": "Deep depth of field keeps all cards in sharp focus.",
+          "fix": "Enable depth of field and adjust aperture to blur non-focused areas.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 0.5,
+          "a_observable": "The 'Secure Payments' card is framed closely and rotated dynamically.",
+          "b_observable": "The card is smaller, rotated less, and positioned differently.",
+          "fix": "Adjust camera distance and rotation to match reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera distance, focal length, and enable shallow depth of field to match the reference framing and blur.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 0.5,
+        "a_observable": "Close-up framing on the 'Secure Payments' tile, with surrounding tiles mostly cropped out.",
+        "b_observable": "Wide framing showing multiple surrounding tiles, with the main tile appearing much smaller.",
+        "fix": "Adjust camera position and focal length to match the close-up framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 3,
+        "status": "pending_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "Clip A shows a tight close-up on the 'Secure Payments' tile, with the surrounding tiles heavily cropped. Clip B has a wider framing where the 'Secure Payments' tile is smaller and more of the surrounding tiles are visible."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.5,
+        "a_observable": "Pronounced vignette darkening the corners of the frame.",
+        "b_observable": "Even, flat illumination across the entire frame with no vignette.",
+        "fix": "Add a vignette effect to darken the corners.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 202.03,
+            "center_mean": 205.44,
+            "falloff_pct": 1.66
+          },
+          "B": {
+            "corner_mean": 183.6,
+            "center_mean": 214.9,
+            "falloff_pct": 14.56
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust camera position and focal length to match the close-up framing.",
+    "dropped_unsupported": 5
+  }
+}

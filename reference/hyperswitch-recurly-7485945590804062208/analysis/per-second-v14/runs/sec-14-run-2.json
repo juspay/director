@@ -1,0 +1,67 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera motion",
+      "shadow motion"
+    ],
+    "b_motion": [
+      "camera motion"
+    ],
+    "absent_in_b": [
+      "leaf_shadows"
+    ],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 14.1,
+        "a_observable": "Animated shadows of leafy branches move across the white tiles.",
+        "b_observable": "The lighting on the tiles is static with no leaf shadow patterns.",
+        "fix": "Add an animated light cookie to project moving leaf shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 14,
+        "a_observable": "The perspective shows converging grid lines from a wider field of view.",
+        "b_observable": "The perspective is flatter with nearly parallel grid lines.",
+        "fix": "Increase the camera field of view and move it closer.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 14.2,
+        "a_observable": "The white tiles have a warm, cream-colored tint.",
+        "b_observable": "The white tiles have a cooler, neutral white appearance.",
+        "fix": "Warm up the white balance to match the cream tone.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "material",
+        "t": 14,
+        "a_observable": "The yellow button has a semi-glossy, slightly metallic texture.",
+        "b_observable": "The yellow button has a flat, matte plastic appearance.",
+        "fix": "Increase specularity and add a metallic finish to the yellow button.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Add animated leaf shadows using a light cookie to replicate the organic lighting of the reference."
+  }
+}

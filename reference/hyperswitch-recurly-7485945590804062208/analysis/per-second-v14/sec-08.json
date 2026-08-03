@@ -1,0 +1,250 @@
+{
+  "sec": 8,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "slow camera pan on the close-up card",
+        "hard cut",
+        "camera zooms out and rotates while the Live Now button slides up"
+      ],
+      "b_motion": [
+        "slow camera pan on the close-up card",
+        "hard cut",
+        "camera zooms out and rotates while the Live Now button slides up prematurely"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "color",
+          "t": 8.05,
+          "a_observable": "The white cards and background have a cool, bluish color cast.",
+          "b_observable": "The white cards and background are neutral grey.",
+          "fix": "Apply a cool white balance adjustment to match the bluish tint in Video A.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 8.5,
+          "a_observable": "The camera is closer to the grid, framing the Recurly and hyperswitch cards more tightly.",
+          "b_observable": "The camera is further away, showing a wider view of the grid.",
+          "fix": "Move the camera closer to the grid to match the tighter framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "staging",
+          "t": 8.7,
+          "a_observable": "The 'Live Now' button is actively sliding up and only partially visible.",
+          "b_observable": "The 'Live Now' button has already fully emerged and is stationary.",
+          "fix": "Delay the emergence animation of the 'Live Now' button to match Video A.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Delay the emergence animation of the 'Live Now' button so that it aligns with the timing in the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "slow camera zoom out and pan"
+      ],
+      "b_motion": [
+        "slow camera zoom out and pan"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 8.3,
+          "a_observable": "Tighter camera framing on the Recurly and hyperswitch cards.",
+          "b_observable": "Wider camera framing showing more of the surrounding grid.",
+          "fix": "Adjust camera position or focal length to match the tighter framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 8.5,
+          "a_observable": "Soft, diffused shadows cast by the cards.",
+          "b_observable": "Sharp, hard-edged shadows with high contrast.",
+          "fix": "Increase light source size to soften the shadows.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_higher_contrast"
+          }
+        },
+        {
+          "category": "color",
+          "t": 8.8,
+          "a_observable": "Muted yellow and blue tones with a cool color cast on white surfaces.",
+          "b_observable": "Highly saturated colors with neutral white surfaces.",
+          "fix": "Reduce color saturation and add a slight cool color cast.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera framing to match the tighter composition of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        8.104
+      ],
+      "a_motion": [
+        "camera pans and zooms out from the JUSPAY card",
+        "cut to a wider view panning and zooming out over the grid of cards"
+      ],
+      "b_motion": [
+        "camera pans and zooms out from the JUSPAY card",
+        "cut to a wider view panning and zooming out over the grid of cards"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "color",
+          "t": 8.5,
+          "a_observable": "The white cards and background have a warm, cream-colored tint.",
+          "b_observable": "The white cards and background have a cool, neutral grey tint.",
+          "fix": "Adjust the white balance to add warmth to the scene.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 8.5,
+          "a_observable": "A strong vignette is visible, darkening the corners of the frame.",
+          "b_observable": "The frame has uniform brightness with no vignette in the corners.",
+          "fix": "Apply a vignette effect in post-processing.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 8.7,
+          "a_observable": "The 'Live Now' button starts sliding up at t=8.70s.",
+          "b_observable": "The 'Live Now' button starts sliding up earlier, at t=8.60s.",
+          "fix": "Delay the keyframes of the button's entrance animation.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the overall color grading and white balance to match the warm, golden tone of the reference video, and add a vignette effect.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "color",
+        "t": 8.05,
+        "a_observable": "The white cards and background have a cool, bluish color cast.",
+        "b_observable": "The white cards and background are neutral grey.",
+        "fix": "Apply a cool white balance adjustment to match the bluish tint in Video A.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_cooler",
+          "A": {
+            "r": 180.02,
+            "g": 190.52,
+            "b": 206.41,
+            "rb_delta": -26.39,
+            "saturation": 0.2557
+          },
+          "B": {
+            "r": 125.47,
+            "g": 137.59,
+            "b": 191.47,
+            "rb_delta": -66,
+            "saturation": 0.3245
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "camera",
+        "t": 8.3,
+        "a_observable": "Tighter camera framing on the Recurly and hyperswitch cards.",
+        "b_observable": "Wider camera framing showing more of the surrounding grid.",
+        "fix": "Adjust camera position or focal length to match the tighter framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 2,
+        "status": "pending_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "Clip A shows a much tighter zoom on the Recurly and hyperswitch cards, while Clip B has a wider camera angle showing more of the surrounding grid tiles."
+        }
+      },
+      {
+        "category": "staging",
+        "t": 8.7,
+        "a_observable": "The 'Live Now' button is actively sliding up and only partially visible.",
+        "b_observable": "The 'Live Now' button has already fully emerged and is stationary.",
+        "fix": "Delay the emergence animation of the 'Live Now' button to match Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "pending_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 0.9,
+          "note": "In Clip A, the pill-shaped button (which represents the 'Live Now' button) is actively sliding up and is only partially visible by the end of the clip. In Clip B, the button with the text 'Live Now' has fully emerged and is stationary at the end of the clip."
+        }
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust camera position or focal length to match the tighter framing.",
+    "dropped_unsupported": 3
+  }
+}

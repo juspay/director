@@ -1,0 +1,77 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and tilt"
+    ],
+    "b_motion": [
+      "slow camera pan and tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 0.1,
+        "a_observable": "Landscape-oriented 'Secure Payments' card with shield on the left and horizontal text.",
+        "b_observable": "Portrait-oriented card with shield on top and vertically rotated text.",
+        "fix": "Change card orientation to landscape and align icon and text horizontally.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 0,
+        "a_observable": "Close-up camera framing focused tightly on the 'Secure Payments' card.",
+        "b_observable": "Wider camera framing showing more surrounding keyboard keys.",
+        "fix": "Adjust camera position and focal length for a tighter close-up.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.5,
+        "a_observable": "Pronounced vignette darkening the corners of the frame.",
+        "b_observable": "Even, flat illumination across the entire frame with no vignette.",
+        "fix": "Add a vignette effect to darken the corners.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 0.5,
+        "a_observable": "High contrast with deep shadows in the key crevices.",
+        "b_observable": "Low contrast with washed-out, bright shadows in the crevices.",
+        "fix": "Adjust luma curve to deepen shadows and increase contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "material",
+        "t": 0.3,
+        "a_observable": "Yellow card has a metallic brushed texture with anisotropic reflections.",
+        "b_observable": "Yellow card has a flat, matte plastic material with no texture.",
+        "fix": "Apply a brushed metal texture and adjust reflectivity on the yellow card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Correct the orientation and layout of the 'Secure Payments' card to match the landscape design in the reference."
+  }
+}

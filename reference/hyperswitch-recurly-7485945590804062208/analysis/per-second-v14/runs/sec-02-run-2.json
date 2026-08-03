@@ -1,0 +1,70 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.21
+    ],
+    "a_motion": [
+      "pan",
+      "tilt"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 2.1,
+        "a_observable": "The 'Secure Payments' card is surrounded by 'Renewal Success' above, a blue card to the left, and a yellow card below.",
+        "b_observable": "The 'Secure Payments' card is surrounded by a blue card at the top, a yellow card to the bottom-left, and 'Renewal Success' to the right.",
+        "fix": "Re-align the cards in the 3D scene to match the reference layout.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 2.1,
+        "a_observable": "The camera uses a longer focal length with flatter perspective on the cards.",
+        "b_observable": "The camera uses a wider focal length, resulting in stronger perspective distortion.",
+        "fix": "Increase the camera's focal length and move it further back to flatten the perspective.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.3,
+        "a_observable": "The shadows cast by the stacked cards are soft and highly diffused.",
+        "b_observable": "The shadows cast by the stacked cards are sharp and dark.",
+        "fix": "Increase the light source size to soften the shadow edges.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows",
+          "region": "full"
+        }
+      },
+      {
+        "category": "color",
+        "t": 2.3,
+        "a_observable": "The white cards have a warm, cream-colored tint.",
+        "b_observable": "The white cards are neutral white and grey.",
+        "fix": "Adjust the white balance or material color to add a warm cream tint.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Align the 3D layout and camera focal length of the scene to match the reference's flat perspective and card arrangement."
+  }
+}

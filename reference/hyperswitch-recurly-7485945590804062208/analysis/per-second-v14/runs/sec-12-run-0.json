@@ -1,0 +1,53 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera"
+    ],
+    "b_motion": [
+      "camera"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 12.1,
+        "a_observable": "The camera is positioned closer to the buttons, resulting in a tighter framing.",
+        "b_observable": "The camera is further away, creating a wider framing with more surrounding tiles.",
+        "fix": "Adjust camera distance to match reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "The corners of the frame are noticeably darker than the center, showing a strong vignette.",
+        "b_observable": "The corners have almost the same brightness as the center, lacking a vignette.",
+        "fix": "Apply a stronger vignette in post-processing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 12.3,
+        "a_observable": "The white tiles exhibit a cool bluish tint.",
+        "b_observable": "The white tiles are neutral white without the blue tint.",
+        "fix": "Adjust color grading to introduce a cool blue cast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and focal length to match the tighter framing of the reference video."
+  }
+}

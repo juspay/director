@@ -1,0 +1,195 @@
+{
+  "sec": 14,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 1
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "static"
+      ],
+      "b_motion": [
+        "static"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 14.2,
+          "a_observable": "The yellow 'Recurly' and blue 'hyperswitch' buttons are framed closely, occupying most of the screen width.",
+          "b_observable": "The camera is pulled further back, making the buttons appear smaller with more empty space around them.",
+          "fix": "Adjust the camera distance or focal length to match the closer framing of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 14.2,
+          "a_observable": "The white background tiles have a warm, yellowish color cast.",
+          "b_observable": "The white background tiles are neutral white with a cool blue tint.",
+          "fix": "Adjust the white balance or color grading to introduce a warmer tone.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera zoom and position to match the closer framing of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera motion"
+      ],
+      "b_motion": [
+        "camera motion"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 14.1,
+          "a_observable": "The corners of the frame are darker than the center, creating a clear vignette.",
+          "b_observable": "The corners are as bright as the center, with no vignette effect.",
+          "fix": "Add a vignette in post-production to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 14.2,
+          "a_observable": "The overall color palette has a warm, slightly yellow-green color cast.",
+          "b_observable": "The color palette is neutral white and blue, lacking the warm color cast.",
+          "fix": "Apply a warm color grade to match the color cast of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Apply a warm color grade and add a vignette in post-production to match the lighting and color palette of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera motion",
+        "shadow motion"
+      ],
+      "b_motion": [
+        "camera motion"
+      ],
+      "absent_in_b": [
+        "leaf_shadows"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 14,
+          "a_observable": "The perspective shows converging grid lines from a wider field of view.",
+          "b_observable": "The perspective is flatter with nearly parallel grid lines.",
+          "fix": "Increase the camera field of view and move it closer.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 14.2,
+          "a_observable": "The white tiles have a warm, cream-colored tint.",
+          "b_observable": "The white tiles have a cooler, neutral white appearance.",
+          "fix": "Warm up the white balance to match the cream tone.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "material",
+          "t": 14,
+          "a_observable": "The yellow button has a semi-glossy, slightly metallic texture.",
+          "b_observable": "The yellow button has a flat, matte plastic appearance.",
+          "fix": "Increase specularity and add a metallic finish to the yellow button.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Add animated leaf shadows using a light cookie to replicate the organic lighting of the reference.",
+      "layer1_rejected": [
+        {
+          "claim": {
+            "category": "lighting",
+            "t": 14.1,
+            "a_observable": "Animated shadows of leafy branches move across the white tiles.",
+            "b_observable": "The lighting on the tiles is static with no leaf shadow patterns.",
+            "fix": "Add an animated light cookie to project moving leaf shadows.",
+            "severity": 3,
+            "prediction": {
+              "metric": "none",
+              "expect": "none"
+            }
+          },
+          "why": "lighting claim carries no prediction"
+        }
+      ]
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "color",
+        "t": 14.2,
+        "a_observable": "The white background tiles have a warm, yellowish color cast.",
+        "b_observable": "The white background tiles are neutral white with a cool blue tint.",
+        "fix": "Adjust the white balance or color grading to introduce a warmer tone.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_cooler",
+          "A": {
+            "r": 194.72,
+            "g": 204.52,
+            "b": 200.82,
+            "rb_delta": -6.1,
+            "saturation": 0.1835
+          },
+          "B": {
+            "r": 189.41,
+            "g": 195.02,
+            "b": 217.07,
+            "rb_delta": -27.67,
+            "saturation": 0.1882
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the white balance or color grading to introduce a warmer tone.",
+    "dropped_unsupported": 5
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "camera zoom out and pan",
+      "camera pan after cut"
+    ],
+    "b_motion": [
+      "camera zoom out and pan",
+      "camera pan after cut"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 6.2,
+        "a_observable": "The shadow cast by the yellow Recurly button is soft and diffused.",
+        "b_observable": "The shadow cast by the yellow Recurly button is extremely dark and hard-edged.",
+        "fix": "Increase the size of the light source or adjust shadow blur settings to soften the shadow edges.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 6.8,
+        "a_observable": "The background elements, such as the Revenue Analytics card, are heavily blurred by depth of field.",
+        "b_observable": "The background elements are sharp and in focus, with no noticeable depth of field blur.",
+        "fix": "Enable depth of field on the camera and adjust the aperture to blur background elements.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        }
+      },
+      {
+        "category": "color",
+        "t": 6.2,
+        "a_observable": "The yellow button has a warm, golden-yellow hue.",
+        "b_observable": "The yellow button has a highly saturated, bright lemon-yellow color.",
+        "fix": "Modify the diffuse color of the yellow button material to be warmer and less saturated.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 6.8,
+        "a_observable": "The Subscriptions card is positioned on the left side of the frame, partially cut off.",
+        "b_observable": "The Subscriptions card is positioned near the bottom-left corner of the frame.",
+        "fix": "Adjust the layout and spacing of the cards on the grid to match the reference composition.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera's depth of field to introduce realistic background blur, and soften the hard-edged shadows cast by the 3D elements."
+  }
+}

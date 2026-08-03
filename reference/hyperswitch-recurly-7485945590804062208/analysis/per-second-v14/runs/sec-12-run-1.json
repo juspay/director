@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera zoom out"
+    ],
+    "b_motion": [
+      "camera zoom out"
+    ],
+    "absent_in_b": [
+      "dynamic camera tilt"
+    ],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 12.2,
+        "a_observable": "The tiles are tightly clustered with minimal white space between them.",
+        "b_observable": "The tiles are widely separated, leaving large empty white gaps.",
+        "fix": "Reduce the spacing between tiles to match the reference composition.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "The corners of the frame are significantly darker than the center due to a strong vignette.",
+        "b_observable": "The corners are almost as bright as the center, with very flat illumination.",
+        "fix": "Apply a vignette to darken the corners of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 12.8,
+        "a_observable": "The yellow Recurly tile has a warm golden-yellow color.",
+        "b_observable": "The yellow Recurly tile has a cooler, more greenish-yellow color.",
+        "fix": "Adjust the yellow material color to be warmer and more golden.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera composition and tile layout to eliminate the excessive white space and match the tight framing of the reference."
+  }
+}

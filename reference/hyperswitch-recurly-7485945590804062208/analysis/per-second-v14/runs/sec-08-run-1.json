@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "slow camera zoom out and pan"
+    ],
+    "b_motion": [
+      "slow camera zoom out and pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 8.3,
+        "a_observable": "Tighter camera framing on the Recurly and hyperswitch cards.",
+        "b_observable": "Wider camera framing showing more of the surrounding grid.",
+        "fix": "Adjust camera position or focal length to match the tighter framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "Soft, diffused shadows cast by the cards.",
+        "b_observable": "Sharp, hard-edged shadows with high contrast.",
+        "fix": "Increase light source size to soften the shadows.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_higher_contrast"
+        }
+      },
+      {
+        "category": "color",
+        "t": 8.8,
+        "a_observable": "Muted yellow and blue tones with a cool color cast on white surfaces.",
+        "b_observable": "Highly saturated colors with neutral white surfaces.",
+        "fix": "Reduce color saturation and add a slight cool color cast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing to match the tighter composition of the reference video."
+  }
+}

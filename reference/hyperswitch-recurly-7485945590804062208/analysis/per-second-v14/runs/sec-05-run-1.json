@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "tilt"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 5.5,
+        "a_observable": "Strong corner shading is visible, creating a clear vignette.",
+        "b_observable": "The frame corners are bright, lacking any vignette.",
+        "fix": "Add a vignette effect to darken the corners.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.5,
+        "a_observable": "The shadows between the tiles are deep and well-defined.",
+        "b_observable": "The shadows are faint and washed out, reducing depth.",
+        "fix": "Increase shadow depth and contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 5.2,
+        "a_observable": "The yellow Recurly tile is framed closely, occupying a large portion of the screen.",
+        "b_observable": "The camera is zoomed out, showing a wider perspective of the grid.",
+        "fix": "Adjust camera distance to match the tighter framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera framing and deepen the shadows to match the reference's contrast and composition."
+  }
+}

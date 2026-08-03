@@ -1,0 +1,42 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "Soft, diffused shadows under cards and a distinct vignette darkening the corners.",
+        "b_observable": "Sharp, dark shadows under cards and a flat, uniformly bright background.",
+        "fix": "Soften shadows and add a vignette.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 11.2,
+        "a_observable": "The white background has a cool blue-green color cast.",
+        "b_observable": "The white background is neutral grey-white.",
+        "fix": "Apply a cool color grade to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Soften the shadows cast by the cards and add a vignette to match the reference's lighting."
+  }
+}

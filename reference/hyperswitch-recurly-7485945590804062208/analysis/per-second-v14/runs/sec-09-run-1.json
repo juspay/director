@@ -1,0 +1,45 @@
+{
+  "ok": false,
+  "why": "reported 1 cuts, truth has 0",
+  "json": {
+    "cuts_in_window": [
+      9.79
+    ],
+    "a_motion": [
+      "pan",
+      "zoom_out"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom_out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 9.3,
+        "a_observable": "The camera framing is a tight, low-angle perspective shot focusing closely on the Recurly and Juspay cards.",
+        "b_observable": "The camera is pulled back further, showing a wider view with less perspective distortion and a flatter angle.",
+        "fix": "Match the camera's focal length, position, and rotation to replicate the tight, dynamic perspective of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "The shadows cast by the cards are soft and highly diffused.",
+        "b_observable": "The shadows are sharp, dark, and have hard edges.",
+        "fix": "Increase the radius or size of the light source to soften the shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera focal length and angle to match the tight perspective, and soften the shadow rendering to match the reference's diffused lighting."
+  }
+}

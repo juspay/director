@@ -1,0 +1,156 @@
+{
+  "sec": 13,
+  "meta": {
+    "verified": 2,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [
+    "reported 1 cuts, truth has 0"
+  ],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera zoom out"
+      ],
+      "b_motion": [
+        "camera zoom out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 13.5,
+          "a_observable": "A distinct vignette is visible with darker corners and a soft falloff towards the edges of the frame.",
+          "b_observable": "The background is uniformly bright across the frame, lacking any corner falloff.",
+          "fix": "Add a vignette effect to darken the corners and match the lighting falloff of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 13.5,
+          "a_observable": "The white background and cards exhibit a warm, slightly cream-colored cast.",
+          "b_observable": "The white background and cards are neutral white with a cooler blue-gray undertone.",
+          "fix": "Adjust the white balance or color grading to introduce a warmer tone to the white elements.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 13.5,
+          "a_observable": "The camera is positioned closer to the cards, making the Recurly and hyperswitch elements appear larger and more prominent.",
+          "b_observable": "The camera is positioned further away, resulting in a wider shot where the elements appear smaller.",
+          "fix": "Adjust the camera distance or focal length to match the tighter framing of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Add a vignette effect and adjust the white balance to match the warm, soft lighting of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera zoom out",
+        "subtle card hover motion"
+      ],
+      "b_motion": [
+        "camera zoom out"
+      ],
+      "absent_in_b": [
+        "soft ambient occlusion",
+        "warm color grading"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 13.3,
+          "a_observable": "Camera perspective shows strong depth and angled card layout.",
+          "b_observable": "Camera perspective is flatter, looking more top-down with less depth.",
+          "fix": "Adjust camera focal length and angle to match reference perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 13.5,
+          "a_observable": "Soft shadows and smooth light falloff across the card surfaces.",
+          "b_observable": "Hard, sharp shadows with flat lighting on the cards.",
+          "fix": "Enable soft shadows and adjust light source size.",
+          "severity": 4,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 13.7,
+          "a_observable": "Warm color cast with soft yellow highlights on the white surfaces.",
+          "b_observable": "Cooler, neutral white surfaces with no warm color cast.",
+          "fix": "Apply a warm color grade to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera perspective and focal length to match the dynamic angled framing of the reference, and enable soft shadow rendering to eliminate the harsh, flat look.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "color",
+        "t": 13.5,
+        "a_observable": "The white background and cards exhibit a warm, slightly cream-colored cast.",
+        "b_observable": "The white background and cards are neutral white with a cooler blue-gray undertone.",
+        "fix": "Adjust the white balance or color grading to introduce a warmer tone to the white elements.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_cooler",
+          "A": {
+            "r": 194.53,
+            "g": 204.41,
+            "b": 200.72,
+            "rb_delta": -6.2,
+            "saturation": 0.1862
+          },
+          "B": {
+            "r": 189.94,
+            "g": 195.57,
+            "b": 217.28,
+            "rb_delta": -27.34,
+            "saturation": 0.1867
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the white balance or color grading to introduce a warmer tone to the white elements.",
+    "dropped_unsupported": 4
+  }
+}

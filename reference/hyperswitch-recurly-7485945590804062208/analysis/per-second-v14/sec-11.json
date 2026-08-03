@@ -1,0 +1,214 @@
+{
+  "sec": 11,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 11.25,
+          "a_observable": "The camera is positioned at a low oblique angle relative to the grid plane, creating a dynamic perspective.",
+          "b_observable": "The camera angle is much steeper, closer to a top-down orthogonal view, reducing the perspective depth.",
+          "fix": "Match the camera's pitch and yaw angles to the reference video to capture the same oblique perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.5,
+          "a_observable": "The shadows cast by the cards are soft and highly diffused, blending smoothly into the background tiles.",
+          "b_observable": "The shadows are sharp-edged and dark, indicating a hard, direct light source.",
+          "fix": "Increase the light source size or shadow softness (radius) to achieve a more diffused shadow look.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 11.75,
+          "a_observable": "The background tiles have a warm, creamy off-white color cast.",
+          "b_observable": "The background tiles are a neutral, cool white/light grey.",
+          "fix": "Adjust the white balance or color grading to introduce a warm, cream-colored tint to the white materials.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "material",
+          "t": 11.1,
+          "a_observable": "The yellow card has a subtle glossy reflection that catches the light as the camera moves.",
+          "b_observable": "The yellow card has a flat, matte finish with no visible specular reflections.",
+          "fix": "Increase the specular intensity or reduce the roughness of the yellow card material to match the glossy finish.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Align the camera's pitch and yaw angles to match the low oblique perspective of the reference video, and soften the shadow rendering to eliminate the harsh, sharp-edged shadows.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera zoom out"
+      ],
+      "b_motion": [
+        "slow camera zoom out"
+      ],
+      "absent_in_b": [
+        "depth of field blur",
+        "environmental fog"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 11,
+          "a_observable": "The background elements, such as the line graph tile in the top right, are heavily blurred due to a shallow depth of field.",
+          "b_observable": "The background elements remain perfectly sharp, indicating no depth of field blur is applied.",
+          "fix": "Enable depth of field in the camera settings with a wide aperture to match the reference's blur.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 11.5,
+          "a_observable": "A soft white environmental fog or mist is visible, especially towards the edges, which softens the background tiles.",
+          "b_observable": "No environmental fog is present; the background tiles are completely clear and distinct.",
+          "fix": "Add a white environment fog or volume scatter effect to soften the background.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 11.2,
+          "a_observable": "The shadows cast by the buttons are extremely soft and diffused.",
+          "b_observable": "The shadows are sharp-edged and dark, indicating a small or hard light source.",
+          "fix": "Increase the light source size or radius to soften the shadow edges.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Add depth of field blur to the camera and introduce a soft environmental fog to match the background atmosphere of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 11.5,
+          "a_observable": "Soft, diffused shadows under cards and a distinct vignette darkening the corners.",
+          "b_observable": "Sharp, dark shadows under cards and a flat, uniformly bright background.",
+          "fix": "Soften shadows and add a vignette.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 11.2,
+          "a_observable": "The white background has a cool blue-green color cast.",
+          "b_observable": "The white background is neutral grey-white.",
+          "fix": "Apply a cool color grade to match the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Soften the shadows cast by the cards and add a vignette to match the reference's lighting.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "The shadows cast by the cards are soft and highly diffused, blending smoothly into the background tiles.",
+        "b_observable": "The shadows are sharp-edged and dark, indicating a hard, direct light source.",
+        "fix": "Increase the light source size or shadow softness (radius) to achieve a more diffused shadow look.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "B_deeper_shadows",
+          "A": {
+            "p01": 5.74,
+            "p1": 85.8,
+            "p5": 90.3,
+            "p50": 209.07,
+            "p95": 230.56,
+            "p99": 236.33,
+            "p999": 251.64,
+            "span_p5_p95": 140.26
+          },
+          "B": {
+            "p01": 38.94,
+            "p1": 68.1,
+            "p5": 103.27,
+            "p50": 213.22,
+            "p95": 226.22,
+            "p99": 229.23,
+            "p999": 254.13,
+            "span_p5_p95": 122.95
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Increase the light source size or shadow softness (radius) to achieve a more diffused shadow look.",
+    "dropped_unsupported": 6
+  }
+}

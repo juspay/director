@@ -1,0 +1,40 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera motion"
+    ],
+    "b_motion": [
+      "camera motion"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 14.1,
+        "a_observable": "The corners of the frame are darker than the center, creating a clear vignette.",
+        "b_observable": "The corners are as bright as the center, with no vignette effect.",
+        "fix": "Add a vignette in post-production to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 14.2,
+        "a_observable": "The overall color palette has a warm, slightly yellow-green color cast.",
+        "b_observable": "The color palette is neutral white and blue, lacking the warm color cast.",
+        "fix": "Apply a warm color grade to match the color cast of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Apply a warm color grade and add a vignette in post-production to match the lighting and color palette of the reference."
+  }
+}

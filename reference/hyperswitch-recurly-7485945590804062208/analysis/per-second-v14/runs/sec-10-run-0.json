@@ -1,0 +1,66 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "button press"
+    ],
+    "b_motion": [
+      "camera pan",
+      "button press"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 10.2,
+        "a_observable": "The camera is at a low, oblique perspective, creating a strong sense of depth.",
+        "b_observable": "The camera is at a higher, flatter top-down angle.",
+        "fix": "Lower the camera angle to match the reference perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "The frame has a distinct vignette with darkened corners.",
+        "b_observable": "The frame corners are bright white with no vignette falloff.",
+        "fix": "Add a vignette post-processing effect.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 10.5,
+        "a_observable": "The yellow button has a warm, golden-yellow hue.",
+        "b_observable": "The yellow button is a highly saturated, bright lemon-yellow.",
+        "fix": "Adjust the color grading of the yellow material to be warmer.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 10,
+        "a_observable": "The 'Secure Payments' card is large and close to the yellow button.",
+        "b_observable": "The 'Secure Payments' card is smaller and positioned further away.",
+        "fix": "Reposition the surrounding cards on the grid.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle to be lower and more oblique, and add a strong vignette to match the depth and lighting of the reference."
+  }
+}

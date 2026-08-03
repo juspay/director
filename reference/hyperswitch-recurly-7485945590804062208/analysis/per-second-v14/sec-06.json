@@ -1,0 +1,305 @@
+{
+  "sec": 6,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 6.1,
+          "a_observable": "Soft, highly diffused shadows under the yellow button.",
+          "b_observable": "Sharp, dark, hard-edged shadows under the yellow button.",
+          "fix": "Soften the shadows by increasing light source size.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 6.1,
+          "a_observable": "Distinct vignette with darker corners.",
+          "b_observable": "Uniform lighting across the frame with bright corners.",
+          "fix": "Add a vignette effect in post-production.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 6.8,
+          "a_observable": "Muted, desaturated blue on the Juspay button.",
+          "b_observable": "Highly saturated, darker blue on the Juspay button.",
+          "fix": "Reduce saturation of the blue material.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_more_saturated"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 6.8,
+          "a_observable": "Lower camera angle with more perspective tilt on the Juspay button.",
+          "b_observable": "Flatter, more top-down camera angle on the Juspay button.",
+          "fix": "Adjust camera tilt to match the reference perspective.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Soften the hard-edged shadows in B by increasing the light source size and adding diffusion.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 6.25,
+          "a_observable": "Camera is at a low oblique angle with strong perspective distortion on the yellow button.",
+          "b_observable": "Camera is at a higher, flatter angle with less perspective distortion.",
+          "fix": "Match camera pitch and focal length to Video A.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 6.8,
+          "a_observable": "Corners of the frame are darker than the center, showing a strong vignette.",
+          "b_observable": "Lighting is uniform across the frame with no vignette.",
+          "fix": "Add a vignette in post-processing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "material",
+          "t": 6.9,
+          "a_observable": "The well around the blue button has a brushed metallic silver texture.",
+          "b_observable": "The well is a flat, dark grey matte material.",
+          "fix": "Apply a metallic material to the button well.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 6.3,
+          "a_observable": "Deep ambient occlusion shadows are visible in the crevices between elements.",
+          "b_observable": "Crevices are brightly lit with minimal shadows.",
+          "fix": "Enable ambient occlusion or increase shadow depth.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "full"
+          }
+        }
+      ],
+      "highest_impact_fix": "Match camera angles and focal lengths to restore perspective, and add ambient occlusion and vignette.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "camera zoom out and pan",
+        "camera pan after cut"
+      ],
+      "b_motion": [
+        "camera zoom out and pan",
+        "camera pan after cut"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 6.2,
+          "a_observable": "The shadow cast by the yellow Recurly button is soft and diffused.",
+          "b_observable": "The shadow cast by the yellow Recurly button is extremely dark and hard-edged.",
+          "fix": "Increase the size of the light source or adjust shadow blur settings to soften the shadow edges.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 6.8,
+          "a_observable": "The background elements, such as the Revenue Analytics card, are heavily blurred by depth of field.",
+          "b_observable": "The background elements are sharp and in focus, with no noticeable depth of field blur.",
+          "fix": "Enable depth of field on the camera and adjust the aperture to blur background elements.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "top"
+          }
+        },
+        {
+          "category": "color",
+          "t": 6.2,
+          "a_observable": "The yellow button has a warm, golden-yellow hue.",
+          "b_observable": "The yellow button has a highly saturated, bright lemon-yellow color.",
+          "fix": "Modify the diffuse color of the yellow button material to be warmer and less saturated.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_more_saturated"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 6.8,
+          "a_observable": "The Subscriptions card is positioned on the left side of the frame, partially cut off.",
+          "b_observable": "The Subscriptions card is positioned near the bottom-left corner of the frame.",
+          "fix": "Adjust the layout and spacing of the cards on the grid to match the reference composition.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera's depth of field to introduce realistic background blur, and soften the hard-edged shadows cast by the 3D elements.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 6.2,
+        "a_observable": "The shadow cast by the yellow Recurly button is soft and diffused.",
+        "b_observable": "The shadow cast by the yellow Recurly button is extremely dark and hard-edged.",
+        "fix": "Increase the size of the light source or adjust shadow blur settings to soften the shadow edges.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "B_deeper_shadows",
+          "A": {
+            "p01": 47.93,
+            "p1": 70.57,
+            "p5": 102.59,
+            "p50": 206.64,
+            "p95": 245.55,
+            "p99": 246.7,
+            "p999": 248.37,
+            "span_p5_p95": 142.96
+          },
+          "B": {
+            "p01": 9.2,
+            "p1": 97.98,
+            "p5": 104.49,
+            "p50": 202.38,
+            "p95": 211.81,
+            "p99": 217.4,
+            "p999": 227.19,
+            "span_p5_p95": 107.32
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 6.8,
+        "a_observable": "Corners of the frame are darker than the center, showing a strong vignette.",
+        "b_observable": "Lighting is uniform across the frame with no vignette.",
+        "fix": "Add a vignette in post-processing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 199.46,
+            "center_mean": 124.66,
+            "falloff_pct": -60
+          },
+          "B": {
+            "corner_mean": 192.7,
+            "center_mean": 92.62,
+            "falloff_pct": -108.05
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "camera",
+        "t": 6.25,
+        "a_observable": "Camera is at a low oblique angle with strong perspective distortion on the yellow button.",
+        "b_observable": "Camera is at a higher, flatter angle with less perspective distortion.",
+        "fix": "Match camera pitch and focal length to Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "pending_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 0.95,
+          "note": "Clip A shows the yellow button from a lower, more dramatic oblique angle, resulting in stronger perspective distortion. Clip B shows the button from a higher, more top-down angle, which reduces the perspective distortion and makes the button appear flatter."
+        }
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Match the camera angle and perspective to Video A, and soften the harsh shadows under the yellow button.",
+    "dropped_unsupported": 6
+  }
+}

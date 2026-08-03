@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "zoom out"
+    ],
+    "b_motion": [
+      "camera pan",
+      "zoom out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 9.5,
+        "a_observable": "Soft, diffused contact shadows under the cards.",
+        "b_observable": "Harsh, dark, sharp-edged shadows under the cards.",
+        "fix": "Increase shadow softness and add ambient occlusion.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 9.5,
+        "a_observable": "Tilted camera perspective with diagonal grid lines.",
+        "b_observable": "Flatter camera perspective with more orthogonal grid lines.",
+        "fix": "Adjust camera rotation and perspective to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 9.5,
+        "a_observable": "Warm golden-yellow hue on the Recurly card.",
+        "b_observable": "Cooler, slightly desaturated yellow hue on the Recurly card.",
+        "fix": "Adjust yellow material color to be warmer and more saturated.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Soften the shadows under the cards and adjust the camera angle to match the dynamic perspective of the reference."
+  }
+}

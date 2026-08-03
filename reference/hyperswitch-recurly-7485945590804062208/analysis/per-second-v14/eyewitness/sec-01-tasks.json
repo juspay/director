@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 1,
+    "idx": 0,
+    "t": 1.5,
+    "category": "camera",
+    "a_observable": "The camera roll is aligned such that the grid lines are tilted at a shallow angle of approximately 15 degrees.",
+    "b_observable": "The camera roll is tilted much further, with the grid lines running at a steep diagonal angle of around 35 degrees.",
+    "frames": {
+      "A": "analysis/per-second-v14/eyewitness/sec-01-c0-A.png",
+      "B": "analysis/per-second-v14/eyewitness/sec-01-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 0.95,
+      "note": "The camera roll in Clip A is indeed tilted at a shallow angle of approximately 15 degrees, whereas in Clip B, the camera is rotated significantly more, resulting in the grid lines running at a steep diagonal angle of around 35 degrees."
+    }
+  }
+]

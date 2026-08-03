@@ -1,0 +1,276 @@
+{
+  "sec": 10,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pan",
+        "button press"
+      ],
+      "b_motion": [
+        "camera pan",
+        "button press"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 10.2,
+          "a_observable": "The camera is at a low, oblique perspective, creating a strong sense of depth.",
+          "b_observable": "The camera is at a higher, flatter top-down angle.",
+          "fix": "Lower the camera angle to match the reference perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.5,
+          "a_observable": "The frame has a distinct vignette with darkened corners.",
+          "b_observable": "The frame corners are bright white with no vignette falloff.",
+          "fix": "Add a vignette post-processing effect.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 10.5,
+          "a_observable": "The yellow button has a warm, golden-yellow hue.",
+          "b_observable": "The yellow button is a highly saturated, bright lemon-yellow.",
+          "fix": "Adjust the color grading of the yellow material to be warmer.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_more_saturated"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 10,
+          "a_observable": "The 'Secure Payments' card is large and close to the yellow button.",
+          "b_observable": "The 'Secure Payments' card is smaller and positioned further away.",
+          "fix": "Reposition the surrounding cards on the grid.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle to be lower and more oblique, and add a strong vignette to match the depth and lighting of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 10.5,
+          "a_observable": "The camera is positioned at a low, oblique angle relative to the buttons, showing significant perspective distortion and the extruded sides of the Recurly button.",
+          "b_observable": "The camera is positioned more directly overhead, showing less perspective tilt and very little of the button's side extrusion.",
+          "fix": "Adjust the camera tilt and angle to match the oblique perspective of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 10.5,
+          "a_observable": "The background elements, such as the Secure Payments button in the upper left, are heavily blurred due to a shallow depth of field.",
+          "b_observable": "The background elements remain relatively sharp and in focus, indicating a much wider depth of field.",
+          "fix": "Adjust the camera's aperture size to achieve a shallower depth of field with more background blur.",
+          "severity": 2,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.5,
+          "a_observable": "The corners of the frame show a distinct darkening, creating a soft falloff from the center.",
+          "b_observable": "The lighting is uniform across the frame with no visible vignette, leaving the corners as bright as the center.",
+          "fix": "Add a vignette effect or adjust light falloff to darken the corners of the frame.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 10.5,
+          "a_observable": "The yellow button has a warm, golden-yellow hue.",
+          "b_observable": "The yellow button has a cooler, brighter lemon-yellow hue.",
+          "fix": "Adjust the color temperature of the yellow material to match the warmer tone of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera tilt and angle to match the oblique perspective of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera zoom out and pan"
+      ],
+      "b_motion": [
+        "camera zoom out and pan"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 10.1,
+          "a_observable": "Camera is tilted dynamically, framing the yellow card in the lower-right.",
+          "b_observable": "Camera is flatter and less tilted, with different card framing.",
+          "fix": "Align camera tilt and position to match the reference perspective.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.3,
+          "a_observable": "Card shadows are soft, diffuse, and blend smoothly.",
+          "b_observable": "Card shadows are sharp, dark, and hard-edged.",
+          "fix": "Increase light source size or shadow softness.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 10.7,
+          "a_observable": "A strong vignette darkens the corners of the frame.",
+          "b_observable": "The corners are bright with minimal falloff.",
+          "fix": "Add a vignette effect to darken the corners.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera framing and tilt to match the reference, and soften the hard shadows cast by the cards.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 10.2,
+        "a_observable": "The camera is at a low, oblique perspective, creating a strong sense of depth.",
+        "b_observable": "The camera is at a higher, flatter top-down angle.",
+        "fix": "Lower the camera angle to match the reference perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 3,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "refuted",
+          "certainty": 1,
+          "note": "The claim has reversed the descriptions of Clip A and Clip B. Clip A shows a flat, top-down perspective, while Clip B shows an oblique perspective with a strong sense of depth."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "The frame has a distinct vignette with darkened corners.",
+        "b_observable": "The frame corners are bright white with no vignette falloff.",
+        "fix": "Add a vignette post-processing effect.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 210.78,
+            "center_mean": 196.59,
+            "falloff_pct": -7.22
+          },
+          "B": {
+            "corner_mean": 198.17,
+            "center_mean": 180.63,
+            "falloff_pct": -9.71
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 10.5,
+        "a_observable": "The yellow button has a warm, golden-yellow hue.",
+        "b_observable": "The yellow button is a highly saturated, bright lemon-yellow.",
+        "fix": "Adjust the color grading of the yellow material to be warmer.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "B_more_saturated",
+          "A": {
+            "r": 193.29,
+            "g": 203.73,
+            "b": 201.96,
+            "rb_delta": -8.67,
+            "saturation": 0.191
+          },
+          "B": {
+            "r": 191.89,
+            "g": 197.21,
+            "b": 218.59,
+            "rb_delta": -26.71,
+            "saturation": 0.1831
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera angle to be lower and more oblique, and add a strong vignette to match the depth and lighting of the reference.",
+    "dropped_unsupported": 3
+  }
+}

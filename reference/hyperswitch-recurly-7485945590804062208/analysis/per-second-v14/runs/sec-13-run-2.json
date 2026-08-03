@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zoom out",
+      "subtle card hover motion"
+    ],
+    "b_motion": [
+      "camera zoom out"
+    ],
+    "absent_in_b": [
+      "soft ambient occlusion",
+      "warm color grading"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 13.3,
+        "a_observable": "Camera perspective shows strong depth and angled card layout.",
+        "b_observable": "Camera perspective is flatter, looking more top-down with less depth.",
+        "fix": "Adjust camera focal length and angle to match reference perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 13.5,
+        "a_observable": "Soft shadows and smooth light falloff across the card surfaces.",
+        "b_observable": "Hard, sharp shadows with flat lighting on the cards.",
+        "fix": "Enable soft shadows and adjust light source size.",
+        "severity": 4,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 13.7,
+        "a_observable": "Warm color cast with soft yellow highlights on the white surfaces.",
+        "b_observable": "Cooler, neutral white surfaces with no warm color cast.",
+        "fix": "Apply a warm color grade to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera perspective and focal length to match the dynamic angled framing of the reference, and enable soft shadow rendering to eliminate the harsh, flat look."
+  }
+}

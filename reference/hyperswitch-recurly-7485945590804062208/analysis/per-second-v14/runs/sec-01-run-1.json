@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan"
+    ],
+    "b_motion": [
+      "slow camera pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 1,
+        "a_observable": "The blue card on the left is a soft, muted pastel blue.",
+        "b_observable": "The blue card on the left is a highly saturated, vibrant royal blue.",
+        "fix": "Reduce the saturation and adjust the hue of the blue material to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_more_saturated",
+          "region": "left"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "The shadows cast by the 'Secure Payments' card are soft, diffused, and realistic.",
+        "b_observable": "The shadows cast by the 'Secure Payments' card are harsh, dark, and sharp.",
+        "fix": "Use a larger light source or increase shadow blur/ambient occlusion to soften the shadows.",
+        "severity": 4,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows",
+          "region": "center"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 1.2,
+        "a_observable": "The camera framing shows the 'Secure Payments' card tilted at a shallow angle, with a substantial portion of the yellow card visible at the bottom.",
+        "b_observable": "The camera framing is tilted more steeply, showing less of the yellow card and a different perspective of the grid.",
+        "fix": "Adjust the camera angle and rotation to match the reference perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the lighting to use softer, more diffused shadows and reduce the saturation of the blue card to match the reference."
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "material",
+        "t": 1.5,
+        "a_observable": "The yellow tile at the bottom of the frame displays a brushed metallic texture with horizontal grain.",
+        "b_observable": "The yellow tile at the bottom of the frame is a flat, solid yellow with a smooth matte surface.",
+        "fix": "Apply a brushed metal texture map and adjust the material roughness to match the reference.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "The drop shadow cast by the 'Secure Payments' card onto the tile is soft, diffused, and subtle.",
+        "b_observable": "The drop shadow cast by the 'Secure Payments' card is sharp, dark, and has a distinct hard edge.",
+        "fix": "Increase the light source radius or shadow softness in the render settings to match the soft shadows of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 1.5,
+        "a_observable": "The camera is positioned closer to the tiles, resulting in a tighter framing of the 'Secure Payments' card.",
+        "b_observable": "The camera is positioned further away, showing more of the surrounding tiles and a wider field of view.",
+        "fix": "Adjust the camera's focal length or move it closer to match the framing of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Apply a brushed metal texture map to the yellow tile and adjust the camera framing and rotation to match the reference."
+  }
+}

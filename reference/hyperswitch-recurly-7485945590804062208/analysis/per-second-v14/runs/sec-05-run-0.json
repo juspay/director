@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "tilt",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "tilt",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 5.2,
+        "a_observable": "The camera perspective is low and dynamic, skewing the yellow button.",
+        "b_observable": "The camera angle is flatter and more top-down, reducing the perspective skew.",
+        "fix": "Adjust the camera position and focal length to match the reference's perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.5,
+        "a_observable": "The shadows cast by the yellow button are soft and diffuse.",
+        "b_observable": "The shadows are sharp with hard, dark edges.",
+        "fix": "Increase the light source size to soften the contact shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.8,
+        "a_observable": "A distinct vignette darkens the corners of the frame.",
+        "b_observable": "The corners are bright with minimal vignette falloff.",
+        "fix": "Apply a vignette effect to darken the corners.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and focal length to match the perspective of the reference."
+  }
+}
