@@ -143,6 +143,8 @@ export function pillFaceH(
   line1: string,
   line2: string,
   icon: 'shield' | 'ring',
+  /** Ring sweep progress 0..1 — the reference's progress donut animates. */
+  ringT = 1,
 ): THREE.CanvasTexture {
   return tex(1024, 620, (ctx) => {
     const cy = 300;
@@ -181,7 +183,7 @@ export function pillFaceH(
       ctx.lineWidth = 30;
       ctx.lineCap = 'round';
       ctx.beginPath();
-      ctx.arc(x, cy, r - 15, -Math.PI * 0.5, Math.PI * 1.15);
+      ctx.arc(x, cy, r - 15, -Math.PI * 0.5, -Math.PI * 0.5 + Math.PI * 1.65 * ringT);
       ctx.stroke();
       ctx.strokeStyle = C.indigo;
       ctx.lineWidth = 22;
@@ -224,6 +226,8 @@ export function capabilityFaceV(
   label: string,
   icon: keyof typeof icons,
   gradient = false,
+  /** Icon rotation in radians — the reference's Retries spinner turns. */
+  spin = 0,
 ): THREE.CanvasTexture {
   return tex(1024, 660, (ctx) => {
     const badge = 330;
@@ -240,7 +244,9 @@ export function capabilityFaceV(
     roundRect(ctx, bx, by, badge, badge, 62);
     ctx.fill();
     ctx.save();
-    ctx.translate(bx + badge * 0.16, by + badge * 0.16);
+    ctx.translate(bx + badge / 2, by + badge / 2);
+    ctx.rotate(spin);
+    ctx.translate(-badge * 0.34, -badge * 0.34);
     icons[icon](ctx, badge * 0.68);
     ctx.restore();
     ctx.fillStyle = C.indigo;

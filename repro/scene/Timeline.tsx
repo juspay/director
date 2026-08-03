@@ -247,13 +247,20 @@ export const CameraRig: React.FC = () => {
   const lin = (k: 'roll' | 'fov') => a[k] + (b[k] - a[k]) * t;
   const wob = Math.sin(frame / 23) * 0.055;
   const bob = Math.cos(frame / 37) * 0.045;
+  // Kinetic settle into each shot: the camera lands from a cut still carrying
+  // momentum along its incoming path and springs to rest — energy at the cut
+  // without any entrance staging.
+  const settle = si > 0 ? 1 - spring({ frame: frame - shot.start, fps: FPS, config: { damping: 13, stiffness: 125, mass: 0.9 } }) : 0;
+  const sdx = ks[1].pos[0] - ks[0].pos[0];
+  const sdz = ks[1].pos[2] - ks[0].pos[2];
+  const sdl = Math.hypot(sdx, sdz) || 1;
   const tx = cr('tgt', 0);
   const ty = cr('tgt', 1);
   const tz = cr('tgt', 2);
   camera.position.set(
-    tx + (cr('pos', 0) - tx) * dolly + wob,
+    tx + (cr('pos', 0) - tx) * dolly + wob - (sdx / sdl) * 0.09 * settle,
     ty + (cr('pos', 1) - ty) * dolly + bob,
-    tz + (cr('pos', 2) - tz) * dolly,
+    tz + (cr('pos', 2) - tz) * dolly - (sdz / sdl) * 0.09 * settle,
   );
   camera.lookAt(new THREE.Vector3(tx, ty, tz));
   camera.rotateZ(lin('roll'));
@@ -313,12 +320,24 @@ const LOCK_HYPER: [number, number, number] = [0.74, BRAND_Y, 1.12];
 export const Timeline: React.FC = () => {
   const frame = useCurrentFrame();
   const shot = shotIndex(frame);
+  /**
+   * Living faces. The early per-second analysis listed "icon micro-animations"
+   * among what moves in the reference every second it examined: the Retries
+   * spinner turns, the Renewal progress ring sweeps. These two textures are
+   * therefore frame-dependent; each new CanvasTexture disposes its
+   * predecessor or 435 frames of 2.5MB uploads pile up on the GPU.
+   */
+  const renewal = useMemo(
+    () => pillFaceH('Renewal', 'Success', 'ring', interpolate(frame, [0, 60], [0.45, 0.97], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })),
+    [frame],
+  );
+  const retries = useMemo(() => capabilityFaceV('Retries', 'refresh', false, frame * 0.05), [frame]);
+  React.useEffect(() => () => { renewal.dispose(); }, [renewal]);
+  React.useEffect(() => () => { retries.dispose(); }, [retries]);
   const f = useMemo(
     () => ({
       secure: pillFaceH('Secure', 'Payments', 'shield'),
-      renewal: pillFaceH('Renewal', 'Success', 'ring'),
       subs: capabilityFaceV('Subscriptions', 'card'),
-      retries: capabilityFaceV('Retries', 'refresh'),
       apms: capabilityFaceV('APMs', 'globe', true),
       recurly: recurlyFace(),
       hyper: hyperswitchFace(),
@@ -351,7 +370,7 @@ export const Timeline: React.FC = () => {
       {shot === 0 && (
         <>
           <Keycap position={[-0.06, CAP_Y, 0.30]} size={CAP} color={C.card} face={f.secure} faceSize={F_PILL} />
-          <Keycap position={[0.86, CAP_Y, -0.92]} size={CAP} color={C.card} face={f.renewal} faceSize={F_PILL} />
+          <Keycap position={[0.86, CAP_Y, -0.92]} size={CAP} color={C.card} face={renewal} faceSize={F_PILL} />
         </>
       )}
 
@@ -362,7 +381,7 @@ export const Timeline: React.FC = () => {
       {shot === 1 && (
         <>
           <Keycap position={[-0.05, CAP_Y, -0.94]} size={CAP} color={C.card} face={f.subs} faceSize={F_COL} />
-          <Keycap position={[-0.05, CAP_Y, 0.00]} size={CAP} color={C.card} face={f.retries} faceSize={F_COL} />
+          <Keycap position={[-0.05, CAP_Y, 0.00]} size={CAP} color={C.card} face={retries} faceSize={F_COL} />
           <Keycap position={[-0.05, CAP_Y, 0.94]} size={CAP} color={C.card} face={f.apms} faceSize={F_COL} />
         </>
       )}
@@ -371,7 +390,13 @@ export const Timeline: React.FC = () => {
       {shot === 2 && (
         <>
           <Well position={HERO_WELL} size={[BRAND[0], BRAND[2]]} metalMap={f.metal} whiten={whiten} />
-          <Keycap position={HERO} size={BRAND} color={C.gold} face={f.recurly} faceSize={F_RECURLY} />
+          <Keycap
+            position={[HERO[0], Math.max(HERO[1] + 0.003, HERO[1] + 0.004 + 0.045 * (1 - spring({ frame: frame - 149, fps: FPS, config: { damping: 12, stiffness: 160, mass: 0.85 } }))), HERO[2]]}
+            size={BRAND}
+            color={C.gold}
+            face={f.recurly}
+            faceSize={F_RECURLY}
+          />
           <Keycap position={[-1.32, CAP_Y, -1.30]} size={[1.15, 0.115, 0.72]} color={C.card} face={f.secure} faceSize={[1.02, 1.02 / 1.65]} />
           <Keycap position={[1.44, CAP_Y, -1.45]} size={CAP} color={C.card} face={f.success} faceSize={F_SUCCESS} />
         </>
@@ -393,7 +418,14 @@ export const Timeline: React.FC = () => {
             faceSize={F_HYPER}
           />
           <Keycap position={[1.48, CAP_Y, -1.40]} size={CAP} color={C.card} face={f.revenue} faceSize={F_REVENUE} />
-          <Keycap position={[-1.28, TILE_TOP + 0.05 - 0.008, 0.62]} size={[0.34, 0.10, 0.34]} radius={0.07} color={C.blue} face={f.psp} faceSize={[0.27, 0.27]} />
+          <Keycap
+            position={[-1.28, TILE_TOP + 0.05 - 0.008 + 0.04 * (1 - spring({ frame: frame - (T.hyPressStart + 8), fps: FPS, config: { damping: 10, stiffness: 150 } })), 0.62]}
+            size={[0.34, 0.10, 0.34]}
+            radius={0.07}
+            color={C.blue}
+            face={f.psp}
+            faceSize={[0.27, 0.27]}
+          />
         </>
       )}
 
