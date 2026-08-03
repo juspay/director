@@ -212,7 +212,17 @@ export const DapplePlane: React.FC = () => {
   const frame = useCurrentFrame();
   const map = useMemo(() => dappleTexture(), []);
   map.repeat.set(2.4, 2.4);
-  map.offset.set(0.05 + frame * 0.00042, 0.08 + frame * 0.00028);
+  // Drift is a per-beat quantity: the macro seconds and the lockup's arrival
+  // sweep visibly (the 0.00042 constant measured 6x under the reference at
+  // t=8.5), but the reference's HOLD is nearly still (0.23 mean delta vs our
+  // 0.57 when the fast drift ran flat) — so the pools coast to a drift after
+  // the settle.
+  const rate = interpolate(frame, [280, 330], [0.0017, 0.00045], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+  const drift = frame <= 280 ? frame * 0.0017 : 280 * 0.0017 + (frame - 280) * rate;
+  map.offset.set(0.05 + drift, 0.08 + drift * 0.65);
   return (
     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 1.6, 0]} renderOrder={5}>
       <planeGeometry args={[44, 44]} />

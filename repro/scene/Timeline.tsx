@@ -350,7 +350,9 @@ export const Timeline: React.FC = () => {
     [],
   );
 
-  const whiten = interpolate(frame, [272, 306], [0, 0.12], {
+  // Timed to the spec's bgFade event (f266-277) and strengthened: the
+  // reference's background fade is a visible motion event, not a whisper.
+  const whiten = interpolate(frame, [266, 277], [0, 0.22], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
@@ -429,13 +431,19 @@ export const Timeline: React.FC = () => {
         </>
       )}
 
-      {/* Shot 5 — wide lockup */}
-      {shot === 4 && (
+      {/* Shot 5 — wide lockup. The spec's T.assemble event (f240): the cut
+          lands while the three elements are still TRAVELLING into the lockup
+          arrangement, settling by ~f258 — in-shot action straight from the
+          reference's event table, and the source of its big t=8.0-8.5 motion. */}
+      {shot === 4 && (() => {
+        const asm = spring({ frame: frame - (T.assemble + 3), fps: FPS, config: { damping: 14, stiffness: 90, mass: 1.1 } });
+        const slide = 0.5 * (1 - asm);
+        return (
         <>
-          <Well position={[LOCK_RECURLY[0], TILE_TOP, LOCK_RECURLY[2]]} size={[BRAND[0], BRAND[2]]} metalMap={f.metal} whiten={whiten} />
-          <Keycap position={LOCK_RECURLY} size={BRAND} color={C.gold} face={f.recurly} faceSize={F_RECURLY} />
-          <Well position={[LOCK_HYPER[0], TILE_TOP, LOCK_HYPER[2]]} size={[BRAND[0], BRAND[2]]} metalMap={f.metal} whiten={whiten} />
-          <Keycap position={LOCK_HYPER} size={BRAND} color={C.blue} face={f.hyper} faceSize={F_HYPER} />
+          <Well position={[LOCK_RECURLY[0] - slide, TILE_TOP, LOCK_RECURLY[2] - slide * 0.7]} size={[BRAND[0], BRAND[2]]} metalMap={f.metal} whiten={whiten} />
+          <Keycap position={[LOCK_RECURLY[0] - slide, LOCK_RECURLY[1], LOCK_RECURLY[2] - slide * 0.7]} size={BRAND} color={C.gold} face={f.recurly} faceSize={F_RECURLY} />
+          <Well position={[LOCK_HYPER[0] + slide, TILE_TOP, LOCK_HYPER[2] + slide * 0.7]} size={[BRAND[0], BRAND[2]]} metalMap={f.metal} whiten={whiten} />
+          <Keycap position={[LOCK_HYPER[0] + slide, LOCK_HYPER[1], LOCK_HYPER[2] + slide * 0.7]} size={BRAND} color={C.blue} face={f.hyper} faceSize={F_HYPER} />
           {/* The pill RISES at T.liveRiseStart with a spring overshoot —
               the reference's one true entrance, timed by the spec. Before
               that it is simply absent, exactly as in the reference. */}
@@ -450,7 +458,8 @@ export const Timeline: React.FC = () => {
             />
           )}
         </>
-      )}
+        );
+      })()}
     </>
   );
 };
