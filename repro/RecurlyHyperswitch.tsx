@@ -276,12 +276,22 @@ const Effects: React.FC = () => {
   // of field" than the reference (eyewitness, sec 1), and the lockup measured
   // SHARPER than the reference's soft wide (region_sharpness, sec 12:
   // A lap_var 0.91 vs B 3.06).
-  // Range widened 0.09 -> 0.13 alongside the focus-target fix: 0.09 leaves no
-  // tolerance for a subject that MOVES within its shot (the caps press, the
-  // pill rises, the grid assembles), so any beat that travels off the point
-  // goes soft. The lockup end is raised to keep its corners falling away —
-  // measured softer in the reference there (lap_var 0.91 vs our 4.21).
-  const focalLength = interpolate(frame, [255, 300], [0.08, 0.15], ease);
+  /**
+   * PER-SHOT focus range, calibrated against the reference's own centre-of-
+   * frame Laplacian variance rather than a single number.
+   *
+   * The reference runs 158-552 across the film; an earlier tuning pass aimed at
+   * 280 because that happened to be the value measured in one second, and left
+   * every other beat soft. Shot 2 needs by far the widest range — its three
+   * capability cards are spread 1.9 units in depth and a range that holds the
+   * middle one blurs the outer two (measured 77 against the reference's 469).
+   * The lockup needs a deep range too: at 16 units out the reference's tile
+   * wall is crisp corner to corner apart from a slight edge falloff.
+   */
+  const FOCAL = [0.13, 0.30, 0.13, 0.13, 0.45];
+  const focalLength = frame < 255
+    ? FOCAL[shotIndex(frame)]
+    : interpolate(frame, [255, 300], [FOCAL[3], FOCAL[4]], ease);
   const bokehScale = interpolate(frame, [255, 300], [2.8, 3.0], ease) * RES;
   const focus = FOCUS[shotIndex(frame)];
   // Grade stage. NOTE: `gl.toneMappingExposure` on <ThreeCanvas> is a NO-OP once
