@@ -8,7 +8,6 @@ import {
   Vignette,
   HueSaturation,
   BrightnessContrast,
-  N8AO,
 } from '@react-three/postprocessing';
 import { interpolate, useCurrentFrame, useVideoConfig } from 'remotion';
 import * as THREE from 'three';
@@ -86,7 +85,7 @@ const Lights: React.FC = () => (
           in every measured second, macro and lockup alike. */}
       <Lightformer intensity={0.22} position={[-9, 5, 6]} scale={[22, 22, 1]} color="#f9f3ea" />
       <Lightformer intensity={0.20} position={[9, 4, -4]} scale={[22, 22, 1]} color="#e7effc" />
-      <Lightformer intensity={0.11} position={[0, 1.5, 11]} scale={[26, 12, 1]} color="#ffffff" />
+      <Lightformer intensity={0.55} position={[0, 1.1, 5.5]} scale={[24, 9, 1]} color="#ffffff" />
     </Environment>
     {/* Fill pulled DOWN and the shadow-casting key pushed UP. Measured at f30:
         the reference's 5th-percentile luma is 96.5 against our 164.8 — it has
@@ -317,17 +316,25 @@ const Effects: React.FC = () => {
   const brightness = interpolate(frame, [250, 300], [BRIGHT_MACRO, BRIGHT_LOCKUP], ease);
   return (
     <EffectComposer enableNormalPass={false} multisampling={8}>
-      {/* Contact occlusion. This was the ONLY finding present in all fifteen
-          seconds of the A/B analysis: flat lighting, harsh shadows, "lacking
-          realistic ambient occlusion". Pass 3 read the same signal as moving
-          dappled light and answered it with a projected gobo — which supplied
-          light movement but not darkening where surfaces meet. It also could
-          not have worked before the set rebuild, because nothing in the scene
-          was in contact with anything. aoRadius is in world units and the caps
-          are ~1.3 across, so a third of a unit catches seams and well walls
-          without shading whole panels. */}
+      {/* N8AO REMOVED — it was inert, and this chain can only carry ONE
+          depth-dependent effect.
+          "Lacking realistic ambient occlusion" was once the only finding present
+          in all fifteen seconds, and an N8AO pass has sat here ever since. It
+          was never rendering. Proven by controlled render at f225: intensity
+          2.4, 3.8 and 6.0 all produce the identical frame (p5 35, p50 172, dark
+          34.4%), and DELETING the effect entirely produces that same frame.
+          enableNormalPass makes no difference.
+          What does change it is ORDER. Put N8AO first and it starts
+          contributing (dark 34.4% -> 38.4%) — but DepthOfField immediately
+          reverts to blurring the whole frame, f45 centre variance dropping from
+          479 to 33, which is the pass-13 fault returning. Only the first
+          depth-dependent effect in the composer gets a usable buffer, so this
+          is a choice, not a bug to tune around: DOF is worth ~450 centre
+          variance, the AO was worth 4 percentage points of dark area.
+          Contact darkening now comes from the shadow map instead, which is
+          real geometry rather than a screen-space approximation. Leaving a dead
+          effect in the chain is what let six passes believe AO was happening. */}
       <DepthOfField target={focus} focalLength={focalLength} bokehScale={bokehScale} height={Math.round(720 * RES)} />
-      <N8AO aoRadius={0.55} distanceFalloff={0.7} intensity={3.8} quality="high" halfRes={false} color="#2b2f3a" />
       <Bloom intensity={0.025} luminanceThreshold={0.985} luminanceSmoothing={0.25} mipmapBlur />
       {/* Ramped for the lockup: its corners measured 11-13% BRIGHTER than
           centre against the reference's 1-7% (fog whitening the frame edges).
