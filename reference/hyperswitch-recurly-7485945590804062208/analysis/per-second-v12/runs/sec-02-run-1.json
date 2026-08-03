@@ -1,0 +1,71 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.208
+    ],
+    "a_motion": [
+      "slow camera pan and zoom out before the cut",
+      "slow camera pan down-right after the cut"
+    ],
+    "b_motion": [
+      "slow camera pan before the cut",
+      "slow camera pan after the cut"
+    ],
+    "absent_in_b": [
+      "dotted pattern tile next to Subscriptions"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 2.1,
+        "a_observable": "The camera is positioned extremely close to the 'Secure Payments' tile, blurring the background.",
+        "b_observable": "The camera is positioned further back, showing multiple surrounding tiles in focus.",
+        "fix": "Move the camera closer to the main tile and adjust focus.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 2.5,
+        "a_observable": "A grey dotted tile is visible on the left side of the 'Subscriptions' tile.",
+        "b_observable": "The area to the left of the 'Subscriptions' tile is plain white with no dotted pattern.",
+        "fix": "Add the dotted pattern tile to the left of the subscriptions tile.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.7,
+        "a_observable": "The crevices between the tiles have deep, dark shadows.",
+        "b_observable": "The crevices between the tiles have very faint, light grey shadows.",
+        "fix": "Increase ambient occlusion or shadow depth in the crevices.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 2.8,
+        "a_observable": "The white tiles have a warm, clean white tone.",
+        "b_observable": "The white tiles have a distinct cool, blue-grey color cast.",
+        "fix": "Adjust the white balance to remove the blue-grey cast from the white materials.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Reposition the camera closer to the main tiles to match the tight framing and shallow depth of field of Video A."
+  }
+}

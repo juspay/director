@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera drift"
+    ],
+    "b_motion": [
+      "slow camera drift"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 1,
+        "a_observable": "The camera is positioned at a high angle, looking down at the tiles with a relatively flat perspective.",
+        "b_observable": "The camera is positioned at a much lower, oblique angle, creating a steep perspective where the tiles recede sharply.",
+        "fix": "Adjust the camera's pitch and height to match the flatter, high-angle perspective of the reference video.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "The shadows cast by the elevated cards onto the background tiles are dark, distinct, and have sharp contact edges.",
+        "b_observable": "The shadows cast by the elevated cards are extremely soft, diffuse, and light, lacking definition and depth.",
+        "fix": "Increase the shadow density or reduce the light source radius to create sharper, darker contact shadows.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 1.2,
+        "a_observable": "The blue shield icon has a deep, saturated royal blue color.",
+        "b_observable": "The blue shield icon has a lighter, less saturated sky blue color.",
+        "fix": "Adjust the color grading or material diffuse color of the blue elements to match the deeper royal blue of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and height to match the flatter, high-angle perspective of the reference video, which will correct the overall layout and framing of the tiles."
+  }
+}

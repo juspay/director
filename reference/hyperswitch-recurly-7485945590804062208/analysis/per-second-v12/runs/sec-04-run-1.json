@@ -1,0 +1,68 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      4.896
+    ],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 4.2,
+        "a_observable": "The camera is positioned at a low, tilted angle, viewing the cards from an isometric perspective.",
+        "b_observable": "The camera is positioned more directly overhead, viewing the cards from a flatter, top-down perspective.",
+        "fix": "Adjust the camera angle and rotation to match the isometric perspective of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 4.5,
+        "a_observable": "The corners of the frame are noticeably darker than the center, showing a strong vignette effect.",
+        "b_observable": "The frame is evenly lit across the corners and center, lacking any significant vignette.",
+        "fix": "Add a vignette effect to darken the corners and match the reference lighting.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 4.95,
+        "a_observable": "The yellow Recurly card has a warm, golden hue.",
+        "b_observable": "The yellow Recurly card has a cooler, greenish-yellow hue.",
+        "fix": "Adjust the color of the yellow card to be warmer and more golden.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "typography",
+        "t": 4.5,
+        "a_observable": "The text labels on the cards (e.g., 'Subscriptions') are smaller with more padding around them.",
+        "b_observable": "The text labels are larger, leaving less padding inside the cards.",
+        "fix": "Reduce the font size of the text labels on the cards to match the reference layout.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and perspective of the shots in this second to match the reference's dynamic isometric composition."
+  }
+}

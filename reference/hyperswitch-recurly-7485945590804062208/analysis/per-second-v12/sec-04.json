@@ -1,0 +1,264 @@
+{
+  "sec": 4,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        4.896
+      ],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 4.2,
+          "a_observable": "The 'Subscriptions', 'Retries', and 'APMs' cards are aligned vertically on the right side of the screen.",
+          "b_observable": "The 'Subscriptions', 'Retries', and 'APMs' cards are aligned vertically in the center of the screen.",
+          "fix": "Adjust the horizontal positioning of the cards to match the right-aligned layout of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 4.5,
+          "a_observable": "The background and white card surfaces exhibit a cool blue-cyan tint.",
+          "b_observable": "The background and white card surfaces are neutral gray with a warmer tone.",
+          "fix": "Adjust the color grading to add a cool blue-cyan cast to the scene.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 4.5,
+          "a_observable": "The corners of the frame show a distinct darkening effect.",
+          "b_observable": "The corners of the frame are bright and lack a noticeable vignette.",
+          "fix": "Add a subtle vignette to darken the corners of the frame.",
+          "severity": 1,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 4.95,
+          "a_observable": "The yellow 'Recurly' card is positioned in the lower-right area of the frame, and the 'Secure Payments' card is in the upper-left.",
+          "b_observable": "The yellow 'Recurly' card is positioned in the bottom-center of the frame, and the 'Secure Payments' card is positioned further away in the upper-left.",
+          "fix": "Reposition the cards after the cut to match the reference staging.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the staging and layout of the cards across both shots in this second to match the reference framing and composition.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        4.896
+      ],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 4.2,
+          "a_observable": "The camera is positioned at a low, tilted angle, viewing the cards from an isometric perspective.",
+          "b_observable": "The camera is positioned more directly overhead, viewing the cards from a flatter, top-down perspective.",
+          "fix": "Adjust the camera angle and rotation to match the isometric perspective of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 4.5,
+          "a_observable": "The corners of the frame are noticeably darker than the center, showing a strong vignette effect.",
+          "b_observable": "The frame is evenly lit across the corners and center, lacking any significant vignette.",
+          "fix": "Add a vignette effect to darken the corners and match the reference lighting.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 4.95,
+          "a_observable": "The yellow Recurly card has a warm, golden hue.",
+          "b_observable": "The yellow Recurly card has a cooler, greenish-yellow hue.",
+          "fix": "Adjust the color of the yellow card to be warmer and more golden.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "typography",
+          "t": 4.5,
+          "a_observable": "The text labels on the cards (e.g., 'Subscriptions') are smaller with more padding around them.",
+          "b_observable": "The text labels are larger, leaving less padding inside the cards.",
+          "fix": "Reduce the font size of the text labels on the cards to match the reference layout.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and perspective of the shots in this second to match the reference's dynamic isometric composition.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        4.896
+      ],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 4.2,
+          "a_observable": "Strong contrast with bright highlights on the white tile faces and deep shadows in the gaps.",
+          "b_observable": "Flat, low-contrast lighting with greyish highlights and washed-out shadows.",
+          "fix": "Increase key light intensity and deepen shadows to match the reference contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 4.1,
+          "a_observable": "The camera angle is steeper, looking more directly down onto the grid.",
+          "b_observable": "The camera angle is shallower, viewing the tiles from a lower, more skewed perspective.",
+          "fix": "Adjust camera pitch and height to match the steeper viewing angle.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 4.95,
+          "a_observable": "The yellow tile has a warm, highly saturated golden-yellow color.",
+          "b_observable": "The yellow tile is cooler and less saturated, appearing pale yellow.",
+          "fix": "Adjust the material color of the yellow tile to increase saturation and warmth.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Align the camera angle to match the reference perspective and increase the lighting contrast to eliminate the flat look in B.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 4.5,
+        "a_observable": "The corners of the frame are noticeably darker than the center, showing a strong vignette effect.",
+        "b_observable": "The frame is evenly lit across the corners and center, lacking any significant vignette.",
+        "fix": "Add a vignette effect to darken the corners and match the reference lighting.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 202.6,
+            "center_mean": 199.01,
+            "falloff_pct": -1.81
+          },
+          "B": {
+            "corner_mean": 200.57,
+            "center_mean": 216.51,
+            "falloff_pct": 7.36
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 4.95,
+        "a_observable": "The yellow Recurly card has a warm, golden hue.",
+        "b_observable": "The yellow Recurly card has a cooler, greenish-yellow hue.",
+        "fix": "Adjust the color of the yellow card to be warmer and more golden.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "B_cooler",
+          "A": {
+            "r": 197.85,
+            "g": 204.38,
+            "b": 188,
+            "rb_delta": 9.85,
+            "saturation": 0.2148
+          },
+          "B": {
+            "r": 201.61,
+            "g": 201.27,
+            "b": 189.78,
+            "rb_delta": 11.83,
+            "saturation": 0.2018
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the color of the yellow card to be warmer and add a vignette effect to darken the corners of the frame.",
+    "dropped_unsupported": 7
+  }
+}

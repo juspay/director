@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera zoom out",
+      "subtle camera pan"
+    ],
+    "b_motion": [
+      "slow camera zoom out",
+      "subtle camera pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 14.1,
+        "a_observable": "The camera is positioned closer to the JUSPAY tile, creating a tighter crop.",
+        "b_observable": "The camera is positioned further back, showing more of the surrounding layout.",
+        "fix": "Adjust camera distance and focal length to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none",
+          "region": "full"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 14.2,
+        "a_observable": "Stronger vignetting is visible, darkening the corners of the frame.",
+        "b_observable": "The corners are bright, indicating a lack of vignette falloff.",
+        "fix": "Apply a stronger vignette effect in post-processing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 14.3,
+        "a_observable": "Deep shadows are present in the tile recesses, creating high contrast.",
+        "b_observable": "The shadows are washed out and grey, resulting in lower contrast.",
+        "fix": "Adjust the luma curve to deepen the shadows and blacks.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "center"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust camera position and zoom to match the reference framing, and deepen the shadows to restore contrast."
+  }
+}

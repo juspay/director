@@ -1,0 +1,71 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [
+      "labels",
+      "icons"
+    ],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 8.05,
+        "a_observable": "The surrounding tiles show 'Revenue Analytics' with a yellow bar chart icon and 'PSP' label.",
+        "b_observable": "The surrounding tiles are completely blank white.",
+        "fix": "Add the missing text and icons to the surrounding tiles in this shot.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 8.25,
+        "a_observable": "Surrounding tiles feature labels such as 'Subscriptions' with a blue icon and 'Revenue Analytics' with a yellow icon.",
+        "b_observable": "The surrounding tiles are blank white with no labels or icons.",
+        "fix": "Add the missing labels and icons to the surrounding tiles to match the reference layout.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 8.5,
+        "a_observable": "The yellow and blue buttons have highly saturated, warm tones.",
+        "b_observable": "The colors of the buttons are cooler and less saturated.",
+        "fix": "Adjust the color grading to increase saturation and warmth, matching the reference tones.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 8.5,
+        "a_observable": "The camera is positioned closer to the buttons, creating a tighter, more dynamically angled composition.",
+        "b_observable": "The camera is positioned further back, resulting in a wider field of view with a flatter perspective.",
+        "fix": "Adjust the camera focal length and position to match the tighter, more angled framing of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Add the missing labels, text, and icons to all the surrounding tiles in both shots of this sequence."
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "camera pan",
+      "camera zoom",
+      "camera rotation"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom",
+      "camera rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 8.5,
+        "a_observable": "The camera is positioned closer to the yellow Recurly card with a lower, more dramatic perspective angle.",
+        "b_observable": "The camera is positioned further away with a higher, more top-down perspective angle, making the yellow card appear smaller.",
+        "fix": "Adjust camera position and rotation to match the closer, lower-angle perspective of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "material",
+        "t": 8.5,
+        "a_observable": "The white tile on the left features a grid pattern of small grey dots.",
+        "b_observable": "The white tile on the left is completely plain white without any grid pattern.",
+        "fix": "Add the dotted grid texture to the white tile material to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "The white tiles exhibit a distinct cool blue color cast and soft color bleeding from the adjacent blue elements.",
+        "b_observable": "The white tiles are neutral white and grey, lacking the cool ambient color cast and color bleeding.",
+        "fix": "Enable global illumination or add a subtle blue ambient light to simulate color bleeding.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position, angle, and focal length to match the closer, more dynamic perspective of the reference video."
+  }
+}

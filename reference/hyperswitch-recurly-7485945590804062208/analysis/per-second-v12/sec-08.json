@@ -1,0 +1,255 @@
+{
+  "sec": 8,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "panning",
+        "zooming"
+      ],
+      "b_motion": [
+        "panning",
+        "zooming"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 8.3,
+          "a_observable": "The yellow Recurly card is in the top-left and the blue Hyperswitch card is in the bottom-right.",
+          "b_observable": "The yellow Recurly card is on the left and the blue Hyperswitch card is on the right.",
+          "fix": "Re-align the keyboard keys and camera perspective to match the reference layout.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "color",
+          "t": 8.05,
+          "a_observable": "The white keys and background elements show a cool, bluish color cast.",
+          "b_observable": "The white keys are neutral white and grey, lacking the cool tint.",
+          "fix": "Apply a cool color grade to match the reference white balance.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 8.5,
+          "a_observable": "The corners of the frame are noticeably darker than the center.",
+          "b_observable": "The lighting is uniform across the frame with minimal corner falloff.",
+          "fix": "Add a vignette effect to match the corner shading of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Re-align the keyboard keys and camera perspective to match the reference layout.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "camera pan",
+        "camera zoom",
+        "camera rotation"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom",
+        "camera rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 8.5,
+          "a_observable": "The camera is positioned closer to the yellow Recurly card with a lower, more dramatic perspective angle.",
+          "b_observable": "The camera is positioned further away with a higher, more top-down perspective angle, making the yellow card appear smaller.",
+          "fix": "Adjust camera position and rotation to match the closer, lower-angle perspective of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "material",
+          "t": 8.5,
+          "a_observable": "The white tile on the left features a grid pattern of small grey dots.",
+          "b_observable": "The white tile on the left is completely plain white without any grid pattern.",
+          "fix": "Add the dotted grid texture to the white tile material to match the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 8.5,
+          "a_observable": "The white tiles exhibit a distinct cool blue color cast and soft color bleeding from the adjacent blue elements.",
+          "b_observable": "The white tiles are neutral white and grey, lacking the cool ambient color cast and color bleeding.",
+          "fix": "Enable global illumination or add a subtle blue ambient light to simulate color bleeding.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position, angle, and focal length to match the closer, more dynamic perspective of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        8.1
+      ],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [
+        "labels",
+        "icons"
+      ],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 8.05,
+          "a_observable": "The surrounding tiles show 'Revenue Analytics' with a yellow bar chart icon and 'PSP' label.",
+          "b_observable": "The surrounding tiles are completely blank white.",
+          "fix": "Add the missing text and icons to the surrounding tiles in this shot.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 8.25,
+          "a_observable": "Surrounding tiles feature labels such as 'Subscriptions' with a blue icon and 'Revenue Analytics' with a yellow icon.",
+          "b_observable": "The surrounding tiles are blank white with no labels or icons.",
+          "fix": "Add the missing labels and icons to the surrounding tiles to match the reference layout.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 8.5,
+          "a_observable": "The yellow and blue buttons have highly saturated, warm tones.",
+          "b_observable": "The colors of the buttons are cooler and less saturated.",
+          "fix": "Adjust the color grading to increase saturation and warmth, matching the reference tones.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 8.5,
+          "a_observable": "The camera is positioned closer to the buttons, creating a tighter, more dynamically angled composition.",
+          "b_observable": "The camera is positioned further back, resulting in a wider field of view with a flatter perspective.",
+          "fix": "Adjust the camera focal length and position to match the tighter, more angled framing of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Add the missing labels, text, and icons to all the surrounding tiles in both shots of this sequence.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "color",
+        "t": 8.05,
+        "a_observable": "The white keys and background elements show a cool, bluish color cast.",
+        "b_observable": "The white keys are neutral white and grey, lacking the cool tint.",
+        "fix": "Apply a cool color grade to match the reference white balance.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_cooler",
+          "A": {
+            "r": 180.02,
+            "g": 190.52,
+            "b": 206.41,
+            "rb_delta": -26.39,
+            "saturation": 0.2557
+          },
+          "B": {
+            "r": 136.92,
+            "g": 150.73,
+            "b": 198.78,
+            "rb_delta": -61.86,
+            "saturation": 0.2877
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "camera",
+        "t": 8.5,
+        "a_observable": "The camera is positioned closer to the yellow Recurly card with a lower, more dramatic perspective angle.",
+        "b_observable": "The camera is positioned further away with a higher, more top-down perspective angle, making the yellow card appear smaller.",
+        "fix": "Adjust camera position and rotation to match the closer, lower-angle perspective of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_sharper",
+          "A": {
+            "lap_var": 141.73
+          },
+          "B": {
+            "lap_var": 35.93
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera position, angle, and focal length to match the closer, more dynamic perspective of the reference video.",
+    "dropped_unsupported": 6
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 5.1,
+        "a_observable": "Low-angle perspective on the yellow Recurly button.",
+        "b_observable": "High-angle, flatter perspective on the yellow button.",
+        "fix": "Lower camera height and increase pitch angle.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 5.3,
+        "a_observable": "Shallow depth of field with blurred background elements.",
+        "b_observable": "Deep depth of field with sharp background elements.",
+        "fix": "Adjust camera aperture to blur background.",
+        "severity": 2,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.5,
+        "a_observable": "Strong vignette darkening the corners of the frame.",
+        "b_observable": "Weak or absent vignette with bright corners.",
+        "fix": "Apply a stronger vignette in post-processing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 5.2,
+        "a_observable": "Warm, golden-yellow color on the Recurly button.",
+        "b_observable": "Cooler, greenish-yellow color on the Recurly button.",
+        "fix": "Shift the yellow material color toward orange.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and height to match the dynamic low-angle perspective of the reference video."
+  }
+}

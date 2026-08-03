@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera motion"
+    ],
+    "b_motion": [
+      "camera motion"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 10.5,
+        "a_observable": "The yellow Recurly tile is framed closely, filling a large portion of the screen.",
+        "b_observable": "The camera is positioned further away, showing a much wider view with excess empty space.",
+        "fix": "Move the camera closer to match the tight composition of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10.5,
+        "a_observable": "The shadow under the yellow tile is soft and diffused.",
+        "b_observable": "The shadow is sharp and extremely dark, creating harsh contrast.",
+        "fix": "Increase the light source size to soften the shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 10.5,
+        "a_observable": "The white tiles have a warm, cream-colored tone.",
+        "b_observable": "The white tiles have a cooler, neutral grey appearance.",
+        "fix": "Adjust the white balance or grading to introduce a warmer tint.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and focal length to achieve the closer, more dynamic framing of the reference."
+  }
+}

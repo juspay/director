@@ -1,0 +1,233 @@
+{
+  "sec": 6,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "pan",
+        "tilt"
+      ],
+      "b_motion": [
+        "pan",
+        "tilt"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 6.2,
+          "a_observable": "Camera is close to the yellow card with a shallow depth of field.",
+          "b_observable": "Camera is far from the yellow card with deep focus.",
+          "fix": "Adjust camera distance and enable depth of field.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 6.3,
+          "a_observable": "Strong vignette with high contrast and deep shadows.",
+          "b_observable": "Flat, uniform lighting with low contrast and no vignette.",
+          "fix": "Add vignette and increase contrast.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 6.8,
+          "a_observable": "Camera is close to the blue card at a dynamic angle.",
+          "b_observable": "Camera is far from the blue card at a flat angle.",
+          "fix": "Match camera angle and distance.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera distance, angle, and depth of field to match the reference framing.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 6.2,
+          "a_observable": "The camera is positioned close to the yellow 'Recurly' button with a tilted perspective.",
+          "b_observable": "The camera is positioned further away, resulting in a flatter and wider composition.",
+          "fix": "Match the camera's position, rotation, and focal length to the reference video.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        },
+        {
+          "category": "material",
+          "t": 6.8,
+          "a_observable": "The recess frame around the blue 'Juspay' button has a brushed metallic texture.",
+          "b_observable": "The recess frame around the blue button is a flat matte grey material.",
+          "fix": "Add a brushed metal shader to the recess frame surrounding the Juspay button.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "color",
+          "t": 6.1,
+          "a_observable": "The yellow 'Recurly' button has a warm golden hue.",
+          "b_observable": "The yellow 'Recurly' button has a cooler, greenish-yellow hue.",
+          "fix": "Adjust the hue of the yellow button material to match the warm golden tone of the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera's position, rotation, and focal length to match the close-up tilted perspective of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        6.667
+      ],
+      "a_motion": [
+        "translation",
+        "zoom"
+      ],
+      "b_motion": [
+        "translation",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 6.2,
+          "a_observable": "The yellow button is framed in a tight close-up, occupying most of the screen.",
+          "b_observable": "The yellow button is framed from a wider angle and positioned lower.",
+          "fix": "Adjust camera zoom and position to match the close-up framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 6.8,
+          "a_observable": "The blue button is recessed inside a metallic silver frame.",
+          "b_observable": "The blue button is a raised block with no metallic frame.",
+          "fix": "Model the metallic frame around the blue button.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        }
+      ],
+      "highest_impact_fix": "Model the metallic frame around the blue button and adjust the camera zoom to match the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 6.2,
+        "a_observable": "The yellow button is framed in a tight close-up, occupying most of the screen.",
+        "b_observable": "The yellow button is framed from a wider angle and positioned lower.",
+        "fix": "Adjust camera zoom and position to match the close-up framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_higher_contrast",
+          "A": {
+            "p01": 47.93,
+            "p1": 70.57,
+            "p5": 102.59,
+            "p50": 206.64,
+            "p95": 245.55,
+            "p99": 246.7,
+            "p999": 248.37,
+            "span_p5_p95": 142.96
+          },
+          "B": {
+            "p01": 48.81,
+            "p1": 113.13,
+            "p5": 119.49,
+            "p50": 209.81,
+            "p95": 220.16,
+            "p99": 226.18,
+            "p999": 233.39,
+            "span_p5_p95": 100.67
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "material",
+        "t": 6.8,
+        "a_observable": "The recess frame around the blue 'Juspay' button has a brushed metallic texture.",
+        "b_observable": "The recess frame around the blue button is a flat matte grey material.",
+        "fix": "Add a brushed metal shader to the recess frame surrounding the Juspay button.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_sharper",
+          "A": {
+            "lap_var": 565.17
+          },
+          "B": {
+            "lap_var": 37.23
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Model the metallic frame around the blue button and adjust the camera zoom to match the reference.",
+    "dropped_unsupported": 3
+  }
+}

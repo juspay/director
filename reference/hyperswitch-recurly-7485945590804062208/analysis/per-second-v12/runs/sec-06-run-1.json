@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 6.2,
+        "a_observable": "The camera is positioned close to the yellow 'Recurly' button with a tilted perspective.",
+        "b_observable": "The camera is positioned further away, resulting in a flatter and wider composition.",
+        "fix": "Match the camera's position, rotation, and focal length to the reference video.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      },
+      {
+        "category": "material",
+        "t": 6.8,
+        "a_observable": "The recess frame around the blue 'Juspay' button has a brushed metallic texture.",
+        "b_observable": "The recess frame around the blue button is a flat matte grey material.",
+        "fix": "Add a brushed metal shader to the recess frame surrounding the Juspay button.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "color",
+        "t": 6.1,
+        "a_observable": "The yellow 'Recurly' button has a warm golden hue.",
+        "b_observable": "The yellow 'Recurly' button has a cooler, greenish-yellow hue.",
+        "fix": "Adjust the hue of the yellow button material to match the warm golden tone of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera's position, rotation, and focal length to match the close-up tilted perspective of the reference."
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 11.2,
+        "a_observable": "Deep, soft ambient occlusion shadows are visible in the crevices between the white tiles.",
+        "b_observable": "The tile crevices are brightly lit with almost no ambient occlusion shadows.",
+        "fix": "Increase ambient occlusion intensity and radius to match the reference shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows",
+          "region": "full"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.6,
+        "a_observable": "A distinct vignette is visible, darkening the corners of the frame.",
+        "b_observable": "The corners of the frame are bright and lack any vignette effect.",
+        "fix": "Apply a vignette effect in post-processing to match the corner falloff.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "material",
+        "t": 11.4,
+        "a_observable": "The yellow Recurly card exhibits a subtle satin specular reflection.",
+        "b_observable": "The yellow card has a flat, diffuse texture with no specular highlights.",
+        "fix": "Decrease the roughness of the yellow card material to allow for soft specular reflections.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 11.5,
+        "a_observable": "The white tiles have a warm, cream-colored tint.",
+        "b_observable": "The white tiles are neutral white with a cooler color cast.",
+        "fix": "Adjust the color grading to add a warm tint to the scene.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "full"
+        }
+      }
+    ],
+    "highest_impact_fix": "Enhance the ambient occlusion shadows in the tile crevices and apply a vignette to match the depth and framing of the reference."
+  }
+}

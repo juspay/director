@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "zoom"
+    ],
+    "b_motion": [
+      "translation",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "Stronger vignette with darker corners.",
+        "b_observable": "Brighter corners with minimal vignette.",
+        "fix": "Apply a stronger vignette effect in post-processing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 12.8,
+        "a_observable": "Slower zoom-out, keeping the central cards larger in frame.",
+        "b_observable": "Faster zoom-out, making the cards smaller and revealing more background grid.",
+        "fix": "Adjust camera zoom keyframes to slow down the zoom-out.",
+        "severity": 3,
+        "prediction": {
+          "metric": "motion",
+          "expect": "B_more"
+        }
+      },
+      {
+        "category": "color",
+        "t": 12.2,
+        "a_observable": "Yellow card has a warmer, more saturated golden hue.",
+        "b_observable": "Yellow card has a cooler, less saturated yellow hue.",
+        "fix": "Adjust color saturation and hue of the yellow card.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera zoom keyframes to match the slower zoom-out speed of the reference."
+  }
+}

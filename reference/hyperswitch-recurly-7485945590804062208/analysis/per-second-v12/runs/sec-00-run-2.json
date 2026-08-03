@@ -1,0 +1,64 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "rotational zoom-out"
+    ],
+    "b_motion": [
+      "oblique zoom-out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 0,
+        "a_observable": "The camera is positioned directly above the center card, looking down at a shallow angle.",
+        "b_observable": "The camera is positioned at a steep oblique angle from the side.",
+        "fix": "Adjust the camera angle to look more directly down at the cards.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "layout",
+        "t": 0.1,
+        "a_observable": "The blue card is on the left and the yellow card is directly below the center card.",
+        "b_observable": "The blue card is on the top and the yellow card is on the bottom-left.",
+        "fix": "Reorganize the grid layout of the cards to match the reference composition.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.2,
+        "a_observable": "The corners of the frame show a distinct dark vignette falloff.",
+        "b_observable": "The corners of the frame are bright and lack vignette falloff.",
+        "fix": "Add a vignette effect to darken the corners of the frame.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 0.5,
+        "a_observable": "The yellow card has a warm golden hue.",
+        "b_observable": "The yellow card has a cooler greenish-yellow hue.",
+        "fix": "Adjust the color grading to shift the yellow card towards a warmer hue.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera angle and card layout to match the reference composition."
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "camera zoom",
+      "camera tilt"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom",
+      "camera tilt"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 13.1,
+        "a_observable": "The camera is close to the Recurly key, creating a tight framing.",
+        "b_observable": "The camera is further back, showing a wider view of the keys.",
+        "fix": "Adjust camera distance and focal length.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 13.5,
+        "a_observable": "The white keys have a cool blue color cast in the shaded areas.",
+        "b_observable": "The white keys have a neutral white color cast.",
+        "fix": "Adjust the ambient light color to introduce a cool blue cast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 13.8,
+        "a_observable": "The JUSPAY hyperswitch key has a grey metallic base frame surrounding the blue inner button.",
+        "b_observable": "The JUSPAY hyperswitch key is a single solid blue block without any surrounding base frame.",
+        "fix": "Model the key with a separate grey base frame to match the reference design.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 13.6,
+        "a_observable": "The shadows between the keys are deeper and darker.",
+        "b_observable": "The shadows are brighter and flatter.",
+        "fix": "Increase shadow depth and contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera focal length and position to match the tight framing of the reference video."
+  }
+}

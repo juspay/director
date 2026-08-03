@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 10.25,
+        "a_observable": "The shadow beneath the yellow Recurly tile is soft and diffused.",
+        "b_observable": "The shadow is harsh, dark, and has a sharp black outline.",
+        "fix": "Soften the contact shadows under the yellow tile.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_blacks",
+          "region": "center"
+        }
+      },
+      {
+        "category": "color",
+        "t": 10.5,
+        "a_observable": "The scene has a warm, cream-colored lighting cast.",
+        "b_observable": "The scene has a cooler, neutral gray lighting cast.",
+        "fix": "Warm up the lighting to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler",
+          "region": "full"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 10.5,
+        "a_observable": "The background elements in the top-right corner are blurred.",
+        "b_observable": "The background elements are sharp and in focus.",
+        "fix": "Apply shallow depth of field to blur background elements.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera's depth of field and soften the harsh shadows under the tiles to match the realistic, warm look of the reference."
+  }
+}

@@ -1,0 +1,279 @@
+{
+  "sec": 0,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan down-right"
+      ],
+      "b_motion": [
+        "slow camera pan down-right"
+      ],
+      "absent_in_b": [
+        "brushed metal border on the yellow tile"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 0,
+          "a_observable": "Camera is positioned nearly top-down over the tiles.",
+          "b_observable": "Camera is at a low, oblique angle looking from the side.",
+          "fix": "Match the top-down camera angle of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "material",
+          "t": 0.5,
+          "a_observable": "Yellow tile has a brushed metallic silver border.",
+          "b_observable": "Yellow tile has a plain white plastic border.",
+          "fix": "Apply a brushed metal material to the yellow tile border.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.5,
+          "a_observable": "Stronger vignette with darker corners.",
+          "b_observable": "Weaker vignette with brighter corners.",
+          "fix": "Add a vignette to darken the corners.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 0.5,
+          "a_observable": "White tiles have a cool blue color cast.",
+          "b_observable": "White tiles are neutral white.",
+          "fix": "Add a cool blue tint to the white materials.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler",
+            "region": "center"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle to match the top-down perspective of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 0.1,
+          "a_observable": "The background tiles at the top are heavily blurred due to a shallow depth of field.",
+          "b_observable": "The background tiles at the top are sharp and in focus, indicating a deep depth of field.",
+          "fix": "Reduce the camera aperture size to decrease depth of field and match the reference blur.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "top"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.5,
+          "a_observable": "Crevices and shadows between tiles are soft and light grey.",
+          "b_observable": "Crevices and shadows between tiles are dark and high-contrast.",
+          "fix": "Add ambient or fill light to soften the dark shadows between tiles.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 0.3,
+          "a_observable": "White tiles have a neutral, warm tone.",
+          "b_observable": "White tiles have a cool, bluish-grey color cast.",
+          "fix": "Adjust white balance to remove the cool color cast.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera depth of field and angle to match the reference's soft, focused composition.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "rotational zoom-out"
+      ],
+      "b_motion": [
+        "oblique zoom-out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 0,
+          "a_observable": "The camera is positioned directly above the center card, looking down at a shallow angle.",
+          "b_observable": "The camera is positioned at a steep oblique angle from the side.",
+          "fix": "Adjust the camera angle to look more directly down at the cards.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "layout",
+          "t": 0.1,
+          "a_observable": "The blue card is on the left and the yellow card is directly below the center card.",
+          "b_observable": "The blue card is on the top and the yellow card is on the bottom-left.",
+          "fix": "Reorganize the grid layout of the cards to match the reference composition.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.2,
+          "a_observable": "The corners of the frame show a distinct dark vignette falloff.",
+          "b_observable": "The corners of the frame are bright and lack vignette falloff.",
+          "fix": "Add a vignette effect to darken the corners of the frame.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 0.5,
+          "a_observable": "The yellow card has a warm golden hue.",
+          "b_observable": "The yellow card has a cooler greenish-yellow hue.",
+          "fix": "Adjust the color grading to shift the yellow card towards a warmer hue.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera angle and card layout to match the reference composition.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 0,
+        "a_observable": "Camera is positioned nearly top-down over the tiles.",
+        "b_observable": "Camera is at a low, oblique angle looking from the side.",
+        "fix": "Match the top-down camera angle of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 2,
+        "status": "pending_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 7,
+          "note": "Clip A shows a nearly top-down camera angle over the tiles, while Clip B shows a low, oblique angle looking from the side."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.5,
+        "a_observable": "Stronger vignette with darker corners.",
+        "b_observable": "Weaker vignette with brighter corners.",
+        "fix": "Add a vignette to darken the corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 202.03,
+            "center_mean": 205.44,
+            "falloff_pct": 1.66
+          },
+          "B": {
+            "corner_mean": 192.24,
+            "center_mean": 219.88,
+            "falloff_pct": 12.57
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 0.3,
+        "a_observable": "White tiles have a neutral, warm tone.",
+        "b_observable": "White tiles have a cool, bluish-grey color cast.",
+        "fix": "Adjust white balance to remove the cool color cast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_cooler",
+          "A": {
+            "r": 190.25,
+            "g": 199.25,
+            "b": 201.91,
+            "rb_delta": -11.66,
+            "saturation": 0.207
+          },
+          "B": {
+            "r": 188.75,
+            "g": 198.24,
+            "b": 212.28,
+            "rb_delta": -23.53,
+            "saturation": 0.2238
+          }
+        },
+        "status": "accepted_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera angle to match the top-down perspective of the reference video.",
+    "dropped_unsupported": 5
+  }
+}

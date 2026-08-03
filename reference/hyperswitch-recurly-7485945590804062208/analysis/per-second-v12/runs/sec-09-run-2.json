@@ -1,0 +1,69 @@
+{
+  "ok": false,
+  "why": "reported 1 cuts, truth has 0",
+  "json": {
+    "cuts_in_window": [
+      9.8
+    ],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 9.2,
+        "a_observable": "Cards are framed closely, filling most of the screen vertically.",
+        "b_observable": "Cards are framed from a distance, appearing much smaller with wide margins.",
+        "fix": "Move the camera closer to match the framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 9.9,
+        "a_observable": "The yellow block is highly saturated with a warm golden hue.",
+        "b_observable": "The yellow block is desaturated with a cooler greenish tint.",
+        "fix": "Increase saturation and adjust hue towards warm yellow.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.9,
+        "a_observable": "Deep shadows are present in the crevices between blocks.",
+        "b_observable": "Crevice shadows are faint and washed out.",
+        "fix": "Enable or strengthen ambient occlusion.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "material",
+        "t": 9.9,
+        "a_observable": "The Recurly logo is debossed into the yellow block.",
+        "b_observable": "The Recurly logo is flat on the surface.",
+        "fix": "Add debossing depth to the logo.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and focal length to correct the framing of the cards and blocks throughout the sequence."
+  }
+}

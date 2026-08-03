@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 0.1,
+        "a_observable": "The background tiles at the top are heavily blurred due to a shallow depth of field.",
+        "b_observable": "The background tiles at the top are sharp and in focus, indicating a deep depth of field.",
+        "fix": "Reduce the camera aperture size to decrease depth of field and match the reference blur.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "top"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.5,
+        "a_observable": "Crevices and shadows between tiles are soft and light grey.",
+        "b_observable": "Crevices and shadows between tiles are dark and high-contrast.",
+        "fix": "Add ambient or fill light to soften the dark shadows between tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 0.3,
+        "a_observable": "White tiles have a neutral, warm tone.",
+        "b_observable": "White tiles have a cool, bluish-grey color cast.",
+        "fix": "Adjust white balance to remove the cool color cast.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera depth of field and angle to match the reference's soft, focused composition."
+  }
+}

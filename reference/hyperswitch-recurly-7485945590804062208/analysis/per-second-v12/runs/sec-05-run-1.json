@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pan",
+      "subtle card hover"
+    ],
+    "b_motion": [
+      "camera pan",
+      "subtle card hover"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 5.2,
+        "a_observable": "The background elements, such as the 'Secure Payments' card on the left, exhibit a strong depth-of-field blur.",
+        "b_observable": "The background elements remain sharp and in focus, indicating a lack of depth-of-field simulation.",
+        "fix": "Enable depth of field in the camera settings and focus on the central yellow card.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.5,
+        "a_observable": "Deep ambient occlusion shadows are visible in the crevices surrounding the yellow card.",
+        "b_observable": "The crevices around the yellow card have very bright, flat lighting with minimal shadow definition.",
+        "fix": "Increase ambient occlusion intensity or add a contact shadow light source to define the crevices.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 5.8,
+        "a_observable": "The yellow card has a highly saturated, warm golden-yellow color.",
+        "b_observable": "The yellow card has a desaturated, pale lemon-yellow color.",
+        "fix": "Adjust the material color of the yellow card to increase saturation and warmth.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera's depth of field to match the reference's shallow focus, and enhance the ambient occlusion shadows around the card slots."
+  }
+}
