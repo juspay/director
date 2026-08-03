@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "The corners of the frame exhibit a pronounced dark falloff, creating a strong vignette.",
+        "b_observable": "The corners of the frame are bright and evenly lit, with no visible vignette.",
+        "fix": "Add a post-processing vignette or adjust the camera lens settings to simulate natural corner light falloff.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 1.5,
+        "a_observable": "The white plastic keys have a cool, blueish color cast, particularly visible in the shadows.",
+        "b_observable": "The white plastic keys are neutral grey/white with no blue color cast.",
+        "fix": "Adjust the white balance or apply a cool color grade to the midtones and shadows to match the reference's blue tint.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 1.2,
+        "a_observable": "The upper-right key ('Renewal Success') is heavily blurred due to a shallow depth of field.",
+        "b_observable": "The upper-right key is sharp and in focus.",
+        "fix": "Enable depth of field on the camera and set a wider aperture to blur the background and foreground elements.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Enable depth of field on the camera with a wider aperture to match the realistic focus falloff seen in the reference video."
+  }
+}

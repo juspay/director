@@ -1,0 +1,276 @@
+{
+  "sec": 12,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow pan",
+        "zoom out"
+      ],
+      "b_motion": [
+        "slow pan",
+        "zoom out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 12,
+          "a_observable": "The 'Recurly' and 'hyperswitch' buttons are aligned horizontally across the frame.",
+          "b_observable": "The 'Recurly' button is positioned significantly higher than the 'hyperswitch' button, creating a diagonal layout.",
+          "fix": "Align the buttons horizontally to match the reference layout.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 12.25,
+          "a_observable": "The corners of the frame are noticeably darker than the center, showing a clear vignette.",
+          "b_observable": "The corners of the frame are almost as bright as the center, lacking a vignette.",
+          "fix": "Add a vignette effect in post-processing or adjust camera lens shading.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 12.5,
+          "a_observable": "The yellow button has a warm, golden color cast.",
+          "b_observable": "The yellow button has a cooler, greenish-yellow color cast.",
+          "fix": "Adjust the color temperature of the yellow material to be warmer.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "material",
+          "t": 12.7,
+          "a_observable": "The buttons exhibit soft specular highlights and a semi-glossy finish.",
+          "b_observable": "The buttons appear completely matte with no specular reflections.",
+          "fix": "Increase the specular intensity and adjust roughness on the button materials.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_brighter_highlights"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the layout of the buttons to align them horizontally as in the reference, and enhance the lighting with stronger shadows and a vignette to match the depth of Video A.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera zoom out"
+      ],
+      "b_motion": [
+        "slow camera zoom out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 12,
+          "a_observable": "Crevices between keys show deep, dark shadows.",
+          "b_observable": "Crevices between keys are light grey with minimal shadow definition.",
+          "fix": "Darken contact shadows and ambient occlusion in crevices.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 12.5,
+          "a_observable": "Corners of the frame are noticeably darker than the center due to a vignette.",
+          "b_observable": "Frame brightness is uniform across the center and corners.",
+          "fix": "Apply a vignette effect to darken the corners.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "color",
+          "t": 12.2,
+          "a_observable": "The yellow card displays a warm, golden-yellow hue.",
+          "b_observable": "The yellow card has a cooler, slightly greenish-yellow hue.",
+          "fix": "Adjust the yellow card's color temperature to match the warm reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Enhance the ambient occlusion and contact shadows in the crevices between the keys to restore depth and contrast.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera zooms out and pans upward-right to reveal more of the grid layout"
+      ],
+      "b_motion": [
+        "camera zooms out and pans upward-right to reveal more of the grid layout"
+      ],
+      "absent_in_b": [
+        "realistic contact shadows under the buttons",
+        "vignette effect on the camera lens"
+      ],
+      "differences": [
+        {
+          "category": "material",
+          "t": 12,
+          "a_observable": "The yellow Recurly button displays a soft gradient and subtle specular highlights.",
+          "b_observable": "The yellow Recurly button has a flat, solid color with no specular reflections.",
+          "fix": "Add a glossy shader with roughness to the yellow button material.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast",
+            "region": "left"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 12.5,
+          "a_observable": "The frame corners show a distinct dark vignette falloff.",
+          "b_observable": "The frame corners are as bright as the center, lacking a vignette.",
+          "fix": "Apply a vignette effect in post-production.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Enhance the material properties of the buttons to include specular reflections and apply a vignette to the camera to match the depth and realism of Video A.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 12.5,
+        "a_observable": "The frame corners show a distinct dark vignette falloff.",
+        "b_observable": "The frame corners are as bright as the center, lacking a vignette.",
+        "fix": "Apply a vignette effect in post-production.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 209.43,
+            "center_mean": 194.03,
+            "falloff_pct": -7.93
+          },
+          "B": {
+            "corner_mean": 149.36,
+            "center_mean": 154.64,
+            "falloff_pct": 3.42
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 12.5,
+        "a_observable": "The yellow button has a warm, golden color cast.",
+        "b_observable": "The yellow button has a cooler, greenish-yellow color cast.",
+        "fix": "Adjust the color temperature of the yellow material to be warmer.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "B_cooler",
+          "A": {
+            "r": 193.72,
+            "g": 203.82,
+            "b": 200.11,
+            "rb_delta": -6.38,
+            "saturation": 0.1905
+          },
+          "B": {
+            "r": 139.51,
+            "g": 152.75,
+            "b": 189.16,
+            "rb_delta": -49.65,
+            "saturation": 0.3128
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "material",
+        "t": 12,
+        "a_observable": "The yellow Recurly button displays a soft gradient and subtle specular highlights.",
+        "b_observable": "The yellow Recurly button has a flat, solid color with no specular reflections.",
+        "fix": "Add a glossy shader with roughness to the yellow button material.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast",
+          "region": "left"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_higher_contrast",
+          "A": {
+            "p01": 1.78,
+            "p1": 180.48,
+            "p5": 182.4,
+            "p50": 208.59,
+            "p95": 232.47,
+            "p99": 236.68,
+            "p999": 240.32,
+            "span_p5_p95": 50.07
+          },
+          "B": {
+            "p01": 78.25,
+            "p1": 95.98,
+            "p5": 102.7,
+            "p50": 171.69,
+            "p95": 185.05,
+            "p99": 186.05,
+            "p999": 240.14,
+            "span_p5_p95": 82.35
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Enhance the material properties of the buttons to include specular reflections and apply a vignette to the camera to match the depth and realism of Video A.",
+    "dropped_unsupported": 2
+  }
+}

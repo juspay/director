@@ -1,0 +1,274 @@
+{
+  "sec": 9,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera pull-back"
+      ],
+      "b_motion": [
+        "camera pull-back"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 9.25,
+          "a_observable": "Stronger vignette and softer, deeper ambient occlusion shadows under the cards, creating depth.",
+          "b_observable": "Flat, uniform lighting across the grid with very weak shadows under the cards.",
+          "fix": "Increase ambient occlusion and add a vignette to match the depth of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 9.5,
+          "a_observable": "The yellow Recurly card has a warm, saturated golden-yellow hue.",
+          "b_observable": "The yellow Recurly card has a cooler, slightly greenish-yellow hue.",
+          "fix": "Adjust the color of the yellow card to be warmer and more saturated.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated",
+            "region": "center"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 9,
+          "a_observable": "The camera is closer to the cards, making the Recurly and hyperswitch cards fill more of the frame.",
+          "b_observable": "The camera is further away, showing more of the surrounding grid and making the cards appear smaller.",
+          "fix": "Adjust the camera focal length or position to match the framing of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the lighting to include stronger ambient occlusion shadows and a vignette, which will restore the depth and contrast seen in the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 9,
+          "a_observable": "The camera is positioned closer to the buttons, creating a tighter composition.",
+          "b_observable": "The camera is positioned further back, showing more of the surrounding tiles.",
+          "fix": "Move the camera closer to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 9.2,
+          "a_observable": "Deep shadows are visible in the crevices between the tiles, creating high contrast.",
+          "b_observable": "Crevice shadows are very faint and bright, making the scene look flat.",
+          "fix": "Darken the ambient occlusion and contact shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "color",
+          "t": 9.5,
+          "a_observable": "The yellow and blue buttons have highly saturated, vibrant colors.",
+          "b_observable": "The yellow and blue buttons appear washed out and desaturated.",
+          "fix": "Increase color saturation on the button materials.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera distance and focal length to match the closer framing of the reference, and deepen the contact shadows between tiles to eliminate the flat appearance.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "pan",
+        "zoom"
+      ],
+      "b_motion": [
+        "pan",
+        "zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 9.5,
+          "a_observable": "The camera is positioned close to the keys, creating a tight composition with shallow depth of field.",
+          "b_observable": "The camera is positioned far away, showing a wide, flat view of the grid.",
+          "fix": "Move the camera closer to the keys and adjust the focal length.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "A_sharper",
+            "region": "center"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 9.2,
+          "a_observable": "The scene features high-contrast lighting with deep shadows between keys and a strong vignette.",
+          "b_observable": "The scene has flat, uniform lighting with bright shadows and no vignette.",
+          "fix": "Increase contrast, deepen shadows, and add a vignette.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 9.8,
+          "a_observable": "The yellow card has a warm, highly saturated golden hue.",
+          "b_observable": "The yellow card has a cooler, less saturated yellow hue.",
+          "fix": "Adjust the yellow material to increase warmth and saturation.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and focal length to match the close-up framing and perspective of the reference video.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 9,
+        "a_observable": "The camera is positioned closer to the buttons, creating a tighter composition.",
+        "b_observable": "The camera is positioned further back, showing more of the surrounding tiles.",
+        "fix": "Move the camera closer to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 199.3,
+            "center_mean": 197.21,
+            "falloff_pct": -1.06
+          },
+          "B": {
+            "corner_mean": 150.52,
+            "center_mean": 150.82,
+            "falloff_pct": 0.2
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "lighting",
+        "t": 9.2,
+        "a_observable": "The scene features high-contrast lighting with deep shadows between keys and a strong vignette.",
+        "b_observable": "The scene has flat, uniform lighting with bright shadows and no vignette.",
+        "fix": "Increase contrast, deepen shadows, and add a vignette.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 64.55,
+            "p1": 93.67,
+            "p5": 106.9,
+            "p50": 201.47,
+            "p95": 246.09,
+            "p99": 249.72,
+            "p999": 252.72,
+            "span_p5_p95": 139.19
+          },
+          "B": {
+            "p01": 58.43,
+            "p1": 59.08,
+            "p5": 62.65,
+            "p50": 171.42,
+            "p95": 194.05,
+            "p99": 203.89,
+            "p999": 249.86,
+            "span_p5_p95": 131.4
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 9.5,
+        "a_observable": "The yellow Recurly card has a warm, saturated golden-yellow hue.",
+        "b_observable": "The yellow Recurly card has a cooler, slightly greenish-yellow hue.",
+        "fix": "Adjust the color of the yellow card to be warmer and more saturated.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "center"
+        },
+        "supported_by": 3,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_more_saturated",
+          "A": {
+            "r": 194.9,
+            "g": 201.3,
+            "b": 210.54,
+            "rb_delta": -15.64,
+            "saturation": 0.1976
+          },
+          "B": {
+            "r": 140.62,
+            "g": 155.74,
+            "b": 196.48,
+            "rb_delta": -55.86,
+            "saturation": 0.3721
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Adjust the camera position and focal length to match the closer framing of the reference, and increase ambient occlusion shadows and vignette to restore depth.",
+    "dropped_unsupported": 0
+  }
+}

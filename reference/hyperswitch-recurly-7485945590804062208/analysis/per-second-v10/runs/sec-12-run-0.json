@@ -1,0 +1,67 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow pan",
+      "zoom out"
+    ],
+    "b_motion": [
+      "slow pan",
+      "zoom out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 12,
+        "a_observable": "The 'Recurly' and 'hyperswitch' buttons are aligned horizontally across the frame.",
+        "b_observable": "The 'Recurly' button is positioned significantly higher than the 'hyperswitch' button, creating a diagonal layout.",
+        "fix": "Align the buttons horizontally to match the reference layout.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 12.25,
+        "a_observable": "The corners of the frame are noticeably darker than the center, showing a clear vignette.",
+        "b_observable": "The corners of the frame are almost as bright as the center, lacking a vignette.",
+        "fix": "Add a vignette effect in post-processing or adjust camera lens shading.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 12.5,
+        "a_observable": "The yellow button has a warm, golden color cast.",
+        "b_observable": "The yellow button has a cooler, greenish-yellow color cast.",
+        "fix": "Adjust the color temperature of the yellow material to be warmer.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "material",
+        "t": 12.7,
+        "a_observable": "The buttons exhibit soft specular highlights and a semi-glossy finish.",
+        "b_observable": "The buttons appear completely matte with no specular reflections.",
+        "fix": "Increase the specular intensity and adjust roughness on the button materials.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_brighter_highlights"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the layout of the buttons to align them horizontally as in the reference, and enhance the lighting with stronger shadows and a vignette to match the depth of Video A."
+  }
+}

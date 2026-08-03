@@ -1,0 +1,66 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "zoom"
+    ],
+    "b_motion": [
+      "translation",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 10.2,
+        "a_observable": "The yellow 'Recurly' keycap is larger in the frame and viewed from a lower, more oblique angle.",
+        "b_observable": "The yellow 'Recurly' keycap is smaller in the frame and viewed from a higher, more top-down angle.",
+        "fix": "Adjust the camera position and pitch angle to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "material",
+        "t": 10.5,
+        "a_observable": "A soft diagonal glossy reflection is visible across the yellow 'Recurly' keycap.",
+        "b_observable": "The yellow 'Recurly' keycap has a flat matte appearance with no diagonal reflection.",
+        "fix": "Increase the specularity or adjust the roughness of the yellow material to capture the glossy reflection.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_brighter_highlights"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 10,
+        "a_observable": "The corners of the frame are noticeably darker than the center, showing a strong vignette.",
+        "b_observable": "The corners of the frame are nearly as bright as the center, with minimal vignette.",
+        "fix": "Add a vignette post-processing effect to darken the corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "color",
+        "t": 10.8,
+        "a_observable": "The white keycaps and background elements exhibit a cool blue color tint.",
+        "b_observable": "The white keycaps and background are neutral white and grey.",
+        "fix": "Apply a cool blue color grading or adjust the white balance.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and angle to match the oblique perspective and closer framing of the reference video."
+  }
+}

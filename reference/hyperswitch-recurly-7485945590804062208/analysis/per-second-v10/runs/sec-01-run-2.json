@@ -1,0 +1,80 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan",
+      "slow zoom out"
+    ],
+    "b_motion": [
+      "slow camera pan",
+      "slow zoom out"
+    ],
+    "absent_in_b": [
+      "perforated dot pattern on the left key"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 1.5,
+        "a_observable": "The camera is angled more steeply, showing more perspective distortion on the keys.",
+        "b_observable": "The camera angle is flatter with less perspective distortion, making the keys appear more orthographic.",
+        "fix": "Match the camera focal length and angle of Video A.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 1.5,
+        "a_observable": "The overall color temperature is cool, with crisp white keys and clean blue tones.",
+        "b_observable": "The image has a distinct warm, yellowish-grey color cast.",
+        "fix": "Adjust white balance to remove the warm cast and match the cool tones of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "There is a noticeable vignette with darker corners, creating a focused central spotlight effect.",
+        "b_observable": "The lighting is flat and uniform across the frame, lacking corner falloff.",
+        "fix": "Add a vignette to match the corner shading of Video A.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 1.5,
+        "a_observable": "The 'Secure Payments' card is centered and occupies a larger portion of the frame with tighter gaps between surrounding keys.",
+        "b_observable": "The 'Secure Payments' card is shifted to the left, with wider gaps between the keys.",
+        "fix": "Adjust the layout and spacing of the keys to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "material",
+        "t": 1.5,
+        "a_observable": "The key on the far left features a grid of perforated grey dots.",
+        "b_observable": "The key on the far left is completely solid and blank.",
+        "fix": "Add the perforated dot pattern texture to the left key.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera focal length, angle, and position to match the perspective and framing of Video A."
+  }
+}

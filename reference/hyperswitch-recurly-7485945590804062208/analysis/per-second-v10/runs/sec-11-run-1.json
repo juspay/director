@@ -1,0 +1,65 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "translation",
+      "zoom"
+    ],
+    "b_motion": [
+      "translation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 11,
+        "a_observable": "The key between the Recurly and Juspay buttons is blank white.",
+        "b_observable": "The key between the Recurly and Juspay buttons contains a blue-bordered 'Live Now' pill.",
+        "fix": "Remove the 'Live Now' pill from this key to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 11.5,
+        "a_observable": "The camera zooms out and pans continuously, causing the buttons to shrink and move towards the corners.",
+        "b_observable": "The camera is nearly static, keeping the buttons at a constant size and position.",
+        "fix": "Match the camera zoom-out and pan speed of the reference video.",
+        "severity": 3,
+        "prediction": {
+          "metric": "motion",
+          "expect": "A_more"
+        }
+      },
+      {
+        "category": "material",
+        "t": 11.1,
+        "a_observable": "The white keys have a smooth, solid matte texture with no lines.",
+        "b_observable": "The white keys have thin grey horizontal lines textured onto them.",
+        "fix": "Remove the horizontal line textures from the white keys.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 11,
+        "a_observable": "The Recurly button is a warm golden yellow color.",
+        "b_observable": "The Recurly button is a cooler, greenish-yellow color.",
+        "fix": "Adjust the hue of the yellow button to be warmer and more golden.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Increase camera zoom-out and pan speed to match the dynamic framing of the reference video."
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "sec": 13,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera zoom out"
+      ],
+      "b_motion": [
+        "camera zoom out",
+        "pill slide up"
+      ],
+      "absent_in_b": [
+        "Live Now pill (at start of second)"
+      ],
+      "differences": [
+        {
+          "category": "staging",
+          "t": 13,
+          "a_observable": "The 'Live Now' pill is fully raised and stationary in its slot at the start of the second.",
+          "b_observable": "The 'Live Now' pill is absent at the start of the second, only beginning to slide up much later at original second 13.6.",
+          "fix": "Shift the keyframes of the 'Live Now' pill animation earlier so it is fully raised before second 13.",
+          "severity": 3,
+          "prediction": {
+            "metric": "motion",
+            "expect": "B_more"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 13,
+          "a_observable": "Deep, high-contrast shadows are cast beneath the raised cards.",
+          "b_observable": "Shadows beneath the cards are soft, light grey, and lack depth.",
+          "fix": "Increase shadow density and contrast in the render settings.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 13.5,
+          "a_observable": "The camera perspective is more oblique, showing the 3D depth of the card edges.",
+          "b_observable": "The camera perspective is flatter and more top-down, obscuring the card edges.",
+          "fix": "Adjust camera pitch and angle to match the reference perspective.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Align the animation timing of the 'Live Now' pill to match the reference timeline, ensuring it is fully raised before second 13.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "camera zoom out"
+      ],
+      "b_motion": [
+        "camera zoom out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 13.5,
+          "a_observable": "Crevices between the keys have distinct, soft dark shadows.",
+          "b_observable": "Crevices between the keys are brightly lit with minimal shadow definition.",
+          "fix": "Increase ambient occlusion and shadow depth between the keyboard keys.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 13.5,
+          "a_observable": "The yellow and blue keys are highly saturated and vibrant.",
+          "b_observable": "The yellow and blue keys appear desaturated and washed out.",
+          "fix": "Increase the saturation of the key materials.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_more_saturated"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 13.5,
+          "a_observable": "A distinct vignette is visible with darker corners.",
+          "b_observable": "The lighting is uniform across the entire frame.",
+          "fix": "Add a vignette effect to darken the corners.",
+          "severity": 2,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        }
+      ],
+      "highest_impact_fix": "Enhance the shadow depth and ambient occlusion between the keys to restore the 3D depth and contrast of the keyboard layout.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera zoom out"
+      ],
+      "b_motion": [
+        "slow camera zoom out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 13,
+          "a_observable": "The yellow and blue buttons are positioned closer to the center of the frame.",
+          "b_observable": "The yellow and blue buttons are spaced further apart towards the corners of the frame.",
+          "fix": "Adjust the layout spacing of the buttons to match the reference.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 13.5,
+          "a_observable": "The white background tiles have a neutral white appearance.",
+          "b_observable": "The white background tiles have a noticeable cool blue color cast.",
+          "fix": "Adjust the color balance to remove the blue cast on white surfaces.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 13.8,
+          "a_observable": "The shadows in the crevices between tiles are soft and light grey.",
+          "b_observable": "The shadows in the crevices are dark and high-contrast.",
+          "fix": "Add more ambient fill light to soften the shadow depth.",
+          "severity": 2,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        }
+      ],
+      "highest_impact_fix": "Correct the white balance to eliminate the cool blue color cast on white tiles and soften the shadow contrast.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "",
+    "dropped_unsupported": 10
+  }
+}

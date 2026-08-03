@@ -1,0 +1,19 @@
+[
+  {
+    "sec": 0,
+    "idx": 0,
+    "t": 0.2,
+    "category": "camera",
+    "a_observable": "The camera is closer to the tiles, showing a tight crop of the 'Secure Payments' card and a prominent blue tile on the left.",
+    "b_observable": "The camera is further away and angled differently, showing more surrounding grey tiles and less of the blue tile.",
+    "frames": {
+      "A": "analysis/per-second-v10/eyewitness/sec-00-c0-A.png",
+      "B": "analysis/per-second-v10/eyewitness/sec-00-c0-B.png"
+    },
+    "channelB": {
+      "verdict": "supported",
+      "certainty": 1,
+      "note": "The claim accurately describes the differences in camera distance, framing, and angle between Clip A and Clip B. Clip A has a closer, tighter crop with a prominent blue tile on the left, while Clip B is further away, angled differently, showing more surrounding grey tiles and less of the blue tile."
+    }
+  }
+]

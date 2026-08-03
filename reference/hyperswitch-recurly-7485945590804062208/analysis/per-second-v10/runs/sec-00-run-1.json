@@ -1,0 +1,53 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and zoom out"
+    ],
+    "b_motion": [
+      "slow camera pan and zoom out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 0,
+        "a_observable": "The text and icons on the keys are oriented horizontally.",
+        "b_observable": "The text and icons are rotated 90 degrees counter-clockwise.",
+        "fix": "Rotate the text and icon elements 90 degrees clockwise to restore horizontal orientation.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "camera",
+        "t": 0.2,
+        "a_observable": "The camera is positioned close to the central key, creating a tight, focused composition.",
+        "b_observable": "The camera is positioned further back, resulting in a wider shot with more keys visible.",
+        "fix": "Move the camera closer to the main key to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.1,
+        "a_observable": "Strong vignette with darker corners and a cool blue-grey color cast.",
+        "b_observable": "Flat, even lighting across the frame with no noticeable vignette.",
+        "fix": "Apply a vignette and adjust the color grading to match the cool tones of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      }
+    ],
+    "highest_impact_fix": "Rotate the text and icon elements on the keys 90 degrees clockwise to correct their orientation, and adjust the camera position closer to the main key to match the reference framing."
+  }
+}

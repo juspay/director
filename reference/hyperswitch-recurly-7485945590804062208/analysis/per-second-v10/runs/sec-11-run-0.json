@@ -1,0 +1,58 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow organic camera drift",
+      "subtle camera translation"
+    ],
+    "b_motion": [
+      "stiffer camera translation",
+      "linear camera drift"
+    ],
+    "absent_in_b": [
+      "warm studio lighting color cast",
+      "soft ambient occlusion shadows between keys"
+    ],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 11.5,
+        "a_observable": "The corners of the frame are significantly darker than the center, showing a strong vignette effect.",
+        "b_observable": "The corners of the frame are nearly as bright as the center, with minimal vignette.",
+        "fix": "Increase the vignette strength in post-processing to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 11.2,
+        "a_observable": "The overall image has a warm, cream-colored tone, especially visible on the white key surfaces.",
+        "b_observable": "The image has a cooler, neutral white tone on the key surfaces.",
+        "fix": "Apply a warm color cast or adjust the white balance to match the cream tones of the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 11.8,
+        "a_observable": "Deep shadows are visible in the crevices between the keyboard keys, creating strong contact shadows.",
+        "b_observable": "The crevices between the keys are brightly lit, lacking deep contact shadows.",
+        "fix": "Enable or increase the strength of ambient occlusion and contact shadows between the geometry.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Enhance the lighting by adding a strong vignette, warming up the color temperature, and deepening the contact shadows between the keys to match the rich, high-contrast look of the reference."
+  }
+}

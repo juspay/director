@@ -1,0 +1,276 @@
+{
+  "sec": 0,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera slide/pan across the keyboard keys"
+      ],
+      "b_motion": [
+        "slow camera slide/pan across the keyboard keys"
+      ],
+      "absent_in_b": [
+        "yellow key at the bottom right",
+        "blue key on the left"
+      ],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 0.1,
+          "a_observable": "A yellow key is visible at the bottom right, and a blue key is visible on the left side of the frame.",
+          "b_observable": "No yellow or blue keys are visible in these positions; the surrounding keys are plain grey with thin horizontal lines.",
+          "fix": "Re-arrange the keyboard layout to match the reference, placing the yellow key at the bottom right and the blue key on the left.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 0.2,
+          "a_observable": "The camera is positioned closer to the keys with a steeper angle, showing the 'Secure Payments' key occupying a larger portion of the frame.",
+          "b_observable": "The camera is further away and at a shallower angle, making the keys appear smaller and more skewed.",
+          "fix": "Adjust the camera focal length, distance, and angle to match the reference composition.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.5,
+          "a_observable": "The white keys have bright, clean highlights.",
+          "b_observable": "The white keys are dimmer and greyish, lacking bright highlights.",
+          "fix": "Adjust the exposure or highlight levels in the render to match the brightness of Video A.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_brighter_highlights"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position, angle, and focal length to match the reference composition, and re-arrange the surrounding keyboard layout.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera pan and zoom out"
+      ],
+      "b_motion": [
+        "slow camera pan and zoom out"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 0,
+          "a_observable": "The text and icons on the keys are oriented horizontally.",
+          "b_observable": "The text and icons are rotated 90 degrees counter-clockwise.",
+          "fix": "Rotate the text and icon elements 90 degrees clockwise to restore horizontal orientation.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 0.2,
+          "a_observable": "The camera is positioned close to the central key, creating a tight, focused composition.",
+          "b_observable": "The camera is positioned further back, resulting in a wider shot with more keys visible.",
+          "fix": "Move the camera closer to the main key to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.1,
+          "a_observable": "Strong vignette with darker corners and a cool blue-grey color cast.",
+          "b_observable": "Flat, even lighting across the frame with no noticeable vignette.",
+          "fix": "Apply a vignette and adjust the color grading to match the cool tones of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        }
+      ],
+      "highest_impact_fix": "Rotate the text and icon elements on the keys 90 degrees clockwise to correct their orientation, and adjust the camera position closer to the main key to match the reference framing.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "zoom"
+      ],
+      "b_motion": [
+        "translation",
+        "zoom"
+      ],
+      "absent_in_b": [
+        "square base tiles",
+        "vibrant blue tile on left"
+      ],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 0.1,
+          "a_observable": "The 'Secure Payments' icon and text are on a raised white rounded card sitting on a square tile.",
+          "b_observable": "The 'Secure Payments' icon and text are directly on a single rounded rectangular tile.",
+          "fix": "Model the keys with a square base and a separate raised rounded card.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "camera",
+          "t": 0.2,
+          "a_observable": "The camera is closer to the tiles, showing a tight crop of the 'Secure Payments' card and a prominent blue tile on the left.",
+          "b_observable": "The camera is further away and angled differently, showing more surrounding grey tiles and less of the blue tile.",
+          "fix": "Match the camera position, rotation, and focal length to the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 0.5,
+          "a_observable": "Darker corners indicate a strong vignette effect.",
+          "b_observable": "The corners are bright, showing no significant vignette.",
+          "fix": "Add a vignette to darken the corners of the frame.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger",
+            "region": "corners"
+          }
+        },
+        {
+          "category": "color",
+          "t": 0.3,
+          "a_observable": "The overall color palette is cooler with a blue-grey cast on the white tiles.",
+          "b_observable": "The color palette is warmer with a cream cast on the white tiles.",
+          "fix": "Cool down the white balance and adjust color grading.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Re-model the keyboard keys to feature the square base tiles with separate rounded cards on top, and adjust the camera framing and angle to match the reference.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 0.2,
+        "a_observable": "The camera is closer to the tiles, showing a tight crop of the 'Secure Payments' card and a prominent blue tile on the left.",
+        "b_observable": "The camera is further away and angled differently, showing more surrounding grey tiles and less of the blue tile.",
+        "fix": "Match the camera position, rotation, and focal length to the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 3,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "The claim accurately describes the differences in camera distance, framing, and angle between Clip A and Clip B. Clip A has a closer, tighter crop with a prominent blue tile on the left, while Clip B is further away, angled differently, showing more surrounding grey tiles and less of the blue tile."
+        },
+        "channelA": {
+          "verdict": "cannot_tell",
+          "note": "Mixed claim: the 'angled differently' half is consistent with the elevation-hot family, but 'further away' belongs to the distance family refuted at parity in four consecutive passes."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 0.5,
+        "a_observable": "Darker corners indicate a strong vignette effect.",
+        "b_observable": "The corners are bright, showing no significant vignette.",
+        "fix": "Add a vignette to darken the corners of the frame.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_stronger",
+          "A": {
+            "corner_mean": 202.03,
+            "center_mean": 205.44,
+            "falloff_pct": 1.66
+          },
+          "B": {
+            "corner_mean": 186.37,
+            "center_mean": 213.07,
+            "falloff_pct": 12.53
+          }
+        },
+        "status": "vetoed_measured"
+      },
+      {
+        "category": "color",
+        "t": 0.3,
+        "a_observable": "The overall color palette is cooler with a blue-grey cast on the white tiles.",
+        "b_observable": "The color palette is warmer with a cream cast on the white tiles.",
+        "fix": "Cool down the white balance and adjust color grading.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "A_cooler",
+          "A": {
+            "r": 190.25,
+            "g": 199.25,
+            "b": 201.91,
+            "rb_delta": -11.66,
+            "saturation": 0.207
+          },
+          "B": {
+            "r": 200.5,
+            "g": 205.25,
+            "b": 215.58,
+            "rb_delta": -15.08,
+            "saturation": 0.0683
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [
+      "blue key on the left"
+    ],
+    "highest_impact_fix": "Adjust the camera position, angle, and focal length to match the reference composition, apply a vignette to darken the corners, and cool down the white balance to match the cool blue-grey color cast.",
+    "dropped_unsupported": 4
+  }
+}

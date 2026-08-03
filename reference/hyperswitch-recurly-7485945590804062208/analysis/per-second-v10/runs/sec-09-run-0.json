@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pull-back"
+    ],
+    "b_motion": [
+      "camera pull-back"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 9.25,
+        "a_observable": "Stronger vignette and softer, deeper ambient occlusion shadows under the cards, creating depth.",
+        "b_observable": "Flat, uniform lighting across the grid with very weak shadows under the cards.",
+        "fix": "Increase ambient occlusion and add a vignette to match the depth of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 9.5,
+        "a_observable": "The yellow Recurly card has a warm, saturated golden-yellow hue.",
+        "b_observable": "The yellow Recurly card has a cooler, slightly greenish-yellow hue.",
+        "fix": "Adjust the color of the yellow card to be warmer and more saturated.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated",
+          "region": "center"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 9,
+        "a_observable": "The camera is closer to the cards, making the Recurly and hyperswitch cards fill more of the frame.",
+        "b_observable": "The camera is further away, showing more of the surrounding grid and making the cards appear smaller.",
+        "fix": "Adjust the camera focal length or position to match the framing of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the lighting to include stronger ambient occlusion shadows and a vignette, which will restore the depth and contrast seen in the reference."
+  }
+}

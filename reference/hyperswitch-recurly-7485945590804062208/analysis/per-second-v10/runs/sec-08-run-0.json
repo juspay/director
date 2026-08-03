@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "camera pan",
+      "card slide up"
+    ],
+    "b_motion": [
+      "camera pan",
+      "card slide up"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 8.25,
+        "a_observable": "The camera is at a lower, more oblique angle, showing stronger perspective.",
+        "b_observable": "The camera is at a higher, flatter angle with less perspective.",
+        "fix": "Lower the camera and tilt up to match the oblique angle.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "motion",
+        "t": 8.45,
+        "a_observable": "The white 'Live Now' card is already sliding upwards.",
+        "b_observable": "The white card is static and flat, delaying its animation.",
+        "fix": "Shift the card's slide-up keyframes earlier.",
+        "severity": 4,
+        "prediction": {
+          "metric": "motion",
+          "expect": "A_more"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "Pronounced vignette darkening the corners.",
+        "b_observable": "Even illumination across the frame with weak vignette.",
+        "fix": "Add a stronger vignette in post-production.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "color",
+        "t": 8.3,
+        "a_observable": "The yellow card has a warm, highly saturated golden hue.",
+        "b_observable": "The yellow card is pale and less saturated.",
+        "fix": "Increase saturation and warmth of the yellow material.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the timing of the sliding 'Live Now' card animation and match the oblique camera angle."
+  }
+}

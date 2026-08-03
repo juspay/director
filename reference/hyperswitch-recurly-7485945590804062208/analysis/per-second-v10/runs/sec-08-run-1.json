@@ -1,0 +1,83 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "camera pan",
+      "camera zoom",
+      "button rise"
+    ],
+    "b_motion": [
+      "camera pan",
+      "camera zoom",
+      "button rise"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 8.06,
+        "a_observable": "The camera is positioned closer to the Juspay Hyperswitch button, framing it tightly with a distinct perspective angle.",
+        "b_observable": "The camera is further back, showing more of the surrounding tiles, with a flatter perspective.",
+        "fix": "Adjust the camera focal length and position to match the tighter framing and perspective of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "The corners of the frame are significantly darker than the center, showing a strong vignette.",
+        "b_observable": "The corners of the frame are nearly as bright as the center, with a very weak vignette.",
+        "fix": "Increase the vignette strength in the camera or post-processing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "The shadows under the buttons and in the recesses are deep and dark, creating high contrast.",
+        "b_observable": "The shadows are much lighter and softer, resulting in a flatter look.",
+        "fix": "Adjust the shadow density and contrast to match the deeper shadows of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 8.5,
+        "a_observable": "The Recurly button has a warm golden-yellow color.",
+        "b_observable": "The Recurly button has a cooler, lemon-yellow color.",
+        "fix": "Adjust the material color of the yellow button to have a warmer hue.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 8.7,
+        "a_observable": "The 'Live Now' button is just beginning to rise from its slot.",
+        "b_observable": "The 'Live Now' button has already fully risen and is stationary.",
+        "fix": "Delay the animation of the 'Live Now' button to match the reference timing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Align the camera framing and perspective, and match the warm color grading and vignette of the reference video."
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zoom out"
+    ],
+    "b_motion": [
+      "camera zoom out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 13.5,
+        "a_observable": "Crevices between the keys have distinct, soft dark shadows.",
+        "b_observable": "Crevices between the keys are brightly lit with minimal shadow definition.",
+        "fix": "Increase ambient occlusion and shadow depth between the keyboard keys.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 13.5,
+        "a_observable": "The yellow and blue keys are highly saturated and vibrant.",
+        "b_observable": "The yellow and blue keys appear desaturated and washed out.",
+        "fix": "Increase the saturation of the key materials.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 13.5,
+        "a_observable": "A distinct vignette is visible with darker corners.",
+        "b_observable": "The lighting is uniform across the entire frame.",
+        "fix": "Add a vignette effect to darken the corners.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      }
+    ],
+    "highest_impact_fix": "Enhance the shadow depth and ambient occlusion between the keys to restore the 3D depth and contrast of the keyboard layout."
+  }
+}

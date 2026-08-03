@@ -1,0 +1,9 @@
+{
+  "00:0": {"verdict": "cannot_tell", "note": "Mixed claim: the 'angled differently' half is consistent with the elevation-hot family, but 'further away' belongs to the distance family refuted at parity in four consecutive passes."},
+  "01:3": {"verdict": "supported", "note": "Same spacing family upheld last pass: A packs tighter with the subject more central."},
+  "02:0": {"verdict": "supported", "note": "Both halves check: B is more top-down than A's shallower dramatic angle, and the accent lottery left no yellow card at B's top-left this second."},
+  "02:3": {"verdict": "supported", "note": "A's brushed strip beside the column is prominent; B's equivalent metal tile reads faint."},
+  "04:0": {"verdict": "supported", "note": "Decisive frames: A's three column cards FLOAT with pronounced soft drop shadows beneath them — they hover off the wall. B's sit seated (CAP_Y sinks them in) with minimal shadow. Actionable: raise the column cards and let the directional shadow render below."},
+  "05:0": {"verdict": "supported", "note": "A shoots the Recurly beat low and oblique (~45-50deg) with heavy perspective; B is near-top-down. The pass-8 elevation raise overshot for shot 3 — third corroboration of elevation-runs-hot."},
+  "08:0": {"verdict": "supported", "note": "Same finding upheld last pass at this second: B more directly overhead than A."}
+}

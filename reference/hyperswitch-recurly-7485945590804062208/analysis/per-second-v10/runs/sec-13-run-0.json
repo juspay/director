@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera zoom out"
+    ],
+    "b_motion": [
+      "camera zoom out",
+      "pill slide up"
+    ],
+    "absent_in_b": [
+      "Live Now pill (at start of second)"
+    ],
+    "differences": [
+      {
+        "category": "staging",
+        "t": 13,
+        "a_observable": "The 'Live Now' pill is fully raised and stationary in its slot at the start of the second.",
+        "b_observable": "The 'Live Now' pill is absent at the start of the second, only beginning to slide up much later at original second 13.6.",
+        "fix": "Shift the keyframes of the 'Live Now' pill animation earlier so it is fully raised before second 13.",
+        "severity": 3,
+        "prediction": {
+          "metric": "motion",
+          "expect": "B_more"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 13,
+        "a_observable": "Deep, high-contrast shadows are cast beneath the raised cards.",
+        "b_observable": "Shadows beneath the cards are soft, light grey, and lack depth.",
+        "fix": "Increase shadow density and contrast in the render settings.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 13.5,
+        "a_observable": "The camera perspective is more oblique, showing the 3D depth of the card edges.",
+        "b_observable": "The camera perspective is flatter and more top-down, obscuring the card edges.",
+        "fix": "Adjust camera pitch and angle to match the reference perspective.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Align the animation timing of the 'Live Now' pill to match the reference timeline, ensuring it is fully raised before second 13."
+  }
+}

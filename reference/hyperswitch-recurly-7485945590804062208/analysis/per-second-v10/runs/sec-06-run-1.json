@@ -1,0 +1,45 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      6.667
+    ],
+    "a_motion": [
+      "camera zoom out",
+      "camera pan"
+    ],
+    "b_motion": [
+      "camera zoom out",
+      "camera pan"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 6.25,
+        "a_observable": "The background elements in the corners are heavily blurred due to shallow depth of field.",
+        "b_observable": "The background elements in the corners are in sharp focus.",
+        "fix": "Reduce the camera's f-stop to narrow the depth of field.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 6.9,
+        "a_observable": "The recess surrounding the blue Juspay card has soft, diffused contact shadows.",
+        "b_observable": "The recess has a harsh, dark black outline indicating hard ambient occlusion.",
+        "fix": "Increase the light source size or adjust ambient occlusion settings to soften contact shadows.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Match the camera's focal length, tilt angle, and shallow depth of field to replicate the cinematic perspective and soft background blur of the reference."
+  }
+}

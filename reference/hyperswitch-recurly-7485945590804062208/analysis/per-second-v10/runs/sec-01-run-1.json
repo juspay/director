@@ -1,0 +1,53 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and tilt, rotating around the central keys"
+    ],
+    "b_motion": [
+      "slow camera pan and tilt, rotating around the central keys"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 1.5,
+        "a_observable": "The yellow key is positioned at the bottom of the frame, and the blue key is on the left.",
+        "b_observable": "The yellow key is positioned at the top right of the frame, and the blue key is at the bottom left.",
+        "fix": "Rearrange the keys on the keyboard grid to match the reference layout, placing the yellow key at the bottom and the blue key on the left.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "camera",
+        "t": 1.5,
+        "a_observable": "The camera is positioned close to the 'Secure Payments' card with a shallow depth of field blurring the background.",
+        "b_observable": "The camera is positioned further away, showing more of the keyboard, with all keys in sharp focus.",
+        "fix": "Adjust the camera position, focal length, and enable depth of field with a wider aperture to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "B_sharper",
+          "region": "corners"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 1.5,
+        "a_observable": "Vibrant lighting with a strong blue color cast on the left keys and warm highlights on the center keys.",
+        "b_observable": "Dull, flat grey lighting across all keys with no color cast or warm highlights.",
+        "fix": "Add a blue fill light from the left and a warm key light from the right to match the reference color contrast.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Rearrange the keyboard grid layout to place the yellow key at the bottom and the blue key on the left, and adjust the camera framing and depth of field to match the reference."
+  }
+}

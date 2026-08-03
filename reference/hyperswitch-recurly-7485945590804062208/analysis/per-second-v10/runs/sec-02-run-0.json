@@ -1,0 +1,82 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.2
+    ],
+    "a_motion": [
+      "translation",
+      "rotation"
+    ],
+    "b_motion": [
+      "translation",
+      "rotation"
+    ],
+    "absent_in_b": [
+      "yellow background card"
+    ],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 2.1,
+        "a_observable": "Camera is positioned close to the 'Secure Payments' card, framing it centrally with a yellow card visible at the bottom.",
+        "b_observable": "Camera is further away and at a shallower angle, with no yellow card visible at the bottom.",
+        "fix": "Adjust camera distance and angle to match the reference framing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.1,
+        "a_observable": "Crevices between keyboard tiles have deep, dark shadows, providing high contrast.",
+        "b_observable": "Crevices are brightly lit with very soft, shallow shadows, resulting in a flat look.",
+        "fix": "Increase shadow depth and contrast in the crevices.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "layout",
+        "t": 2.1,
+        "a_observable": "The 'Secure Payments' card is nearly square with highly rounded corners.",
+        "b_observable": "The card is a wide rectangle with less corner rounding.",
+        "fix": "Adjust the card dimensions to be more square.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 2.5,
+        "a_observable": "A yellow card is visible in the top-left background behind the 'Subscriptions' card.",
+        "b_observable": "The background consists entirely of white keys with no yellow card.",
+        "fix": "Add the yellow card to the background staging.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 2.5,
+        "a_observable": "White background tiles have a bright appearance with subtle blue reflections.",
+        "b_observable": "Background tiles are dull neutral grey with no blue tint.",
+        "fix": "Add a cool blue color cast and increase tile brightness.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Increase shadow depth and contrast in the crevices between tiles to match the high-contrast look of the reference."
+  }
+}

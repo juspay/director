@@ -1,0 +1,318 @@
+{
+  "sec": 2,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [
+        2.2
+      ],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [
+        "yellow background card"
+      ],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 2.1,
+          "a_observable": "Camera is positioned close to the 'Secure Payments' card, framing it centrally with a yellow card visible at the bottom.",
+          "b_observable": "Camera is further away and at a shallower angle, with no yellow card visible at the bottom.",
+          "fix": "Adjust camera distance and angle to match the reference framing.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 2.1,
+          "a_observable": "Crevices between keyboard tiles have deep, dark shadows, providing high contrast.",
+          "b_observable": "Crevices are brightly lit with very soft, shallow shadows, resulting in a flat look.",
+          "fix": "Increase shadow depth and contrast in the crevices.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "layout",
+          "t": 2.1,
+          "a_observable": "The 'Secure Payments' card is nearly square with highly rounded corners.",
+          "b_observable": "The card is a wide rectangle with less corner rounding.",
+          "fix": "Adjust the card dimensions to be more square.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 2.5,
+          "a_observable": "A yellow card is visible in the top-left background behind the 'Subscriptions' card.",
+          "b_observable": "The background consists entirely of white keys with no yellow card.",
+          "fix": "Add the yellow card to the background staging.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        },
+        {
+          "category": "color",
+          "t": 2.5,
+          "a_observable": "White background tiles have a bright appearance with subtle blue reflections.",
+          "b_observable": "Background tiles are dull neutral grey with no blue tint.",
+          "fix": "Add a cool blue color cast and increase tile brightness.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        }
+      ],
+      "highest_impact_fix": "Increase shadow depth and contrast in the crevices between tiles to match the high-contrast look of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        2.21
+      ],
+      "a_motion": [
+        "camera pans and zooms out",
+        "hard cut",
+        "camera pans down"
+      ],
+      "b_motion": [
+        "camera pans and zooms out",
+        "hard cut",
+        "camera pans down"
+      ],
+      "absent_in_b": [
+        "yellow key in top-left corner",
+        "brushed metal texture on the right key"
+      ],
+      "differences": [
+        {
+          "category": "color",
+          "t": 2.1,
+          "a_observable": "Rich blue tones on the left card and deep shadows between the keyboard keys.",
+          "b_observable": "Faded, low-contrast gray-blue tones with washed-out shadows.",
+          "fix": "Adjust the color grading to increase contrast and saturation, matching the deep blues and rich shadows of the reference.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_higher_contrast"
+          }
+        },
+        {
+          "category": "staging",
+          "t": 2.3,
+          "a_observable": "A bright yellow key is visible at the top-left corner of the frame.",
+          "b_observable": "Only white/light gray keys are visible in the top-left corner.",
+          "fix": "Add the yellow key to the top-left area of the keyboard layout.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "material",
+          "t": 2.5,
+          "a_observable": "The key to the right of the three white cards has a dark gray brushed metal texture.",
+          "b_observable": "The key to the right is plain white/light gray plastic with no texture.",
+          "fix": "Apply a brushed metal material to the key on the right side of the frame.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the keyboard layout and materials to include the yellow key and brushed metal textures, and apply a high-contrast color grade to match the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [
+        2.2
+      ],
+      "a_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "b_motion": [
+        "camera pan",
+        "camera zoom"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "layout",
+          "t": 2.1,
+          "a_observable": "The 'Secure Payments' card is surrounded by a yellow card at the bottom and a blue card on the left, with the 'Renewal Success' card visible at the top.",
+          "b_observable": "The surrounding cards are positioned differently; the yellow card is not visible at the bottom, and the layout of the background grid is altered.",
+          "fix": "Adjust the camera framing and the layout of the background tiles to match the reference composition.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "material",
+          "t": 2.5,
+          "a_observable": "A brushed metal texture strip is visible to the right of the Subscriptions, Retries, and APMs cards.",
+          "b_observable": "The surface to the right of the cards is a flat, solid grey color with no brushed texture.",
+          "fix": "Apply a brushed metal material to the background strip on the right side.",
+          "severity": 4,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 2.5,
+          "a_observable": "The cards cast soft but distinct dark shadows onto the background, creating depth.",
+          "b_observable": "The shadows under the cards are extremely faint and flat, reducing the sense of three-dimensional depth.",
+          "fix": "Increase the shadow density and adjust the light source to cast more pronounced contact shadows.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows",
+            "region": "center"
+          }
+        }
+      ],
+      "highest_impact_fix": "Align the background layout and add the missing brushed metal texture to match the reference scene's materials and composition.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "camera",
+        "t": 2.1,
+        "a_observable": "Camera is positioned close to the 'Secure Payments' card, framing it centrally with a yellow card visible at the bottom.",
+        "b_observable": "Camera is further away and at a shallower angle, with no yellow card visible at the bottom.",
+        "fix": "Adjust camera distance and angle to match the reference framing.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        },
+        "supported_by": 2,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "The claim accurately describes the differences in camera framing and the visibility of the yellow card at the bottom between Clip A and Clip B."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "Both halves check: B is more top-down than A's shallower dramatic angle, and the accent lottery left no yellow card at B's top-left this second."
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 2.1,
+        "a_observable": "Crevices between keyboard tiles have deep, dark shadows, providing high contrast.",
+        "b_observable": "Crevices are brightly lit with very soft, shallow shadows, resulting in a flat look.",
+        "fix": "Increase shadow depth and contrast in the crevices.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "confirmed",
+          "expect": "A_deeper_shadows",
+          "A": {
+            "p01": 55.31,
+            "p1": 79.89,
+            "p5": 89.83,
+            "p50": 207.53,
+            "p95": 243.22,
+            "p99": 246.59,
+            "p999": 249.59,
+            "span_p5_p95": 153.39
+          },
+          "B": {
+            "p01": 92.23,
+            "p1": 110.13,
+            "p5": 131.98,
+            "p50": 207.59,
+            "p95": 224.67,
+            "p99": 226.67,
+            "p999": 246.3,
+            "span_p5_p95": 92.69
+          }
+        },
+        "status": "accepted_measured"
+      },
+      {
+        "category": "staging",
+        "t": 2.3,
+        "a_observable": "A bright yellow key is visible at the top-left corner of the frame.",
+        "b_observable": "Only white/light gray keys are visible in the top-left corner.",
+        "fix": "Add the yellow key to the top-left area of the keyboard layout.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "rejected_eyewitness",
+        "channelB": {
+          "verdict": "refuted",
+          "certainty": 1,
+          "note": "In Clip B, a yellow key is clearly visible in the top-left corner of the frame from 00:00.000 to 00:00.583, contradicting the claim that only white/light gray keys are visible there."
+        }
+      },
+      {
+        "category": "material",
+        "t": 2.5,
+        "a_observable": "A brushed metal texture strip is visible to the right of the Subscriptions, Retries, and APMs cards.",
+        "b_observable": "The surface to the right of the cards is a flat, solid grey color with no brushed texture.",
+        "fix": "Apply a brushed metal material to the background strip on the right side.",
+        "severity": 4,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        },
+        "supported_by": 2,
+        "status": "accepted_eyewitness",
+        "channelB": {
+          "verdict": "supported",
+          "certainty": 1,
+          "note": "The comparison is accurate. In Clip A, a brushed metal texture strip is clearly visible to the right of the Subscriptions, Retries, and APMs cards, whereas in Clip B, the surface to the right of these cards is a flat, solid grey color with no texture."
+        },
+        "channelA": {
+          "verdict": "supported",
+          "note": "A's brushed strip beside the column is prominent; B's equivalent metal tile reads faint."
+        }
+      }
+    ],
+    "agreed_absent_in_b": [
+      "yellow key in top-left corner",
+      "brushed metal texture on the right key"
+    ],
+    "highest_impact_fix": "Adjust the keyboard layout and materials to include the yellow key and brushed metal textures, and apply a high-contrast color grade to match the reference.",
+    "dropped_unsupported": 3
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      8.1
+    ],
+    "a_motion": [
+      "camera zoom out",
+      "card translation"
+    ],
+    "b_motion": [
+      "camera zoom out",
+      "card translation"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 8.5,
+        "a_observable": "Wider camera field of view with stronger perspective distortion on the keys.",
+        "b_observable": "Flatter camera perspective with less foreshortening on the keys.",
+        "fix": "Decrease focal length and adjust position to match perspective.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 8.5,
+        "a_observable": "The yellow Recurly card has a warm golden hue.",
+        "b_observable": "The yellow Recurly card has a cooler, greenish-yellow hue.",
+        "fix": "Warm up the yellow diffuse material color.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 8.5,
+        "a_observable": "Distinct vignette darkening the corners of the frame.",
+        "b_observable": "Corners are bright, lacking vignette falloff.",
+        "fix": "Add a post-process vignette to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "motion",
+        "t": 8.7,
+        "a_observable": "The 'Live Now' pill is actively sliding upward.",
+        "b_observable": "The 'Live Now' pill has completed its motion and is stationary.",
+        "fix": "Delay the keyframes of the pill animation.",
+        "severity": 3,
+        "prediction": {
+          "metric": "motion",
+          "expect": "A_more"
+        }
+      }
+    ],
+    "highest_impact_fix": "Match the camera focal length to correct the perspective distortion and key layout, and delay the 'Live Now' pill animation timing."
+  }
+}

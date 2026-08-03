@@ -1,0 +1,61 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [
+      2.21
+    ],
+    "a_motion": [
+      "camera pans and zooms out",
+      "hard cut",
+      "camera pans down"
+    ],
+    "b_motion": [
+      "camera pans and zooms out",
+      "hard cut",
+      "camera pans down"
+    ],
+    "absent_in_b": [
+      "yellow key in top-left corner",
+      "brushed metal texture on the right key"
+    ],
+    "differences": [
+      {
+        "category": "color",
+        "t": 2.1,
+        "a_observable": "Rich blue tones on the left card and deep shadows between the keyboard keys.",
+        "b_observable": "Faded, low-contrast gray-blue tones with washed-out shadows.",
+        "fix": "Adjust the color grading to increase contrast and saturation, matching the deep blues and rich shadows of the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_higher_contrast"
+        }
+      },
+      {
+        "category": "staging",
+        "t": 2.3,
+        "a_observable": "A bright yellow key is visible at the top-left corner of the frame.",
+        "b_observable": "Only white/light gray keys are visible in the top-left corner.",
+        "fix": "Add the yellow key to the top-left area of the keyboard layout.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "material",
+        "t": 2.5,
+        "a_observable": "The key to the right of the three white cards has a dark gray brushed metal texture.",
+        "b_observable": "The key to the right is plain white/light gray plastic with no texture.",
+        "fix": "Apply a brushed metal material to the key on the right side of the frame.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the keyboard layout and materials to include the yellow key and brushed metal textures, and apply a high-contrast color grade to match the reference."
+  }
+}

@@ -1,0 +1,235 @@
+{
+  "sec": 7,
+  "meta": {
+    "verified": 3,
+    "attempted": 3,
+    "layer1Rejected": 0
+  },
+  "rejected": [],
+  "runs": [
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 7.25,
+          "a_observable": "The recess around the blue card has soft, light-grey shadows.",
+          "b_observable": "The recess around the blue card has very dark, high-contrast black shadows.",
+          "fix": "Soften the shadow density in the card recesses.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 7.1,
+          "a_observable": "The white background tiles have a warm, cream-colored tint.",
+          "b_observable": "The white background tiles are neutral grey with a cool blue undertone.",
+          "fix": "Adjust white balance to add warmth to the background tiles.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_cooler"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 7.5,
+          "a_observable": "The camera angle is more top-down, reducing perspective distortion.",
+          "b_observable": "The camera is at a lower angle, increasing perspective distortion.",
+          "fix": "Adjust camera tilt to match the flatter perspective.",
+          "severity": 2,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        }
+      ],
+      "highest_impact_fix": "Soften the shadow density in the card recesses to match the bright, clean aesthetic of the reference.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "slow camera rotation and pan around the central blue tile"
+      ],
+      "b_motion": [
+        "slow camera rotation and pan around the central blue tile"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "lighting",
+          "t": 7.5,
+          "a_observable": "Deep, soft ambient occlusion shadows are visible between the tiles.",
+          "b_observable": "Crevice shadows are extremely faint, making the tiles look flat.",
+          "fix": "Enable or increase ambient occlusion strength in render settings.",
+          "severity": 4,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "A_deeper_shadows"
+          }
+        },
+        {
+          "category": "color",
+          "t": 7.5,
+          "a_observable": "The white tiles have a distinct cool, blue-tinted color cast.",
+          "b_observable": "The white tiles are neutral grey, lacking the cool color grading.",
+          "fix": "Adjust color temperature or add a blue color cast in post.",
+          "severity": 3,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "A_cooler"
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 7.5,
+          "a_observable": "A noticeable vignette is present, with darker corners.",
+          "b_observable": "The lighting is uniform across the frame, lacking corner falloff.",
+          "fix": "Add a vignette effect in post-production.",
+          "severity": 3,
+          "prediction": {
+            "metric": "vignette",
+            "expect": "A_stronger"
+          }
+        },
+        {
+          "category": "material",
+          "t": 7.5,
+          "a_observable": "The blue tile has a matte texture with soft specular highlights on its edges.",
+          "b_observable": "The blue tile has a flat, uniform shader with no specular highlights.",
+          "fix": "Adjust roughness and specular settings of the blue material.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": "none"
+          }
+        }
+      ],
+      "highest_impact_fix": "Add ambient occlusion and soft contact shadows to the tiles to match the depth and integration of the reference video.",
+      "layer1_rejected": []
+    },
+    {
+      "cuts_in_window": [],
+      "a_motion": [
+        "translation",
+        "rotation"
+      ],
+      "b_motion": [
+        "translation",
+        "rotation"
+      ],
+      "absent_in_b": [],
+      "differences": [
+        {
+          "category": "camera",
+          "t": 7.5,
+          "a_observable": "The camera perspective is lower and closer to the blue card, showing less of the surrounding grid.",
+          "b_observable": "The camera is higher and further back, showing more of the grid at a steeper angle.",
+          "fix": "Adjust camera height, distance, and pitch to match the reference framing.",
+          "severity": 3,
+          "prediction": {
+            "metric": "none",
+            "expect": ""
+          }
+        },
+        {
+          "category": "lighting",
+          "t": 7.5,
+          "a_observable": "The shadows cast by the blue card onto the white surface are soft and highly diffused.",
+          "b_observable": "The shadows are sharp and dark with high contrast edges.",
+          "fix": "Increase the light source size or adjust shadow diffusion settings.",
+          "severity": 3,
+          "prediction": {
+            "metric": "luma_curve",
+            "expect": "B_higher_contrast"
+          }
+        },
+        {
+          "category": "color",
+          "t": 7.5,
+          "a_observable": "The blue card has a matte, slightly desaturated royal blue color.",
+          "b_observable": "The blue card is highly saturated and vibrant.",
+          "fix": "Reduce the saturation and brightness of the blue card material.",
+          "severity": 2,
+          "prediction": {
+            "metric": "color_cast",
+            "expect": "B_more_saturated"
+          }
+        },
+        {
+          "category": "camera",
+          "t": 7.5,
+          "a_observable": "The top and bottom areas of the frame are softly blurred due to shallow depth of field.",
+          "b_observable": "The entire frame is uniformly sharp, lacking depth of field blur.",
+          "fix": "Enable camera depth of field with a wider aperture focused on the center card.",
+          "severity": 3,
+          "prediction": {
+            "metric": "region_sharpness",
+            "expect": "B_sharper",
+            "region": "top"
+          }
+        }
+      ],
+      "highest_impact_fix": "Adjust the camera position and rotation to match the reference perspective, and enable depth of field with soft shadow rendering.",
+      "layer1_rejected": []
+    }
+  ],
+  "consolidated": {
+    "agreed_differences": [
+      {
+        "category": "lighting",
+        "t": 7.5,
+        "a_observable": "The shadows cast by the blue card onto the white surface are soft and highly diffused.",
+        "b_observable": "The shadows are sharp and dark with high contrast edges.",
+        "fix": "Increase the light source size or adjust shadow diffusion settings.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_higher_contrast"
+        },
+        "supported_by": 2,
+        "measurement": {
+          "verdict": "refuted",
+          "expect": "B_higher_contrast",
+          "A": {
+            "p01": 65.23,
+            "p1": 69.47,
+            "p5": 75.95,
+            "p50": 200.32,
+            "p95": 246.42,
+            "p99": 247.86,
+            "p999": 253.09,
+            "span_p5_p95": 170.47
+          },
+          "B": {
+            "p01": 7.44,
+            "p1": 10.41,
+            "p5": 33.83,
+            "p50": 156.05,
+            "p95": 194.84,
+            "p99": 206.33,
+            "p999": 254.79,
+            "span_p5_p95": 161.01
+          }
+        },
+        "status": "vetoed_measured"
+      }
+    ],
+    "agreed_absent_in_b": [],
+    "highest_impact_fix": "Increase the light source size or adjust shadow diffusion settings.",
+    "dropped_unsupported": 9
+  }
+}

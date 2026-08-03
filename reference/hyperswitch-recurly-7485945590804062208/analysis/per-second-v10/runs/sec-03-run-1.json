@@ -1,0 +1,40 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "smooth camera pan downwards and slightly to the right"
+    ],
+    "b_motion": [
+      "smooth camera pan downwards and slightly to the right"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "color",
+        "t": 3.5,
+        "a_observable": "The white tiles and background exhibit a distinct cool blue-cyan color cast.",
+        "b_observable": "The white tiles and background are neutral grey with a warmer tone.",
+        "fix": "Apply a cool blue color grade to the scene to match the reference.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 3.5,
+        "a_observable": "The contact shadows beneath the white tiles are deep and well-defined.",
+        "b_observable": "The contact shadows are faint and washed out, reducing depth.",
+        "fix": "Increase the intensity and depth of the drop shadows under the tiles.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Increase the depth of the contact shadows under the tiles and apply a cool blue color grade to match the reference."
+  }
+}

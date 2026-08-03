@@ -1,0 +1,64 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "camera pans down-right"
+    ],
+    "b_motion": [
+      "camera pans down-right"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 5.5,
+        "a_observable": "Strong vignette with distinct light falloff in the corners.",
+        "b_observable": "Flat lighting with minimal corner falloff.",
+        "fix": "Add a vignette effect in post-production.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 5.2,
+        "a_observable": "Deep shadows in the crevices between keys.",
+        "b_observable": "Lighter, washed-out shadows in the crevices.",
+        "fix": "Increase shadow density or ambient occlusion.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 5.8,
+        "a_observable": "White keys exhibit a cool blue color cast.",
+        "b_observable": "White keys are neutral white.",
+        "fix": "Adjust the white balance to introduce a cooler tint.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "material",
+        "t": 5.5,
+        "a_observable": "The yellow button has a subtle specular highlight.",
+        "b_observable": "The yellow button is completely matte.",
+        "fix": "Increase specular reflectivity on the yellow material.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the lighting to introduce a stronger vignette and deeper shadows in the crevices to match the contrast of the reference."
+  }
+}

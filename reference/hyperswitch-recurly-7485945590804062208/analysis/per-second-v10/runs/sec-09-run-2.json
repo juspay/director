@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "pan",
+      "zoom"
+    ],
+    "b_motion": [
+      "pan",
+      "zoom"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 9.5,
+        "a_observable": "The camera is positioned close to the keys, creating a tight composition with shallow depth of field.",
+        "b_observable": "The camera is positioned far away, showing a wide, flat view of the grid.",
+        "fix": "Move the camera closer to the keys and adjust the focal length.",
+        "severity": 3,
+        "prediction": {
+          "metric": "region_sharpness",
+          "expect": "A_sharper",
+          "region": "center"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 9.2,
+        "a_observable": "The scene features high-contrast lighting with deep shadows between keys and a strong vignette.",
+        "b_observable": "The scene has flat, uniform lighting with bright shadows and no vignette.",
+        "fix": "Increase contrast, deepen shadows, and add a vignette.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 9.8,
+        "a_observable": "The yellow card has a warm, highly saturated golden hue.",
+        "b_observable": "The yellow card has a cooler, less saturated yellow hue.",
+        "fix": "Adjust the yellow material to increase warmth and saturation.",
+        "severity": 2,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_more_saturated"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and focal length to match the close-up framing and perspective of the reference video."
+  }
+}

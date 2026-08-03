@@ -1,0 +1,64 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera rotation and pan around the central blue tile"
+    ],
+    "b_motion": [
+      "slow camera rotation and pan around the central blue tile"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "lighting",
+        "t": 7.5,
+        "a_observable": "Deep, soft ambient occlusion shadows are visible between the tiles.",
+        "b_observable": "Crevice shadows are extremely faint, making the tiles look flat.",
+        "fix": "Enable or increase ambient occlusion strength in render settings.",
+        "severity": 4,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "A_deeper_shadows"
+        }
+      },
+      {
+        "category": "color",
+        "t": 7.5,
+        "a_observable": "The white tiles have a distinct cool, blue-tinted color cast.",
+        "b_observable": "The white tiles are neutral grey, lacking the cool color grading.",
+        "fix": "Adjust color temperature or add a blue color cast in post.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "A_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 7.5,
+        "a_observable": "A noticeable vignette is present, with darker corners.",
+        "b_observable": "The lighting is uniform across the frame, lacking corner falloff.",
+        "fix": "Add a vignette effect in post-production.",
+        "severity": 3,
+        "prediction": {
+          "metric": "vignette",
+          "expect": "A_stronger"
+        }
+      },
+      {
+        "category": "material",
+        "t": 7.5,
+        "a_observable": "The blue tile has a matte texture with soft specular highlights on its edges.",
+        "b_observable": "The blue tile has a flat, uniform shader with no specular highlights.",
+        "fix": "Adjust roughness and specular settings of the blue material.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      }
+    ],
+    "highest_impact_fix": "Add ambient occlusion and soft contact shadows to the tiles to match the depth and integration of the reference video."
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera pan and zoom out"
+    ],
+    "b_motion": [
+      "slow camera pan and zoom out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "camera",
+        "t": 5.2,
+        "a_observable": "The camera is closer to the yellow Recurly card with a shallower angle.",
+        "b_observable": "The camera is further back and at a steeper angle.",
+        "fix": "Adjust camera position and angle to match the reference framing.",
+        "severity": 3,
+        "prediction": {
+          "metric": "none",
+          "expect": ""
+        }
+      },
+      {
+        "category": "color",
+        "t": 5.5,
+        "a_observable": "The recess around the yellow card has soft, light grey shadows.",
+        "b_observable": "The recess has extremely dark, high-contrast black shadows.",
+        "fix": "Reduce shadow intensity or ambient occlusion around the card recess.",
+        "severity": 3,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_blacks"
+        }
+      },
+      {
+        "category": "color",
+        "t": 5.8,
+        "a_observable": "The white keys exhibit a warm, cream-colored tone.",
+        "b_observable": "The white keys exhibit a cool, neutral grey-blue tone.",
+        "fix": "Adjust white balance to introduce a warmer color temperature.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      }
+    ],
+    "highest_impact_fix": "Adjust the camera position and angle to match the reference framing, and correct the dark shadows in the card recesses."
+  }
+}

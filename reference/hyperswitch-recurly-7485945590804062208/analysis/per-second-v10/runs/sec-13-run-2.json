@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "json": {
+    "cuts_in_window": [],
+    "a_motion": [
+      "slow camera zoom out"
+    ],
+    "b_motion": [
+      "slow camera zoom out"
+    ],
+    "absent_in_b": [],
+    "differences": [
+      {
+        "category": "layout",
+        "t": 13,
+        "a_observable": "The yellow and blue buttons are positioned closer to the center of the frame.",
+        "b_observable": "The yellow and blue buttons are spaced further apart towards the corners of the frame.",
+        "fix": "Adjust the layout spacing of the buttons to match the reference.",
+        "severity": 2,
+        "prediction": {
+          "metric": "none",
+          "expect": "none"
+        }
+      },
+      {
+        "category": "color",
+        "t": 13.5,
+        "a_observable": "The white background tiles have a neutral white appearance.",
+        "b_observable": "The white background tiles have a noticeable cool blue color cast.",
+        "fix": "Adjust the color balance to remove the blue cast on white surfaces.",
+        "severity": 3,
+        "prediction": {
+          "metric": "color_cast",
+          "expect": "B_cooler"
+        }
+      },
+      {
+        "category": "lighting",
+        "t": 13.8,
+        "a_observable": "The shadows in the crevices between tiles are soft and light grey.",
+        "b_observable": "The shadows in the crevices are dark and high-contrast.",
+        "fix": "Add more ambient fill light to soften the shadow depth.",
+        "severity": 2,
+        "prediction": {
+          "metric": "luma_curve",
+          "expect": "B_deeper_shadows"
+        }
+      }
+    ],
+    "highest_impact_fix": "Correct the white balance to eliminate the cool blue color cast on white tiles and soften the shadow contrast."
+  }
+}
