@@ -91,7 +91,7 @@ jobs:
         # unfixable by re-running the job.
         #
         # When bumping, keep the trailing tag comment in sync with the SHA.
-        uses: juspay/yama@b89b3aaaf5c9faa830d17d50611a7c2845de8159 # v2.7.2
+        uses: juspay/yama@d03720e7d5479cf23a441b360c8d2e662f3b9ca6 # v3.0.4
         with:
           github-token: ${{ secrets.YAMA_GITHUB_TOKEN }}
           ai-provider: litellm
