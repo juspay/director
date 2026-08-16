@@ -38,18 +38,45 @@ ai:
   # codebase context. Keep enabled so the reviewer sees your repo's rules.
   explore:
     enabled: true
+    # Set explicitly: yama >= 3.0.0 no longer defaults this to 0.1 — when unset
+    # the field is omitted from the NeuroLink call and the provider default wins.
+    temperature: 0.1
     timeout: "5m"
     cacheResults: true
 
-# GitHub MCP only. Jira/Bitbucket off so no extra credentials are needed. Yama's
-# built-in denylist already blocks repo-mutating GitHub tools; this is a
+# GitHub MCP only. Bitbucket off so no extra credentials are needed; this is a
 # read + review-comment workflow.
+#
+# v3 SHAPE — server definitions live under `mcpServers.servers.<id>` as full
+# generic definitions. The legacy flat shape (`mcpServers.github: ...`) is
+# REJECTED AT STARTUP by yama >= 3.0.0, which exits non-zero and trips the
+# "Enforce verdict" step below with no decision. Nothing is hardcoded in Yama
+# anymore, so transport/url/headers must be spelled out here.
+#
+# Token: use ${YAMA_GITHUB_TOKEN}, NOT ${GITHUB_TOKEN}. Inside a composite
+# action GITHUB_TOKEN is a reserved name that the runner's automatic token can
+# clobber; the action exports both and treats YAMA_GITHUB_TOKEN as the reliable
+# one (see juspay/yama action.yml).
+#
+# Jira was removed end-to-end in v3 — the `mcpServers.jira` key no longer exists.
 mcpServers:
-  github:
-    enabled: true
-    # transport defaults to "http" (hosted GitHub MCP at api.githubcopilot.com).
-  jira:
-    enabled: false
+  servers:
+    github:
+      enabled: true
+      transport: http
+      url: https://api.githubcopilot.com/mcp/
+      headers:
+        Authorization: "Bearer ${YAMA_GITHUB_TOKEN}"
+      roles: [review, explore]
+      modes: [pr]
+      # Repo-mutating tools the review flow never needs. Comments, approval and
+      # update_pull_request are intentionally NOT blocked.
+      blockedTools:
+        - push_files
+        - create_or_update_file
+        - create_branch
+        - delete_file
+        - merge_pull_request
 
 review:
   enabled: true
