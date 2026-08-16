@@ -90,8 +90,14 @@ jobs:
         # 30000" and reported an infrastructure failure with no verdict —
         # unfixable by re-running the job.
         #
+        # v3.0.0 is BREAKING for config: `mcpServers` server definitions moved
+        # under `mcpServers.servers.<id>`, and the legacy flat shape is rejected
+        # at startup — which surfaces here as a no-decision failure and trips the
+        # "Enforce verdict" step below. yama.config.yaml was migrated in the same
+        # commit as this bump; keep the two in sync when bumping across a major.
+        #
         # When bumping, keep the trailing tag comment in sync with the SHA.
-        uses: juspay/yama@b89b3aaaf5c9faa830d17d50611a7c2845de8159 # v2.7.2
+        uses: juspay/yama@d03720e7d5479cf23a441b360c8d2e662f3b9ca6 # v3.0.4
         with:
           github-token: ${{ secrets.YAMA_GITHUB_TOKEN }}
           ai-provider: litellm
