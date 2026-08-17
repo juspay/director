@@ -52,8 +52,19 @@ describe('execa contract', () => {
 
   it('passes an argument array through to the subprocess', async () => {
     // Mirrors the call shape in src/scripts/python-bridge.ts.
-    const result = await execa('node', ['-e', 'process.stdout.write(process.argv[1])', 'arg-1']);
-    assert.equal(result.stdout, 'arg-1');
+    //
+    // Under `node -e`, the eval script is NOT part of argv: argv is
+    // [execPath, ...positionals], so the first positional is argv[1] — not
+    // argv[2] or argv[3] as with a script file. Verified on Node 22 and 24.
+    // The marker prefix and String() keep a dropped argument surfacing as a
+    // readable assertion diff rather than an ERR_INVALID_ARG_TYPE crash
+    // inside the subprocess.
+    const result = await execa('node', [
+      '-e',
+      'process.stdout.write("arg=" + String(process.argv[1]))',
+      'arg-1',
+    ]);
+    assert.equal(result.stdout, 'arg=arg-1');
   });
 
   it('returns rather than throws on non-zero exit when reject is false', async () => {
