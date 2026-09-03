@@ -29,12 +29,12 @@
     "backlot": "node --import tsx src/backlot/server.ts"
   },
   "dependencies": {
-    "@juspay/neurolink": "^10.12.9",
+    "@juspay/neurolink": "^12.7.4",
     "dotenv": "^17.4.2",
     "execa": "^10.0.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "zod": "^4.3.6"
+    "zod": "^4.5.4"
   },
   "overrides": {
     "unicorn-magic": "0.4.0",
