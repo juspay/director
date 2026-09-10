@@ -97,7 +97,7 @@ jobs:
         # commit as this bump; keep the two in sync when bumping across a major.
         #
         # When bumping, keep the trailing tag comment in sync with the SHA.
-        uses: juspay/yama@d03720e7d5479cf23a441b360c8d2e662f3b9ca6 # v3.0.4
+        uses: juspay/yama@8ee1ec53c6f87aa5dcba9a0d82f22379717af456 # v6.1.1
         with:
           github-token: ${{ secrets.YAMA_GITHUB_TOKEN }}
           ai-provider: litellm
